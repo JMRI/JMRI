@@ -28,7 +28,7 @@
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
-        <ant.version>1.10.1</ant.version>
+        <ant.version>1.10.5</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
@@ -684,7 +684,7 @@
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     </configuration>
-                </plugin>        
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
