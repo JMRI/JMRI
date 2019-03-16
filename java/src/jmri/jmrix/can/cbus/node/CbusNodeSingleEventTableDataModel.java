@@ -329,34 +329,30 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         
         ArrayList<CbusNodeEvent> eventArray = new ArrayList<CbusNodeEvent>(1);
         eventArray.add(newevent);
-        if ( nodeModel == null ) {
-            try {
-                nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            } catch (NullPointerException e) {
-                log.error("Unable to get Node Table from Instance Manager");
-            }
+        try {
+            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+            nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).sendNewEvSToNode( eventArray, frame, null);
+        } catch (NullPointerException e) {
+            log.error("Unable to get Node Table from Instance Manager");
         }
         
         //  log.info(" pass changes arr length {} ",newEVs.length);
-        nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).sendNewEvSToNode( eventArray, frame, null);
+        
     }
 
     public void passEditEvToNode( CbusNodeEditEventFrame frame ) {
 
         if ( frame.spinnersDirty() ) {
             
-            if ( nodeModel == null ) {
-                try {
-                    nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-                } catch (NullPointerException e) {
-                    log.error("Unable to get Node Table from Instance Manager");
-                }
+            try {
+                nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+                // learn mode - timeout, no feedback from node
+                // unlearn event - timeout, no feedback from node
+                // this should take 100ms
+                nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn(), null );
+            } catch (NullPointerException e) {
+                log.error("Unable to get Node Table from Instance Manager");
             }
-            
-            // learn mode - timeout, no feedback from node
-            // unlearn event - timeout, no feedback from node
-            // this should take 100ms
-            nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn(), null );
             
             // learn mode - to reset after unlearn, timeout, no feedback from node
             // teach new event ( as brand new event )
