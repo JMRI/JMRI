@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-16 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI OperationsPro - Routes</title><!-- Style -->
+  <title>JMRI OperationsPro - Itin&#233;raires</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -26,81 +26,84 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; eExploiter des Trains</h1>
 
-      <h2>OperationsPro: Routes pane</h2>
+      <h2> OperationsPro: Volet Itin&#233;raires</h2>
 
-      <div align="right">
-        <p><a href="Ops_Engines.shtml">Previous</a> | <a href=
-        "Ops_Trains.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines.shtml"> Pr&#233;c&#233;dent</a> | <a href =
+        "Ops_Trains.shtml"> Suivant</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>A Route is a series of Locations that a Train will visit.
-      After adding Locations to a Route, you can decide if the
-      Train will stop at a Location for work. Routes can be point
-      to point or out and back.</p>
+      <p>Un Itin&#233;raire est une s&#233;rie d'Emplacements o&#249; un train passera. 
+      Apr&#232;s avoir ajout&#233; des Emplacements &#224; un Itin&#233;raire, vous pouvez 
+      d&#233;cider si le train s'arr&#234;tera &#224; un emplacement pour man&#156;uvrer. 
+      Les Itin&#233;raires peuvent &#234;tre point &#224; point ou aller-retour.</P>
 
-      <p>Operations Demo Panel showing Locations and connecting
-      trackwork over which Routes could be defined:</p>
+      <p>Panneau de D&#233;monstration des op&#233;rations indiquant les 
+      Emplacements et les voies de connexion sur lesquelles des 
+      Itin&#233;raires pourraient &#234;tre d&#233;finis:</p>
 
-      <p><img src="images/Ops_DemoPanel.png" alt="panel" height=
-      "220" width="800"></p>
+      <p><img src = "images/Ops_DemoPanel.png" alt = "panneau" height =
+      "220" width = "800"></p>
 
-      <p>All Routes in your OperationsPro Roster are listed in the
-      <strong>Routes</strong> window with their status. "Orphan"
-      means it has currently not been assigned to a Train.</p>
+      <p>Tous les Itin&#233;raires de votre r&#233;pertoire OperationsPro sont 
+      r&#233;pertori&#233;s dans la fen&#234;tre <strong>Itin&#233;raires</strong> avec leur 
+      statut. "Orphelin" signifie qu'il n'a pas encore &#233;t&#233; affect&#233; &#224; un 
+      train.</P>
 
-      <p><img src="images/Ops_Routes.png" alt="routes" height="310"
-      width="730"></p>
+      <p><img src = "images/Ops_Itin&#233;raires.png" alt = "Itin&#233;raires" height = "310"
+      width = "730"></p>
 
-      <h4>Body of Routes pane</h4>
+      <h4>  Corps du Volet Itin&#233;raires</h4>
 
-      <p>The Routes pane lists all the Routes defined for your
-      Railroad:</p>
+      <p>Le volet Itin&#233;raires r&#233;pertorie tous les Itin&#233;raires d&#233;finis 
+      pour votre r&#233;seau:</p>
 
-      <div style="margin-left: 40px;">
-        <span style="font-weight: bold;">Id</span> column - Route
-        Id is assigned by OperationsPro<br>
-        <span style="font-weight: bold;">Name</span> column - Name
-        of Route<br>
-        <span style="font-weight: bold;">Comment</span> column -
-        Any comments that you wish to include for each Route<br>
-        <span style="font-weight: bold;">Status</span> column -
-        Indicates the state of the Route:
+      <div style = "margin-left: 40px;">
+        <span style = "font-weight: bold;"> colonne</span> - Itin&#233;raire
+        L'identifiant est attribu&#233; par OperationsPro <br>
+        <span style = "font-weight: bold;"> colonne</span> - Nom de 
+        l' Itin&#233;raire <br>
+        Colonne <span style = "font-weight: bold;"> Commentaire</span>: 
+        tous les commentaires que vous souhaitez inclure pour chaque 
+        Itin&#233;raire <br>
+        Colonne <span style = "font-weight: bold;"> Etat</span>: indique 
+        l'&#233;tat de l'Itin&#233;raire.
 
         <ul>
-          <li>Okay - Route is assigned to a Train</li>
+          <li> OK - L'Itin&#233;raire est attribu&#233; &#224; un Train</li>
 
-          <li>Orphan - Route has not been assigned to a Train</li>
-        </ul><a style="font-weight: bold;" href=
-        "Ops_EditRoutes.shtml">Edit</a> button column - allows you
-        to edit selected Route attributes.
-      </div>
+          <li> Orphelin - L'Itin&#233;raire n'a pas &#233;t&#233; attribu&#233; &#224; un train</li>
+       </ul> <a style = "font-weight: bold;" href =
+        "Ops_EditItin&#233;raires.shtml"> </a>bouton colonne - 
+        permet de modifier les attributs d'Itin&#233;raire s&#233;lectionn&#233;.
+     </div>
 
-      <h4>Bottom of Routes pane</h4>
+      <h4> Bas du Volet des Itin&#233;raires</h4>
 
-      <p><strong>Sort by <input name="radio" id="radio" value=
-      "radio" checked="checked" type="radio"> Name <input name=
-      "radio2" id="radio2" value="radio2" type="radio"> Id</strong>
-      establishes the sort order of the Routes in the list.</p>
+      <p><strong>Trier par <input name = "radio" id = "radio" value =
+      "radio" checked = "checked" type = "radio"> Nom <input name =
+      "radio2" id = "radio2" value = "radio2" type = "radio"> id</strong>
+      &#233;tablit l'ordre de tri des Itin&#233;raires dans la liste.</p>
 
-      <p><input name="button2" id="button2" value="Add" type=
-      "submit"> opens the <a href="Ops_AddRoutes.shtml"><strong>Add
-      Route</strong></a> window allowing you to add Routes to your
-      Operations database.</p>
+      <p><input name = "button2" id = "button2" value = "Ajouter" type =
+      "submit"> ouvre la fen&#234;tre <a href="Ops_AddItin&#233;raires.shtml"> 
+		  <strong>Ajouter Itin&#233;raire</strong></a> vous permettant 
+		  d'ajouter des Itin&#233;raires &#224; votre base de donn&#233;es Operations.</P>
 
-      <h4>The <a href="Ops_Routes_Menu.shtml">Routes window menu
-      bar</a></h4>
-      <hr>
+      <h4> La <a href="Ops_Itin&#233;raires_Menu.shtml"> Barre de menu de la 
+      fen&#234;tre Itin&#233;raires</a></h4>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Engines.shtml">Previous</a> | <a href=
-        "Ops_Trains.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines.shtml"> Pr&#233;c&#233;dent</a> | <a href =
+        "Ops_Trains.shtml"> Suivant</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
