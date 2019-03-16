@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-16 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Operations - Manifest Print Options</title>
+  <title>JMRI Operations - Manifeste Print Options</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -27,238 +27,241 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Manifest Print Options</h2>
+      <h2> OperationsPro: Options d'Impression du Manifeste</h2>
 
-      <div align="right">
-        <p><a href="Ops_Settings_menubar.shtml">Back to
-        Settings</a></p>
+      <div align = "right">
+        <p><a href="Ops_Settings_menubar.shtml"> Retour &#224;
+        Param&#232;tres</a></p>
 
-        <p><a href="Ops_Trains.shtml">Back to Trains</a></p>
-      </div>
-      <hr>
+        <p><a href="Ops_Trains.shtml"> Retour aux trains</a></p>
+     </div>
+      <h>
 
-      <p style="text-align: center;"><img src=
-      "images/Ops_Print.png" alt="print" height="440" width=
+      <p style = "text-align: center;"> <img src =
+      "images/Ops_Print.png" alt = "print" height = "440" width =
       "900"></p>
 
-      <p>You can modify how JMRI&reg; OperationsPro prints the
-      Train Manifests and the amount of detail that the Build
-      Report provides.</p>
+      <p>Vous pouvez modifier la mani&#232;re dont JMRI&reg; OperationsPro 
+      imprime le Manifeste du Train et la quantit&#233; de d&#233;tails que Le 
+      Rapport D'Assemblage fournit.
+      .</P>
 
-      <h3>Print Options</h3>
+      <h3> Options d'Impression</h3>
 
-      <table style="width: 90%;" border="0" cellpadding="2"
-      cellspacing="1">
+      <table style  = "width: 90%;" border = "0" cellpadding = "2"
+      cellspacing "1">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_font.png" alt="fosnt" height=
-            "113" width="110"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_font.png" alt = "fosnt" height =
+            "113" width = "110"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_fontSize.png" alt="font size"
-            height="208" width="110"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_fontSize.png" alt = "taille de la police"
+            height = "208" width = "110"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_printOption_MsgFmt.png" alt=
-            "message format" height="111" width="166"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_printOption_MsgFmt.png" alt =
+            "format de message" height = "111" width = "166"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_Orientation.png" height="96"
-            width="110"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_Orientation.png" height = "96"
+            width = "110"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_color_pu.png" alt=
-            "pick up color" height="127" width="110"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_color_pu.png" alt =
+            "pick up color" height = "127" width = "110"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_color_su.png" alt=
-            "set out color" height="126" width="110"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_color_su.png" alt =
+            "couleur de d&#233;part" height = "126" width = "110"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_color_move.png" alt=
-            "color move" height="111" width="110"></td>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_color_move.png" alt =
+            "color move" height = "111" width = "110"></td>
 
-            <td style="vertical-align: top;"><img src=
-            "images/Ops_PrintOption_SwitchList.png" alt=
-            "switch List" height="101" width="194"></td>
-          </tr>
+            <td style = "vertical-align: top;"> <img src =
+            "images/Ops_PrintOption_SwitchList.png" alt =
+            "liste de commutation" height = "101" width = "194"></td>
+         </tr>
 
           <tr>
-            <td style="vertical-align: top;" colspan="2">
-              <div align="center">
-                Select the desired <strong>Font</strong> and
-                <strong>Size</strong>.
-              </div>
-            </td>
+            <td style = "vertical-align: top;" colspan = "2">
+              <div align = "center">
+                S&#233;lectionnez la <strong>Police</strong> souhait&#233;e et
+                <strong>Taille</strong>.
+             </div>
+           </td>
 
-            <td style="vertical-align: top;">Select if you want the
-            Manifest printed in tabular format. It works best with
-            mono-spaced fonts, <strong>Courier</strong> or
+            <td style = "vertical-align: top;"> S&#233;lectionnez si vous 
+            voulez que le Manifeste soit imprim&#233; sous forme de tableau. 
+            Cela fonctionne mieux avec les polices mono-espac&#233;es, 
+            <strong>Courrier</strong> ou
             <strong>Monospaced</strong>.</td>
 
-            <td style="vertical-align: top;">Page
-            <strong>Orientation</strong></td>
+            <td style = "vertical-align: top;">
+            <strong>Orientation</strong></td>  Page
 
-            <td style="vertical-align: top;">
-              <div align="center">
-                Assign Manifest print color for Car or Locomotive
-                <strong>Pick Up</strong>
-              </div>
-            </td>
+            <td style = "vertical-align: top;">
+              <div align = "center">
+                Attribuer la couleur d'impression Manifeste pour les 
+                <strong>Enl&#232;vement</strong> de Wagon ou de Locomotive
+                
+             </div>
+           </td>
 
-            <td style="vertical-align: top;">
-              <div align="center">
-                Assign Manifest print color for Car or Locomotive
-                <strong>Set Out</strong>
-              </div>
-            </td>
+            <td style = "vertical-align: top;">
+              <div align = "center">
+                Attribuer la couleur d'impression Manifeste pour la 
+                <strong>Remise</strong> de Wagon ou de Locomotive
+               
+             </div>
+           </td>
 
-            <td style="vertical-align: top;">
-              <div align="center">
-                Assign Manifest print color when the operation is
-                to move a Car from one track to another at the same
-                Location.
-              </div>
-            </td>
+            <td style = "vertical-align: top;">
+              <div align = "center">
+                Attribuez la couleur d'impression Manifestee lorsque 
+                l'op&#233;ration consiste &#224; d&#233;placer un Wagon d'une Voie &#224; 
+                une autre au m&#234;me endroit.
+             </div>
+           </td>
 
-            <td style="vertical-align: top;">
-              <div align="center">
-                Select if you want the Switch List in the same
-                format as the Manifest.
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <td style = "vertical-align: top;">
+              <div align = "center">
+                S&#233;lectionnez si vous voulez que la liste de Man&#156;uvres 
+                soit au m&#234;me format que le Manifeste.
+             </div>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="width: 90%;" border="0" cellpadding="2"
-      cellspacing="1">
+      <table style= "width: 90%;" border = "0" cellpadding = "2"
+      cellspacing = "1">
         <tbody>
           <tr>
-            <td style="width: 39%; vertical-align: top;">
-              <h4>Pick Up Locomotive Message Format</h4>
-            </td>
+            <td style = "width: 39%; vertical-align: top;">
+              <h4> Format du Message de Collecte de Locomotive</h4>
+           </td>
 
-            <td rowspan="5" style=
-            "width: 61%; vertical-align: top;">You may customize
-            the messages for your Manifest and Switch List
-            printing. Select formats from the dropdown menus. To
-            remove an attribute, select blank. The Prefixes in the
-            text boxes may be edited. If you want to use the text
-            color options, the Set Out, Pick Up and Move prefixes
-            must be unique.</td>
-          </tr>
-
-          <tr>
-            <td>
-              <h4>Set Out Locomotive Message Format</h4>
-            </td>
-          </tr>
+<td rowspan = "5" style =
+            "width: 61%; vertical-align: top;"> Vous pouvez personnaliser 
+            les messages pour l'impression de votre Manifeste et de
+             votre liste de Man&#156;uvres. S&#233;lectionnez les formats dans 
+             les menus d&#233;roulants. Pour supprimer un attribut, 
+             s&#233;lectionnez vide. Les Pr&#233;fixes dans les zones de texte 
+             peuvent &#234;tre &#233;dit&#233;s. Si vous souhaitez utiliser les options 
+             de couleur du texte, les pr&#233;fixes Remise, Collecte 
+             et D&#233;placement doivent &#234;tre uniques.</Td>
+         </tr>
 
           <tr>
             <td>
-              <h4>Pick Up Car Message Format</h4>
-            </td>
-          </tr>
-
-          <tr>
-            <td height="29">
-              <h4>Set Out Car Message Format</h4>
-            </td>
-          </tr>
+              <h4>Format du Message Remise de Locomotive</h4>
+           </td>
+         </tr>
 
           <tr>
             <td>
-              <h4>Local Mover Message Format</h4>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <h4> Format du Message de Collecte de Wagon</h4>
+           </td>
+         </tr>
 
-      <p><strong>Manifest Options</strong><br>
-      Each Location can have an optional comment. You can print
-      these comments on your Manifest if they are selected.</p>
+          <tr>
+            <td height = "29">
+              <h4> Format du Message Remise de Wagon</h4>
+           </td>
+         </tr>
 
-      <p><input name="checkbox6" id="checkbox6" checked="checked"
-      type="checkbox"> <strong>Print Valid</strong> Prints the time
-      of the train build, not the time the manifest was
-      printed.<br>
-      <input name="checkbox" id="checkbox" type="checkbox">
-      <strong>Location</strong>. allows location comment for each
-      car is selected<br>
-      <input name="checkbox3" id="checkbox3" type="checkbox">
-      <strong>Route</strong> allows comments about location for
-      each car if selected<br>
-      <input name="checkbox2" id="checkbox2" type="checkbox">
-      <strong>Loads and Empties</strong> to show how many car loads
-      and empties are in the train.<br>
-      <input name="checkbox4" id="checkbox4" type="checkbox">
-      <strong>12hr Format</strong> default is 24 hr clock<br>
-      <input name="checkbox13" id="checkbox13" type="checkbox">
-      <strong>Departure Times</strong> to print departure times on
-      manifest<br>
-      <input name="checkbox5" id="checkbox5" type="checkbox">
-      <strong>Show Timetable show which timetable was used when
-      train build was made.<br>
-      <input name="checkbox7" id="checkbox7" type="checkbox">
-      Truncate</strong> Reduces the amount of information at a
-      location that has a separate switch list.</p>
+          <tr>
+            <td>
+              <h4> Format du Message de D&#233;placement Local</h4>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <p><strong>Manifest Preview</strong></p>
+      <p><strong>Options du Manifeste</strong> <br>
+      Chaque emplacement peut avoir un commentaire facultatif. Vous 
+      pouvez imprimer ces commentaires sur votre Manifeste s'ils sont 
+      s&#233;lectionn&#233;s.</P>
 
-      <p><input name="checkbox11" id="checkbox11" type="checkbox">
-      Use Text Editor</p>
+      <p><input name = "checkbox6" id = "checkbox6" checked = "checked"
+      type = "checkbox"> <strong>Imprimer Valide</strong>: imprime 
+      l'heure d'assemblage du train et non l'heure &#224; laquelle le 
+      Manifeste a &#233;t&#233; imprim&#233;. <br>
+      <input name = "checkbox" id = "checkbox" type = "checkbox">
+      <strong>Emplacement</strong>. permet de commenter l'emplacement 
+      de chaque Wagon s&#233;lectionn&#233;e. <br>
+      <input name = "checkbox3" id = "checkbox3" type = "checkbox">
+      <strong>Itin&#233;raire</strong> permet de commenter l'emplacement de 
+      chaque Wagon si elle est s&#233;lectionn&#233;e <br>
+      <input name = "checkbox2" id = "checkbox2" type = "checkbox">
+      <strong>Charg&#233;s et Vides</strong> pour indiquer le nombre de wagons 
+      charg&#233;s et vides dans le train. <br>
+      <input name = "checkbox4" id = "checkbox4" type = "checkbox">
+      <strong>Le format 12 heures</strong> est d&#233;fini par d&#233;faut sur une 
+      horloge de 24 heures <br>
+      <input name = "checkbox13" id = "checkbox13" type = "checkbox">
+      <strong>Heures de d&#233;part</strong>: pour imprimer les heures de 
+      d&#233;part sur le Manifeste <br> <br>
+      <input name = "checkbox5" id = "checkbox5" type = "checkbox">
+      <strong>Afficher l'horaire indique l'horaire utilis&#233; lors de 
+      l'assemblage du train. <br>
+      <input name = "checkbox7" id = "checkbox7" type = "checkbox">
+      Truncate</strong> r&#233;duit la quantit&#233; d'informations sur un 
+      emplacement disposant d'une liste de Man&#156;uvres distincte.</P>
 
-      <p><strong>Logo</strong><br>
-      <input name="button3" id="button3" value="Add Logo" type=
-      "button"> allows you to add a logo in the top right hand
-      corner of your Manifests and Switch Lists. Press <input name=
-      "button4" id="button4" value="Add Logo" type="button"> and
-      select a file with the image you want to display. Each Train
-      in your Roster may have a different logo; this is set in
-      <strong><a href="Ops_Trains.shtml">Trains
-      Setup</a></strong></p>
+      <p><strong>Aper&#231;u du Manifeste</strong></p>
 
-      <p><strong>Misplaced Cars Comment</strong></p>
+      <p><input name = "checkbox11" id = "checkbox11" type = "checkbox">
+      Utiliser l'&#233;diteur de texte</p>
 
-      <p>Allows you to add a notification for operators to be
-      looking for Cars that have been misplaced.</p>
+      <p><strong>Logo</strong> <br>
+      <input name = "button3" id = "button3" value = "Ajouter un logo" type =
+      "bouton"> vous permet d'ajouter un logo dans le coin sup&#233;rieur 
+      droit de vos Manifestes et listes de Man&#156;uvres. Appuyez sur <input name =
+      "button4" id = "button4" value = "Ajouter un logo" type = "button"> 
+      et s&#233;lectionnez un fichier avec l'image que vous souhaitez 
+      afficher. Chaque train de votre Inventaire peut avoir un logo 
+      diff&#233;rent; ceci est d&#233;fini dans <strong><a href="Ops_Trains.shtml">
+		   Configuration Trains</a></strong></p>
 
-      <p><strong>Hazardous Comment</strong></p>
+      <p><strong>Commentaire sur les Wagons mal plac&#233;s</strong></p>
 
-      <p>You can declare a car load as Hazardous.</p>
-      <!-- New in version 3.8 -->
+      <p>Vous permet d'ajouter une notification pour que les op&#233;rateurs 
+      recherchent des Wagons &#233;gar&#233;s.</p>
 
-      <div style=
-      "margin:40px; padding:10px; background-color:#eee;">
-        New in v3.8:
+      <p><strong>Commentaire dangereux</strong></p>
 
+      <p>Vous pouvez d&#233;clarer un chargement de Wagon comme dangereux.</p>
+      
         <ul>
-          <li>New Manifest and Switch List format: two columns, one
-          for pulls and one for spots, with your Track names
-          centered in each column.</li>
+          <li> Nouveau format de Manifeste et de liste de Man&#156;uvres: 
+          deux colonnes, une pour les tirages et une pour les taches, 
+          avec les Noms de Voie centr&#233;s dans chaque colonne.</li>
 
-          <li>Add headers in Manifests and Switch Lists describing
-          each of the Car attributes. Select "Print Headers" in the
-          "Manifest Print Options". You can also customize all of
-          the header text: "Manifest Print Options" panel -&gt;
-          Tools -&gt; Edit Header Text menu.</li>
-        </ul>
-      </div><!-- End of New -->
+          <li> Ajoutez des en-t&#234;tes dans les Manifestes et les listes 
+          de Man&#156;uvres d&#233;crivant chacun des attributs de Wagon. 
+          S&#233;lectionnez "Impression d'En-t&#234;tes" dans les "Options 
+          d'Impression du Manifeste". Vous pouvez &#233;galement personnaliser 
+          l'int&#233;gralit&#233; du texte de l'en-t&#234;te: Panneau "Options 
+          d'Impression du Manifeste" - &gt; Outils - &gt; Menu Modifier 
+          le texte de l'en-t&#234;te.</Li>
+       </ul>
+     </div> 
 
-      <p>Be sure to press <input name="button" id="button" value=
-      "Save" type="submit"> after changing the Manifest Print
-      selections.</p>
-      <hr>
+      <p>Assurez-vous d'appuyer sur <input name = "button" id = "button" 
+      value = "Enregistrer" type = "submit"> apr&#232;s avoir modifi&#233; les 
+      s&#233;lections d'Impression du Manifeste.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Settings_menubar.shtml">Back to
-        Settings</a></p>
+      <div align = "right">
+        <p><a href="Ops_Settings_menubar.shtml"> Retour aux Param&#232;tres</a></p>
 
-        <p><a href="Ops_Trains.shtml">Back to Trains</a><a href=
+        <p><a href="Ops_Trains.shtml"> Retour aux Trains</a> <a href =
         "index.shtml#Main"></a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
