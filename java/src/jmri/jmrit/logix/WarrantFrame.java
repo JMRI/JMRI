@@ -726,7 +726,7 @@ public class WarrantFrame extends WarrantRoute {
         _throttlePane = new JScrollPane(_commandTable);
         _rowHeight = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
-        dim.height = _rowHeight * 8;
+        dim.height = _rowHeight * 10;
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
@@ -1283,12 +1283,15 @@ public class WarrantFrame extends WarrantRoute {
                 bName = block.getDisplayName();
             }
         }
+        if  (cmd.equals("Forward")) {
+            _speedUtil.setIsForward(Boolean.parseBoolean(value));
+        }
         setThrottleCommand(cmd, value, bName);
     }
     
-    protected void setSpeedCommand(float speed, boolean isForward) {
+    protected void setSpeedCommand(float speed) {
         if (_warrant.getSpeedUtil().profileHasSpeedInfo()) {
-            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms            
+            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed);  // mm/ms            
         } else {
             _speed = 0.0f;
         }

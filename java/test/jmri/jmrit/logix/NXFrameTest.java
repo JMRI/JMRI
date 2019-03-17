@@ -102,7 +102,7 @@ public class NXFrameTest {
         // then the Review Button
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonReview"));
 
-        nxFrame.setThrottleIncrement(0.05f);
+        nxFrame._speedUtil.setRampThrottleIncrement(0.05f);
 
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
         nxFrame.setMaxSpeed(2);
@@ -167,7 +167,7 @@ public class NXFrameTest {
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonReview"));
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
 
-        nxFrame.setThrottleIncrement(0.05f);     
+        nxFrame._speedUtil.setRampThrottleIncrement(0.05f);     
         nxFrame.setMaxSpeed(0.6f);
         nxFrame._speedUtil.setDccAddress("666");
         nxFrame.setTrainInfo("Nick");
@@ -224,8 +224,8 @@ public class NXFrameTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #8.");
-        }, "Train starts to move at 8th command");
+            return m.endsWith("Cmd #9.");
+        }, "Train starts to move at 9th command");
 
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
@@ -389,7 +389,7 @@ public class NXFrameTest {
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" of "+route.length);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
-            jmri.util.JUnitUtil.releaseThread(this, 100);
+//            jmri.util.JUnitUtil.releaseThread(this, 100);
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -403,7 +403,7 @@ public class NXFrameTest {
                         Assert.fail("Unexpected Exception: " + e);
                     }
                 });
-                jmri.util.JUnitUtil.releaseThread(this, 100);
+//                jmri.util.JUnitUtil.releaseThread(this, 100);
                 jmri.util.ThreadingUtil.runOnLayout(() -> {
                     try {
                         nextSensor.setState(Sensor.ACTIVE);
@@ -412,7 +412,7 @@ public class NXFrameTest {
                     }
                 });
                 new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
-                jmri.util.JUnitUtil.releaseThread(this, 100);
+//                jmri.util.JUnitUtil.releaseThread(this, 100);
             } else {
                 nextSensor = null;
             }
