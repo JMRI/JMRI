@@ -180,7 +180,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * <p>
      * Logs an error and aborts if the index is beyond the length of the message.
      * <p>
-     * @param n - the byte index within the message
+     * @param n  the byte index within the message
      * @return  - the integer value of the byte at the index within the message
      */
     @Override
@@ -198,8 +198,8 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * <p>
      * Logs an error and aborts if the index is beyond the length of the message.
      * <p>
-     * @param n - the byte index within the message
-     * @param v - the value to be set
+     * @param n  the byte index within the message
+     * @param v  the value to be set
      */
     @Override
     public void setElement(int n, int v) {
@@ -445,7 +445,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * object does not have a user name assigned, then the method does not display 
      * a user name.
      * <p>
-     * @param prefix - the "System Name" prefix denoting the connection
+     * @param prefix  the "System Name" prefix denoting the connection
      * @return a human readable representation of the message.
      */
     public String toMonitorString(@Nonnull String prefix){
@@ -526,7 +526,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * Check if a high bit is set, usually used to store it in some other
      * location (LocoNet does not allow the high bit to be set in data bytes).
      * <p>
-     * @param val - value to be checked
+     * @param val  value to be checked
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {

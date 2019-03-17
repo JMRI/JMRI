@@ -313,7 +313,7 @@ public interface ThrottleManager {
     /**
      * 
      * @param re roster entry to test
-     * @returntrue, its still required, false its not.
+     * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(BasicRosterEntry re);
 

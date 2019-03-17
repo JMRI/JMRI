@@ -184,7 +184,7 @@ public final class LnConstants {
     /**
      * Encode consisting status as a string
      * <p>
-     * @param s - consist status bits
+     * @param s  consist status bits
      * @return string contaning a description of the consisting state
      */
     public final static String CONSIST_STAT(int s) {
@@ -211,7 +211,7 @@ public final class LnConstants {
     /**
      * Encode loco status as a string
      * <p>
-     * @param s - integer containing loco "status"
+     * @param s  integer containing loco "status"
      * @return string containing a description of the loco "status"
      */
     public final static String LOCO_STAT(int s) {
@@ -412,7 +412,7 @@ public final class LnConstants {
     /**
      * Encode LocoNet Opcode as a string
      * <p>
-     * @param opcode - a LocoNet opcode value
+     * @param opcode  a LocoNet opcode value
      * @return string containing the opcode "name"
      */
     public final static String OPC_NAME(int opcode) {

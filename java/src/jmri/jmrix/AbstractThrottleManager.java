@@ -278,15 +278,15 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Abstract member to actually do the work of configuring a new throttle,
      * usually via interaction with the DCC system
-     * @param a - address
-     * @param control - false  - read only.
+     * @param a  address
+     * @param control  false  - read only.
      */
     abstract public void requestThrottleSetup(LocoAddress a, boolean control);
 
     /**
      * Abstract member to actually do the work of configuring a new throttle,
      * usually via interaction with the DCC system
-     * @param a - address.
+     * @param a  address.
      */
     public void requestThrottleSetup(LocoAddress a) {
         requestThrottleSetup(a, true);
@@ -457,8 +457,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * <P>
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
-     * @param throttle - throttle object
-     * @param addr - address.
+     * @param throttle  throttle object
+     * @param addr  address.
      */
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for " + addr);

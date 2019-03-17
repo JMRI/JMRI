@@ -512,7 +512,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Add filter(s) for possible types to the input file chooser.
-     * @param chooser - a JFileChooser to which the filter is to be added
+     * @param chooser  a JFileChooser to which the filter is to be added
      */
     @Override
     protected void addChooserFilters(JFileChooser chooser) {
