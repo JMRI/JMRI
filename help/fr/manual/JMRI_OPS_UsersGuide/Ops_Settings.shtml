@@ -1,7 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-17 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,317 +26,315 @@
     <div id="mainContent">
       <a name="Top"></a>
 
-      <h1>Using JMRI&#174; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; pour Exploiter desTrains</h1>
 
-      <h2>OperationsPro: Settings Window</h2>
+      <h2> OperationsPro: Fen&#234;tre Param&#232;tres</h2>
 
-      <div align="right">
-        <p><a href="Ops_Locations.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Ops_Locations.shtml"> Suivant</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p class="important">The current JMRI OperationsPro Settings
-      Help is <a href=
-      "../../package/jmri/jmrit/operations/Operations.shtml#Settings">
-      here</a>.</p>
+      <p class = "important"> L'aide actuelle sur les param&#232;tres 
+      OperationsPro JMRI est <a href =
+      "../../ package/jmri/jmrit/operations/Operations.shtml # Param&#232;tres">
+      ici</a>.</p>
 
-      <p>The <span style="font-weight: bold;">Operations
-      Settings</span> Window is opened from DecoderPro&#174;
-      <span style="font-weight: bold;">Tools</span> menu /
-      <span style="font-weight: bold;">Operations</span>
-      <img style="width: 20px; height: 9px;" alt="arrow" src=
-      "images/arrow.gif"> <span style=
-      "font-weight: bold;">Settings</span> or <span style=
-      "font-weight: bold;">Operations</span> menu / <span style=
-      "font-weight: bold;">Settings</span> if selected in
-      <span style="font-weight: bold;">Operations Setting</span>
-      window.</p>
+      <p>La fen&#234;tre <span style = "font-weight: bold;"> Param&#232;tres 
+      d'Exploitations</span> est ouverte &#224; partir de DecoderPro&#174;.
+       Menu<span style = "font-weight: bold;"> Outils</span>/
+      <span style = "font-weight: bold;"> Exploitations</span>
+      <img style = "width: 20px; height: 9px;" alt = "arrow" src =
+      "images/arrow.gif"> <span style =
+      "font-weight: bold;"> Param&#232;tres</span> ou menu <span style =
+      "font-weight: bold;"> Exploitations</span>/<span style =
+      "font-weight: bold;"> Param&#232;tres</span> si s&#233;lectionn&#233; dans la
+      fen&#234;tre <span style = "font-weight: bold;"> Param&#232;tre  
+      Exploitations</span>.</p>
 
-      <p style="text-align: center;"><img src=
-      "images/Ops_Setting01.png" alt="ops setting" height="608"
-      width="778"></p>
+      <p style = "text-align: center;"> <img src =
+      "images/Ops_Setting01.png" alt = "param&#233;trage ops" height = "608"
+      width = "778"></p>
 
-      <p><a style="font-weight: bold;" href=
-      "Ops_Settings_menubar.shtml">Menu Bar</a></p>
+      <p><a style = "font-weight: bold;" href =
+      "Ops_Settings_menubar.shtml"> Barre de menus</a></p>
 
-      <p><span style="font-weight: bold;">Settings --</span>
-      describes your railroad to the operations program.</p>
+      <p><span style = "font-weight: bold;"> Param&#232;tres -</span>
+      d&#233;crit votre r&#233;seau au programme d'exploitation.</p>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td colspan="2" rowspan="1"><img style=
-            "width: 800px; height: 156px;" alt="Name" src=
+          <tr align = "center">
+            <td colspan = "2" rowspan = "1"> <img style =
+            "width: 800px; height: 156px;" alt = "Nom" src =
             "images/Ops_Setting05.png"></td>
-          </tr>
+         </tr>
 
           <tr>
-            <td><strong>Railroad Name</strong> <input name=
-            "textfield" id="textfield" type="text"><br>
-            Enter the name of your railroad. This name will show up
-            on your manifests You may use a different name for
-            every train in your Roster. See <a href=
-            "Ops_Trains.shtml">Train Options</a> for
-            details<strong>.<br></strong></td>
+            <td> <strong>Nom de la voie ferr&#233;e</strong> <input name =
+            "textfield" id = "textfield" type = "text"> <br>
+            Entrez le nom de votre r&#233;seau. Ce nom appara&#238;tra sur vos 
+            Manifestes. Vous pouvez utiliser un nom diff&#233;rent pour chaque 
+            train de votre Inventaire. Voir <a href =
+            "Ops_Trains.shtml"> Options de Train</a> pour plus de d&#233;tails 
+            <strong>. <br></strong></td>
 
-            <td><strong>Trains Travel <input name="checkbox" id=
-            "checkbox" checked="checked" type="checkbox">
-            North/South</strong> <input name="checkbox2" id=
-            "checkbox2" checked="checked" type="checkbox">
-            <strong>East/West</strong><br>
-            If your railroad depicts trains traveling north and
-            south select the "North/South" box, if your trains
-            travel east and west select the "East/West" box. You
-            must select at least one direction, and can if desired
-            select both.</td>
-          </tr>
-        </tbody>
-      </table>
+            <td> <strong>Voyages en train <input name = "checkbox" id =
+            "checkbox" checked = "checked" type = "checkbox">
+            Nord/Sud</strong> <input name = "checkbox2" id =
+            "checkbox2" checked = "checked" type = "checkbox">
+            <strong>Est/Ouest</strong> <br>
+            Si votre r&#233;seau repr&#233;sente des trains voyageant vers le nord 
+            et le sud, s&#233;lectionnez la case "Nord/Sud", si vos trains 
+            voyagent vers l'est et l'ouest, s&#233;lectionnez la case 
+            "Est/Ouest". Vous devez s&#233;lectionner au moins une direction 
+            et vous pouvez, si vous le souhaitez, s&#233;lectionner les deux.</Td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td><img style="width: 800px; height: 132px;" alt=
-            "scale" src="images/Ops_Setting06.png"></td>
-          </tr>
+          <tr align = "center">
+            <td> <img style = "width: 800px; height: 132px;" alt =
+            "scale" src = "images/Ops_Setting06.png"></td>
+         </tr>
 
           <tr>
-            <td><strong>Scale</strong><br>
-            Select the radio button for the scale of your railroad.
-            This will be used in calculating scale feet when you
-            enter actual inches. Select the scale you are modeling.
-            This is useful when you enter the length of cars and
-            tracks. You can enter the number of actual inches and
-            the program will convert to scale feet. Append a double
-            quote to the length when entering actual inches. The
-            program will also automatically assign the proper NMRA
-            weight for a car based on scale and length. When Meters
-            is set as the <a href="#unit">Unit of Length</a>, input
-            as "123cm" so actual centimeters will be converted into
-            scale Meters.</td>
-          </tr>
-        </tbody>
-      </table>
+            <td> <strong>&#201;chelle</strong> <br>
+            S&#233;lectionnez le bouton radio correspondant &#224; l'&#233;chelle de 
+            votre r&#233;seau. Ceci sera utilis&#233; dans le calcul des pieds 
+            &#224; l'&#233;chelle lorsque vous entrez les pouces r&#233;els.
+             S&#233;lectionnez l'&#233;chelle que vous mod&#233;lisez. Ceci est utile 
+             lorsque vous entrez la longueur des wagons et des voies. 
+             Vous pouvez entrer le nombre de pouces r&#233;els et le programme 
+             sera converti en pieds d'&#233;chelle. Ajoutez une citation double 
+             &#224; la longueur lorsque vous entrez des pouces r&#233;els. Le 
+             programme assignera &#233;galement automatiquement le poids 
+             appropri&#233; de la NMRA &#224; un wagon en fonction de l'&#233;chelle 
+             et de la longueur. Lorsque M&#232;tres est d&#233;fini comme 
+             <a href="#unit"> Unit&#233; de longueur</a>, saisissez-le sous 
+             la forme "123 cm" afin que les centim&#232;tres r&#233;els soient 
+             convertis en m&#232;tres &#224; l'&#233;chelle.</Td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td colspan="4" rowspan="1"><img style=
-            "width: 800px; height: 120px;" alt="length" src=
+          <tr align = "center">
+            <td colspan = "4" rowspan = "1"> <img style =
+            "width: 800px; height: 120px;" alt = "longueur" src =
             "images/Ops_Setting07.png"></td>
-          </tr>
+         </tr>
 
           <tr>
-            <td style="vertical-align: top;"><strong>Maximum Train
-            Length (ft)</strong> <input name="textfield2" id=
-            "textfield2" type="text"><br>
-            This field provides the maximum default train length
-            between cities. Later you can override this length if
-            you wish a shorter train between any two Locations. A
-            1000 foot train can carry approximately 20 cars, and is
-            of course dependent on the car lengths assigned to the
-            train.</td>
-
+            <td style = "vertical-align: top;"> <strong>Train Longueur 
+            Maximum (ft)</strong> <input name = "textfield2" id =
+            "textfield2" type = "text"> <br>
+            Ce champ fournit la longueur de train maximale par d&#233;faut 
+            entre les villes. Plus tard, vous pourrez remplacer cette 
+            longueur si vous souhaitez un train plus court entre deux 
+            emplacements. Un train de 1 000 pieds peut transporter 
+            environ 20 wagons et d&#233;pend bien sûr de la longueur du wagon 
+            attribu&#233; au train.</Td>
             <td style="vertical-align: top;"><strong>Maximum Locos
-            per Train</strong> <input name="textfield3" id=
+            par Train</strong> <input name="textfield3" id=
             "textfield3" type="text"><br>
-            Now set the maximum number of Locomotives that you want
-            the program to assign to a train. If you don't want the
-            program assigning Locomotives, set this value to
-            0.</td>
+           D&#233;finissez maintenant le nombre maximal de Locomotives que 
+           vous souhaitez que le programme attribue au train. Si vous ne 
+           souhaitez pas que le programme attribue des locomotives, 
+           d&#233;finissez cette valeur sur 0.</Td>
 
-            <td style="vertical-align: top;"><strong>Switch Time
-            (minutes)</strong> <input name="textfield4" id=
-            "textfield4" type="text"></td>
+            <td style = "vertical-align: top;"> <strong>Dur&#233;e de Man&#156;uvres 
+            (minutes)</strong> <input name = "textfield4" id =
+            "textfield4" type = "text"></td>
 
-            <td style="vertical-align: top;"><strong>Travel Time
-            (minutes)</strong> <input name="textfield5" id=
-            "textfield5" type="text"><br>
-            OperationsPro when generating Switch Lists for the
-            various Locations on your railroad, will estimate the
-            arrival times for your Trains based on the Train's
-            departure time and the switch and travel times. Enter
-            the average number of minutes it takes to drop or
-            pickup a car on your railroad. Then enter the average
-            amount of time in minutes it takes to travel from one
-            Location to the another. Later when you create a
-            <strong><a href="Ops_Routes.shtml">Route</a></strong>
-            you will be able to increase or decrease the Train's
-            travel time between any two Locations</td>
-          </tr>
-        </tbody>
-      </table>
+            <td style = "vertical-align: top;"> <strong>Dur&#233;e du Trajet 
+            (minutes)</strong> <input name = "textfield5" id =
+            "textfield5" type = "text"> <br>
+            Lors de la cr&#233;ation de listes de Man&#156;uvres pour diff&#233;rents 
+            Emplacements de votre r&#233;seau, OperationsPro estimera les 
+            heures d'arriv&#233;e de vos trains en fonction de l'heure de 
+            d&#233;part du train, des heures de Man&#156;uvres et de Trajet. Entrez 
+            le nombre moyen de minutes n&#233;cessaires pour d&#233;poser ou 
+            prendre un wagon sur votre chemin de fer. Entrez ensuite 
+            le temps moyen, en minutes, qu'il vous faut pour aller d'un 
+            lieu &#224; un autre. Plus tard, lorsque vous cr&#233;ez un 
+            <strong><a href="Ops_Routes.shtml"> Itin&#233;raire</a></strong>, 
+            vous pourrez augmenter ou diminuer le temps de parcours du 
+            train entre deux emplacements quelconques</td>.
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td colspan="3" rowspan="1"><img style=
-            "width: 800px; height: 137px;" alt="car types" src=
+          <tr align = "center">
+            <td colspan = "3" rowspan = "1"> <img style =
+            "width: 800px; height: 137px;" alt = "types de voitures" src =
             "images/Ops_Setting08.png"></td>
-          </tr>
+         </tr>
 
           <tr>
-            <td style="vertical-align: top; width: 33%;">
-              <p><strong>Car Types</strong></p><input name="radio"
-              id="radio" value="radio" checked="checked" type=
-              "radio"> <strong>Descriptive</strong> <input name=
-              "radio2" id="radio2" value="radio2" type="radio">
-              <strong>AAR Codes</strong><br>
-              The program has two sets of car types for you to use.
-              <strong>Descriptive</strong> provides type names like
-              <strong>Boxcar</strong> and <strong>Tankcar</strong>,
-              and <strong>AAR</strong> provides type names like
-              <strong>XM</strong> and <strong>T</strong> for
-              boxcars and tank cars respectively. Select the one
-              that you prefer
-            </td>
+            <td style = "vertical-align: top; width: 33%;">
+              <p><strong>Types de Wagon</strong></p> <input name = "radio"
+              id = "radio" value = "radio" checked = "checked" type =
+              "radio"> <strong>Descriptive</strong> <input name =
+              "radio2" id = "radio2" valeur = "radio2" type = "radio">
+              <strong>Codes AAR</strong> <br>
+              Le programme propose deux types de wagon &#224; utiliser. 
+              <strong>Description</strong> fournit des noms de type tels 
+              que <strong>Boxcar</strong> et <strong>Tankcar</strong>, 
+              et <strong>AAR</strong> fournit des noms de type tels que 
+              <strong>XM</strong > et <strong>T</strong> pour les wagons 
+              couverts et les wagons-citernes. S&#233;lectionnez celui que 
+              vous pr&#233;f&#233;rez
+           </td>
 
-            <td style="vertical-align: top; width: 33%;">
-            <strong><a name="unit"></a>Unit of Length<br>
+            <td style = "vertical-align: top; width: 33%;">
+            <strong><a name="unit"></a> Unit&#233; de longueur <br>
             <br>
-            <input name="radio5" id="radio5" value="radio5"
-            checked="checked" type="radio"> Feet <input name=
-            "radio6" id="radio6" value="radio6" type="radio">
-            Meters</strong><br></td>
+            <input name = "radio5" id = "radio5" value = "radio5"
+            checked = "checked" type = "radio"> Pieds <input name =
+            "radio6" id = "radio6" valeur = "radio6" type = "radio">
+            M&#232;tres</strong> <br></td>
 
-            <td style="vertical-align: top;"><strong>Optional Year
-            Modeled</strong> <input name="textfield7" id=
-            "textfield7" type="text"><br>
+            <td style = "vertical-align: top;"> <strong>Ann&#233;e facultative
+            Mod&#233;lis&#233;</strong> <input name = "textfield7" id =
+            "textfield7" type = "text"> <br>
             <br>
-            You can optionally enter the year you want printed on
-            your train manifest.</td>
-          </tr>
-        </tbody>
-      </table>
+            Vous pouvez &#233;ventuellement indiquer l'ann&#233;e que vous souhaitez 
+            imprimer sur votre Manifeste de train.</Td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td colspan="4" rowspan="1"><img style=
-            "width: 797px; height: 153px;" alt="options" src=
+          <tr align = "center">
+            <td colspan = "4" rowspan = "1"> <img style =
+            "width: 797px; height: 153px;;" alt = "options" src =
             "images/Ops_Setting09.png"></td>
-          </tr>
+         </tr>
 
           <tr>
-            <td style="width: 30%;">
-              <span name="options" id="options" style=
-              "font-weight: bold;">Options</span><br>
-              <input name="checkbox3" id="checkbox3" checked=
-              "checked" type="checkbox"> <strong>Add Operations
-              Menu to Main Menu</strong><br>
-              When selected, and saved, the Operations menu will be
-              added to the main menu bar the next time you start
-              JMRI. To remove it, go through the same
-              procedure&#8230; in the Settings window uncheck the
-              box, "Save" the change and restart
-              DecoderPro&#174;.<br>
+            <td style = "width: 30%;">
+              <span name = "options" id = "options" style =
+              "font-weight: bold;"> Options</span> <br>
+              <nom d'entr&#233;e = "checkbox3" id = "checkbox3" v&#233;rifi&#233; =
+              "v&#233;rifi&#233;" type = "case &#224; cocher"> <strong>Ajouter le menu 
+              d'Exploitations au menu principal</strong> <br>
+              Une fois s&#233;lectionn&#233; et enregistr&#233;, le menu Exploitations 
+              sera ajout&#233; &#224; la barre de menus principale au prochain 
+              d&#233;marrage de JMRI. Pour le supprimer, suivez la m&#234;me 
+              proc&#233;dure… dans la fen&#234;tre Param&#232;tres, d&#233;cochez la case 
+              "Enregistrer" la modification et red&#233;marrez DecoderPro®. <br>
 
-              <p><img style="width: 300px; height: 245px;" alt=
-              "setting" src="images/Ops_Setting02.png"><br></p>
-            </td>
+              <p><img style = "width: 300px; height: 245px;" alt =
+              "param&#232;tre" src = "images/Ops_Setting02.png"> <br></p>
+           </td>
 
-            <td style="vertical-align: top; width: 20%;">
-            <input name="checkbox4" id="checkbox4" type="checkbox">
-            <strong>Close Windows on Save</strong></td>
+            <td style = "vertical-align: top; width: 20%;">
+            <input name = "checkbox4" id = "checkbox4" type = "checkbox">
+            <strong>Fermer les Fen&#234;tres lors de l'enregistrement</strong></td>
 
             <td style="vertical-align: top; width: 10%;">
             <strong><input name="checkbox12" id="checkbox12"
             checked="checked" type="checkbox"></strong>
-            <span style="font-weight: bold;">Auto Save</span></td>
+           <span style = "font-weight: bold;"> Enregistrement Automatique</span></td>
 
-            <td style=
-            "vertical-align: top; width: 10%; font-weight: bold;">
-            <small><input name="checkbox13" id="checkbox13"
-            checked="checked" type="checkbox"></small> Auto
-            Backup</td>
-          </tr>
-        </tbody>
-      </table>
+            <td style="vertical-align: top; width: 10%;">
+            <strong><input name="checkbox12" id="checkbox12"
+            checked="checked" type="checkbox"></strong>
+            <span style="font-weight: bold;"> Sauvegarde Automatique</td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td><img style="width: 800px; height: 132px;" alt=
-            "panel options" src="images/Ops_Setting10.png"></td>
-          </tr>
+          <tr align = "center">
+            <td> <img style = "width: 800px; height: 132px;" alt =
+            "options du panneau" src = "images/Ops_Setting10.png"></td>
+         </tr>
 
           <tr>
-            <td><strong>Panel options</strong> will not be covered
-            in this manual at this time. Panels are normally
-            created as a part of PanelPro&#8482;</td>
-          </tr>
-        </tbody>
-      </table>
+           <td>Les <strong>Options de Panneau</strong> ne seront pas 
+            abord&#233;es dans ce manuel pour le moment. Les panneaux sont 
+            normalement cr&#233;&#233;s dans le cadre de PanelPro ™</td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td><img style="width: 799px; height: 196px;" alt=
-            "icon colors" src="images/Ops_Setting11.png"></td>
-          </tr>
+          <tr align = "center">
+            <td> <img style = "width: 799px; height: 196px;" alt =
+            "couleurs d'ic&#244;ne" src = "images/Ops_Setting11.png"></td>
+         </tr>
 
           <tr>
-            <td><strong>Icon Colors</strong> Not covered here and
-            normally used with PanelPro</td>
-          </tr>
-        </tbody>
-      </table>
+            <td> Les <strong>Couleurs des Ic&#244;nes</strong> non d&#233;crites ici 
+            et utilis&#233;es normalement avec PanelPro</td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table style="text-align: left; width: 100%;" border="0"
-      cellpadding="2" cellspacing="2">
+      <table style = "text-align: left; width: 100%;" border = "0"
+      cellpadding = "2" cellspacing = "2">
         <tbody>
-          <tr align="center">
-            <td colspan="3" rowspan="1"><img style=
-            "width: 791px; height: 101px;" alt="buttons" src=
+          <tr align = "center">
+            <td colspan = "3" rowspan = "1"> <img style =
+            "width: 791px; height: 101px;" alt = "bouttons" src =
             "images/Ops_Setting12.png"></td>
-          </tr>
+         </tr>
 
           <tr>
-            <td style="vertical-align: top;">The <span style=
-            "font-weight: bold;">Restore</span> button will prompt
-            you to select which set of backup files you wish to use
-            to recover your operation files. You must quit and
-            restart DecoderPro&#174; to complete the restoration of
-            the operation files.</td>
+            <td style = "vertical-align: top;"> Le bouton <span style =
+            "font-weight: bold;"> Restaurer</span> vous invite &#224; 
+            s&#233;lectionner le jeu de fichiers de sauvegarde que vous 
+            souhaitez utiliser pour r&#233;cup&#233;rer vos fichiers d'exploitation. 
+            Vous devez quitter et red&#233;marrer DecoderPro pour terminer 
+            la restauration des fichiers d'expoitation.</Td>
 
-            <td style="vertical-align: top;">The <span style=
-            "font-weight: bold;">Backup</span> button will store a
-            copy of the operation files in a new directory in
-            operations called <strong>backups</strong>, and then
-            stores the operation files in a directory that is based
-            on the day you created the backup. For example, if
-            today was November 21, 2008, the program will create a
-            backup directory named
-            <strong>2008_11_21</strong>.</td>
+            <td style = "vertical-align: top;"> Le bouton <span style =
+            "font-weight: bold;"  >Sauvegarder</span> stockera une copie 
+            des fichiers d'exploitation dans un nouveau r&#233;pertoire des 
+            operations appel&#233; <strong>sauvegardes</strong>, puis stockera 
+            les fichiers d'exploitation dans un r&#233;pertoire en fonction du 
+            jour o&#249; vous avez cr&#233;&#233; la sauvegarde. Par exemple, 
+            si nous &#233;tions aujourd'hui le 21 novembre 2008, le programme 
+            cr&#233;erait un r&#233;pertoire de sauvegarde nomm&#233; <strong>2008_11_21</strong>.</Td>
 
-            <td style="vertical-align: top;">When you're finished
-            with the settings window, press the <span style=
-            "font-weight: bold;">Save</span> button to store the
-            setting in a file called
-            <strong>Operations.xml.</strong> You can find this file
-            in your JMRI directory in a folder called
-            <strong>operations</strong>. The program will also
-            create a backup file each time you press the
-            <span style="font-weight: bold;">Save</span>
-            button</td>
-          </tr>
-        </tbody>
-      </table>
-      <hr>
+            <td style = "vertical-align: top;"> Lorsque vous avez termin&#233; 
+            avec la fen&#234;tre de configuration, appuyez sur le bouton 
+            <span style = "font-weight: bold;"> Enregistrer</span> pour 
+            enregistrer le param&#232;tre dans un fichier appel&#233; 
+            <strong>Operations.xml.</strong>. Ce fichier se trouve dans 
+            votre r&#233;pertoire JMRI dans un dossier nomm&#233; <strong>operations
+            </strong>. Le programme cr&#233;era &#233;galement un fichier de 
+            sauvegarde chaque fois que vous appuierez sur <span style = 
+            "font-weight: bold;"> Enregistrer</span>.
+            bouton</td>
+         </tr>
+       </tbody>
+     </table>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Locations.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Ops_Locations.shtml"> Suivant</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
