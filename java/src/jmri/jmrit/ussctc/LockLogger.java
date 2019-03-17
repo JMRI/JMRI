@@ -24,14 +24,14 @@ public class LockLogger {
         log.trace("Object {} set \"{}\" was \"{}\"", logger, status, statusMap.get(logger));
         statusMap.put(logger, status);
         // most recent always displayed if not null
-        if ( ! status.equals("")) {
+        if ( ! status.isEmpty()) {
             log.trace("  writing status from call");
             InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue(status);
             return;
         }
         // see if anything else needs to be displayed
         for (String value : statusMap.values()) {
-            if ( ! value.equals("") ) {
+            if ( ! value.isEmpty() ) {
                 log.trace("   writing status from map: \"{}\"", value);
                 InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue(value);
                 return;
