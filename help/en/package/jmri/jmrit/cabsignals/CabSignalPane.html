@@ -6,8 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: MERG CBUS Console Tool</title>
+  <title>JMRI: Cab Signalling</title>
   <meta name="author" content="Steve Young">
+  <meta name="author" content="Paul Bender">
   <meta name="keywords" content="JMRI Cab Signal signalling signaling">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -30,7 +31,7 @@
        <p>JMRI generated Cab Signals are currently available for the following hadware types : </p>
 
         <ul>
-        <li>Loconet</li>
+        <li>LocoNet</li>
         <li>MERG CBUS</li>
         </ul>
 
@@ -45,13 +46,12 @@
             can manually reverse the current block direction.</li>
         <li>Next Block Username</li>
         <li>Next Signal Mast Username</li>
-        <li>Next Aspect </li>
+        <li>Next Aspect</li>
         <li>Send Cabdata checkbox - Will send data for Cab Signalling when 
         the next signal aspect or speed changes.
         Over-ridden by the master Cabdata button being switched off.</li>
         </ul>
-        
-        
+                
         <p>The table will attempt to identify which 
         block the train is in via the 
         block value ( train describer ).</p>
@@ -90,8 +90,107 @@
         
         <p>The table will follow the block route of the train until 
         it finds the next signal.</p>  
-       
-    <h3>JMRI Help</h3>
+
+        <p>Signals used by this tool are defined using <a href="../../../../html/tools/signaling/AspectSignaling.shtml">Aspect Signalling</a>.
+
+    <h2>Digitrax Throttle Cab Signals</h2>
+
+        <p>The LocoNet Cab signal indications is intended to work with Digitrax         throttles with digitrax throttles that include semaphore icons for the 
+        Left and Right throttles.  The code was developed and tested using a 
+        DT402 and a DT500.  The basic message format shold work with a DT300 
+        and DT400 as well, though they have not been tested by the author.</p>
+
+        <p>As of JMRI 4.15.4, it is only possible to send cab signal 
+        indications to throttles when they are plugged in to the 
+        LocoNet.  This is limitation of the hardware and is true even on 
+        Duplex Wireless systems.</p>
+
+        <p>When a cab signal is active, The throttle will beep every time a
+        new aspect is sent to the throttle.  The beep may occur even when no
+        change of aspect is seen.</p>
+
+        <p>The Digitrax Cab Signal Semaphores have 3 controlable blades 
+        (horizontal, diagonal, and verticle).  When the semaphore is active,
+        Each blade can be turned on and off.  The semaphore can also be set 
+        to flash.<p>
+
+        <p>The JMRI support for Digitrax Cab Signal Semaphores uses the 
+        speed indication from the Aspects as indicated in the following table.</p>
+
+        <h3>Aspect Mapping</h3>
+        <table>
+          <tbody><tr>
+             <th>Semaphore Appearance</th>
+             <th>Mapped Signal Speeds</th>
+             <th>Other Mappings</th>
+        </tr>
+        <tr>
+          <td>Vertical</td>
+          <td>
+            <ul>
+              <li>Clear</li>
+              <li>Normal</li>
+            </ul>
+          </td>
+          <td>No matching speed was found, but the signal system indicates the aspect is permissive.</td>
+        </tr>
+        <tr>
+          <td>Flashing Vertical</td>
+          <td>
+            <ul>
+              <li>Limited</li>
+            </ul>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Diagonal</td>
+          <td>
+             <ul>
+                <li>Medium</li>
+             </ul>
+          </td>
+          <td>No matching speed was found, but the signal system indicates the signal is neither a stop (danger) aspect or a permissive aspect</td>
+        </tr>
+        <tr>
+          <td>Flashing Diagonal</td>
+          <td></td>
+          <td>This appearance is not currently used</td>
+        </tr>
+        <tr>
+          <td>Horizontal</td>
+          <td>
+            <ul>
+              <li>Stop</li>
+            </ul>
+          </td>
+          <td>No matching speed was found, but the signal system indicates the signal is a stop (danger) signal or the signal is held.</td>
+        </tr>
+        <tr>
+          <td>Flashing Horizontal</td>
+          <td>
+            <ul>
+              <li>Restricting</li>
+              <li>RestrictedSlow</li>
+              <li>Restricted</li>
+              <li>Slow</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Dot</td>
+          <td></td>
+          <td>Indicates the cab signal is active, but no Aspect is currently available.
+        </tr>
+        <tr>
+          <td>Nothing</td>
+          <td></td>
+          <td>Indicates the cab signal is not active.
+        </tr>
+      </tbody>
+      </table>
+
+    <h2>JMRI Help</h2>
       
         <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
         Cab Signal window.</p>
