@@ -237,7 +237,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * uses the specified "board type name" from the method parameter.
      *
      * @param boardTypeName  device type name, to be included in read and write GUI buttons
-     * @return - a JPanel containing a JTextField and read and write JButtons
+     * @return JPanel containing a JTextField and read and write JButtons
      */
     protected JPanel provideAddressing(String boardTypeName) {
         JPanel pane0 = new JPanel();
@@ -278,7 +278,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Create the status line for the GUI.
      *
-     * @return - a JComponent which will display status updates
+     * @return JComponent which will display status updates
      */
     protected JComponent provideStatusLine() {
         status.setFont(status.getFont().deriveFont(0.9f * addrField.getFont().getSize())); // a bit smaller

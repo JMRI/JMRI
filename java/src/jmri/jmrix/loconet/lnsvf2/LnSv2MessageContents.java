@@ -273,7 +273,7 @@ public class LnSv2MessageContents {
      * Interprets a LocoNet message to determine its SV Programming Format 2 &lt;SV_CMD&gt;.
      * If the message is not an SV Programming Format 2 message, returns null
      * @param m  LocoNet message containing SV Programming Format 2 message
-     * @return - Sv2Command found in the SV Programming Format 2 message
+     * @return Sv2Command found in the SV Programming Format 2 message
      */
     public static Sv2Command extractMessageType(LocoNetMessage m) {
         if (isSupportedSv2Message(m)) {
@@ -291,7 +291,7 @@ public class LnSv2MessageContents {
     /**
      * Interprets the SV Programming Format 2 message into a human-readable string.
      * 
-     * @return - a String containing a human-readable version of the SV Programming 
+     * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message
      */
     @Override
@@ -304,7 +304,7 @@ public class LnSv2MessageContents {
      * Interprets the SV Programming Format 2 message into a human-readable string.
      * 
      * @param locale  locale to use for the human-readable string
-     * @return - a String containing a human-readable version of the SV Programming 
+     * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message, in the language specified by the Locale, if the 
      *      properties have been translated to that Locale, else in the deafult 
      *      English language.
@@ -591,7 +591,7 @@ public class LnSv2MessageContents {
      * @param d2  SV Programming Format 2 second data value (for &lt;D2&gt;)
      * @param d3  SV Programming Format 2 third data value (for &lt;D3&gt;)
      * @param d4  SV Programming Format 2 fourth data value (for &lt;D4&gt;)
-     * @return - LocoNet message for the requested message
+     * @return LocoNet message for the requested message
      * @throws IllegalArgumentException of command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
      */
     public static LocoNetMessage createSv2Message (int source, int command, 

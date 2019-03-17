@@ -160,7 +160,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Loads a train into the Dispatcher from a traininfo file
      *
      * @param traininfoFileName  the file name of a traininfo file.
-     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     * @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
      */
     public int loadTrainFromTrainInfo(String traininfoFileName) {
         return loadTrainFromTrainInfo(traininfoFileName, "NONE", "");
@@ -174,7 +174,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
      *            trainname.
-     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     * @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
      */
     public int loadTrainFromTrainInfo(String traininfoFileName, String overRideType, String overRideValue) {
         //read xml data from selected filename and move it into trainfo
@@ -202,7 +202,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Loads a train into the Dispatcher
      *
      * @param info  a completed TrainInfo class.
-     * @return - 0 good. -1 failure
+     * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info) {
         return loadTrainFromTrainInfo(info, "NONE", "");
@@ -215,7 +215,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
      *            trainname.
-     * @return - 0 good. -1 failure
+     * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
 

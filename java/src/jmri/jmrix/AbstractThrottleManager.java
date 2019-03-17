@@ -168,7 +168,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Does this DCC system allow a Throttle (e.g. an address) to be used by
      * only one user at a time?
-     * @return - true or false
+     * @return true or false
      */
     protected boolean singleUse() {
         return true;

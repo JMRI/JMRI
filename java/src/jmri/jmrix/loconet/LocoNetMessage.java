@@ -181,7 +181,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * Logs an error and aborts if the index is beyond the length of the message.
      * <p>
      * @param n  the byte index within the message
-     * @return  - the integer value of the byte at the index within the message
+     * @return integer value of the byte at the index within the message
      */
     @Override
     public int getElement(int n) {
