@@ -798,6 +798,7 @@ public class FnMapPanelESU extends JPanel {
         for (int i = 0; i < elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
+            log.debug("output element name: {} value: {}", e.getAttributeValue("name"), e.getAttributeValue("label"));
             // if this a number, or a character name?
             try {
                 int outputNum = Integer.parseInt(name);
@@ -828,7 +829,7 @@ public class FnMapPanelESU extends JPanel {
           log.debug(" found outputs element of size {}", elem.getChildren().size());
           addOutputElements(elem.getChildren(), accumulate);
         } else if (elem.getName().equals("output")) {
-          log.debug("adding output element {} {}", elem.getAttribute("name").getValue(), elem.getAttribute("label").getValue());
+          log.debug("adding output element name: {} value: {}", elem.getAttributeValue("name"), elem.getAttributeValue("label"));
           accumulate.add(elem);
         }
       }

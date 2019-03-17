@@ -474,7 +474,7 @@ public class NamedIcon extends ImageIcon {
      * @param h  Height
      * @param t  Affine Transform
      * @param comp
-     * @return
+     * @return Transformed image
      */
     private BufferedImage transformFrame(Image frame, int w, int h, AffineTransform t, Component comp) {
 

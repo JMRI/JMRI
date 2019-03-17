@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import jmri.InstanceManager;
 import jmri.Timebase;
+import jmri.TimebaseRateException;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -535,7 +536,7 @@ public class SimpleClockFrame extends JmriJFrame
         }
         try {
             clock.userSetRate(parsedRate);
-        } catch (Exception e) {
+        } catch (TimebaseRateException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             log.error("Exception when setting timebase rate: " + e);

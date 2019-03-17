@@ -3,6 +3,9 @@ package jmri.server.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
@@ -23,6 +26,7 @@ public class JsonHttpServiceTestBase {
      *
      * @throws Exception to allow overriding methods to throw any exception
      */
+    @OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         this.mapper = new ObjectMapper();
@@ -35,6 +39,7 @@ public class JsonHttpServiceTestBase {
      *
      * @throws Exception to allow overriding methods to throw any exception
      */
+    @OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         this.mapper = null;
         JUnitUtil.tearDown();

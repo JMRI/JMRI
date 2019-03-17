@@ -2167,14 +2167,13 @@ public class PaneProgPane extends javax.swing.JPanel
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         // instead of forcing the columns to fill the frame (and only fill)
         cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         JScrollPane cvScroll = new JScrollPane(cvTable);
         cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 
-        cs.gridheight = GridBagConstraints.REMAINDER;
+        cs.fill = GridBagConstraints.VERTICAL;
+        cs.weighty = 2.0;
         g.setConstraints(cvScroll, cs);
         c.add(cvScroll);
-        cs.gridheight = 1;
 
         // remember which CVs to read/write
         isCvTablePane = true;

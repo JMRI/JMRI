@@ -9,7 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
@@ -47,6 +52,8 @@ import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
+import jmri.util.zeroconf.MockZeroConfServiceManager;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
@@ -137,7 +144,7 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * Check for any threads left behind after a test calls {@link #tearDown()}.
+     * Check for any threads left behind after a test calls {@link #tearDown}
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
@@ -829,6 +836,34 @@ public class JUnitUtil {
     }
 
     /**
+     * Initialize a {@link jmri.util.zeroconf.MockZeroConfServiceManager} after
+     * ensuring that any existing
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager} (real or mocked) has
+     * stopped all services it is managing.
+     */
+    public static void initZeroConfServiceManager() {
+        resetZeroConfServiceManager();
+        InstanceManager.setDefault(ZeroConfServiceManager.class, new MockZeroConfServiceManager());
+    }
+
+    /**
+     * Ensure that any existing
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager} (real or mocked) has
+     * stopped all services it is managing.
+     */
+    public static void resetZeroConfServiceManager() {
+        ZeroConfServiceManager manager = InstanceManager.containsDefault(ZeroConfServiceManager.class)
+                ? InstanceManager.getDefault(ZeroConfServiceManager.class)
+                : null;
+        if (manager != null) {
+            manager.stopAll();
+            JUnitUtil.waitFor(() -> {
+                return (manager.allServices().isEmpty());
+            }, "Stopping all ZeroConf Services");
+        }
+    }
+
+    /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.
      * @see #initShutDownManager()
@@ -888,7 +923,7 @@ public class JUnitUtil {
             f.setAccessible(true);
             f.set(c, null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset jmri.util.node.NodeIdentity static field", x);
+            log.error("Failed to reset jmri.util.node.NodeIdentity instance", x);
         }
     }
 

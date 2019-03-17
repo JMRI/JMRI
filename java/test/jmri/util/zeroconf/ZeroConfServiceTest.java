@@ -35,18 +35,12 @@ public class ZeroConfServiceTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+        JUnitUtil.initZeroConfServiceManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+        JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.tearDown();
     }
 
@@ -57,7 +51,7 @@ public class ZeroConfServiceTest {
     public void testCreate_String_int() {
         ZeroConfService result = ZeroConfService.create(HTTP, 9999);
         Assert.assertNotNull(result);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.getName());
     }
 
     /**
@@ -68,7 +62,7 @@ public class ZeroConfServiceTest {
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, 9999, properties);
         Assert.assertNotNull(result);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.getName());
     }
 
     /**
@@ -80,7 +74,18 @@ public class ZeroConfServiceTest {
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, name, 9999, 1, 1, properties);
         Assert.assertNotNull(result);
-        Assert.assertEquals(name, result.name());
+        Assert.assertEquals(name, result.getName());
+    }
+
+    /**
+     * Test of getKey method, of class ZeroConfService.
+     */
+    @Test
+    public void testGetKey() {
+        String name = "my_name";
+        ZeroConfService instance = ZeroConfService.create(HTTP, name, 9999, 0, 0, new HashMap<>());
+        String result = instance.getKey();
+        Assert.assertEquals(name + "." + HTTP, result);
     }
 
     /**
@@ -95,12 +100,12 @@ public class ZeroConfServiceTest {
     }
 
     /**
-     * Test of key method, of class ZeroConfService.
+     * Test of getName method, of class ZeroConfService.
      */
     @Test
-    public void testKey_String_String() {
-        String result = ZeroConfService.key("THAT", "THIS");
-        Assert.assertEquals("this.that", result);
+    public void testGetName() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), instance.getName());
     }
 
     /**
@@ -113,6 +118,15 @@ public class ZeroConfServiceTest {
     }
 
     /**
+     * Test of getType method, of class ZeroConfService.
+     */
+    @Test
+    public void testGetType() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertEquals(HTTP, instance.getType());
+    }
+
+    /**
      * Test of type method, of class ZeroConfService.
      */
     @Test
@@ -122,12 +136,12 @@ public class ZeroConfServiceTest {
     }
 
     /**
-     * Test of serviceInfo method, of class ZeroConfService.
+     * Test of getServiceInfo method, of class ZeroConfService.
      */
     @Test
     public void testServiceInfo() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        ServiceInfo result = instance.serviceInfo();
+        ServiceInfo result = instance.getServiceInfo();
         Assert.assertNotNull(result);
     }
 
@@ -202,7 +216,7 @@ public class ZeroConfServiceTest {
     public void testAllServices() {
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getDefaultRailroadName(), instance.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getDefaultRailroadName(), instance.getName());
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
