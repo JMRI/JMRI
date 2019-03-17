@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-17 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,464 +26,467 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+     <h1> Utilisation de JMRI&reg; dans l'Exploitation des Trains</h1>
 
-      <h2>OperationsPro Settings Options Window</h2>
+      <h2> OperationsPro: barre de menu Options</h2>
 
-      <div align="right">
-        <p><a href="Ops_Settings_menubar.shtml"><span style=
-        "text-decoration: underline;">Back</span></a></p>
+      <div align = "right">
+        <p><a href="Ops_Settings_menubar.shtml"> <span style =
+        "text-decoration: underline;"> retour</span></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Main"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p>The <span style="font-weight: bold;">Options</span> window
-      is opened from the <span style="font-weight: bold;">Settings
-      &gt; Tools</span> menu and allows you to set several options
-      that can be modified.</p>
+      <p>La fen&#234;tre <span style = "font-weight: bold;"> Options</span> 
+      est ouverte &#224; partir de <span style = "font-weight: bold;"> 
+		Param&#232;tres &gt; Outils</span> et vous permet de d&#233;finir plusieurs 
+		options pouvant &#234;tre modifi&#233;es.</P>
 
-      <table align="center" border="1" cellpadding="2" cellspacing=
-      "1" width="82%">
+      <table align = "center" border = "1" cellpadding = "2" cellspacing =
+      "1" width = "82%">
         <tbody>
           <tr>
-            <td colspan="2" valign="top">
-              <p><img src="images/Ops_Setting_tool_options01.png"
-              alt="options" height="235" width="409"></p>
-            </td>
-          </tr>
+            <td colspan = "2" valign = "top">
+              <p><img src = "images/Ops_Setting_tool_options01.png"
+              alt = "options" height = "235" width = "409"></p>
+           </td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top">
-              <p><strong><input name="radio3" id="radio3" value=
-              "radio3" checked="checked" type="radio"> Normal
-              <input name="radio4" id="radio4" value="radio4" type=
-              "radio"> Aggressive<br></strong>There are two build
-              train options, normal and aggressive. Normal is
-              recommended when you are beginning, as Normal builds
-              guarantee that when a car is delivered(set out) by a
-              train that there will be track space available for
-              the car.</p>
+            <td colspan = "2" valign = "top">
+              <p><strong><input name = "radio3" id = "radio3" valeur =
+              "radio3" checked = "checked" type = "radio"> Normal
+              <input name = "radio4" id = "radio4" value = "radio4" type =
+              "radio"> Agressive</strong> Il existe deux options 
+              d'Assemblage, Normale et Agressive. Normal est recommand&#233; 
+              lorsque vous d&#233;butez, car les Assemblages normaux 
+              garantissent que lorsqu'un wagon est livr&#233; (d&#233;pos&#233;) par un train, 
+              il y aura un espace de voie disponible pour le wagon.</P>
 
-              <p>Aggressive builds makes the car's track space
-              available as soon as a car is scheduled for a
-              pickup.</p>
 
-              <p>Note that once you've built a train, the build
-              option can not be changed until all trains are
-              terminated or reset.</p>
-            </td>
-          </tr>
+              <p>Les Assemblages Agressifs permettent de disposer de 
+              l'espace disponible sur la voie d&#232;s qu'un wagon est planifi&#233; 
+              pour une prise en charge (enl&#232;vement).</p>
 
-          <tr>
-            <td colspan="2" valign="top"><strong>Switcher
-            Service<br></strong>This set of options controls the
-            local car movements. Normally, it is better not to
-            allow a car to move from one spur directly to another
-            spur in the same location. This type of move is very
-            unrealistic.If you need these types of moves, select
-            the appropriate checkbox.<strong><br></strong></td>
-          </tr>
+              <p>Notez qu'une fois que vous avez assembl&#233; un train, 
+              l'option d'assemblage ne peut pas &#234;tre modifi&#233;e tant que 
+              tous les trains ne sont pas termin&#233;s ou r&#233;initialis&#233;s.</p>
+           </td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top"><img src=
-            "images/Ops_Setting_tool_options02.png" alt="setting"
-            height="219" width="473"></td>
-          </tr>
+         <td colspan = "2" valign = "top"> <strong>Service de Man&#156;uvre<br></strong> 
+         Cet ensemble d'options contr&#244;le les mouvements locaux du wagon. 
+         Normalement, il est pr&#233;f&#233;rable de ne pas permettre &#224; un wagon 
+         de passer directement d'un embranchement &#224; un autre au m&#234;me 
+         endroit. Ce type de mouvement est tr&#232;s irr&#233;aliste.Si vous avez 
+         besoin de ces types de transferts, cochez la case appropri&#233;e. 
+         <Strong> <br></strong></td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top">
-              <p><strong>Staging</strong></p>
-
-              <p><input name="checkbox5" id="checkbox5" checked=
-              "checked" type="checkbox"> <strong>Enable Type, Road
-              and</strong> Load Restrictions into Staging<br>
-              This option restricts trains to staging tracks that
-              only accept the train's rolling stock type, road and
-              load names. This is useful when you want trains
-              delivered to staging tracks based on the train's
-              rolling stock restrictions. However, if you want
-              certain car types, car loads, or road name to be
-              transported by a train, but not delivered to staging,
-              deselect this feature</p>
-            </td>
-          </tr>
+            <td colspan = "2" valign = "top"> <img src =
+            "images/Ops_Setting_tool_options02.png" alt = "setting"
+            height = "219" width = "473"></td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top">
-              <p><input name="checkbox11" id="checkbox11" type=
-              "checkbox"> Make departure track available after
-              train is built (Greyed out in Normal mode)<br>
-              When selected the departure track in staging becomes
-              a available for other trains immediately after the
-              departure train is built. For trains that return to
-              same staging location, this option allow the train to
-              return to the same track it departed on. This option
-              is only available when using the aggressive mode for
-              building trains.<br></p>
-            </td>
-          </tr>
+            <td colspan = "2" valign = "top">
+              <p><strong>Coulisse</strong></p>
+
+              <p><input name = "checkbox5" id = "checkbox5" v&#233;rifi&#233; =
+            "checked" type = "checkbox"> <strong>Activer les restrictions 
+            de Type, de Ligne et</strong> dans le transfert <br> <br>
+              Cette option limite les trains aux voies en coulisse qui 
+              n'acceptent que les noms de type de mat&#233;riel roulant, de 
+              ligne et de charge du train. Cela est utile lorsque vous 
+              souhaitez que les trains soient livr&#233;s sur des voies en  
+              coulisse en fonction des restrictions du mat&#233;riel 
+              roulant du train. Toutefois, si vous souhaitez que certains 
+              types de wagons, chargement de wagons ou nom de ligne 
+              soient transport&#233;s par un train mais ne soient pas livr&#233;s 
+              &#224; la coulisse d&#233;s&#233;lectionnez cette fonction</p>.
+           </td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top"><input name="checkbox6"
-            id="checkbox6" type="checkbox"> <strong>Prompt for
-            Departure Track from Staging<br></strong>If you would
-            like the program to ask you which track a train should
-            depart from staging during the train build, select this
-            option. Normally, during the train build the program
-            would select the least recently used track when
-            determining the track to depart from. Note that the
-            program will only prompt you if there are two or more
-            trains availabe in staging that meet the train's
-            requirements.</td>
-          </tr>
+            <td colspan = "2" valign = "top">
+              <p><input name = "checkbox11" id = "checkbox11" type =
+              "checkbox"> Rendre la voie de d&#233;part disponible apr&#232;s 
+              l'assemblage du train (Gris&#233;e en mode Normal) <br>
+			  Lorsque cette option est s&#233;lectionn&#233;e, la voie de d&#233;part 
+			  en coulisse devient disponible pour les autres trains 
+			  imm&#233;diatement apr&#232;s que le train au d&#233;part soit assembl&#233;. 
+			  Pour les trains qui reviennent &#224; la m&#234;me coulisse, cette 
+			  option permet au train de revenir sur la m&#234;me voie que sur 
+			  laquelle il est parti. Cette option est uniquement 
+			  disponible lorsque vous utilisez le mode agressif pour 
+			  l'assemblage de trains. <br></p>
+           </td>
+         </tr>
+
+          <tr>
+            <td colspan = "2" valign = "top"> <input namee = "checkbox6"
+            id = "checkbox6" type = "checkbox"> <strong>Demander une 
+            Voie de D&#233;part &#224; partir de la Coulisse<br> <br></strong> si 
+            vous souhaitez que le programme vous demande pendant 
+            l'assemblage du train, de quelle voie un train doit partir  
+            s&#233;lectionnez cette option. Normalement, pendant l'assemblage 
+            du train, le programme s&#233;lectionnera la voie la moins 
+            r&#233;cemment utilis&#233;e pour d&#233;terminer la voie de d&#233;part. 
+            Notez que le programme ne vous demandera que s'il y a deux 
+            trains ou plus disponibles pour la coulisse qui r&#233;pondent 
+            aux exigences du train.</Td>
 
           <tr>
             <td colspan="2" valign="top"><input name="checkbox8"
-            id="checkbox8" type="checkbox"> <strong>Prompt for
-            Arrival Track from Stagiing</strong><br>
-            If you would like the program to ask you which track a
-            train should Arrive to staging during the train build,
-            select this option. Normally, during the train build
-            the program would select the least recently used track
-            when determining the track to arrive on. Note that the
-            program will only prompt you if there are two or more
-            trains availabe in staging that meet the train's
-            requirements.</td>
-          </tr>
+            id="checkbox8" type="checkbox"> <strong>Demande le
+			Chemin d'arriv&#233;e depuis la Coulisse</strong> <br>
+            Si vous souhaitez que le programme vous demande que le 
+            programme vous demande pendant l'assemblage du train,  par 
+            quelle voie un train Arrive &#224; la coulisse 
+            , s&#233;lectionnez cette option. Normalement, pendant 
+            l'assemblage du train, le programme s&#233;lectionnerat la voie 
+            la moins r&#233;cemment utilis&#233;e lors de la d&#233;termination de la 
+            voie sur laquelle il doit arriver. Notez que le programme ne 
+            vous demandera que s'il y a deux trains ou plus disponibles 
+            pour la coulisse qui r&#233;pondent aux exigences du train.</Td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top"><img style=
-            "width: 488px; height: 144px;" alt="options settings"
-            src="images/Ops_Setting_tool_options03.png"><br></td>
-          </tr>
+            <td colspan = "2" valign = "top"> <img style =
+            "width: 488px; height: 144px;" alt = "param&#232;tres d'options"
+            src = "images/Ops_Setting_tool_options03.png"> <br></td>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top">
-              <p><strong>Car Routing Options</strong></p>
+            <td colspan = "2" valign = "top">
+              <p><strong>Options de Routage de Wagon</strong></p>
 
-              <p><input name="checkbox7" id="checkbox7" checked=
-              "checked" type="checkbox"> <strong>Enable Car
-              Routing<br></strong>When car routing is enabled, the
-              program will use multiple trains to deliver a car to
-              its final destination. It is recommended that you
-              leave the option enabled. With car routing enabled,
-              you can use a <strong><a href=
-              "Ops_schedule.shtml">Schedule</a></strong> to deliver
-              a car to a specific location. The car routing
-              algorithm will search for the most efficient rout for
-              the car to travel. The algorithm will try to find a
-              route using a maximum of five trains to complete the
-              car move. Note that the program never gives up trying
-              to route a car. If a car has been assigned a "Final
-              Destination" the program will try and route the car
-              after every move.</p>
-            </td>
-          </tr>
+              <p><input name = "checkbox7" id = "checkbox7" v&#233;rifi&#233; =
+              "checked" type = "checkbox"> <strong>Activer le Routage des 
+              Wagons<br></strong> Lorsque le routage des Wagons est activ&#233;, 
+              le programme utilise plusieurs trains pour livrer un wagon
+               &#224; sa destination finale. Il est recommand&#233; de laisser 
+               l'option activ&#233;e. Lorsque le routage de wagon est activ&#233;, 
+               vous pouvez utiliser un <strong><a href= "Ops_schedule.shtml"> 
+				   Horaire</a></strong> pour livrer un wagon &#224; un 
+				 emplacement sp&#233;cifique. L'algorithme de routage de wagon 
+				 cherchera l'itin&#233;raire le plus efficace pour le wagon. 
+				 L'algorithme essaiera de trouver un itin&#233;raire en 
+				 utilisant un maximum de cinq trains pour effectuer le 
+				 d&#233;placement du wagon. Notez que le programme n'abandonne 
+				 jamais d'essayer de router un wagon. Si une "destination 
+				 finale" est attribu&#233;e &#224; un wagon, le programme essaiera 
+				 de le router apr&#232;s chaque mouvement.</P>
+           </td>
+         </tr>
 
           <tr>
-            <td colspan="2" rowspan="1"><input checked="checked"
-            name="route" type="checkbox"><span style=
-            "font-weight: bold;">Enable Car Routing via
-            Yards</span><br>
-            Check if you want to allow car routing via your yards,
-            then yards may be used if the most effiecient
+            <td colspan = "2" rowspan = "1"> <input checked="checked"
+            name = "route" type = "checkbox"> <span style =
+            "font-weight: bold;"> Activer le Routage de Wagon via
+           les Triages</span> <br>
+            V&#233;rifiez si vous souhaitez autoriser l'acheminement des wagons 
+            par l'interm&#233;diaire de vos triages. Vous pouvez alors utiliser 
+            les triages si vous le souhaitez.
             route.</td>
-          </tr>
+         </tr>
 
           <tr>
-            <td colspan="2" valign="top">
-              <p><img src="images/Ops_Setting_tool_options04.png"
-              alt="options" height="149" width="411"></p>
+            <td colspan = "2" valign = "top">
+              <p><img src = "images/Ops_Setting_tool_options04.png"
+              alt = "options" height = "149" width = "411"></p>
 
-              <p><strong>Logging Options</strong></p>
+              <p><strong>Options de journalisation</strong></p>
 
-              <p>If you want the operations program to log your
-              locomotive, car, or train movements to file, select
-              the appropriate checkboxes. The program will create a
-              new directory called logger in the operations
-              directory. For each day's session the program will
-              create a new file(.csv) using the day's date.</p>
-            </td>
-          </tr>
-
-          <tr>
-            <td colspan="2" valign="top">
-              <p><img src="images/Ops_Setting_tool_options05.png"
-              alt="ops settings" height="233" width="466"><br>
-              To create your own custom manifest using a comma
-              separated value (.csv) file, select this option. You
-              can use a program like Excel to create a manifest to
-              your liking. The manifest is located in the
-              operations directory in a directory called
-              <strong>csvManifests.</strong> Each line of the file
-              starts with a two or three letter code, followed by
-              the code's description, and then any parameters
-              associated with the code.</p>
-
-              <p><input name="checkbox9" id="checkbox9" type=
-              "checkbox"> <strong>Enable Radio-Frequency
-              Identification (RFID) Fields</strong> - This option
-              allows the RFID to be renamed to anything you like
-              and set the values that you want.</p>
-
-              <p><input name="checkbox10" id="checkbox10" type=
-              "checkbox"> <strong>Enable physical locations for
-              Virtual Sound Decoder -</strong></p>
-            </td>
-          </tr>
+              <p>Si vous souhaitez que le programme d'op&#233;rations 
+              enregistre vos mouvements de Locomotive, de Wagon ou de 
+              Train dans un fichier, cochez les cases appropri&#233;es. Le 
+              programme cr&#233;era un nouveau r&#233;pertoire appel&#233; logger dans 
+              le r&#233;pertoire des operations. Pour chaque session du jour, 
+              le programme cr&#233;era un nouveau fichier (.csv) en utilisant 
+              la date du jour.</P>
+           </td>
+         </tr>
 
           <tr>
-            <td valign="top" width="66%">
-              <table align="center" border="0" cellpadding="2"
-              cellspacing="1" width="90%">
+            <td colspan = "2" valign = "top">
+              <p><img src = "images/Ops_Setting_tool_options05.png"
+              alt = "ops settings" height = "233" width = "466"> <br>
+              Pour cr&#233;er votre propre manifeste personnalis&#233; &#224; l'aide 
+              d'un fichier (.csv) s&#233;par&#233; par des virgules, s&#233;lectionnez 
+              cette option. Vous pouvez utiliser un programme tel 
+              qu'Excel pour cr&#233;er un manifeste &#224; votre go&#251;t. Le manifeste 
+              se trouve dans le r&#233;pertoire des operations dans un 
+              r&#233;pertoire appel&#233; <strong>csvManifests.</Strong> Chaque 
+              ligne du fichier commence par un code de deux ou trois 
+              lettres, suivi de la description du code, puis des 
+              param&#232;tres associ&#233;s au code.</p>
+
+              <p><input name = "checkbox9" id = "checkbox9" type =
+              "case &#224; cocher"> <strong>Activer le Champs d'identification (
+              radio-fr&#233;quence (RFID)</strong>: cette option permet de 
+              renommer la RFID selon vos pr&#233;f&#233;rences et de d&#233;finir les 
+              valeurs souhait&#233;es.</P>
+
+              <p><input name = "checkbox10" id = "checkbox10" type =
+              "case &#224; cocher"> <strong>Activer les emplacements physiques 
+              pour Virtual Sound Decoder -</strong></p>
+           </td>
+         </tr>
+
+          <tr>
+            <td valign = "top" width = "66%">
+              <table align = "center" border = "0" cellpadding = "2"
+              cellspacing = "1" width = "90%">
                 <tbody>
                   <tr>
-                    <td><strong>Code</strong></td>
+                    <td> <strong>Code</strong></td>
 
-                    <td><strong>Desription</strong></td>
+                    <td> <strong>Desription</strong></td>
 
-                    <td><strong>Parameters</strong></td>
-                  </tr>
+                    <td> <strong>Param&#232;tres</strong></td>
+                 </tr>
 
                   <tr>
-                    <td>AH</td>
+                    <td> AH</td>
 
                     <td>
-                      <p>Add Helpers</p>
-                    </td>
+                      <p>Ajouter des Loco Assistantes</p>
+                   </td>
 
                     <td></td>
-                  </tr>
+                 </tr>
 
                   <tr>
-                    <td>AT</td>
+                    <td> AT</td>
 
-                    <td>Arrival Time</td>
+                    <td> Heure d'Arriv&#233;e</td>
 
-                    <td>Time</td>
+                    <td> Heure</td>
                   </tr>
 
                   <tr>
                     <td>CC</td>
 
-                    <td>Change Locos and Caboose</td>
+                    <td>Changer les Locos et Fourgons</td>
 
                     <td></td>
-                  </tr>
+                 </tr>
 
                   <tr>
-                    <td>CL</td>
-
-                    <td>Change Locos</td>
+                    <td> CL</td>
+					<td> Changer Locos</td>
 
                     <td></td>
-                  </tr>
+                 </tr>
 
                   <tr>
-                    <td>DT</td>
+                    <td> DT</td>
 
-                    <td>Departure Time</td>
+                    <td> Heure de d&#233;part</td>
 
-                    <td>Time</td>
-                  </tr>
-
-                  <tr>
-                    <td>DTR</td>
-
-                    <td>Departure Time Route</td>
-
-                    <td>Time</td>
-                  </tr>
+                    <td> Heure</td>
+                 </tr>
 
                   <tr>
-                    <td>LC</td>
+                    <td> DTR</td>
 
-                    <td>Location Comment</td>
+                    <td> Heure de D&#233;part de l'Itin&#233;raire</td>
 
-                    <td>Comment</td>
-                  </tr>
-
-                  <tr>
-                    <td>LN</td>
-
-                    <td>Location Name</td>
-
-                    <td>Name</td>
-                  </tr>
+                    <td> Heure</td>
+                 </tr>
 
                   <tr>
-                    <td>NW</td>
+                    <td> LC</td>
 
-                    <td>No Work</td>
+                    <td> Commentaire sur l'Emplacement</td>
+
+                    <td> Commentaire</td>
+                 </tr>
+
+                  <tr>
+                    <td> LN</td>
+
+                    <td> Nom de l'Emplacement</td>
+
+                    <td> Nom</td>
+                 </tr>
+
+                  <tr>
+                    <td> NW</td>
+
+                    <td> Pas de Travail</td>
 
                     <td></td>
-                  </tr>
+                 </tr>
 
                   <tr>
-                    <td>PC</td>
+                    <td> PC</td>
 
-                    <td>Pick up car</td>
+                    <td> Prendre le Wagon</td>
 
-                    <td>See below</td>
-                  </tr>
-
-                  <tr>
-                    <td>PL</td>
-
-                    <td>Pick up loco</td>
-
-                    <td>See below</td>
-                  </tr>
+                    <td> Voir ci-dessous</td>
+                 </tr>
 
                   <tr>
-                    <td>RC</td>
+                    <td> PL</td>
 
-                    <td>Route Comment</td>
+                    <td> Prendre la Loco</td>
 
-                    <td>Comment</td>
-                  </tr>
+                    <td> Voir ci-dessous</td>
+                 </tr>
 
                   <tr>
-                    <td>RH</td>
+                    <td> RC</td>
 
-                    <td>Remove Helpers</td>
+                    <td> Commentaire d'Itin&#233;raire</td>
+
+                    <td> Commentaire</td>
+                 </tr>
+
+                  <tr>
+                    <td> RH</td>
+
+                    <td> Supprimer les Locos Assistantes</td>
 
                     <td></td>
+                 </tr>
+
+                  <tr>
+                    <td> RN</td>
+
+                    <td> Nom du R&#233;seau</td>
+
+                    <td> Nom</td>
+                 </tr>
+
+                  <tr>
+                    <td> SC</td>
+
+                    <td> D&#233;poser le Wagon</td>
+
+                    <td> Voir ci-dessous</td>
+                 </tr>
+
+                  <tr>
+                    <td> SL</td>
+
+                    <td> D&#233;poser la Locomotive</td>
+
+                    <td> Voir ci-dessous</td>
+                 </tr>
+
+                  <tr>
+                    <td> TC</td>
+
+                    <td> Commentaire de Train</td>
+
+                    <td> Commentaire</td>
+                 </tr>
+
+                  <tr>
+                    <td> TD</td>
+
+                    <td> D&#233;part du Train</td>
+
+                    <td> Nom</td>
+                 </tr>
+
+                  <tr>
+                    <td> TL</td>
+
+                    <td> Longueur du Train</td>
+
+                    <td> Longueur</td>
+
                   </tr>
 
                   <tr>
-                    <td>RN</td>
+                    <td> TM</td>
 
-                    <td>Railroad Name</td>
+                    <td> Description du Manifeste de Train</td>
 
-                    <td>Name</td>
-                  </tr>
-
-                  <tr>
-                    <td>SC</td>
-
-                    <td>Set out car</td>
-
-                    <td>See below</td>
-                  </tr>
+                    <td> Description</td>
+                 </tr>
 
                   <tr>
-                    <td>SL</td>
+                    <td> TN</td>
 
-                    <td>Set out loco</td>
+                    <td> Nom du Train</td>
 
-                    <td>See below</td>
-                  </tr>
-
-                  <tr>
-                    <td>TC</td>
-
-                    <td>Train Comment</td>
-
-                    <td>Comment</td>
-                  </tr>
+                    <td> Nom</td>
+                 </tr>
 
                   <tr>
-                    <td>TD</td>
+                    <td> TW</td>
 
-                    <td>Train Departs</td>
+                    <td> Poids du Train</td>
 
-                    <td>Name</td>
-                  </tr>
-
-                  <tr>
-                    <td>TL</td>
-
-                    <td>Train Length</td>
-
-                    <td>Length</td>
-                  </tr>
+                    <td> Poids</td>
+                 </tr>
 
                   <tr>
-                    <td>TM</td>
+                    <td> TT</td>
 
-                    <td>Train Manifest Description</td>
+                    <td> Train Termin&#233;</td>
 
-                    <td>Description</td>
-                  </tr>
-
-                  <tr>
-                    <td>TN</td>
-
-                    <td>Train Name</td>
-
-                    <td>Name</td>
-                  </tr>
+                    <td> Nom</td>
+                 </tr>
 
                   <tr>
-                    <td>TW</td>
+                    <td> VT</td>
 
-                    <td>Train Weight</td>
+                    <td> Valide</td>
 
-                    <td>Weight</td>
-                  </tr>
-
-                  <tr>
-                    <td>TT</td>
-
-                    <td>Train Terminates</td>
-
-                    <td>Name</td>
-                  </tr>
+                    <td> Mois/Jour, Ann&#233;e Heure</td>
+                 </tr>
 
                   <tr>
-                    <td>VT</td>
-
-                    <td>Valid</td>
-
-                    <td>Month/Day, Year Time</td>
-                  </tr>
+                    <td colspan = "3"> Heure utilise le format HeureMinute</td>
+                 </tr>
 
                   <tr>
-                    <td colspan="3">Time uses the format
-                    HourMinute</td>
-                  </tr>
+                    <td colspan = "3">
+                      <p>Les param&#232;tres de wagon pour le ramassage (PC) 
+                      et la d&#233;pose de wagon (SC) sont les suivants: ligne, 
+                      num&#233;ro, type, longueur, charge, couleur, nom d
+                      'emplacement, nom de la voie, nom de la destination, 
+                      nom de la voie de destination, nom du propri&#233;taire, 
+                      nom du noyau, commentaire sur le wagon, commentaire 
+                      enl&#232;vement, commentaire d&#233;pose, C, F, H, RFID. O&#249; 
+                      C = Caboose, F = FRED et H = Hazardous.</P>
 
-                  <tr>
-                    <td colspan="3">
-                      <p>The car parameters for pick up car (PC)
-                      and set out car (SC) are road, number, type,
-                      length, load, color, location name, track
-                      name, destination name, destination track
-                      name, owner name, kernel name, car comment,
-                      pick up comment, set out comment, C, F, H,
-                      RFID. Where C = Caboose, F = FRED, and H =
-                      Hazardous.</p>
+                      <p>Les param&#232;tres de locomotive pour le ramassage 
+                      (PL) et la d&#233;pose (SL) sont ligne, num&#233;ro, mod&#232;le, 
+                      longueur, type, Puissance, nom de localisation, 
+                      nom de voie, nom de destination, nom de voie de 
+                      destination, nom du propri&#233;taire, nom de couplage, 
+                      commentaire wagon, RFID.</p>
 
-                      <p>The loco parameters for pick up (PL) and
-                      set out loco (SL) are road, number, model,
-                      length, type, hp, location name, track name,
-                      destination name, destination track name,
-                      owner name, consist name, car comment,
-                      RFID.</p>
-
-                      <p><a href=
+                      <p><a href =
                       "http://groups.yahoo.com/group/jmriusers/files/Operations"
-                      target="_blank">Examples of custom
-                      manifests</a> (requires that you have Yahoo
-                      ID and Password to JMRI Users Yahoo
-                      group).</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
+                      target = "_ blank"> Exemples de Manifestes 
+                      personnalis&#233;s</a> (vous devez poss&#233;der un 
+                      identifiant Yahoo et un mot de passe pour le 
+                      groupe Yahoo des utilisateurs JMRI).</p>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </td>
 
-            <td valign="top" width="34%"></td>
-          </tr>
-        </tbody>
-      </table>
+            <td valign = "top" width = "34%"></td>
+         </tr>
+       </tbody>
+     </table>
 
-      <div align="right">
-        <p><a href="Ops_Settings_menubar.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Settings_menubar.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a> </p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
