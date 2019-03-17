@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
@@ -57,7 +58,8 @@ public class JsonTimeSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", 60, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        Assert.assertEquals("Time is current", formatter.format(current), message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
+        Assert.assertEquals("Time is current", formatter.format(current),
+                message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         Assert.assertEquals("Service is listening to time", 1, manager.getMinuteChangeListeners().length);
         Assert.assertEquals("Service is listening to changes", 1, manager.getNumPropertyChangeListeners());
         Date waitFor = current;
@@ -108,7 +110,8 @@ public class JsonTimeSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", 100, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        Assert.assertEquals("Time is current", formatter.format(current), message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
+        Assert.assertEquals("Time is current", formatter.format(current),
+                message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         service.onClose(); // clean up listeners
         Assert.assertEquals("Service is not listening to time", 0, manager.getMinuteChangeListeners().length);
         Assert.assertEquals("Service is not listening to changes", 0, manager.getNumPropertyChangeListeners());
@@ -128,6 +131,39 @@ public class JsonTimeSocketServiceTest {
         }
     }
 
+    /**
+     * Test that listener handles error states correctly.
+     * 
+     * @throws JsonException if unexpected exception occurs
+     * @throws JmriException if unexpected exception occurs
+     * @throws IOException   if unexpected exception occurs
+     */
+    @Test
+    public void testListenerErrorHandling() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        TestJsonTimeHttpService http = new TestJsonTimeHttpService(connection.getObjectMapper());
+        JsonTimeSocketService service = new JsonTimeSocketService(connection, http);
+        Timebase manager = InstanceManager.getDefault(Timebase.class);
+        manager.setRun(false); // stop for testing
+        // GET method
+        service.onMessage(JsonTimeServiceFactory.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
+                Locale.ENGLISH);
+        // Thrown JsonException on next message
+        http.setThrowException(true);
+        // We should be listening so start the manager
+        manager.setRate(60); // one minute per second
+        JsonNode message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertEquals("Message is error", JsonException.ERROR, message.path(JSON.TYPE).asText());
+        Assert.assertEquals("Error code is HTTP 499", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
+        Assert.assertEquals("Error message is mocked", "Mock Exception", message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
+        // Thrown IOException on next message
+        connection.setThrowIOException(true);
+        manager.setRate(10);
+        // Since the deliberately thrown IOException should have been caught and discarded,
+        // this test should simply pass at this point
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -136,6 +172,29 @@ public class JsonTimeSocketServiceTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+    }
+
+    private static class TestJsonTimeHttpService extends JsonTimeHttpService {
+
+        private boolean throwException = false;
+
+        public TestJsonTimeHttpService(ObjectMapper mapper) {
+            super(mapper);
+        }
+
+        @Override
+        public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+            if (throwException) {
+                throwException = false;
+                throw new JsonException(499, "Mock Exception");
+            }
+            return super.doGet(type, name, locale);
+        }
+
+        public void setThrowException(boolean throwException) {
+            this.throwException = throwException;
+        }
+
     }
 
 }
