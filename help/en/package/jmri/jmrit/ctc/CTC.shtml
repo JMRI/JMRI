@@ -528,6 +528,8 @@ you enter them out of order, described in another section.
         <h4>Signal direction lever</h4>
         <p>
         Defines all of the sensors required for the JMRI object MultiSensor in order to select a signal direction.
+        </p>
+        
         <p>
         <strong>Left, Normal and Right lever sensors</strong>: Normal and one or both of Left and Right
         required.  This defines the three sensors associated with the 3 corresponding positions of the
@@ -630,8 +632,73 @@ you enter them out of order, described in another section.
         
         <a name="frmTRL" id="frmTRL"></a>
         <h4>Traffic Locking</h4>
-        <p>=== form details ===</p>
-
+        <p>
+        Defines all of the allowed non conflicting routes from the selected O.S. section in either direction from it.
+        This is the beating heart of the CTC system.  As such, it is the most complex part of CTC you will encounter.
+        However, if you are methodical and after some experience, you should find that this section is fairly straight
+        forward.
+        </p>
+        <p>
+        When you initially select Traffic Locking, the first screen that comes up will allow you to edit one of the
+        directions from this O.S. section to other O.S. section(s).  <strong>Note:</strong> Having no rules <strong>always</strong> allows
+        that direction of travel no matter any other condition, and may be valid in certain situations such as traveling
+        to staging where there is no O.S. section.
+        </p>
+        
+        <p>
+        Now, either select Left or Right to proceed.  On the next screen that appears, you will notice that the "Rules:"
+        area is blank, and that "Add New" is only button enabled.  Press "Add New" now, and notice how the bottom half of the
+        screen is enabled for editing of this new rule.
+        </p>
+        
+        <p>
+        Before we proceed to details on this rule, you will notice that "This rule ENABLED" is checked by default.  You
+        may enable / disable individual rules at your whim, you mostly disable ones so that the information is not lost,
+        and you may in the future want to re-enable it.
+        </p>
+        
+        <p>
+        Part of the design of your CTC system (which has nothing to do with this program) is determining where
+        the interlocking limits are in complex trackwork situations, such as parallel (or 3 or more) tracks with
+        multiple switches and crossovers.  It is beyond the scope of this help in guiding you in designing
+        interlocking plants.  For instance, it depends on how you want simultaneous moves to occur within
+        interlocking limits that may need to be considered.        
+        </p>
+                
+        <p>
+        <strong>Specifying a rule:</strong>
+        </p>
+        <p>
+        Under "--- ROUTE ---", you specify the O.S. section(s) traversed, and the switch alignment associated with the
+        O.S. section for that route.  Order of specified O.S. section(s) is irrelevant.  Include <strong>both</strong> switch alignments for this
+        O.S. section here, along with (at least) all alignments of the "terminating" O.S. section too.  Therefore, for a passing
+        siding (for instance), there should be 4 rules in the direction of the other O.S. section associated with the passing siding.
+        </p>
+        <p>
+        Under "Occupancy sensors ... allowed." you specify other sensor(s) that also will be locked long that route.  Mostly
+        none are needed, except in complex interlocking situations which is supported by this feature.
+        </p>
+        <p>
+        Under "--- Optional sensors... valid ---", specify any sensors that must be VALID to allow this rule to be valid.
+        You may (for instance) use JMRI Logix to create such a sensor for specific unusual situations.
+        <strong>Important:</strong> These optional sensors are <strong>not</strong> allocated as part of the rule.
+        They are just checked at the moment the dispatcher codes the O.S. section.
+        </p>
+        
+        <p>
+        <strong>Final result: </strong> When the dispatcher codes this O.S. section, and a rule is selected as valid, the whole "path"
+        of that rule specified is fully <strong>allocated</strong>.  The path consists of all of the O.S. occupancy sensors
+        specified in the individual O.S. sections, along with all of the occupancy sensors specified on this screen at the bottom for
+        this rule.  <strong>Only</strong> as each of these occupancy sensors <strong>transition</strong> from occupied
+        to unoccupied is that corresponding occupancy sensor removed from the allocated list.  This prevents other conflicting paths
+        in any rule anywhere from allocating any of these occupancy sensor(s).
+        </p>
+        <p>
+        In complex interlocking situations: as a train traverses the rule's occupancy sensor(s) and transited occupancy sensor(s) are released,
+        other rules that don't conflict with the remaining allocated occupancy sensors may be allowed before this train
+        has fully transited this whole rule, and the dispatcher may select these routes (rules) safely.
+        </p>        
+        
         <a name="frmTUL" id="frmTUL"></a>
         <h4>Turnout locking</h4>
         <p>=== form details ===</p>
