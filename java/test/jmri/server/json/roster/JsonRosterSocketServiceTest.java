@@ -132,7 +132,9 @@ public class JsonRosterSocketServiceTest {
             return this.connection.getMessages().size() >= 1;
         }, "Expected message not sent");
         Assert.assertEquals("One message sent", 1, this.connection.getMessages().size());
-        Assert.assertEquals("Message contains rosterEntry", JsonRoster.ROSTER_ENTRY, this.connection.getMessage().path(JSON.TYPE).asText());
+        message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertEquals("Message contains rosterEntry", JsonRoster.ROSTER_ENTRY, message.path(JSON.TYPE).asText());
 
         // Set known roster group directly as attribute of RosterEntry
         Roster.getDefault().addRosterGroup("NewRosterGroup");

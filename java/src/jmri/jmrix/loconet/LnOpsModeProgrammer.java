@@ -42,6 +42,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     /**
      * @deprecated 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+     * @param pSlotMgr the slot manager for this programmer
+     * @param memo the memo for this programmer
+     * @param pAddress the decoder address to be programmed
+     * @param pLongAddr true if pAddress represents a DCC "Long" address
      */
     @Deprecated // 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
     public LnOpsModeProgrammer(SlotManager pSlotMgr,

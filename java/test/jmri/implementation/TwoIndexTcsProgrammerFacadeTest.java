@@ -3,10 +3,11 @@ package jmri.implementation;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +16,12 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2014
  * 
  */
-public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
+public class TwoIndexTcsProgrammerFacadeTest {
 
     int readValue = -2;
     boolean replied = false;
 
+    @Test
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
@@ -44,6 +46,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         Assert.assertTrue("index not written", !dp.hasBeenWritten(81));
     }
 
+    @Test
     public void testWriteReadDoubleIndexed() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
@@ -83,6 +86,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         // and the test Programmer remembers that
     }
 
+    @Test
     public void testWriteReadTripleIndexed() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
@@ -118,6 +122,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         Assert.assertEquals("read back", 13, readValue);
     }
 
+    @Test
     public void testCvLimit() {
         ProgDebugger dp = new ProgDebugger();
         dp.setTestReadLimit(1024);
@@ -139,29 +144,12 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         replied = false;
     }
 
-    // from here down is testing infrastructure
-    public TwoIndexTcsProgrammerFacadeTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {TwoIndexTcsProgrammerFacadeTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TwoIndexTcsProgrammerFacadeTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
+    @After
     public void tearDown(){
         jmri.util.JUnitUtil.tearDown();
     }

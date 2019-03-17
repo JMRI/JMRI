@@ -107,12 +107,9 @@
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
         Event Table</a> - Monitors events and presents them in a table full of statistics.
-        
            <ul>
            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml#stats"
            >Event Statistics</a> On / Off / In / Out </li>
-            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml#status"
-            >Requesting Event Status</a> + Event Feedback</li>
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml#importexport"
         >Table Import and Export</a></li>
            </ul>
@@ -145,6 +142,10 @@
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
         >Event Capture Tool</a> - Capture MERG CBUS events
+        </li>
+
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml"
+        >Event Request Monitor</a> - Request Event status monitoring tool
         </li>
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"

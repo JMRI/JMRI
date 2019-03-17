@@ -60,7 +60,6 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  *
  */
-@SuppressWarnings("serial")
 public class VSDControl extends JPanel {
 
     public static enum PropertyChangeId {

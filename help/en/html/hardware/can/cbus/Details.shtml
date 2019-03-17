@@ -103,6 +103,16 @@
         <img src="images/connection/merg-connection-canrs-canusb-350x250.jpg"
       width="350" height="250" alt="JMRI MERG Connection canrd canusb canusb4 adapter" align="right">
 
+        <p>A CANUSB4 should not normally require special drivers to be installed, it should just work.</p>
+
+        <p>If using a MacBook Pro running Mojave and are struggling with drivers for a CANUSB / CANUSB2, 
+        the appropriate driver is available from FDTI for the UM245R, the VCP option. 
+        <br>
+        ( Tip courtesy of John (G8GKU) via <a 
+        href="https://groups.io/g/jmriusers/topic/running_jmri_from_a_macbook/28888237?p=,,,50,0,0,0::recentpostdate%2Fsticky,,,50,2,0,28888237"
+        >JMRI Users at Groups.io</a> )
+        </p>
+
         <p>Default setting shown on right hand side after the " : " </p>
       
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
@@ -121,8 +131,7 @@
         </ul>
 
         <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
-        <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
-        <p>nb, CANUSB4 - may not require drivers installing on modern operating systems.</p>
+        <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>
       
       <h3><a name="c2" id="c2">CAN via MERG Network Interface</a></h3>
       <img src="images/connection/merg-connection-network-interface-330x353.png"

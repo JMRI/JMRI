@@ -3,51 +3,56 @@ package jmri.jmrix.secsi;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialNode class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Dave Duchamp multi-node extensions 2003
  */
-public class SerialNodeTest extends TestCase {
+public class SerialNodeTest {
 
     private SerialTrafficControlScaffold tcis = null;
     private SecsiSystemConnectionMemo memo = null;
 
     private SerialNode b = null;
 
+    @Test
     public void testConstructor1() {
         Assert.assertEquals("check default ctor type", SerialNode.DAUGHTER, b.getNodeType());
         Assert.assertEquals("check default ctor address", 0, b.getNodeAddress());
     }
 
+    @Test
     public void testConstructor2() {
-        SerialNode c = new SerialNode(3, SerialNode.DAUGHTER,tcis);
+        SerialNode c = new SerialNode(3, SerialNode.DAUGHTER, tcis);
         Assert.assertEquals("check ctor type", SerialNode.DAUGHTER, c.getNodeType());
         Assert.assertEquals("check ctor address", 3, c.getNodeAddress());
     }
 
+    @Test
     public void testAccessors() {
-        SerialNode n = new SerialNode(2, SerialNode.DAUGHTER,tcis);
+        SerialNode n = new SerialNode(2, SerialNode.DAUGHTER, tcis);
         n.setNodeAddress(7);
         Assert.assertEquals("check ctor type", SerialNode.DAUGHTER, n.getNodeType());
         Assert.assertEquals("check address", 7, n.getNodeAddress());
     }
 
+    @Test
     public void testInitialization1() {
         // no initialization in this protocol
         AbstractMRMessage m = b.createInitPacket();
         Assert.assertEquals("initpacket null", null, m);
     }
 
+    @Test
     public void testOutputBits1() {
         // IO48 with several output bits set
-        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER,tcis);
+        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER, tcis);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
@@ -75,6 +80,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("byte 4 hi nibble", 0x74, m.getElement(8));
     }
 
+    @Test
     public void testMarkChanges() {
         SerialSensor s1 = new SerialSensor("VS1", "a", memo);
         Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("VS1", "V"));
@@ -93,26 +99,8 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
     }
 
-    // from here down is testing infrastructure
-    public SerialNodeTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialNodeTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialNodeTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
 
         memo = new SecsiSystemConnectionMemo();
@@ -121,8 +109,8 @@ public class SerialNodeTest extends TestCase {
         b = new SerialNode(tcis);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

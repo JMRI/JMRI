@@ -288,8 +288,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         reply.setLength(0x0004);
         int offset=4;
         for(int i = 0;i<xnetadapter.locoCount;i++) {
-            reply.setElement(offset++,xnetadapter.locoData[i].getAddressMsb());// byte 5, LocoAddress msb.
-            reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 5, LocoAddress lsb.
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressMsb());// byte 6, LocoAddress msb.
             reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
             reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x00);

@@ -5,9 +5,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficController;
-import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,15 +24,15 @@ public class CbusCommandStation implements CommandStation, CanListener {
     public CbusCommandStation(CanSystemConnectionMemo memo) {
         tc = memo.getTrafficController();
         adapterMemo = memo;
-        
-        if ( ( tc != null ) && ( tc.getClass().getName().contains("loopback")) ) {
-            startNetworkSim();
+        if ( ( tc != null ) && ( tc.getClass().getName().contains("Loopback")) ) {
+            jmri.util.ThreadingUtil.runOnLayout( ()->{
+                new jmri.jmrix.can.cbus.simulator.CbusSimulator(adapterMemo);
+            });
         }
     }
 
     TrafficController tc;
     CanSystemConnectionMemo adapterMemo;
-    CbusSimulator _sim = null;
 
     /**
      * Send a specific packet to the rails.
@@ -47,15 +45,20 @@ public class CbusCommandStation implements CommandStation, CanListener {
     @Override
     public boolean sendPacket(byte[] packet, int repeats) {
 
-        if (repeats != 1) {
-            log.warn("Only single transmissions currently available");
+        if (repeats < 1) {
+            repeats = 1;
+            log.warn("Ops Mode Accessory Packet 'Send count' of < 1 is illegal and is forced to 1.");
         }
+        if (repeats > 8) {
+            repeats = 8;
+            log.warn("Ops Mode Accessory Packet 'Send count' reduced to 8.");
+        }        
 
         CanMessage m = new CanMessage(2 + packet.length, tc.getCanid());     // Account for opcode and repeat
         int j = 0; // counter of byte in input packet
 
         m.setElement(0, CbusConstants.CBUS_RDCC3 + (((packet.length - 3) & 0x3) << 5));
-        m.setElement(1, 1);   // repeat
+        m.setElement(1, repeats);   // repeat
 
         // add each byte of the input message
         for (j = 0; j < packet.length; j++) {
@@ -136,24 +139,6 @@ public class CbusCommandStation implements CommandStation, CanListener {
         msg.setElement(1, handle);
         msg.setElement(2, mode);
         tc.sendCanMessage(msg, this);
-    }
-
-
-    public CbusSimulator getNetworkSim() {
-        if ( _sim == null ) {
-            ThreadingUtil.runOnLayout( ()->{
-                _sim = new CbusSimulator(adapterMemo);
-            });
-        }
-        return _sim;
-    }
-    
-    public void startNetworkSim() {
-        if ( _sim == null ) {
-            ThreadingUtil.runOnLayout( ()->{
-                _sim = new CbusSimulator(adapterMemo);
-            });
-        }
     }
 
     @Override

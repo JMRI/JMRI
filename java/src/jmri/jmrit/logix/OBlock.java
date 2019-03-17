@@ -95,6 +95,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _statusMap.put("powerError", Integer.valueOf(TRACK_ERROR));
     }
 
+    // Note also the enum jmri.Conditional.Type with the values OBLOCK_????
     static void loadStatusNameMap() {
         _statusNameMap.put(Bundle.getMessage("unoccupied"), "unoccupied");
         _statusNameMap.put(Bundle.getMessage("occupied"), "occupied");
@@ -521,7 +522,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         String msg = null;
         if (_warrant != null) {
             if (!warrant.equals(_warrant)) {
-                msg = Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
+                msg = Bundle.getMessage("AllocatedToWarrant", 
+                        _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
             } else {
                 return null;
             }
@@ -563,7 +565,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return null;
         } else if (_warrant != null) {
             // allocated to another warrant
-            return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
+            return Bundle.getMessage("AllocatedToWarrant",
+                    _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
         if (_pathName != null && !_pathName.equals(pathName)) {
             return Bundle.getMessage("AllocatedToPath", pathName, getDisplayName(), _pathName);
@@ -838,7 +841,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_EXCEPTION", justification="reference to OPath is not null when used")
     protected String setPath(String pathName, Warrant warrant) {
         if (_warrant != null && !_warrant.equals(warrant)) {
-            return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
+            return Bundle.getMessage("AllocatedToWarrant",
+                    _warrant.getDisplayName(), getDisplayName(), _warrant.getTrainName());
         }
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
@@ -848,12 +852,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         if (msg == null && ((getState() & OBlock.ALLOCATED) == 0)) {
             msg = Bundle.getMessage("PathNotSet", pathName, getDisplayName());
-        } else if (msg == null) {  // Sanity check
-            String p = warrant.getRoutePathInBlock(this);
-            if (p!=null && !pathName.equals(p)) {
-                msg = "path \""+pathName+"\" for block \""+getDisplayName()+"\" does not agree with path \""+
-                        p+"\" in route of warrant \""+warrant.getDisplayName()+"\"";
-            }
         }
         if (msg != null) {
             log.warn(msg);

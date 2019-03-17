@@ -172,6 +172,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     /**
      * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Sensor System Name
+     * @return the sensor number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -242,7 +244,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

@@ -43,7 +43,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));  // NOI18N
         options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
-        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));  // NOI18N
+        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"), packetizerOptions()));  // NOI18N
         options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"), 
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
     }

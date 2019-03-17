@@ -37,19 +37,11 @@ public class DefaultSignalMastManagerXml
         element.setAttribute("class", this.getClass().getName());
         if (m != null) {
             // include contents
-            List<String> names = m.getSystemNameList();
-            for (int i = 0; i < names.size(); i++) {
-                //Element e = new Element("signalmast");
-                SignalMast p = m.getSignalMast(names.get(i));
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
-                    if (e != null) {
-                        element.addContent(e);
-                    }
-                } catch (Exception ex) {
-                    log.error("Error storing signalmast: {}", ex);
+            for (SignalMast p : m.getNamedBeanSet()) {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
+                if (e != null) {
+                    element.addContent(e);
                 }
-
             }
             List<SignalMastRepeater> repeaterList = m.getRepeaterList();
             if (repeaterList.size() > 0) {
@@ -112,10 +104,12 @@ public class DefaultSignalMastManagerXml
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
                 try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -128,10 +122,12 @@ public class DefaultSignalMastManagerXml
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
                 try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -144,10 +140,12 @@ public class DefaultSignalMastManagerXml
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
                 try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -160,10 +158,12 @@ public class DefaultSignalMastManagerXml
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
                 try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -176,10 +176,12 @@ public class DefaultSignalMastManagerXml
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
                 try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                 } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -192,10 +194,12 @@ public class DefaultSignalMastManagerXml
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
                 try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }

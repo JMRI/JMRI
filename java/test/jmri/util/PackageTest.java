@@ -19,6 +19,7 @@ import org.junit.runners.Suite;
         AlphanumComparatorTest.class,
         ColorUtilTest.class,
         MathUtilTest.class,
+        JUnitSwingUtilTest.class,
         SwingTestCaseTest.class,
         
         jmri.util.docbook.PackageTest.class,
@@ -89,6 +90,7 @@ import org.junit.runners.Suite;
         QuickPromptUtilTest.class,
         UnzipFileClassTest.class,
         AbstractFrameActionTest.class,
+        ValidatingInputPaneTest.class,
 
         // deliberately at end
         jmri.util.Log4JErrorIsErrorTest.class,

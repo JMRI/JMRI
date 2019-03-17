@@ -110,7 +110,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return newInstance;
         });
         instance.setVisible(true);
-        instance.pack();
         return instance;
     }
 
@@ -293,7 +292,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         mainPanel.setLayout(new BorderLayout(5, 5));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-//        panel.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout());
         pp.add(new JLabel("A:"));
@@ -315,9 +313,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 concatenate();
             }
         });
-//        panel.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
         panel.add(concatButton, Box.CENTER_ALIGNMENT);
-//        panel.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
 
         mainPanel.add(panel);
         _concatDialog.getContentPane().add(mainPanel);
@@ -465,29 +461,19 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      */
     public String runTrain(Warrant w, int mode) {
         String msg = null;
-        w.deAllocate();
         if (w.getRunMode() != Warrant.MODE_NONE) {
             msg = w.getRunModeMessage();
         }
         if (msg == null) {
+            w.deAllocate();
             msg = w.setRoute(false, null);
             if (msg == null) {
-                msg = _model.checkAddressInUse(w);
-                if (msg == null) {
-                    msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
-                }
+                msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
             }
         }
         if (msg != null) {
-            w.deAllocate();
-//            setStatusText(msg, Color.red, false);
             return Bundle.getMessage("CannotRun", w.getDisplayName(), msg);
         }
-/*        if (w.commandsHaveTrackSpeeds()) {
-            w.getSpeedUtil().getValidSpeedProfile(this);            
-        } else {
-            setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
-        }*/
         return null;
     }
 

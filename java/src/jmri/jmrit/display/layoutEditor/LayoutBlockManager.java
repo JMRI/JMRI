@@ -168,23 +168,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getLayoutBlock(@Nullable Block block) {
-        LayoutBlock result = null;
-
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during scan of LayoutBlocks");
-            } else {
-                result = getBySystemName(sName);
-                if (result.getBlock() == block) {
-                    break;
-                }
-                result = null;
+        for (LayoutBlock lb : getNamedBeanSet()) {
+             if (lb.getBlock() == block) {
+                return lb;
             }
         }
-        return result;
+        return null;
     }	//getLayoutBlock
 
     @CheckReturnValue
@@ -221,22 +210,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getBlockWithSensorAssigned(@Nullable Sensor s) {
-        LayoutBlock result = null;
-
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during scan of LayoutBlocks");
-            } else {
-                LayoutBlock block = getBySystemName(sName);
-                if (block.getOccupancySensor() == s) {
-                    result = block;
-                    break;
-                }
+        for (LayoutBlock block : getNamedBeanSet()) {
+            if (block.getOccupancySensor() == s) {
+                return block;
             }
         }
-        return result;
+        return null;
     }	//getBlockWithSensorAssigned
 
     /**
@@ -249,23 +228,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getBlockWithMemoryAssigned(Memory m) {
-        LayoutBlock result = null;
-
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during scan of LayoutBlocks");
-            } else {
-                LayoutBlock block = getBySystemName(sName);
-
-                if (block.getMemory() == m) {
-                    result = block;
-                    break;
-                }
+        for (LayoutBlock block : getNamedBeanSet()) {
+            if (block.getMemory() == m) {
+                return block;
             }
         }
-        return result;
+        return null;
     }	//getBlockWithMemoryAssigned
 
     /**

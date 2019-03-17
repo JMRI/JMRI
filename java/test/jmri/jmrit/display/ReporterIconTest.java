@@ -35,9 +35,7 @@ public class ReporterIconTest extends PositionableTestBase {
 
     @Test
     public void testShowNumericAddress() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -48,11 +46,9 @@ public class ReporterIconTest extends PositionableTestBase {
         jf.setVisible(true);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         JUnitUtil.initReporterManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test ReporterIcon Panel");
@@ -70,9 +66,8 @@ public class ReporterIconTest extends PositionableTestBase {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         to = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

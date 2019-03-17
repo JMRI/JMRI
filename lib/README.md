@@ -141,10 +141,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
 - unlike jython-2.7.0.jar, includes embedded standard python libs
 
-##### jakarta-regexp-1.5.jar
-- (needed for jfcunit)
-- Used for testing only, not at runtime
-
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
@@ -206,10 +202,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
 
 ##### jmdns.jar
-- Version 3.5.1 (4 August 2016)
+- Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
-
-##### jakarta-regexp-1.5.jar
 
 ##### jna-4.4.0.jar
 - Java Native Access library
@@ -218,6 +212,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### jna-platform-4.4.0.jar
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
+
+##### thumbnailator-0.4.8.jar
+- Thumbnailator
+- from https://github.com/coobird/thumbnailator
+- Used by jmri.util.swing.ResizableImagePanel to read Exif information in JPEG files.
 
 ##### vecmath-1.5.2.jar
 - from Java3D 1.5.2
@@ -247,8 +246,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.6 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- Eclipse compiler 4.10 from
+    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
 - used in ant warnings target
 
 ##### jemmy-22-00c9f753cd0a.jar
@@ -263,11 +262,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version 1.3
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
-
-##### jfcunit.jar
-- version 2.08
-- Used for testing only, not at runtime
-- from <http://jfcunit.sourceforge.net>
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.  

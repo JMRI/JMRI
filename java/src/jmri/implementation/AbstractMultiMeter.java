@@ -30,6 +30,9 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
            intervalTask.cancel();
            intervalTask = null;
         }
+        if(sleepInterval <0){
+           return; // don't start or restart the timer.
+        }
         intervalTask = new UpdateTask();
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");
@@ -89,7 +92,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public void updateCurrent(float c) {
         setCurrent(c);
     }
@@ -107,7 +110,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public void updateVoltage(float v) {
         setVoltage(v);
     }
@@ -121,7 +124,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public synchronized void addDataUpdateListener(PropertyChangeListener l) {
         this.addPropertyChangeListener(CURRENT, l);
         this.addPropertyChangeListener(VOLTAGE, l);
@@ -131,7 +134,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public synchronized void removeDataUpdateListener(PropertyChangeListener l) {
         this.removePropertyChangeListener(CURRENT, l);
         this.removePropertyChangeListener(VOLTAGE, l);
@@ -141,7 +144,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public PropertyChangeListener[] getDataUpdateListeners() {
         return this.getPropertyChangeListeners(CURRENT);
     }

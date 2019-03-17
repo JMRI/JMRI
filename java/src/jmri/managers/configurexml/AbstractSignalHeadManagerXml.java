@@ -41,6 +41,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element signalheads = new Element("signalheads");
         setStoreElementClass(signalheads);
@@ -63,13 +64,9 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                 }
                 log.debug("system name is " + sname);
                 SignalHead sub = sm.getBySystemName(sname);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        signalheads.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing signalhead: {}", e, e);
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    signalheads.addContent(e);
                 }
             }
         }
@@ -133,10 +130,12 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via " + adapterName);
             try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
                 adapter.load(item, null);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                        | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                        | jmri.configurexml.JmriConfigureXmlException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e, e);
             }
         }

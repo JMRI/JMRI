@@ -392,7 +392,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     protected void addPressed(ActionEvent e) {
         editMode = false;
         duplicateMode = false;
-        if ((sectionManager.getSystemNameList().size()) > 0) {
+        if ((sectionManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
             JOptionPane.showMessageDialog(null, rbx
@@ -928,13 +928,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
         List<String> possibleNames = new ArrayList<>();
-        List<String> allSections = sectionManager.getSystemNameList();
-        for (int i = 0; i < allSections.size(); i++) {
+        
+        for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = allSections.get(i);
+            String mayBeName = s.getSystemName();
             int mayBeDirection = 0;
-            Section s = sectionManager.getBySystemName(mayBeName);
-            if ((s != null) && (s != sOld) && (s != beforeSection)
+            if ((s != sOld) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
@@ -1142,13 +1141,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
         List<String> possibleNames = new ArrayList<>();
-        List<String> allSections = sectionManager.getSystemNameList();
-        for (int i = 0; i < allSections.size(); i++) {
+        for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = allSections.get(i);
+            String mayBeName = s.getSystemName();
             int mayBeDirection = 0;
-            Section s = sectionManager.getBySystemName(mayBeName);
-            if ((s != null) && (s != primarySection) && (s != beforeSection)
+            if ((s != primarySection) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {

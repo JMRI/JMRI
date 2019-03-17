@@ -135,6 +135,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         setVisible(true);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("defaultCatalog", "selectNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
@@ -205,6 +206,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         editMenu.add(deleteItem);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeIndexPanel() {
         _index = new CatalogPanel("ImageIndex", "selectIndexNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");

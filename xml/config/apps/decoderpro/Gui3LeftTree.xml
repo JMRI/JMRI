@@ -99,14 +99,14 @@
       <name xml:lang="it">Palmari</name>
       <name xml:lang="de">Fahrregler</name>
 	  <name xml:lang="ca">Regulador</name>
-      <name xml:lang="cs">Lokoovladače</name>
+      <name xml:lang="cs">Ovladače</name>
       <name xml:lang="de">Rijregelaars</name>
     <node>
         <name>Throttle 1</name>
         <name xml:lang="it">Palmare 1</name>
         <name xml:lang="de">Fahrregler 1</name>
 		<name xml:lang="ca">Regulador 1</name>
-        <name xml:lang="cs">Lokoovladač 1</name>
+        <name xml:lang="cs">Oovladač 1</name>
         <name xml:lang="nl">Rijregelaar 1</name>
     </node>
     <node>
@@ -117,7 +117,7 @@
         <name xml:lang="it">Nuovo Palmare</name>
         <name xml:lang="de">Neuer Fahrregler</name>
 		<name xml:lang="ca">Regulador Nou</name>
-        <name xml:lang="cs">Nový lokoovladač</name>
+        <name xml:lang="cs">Nový ovladač</name>
         <name xml:lang="nl">Nieuwe Rijregelaar</name>
     </node>
     <node>

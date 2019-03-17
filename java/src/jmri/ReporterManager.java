@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -44,6 +43,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * new Reporter. If the name is a valid system name, it will be used for the
      * new Reporter. Otherwise, the makeSystemName method will attempt to turn
      * it into a valid system name.
+     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -131,16 +132,6 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      */
     @Nonnull public
     Reporter newReporter(@Nonnull String systemName, String userName);
-
-    /**
-     * Get a list of all Reporter system names.
-     *
-     * @return a list of reporter system names or an empty list if there are no
-     *         reporters
-     */
-    @Nonnull public
-    @Override
-    List<String> getSystemNameList();
 
     /**
      * Determine if it is possible to add a range of reporters in numerical

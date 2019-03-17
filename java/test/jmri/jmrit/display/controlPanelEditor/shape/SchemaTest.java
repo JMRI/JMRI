@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-//import jmri.InstanceManager;
 /**
  * Checks of JMRI XML Schema
  *
@@ -25,30 +24,8 @@ public class SchemaTest extends SchemaTestBase {
     public SchemaTest(File file, boolean pass) {
         super(file, pass);
     }
+
     public void foo() {
-        
+
     }
 }
-/*
-public class SchemaTest extends jmri.configurexml.SchemaTestBase {
-
-    // from here down is testing infrastructure
-    public SchemaTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SchemaTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.logix.SchemaTest");
-
-        validateDirectory(suite, "java/test/jmri/jmrit/display/controlPanelEditor/shape/valid");
-
-        return suite;
-    }
-}*/

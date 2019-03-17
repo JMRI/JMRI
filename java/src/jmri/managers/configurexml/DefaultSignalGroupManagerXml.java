@@ -35,10 +35,8 @@ public class DefaultSignalGroupManagerXml
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        List<String> names = m.getSystemNameList();
-        for (int i = 0; i < names.size(); i++) {
+        for (SignalGroup p : m.getNamedBeanSet()) {
             Element e = new Element("signalgroup");
-            SignalGroup p = m.getSignalGroup(names.get(i));
             e.addContent(new Element("systemName").addContent(p.getSystemName()));
             e.addContent(new Element("userName").addContent(p.getUserName()));
             //storeCommon(p, e); would store comment, now a separate element

@@ -96,13 +96,13 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
     
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public void useDefaultTimerSettings(boolean boo) {
         setUseDefaultTimerSettings(boo);
     }
     
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public boolean useDefaultTimerSettings() {
         return getUseDefaultTimerSettings();
     }

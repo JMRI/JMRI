@@ -1,19 +1,20 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the NamedBean interface
  *
  * @author	Bob Jacobsen Copyright (C) 2017
  */
-public class NamedBeanTest extends TestCase {
+public class NamedBeanTest {
 
     // Note: This shows that BadUserNameException doesn't (yet) have to be caught or declared
     // Eventually that will go away, and that'll be OK
+    @Test
     public void testNormalizePassThrough() {
         String testString = "  foo ";
         String normalForm = NamedBean.normalizeUserName(testString);
@@ -21,33 +22,13 @@ public class NamedBeanTest extends TestCase {
         Assert.assertEquals("foo", normalForm);
     }
 
-
-    // from here down is testing infrastructure
-    public NamedBeanTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NamedBeanTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NamedBeanTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 }

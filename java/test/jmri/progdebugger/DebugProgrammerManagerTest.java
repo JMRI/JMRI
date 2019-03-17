@@ -2,21 +2,22 @@ package jmri.progdebugger;
 
 import jmri.*;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Test the DebugProgrammerManager class.
  *
  * @author	Bob Jacobsen Copyright 2002
  */
-public class DebugProgrammerManagerTest extends TestCase {
+public class DebugProgrammerManagerTest {
 
     /**
      * Service mode request returns a programmer
      */
+    @Test
     public void testServiceModeRequest() {
         InstanceManager.setDefault(GlobalProgrammerManager.class,
                 new DebugProgrammerManager());
@@ -29,6 +30,7 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * Any service mode request gets the same object
      */
+    @Test
     public void testServiceModeUnique() {
         InstanceManager.setDefault(GlobalProgrammerManager.class,
                 new DebugProgrammerManager());
@@ -42,6 +44,7 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * ops mode request returns a programmer
      */
+    @Test
     public void testOpsModeRequest() {
         InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
@@ -53,6 +56,7 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * Any identical ops mode request gets the same object
      */
+    @Test
     public void testOpsModeUnique() {
         InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
@@ -65,6 +69,7 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * Any identical ops mode request gets the same object
      */
+    @Test
     public void testOpsModeDistinct() {
         InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
@@ -77,29 +82,12 @@ public class DebugProgrammerManagerTest extends TestCase {
                         .getAddressedProgrammer(true, 777) == p);
     }
 
-    // from here down is testing infrastructure
-    public DebugProgrammerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DebugProgrammerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DebugProgrammerManagerTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
+    @After
     public void tearDown(){
         jmri.util.JUnitUtil.tearDown();
     }

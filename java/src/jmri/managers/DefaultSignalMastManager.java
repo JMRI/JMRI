@@ -3,7 +3,8 @@ package jmri.managers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.SignalMast;
@@ -11,8 +12,6 @@ import jmri.SignalMastManager;
 import jmri.implementation.SignalMastRepeater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Default implementation of a SignalMastManager.
@@ -48,7 +47,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
 
     @Override
     public SignalMast getSignalMast(String name) {
-        if (name == null || name.length() == 0) {
+        if (Objects.isNull(name) || name.length() == 0) {
             return null;
         }
         SignalMast t = getByUserName(name);
@@ -125,7 +124,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return Bundle.getMessage("BeanNameSignalMast");
     }
 
-    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<SignalMastRepeater>();
+    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();
 
     /**
      * Creates or retrieves a signal mast repeater.
@@ -184,6 +183,11 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         for (SignalMastRepeater smr : repeaterList) {
             smr.initialise();
         }
+    }
+
+    @Override
+    public SignalMast provide(String name) throws IllegalArgumentException {
+        return provideSignalMast(name);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class);

@@ -9,8 +9,11 @@ import java.util.regex.Pattern;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.TestCase;
-import org.junit.*;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2014
  *
  */
-public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
+public class OpsModeDelayedProgrammerFacadeTest {
 
     @Test
     public void testWrite4Val12Delay0() throws jmri.ProgrammerException, InterruptedException {
@@ -152,13 +155,11 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
 
     // The minimal setup for log4J
     @Before
-    @Override
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
     @After
-    @Override
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

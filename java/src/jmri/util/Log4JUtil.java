@@ -71,7 +71,7 @@ public class Log4JUtil {
     static private boolean warnOnceHasWarned = false;
     
     /**
-     * Restart the "once" part of {@link warnOnce} so that the 
+     * Restart the "once" part of {@link #warnOnce} so that the 
      * nextInvocation will log, even if it already has.
      * <p>
      * Should only be used by test code. We denote this
@@ -97,7 +97,7 @@ public class Log4JUtil {
      */
      static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
         if (logDeprecations) {
-            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, new Exception("traceback"));
+            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, shortenStacktrace(new Exception("traceback")));
         }
      }
      
@@ -264,7 +264,6 @@ public class Log4JUtil {
      * If you then pass it to 
      * Log4J for logging, it'll take up less space.
      * @param t The Throwable to truncate and return
-     * @param len The number of stack trace entries to keep.
      * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t) {
@@ -272,8 +271,9 @@ public class Log4JUtil {
         int i;
         for (i = originalTrace.length-1; i>0; i--) { // search from deepest
             String name = originalTrace[i].getClassName();
-            if (name.equals("jmri.util.junit.TestClassMainMethod")) continue; // special case
-            if (name.startsWith("jmri") || name.startsWith("apps")) break;
+            if (name.equals("jmri.util.junit.TestClassMainMethod")) continue; // special case to ignore high up in stack
+            if (name.equals("apps.tests.AllTest")) continue;                 // special case to ignore high up in stack
+            if (name.startsWith("jmri") || name.startsWith("apps")) break;  // keep those
         }
         return shortenStacktrace(t, i+1);
     }
@@ -285,7 +285,7 @@ public class Log4JUtil {
      * Log4J for logging, it'll take up less space.
      * @param t The Throwable to truncate and return
      * @param len The number of stack trace entries to keep.
-     * @return THe original object with truncated stack trace
+     * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
         StackTraceElement[]	originalTrace = t.getStackTrace();
