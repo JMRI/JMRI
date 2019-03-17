@@ -443,7 +443,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     actualnode.setNameIfNoName( nodeName );
                     actualnode.resetNodeEvents();
                     
-                    log.info("node version {}",nodeVersion);
+                    log.debug("node version {}",nodeVersion);
                     
                     int numNvs = -1;
                     if (moduleNvString.length() % 2 == 0) {
@@ -599,7 +599,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         int response = JOptionPane.showConfirmDialog(null,
                 ( buf.toString() ),
-                ( ("Confirm Write Title")),
+                ( ("Please Confirm Write to Node")),
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if ( response != JOptionPane.OK_OPTION ) {
