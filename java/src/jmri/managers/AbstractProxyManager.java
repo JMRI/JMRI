@@ -407,6 +407,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     @OverridingMethodsMustInvokeSuper
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        if (!namedPropertyListenerMap.containsKey(propertyName)) {
+            namedPropertyListenerMap.put(propertyName, new ArrayList<>());
+        }
         if (!namedPropertyListenerMap.get(propertyName).contains(listener)) {
             namedPropertyListenerMap.get(propertyName).add(listener);
         }
