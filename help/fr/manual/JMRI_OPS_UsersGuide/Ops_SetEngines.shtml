@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-17 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,102 +26,102 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
+3305/5000
+<h1> Utilisation de JMRI&reg; Exploitation des Trains</h1>
 
-      <h2>Set Locomotive Location</h2>
+      <h2> D&#233;finir l'Emplacement de la locomotive</h2>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines_menu.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>The Set Locomotive Location window allows you to override
-      the program and set a Locomotive at a Location that is
-      defined in your Operations database. This dialog superceeds
-      the Set Locomotive window</p>
+      <p>La fen&#234;tre D&#233;finir l'Emplacement d'une Locomotive vous permet 
+      de remplacer le programme et de d&#233;finir une locomotive &#224; un 
+      Emplacement d&#233;fini dans votre base de donn&#233;es Operations. </p>
 
-      <p><img src="images/Ops_Engine_Release.png" alt="release"
-      height="122" width="449"></p>
+      <p><img src = "images/Ops_Engine_Release.png" alt = "release"
+      height = "122" width = "449"></p>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "90%">
         <tbody>
           <tr>
-            <td valign="top" width="47%"><img src=
-            "images/set_Engine_location.png" alt="set locations"
-            height="400" width="500"></td>
+            <td valign = "top" width = "47%"> <img src =
+            "images/set_Engine_location.png" alt = "d&#233;finir les emplacements"
+            height = "400" width = "500"></td>
 
-            <td align="left" valign="top" width="53%">
-              <p><strong>Menu</strong> is standard for
-              DecoderPro&reg;.</p>
+            <td align = "left" valign = "top" width = "53%">
+               <p>Le <strong>Menu</strong> est la norme pour
+              DecoderPro&reg;.</P>
 
-              <p><strong>Locomotive</strong> displays the selected
-              engine.</p>
+              <p><strong>La Locomotive</strong> affiche la machine 
+              s&#233;lectionn&#233;e.</p>
 
-              <p><strong>Type</strong> is displayed</p>
+              <p><strong>Le Type</strong> est affich&#233;</p>
 
-              <p>Status<br>
-              <input name="checkbox" id="checkbox" type="checkbox">
-              Out of Service<br>
-              Takes the Locomotive out of service and will not be
-              assigned by the Build program</p>
+              <p>Statut <br>
+              <input name = "checkbox" id = "checkbox" type = "checkbox">
+              Hors service <br>
+              Met la locomotive hors service et ne sera pas affect&#233;e par 
+              le programme Build</p>
 
-              <p><strong>Location</strong><br>
-              <strong>Name <select name="select16" id="select16">
+              <p><strong>Emplacement</strong> <br>
+              <strong>Nom <select name = "select16" id = "select16">
                 <option>
                   Susanville
-                </option>
-              </select></strong> and <strong>Track <select name=
-              "select16" id="select17">
+               </option>
+             </select></strong> et <strong>Suivre <select name =
+              "select16" id = "select17">
                 <option>
-                  #83 Yard Track
-                </option>
-              </select></strong> you can set the Locomotive at any
-              defined Location on your layout.<br>
-              <input name="checkbox2" id="checkbox2" type=
-              "checkbox"> <strong>Auto</strong> limits selections
-              to valid locations<br></p>
+                  # 83 Yard Track
+               </option>
+             </select></strong>, vous pouvez configurer la Locomotive &#224; 
+             n'importe quel Emplacement d&#233;fini de votre r&#233;seau. <br>
+              <input name = "checkbox2" id = "checkbox2" type =
+              "checkbox"> <strong>Auto</strong>: limite les s&#233;lections 
+              &#224; des Emplacements valides.</p>
 
-              <p><strong>Optional - Normally Set by
-              Program--</strong></p>
+              <p><strong>Facultatif - Normalement d&#233;fini par
+              Programme -</strong></p>
 
-              <p><strong>Destination</strong> optionally set the
-              <strong>Name</strong><strong><select name="select16"
-              id="select18">
+              <p><strong>Destination</strong>, d&#233;finissez &#233;ventuellement le
+              <strong>Nom</strong> <strong><select name = "select16"
+              id = "select18">
                 <option>
                   Lakeview
-                </option>
-              </select></strong> of location and the <strong>Track
-              <select name="select16" id="select19">
+               </option>
+             </select></strong> du lieu et de la <strong>voie <select name = "select16" id = "select19">
                 <option>
-                  #94 Yard Track
-                </option>
-              </select></strong> .</p>
+                  # 94 Yard Track
+               </option>
+             </select></strong>.</p>
 
-              <p><strong>Train</strong> <select name="select16" id=
+              <p><strong>Train</strong> <select name = "select16" id =
               "select20">
                 <option>
                   SL
-                </option>
-              </select> optionally set the Train.</p>
+               </option>
+             </select> d&#233;finissez &#233;ventuellement le Train.</p>
 
-              <p><input name="button17" id="button17" value="Save"
-              type="submit"> press to save the Locomotive Locations
-              that you have set.</p>
+              <p><input name = "button17" id = "button17" value = "Enregistrer"
+              type = "submit"> appuyez sur pour enregistrer les 
+             Emplacements de Locomotive que vous avez d&#233;finis.</p>
 
-              <p>Close the window when completed.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <hr>
+              <p>Fermez la fen&#234;tre lorsque vous avez termin&#233;.</p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines_menu.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
