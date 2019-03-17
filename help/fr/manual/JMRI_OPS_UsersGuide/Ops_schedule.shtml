@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-17 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,190 +24,199 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
 
-      <h2>OperationsPro: Schedules</h2>
+<h1> Utilisation de JMRI&reg; Exploitation des Trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_Locations_Menu.shtml">back</a><a href=
+      <h2> OperationsPro: Planifications</h2>
+
+      <div align = "right">
+        <p><a href="Ops_Locations_Menu.shtml"> retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>If you would like to see Cars delivered to a customer's
-      siding in a particular sequence, or with a specific Load for
-      delivery or shipping, the program allows you to apply a
-      (Manifest) <strong>Schedule</strong> to a Spur Track.
-      <strong>This is an optional feature and shouldn't be used
-      until you become very familiar with how the program generates
-      Manifests and Switch Lists.</strong></p>
+      <p>Si vous souhaitez que des Wagons soient livr&#233;s chez un client
+       dans une s&#233;quence particuli&#232;re ou avec une charge sp&#233;cifique pour 
+       la livraison ou l'exp&#233;dition, le programme vous permet d'appliquer 
+       un <strong>Horaire</strong> (Manifeste) &#224; une Voie d'Embranchement. 
+       <strong>Il s'agit d'une fonctionnalit&#233; facultative qui ne doit 
+       pas &#234;tre utilis&#233;e tant que vous n'&#234;tes pas familiaris&#233; avec la 
+       fa&#231;on dont le programme g&#233;n&#232;re les Manifestes et les Listes de 
+       Man&#156;uvres.</strong></p>
 
-      <p>A Schedule provides very fine control on the order in
-      which specific Cars Types will be delivered to a Spur Track.
-      You can also specify the Road name for the type of Car
-      delivered. For example, if you wanted two SP boxcars to be
-      delivered followed by a tank car loaded with "Oil", you can
-      create a Schedule that will make OperationsPro do exactly
-      that.</p>
+      <p>Un Horaire fournit un contr&#244;le tr&#232;s pr&#233;cis de l'ordre dans 
+      lequel des types de Wagons sp&#233;cifiques seront livr&#233;s &#224; une Voie 
+      d'Embranchement. Vous pouvez &#233;galement sp&#233;cifier le nom de 
+      l'Itin&#233;raire pour le type de Wagon livr&#233;e. Par exemple, si vous 
+      souhaitez que deux wagons SP soient livr&#233;s, suivis d'un 
+      wagon-citerne charg&#233; de "p&#233;trole", vous pouvez cr&#233;er un Horaire qui 
+      permettra &#224; OperationsPro de faire exactement &#231;a.</p>
 
-      <p><a name="Schedules" id="Schedules"></a>You can also access
-      your Schedules from the <a href=
-      "Ops_Locations.shtml">Locations</a> panel Tools menu. The
-      Schedules table provides status for each Schedule. Since you
-      can assign one Schedule to multiple Spurs Tracks, the table
-      also provides additional status info for each of the Tracks
-      that use that particular Schedule. The table also allows you
-      the edit a Schedule once its been assigned to a Spur
-      Track.</p>
+      <p><a name="Schedules" id="Schedules"></a> Vous pouvez &#233;galement 
+      acc&#233;der &#224; vos horaires depuis le menu du panneau Outils<a href =
+      "Ops_Locations.shtml"> Emplacements</a>. Le tableau des Horaires 
+      fournit le statut de chaque Horaire. Etant donn&#233; que vous pouvez 
+      affecter une planification &#224; plusieurs Voies d'Embranchements, le 
+      tableau fournit &#233;galement des informations de statut 
+      suppl&#233;mentaires pour chacune des Voies utilisant cette Planification 
+      particuli&#232;re. Le tableau vous permet &#233;galement de modifier un 
+      Horaire une fois qu'il a &#233;t&#233; affect&#233; &#224; une Voie d'Embranchement.</P>
 
-      <p style="text-align: center;"><img src=
-      "images/Ops_Schedule07.png" alt="schedule" height="218"
-      width="900"></p>
+      <p style = "text-align: center;"> <img src =
+      "images/Ops_Schedule07.png" alt = "schedule" height = "218"
+      width = "900"></p>
 
-      <h4>Creating a Schedule</h4>
+      <h4> Cr&#233;ation d'un calendrier</h4>
 
-      <p>First open the <a style="font-weight: bold;" href=
-      "Ops_Locations.shtml">Locations</a> window.</p>
+      <p>Ouvrez d'abord la <a style = "font-weight: bold;" href =
+      "Ops_Locations.shtml"> Fen&#234;tre Emplacements</a>.</P>
 
-      <p>Then press <input name="button" id="button" value="Edit"
-      type="submit"> in the column to the right of the location
-      that you desire to schedule and the <strong>Edit
-      Location</strong> window will open.</p>
+      <p>Appuyez ensuite sur <input name = "boutton" id = "boutton" 
+      value = "Modifier" type = "submit"> dans la colonne &#224; droite de 
+      l'Emplacement que vous souhaitez planifier et la fen&#234;tre <strong>
+		  Modifier l'Emplacement</strong> s'ouvre.</p>
 
-      <p><img src="images/Ops_Schedule02.png" alt="Schedule"
-      height="544" width="777"></p>
+      <p><img src = "images/Ops_Schedule02.png" alt = "Calendrier"
+      height = "544" width = "777"></p>
 
-      <p>To Schedule a location, select <input name="button2" id=
-      "button2" value="Edit" type="button"> in the column to the
-      right to schedule the specific track at a location, then the
-      <strong>Edit (Spur or other type of track) Track</strong>
-      window will open.</p>
+      <p>Pour planifier un Emplacement, s&#233;lectionnez <input name = "button2" id =
+      "button2" value = "Modifier" type = "button"> dans la colonne de 
+      droite pour planifier la Voie sp&#233;cifique &#224; un Emplacement donn&#233;, 
+      puis la fen&#234;tre <strong>Modifier (Embranchement ou autre type de Voie)</strong> ouverte.</p>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "90%">
         <tbody>
           <tr>
-            <td width="44%"><input name="schedule" id="schedule"
-            src="images/Ops_Schedule03.png" type="image"></td>
+            <td width = "44%"> <input name = "schedule" id = "schedule"
+            src = "images/Ops_Schedule03.png" type = "image"></td>
 
-            <td align="left" valign="top" width="56%">
-              <p>Next to <strong>Optional Schedule</strong>
-              <select name="select" id="select">
-                </select> on the <strong>Edit Spur Track</strong>
-                panel. Press <input name="button3" id="button3"
-                value="Edit" type="submit"> should open the
-                <strong>Add Schedule</strong> panel.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <td align = "left" valign = "top" width = "56%">
+              <p>En regard de <strong>Horaire facultatif</strong>
+              <select name = "select" id = "select">
+               </select> dans le panneau <strong>Modifier Voie 
+               d'Embranchement</strong>. Appuyez sur <input name = 
+               "button3" id = "button3"
+                value = "Modifier" type = "submit"> devrait ouvrir le 
+                panneau <strong>Ajouter un Horaire</strong>.</p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <p>If the Schedule already exists, the <strong>Edit Schedule
-      for <em>Spur</em> [spur name]</strong> window opens so you
-      can modify (or delete) it.<br>
-      If no Schedule is selected, then pressing <input name=
-      "button8" id="button8" value="Edit" type="button"> opens the
-      <strong>Add Schedule for <em>Spur</em> [spur name]</strong>
-      pane.</p>
+      <p>Si la Planification existe d&#233;j&#224;, la fen&#234;tre <strong>Modifier 
+      l'Horaire <em> Embranchement</em> [nom de l'Embranchement]</strong>
+       s'ouvre pour vous permettre de la modifier (ou de la supprimer). <br>
+      Si aucune planification n'est s&#233;lectionn&#233;e, appuyez sur <input name =
+      "button8" id = "button8" value = "Modifier" type = "button"> ouvre 
+      le volet <strong>Ajouter un Horaire pour l'<em> Embranchement</em> 
+      [nom de l'Embranchement]</strong>.</p>
 
-      <p><img src="images/Ops_Schedule04.png" alt="Schedule"
-      height="281" width="900"></p>
+      <p><img src = "images/Ops_Schedule04.png" alt = "Calendrier"
+      height = "281" width = "900"></p>
 
-      <p>A Schedule can operate in two modes:</p>
+      <p>Un Horaire peut fonctionner dans deux modes:</p>
 
       <ul>
-        <li>Sequential, if you want cars in sequence</li>
+        <li> S&#233;quentiel, si vous voulez des Wagons en s&#233;quence</li>
 
-        <li>Match mode, if you do not care about car order</li>
-      </ul>
+        <li> Mode de Correspondance, si vous ne vous souciez pas de 
+        l'ordre de votre Wagon</li>
+     </ul>
 
-      <p>Type a <strong>Name</strong> for your Schedule and then
-      press <input name="button4" id="button4" value="Add Schedule"
-      type="submit"> on the bottom of the panel. Multiple Spur
-      Tracks can use the same Schedule as long as the Tracks use
-      the same Car types and Roads.</p>
+      <p>Saisissez un <strong>nom</strong> pour votre Horaire, puis 
+      appuyez sur <input name = "button4" id = "button4" value = "Ajouter 
+      un Horaire" type = "submit"> au bas du panneau. Plusieurs Voies 
+      d'Embranchements peuvent utiliser le m&#234;me horaire tant que les 
+      Voies utilisent les m&#234;mes types de Wagons et les m&#234;mes Itin&#233;raires.</P>
 
-      <p><img src="images/Ops_Schedule05.png" alt="Schedule"
-      height="281" width="900"></p>
+      <p><img src = "images/Ops_Schedule05.png" alt = "Calendrier"
+      height = "281" width = "900"></p>
 
-      <p><img src="images/Ops_Schedule05a.png" alt="Schedule"
-      height="281" width="900"></p>
+      <p><img src = "images/Ops_Schedule05a.png" alt = "Calendrier"
+      height = "281" width = "900"></p>
 
-      <p>Now add your first delivery for this Track by selecting a
-      Car type <select name="select2" id="select2">
+      <p>Ajoutez maintenant votre premi&#232;re livraison pour cette Voie en 
+      s&#233;lectionnant un type de Wagon <select name = "select2" id = "select2">
         <option>
           Boxcar
-        </option>
-      </select> and pressing <input name="button5" id="button5"
-      value="Add car type" type="submit"> . A new item of Type
-      "Boxcar" should appear in your Schedule list:</p>
+       </option>
+     </select> et en appuyant sur <input name = "button5" id = "button5"
+      value = "Ajouter un type de Wagon" type = "submit">. Un nouvel 
+      &#233;l&#233;ment de type "Boxcar" devrait appara&#238;tre dans votre liste d' 
+      Horaire:</p>
 
-      <p><img src="images/Ops_Schedule06.png" alt="Schedule"
-      height="281" width="900"></p>
+      <p><img src = "images/Ops_Schedule06.png" alt = "Calendrier"
+      height = "281" width = "900"></p>
 
-      <p>A Timetable may be specified using drop-down menus.<br>
-      If you wish, specify a particular Road for the type of Car
-      you entered, or leave the Road field blank if you don't care
-      about the Road name.<br>
-      You can also specify the Car Load for both Receive and
-      Ship.</p><!-- New in version 3.10 -->
+     <p>Un horaire peut &#234;tre sp&#233;cifi&#233; &#224; l'aide des menus d&#233;roulants. <br>
+      Si vous le souhaitez, sp&#233;cifiez une Itin&#233;raire particulier pour le 
+      type de Wagon que vous avez entr&#233; ou laissez le champ Itin&#233;raire 
+      vide si vous ne vous souciez pas du nom de l'Itin&#233;raire. <br>
+      Vous pouvez &#233;galement sp&#233;cifier le chargement de Wagon pour la 
+      r&#233;ception et l'envoi.</P>
 
-      <div style=
-      "margin:40px; padding:10px; background-color:#eee;">
-        New in v3.10: Random moves
-
-        <p>The Add/Edit Schedule panel has a new "Random" column
-        with a menu of 8 items. The default is [Blank] (disabled),
-        and there are values between 5 and 50. If you select 5, it
-        tells the program to randomly reduce the number of Car
-        Moves at this Location by up to 5%. So if you asked for 10
-        Moves, you could get 10 or 9 Moves. If you selected 50, you
-        could get any number of Moves between 10 and 5. Be sure to
-        press "Save Schedule" to save you setting.</p><img src=
-        "images/Ops_AddScheduleRandom413.png" alt=
-        "Schedule v3.8 with Random column" height="268" width=
+            
+              <p>Le panneau Ajouter/Modifier un Horaire a une nouvelle 
+        colonne "Al&#233;atoire" avec un menu de 8 &#233;l&#233;ments. La valeur par 
+        d&#233;faut est [Vide] (d&#233;sactiv&#233;) et il existe des valeurs comprises 
+        entre 5 et 50. Si vous s&#233;lectionnez 5, le programme indique au 
+        programme de r&#233;duire de mani&#232;re al&#233;atoire le nombre de 
+        d&#233;placements de Wagon &#224; cet emplacement jusqu'&#224; 5%. Donc, si 
+        vous demandez 10 mouvements, vous pouvez obtenir 10 ou 9 mouvements. 
+        Si vous avez s&#233;lectionn&#233; 50, vous pouvez obtenir un nombre 
+        quelconque de d&#233;placements compris entre 10 et 5. N'oubliez 
+        pas d'appuyer sur "Enregistrer l'Horaire" pour enregistrer votre 
+        r&#233;glage.</P> <img src =
+        "images/Ops_AddScheduleRandom413.png" alt =
+        "Annexe v3.8 avec colonne al&#233;atoire" height = "268" width =
         "825">
-      </div><!-- End of New -->
+    
 
-      <p>If you want more than one Car of this Type to be delivered
-      consecutively, increase the number in the Count field. The
-      maximum Count is 10 and the minimum is 1. Repeat selecting
-      Car types and pressing <input name="button6" id="button6"
-      value="Add car type" type="submit"> until your have a
-      delivery Schedule you like. Press <input name="button7" id=
-      "button7" value="Save Schedule" type="submit"> and close the
-      Add/Edit Schedule panel when you are done.</p>
+      <p>Si vous souhaitez que plusieurs Wagons de ce type soient livr&#233;es 
+      cons&#233;cutivement, augmentez le nombre indiqu&#233; dans le champ Nombre. 
+      Le nombre maximum est 10 et le minimum est 1. R&#233;p&#233;tez en 
+      s&#233;lectionnant les types de Wagon et en appuyant sur <input name= 
+      "button6" id = "button6" value = "Ajouter un type de Wagon" 
+      type = "submit"> jusqu'&#224; ce que votre Horaire de livraison vous 
+      convienne. Appuyez sur <input name = "button7" id ="button7" value 
+      = "Enregistrer l'Horairee" type = "submit"> et fermez le panneau 
+      Ajouter/Modifier Horaire lorsque vous avez termin&#233;.</p>
 
-      <p>Note only Car Types and Roads that are accepted by this
-      Spur Track are available. If a Car Type or Road isn't
-      available, check the Car Types and Roads set up for this
-      <a href="Ops_AddSiding.shtml">Track</a> and <a href=
-      "Ops_AddLocations.shtml">Location</a> in the respective
-      panes.</p>
+      <p>Notez que seuls les types de Wagon et les Itin&#233;raires accept&#233;s 
+      par cette Voie d'Embranchement sont disponibles. Si un type de 
+      Wagon ou un Itin&#233;raire n'est pas disponible, v&#233;rifiez les types de 
+      Wagons et d'Itin&#233;raires configur&#233;s pour cette <a href="
+      Ops_AddSiding.shtml"> Voie</a> et <a href= "Ops_AddLocations.shtml"> 
+		  Emplacement</a> dans les volets respectifs.</p>
 
-      <p>If you want a specific Load for your cars, you can create
-      them using the <a href="Ops_CarAttributes.shtml">Edit Car
-      Attributes</a> for car <strong>Load</strong>. Each new custom
-      Load type is associated with the Car type. For example you
-      can have "Screws" for a Boxcar, and "Oil" for a Tankcar.
-      OperationsPro will only deliver Cars with a "Schedule Load"
-      to a Spur Track that has a matching Schedule that also
-      requests that particular Load. However, Cars with a Schedule
-      Load can still be placed at Yards, Staging, and Interchange
-      Tracks.</p>
+      <p>Si vous souhaitez une charge sp&#233;cifique pour vos Wagons, vous 
+      pouvez les cr&#233;er &#224; l'aide de <a href="Ops_CarAttributes.shtml"> 
+		  Modifier les attributs de Wagon</a> pour le Wagon <strong>
+			  Charger</strong>. Chaque nouveau type de chargement 
+			  personnalis&#233; est associ&#233; au type de Wagon. Par exemple, 
+			  vous pouvez avoir "Vis" pour un wagon couvert et "Huile" 
+			  pour un wagon-citerne. OperationsPro livrera uniquement 
+			  les Wagons avec une "charge programm&#233;e" &#224; une Voie 
+			  d'Embranchementr ayant une planification correspondante 
+			  qui demande &#233;galement cette charge particuli&#232;re. Toutefois, 
+			  les Wagons avec une charge programm&#233;e peuvent toujours &#234;tre 
+			  plac&#233;es dans les voies de triage, de coulisse et d'&#233;change.</P>
 
-      <p>You can optionally use your Staging Tracks to empty cars
-      with a "Schedule" load, and you can also <em>create</em>
-      "Schedule" loads using staging tracks.</p>
-      <hr>
+      <p>Vous pouvez &#233;ventuellement utiliser vos Voies de stockage 
+      interm&#233;diaire pour vider les wagons avec une charge "Planification". 
+      Vous pouvez &#233;galement <em> cr&#233;er</em> des chargements "Planification" 
+      &#224; l'aide de Voies de coulisse.</p>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Locations_Menu.shtml">back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_Locations_Menu.shtml"> retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
