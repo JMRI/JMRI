@@ -117,12 +117,13 @@
 
         <li><a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
-        Node Config Tool</a> - For MERG CBUS node configuration and editing Node Variables.
+        Node Manager</a> - Node Table and node configuration tools.
         
         <ul>
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#variables">Node Variables</a></li>
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#events">Node Events</a></li>
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodenumber">Node Numbers</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#fcuimport">Restore node from MERG FCU xml file</a></li>
         </ul>
         </li>
         
@@ -169,7 +170,6 @@
       <li>Save / Restart JMRI</li>
       <li>If you are using DCC over the MERG connection, check that JMRI Preferences > Defaults 
       are set correctly, see <a href="#dcc">DCC over MERG CBUS</a>.
-      <br>Restart JMRI a few times, checking that the default connection preferences have stuck.
       </li>
       <li>A new menu item MERG appears in the PanelPro or DecoderPro window, containing the MERG tools.
       <br>Help > Window Help will show relevant info in the tools and any JMRI window.</li>
@@ -382,12 +382,19 @@
       
         <p>DCC is not a requirement for MERG CBUS or JMRI. Many DC layouts use 
         MERG CBUS + JMRI for route setting, signalling and track occupancy purposes.
-        </p>      
+        </p>
       
         <p>JMRI will send the DCC events over the MERG CBUS network and can be monitored within the MERG CBUS console</p>
 
+        <p>Loco sessions are best viewed with the 
+        <a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml" 
+         >CBUS Command Station Monitor</a>, 
+        which updates the sessions in a table format.</p>
+
         <p>The MERG system allows for advanced consisting to be set using CANCMD and CANCABs.</p>
         
+        <p>Although the CBUS protocol and CANCMD support Advanced Consisting, 
+        this has not been implemented within JMRI at present.</p>
         
         <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" 
         title="JMRI Consisting">JMRI Consisting</a> 
@@ -397,12 +404,21 @@
         <p>Primary Address Consists are supported however.</p>
       
       
-      <h3>Connecting a MERG DCC Command Station CANCMD</h3>
+      <h3>Connecting a MERG DCC Command Station ( CANCMD , CANCSB etc. )</h3>
+        
+        <p>On JMRI startup, the CBUS Node Manager will by default search for command stations.</p>
+        <p>If a command station responds then it will be added to the node table. </p>
+        
+        <p>A command station found at startup will also enable the Track Current Meter, 
+        available from the main PanelPro > Tools > Track Current Meter.
+        <br>This listens for extended event 1 from whichever node number command station 0 is set for.</p>
+        <p>The frequency and other settings for this are within the command station node variables.</p>
+        
         
         <p>Make sure that main <a href="../../../../package/apps/TabbedPreferences.shtml#Defaults"
         >JMRI Preferences Defaults</a> are set to your MERG connection for 
         Throttles, Power Control, Command Station, Service Programmer and Ops Mode Programmer.</p>
-        <p>Although the CANCMD supports Advanced Consisting, this has not been implemented within JMRI at present.</p>
+        
       
         <p>You can use an existing DCC command station, 
         or have a separate DCC command station for a programming track 
@@ -410,24 +426,26 @@
 
         <p>Events do not need to be set up to connect a MERG DCC Command Station CANCMD.</p>
         
-        <img src="images/web/merg-dcc-decoders-355x398.png"
-        width="355" height="398" alt="JMRI MERG DCC Decoders" align= "right">
         
-        <p>DCC Accessory Decoders can be controlled over MERG CBUS and a CANCMD by creating turnouts with explicit RDCCx Opscode commands, 
+        
+        
+        
+        <p>DCC Accessory Decoders can be controlled over MERG CBUS and a CANCMD 
+        by creating turnouts with explicit RDCCx Opscode commands, 
         see <a href="Names.shtml#hex">MERG CBUS hex event naming</a>.
         <br>
         This is also discussed within the <a href="#thirdparty">MERG CBUS WIKI</a> documentation.</p>
         
-      <h3>Programming Train CV's</h3>
-    
-    
-
-    
+      <h3>Programming CV's</h3>
+    <img src="images/web/merg-dcc-decoders-355x398.png"
+        width="355" height="398" alt="JMRI MERG DCC Decoders" align= "right">
         <p>Program train CV's using DecoderPro</p>
         
         <p>CANCMD fully supports DCC CV programming.</p>
         
-        <p>There are definitions within DecoderPro for the MERG CANACC5 .</p>
+        <p>There are definitions within DecoderPro for the MERG CANACC5 and other MERG DCC decoders.</p>
+        
+        
 
     </div>
     <h2><a id="signalling" name="signalling">Signalling</a></h2>
@@ -491,6 +509,14 @@
         This could make network diagnosis awkward, although very unlikely to swamp a MERG CBUS network.</p>
         <p>As stated previously, this is just one approach. 
         There are may ways of interfacing JMRI with MERG CBUS signalling systems.</p>
+        
+        
+        <hr>
+        
+        <p>There is initial support for the experimental CabData OPC available in 
+        <a href="../../../../package/jmri/jmrit/cabsignals/CabSignalPane.html"
+        >JMRI CabSignals</a></p>
+        
       
       <h3>Receiving Module supplied or existing Signal Logic into JMRI</h3>
       <p>This is normally done the other way round, however people may have 
