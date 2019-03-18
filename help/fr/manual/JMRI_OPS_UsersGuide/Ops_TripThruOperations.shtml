@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-18 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,106 +26,109 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg;pour l'Exploitation des Trains</h1>
 
-      <h2>A Trip through Operations</h2>
+      <h2> Un voyage &#224; travers l'Exploitation</h2>
 
-      <div align="right">
-        <p><a href="Ops_Trains.shtml">Previous</a></p>
+      <div align = "right">
+        <p><a href="Ops_Trains.shtml"> Pr&#233;c&#233;dent</a></p>
 
-        <p><a href="index.shtml#Operations">Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Index</a></p>
+     </div>
+      <h>
 
-      <p>Well, now that we've had an overview of OperationsPro,
-      let's see if we can make it work. We could sit down and enter
-      a whole bunch of information into the Locations, Cars,
-      Engines, Routes and Trains screens or do it the easy way and
-      use the built-in Demo Railroad. Since this is a training (pun
-      intended) exercise, we'll use the Demo files.<br>
-      To get the demo files loaded, go to the JMRI main menu and
-      click on <strong>Tools</strong>, scroll all the way to the
-      bottom to select Operations (or pick the Operations menu if
-      set in Operations settings), and slide sideways to select
-      Settings. On the Operations Settings screen select the Tools
-      menu and then select Load Demo Files. DecoderPro&reg; will
-      need to restart.</p>
+      <p>Eh bien, maintenant que nous avons un aper&#231;u d'OperationsPro, 
+      voyons si nous pouvons le faire fonctionner. Nous pourrions nous 
+      asseoir et entrer une foule d'informations dans les &#233;crans 
+      Emplacements, Wagons, Locomotives, Itin&#233;raires et Trains ou le 
+      faire facilement et utiliser le r&#233;seau de d&#233;monstration int&#233;gr&#233;. 
+      Comme il s'agit d'un exercice d'entra&#238;nement (jeu de mots), nous 
+      utiliserons les fichiers de d&#233;monstration. <br> 
+      Pour charger les fichiers de d&#233;monstration, ouvrez le menu 
+      principal JMRI et cliquez sur <strong>Outils</strong>, faites les 
+      tous d&#233;filer vers le bas pour s&#233;lectionner Exploitation (ou 
+      choisissez le menu Exploitaion s'il est d&#233;fini dans Param&#232;tres 
+      d'Exploitation), puis faites-le glisser pour s&#233;lectionner Param&#232;tres. 
+      Sur l'&#233;cran Param&#232;tres d'Exploitation, s&#233;lectionnez le menu Outils, 
+      puis s&#233;lectionnez Charger les fichiers de d&#233;monstration 
+      DecoderPro&reg; devra red&#233;marrer.</p>
 
       <p align="center"><img src="images/Ops_Operations01.png"
       width="778" height="608"></p>
-
-      <p align="left">Now go back to the DecoderPro main menu to
-      quit and then re-start the program. This will load the Demo
-      files. When the program presents the main JMRI screen, click
-      on Tools menu, scroll all the way to the bottom to select
-      Operations, and it expands to the Operations menu. Select
-      Locations which opens and displays the Location window as
-      shown below. All of the locations are shown as a list sorted
-      by <strong>Name.</strong></p>
-
+      
+      <p align = "left"> Maintenant, retournez dans le menu principal de 
+      DecoderPro pour quitter puis red&#233;marrez le programme. Cela 
+      chargera les fichiers de d&#233;monstration. Lorsque le programme 
+      pr&#233;sente l'&#233;cran principal JMRI, cliquez sur le menu Outils, 
+      faites d&#233;filer l'&#233;cran jusqu'en bas pour s&#233;lectionner Exploitation, 
+      puis le menu Exploitation appara&#238;t. S&#233;lectionnez Emplacements qui 
+      s'ouvre et affiche la fen&#234;tre Emplacement, comme indiqu&#233; ci-dessous. 
+      Tous les emplacements sont affich&#233;s dans une liste tri&#233;e
+      par <strong>Nom.</strong></p>
       <p align="center"><img src="images/Ops_Operations02.png"
       width="670" height="245"></p>
 
-      <p align="left">If you select Lakeview and click on the Edit
-      box way over on the right of the entry for Lakeview, you'll
-      see a screen like that below, Edit Location, showing that
-      Lakeview is a staging area that can accommodate almost any
-      kind of car. This will be the starting point for our mythical
-      trip.</p>
+
+      <p align = "left"> Si vous s&#233;lectionnez Lakeview et que vous 
+      cliquez sur la bo&#238;te de dialogue Modifier situ&#233;e &#224; droite de 
+      l'entr&#233;e de Lakeview, un &#233;cran comme celui ci-dessous, Modifier 
+      l'emplacement, indique que Lakeview est une Coulisse qui peut 
+      accueillir presque n'importe quel type de Wagon. Ce sera le point 
+      de d&#233;part de notre voyage mythique.</P>
 
       <p align="center"><img src="images/Ops_Operations03.png"
-      width="766" height="577" alt="location Edit"></p>
+      width="766" height="577" alt="location Modifier"></p>
 
-      <p>We will now exit <strong>Edit Location</strong> window
-      that describes location Lakeview Staging Area, by clicking
-      the window close icon (red X) in the upper right corner of
-      the window. Also close the <strong>Locations</strong> window
-      in the same manner.</p>
+      <p>Nous allons maintenant quitter la fen&#234;tre <strong>Modifier 
+      l'Emplacement</strong> d&#233;crivant l'emplacement Coulissee Lakeview 
+      en cliquant sur l'ic&#244;ne de fermeture de la fen&#234;tre (X rouge) dans 
+      le coin sup&#233;rieur droit de la fen&#234;tre. Fermez &#233;galement la fen&#234;tre 
+      <strong>Emplacements</strong> de la m&#234;me mani&#232;re.</P>
 
-      <p>Now, let's take a look at what resources are available to
-      make up our train. Open the Cars window from the Operations
-      menu. The Cars window now lists all the cars that are in the
-      OperationsPro database and can be chosen to make up a train,
-      so many that there's a scrollbar on the right to scroll
-      through the list. Again clicking on the Edit box on the right
-      we could see the specifics of any one car and of course Edit
-      the data (if it was our own). We won't bother.</p>
+      <p>Maintenant, regardons quelles ressources sont disponibles pour 
+      composer notre Train. Ouvrez la fen&#234;tre Wagons dans le menu 
+      Exploitation. La fen&#234;tre Wagons r&#233;pertorie &#224; pr&#233;sent tous les 
+      Wagons figurant dans la base de donn&#233;es OperationsPro et pouvant 
+      &#234;tre choisies pour constituer un Train, ils sont  si nombreux 
+      qu'une barre de d&#233;filement &#224; droite permet de faire d&#233;filer la 
+      liste. En cliquant &#224; nouveau sur la case Editer &#224; droite, nous 
+      avons pu voir les sp&#233;cificit&#233;s de chaque Wagon et bien s&#251;r &#233;diter 
+      les donn&#233;es (si c'&#233;tait la n&#244;tre). Nous ne nous d&#233;rangerons pas.</P>
 
-      <p align="center"><img src="images/Ops_Operations04.png"
+      <p align="center"> <img src="images/Ops_Operations04.png"
       width="900" height="486"></p>
 
-      <p>Of course, we'll need Motive Power to pull our train, so
-      let's look at what's in the Locomotives Table.</p>
+      <p>Bien s&#251;r, nous aurons besoin de la force motrice pour tirer 
+      notre Train, regardons donc le contenu du tableau des locomotives.</p>
 
-      <p align="center"><img src="images/Ops_Operations05.png"
-      width="900" height="453"></p>
+      <p align = "center"> <img src = "images/Ops_Operations05.png"
+      width = "900" height = "453"></p>
 
-      <p>Since we know we're departing from
-      <strong>Lakeview</strong> we probably want to eyeball that
-      pair of <strong>Trainmasters</strong> sitting over on track
-      <strong>#97.</strong> The Command Station on our Demo
-      railroad is obviously an NCE product because these locos are
-      assigned <strong>NCE consist #118.</strong></p>
+      <p>Puisque nous savons que nous partons de <strong>Lakeview</strong>, 
+      nous voulons probablement surveiller de pr&#232;s cette paire de 
+      <strong>Train</strong> pos&#233;e sur la bonne voie <strong>n &ordm; 97.
+      </strong> La centale de commande de notre r&#233;seau de d&#233;monstration 
+      est &#233;videmment un produit NCE, car ces locomotives portent le 
+      <strong>couplage NCE n&ordm;118.</Strong></p>
 
-      <p>So how does Operations REALLY work? Well, once you have
-      all the data entered as we've seen above, we can generate a
-      set of manifests for the train operations. To do this we use
-      the Trains window. Select <strong>Trains</strong> from the
-      <strong>Operations</strong> menu and the
-      <strong>Trains</strong> window will display.</p>
+      <p>Alors, comment fonctionne VRAIMENT l'Exploitation? Eh bien, 
+      une fois que vous avez saisi toutes les donn&#233;es comme nous l'avons 
+      vu ci-dessus, nous pouvons g&#233;n&#233;rer un ensemble de Manifestes pour 
+      l'exploitation des Trains. Pour ce faire, nous utilisons la fen&#234;tre 
+      Trains. S&#233;lectionnez <strong>Trains</strong> dans le menu <strong>
+		  Exploitation</strong> pour afficher la fen&#234;tre <strong>Trains</strong>.</P>
 
-      <p align="center"><img src="images/Ops_Operations06.png"
-      width="899" height="358"></p>
+      <p align = "center"> <img src = "images/Ops_Operations06.png"
+      width = "899" height = "358"></p>
 
-      <p>Here there are several trains ready to build. The
-      highlighted train is <strong>LBX from Lakeview to
-      Bakersfield</strong>. By putting a check mark in the box in
-      the Build column and then clicking the <input name="button1"
-      id="button1" value="Build" type="button"> button at the
-      bottom of the screen we were able to get the manifest built
-      so that we can preview it. It's a short run, but still takes
-      more than one page of fine print instructions for the
-      crew.</p>
+      <p>Ici, plusieurs Trains sont pr&#234;ts &#224; assembler. Le Train en 
+      surbrillance est <strong>LBX de Lakeview &#224; Bakersfield</strong>. 
+      En cochant la case dans la colonne Assembler, puis en cliquant sur 
+      le bouton <input name = "button1" id = "button1" value = "Assembler" 
+      type = "boutton"> en bas de l'&#233;cran, nous avons pu obtenir le 
+      manifeste Assembl&#233; afin que nous puissions en avoir un aper&#231;u. 
+      La course est courte, mais il faut toujours plus d'une page 
+      d'instructions en petits caract&#232;res pour l'&#233;quipage.</P>
 
       <p align="center"><img src="images/Ops_Operations07.png"
       width="900" height="1169"></p>
@@ -133,33 +136,33 @@
       <p align="center"><img src="images/Ops_Operations08.png"
       width="900" height="472"></p>
 
-      <p>We pick up our locomotives in Lakeview and head over to
-      the yard to gather up a bunch of cars and a caboose. Then we
-      get ready to depart at 7:10 on the fast clock. We should
-      arrive at Farmington at 7:14, and since there were no
-      Farmington bound cars in Lakeview, and nothing in Farmington
-      bound for Hillsboro or Bakersfield, the program has scheduled
-      no work to do at Farmington. So we'll keep going. When we
-      arrive at Hillsboro (hopefully at 7:18), we have some
-      set-outs and pick-ups to attend to. Then, we're off to
-      Bakersfield, gliding through Danville and Port Arthur on the
-      way. Arriving at Bakersfield right on time at 8:21, we drop
-      the boxcar at Heritage Furniture, the Coalhopper in the yard,
-      and slide the caboose gently into the caboose track. Now we
-      can take the motive power over to the locomotive terminal and
-      call in to Dispatch asking for the trip to be terminated.<br>
-      The trip is terminated by selecting it in the Trains screen
-      and clicking the terminate button. This would then enter the
-      new locations of the rolling stock into the data screens and
-      release them for the next build.<br>
-      So that wasn't so difficult, was it? Hope you enjoyed your
-      cab ride.</p>
-      <hr>
+      <p>Nous r&#233;cup&#233;rons nos locomotives &#224; Lakeview et nous dirigeons 
+      vers le triage pour recueillir un tas de Wagons et un fourgon de 
+      queue. Ensuite, nous nous pr&#233;parons &#224; partir &#224; 7h10 avec l'horloge 
+      rapide. Nous devrions arriver &#224; Farmington &#224; 7h14, et comme il n'y 
+      avait pas de Wagons Farmington &#224; Lakeview et rien &#224; Farmington &#224; 
+      destination de Hillsboro ou de Bakersfield, le programme n'a pr&#233;vu 
+      aucun travail &#224; Farmington. Alors on continue. Lorsque nous arrivons 
+      &#224; Hillsboro (&#224; 7h18, esp&#233;rons-le), nous avons quelques d&#233;poses et 
+      ramassages &#224; prendre en charge. Ensuite, nous partons pour 
+      Bakersfield, en passant par Danville et Port Arthur. Arriv&#233;s &#224;
+       Bakersfield &#224; l'heure pr&#233;vue &#224; 8h21, nous d&#233;posons le wagon couvert 
+       de Heritage Furniture, la Coalhopper dans la cour, et glissons 
+       doucement le fourgon de queue dans la voie de fourgon de queue. 
+       Nous pouvons maintenant amener la machine au terminal de Locomotive 
+       et appeler le Dispatcheur pour lui demander de mettre fin au voyage. <br>
+      Le voyage est termin&#233; en le s&#233;lectionnant dans l'&#233;cran Trains et 
+      en cliquant sur le bouton Terminer. Cela entrerait ensuite les 
+      nouveaux Emplacements du mat&#233;riel roulant dans les &#233;crans de donn&#233;es 
+      et les publierait pour la prochaine construction. <br>
+      Donc ce n'&#233;tait pas si difficile, n'est-ce pas? J'esp&#232;re que vous 
+      avez appr&#233;ci&#233; votre trajet en taxi.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Trains.shtml">Previous</a></p>
+      <div align = "right">
+        <p><a href="Ops_Trains.shtml"> Pr&#233;c&#233;dent</a></p>
 
-        <p><a href="index.shtml#Operations">Index</a><a href=
+        <p><a href="index.shtml#Operations"> Index</a><a href=
         "index.shtml#Operations"></a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
