@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-18 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,116 +24,117 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>
 
-      <h2>OperationsPro: Modify Trains by Car Type Window</h2>
+Utilisation de JMRI & reg; pour l'Exploitation des Trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+      <h2> OperationsPro: Fen&#234;tre Modifier les Trains par Type de Wagon</h2>
+
+      <div align = "right">
+        <p><a href="Ops_Trains_Menu.shtml"> Retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>Opened from the <strong>Trains</strong> window
-      <strong>Tools</strong> menu. Use this tool to quickly modify
-      the type of Cars your Train will service. It's useful when
-      adding a new Car Type to your Roster.</p>
+      <p>Ouvert depuis le menu <strong>Trains</strong> <strong>Outils</strong>. 
+      Utilisez cet outil pour modifier rapidement le type de Wagons que 
+      votre Train utilisera. C'est utile lorsque vous ajoutez un nouveau 
+      type de Wagon &#224; votre Inventaire.</P>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "90%">
         <tbody>
           <tr>
-            <td valign="top" width="350"><img src=
-            "images/Ops_TrainsModify.png" alt="modify" height="356"
-            width="300"></td>
+            <td valign = "top" width = "350"> <img src =
+            "images/Ops_TrainsModify.png" alt = "modify" height = "356"
+            width = "300"></td>
 
-            <td valign="top">
-              <p><strong>Menu Bar</strong></p>
+            <td valign = "top">
+              <p><strong>Barre de menus</strong></p>
 
               <ul>
                 <li>
-                  <strong>Tools</strong>
+                  <strong>Outils</strong>
 
                   <ul>
-                    <li><a name="PrintTop" id=
-                    "PrintTop"></a><strong><a href="#Print">Print
-                    Train by Car Types</a></strong></li>
+                    <li> <a name = "PrintTop" id =
+                    "PrintTop"></a> <strong><a href="#Print"> Imprimer Train par Types de Wagon</a></strong></li>
 
-                    <li><a name="PreviewTop" id=
-                    "PreviewTop"></a><strong><a href=
-                    "#Preview">Preview Train by Car
-                    Types</a></strong></li>
-                  </ul>
-                </li>
+                    <li> <a name = "PreviewTop" id =
+                    "PreviewTop"></a> <strong><a href =
+                    "#Aper&#231;u"> Aper&#231;u Train par Types de Wagon
+                    </a></strong></li>
+                 </ul>
+               </li>
 
-                <li><strong>Window</strong> - standard JMRI&reg;
-                menu</li>
+                <li> <strong>Fen&#234;tre</strong> menu standard JMRI&reg;</li>
 
-                <li><strong>Help</strong> - standard JMRI&reg;
-                menu</li>
-              </ul>
+                <li> <strong>Aide</strong>: menu standard JMRI&reg;</li>
+             </ul>
 
-              <p><strong>Type<br>
-              <select name="select" id="select">
+              <p><strong>Type <br>
+              <select name = "select" id = "select">
                 <option>
-                  Baggage
-                </option>
-              </select> <input name="checkbox" id="checkbox" type=
-              "checkbox"> Copy</strong></p>
+                  Bagages
+               </option>
+             </select> <input name = "checkbox" id = "checkbox" type =
+              "case &#224; cocher"> Copier</strong></p>
 
-              <p>You can also <input name="checkbox" id="checkbox"
-              type="checkbox"> <strong>Copy</strong> how all cars
-              of an existing Car Type are to be serviced by your
-              Train and apply those rules to another Car Type. To
-              make a Car Type behave like another, first select the
-              Car Type you would like to copy. The program will
-              show which Trains can service that car type. Next,
-              select the <input name="checkbox2" id="checkbox2"
-              checked="checked" type="checkbox">
-              <strong>Copy</strong>.<br>
-              The Car Type will now appear to the right of the
-              <strong>Copy</strong> checkbox:</p><img src=
-              "images/Ops_copyTrainbyCarType214.png" width="301"
-              height="134">
+              <p>Vous pouvez &#233;galement <input name = "checkbox" id = "checkbox"
+              type = "checkbox"> <strong>Copiez</strong> la fa&#231;on dont 
+              tous les Wagons d'un type de Wagon existant doivent &#234;tre 
+              utilis&#233;s par votre Train et appliquez ces r&#232;gles &#224; un autre 
+              type de Wagon. Pour qu'un type de Wagon se comporte comme 
+              un autre, s&#233;lectionnez d'abord le type de Wagon que vous 
+              souhaitez copier. Le programme indiquera quels Trains peuvent 
+              utiliser ce type de Wagon. Ensuite, s&#233;lectionnez 
+              <input name = "checkbox2" id = "checkbox2"
+              checked = "checked" type = "checkbox">
+              <strong>Copier</strong>. <br>
+              Le type de Wagon appara&#238;tra maintenant &#224; droite de la case 
+              &#224; cocher <strong>Copier</strong>:</p> <img src =
+              "images/Ops_copyTrainbyCarType214.png" width = "301"
+              height = "134">
 
-              <p>Now select the Car Type you want to apply these
-              Trains to using the Type pop-up menu and to have both
-              Car Types serviced by the same Trains.</p>
+              <p>S&#233;lectionnez maintenant le type de Wagon auquel vous 
+              souhaitez appliquer ces Trains &#224; l'aide du menu contextuel 
+              Type et pour que les deux types de Wagon soient utilis&#233;s 
+              par les m&#234;mes Trains.</p>
 
-              <p>Press <input name="button" id="button" value=
-              "Save" type="button"> to apply your choice.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <hr>
+              <p>Appuyez sur <input name = "button" id = "boutton" value =
+              "Enregistrer" tapez = "button"> pour appliquer votre choix.</P>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+      <h>
 
-      <h3><a name="Print" id="Print"></a>Print Train by Car
-      Types</h3>
+      <h3> <a name="Print" id="Print"></a> Imprimer le Train epar Types 
+      de Wagon</h3>
 
-      <p><img src="images/Ops_PrintTrainsbyCarTypes.png" alt=
-      "print" height="779" width="714"></p>
+      <p><img src = "images/Ops_PrintTrainsbyCarTypes.png" alt =
+      "print" height = "779" width = "714"></p>
 
-      <p><strong><a href="#PrintTop">Back</a><a href=
+      <p><strong><a href="#PrintTop"> Retour</a> <a href =
       "#Print"></a></strong></p>
-      <hr>
+      <h>
 
-      <h3><a name="Preview" id="Preview"></a>Preview Train by Car
-      Types</h3>
+      <h3> <a name="Preview" id="Preview"></a> Aper&#231;u de Train par Type 
+      de Wagon</h3>
 
-      <p><img src="images/Ops_PrintPreview.png" alt="preview"
-      height="933" width="660"></p>
+      <p><img src = "images/Ops_PrintPreview.png" alt = "preview"
+      height = "933" width = "660"></p>
 
-      <p><strong><a href="#PreviewTop">Back</a></strong></p>
-      <hr>
+      <p><strong><a href="#PreviewTop"> Retour</a></strong></p>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_Trains_Menu.shtml"> Retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
