@@ -67,11 +67,9 @@ public class CbusNameService {
 
     /**
      * Return a formatted String attempting locate the node name
-     * <P>
      * <p> 1st attempt - Node Username in node table ( eg. Control Panel West )
      * <p> 2nd attempt - Node Type Name ( eg. CANPAN )
      * <p> fallback empty string
-     * <P>
      * @param nn Node Number
      * @return Node name if available , else empty string
      */
