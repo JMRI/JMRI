@@ -147,10 +147,10 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      * return the next free valid address up to a maximum of 10 addresses away
      * from the initial address. Used when adding add a range of Sensors.
      *
-     * @param curAddress - The hardware address of the sensor we wish to add
-     * @param prefix     - The System Prefix used to make up the systemName
+     * @param curAddress The hardware address of the sensor we wish to add
+     * @param prefix     The System Prefix used to make up the systemName
      *                   check.
-     * @return - null if the system name made from prefix and curAddress is in
+     * @return null if the system name made from prefix and curAddress is in
      *         use
      * @throws jmri.JmriException if problem calculating next address
      */

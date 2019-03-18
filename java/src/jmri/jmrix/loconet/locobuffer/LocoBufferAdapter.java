@@ -291,8 +291,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * for a given readable choice return internal value
      * or the default
      * <p>
-     * @param s - string containing ?a packetizer name?
-     * @return - internal value
+     * @param s  string containing ?a packetizer name?
+     * @return internal value
      */
     protected String getPacketizerOption(String s) {
         for (int i=0;i < packetizers.length; i++) {

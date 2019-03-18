@@ -1005,8 +1005,8 @@ public class RosterSpeedProfile {
     /**
      * Get track speed in millimeters per second from throttle setting
      *
-     * @param speedStep - throttle setting
-     * @param isForward - direction
+     * @param speedStep  throttle setting
+     * @param isForward  direction
      * @return track speed
      */
     public float getSpeed(float speedStep, boolean isForward) {

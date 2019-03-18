@@ -331,10 +331,10 @@ public abstract class LayoutTrack {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint           - the point
-     * @param useRectangles      - whether to use (larger) rectangles or
+     * @param hitPoint            the point
+     * @param useRectangles       whether to use (larger) rectangles or
      *                           (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free
+     * @param requireUnconnected  whether to only return hit types for free
      *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
@@ -586,7 +586,7 @@ public abstract class LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType - the connection type to test
+     * @param connectionType  the connection type to test
      * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(int connectionType) {

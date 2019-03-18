@@ -55,7 +55,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     /**
      * Initialise a Signal Mast Logic for a given source Signal mast.
      *
-     * @param source - The Signal Mast we are configuring an SML for
+     * @param source  The Signal Mast we are configuring an SML for
      */
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
         super(source.toString()); // default system name
