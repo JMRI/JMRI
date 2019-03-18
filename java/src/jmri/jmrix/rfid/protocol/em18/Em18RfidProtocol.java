@@ -40,9 +40,9 @@ public class Em18RfidProtocol extends RfidProtocol {
      * Constructor for EM-18 RFID Protocol. Supports the use of concentrators
      * where a character range is used to determine the specific reader port.
      *
-     * @param concentratorFirst - character representing first concentrator port
-     * @param concentratorLast  - character representing last concentrator port
-     * @param portPosition      - position of port character in reply string
+     * @param concentratorFirst  character representing first concentrator port
+     * @param concentratorLast   character representing last concentrator port
+     * @param portPosition       position of port character in reply string
      */
     public Em18RfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         super(concentratorFirst, concentratorLast, portPosition);
