@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The RosterEntry is the central place to find information about a locomotive's
  * configuration, including CV and "programming variable" information.
- * RosterEntry handles persistency through the LocoFile class. Creating a
+ * RosterEntry handles persistence through the LocoFile class. Creating a
  * RosterEntry does not necessarily read the corresponding file (which might not
  * even exist), please see readFile(), writeFile() member functions.
  * <p>
