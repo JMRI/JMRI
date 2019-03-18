@@ -325,7 +325,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      *
      * Also listen for additions/removals or PowerManagers
      *
-     * @param e - the change event
+     * @param e the change event
      */
 
     @Override

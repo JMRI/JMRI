@@ -161,7 +161,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     /**
      * Configure LocoNet connection
      * 
-     * @param memo - specifies which LocoNet connection is used by this tool
+     * @param memo  specifies which LocoNet connection is used by this tool
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {

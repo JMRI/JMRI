@@ -5,7 +5,18 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CbusNodeEventTest.class
+    BundleTest.class,
+    CbusAllocateNodeNumberTest.class,
+    CbusNodeTest.class,
+    CbusNodeConstantsTest.class,
+    CbusNodeEventTest.class,
+    CbusNodeEventTableDataModelTest.class,
+    CbusNodeFromFcuTest.class,
+    CbusNodeFromFcuTableDataModelTest.class,
+    CbusNodeNVTableDataModelTest.class,
+    CbusNodeSingleEventTableDataModelTest.class,
+    CbusNodeTableDataModelTest.class,
+    CbusNodeTrickleFetchTest.class
 })
 
 /**

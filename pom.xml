@@ -257,7 +257,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -613,6 +613,26 @@
                     <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
                     <ignore>org.python:jython-standalone:2.7.0</ignore>
                 </configuration>
+            </plugin>
+            <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-enforcer-plugin</artifactId>
+	            <version>3.0.0-M2</version>
+	            <executions>
+	                <execution>
+	                    <id>enforce-maven</id>
+	                    <goals>
+	                        <goal>enforce</goal>
+                        </goals>
+	                    <configuration>
+	                        <rules>
+	                            <requireMavenVersion>
+	                                <version>[3.3.9,)</version>
+	                            </requireMavenVersion>
+	                        </rules>
+	                    </configuration>
+	                </execution>
+	            </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -1106,7 +1126,7 @@
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <version>[0.4, 0.5)</version>
+            <version>0.4.8</version>
         </dependency>
     </dependencies>
 
