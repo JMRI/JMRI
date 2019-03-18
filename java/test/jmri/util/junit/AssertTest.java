@@ -60,6 +60,7 @@ public class AssertTest {
         assertsEnabled = false;
         assert assertsEnabled = true; // Intentional side-effect if assert is enabled
         // Now assertsEnabled is set to the correct value
+        System.err.println("assert status: "+assertsEnabled);
     }
 
     @After
