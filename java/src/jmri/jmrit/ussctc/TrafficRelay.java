@@ -17,9 +17,6 @@ public class TrafficRelay implements Lock {
         Right,
         Neither }
 
-    // logging to locks now, as related
-    static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
-        
     /**
      * @param signal SignalHeadSection at far end of this route
      * @param direction Setting that, if present in the far SignalHeadSection, means to lock
