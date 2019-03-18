@@ -21,6 +21,8 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
 
     /**
      * @deprecated 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
+     * @param pSlotManager  an ignored parameter
+     * @param memo the LocoNetSystemConnectionMemo to associate with this manager
      */
     @Deprecated // 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
     public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {

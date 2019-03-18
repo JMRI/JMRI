@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.pr3;
 
 import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
@@ -30,7 +31,7 @@ public class PR3Adapter extends LocoBufferAdapter {
      * not considered a user-settable option.  Sets the PR3 for the appropriate
      * operating mode, based on the selected "command station type".
      *
-     * @param activeSerialPort - the port to be configured
+     * @param activeSerialPort  the port to be configured
      */
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
@@ -177,16 +178,16 @@ public class PR3Adapter extends LocoBufferAdapter {
         return retval;
     }
 
+    
     @Override
     public PR3SystemConnectionMemo getSystemConnectionMemo() {
-        if (super.getSystemConnectionMemo() instanceof PR3SystemConnectionMemo) {
-            return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
-        } else {
-            log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
-            return null;
+        LocoNetSystemConnectionMemo m = super.getSystemConnectionMemo();
+        if (m instanceof PR3SystemConnectionMemo) {
+            return (PR3SystemConnectionMemo) m;
         }
+        log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
+        return null;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }

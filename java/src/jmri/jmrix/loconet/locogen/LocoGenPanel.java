@@ -285,7 +285,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * Run button pressed down, start the sequence operation
      *<p>
-     * @param e - a {@link java.awt.event.ActionEvent} to be triggered
+     * @param e  a {@link java.awt.event.ActionEvent} to be triggered
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -375,7 +375,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * two characters each, as defined in
      * {@link jmri.util.StringUtil#bytesFromHexString(String s)} .
      * <p>
-     * @param s - a string containing raw hex data of good form
+     * @param s  a string containing raw hex data of good form
      * @return The packet, with contents filled-in
      */
     LocoNetMessage createPacket(String s) {

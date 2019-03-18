@@ -1,8 +1,8 @@
 package jmri.jmrix.dccpp;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -13,8 +13,9 @@ import org.junit.Assert;
  * @author	Paul Bender
  * @author	Mark Underwood
  */
-public class DCCppInitializationManagerTest extends TestCase {
+public class DCCppInitializationManagerTest {
 
+    @Test
     public void testCtor() {
 
         // infrastructure objects
@@ -36,33 +37,13 @@ public class DCCppInitializationManagerTest extends TestCase {
         //jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down");
     }
     
-    // from here down is testing infrastructure
-    public DCCppInitializationManagerTest(String s) {
-        super(s);
-    }
-    
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppInitializationManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-    
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppInitializationManagerTest.class);
-        return suite;
-    }
-    
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

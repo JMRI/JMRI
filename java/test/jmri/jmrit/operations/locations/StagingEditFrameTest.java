@@ -8,6 +8,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,9 +29,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
      */
     @Test
     public void testAddStagingTrackDefaults() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -79,9 +78,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testSetDirectionUsingChceckbox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -110,9 +107,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddCloseAndReload() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly

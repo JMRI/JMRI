@@ -14,7 +14,7 @@ import jmri.NamedBean;
  * <p>
  * This sorts on the information in the NamedBean itself, including using 
  * the actual type by deferring prefix comparison into the specific NamedBean subclass.
- * This is different from {@link SystemNameComparator}, which only does a common
+ * This is different from the (deprecated) SystemNameComparator, which only does a common
  * lexical sort.  
  * See the <a href="http://jmri.org/help/en/html/doc/Technical/Names.shtml">Names documentation page</a>.
  */

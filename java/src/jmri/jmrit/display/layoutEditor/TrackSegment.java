@@ -19,6 +19,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -28,6 +31,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.ColorUtil;
@@ -57,16 +62,15 @@ import org.slf4j.LoggerFactory;
  * TrackSegments may be hidden when the panel is not in EditMode.
  *
  * @author Dave Duchamp Copyright (p) 2004-2009
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class TrackSegment extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-    private LayoutBlock layoutBlock = null;
+    private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
 
     // persistent instances variables (saved between sessions)
-    private String blockName = "";
     protected LayoutTrack connect1 = null;
     protected int type1 = 0;
     protected LayoutTrack connect2 = null;
@@ -157,7 +161,11 @@ public class TrackSegment extends LayoutTrack {
      */
     @Nonnull
     public String getBlockName() {
-        return (blockName == null) ? "" : blockName;
+        String result = null;
+        if (namedLayoutBlock != null) {
+            result = namedLayoutBlock.getName();
+        }
+        return ((result == null) ? "" : result);
     }
 
     public int getType1() {
@@ -179,8 +187,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 1
      *
-     * @param connectTrack   - the track we want to connect to
-     * @param connectionType - where on that track we want to be connected
+     * @param connectTrack    the track we want to connect to
+     * @param connectionType  where on that track we want to be connected
      */
     protected void setNewConnect1(@Nullable LayoutTrack connectTrack, int connectionType) {
         connect1 = connectTrack;
@@ -190,8 +198,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 2
      *
-     * @param connectTrack   - the track we want to connect to
-     * @param connectionType - where on that track we want to be connected
+     * @param connectTrack    the track we want to connect to
+     * @param connectionType  where on that track we want to be connected
      */
     protected void setNewConnect2(@Nullable LayoutTrack connectTrack, int connectionType) {
         connect2 = connectTrack;
@@ -455,10 +463,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((layoutBlock == null) && (blockName != null) && !blockName.isEmpty()) {
-            layoutBlock = layoutEditor.provideLayoutBlock(blockName);
-        }
-        return layoutBlock;
+        return (namedLayoutBlock != null) ? namedLayoutBlock.getBean() : null;
     }
 
     public String getConnect1Name() {
@@ -529,23 +534,28 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Set Up a Layout Block for a Track Segment.
      */
-    public void setLayoutBlock(@Nullable LayoutBlock b) {
-        if (layoutBlock != b) {
+    public void setLayoutBlock(@Nullable LayoutBlock newLayoutBlock) {
+        LayoutBlock layoutBlock = getLayoutBlock();
+        if (layoutBlock != newLayoutBlock) {
             // block has changed, if old block exists, decrement use
             if (layoutBlock != null) {
                 layoutBlock.decrementUse();
             }
-            layoutBlock = b;
-            if (b != null) {
-                blockName = b.getId();
+            if (newLayoutBlock != null) {
+                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
             } else {
-                blockName = "";
+                namedLayoutBlock = null;
             }
         }
     }
 
     public void setLayoutBlockByName(@Nullable String name) {
-        blockName = name;
+        if ((name != null) && !name.isEmpty()) {
+            LayoutBlock b = layoutEditor.provideLayoutBlock(name);
+            namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
+        } else {
+            namedLayoutBlock = null;
+        }
     }
 
     /*
@@ -598,9 +608,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
-    public String tBlockName = "";
     public String tConnect1Name = "";
     public String tConnect2Name = "";
+
+    public String tLayoutBlockName = "";
 
     /**
      * Initialization method. The above variables are initialized by
@@ -612,14 +623,18 @@ public class TrackSegment extends LayoutTrack {
     // we're using it here for backwards compatibility until it can be removed
     @Override
     public void setObjects(LayoutEditor p) {
-        if (!tBlockName.isEmpty()) {
-            layoutBlock = p.getLayoutBlock(tBlockName);
-            if (layoutBlock != null) {
-                blockName = tBlockName;
-                layoutBlock.incrementUse();
+
+        LayoutBlock lb;
+        if (!tLayoutBlockName.isEmpty()) {
+            lb = p.provideLayoutBlock(tLayoutBlockName);
+            if (lb != null) {
+                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                lb.incrementUse();
             } else {
-                log.error("bad blockname '" + tBlockName + "' in tracksegment " + getName());
+                log.error("bad blockname '" + tLayoutBlockName + "' in tracksegment " + getName());
+                namedLayoutBlock = null;
             }
+            tLayoutBlockName = null; //release this memory
         }
 
         //NOTE: testing "type-less" connects
@@ -637,6 +652,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     protected void updateBlockInfo() {
+        LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != null) {
             layoutBlock.updatePaths();
         }
@@ -772,6 +788,51 @@ public class TrackSegment extends LayoutTrack {
     private JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
     /**
+     * Maximum length of the bumper decoration.
+     */
+    private static final int MAX_BUMPER_LENGTH = 200;
+    private static final int MAX_ARROW_LINEWIDTH = 200;
+    private static final int MAX_ARROW_LENGTH = 200;
+    private static final int MAX_ARROW_GAP = 200;
+    private static final int MAX_BRIDGE_LINE_WIDTH = 200;
+    private static final int MAX_BRIDGE_APPROACH_WIDTH = 200;
+    private static final int MAX_BRIDGE_DECK_WIDTH = 200;
+    private static final int MAX_TUNNEL_FLOOR_WIDTH = 200;
+    private static final int MAX_TUNNEL_LINE_WIDTH = 200;
+    private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
+
+    /**
+     * Helper method, which adds "Set value" item to the menu. The value can be optionally
+     * range-checked. Item will be appended at the end of the menu.
+     * 
+     * @param menu the target menu.
+     * @param titleKey bundle key for the menu title/dialog title
+     * @param tooltipKey bundle key for the menu item tooltip
+     * @param val value getter
+     * @param set value setter
+     * @param predicate checking predicate, possibly null.
+     */
+    private void addNumericMenuItem(@Nonnull JMenu menu, 
+            @Nonnull String titleKey, @Nonnull String tooltipKey,
+            @Nonnull Supplier<Integer> val, 
+            @Nonnull Consumer<Integer> set, @Nullable Predicate<Integer> predicate) {
+        int oldVal = val.get();
+        JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                    Bundle.getMessage(titleKey)) + oldVal));
+            jmi.setToolTipText(Bundle.getMessage(tooltipKey));
+            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for lineWidth
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage(titleKey),
+                    Bundle.getMessage(titleKey),
+                    // getting again, maybe something changed from the menu construction ?
+                    val.get(), predicate);
+            set.accept(newValue);
+            layoutEditor.repaint();
+        });
+    }
+    
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -799,7 +860,7 @@ public class TrackSegment extends LayoutTrack {
         JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", info) + getName());
         jmi.setEnabled(false);
 
-        if (blockName.isEmpty()) {
+        if (namedLayoutBlock == null) {
             jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
         } else {
             jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
@@ -1033,41 +1094,20 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(arrowColor);
         jmi.setBackground(ColorUtil.contrast(arrowColor));
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + arrowLineWidth));
-        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for arrow line width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                    arrowLineWidth);
-            setArrowLineWidth(newValue);
-        });
+        addNumericMenuItem(arrowsMenu, 
+                "DecorationLineWidthMenuItemTitle",  "DecorationLineWidthMenuItemToolTip", 
+                this::getArrowLineWidth, this::setArrowLineWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_ARROW_LINEWIDTH, null));
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("DecorationLengthMenuItemTitle")) + arrowLength));
-        jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for arrow length
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                    arrowLength);
-            setArrowLength(newValue);
-        });
+        addNumericMenuItem(arrowsMenu, 
+                "DecorationLengthMenuItemTitle", "DecorationLengthMenuItemToolTip", 
+                this::getArrowLength, this::setArrowLength,
+                QuickPromptUtil.checkIntRange(1, MAX_ARROW_LENGTH, null));
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("DecorationGapMenuItemTitle")) + arrowGap));
-        jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for arrow gap
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("DecorationGapMenuItemTitle"),
-                    Bundle.getMessage("DecorationGapMenuItemTitle"),
-                    arrowGap);
-            setArrowGap(newValue);
-        });
+        addNumericMenuItem(arrowsMenu,  
+                "DecorationGapMenuItemTitle", "DecorationGapMenuItemToolTip", 
+                this::getArrowGap, this::setArrowGap,
+                QuickPromptUtil.checkIntRange(1, MAX_ARROW_GAP, null));
 
         //
         // bridge menus
@@ -1167,41 +1207,20 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(bridgeColor);
         jmi.setBackground(ColorUtil.contrast(bridgeColor));
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bridgeLineWidth));
-        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for bridge line width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                    bridgeLineWidth);
-            setBridgeLineWidth(newValue);
-        });
+        addNumericMenuItem(bridgeMenu, 
+                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip", 
+                this::getBridgeLineWidth, this::setBridgeLineWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("BridgeApproachWidthMenuItemTitle")) + bridgeApproachWidth));
-        jmi.setToolTipText(Bundle.getMessage("BridgeApproachWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for bridge approach width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("BridgeApproachWidthMenuItemTitle"),
-                    Bundle.getMessage("BridgeApproachWidthMenuItemTitle"),
-                    bridgeApproachWidth);
-            setBridgeApproachWidth(newValue);
-        });
+        addNumericMenuItem(bridgeMenu, 
+                "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip", 
+                this::getBridgeApproachWidth, this::setBridgeApproachWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_APPROACH_WIDTH, null));
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("BridgeDeckWidthMenuItemTitle")) + bridgeDeckWidth));
-        jmi.setToolTipText(Bundle.getMessage("BridgeDeckWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for bridge deck width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("BridgeDeckWidthMenuItemTitle"),
-                    Bundle.getMessage("BridgeDeckWidthMenuItemTitle"),
-                    bridgeDeckWidth);
-            setBridgeDeckWidth(newValue);
-        });
+        addNumericMenuItem(bridgeMenu, 
+                "BridgeDeckWidthMenuItemTitle", "BridgeDeckWidthMenuItemToolTip", 
+                this::getBridgeDeckWidth, this::setBridgeDeckWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_DECK_WIDTH, null));
 
         //
         // end bumper menus
@@ -1272,7 +1291,17 @@ public class TrackSegment extends LayoutTrack {
             int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                     Bundle.getMessage("DecorationLengthMenuItemTitle"),
                     Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                    bumperLength);
+                    bumperLength, new Predicate<Integer>() {
+                @Override
+                public boolean test(Integer t) {
+                    if (t < 0 || t > MAX_BUMPER_LENGTH) {
+                        throw new IllegalArgumentException(
+                                Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
+                    }
+                    return true;
+                }
+            }
+            );
             setBumperLength(newValue);
         });
 
@@ -1374,41 +1403,18 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(tunnelColor);
         jmi.setBackground(ColorUtil.contrast(tunnelColor));
 
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("TunnelFloorWidthMenuItemTitle")) + tunnelFloorWidth));
-        jmi.setToolTipText(Bundle.getMessage("TunnelFloorWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for tunnel floor width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("TunnelFloorWidthMenuItemTitle"),
-                    Bundle.getMessage("TunnelFloorWidthMenuItemTitle"),
-                    tunnelFloorWidth);
-            setTunnelFloorWidth(newValue);
-        });
-
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + tunnelLineWidth));
-        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for tunnel line width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                    tunnelLineWidth);
-            setTunnelLineWidth(newValue);
-        });
-
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                Bundle.getMessage("TunnelEntranceWidthMenuItemTitle")) + tunnelEntranceWidth));
-        jmi.setToolTipText(Bundle.getMessage("TunnelEntranceWidthMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for tunnel entrance width
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("TunnelEntranceWidthMenuItemTitle"),
-                    Bundle.getMessage("TunnelEntranceWidthMenuItemTitle"),
-                    tunnelEntranceWidth);
-            setTunnelEntranceWidth(newValue);
-        });
+        addNumericMenuItem(tunnelMenu, 
+                "TunnelFloorWidthMenuItemTitle", "TunnelFloorWidthMenuItemToolTip", 
+                this::getTunnelFloorWidth, this::setTunnelFloorWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_FLOOR_WIDTH, null));
+        addNumericMenuItem(tunnelMenu, 
+                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip", 
+                this::getTunnelLineWidth, this::setTunnelLineWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_LINE_WIDTH, null));
+        addNumericMenuItem(tunnelMenu, 
+                "TunnelEntranceWidthMenuItemTitle", "TunnelEntranceWidthMenuItemToolTip", 
+                this::getTunnelEntranceWidth, this::setTunnelEntranceWidth,
+                QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_ENTRANCE_WIDTH, null));
 
         popupMenu.add(decorationsMenu);
 
@@ -1486,7 +1492,7 @@ public class TrackSegment extends LayoutTrack {
                 });
             }
         }
-        if ((!blockName.isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
+        if ((namedLayoutBlock != null) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
             popupMenu.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -3810,6 +3816,7 @@ public class TrackSegment extends LayoutTrack {
          */
         List<Set<String>> TrackNameSets = null;
         Set<String> TrackNameSet = null;    // assume not found (pessimist!)
+        String blockName = getBlockName();
         if (blockName != null) {
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
             if (TrackNameSets != null) { // (#1)
@@ -3849,7 +3856,7 @@ public class TrackSegment extends LayoutTrack {
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
             // is this the blockName we're looking for?
-            if (this.blockName.equals(blockName)) {
+            if (getBlockName().equals(blockName)) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
                     log.debug("*    Add track '{}'for block '{}'", getName(), blockName);

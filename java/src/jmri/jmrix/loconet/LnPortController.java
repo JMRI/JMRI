@@ -82,6 +82,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     // and "PR2 standalone programmer" in pr2/Pr2Adaper
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     * @param name the name of the command station type
      */
     public void setCommandStationType(String name) {
         setCommandStationType(LnCommandStationType.getByName(name));
@@ -89,6 +90,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     /**
      * Set config info from the command station type enum.
+     * @param value the LnCommandStationType
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {

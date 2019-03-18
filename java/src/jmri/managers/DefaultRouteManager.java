@@ -161,6 +161,11 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return Bundle.getMessage("BeanNameRoute");
     }
 
+    @Override
+    public Route provide(String name) throws IllegalArgumentException {
+        return provideRoute(name, null);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
 
 }

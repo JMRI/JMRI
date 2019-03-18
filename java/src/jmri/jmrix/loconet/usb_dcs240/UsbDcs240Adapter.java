@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.usb_dcs240;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
      * not considered a user-settable option.  Sets the DCS240 USB interface for the appropriate
      * operating mode, based on the selected "command station type".
      *
-     * @param activeSerialPort - the port to be configured
+     * @param activeSerialPort  the port to be configured
      */
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
@@ -180,14 +181,13 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
 
     @Override
     public UsbDcs240SystemConnectionMemo getSystemConnectionMemo() {
-        if (super.getSystemConnectionMemo() instanceof UsbDcs240SystemConnectionMemo) {
-            return (UsbDcs240SystemConnectionMemo) super.getSystemConnectionMemo();
-        } else {
-            log.error("Cannot cast the system connection memo to a UsbDcs240SystemConnection Memo.");
-            return null;
+        LocoNetSystemConnectionMemo m = super.getSystemConnectionMemo();
+        if (m instanceof UsbDcs240SystemConnectionMemo) {
+            return (UsbDcs240SystemConnectionMemo) m;
         }
+        log.error("Cannot cast the system connection memo to a UsbDcs240SystemConnection Memo.");
+        return null;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(UsbDcs240Adapter.class);
 }

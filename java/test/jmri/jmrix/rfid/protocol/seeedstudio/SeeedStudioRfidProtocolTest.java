@@ -1,9 +1,12 @@
 package jmri.jmrix.rfid.protocol.seeedstudio;
 
 import jmri.jmrix.AbstractMRReply;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the SeeedStudioRfidProtocol class
@@ -17,7 +20,7 @@ import junit.framework.TestSuite;
  * 
  * @author Matthew Harris
  */
-public class SeeedStudioRfidProtocolTest extends TestCase {
+public class SeeedStudioRfidProtocolTest {
 
     AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u00027800652CC9F8\u0003");
     AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("\u00027800652CC9C6\u0003");
@@ -25,6 +28,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of getMaxSize method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testGetMaxSize() {
         assertEquals(14, SeeedStudioRfidProtocol.getMaxSize());
     }
@@ -32,6 +36,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of initString method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testInitString() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals("", instance.initString());
@@ -40,6 +45,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of getTag method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testGetTag() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals("7800652CC9", instance.getTag(msgStandalone));
@@ -48,6 +54,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of providesChecksum method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testProvidesChecksum() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.providesChecksum());
@@ -56,6 +63,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of getCheckSum method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testGetCheckSum() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals("F8", instance.getCheckSum(msgStandalone));
@@ -64,6 +72,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of isValid method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testIsValid() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
@@ -73,6 +82,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of isCheckSumValid method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testIsCheckSumValid() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.isCheckSumValid(msgStandalone));
@@ -82,6 +92,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of endOfMessage method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testEndOfMessage() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.endOfMessage(msgStandalone));
@@ -90,6 +101,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of getReaderPort method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetReaderPort() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         char expResult = 0x00;
@@ -99,6 +111,7 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
     /**
      * Test of toMonitorString method, of class SeeedStudioRfidProtocol.
      */
+    @Test
     public void testToMonitorString() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         String expResult = "Reply from SeeedStudio reader. Tag read 7800652CC9 checksum F8 valid? yes";
@@ -122,33 +135,13 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public SeeedStudioRfidProtocolTest(String testName) {
-        super(testName);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SeeedStudioRfidProtocolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SeeedStudioRfidProtocolTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

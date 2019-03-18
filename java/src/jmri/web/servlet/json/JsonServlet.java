@@ -459,22 +459,6 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     /**
-     * Send an error message in response to a request.
-     *
-     * @param response the HTTP response that will send the message
-     * @param code the error code
-     * @param message the error message
-     * @throws IOException if unable to send message
-     * @deprecated since 4.11.5 without public replacement
-     */
-    @Deprecated
-    public void sendError(HttpServletResponse response, int code, String message) throws IOException {
-        response.setStatus(code);
-        response.getWriter().write(message);
-        jmri.util.Log4JUtil.deprecationWarning(log, "sendError");
-    }
-
-    /**
      * Send a message to the HTTP client in an HTTP response. This closes the
      * response to future messages.
      * <p>

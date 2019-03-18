@@ -37,7 +37,8 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutShape {
-
+    public static final int MAX_LINEWIDTH = 200;
+    
     // operational instance variables (not saved between sessions)
     private LayoutEditor layoutEditor = null;
     private String name;
@@ -308,8 +309,8 @@ public class LayoutShape {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint      - the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller)
+     * @param hitPoint       the point
+     * @param useRectangles  whether to use (larger) rectangles or (smaller)
      *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
@@ -416,10 +417,6 @@ public class LayoutShape {
 
     private JPopupMenu popup = null;
 
-    /**
-     * {@inheritDoc}
-     */
-    //@Override
     @Nonnull
     protected JPopupMenu showShapePopUp(@Nullable MouseEvent mouseEvent, int hitPointType) {
         if (popup != null) {
@@ -525,6 +522,8 @@ public class LayoutShape {
                                 lsp.setType(LayoutShapePointType.eStraight);
                                 break;
                             }
+                            default:
+                              log.error("unexpected enum member!");
                         }
                         layoutEditor.repaint();
                     });
@@ -540,7 +539,8 @@ public class LayoutShape {
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
-                        level);
+                        level, QuickPromptUtil.checkIntRange(1, null, 
+                            Bundle.getMessage("ShapeLevelValueTitle")));
                 setLevel(newValue);
                 layoutEditor.repaint();
             });
@@ -580,7 +580,7 @@ public class LayoutShape {
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
-                        lineWidth);
+                        lineWidth, QuickPromptUtil.checkIntRange(1, MAX_LINEWIDTH, null));
                 setLineWidth(newValue);
                 layoutEditor.repaint();
             });
@@ -710,6 +710,9 @@ public class LayoutShape {
                     path.quadTo(p.getX(), p.getY(), midR.getX(), midR.getY());
                     break;
                 }
+                
+                default:
+                  log.error("unexpected enum member!");
             }
         }   // for (idx = 0; idx < cnt; idx++)
 

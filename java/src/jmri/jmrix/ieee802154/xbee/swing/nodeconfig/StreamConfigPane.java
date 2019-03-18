@@ -182,7 +182,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                     } else {
                         Class<?> cl = Class.forName(className);
 			try {
-                           config = (StreamConnectionConfig) cl.newInstance();
+                           config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
                            modeBox.addItem(config.name());
 			} catch (ClassCastException cce) {
 		           // the list may include non-StreamConnectinoConfig 
@@ -193,7 +193,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
                     log.error("Attempt to load {} failed.", className, e);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.debug("Attempt to load {} failed: {}.", className, e);
                 }
             }
@@ -249,7 +249,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                 try {
                     jmri.jmrix.StreamConnectionConfig config;
                     Class<?> cl = Class.forName(classConnectionNameList1);
-                    config = (jmri.jmrix.StreamConnectionConfig) cl.newInstance();
+                    config = (jmri.jmrix.StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
                     modeBox.addItem(config.name());
                     classConnectionList[n++] = config;
                     if (classConnectionNameList.length == 1) {
@@ -259,7 +259,8 @@ public class StreamConfigPane extends JmrixConfigPane {
 		    // the list may include non-StreamConnectinoConfig 
 		    // objects, so just ignore those.
 	            continue;
-                } catch (NullPointerException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (NullPointerException | ClassNotFoundException | InstantiationException | 
+                            IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);
                 }
             }

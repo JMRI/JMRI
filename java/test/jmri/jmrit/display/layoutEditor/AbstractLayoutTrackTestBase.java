@@ -1,14 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base for testing objects inheriting from LayoutTrack
@@ -18,6 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AbstractLayoutTrackTestBase {
 
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
     }

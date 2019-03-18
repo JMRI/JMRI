@@ -198,6 +198,8 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
 
     /**
      * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Turnout System Name
+     * @return the turnout number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

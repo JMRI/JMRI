@@ -187,7 +187,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Sets the type of turnout configuration which is being used
      *
-     * @param slip - valid values are
+     * @param slip  valid values are
      * <ul>
      * <li>0x00 - Double Slip
      * <li>0x02 - Single Slip

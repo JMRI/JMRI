@@ -109,16 +109,6 @@ public class CbusSendTest {
         checknERD();
     }
     
-    @Test
-    public void testTextAreaAdd1() {
-        TextAreaFIFO ta = new TextAreaFIFO(9);
-        CbusSend tasend = new CbusSend(memo,ta);
-        Assert.assertNotNull("exists",tasend);
-        tasend.searchForNodes();
-        Assert.assertTrue("textarea is updated 1",(ta.getText()).contains("Sending message for all FLiM nodes to respond"));
-        tasend = null;
-        ta = null;
-    }
     
     @Test
     public void testTextAreaAdd2() {

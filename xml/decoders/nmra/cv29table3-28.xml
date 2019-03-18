@@ -69,7 +69,7 @@
 			</enumChoice>
 			<enumChoice choice="Use Speed Table">
 				<choice>Use Speed Table (CV's 67-94)</choice>
-				<choice xml:lang="it">Usa Tabella Velocità' (CV's 67-94)</choice>
+				<choice xml:lang="it">Usa Tabella Velocità (CV's 67-94)</choice>
 				<choice xml:lang="fr">Utiliser tableau de vitesse (CV's 67-94)</choice>
 				<choice xml:lang="de">Geschwindigkeitskennlinie nutzen (CV's 67-94)</choice>
 				<choice xml:lang="cs">Použít rychlostní tabulku (CV 67-94)</choice>

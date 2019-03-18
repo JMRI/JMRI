@@ -348,7 +348,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     /**
      * Set the display order of the combobox.
      *
-     * @param inDisplayOrder - the desired display order for this combobox
+     * @param inDisplayOrder  the desired display order for this combobox
      */
     public void setDisplayOrder(DisplayOptions inDisplayOrder) {
         if (_displayOrder != inDisplayOrder) {

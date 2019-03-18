@@ -409,7 +409,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
 
     /**
      * Remove Row from table
-     * @see buttonDeleteClicked
+     * @see #buttonDeleteClicked
      * @param row int row number
      */    
     void removeRow(int row) {
@@ -422,7 +422,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     /**
      * Delete Button Clicked
      * See whether to display confirm popup
-     * @see removeRow
+     * @see #removeRow
      * @param row int row number
      */
     private void buttonDeleteClicked(int row) {

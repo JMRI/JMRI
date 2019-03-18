@@ -11,12 +11,13 @@ import static jmri.server.json.light.JsonLight.LIGHTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.LightManager;
+import jmri.ProvidingManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 
@@ -24,15 +25,14 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood
  */
-public class JsonLightHttpService extends JsonNamedBeanHttpService {
+public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
 
     public JsonLightHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        Light light = InstanceManager.lightManagerInstance().getLight(name);
+    public ObjectNode doGet(Light light, String name, String type, Locale locale) throws JsonException {
         ObjectNode root = this.getNamedBean(light, name, type, locale);
         ObjectNode data = root.with(DATA);
         if (light != null) {
@@ -57,11 +57,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Light light = InstanceManager.lightManagerInstance().getLight(name);
-        if (light == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
-        }
-        this.postNamedBean(light, data, name, type, locale);
+        Light light = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
@@ -80,26 +76,6 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            InstanceManager.lightManagerInstance().provideLight(name);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", LIGHT, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (Light l : InstanceManager.lightManagerInstance().getNamedBeanSet()) {
-            root.add(this.doGet(LIGHT, l.getSystemName(), locale));
-        }
-        return root;
-
-    }
-
-    @Override
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         switch (type) {
             case LIGHT:
@@ -111,5 +87,15 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+
+    @Override
+    protected String getType() {
+        return LIGHT;
+    }
+
+    @Override
+    protected ProvidingManager<Light> getManager() throws UnsupportedOperationException {
+        return InstanceManager.getDefault(LightManager.class);
     }
 }
