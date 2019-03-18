@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-18 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,136 +27,133 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; pour l'Exploitation des Trains</h1>
 
-      <h2>OperationsPro: Build Options for Trains</h2>
+      <h2> OperationsPro: options d'Assemblage des Trains</h2>
 
-      <div align="right">
-        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_Trains_Menu.shtml"> Retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>The <strong>Options</strong> pane is opened from the
-      <strong>Trains</strong> pane's <strong>Tools</strong>
+      <p>Le volet <strong>Options</strong> est ouvert &#224; partir des 
+      <strong>Outils du volet <strong>Trains</strong>.</strong>
       menu.</p>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "90%">
         <tbody>
           <tr>
-            <td valign="top" width="57%"><img style=
-            "width: 477px; height: 691px;" alt=
-            "trains build options" src=
-            "images/Ops_Trains_BuildOptions.png"><br></td>
+            <td valign = "top" width = "57%"> <img style =
+            "width: 477px; height: 691px;" alt =
+            "options de construction de Trains" src =
+            "images/Ops_Trains_BuildOptions.png"> <br></td>
 
-            <td valign="top" width="43%">
-              <p>Standard JMRI&reg; <strong>Window</strong> and
-              <strong>Help</strong> menus</p>
+            <td valign = "top" width = "43%">
+              <p> <strong>Fen&#234;tres</strong> JMRI standard&reg; et menu 
+              d'<strong>Aide</strong></p>
 
-              <p><strong>Build Options</strong><br>
-              <input name="radio" id="radio" value="radio" checked=
-              "checked" type="radio"> <strong>Normal <input name=
-              "radio2" id="radio2" value="radio2" type="radio">
-              Agressive</strong><br>
-              Normal builds are recommended when you first begin
-              the program. Normal builds guarantee that when a Car
-              is delivered (set out) by a train that there will be
-              track space available for the car.<br>
+              <p><strong>Options d'Assemblage</strong> <br>
+              <input name = "radio" id = "radio" value = "radio" checked =
+              "checked" type = "radio"> <strong>Normal <input name =
+              "radio2" id = "radio2" value = "radio2" type = "radio">
+              Agressif</strong> <br>
+              Des versions normales sont recommand&#233;es lorsque vous 
+              d&#233;marrez le programme pour la premi&#232;re fois. Les Assemblages 
+              normaux garantissent que lorsqu'un Wagon est livr&#233;e par 
+              un train, il y aura un espace de voie disponible pour le Wagon. <br>
               <br>
-              Aggressive builds makes the Car's track space
-              available as soon a a car is scheduled for pick
-              up.<br>
+              Les constructions agressives permettent de disposer de 
+              l'espace du Wagon d&#232;s qu'un Wagon doit &#234;tre r&#233;cup&#233;r&#233;. <br>
               <br>
-              Note that once you've built a train, the build option
-              can not be changed until all trains are terminated or
-              reset.</p>
+              Notez qu'une fois que vous avez asssembl&#233; un train, 
+              l'option de construction ne peut pas &#234;tre modifi&#233;e tant 
+              que tous les Trains ne sont pas termin&#233;s ou r&#233;initialis&#233;s.</P>
 
-              <p><strong>Switcher Service</strong></p>
+              <p><strong>Service de Man&#156;uvre</strong></p>
 
-              <p>Next set of options control local car movements.
-              Normally, it is beter not to allow a car to move from
-              one spur directly to another spur in the same
-              location.</p>
+              <p>Les options suivantes contr&#244;lent les mouvements locaux d
+              e Wagon . Normalement, il est pr&#233;f&#233;rable de ne pas permettre 
+              &#224; un Wagon de passer directement d'un embranchement &#224; un 
+              autre au m&#234;me Emplacement.</P>
 
-              <p><strong>Staging</strong></p>
+              <p><strong>Coulisse</strong></p>
 
-              <p><input name="checkbox2" id="checkbox2" checked=
-              "checked" type="checkbox"> <strong>Enable Type, Road
-              and Load Restrictions into Staging</strong><br>
-              When selected, the program will only deliver a train
-              to a staging track that has the same rolling stock,
-              road, and load name restrictions.</p>
+              <p><input name = "checkbox2" id = "checkbox2" checked =
+              "checked" type = "checkbox"> <strong>Activer les 
+              restrictions de type, de ligne et de charge dans la 
+              coulisse</strong> <br> 
+              Une fois s&#233;lectionn&#233;, le programme ne livrera un train que 
+              sur une voie de coulisse ayant les m&#234;mes restrictions en 
+              mati&#232;re de mat&#233;riel roulant, de ligne et de nom de charge.</P>
 
-              <p><input name="departure" type="checkbox">
-              M<span style="font-weight: bold;">ake departure track
-              available after train is built.</span></p>
+              <p><input name = "departure" type = "checkbox">
+              <span style = "font-weight: bold;">fait une voie de d&#233;part 
+              disponible apr&#232;s l'assemblage du train.</Span></p>
 
-              <p><input name="2" type="checkbox"> <span style=
-              "font-weight: bold;">Allow cars to return to staging
-              if needed.</span></p>
+              <p><input name = "2" type = "checkbox"> <span style =
+              "font-weight: bold;"> Autoriser les Wagons &#224; revenir si 
+              n&#233;cessaire.</span></p>
 
-              <p><input name="checkbox3" id="checkbox3" type=
-              "checkbox"> <strong>Prompt for Departure Track from
-              Staging</strong><br>
-              If selected the program ask you which track should
-              depart from staging during the train build. Note that
-              the program will only prompt you if there are two or
-              more trains available in staging that meet the
-              train's requirements.</p>
+              <p><input name = "checkbox3" id = "checkbox3" type =
+              "checkbox"> <strong>Invite  Voie de D&#233;part de la Coulisse</strong> <br>
+              Si cette option est s&#233;lectionn&#233;e, le programme vous demande 
+              quelle sera la voie de d&#233;part de la coulisse pendant 
+              l'assemblage du train. Notez que le programme ne vous le 
+              demandera que s'il y a deux Trains ou plus disponibles dans 
+              la coulisse qui r&#233;pondent aux exigences du train.</P>
 
-              <p><input name="checkbox4" id="checkbox4" type=
-              "checkbox"> <strong>Prompt for Arrival Track into
-              Staging</strong><br>
-              If selected the program ask you which track should be
-              used for arrival to staging during the train build.
-              Note that the program will only prompt you if there
-              are two or more trains available in staging that meet
-              the train's requirements.</p>
+              <p><input name = "checkbox4" id = "checkbox4" type =
+              "checkbox"> <strong>Invite Voie d'Arriv&#233;e dans la Coulisse</strong> <br>
+              Si cette option est s&#233;lectionn&#233;e, le programme vous demande 
+              quelle voie doit &#234;tre utilis&#233;e pour l'arriv&#233;e lors de 
+              l'assemblage du train. Notez que le programme ne vous le 
+              demandera que s'il ya deux Trains ou plus disponibles dans 
+              l'&#233;tage qui r&#233;pondent aux exigences du train.</P>
 
-              <p><strong>Car Routing Options<br></strong><br>
-              <input name="checkbox" id="checkbox" checked=
-              "checked" type="checkbox"> <strong>Enable Car
-              Routing</strong><br>
-              When enabled, the program will use multiple trains to
-              deliver a car to its final destination. It is
-              recommended that you leave this option enabled. When
-              enabled , you can use <strong><a href=
-              "Ops_schedule.shtml">Schedule</a></strong> to deliver
-              a car to a specific location.</p>
+              <p><strong>Options de Routage des Wagons <br></strong> <br>
+              <input name = "checkbox" id = "checkbox" coch&#233; =
+              "checked" type = "checkbox"> <strong>Activer le Routage du Wagon</strong> <br>
+              Lorsqu'il est activ&#233;, le programme utilisera plusieurs 
+              Trains pour livrer un Wagon &#224; sa destination finale. 
+              Il est recommand&#233; de laisser cette option activ&#233;e. 
+              Une fois activ&#233;, vous pouvez utiliser <strong> <a href =
+              "Ops_schedule.shtml"> Planifiez</a></strong> pour livrer 
+              un Wagon &#224; un emplacement sp&#233;cifique.</P>
 
-              <p><input name="cb10" type="checkbox"> <span style=
-              "font-weight: bold;">Enable Car Routing via
-              Yards</span></p>
+              <p><input name = "cb10" type = "checkbox"> <span style =
+              "font-weight: bold;"> Activer le routage en Wagon via les 
+              Triages</span></p>
 
-              <p><strong>Logging Options<br></strong><br>
-              You can have the program log your locomotive, car, or
-              train movement to a file by selecting the appropriate
-              check boxes. The program creates a new directory
-              "logger" in the operations directory. For each day's
-              session the program will create a new file (.csv)
-              using the day's date.</p>
 
-              <p><strong>Options</strong><br>
-              Allow you to create your own custom manifest using
-              .csv file. Import into a program like Excel to create
-              a manifest to your liking.</p>
+			<p><strong>Options de journalisation <br></strong> <br>
+              Vous pouvez demander au programme de consigner votre 
+              mouvement de locomotive, de Wagon ou de train dans un 
+              fichier en cochant les cases appropri&#233;es. Le programme 
+              cr&#233;e un nouveau r&#233;pertoire "logger" dans le r&#233;pertoire 
+              des op&#233;rations. Pour chaque session du jour, le programme 
+              cr&#233;era un nouveau fichier (.csv) en utilisant la date du jour.</P>
 
-              <p><input name="button" id="button" value="Save"
-              type="button"> settings to disk to preserve
-              them.<br></p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <hr>
+              <p><strong>Options</strong> <br>
+              Vous permet de cr&#233;er votre propre manifeste personnalis&#233; &#224; 
+              l'aide du fichier .csv. Importez-le dans un programme 
+              comme Excel pour cr&#233;er un manifeste &#224; votre go&#251;t.</P>
 
-      <div align="right">
-        <p><a href="Ops_Trains_Menu.shtml">Back</a></p>
+              <p><input name = "bouton" id = "bouton" value = "Enregistrer"
+              type = "bouton"> param&#232;tres sur le disque pour les conserver. <br></p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+      <h>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      <div align = "right">
+        <p><a href="Ops_Trains_Menu.shtml"> Retour</a></p>
+
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
