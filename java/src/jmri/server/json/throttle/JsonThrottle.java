@@ -16,12 +16,15 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
+import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
 import jmri.server.json.JsonException;
 import org.slf4j.Logger;
@@ -87,51 +90,62 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param throttleId The client's identity token for this throttle
      * @param data       JSON object containing either an ADDRESS or an ID
      * @param server     The server requesting this throttle on behalf of a
-     *                   client
+     *                       client
      * @return The throttle
      * @throws jmri.server.json.JsonException if unable to get the requested
-     *                                        {@link jmri.Throttle}
+     *             {@link jmri.Throttle}
      */
-    public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException {
+    public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server)
+            throws JsonException {
+        JsonThrottle throttle = null;
         DccLocoAddress address = null;
+        BasicRosterEntry entry = null;
         Locale locale = server.getConnection().getLocale();
         JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
         if (!data.path(ADDRESS).isMissingNode()) {
-            if (manager.canBeLongAddress(data.path(ADDRESS).asInt())
-                    || manager.canBeShortAddress(data.path(ADDRESS).asInt())) {
+            if (manager.canBeLongAddress(data.path(ADDRESS).asInt()) ||
+                    manager.canBeShortAddress(data.path(ADDRESS).asInt())) {
                 address = new DccLocoAddress(data.path(ADDRESS).asInt(),
                         data.path(IS_LONG_ADDRESS).asBoolean(!manager.canBeShortAddress(data.path(ADDRESS).asInt())));
             } else {
                 log.warn("Address \"{}\" is not a valid address.", data.path(ADDRESS).asInt());
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorThrottleInvalidAddress", data.path(ADDRESS).asInt())); // NOI18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                        Bundle.getMessage(locale, "ErrorThrottleInvalidAddress", data.path(ADDRESS).asInt())); // NOI18N
             }
         } else if (!data.path(ID).isMissingNode()) {
-            try {
-                address = Roster.getDefault().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
-            } catch (NullPointerException ex) {
+            entry = Roster.getDefault().getEntryForId(data.path(ID).asText());
+            if (entry != null) {
+                address = entry.getDccLocoAddress();
+            } else {
                 log.warn("Roster entry \"{}\" does not exist.", data.path(ID).asText());
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorThrottleRosterEntry", data.path(ID).asText())); // NOI18N
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                        Bundle.getMessage(locale, "ErrorThrottleRosterEntry", data.path(ID).asText())); // NOI18N
             }
         } else {
             log.warn("No address specified");
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorThrottleNoAddress")); // NOI18N
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                    Bundle.getMessage(locale, "ErrorThrottleNoAddress")); // NOI18N
         }
         if (manager.containsKey(address)) {
-            JsonThrottle throttle = manager.get(address);
+            throttle = manager.get(address);
             manager.put(throttle, server);
-            throttle.sendMessage(server.getConnection().getObjectMapper().createObjectNode().put(CLIENTS, manager.getServers(throttle).size()));
-            return throttle;
+            throttle.sendMessage(server.getConnection().getObjectMapper().createObjectNode().put(CLIENTS,
+                    manager.getServers(throttle).size()));
         } else {
-            JsonThrottle throttle = new JsonThrottle(address, server);
+            throttle = new JsonThrottle(address, server);
             if (!manager.requestThrottle(address, throttle)) {
                 log.error("Unable to get throttle for \"{}\".", address);
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", address));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle
+                        .getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", address));
             }
             manager.put(address, throttle);
             manager.put(throttle, server);
             manager.attachListener(address, throttle);
-            return throttle;
         }
+        if (entry != null) {
+            throttle.throttle.setRosterEntry(entry);
+        }
+        return throttle;
     }
 
     public void close(JsonThrottleSocketService server, boolean notifyClient) {
@@ -277,9 +291,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     this.sendStatus(server);
                     break;
                 case THROTTLE:
-                default:
                     // no action for throttle item; it always exists
-                    // silently ignore unknown or unexpected items, since a
+                    break;
+                default:
+                    log.debug("Unknown field \"{}\": \"{}\"", k, v);
+                    // do not error on unknown or unexpected items, since a
                     // following item may be an ESTOP and we always want to
                     // catch those
                     break;
@@ -318,7 +334,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         } else if (property.startsWith(F) && !property.contains("Momentary")) { // NOI18N
             data.put(property, ((Boolean) evt.getNewValue()));
         }
-        this.sendMessage(data);
+        if (data.size() > 0) {
+            this.sendMessage(data);
+        }
     }
 
     @Override
@@ -352,16 +370,18 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
-        for (JsonThrottleSocketService server : manager.getServers(this).toArray(new JsonThrottleSocketService[manager.getServers(this).size()])) {
-            this.sendErrorMessage(new JsonException(512, Bundle.getMessage(server.getConnection().getLocale(), "ErrorThrottleRequestFailed", address, reason)), server);
+        for (JsonThrottleSocketService server : manager.getServers(this)
+                .toArray(new JsonThrottleSocketService[manager.getServers(this).size()])) {
+            this.sendErrorMessage(new JsonException(512, Bundle.getMessage(server.getConnection().getLocale(),
+                    "ErrorThrottleRequestFailed", address, reason)), server);
             server.release(this);
         }
     }
 
     @Override
     public void notifyStealThrottleRequired(LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        // this is an automatically stealing implementation.
+        InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
     }
 
     private void sendErrorMessage(JsonException message, JsonThrottleSocketService server) {
@@ -429,5 +449,15 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
         }
         return data;
+    }
+
+    /**
+     * Get the Throttle this JsonThrottle is a proxy for.
+     * 
+     * @return the throttle or null if no throttle is set
+     */
+    // package private
+    Throttle getThrottle() {
+        return this.throttle;
     }
 }

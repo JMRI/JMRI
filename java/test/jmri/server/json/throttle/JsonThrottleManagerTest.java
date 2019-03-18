@@ -5,19 +5,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import jmri.InstanceManager;
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleManagerTest {
 
     @Test
-    public void testCTor() {
-        JsonThrottleManager t = new JsonThrottleManager();
-        Assert.assertNotNull("exists",t);
+    public void testGetDefault() {
+        Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class), JsonThrottleManager.getDefault());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
