@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-18 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,49 +24,49 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg; pour l'Exploitation des Trains</h1>
 
-      <h2>OperationsPro: Trains Timetable</h2>
+      <h2> OperationsPro: Horaire des Trains</h2>
 
-      <div align="right">
-        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_Trains_Menu.shtml"> Retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224;l'Index</a></p>
+     </div>
+      <h>
 
-      <p>Opened from the <strong>Trains</strong> window
-      <strong>Tool</strong> menu. The Timetable tool allows you to
-      define which Trains will run on any given day.</p>
+      <p>Ouvert depuis le menu <strong>Fen&#234;tre Trains</strong> <strong>
+		  Outils</strong>. L'outil Horaires vous permet de d&#233;finir les 
+		  trains &#224; ex&#233;cuter chaque jour.</P>
 
-      <p><img src="images/Ops_TainTimetalbe.png" alt="timetable"
-      height="331" width="794"></p>
+      <p><img src = "images/Ops_TainTimetalbe.png" alt = "emploi du temps"
+      height = "331" width = "794"></p>
 
-      <h3>Menu Bar</h3>
+      <h3> Barre de Menus</h3>
 
       <ul>
         <li>
-          <strong>Tools</strong>
+          <strong>Outils</strong>
 
           <ul>
-            <li><strong>Edit Timetable</strong><br>
-            <img src="images/Ops_EditTimetable.png" alt=
-            "edit timetable" height="122" width="274"><br></li>
-          </ul>
-        </li>
+            <li> <strong>Modifier les horaires</strong> <br>
+            <img src = "images/Ops_EditTimetable.png" alt =
+            "edit schedule" height = "122" width = "274"> <br></li>
+         </ul>
+       </li>
 
-        <li><strong>Window</strong> - standard JMRI&reg; menu</li>
+        <li> <strong>Fen&#234;tre</strong> -menu standard JMRI&reg;</li>
 
-        <li><strong>Help</strong> - standard JMRI &reg;menu</li>
-      </ul>
-      <hr>
+        <li> <strong>Aide</strong>: menu standard JMRI&reg;</li>
+     </ul>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_Trains_Menu.shtml"> Retour</a> <a href =
         "#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224;l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
