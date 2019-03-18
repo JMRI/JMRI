@@ -9,10 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
-import jmri.jmrix.can.cbus.swing.simulator.DirectionPane;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +26,14 @@ import org.slf4j.LoggerFactory;
 public class NdPane extends JPanel {
     
     private JComboBox<String> _selectNd;
-    private CbusDummyNode _cs;
-    private int _type;
-    private int _nn;
+    private CbusDummyNode _node;
     private JButton _resetNd;
     private JLabel _sessionText;
     private ArrayList<String> tooltips;
     
-    public NdPane(CbusDummyNode cs ) {
+    public NdPane(CbusDummyNode nd ) {
         super();
-        _cs = cs;
+        _node = nd;
         init();
     }
     
@@ -47,9 +43,6 @@ public class NdPane extends JPanel {
         
     private void init() {
 
-        _type = _cs.getDummyType();
-        _nn = 0;
-
         _sessionText = new JLabel();
         
         _selectNd = new JComboBox<String>();
@@ -58,17 +51,17 @@ public class NdPane extends JPanel {
         SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
         _selectNd.setRenderer(renderer);
         
-        _cs.setPane(this);
+        _node.setPane(this);
         
         tooltips = new ArrayList<String>();
         String getSelected="";
         
         for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
             int intoption = CbusDummyNode.ndTypes.get(i);
-            String option = CbusOpCodes.getModuleType(165,intoption);
+            String option = CbusNodeConstants.getModuleType(165,intoption);
             _selectNd.addItem(option);
-            tooltips.add(CbusOpCodes.getModuleTypeExtra(165,intoption));
-            if ( intoption == _type ){
+            tooltips.add(CbusNodeConstants.getModuleTypeExtra(165,intoption));
+            if ( intoption == _node.getNodeType() ){
                 getSelected = option;
             }
         }
@@ -81,11 +74,10 @@ public class NdPane extends JPanel {
                 
                 for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
                     int intoption = CbusDummyNode.ndTypes.get(i);
-                    String option = CbusOpCodes.getModuleType(165,intoption);
+                    String option = CbusNodeConstants.getModuleType(165,intoption);
                     if (option.equals(chosen)) {
                         log.debug("chosen {} {}",i,chosen);
-                        _cs.setDummyType(intoption);
-                        _type = intoption;
+                        _node.setDummyType(165,intoption);
                     }
                 }
                 updateNode();
@@ -96,7 +88,7 @@ public class NdPane extends JPanel {
         
         _resetNd = new JButton("FLiM");
         
-        DirectionPane dp = new DirectionPane(_cs);
+        DirectionPane dp = new DirectionPane(_node);
         
         JPanel topPane = new JPanel();
         
@@ -114,7 +106,7 @@ public class NdPane extends JPanel {
         _resetNd.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _cs.flimButton();
+                _node.flimButton();
             }
         });
         
@@ -122,16 +114,16 @@ public class NdPane extends JPanel {
     }
     
     private void updateNode(){
-        if ( _type>0 ) { 
+        if ( _node.getNodeType()>0 ) { 
             _resetNd.setEnabled(true); 
         } else {
             _resetNd.setEnabled(false); 
         }
-       _sessionText.setText("<html> <h2> " + _nn + " </h2> </html>");
+       _sessionText.setText("<html> <h2> " + _node.getNodeNumber() + " </h2> </html>");
     }
     
     public void setNodeNum(int num){
-        _nn=num;
+        _node.setNodeNumber(num);
         updateNode();
     }
     

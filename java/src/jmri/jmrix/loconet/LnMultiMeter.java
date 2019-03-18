@@ -15,7 +15,7 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
     /**
      * Create a ClockControl object for a Loconet clock
      *
-     * @param scm - connection memo
+     * @param scm  connection memo
      */
     public LnMultiMeter(LocoNetSystemConnectionMemo scm) {
         super(LnConstants.METER_INTERVAL_MS);

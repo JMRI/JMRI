@@ -291,29 +291,29 @@ public interface ThrottleManager {
 
     /**
      * 
-     * @param la - Loco address to test
-     * @return - true, its still required, false its not.
+     * @param la Loco address to test
+     * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(LocoAddress la);
 
     /**
      * 
-     * @param address - Loco number to test.
-     * @param addressIsLong - true if long address.
-     * @return - true, its still required, false its not.
+     * @param address Loco number to test.
+     * @param addressIsLong true if long address.
+     * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(int address, boolean addressIsLong);
     /**
      * 
-     * @param address - Loco number to test
-     * @return - true, its still required, false its not.
+     * @param address Loco number to test
+     * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(int address);
 
     /**
      * 
-     * @param re - roster entry to test
-     * @return - true, its still required, false its not.
+     * @param re roster entry to test
+     * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(BasicRosterEntry re);
 
@@ -376,8 +376,8 @@ public interface ThrottleManager {
      * The PropertyChangeListener will be notified if it has been attached to a
      * loco address or not, via a PropertyChange notification.
      * <p>
-     * @param la - LocoAddress of the loco we wish to monitor
-     * @param p  - PropertyChangeListener to attach to the throttle
+     * @param la LocoAddress of the loco we wish to monitor
+     * @param p  PropertyChangeListener to attach to the throttle
      */
     public void attachListener(LocoAddress la, PropertyChangeListener p);
 
@@ -390,8 +390,8 @@ public interface ThrottleManager {
      * The PropertyChangeListener will be notified if it has been removed via a
      * PropertyChange notification.
      *
-     * @param la - LocoAddress of the loco we wish to monitor
-     * @param p  - PropertyChangeListener to remove from the throttle
+     * @param la LocoAddress of the loco we wish to monitor
+     * @param p  PropertyChangeListener to remove from the throttle
      */
     public void removeListener(LocoAddress la, PropertyChangeListener p);
 
@@ -405,7 +405,7 @@ public interface ThrottleManager {
     /**
      * Get the number of Throttles sharing the throttle for a ddcaddress.
      *
-     * @param la - LocoAddress of the loco you want the throttle usage count for.
+     * @param la LocoAddress of the loco you want the throttle usage count for.
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
     public int getThrottleUsageCount(LocoAddress la);
@@ -413,8 +413,8 @@ public interface ThrottleManager {
     /**
      * Get the number of Throttles sharing the throttle for a ddcaddress.
      *
-     * @param address - number of the loco you want the throttle usage count for.
-     * @param isLongAddress - indicates whether the address is long or not.
+     * @param address number of the loco you want the throttle usage count for.
+     * @param isLongAddress indicates whether the address is long or not.
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
      public int getThrottleUsageCount(int address, boolean isLongAddress);
@@ -422,7 +422,7 @@ public interface ThrottleManager {
     /**
      * Get the number of Throttles sharing the throttle for a ddcaddress.
      *
-     * @param address - number of the loco you want the throttle usage count for.
+     * @param address number of the loco you want the throttle usage count for.
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
     public int getThrottleUsageCount(int address);
@@ -430,7 +430,7 @@ public interface ThrottleManager {
     /**
      * Get the number of Throttles sharing the throttle for a ddcaddress.
      *
-     * @param re - BasicRosterEntry of the loco you want the throttle usage count for.
+     * @param re BasicRosterEntry of the loco you want the throttle usage count for.
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
     public int getThrottleUsageCount(BasicRosterEntry re);

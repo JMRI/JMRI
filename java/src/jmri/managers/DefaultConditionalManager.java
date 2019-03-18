@@ -144,7 +144,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
      * special logic
      *
-     * @param name - system name of Conditional (must be trimmed and upper case)
+     * @param name  system name of Conditional (must be trimmed and upper case)
      * @return the parent Logix or null
      */
     @Override
@@ -194,8 +194,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * lookup. If this fails, or if x == null, looks up assuming that name is a
      * System Name. If both fail, returns null.
      *
-     * @param x    - parent Logix (may be null)
-     * @param name - name to look up
+     * @param x     parent Logix (may be null)
+     * @param name  name to look up
      * @return null if no match found
      */
     @Override
