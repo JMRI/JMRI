@@ -11,6 +11,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.TextAreaFIFO;
@@ -37,8 +38,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public CbusEventTableAction ta;
     
     // column order needs to match list in column tooltips
-    static public final int EVENT_COLUMN = 0; 
-    static public final int NODE_COLUMN = 1; 
+    static public final int NODE_COLUMN = 0; 
+    static public final int EVENT_COLUMN = 1; 
     static public final int NAME_COLUMN = 2; 
     static public final int NODENAME_COLUMN = 3;
     static public final int COMMENT_COLUMN = 4;
@@ -83,8 +84,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     // order needs to match column list top of dtabledatamodel
     public static final String[] columnToolTips = {
-        Bundle.getMessage("EventColTip"),
         Bundle.getMessage("NodeColTip"),
+        Bundle.getMessage("EventColTip"),
         Bundle.getMessage("NameColTip"),
         Bundle.getMessage("CbusNodeNameTip"),
         Bundle.getMessage("CommentColTip"),
@@ -214,17 +215,17 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return new JTextField(5).getPreferredSize().width;
             case SESSION_TOTAL_COLUMN:
             case LATEST_TIMESTAMP_COLUMN:
+            case DELETE_BUTTON_COLUMN:
                 return new JTextField(7).getPreferredSize().width;
             case ON_BUTTON_COLUMN:
             case OFF_BUTTON_COLUMN:               
-            case TOGGLE_BUTTON_COLUMN:
                 return new JTextField(8).getPreferredSize().width; 
             case STATUS_REQUEST_BUTTON_COLUMN:
                 return new JTextField(9).getPreferredSize().width;
             case COMMENT_COLUMN:
             case NAME_COLUMN:
             case NODENAME_COLUMN:
-            case DELETE_BUTTON_COLUMN:
+            case TOGGLE_BUTTON_COLUMN:
                 return new JTextField(10).getPreferredSize().width;
             case STLR_ON_COLUMN:
             case STLR_OFF_COLUMN:
@@ -337,7 +338,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case NAME_COLUMN:
                 return _mainArray.get(row).getName();
             case NODENAME_COLUMN:
-                return _mainArray.get(row).getNodeName();
+                return new CbusNameService().getNodeName( _mainArray.get(row).getNn() );
             case CANID_COLUMN:
                 return _mainArray.get(row).getEventCanId();
             case STATE_COLUMN:
@@ -395,9 +396,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }  else if (col == COMMENT_COLUMN) {        
             _mainArray.get(row).setComment( (String) value );
         }
-        else if (col == NODENAME_COLUMN) {        
-            _mainArray.get(row).setNodeName( (String) value );
-        }
         else if (col == STATE_COLUMN) {
             _mainArray.get(row).setState( (CbusTableEvent.EvState) value );
             ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, STATE_COLUMN); });
@@ -420,10 +418,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         else if (col == SESSION_ON_COLUMN) {
             _mainArray.get(row).bumpSessionOn();
             ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_ON_COLUMN); });
+            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_TOTAL_COLUMN); });
             }
         else if (col == SESSION_OFF_COLUMN) {
             _mainArray.get(row).bumpSessionOff();
             ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_OFF_COLUMN); });
+            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_TOTAL_COLUMN); });
         }
         else if (col == SESSION_IN_COLUMN) {
             _mainArray.get(row).bumpSessionIn();
@@ -534,7 +534,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             if (state==CbusTableEvent.EvState.OFF) {
                 off=1;
             }
-            addEvent(node,event,canid,state,"","","",on,off,in,out); // on off in out
+            addEvent(node,event,canid,state,"","",on,off,in,out); // on off in out
         } else {
             setValueAt(state, existingRow, STATE_COLUMN);
              if ( (state==CbusTableEvent.EvState.ON) || (state==CbusTableEvent.EvState.OFF) ) {
@@ -545,6 +545,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             if (state==CbusTableEvent.EvState.OFF) { setValueAt(1, existingRow, SESSION_OFF_COLUMN); }
             if (in==1) {  setValueAt(1, existingRow, SESSION_IN_COLUMN); }
             if (out==1) { setValueAt(1, existingRow, SESSION_OUT_COLUMN); }
+            
         }
     }
     
@@ -599,7 +600,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * Register new event to table
      */
     public void addEvent(int node, int event, int canid, CbusTableEvent.EvState state, 
-        String eventName, String nodeName, String evComment, int on, int off, int in, int out) {
+        String eventName, String evComment, int on, int off, int in, int out) {
         
         Date tmpdate = null;
         if ( ( in > 0 ) || ( out > 0 ) ) {
@@ -608,7 +609,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         
         CbusTableEvent newtabev = new CbusTableEvent(
             node, event, 
-            state, canid, eventName, nodeName, evComment, 
+            state, canid, eventName, evComment, 
             on, off, in, out, tmpdate );
         _mainArray.add(newtabev);
         // notify the JTable object that a row has changed; do that in the Swing thread!
