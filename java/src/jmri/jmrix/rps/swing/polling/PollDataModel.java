@@ -132,21 +132,21 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
                     return null;
                 }
                 val = m.getX();
-                return new Double(val);
+                return Double.valueOf(val);
             case LASTYCOL:
                 m = Engine.instance().getTransmitter(r).getLastMeasurement();
                 if (m == null) {
                     return null;
                 }
                 val = m.getY();
-                return new Double(val);
+                return Double.valueOf(val);
             case LASTZCOL:
                 m = Engine.instance().getTransmitter(r).getLastMeasurement();
                 if (m == null) {
                     return null;
                 }
                 val = m.getZ();
-                return new Double(val);
+                return Double.valueOf(val);
             case LASTTIME:
                 m = Engine.instance().getTransmitter(r).getLastMeasurement();
                 if (m == null) {

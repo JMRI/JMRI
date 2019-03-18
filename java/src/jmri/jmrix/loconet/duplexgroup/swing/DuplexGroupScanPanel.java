@@ -238,7 +238,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Examines incoming LocoNet messages to see if the message is a Duplex
      * Group Channel Report. If so, captures the group number.
      *
-     * @param m - incoming LocoNetMessage
+     * @param m  incoming LocoNetMessage
      * @return true if message m is a Duplex Group Channel Report
      */
     private boolean handleMessageDuplexChannelReport(LocoNetMessage m) {
@@ -310,7 +310,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Creates a LocoNet message containing a channel-specific query for signal
      * information from UR92 device(s).
      *
-     * @param channelNum - integer between 11 and 26, inclusive
+     * @param channelNum  integer between 11 and 26, inclusive
      * @return LocoNetMessage - query for Dulpex Channel Scan information
      */
     private LocoNetMessage createDuplexScanQueryPacket(int channelNum) {
@@ -579,7 +579,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
          * clear the channel highlight. After invoking this method, a call to
          * this class' repaint() method is required to cause the GUI update.
          * <p>
-         * @param channelNum - integer representing a Duplex Group channel
+         * @param channelNum  integer representing a Duplex Group channel
          *                   number.
          */
         public void setChannelBeingScanned(int channelNum) {

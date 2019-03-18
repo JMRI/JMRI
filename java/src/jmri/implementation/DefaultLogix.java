@@ -93,7 +93,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Add/Edit Logix dialog. If 'order' is greater than the number of
      * Conditionals for this Logix, and empty String is returned.
      *
-     * @param order - order in which the Conditional calculates.
+     * @param order  order in which the Conditional calculates.
      */
     @Override
     public String getConditionalByNumberOrder(int order) {
@@ -110,7 +110,7 @@ public class DefaultLogix extends AbstractNamedBean
      * has been exceeded.
      *
      * @param systemName The Conditional system name
-     * @param order      - the order this conditional should calculate in if
+     * @param order       the order this conditional should calculate in if
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
      */

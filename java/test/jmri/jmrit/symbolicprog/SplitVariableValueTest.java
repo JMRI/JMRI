@@ -7,9 +7,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,49 +66,60 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     // end of abstract members
     // some of the premade tests don't quite make sense; override them here.
     @Override
+    @Test
     public void testVariableValueCreate() {
     }// mask is ignored by splitAddre
 
     @Override
+    @Test
     public void testVariableFromCV() {
     }     // low CV is upper part of address
 
     @Override
+    @Test
     public void testVariableValueRead() {
     }	// due to multi-cv nature of SplitAddr
     // public void testVariableReadOnly() {}	// due to multi-cv nature of SplitAddr
 
     @Override
+    @Test
     public void testVariableValueWrite() {
     } // due to multi-cv nature of SplitAddr
 
     @Override
+    @Test
     public void testVariableCvWrite() {
     }    // due to multi-cv nature of SplitAddr
 
     @Override
+    @Test
     public void testWriteSynch2() {
     }        // programmer synch is different
 
     // at some point, these should pass, but have to think hard about
     // how to define the split/shift/mask operations for long CVs
     @Override
+    @Test
     public void testVariableValueCreateLargeValue() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue256() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
     } // mask is ignored 
 
     // Local tests
+    @Test
     public void testSplitAddressFromCV1() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
@@ -134,6 +147,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
+    @Test
     public void testSplitAddressFromCV2() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
@@ -161,6 +175,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
+    @Test
     public void testSplitAddressFromCV3() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
@@ -188,6 +203,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
+    @Test
     public void testSplitAddressFromCV4() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
@@ -218,6 +234,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
     // check a long address read operation
+    @Test
     public void testSplitAddressRead1() {
         log.debug("testSplitAddressRead starts");
 
@@ -269,6 +286,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // check a long address write operation
+    @Test
     public void testSplitAddressWrite1() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -295,21 +313,14 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         // how do you check separation of the two writes?  State model?
     }
 
-    // from here down is testing infrastructure
-    public SplitVariableValueTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        super.setUp();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SplitVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SplitVariableValueTest.class);
-        return suite;
+    
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class);

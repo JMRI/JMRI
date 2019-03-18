@@ -1,0 +1,1527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Wouter Kok" version="1.00" lastUpdated="20190131"/>
+	<!-- Version 1.00 - Initial version                              -->
+	<decoder>
+		<family name="Fl decoders Train-Navigation" mfg="Fleischmann">
+			<model model="685301" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="9" numFns="14" productID="685301">
+				<output name="1" label="Light forwards">
+					<label xml:lang="de">Licht vorwärts</label>
+					<label xml:lang="nl">Licht vooruit</label>
+				</output>
+				<output name="2" label="Light backwards">
+					<label xml:lang="de">Licht rückwärts</label>
+					<label xml:lang="nl">Licht achteruit</label>
+				</output>
+				<output name="7" label="Acceleration off">
+					<label xml:lang="de">Beschleunigung aus</label>
+					<label xml:lang="nl">Acceleratie uit</label>
+				</output>
+				<output name="8" label="Shunting-gear">
+					<label xml:lang="de">Rangier-gang</label>
+					<label xml:lang="nl">Rangeer-stand</label>
+				</output>
+				<output name="9" label="Train-Navigation">
+					<label xml:lang="de">Zug-navigation</label>
+					<label xml:lang="nl">Trein-navigatie</label>
+				</output>
+				<size length="12.9" width="9" height="3.4" units="mm"/>
+			</model>
+			<model model="685401" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="9" numFns="14" productID="685401">
+				<output name="1" label="Light forwards">
+					<label xml:lang="de">Licht vorwärts</label>
+					<label xml:lang="nl">Licht vooruit</label>
+				</output>
+				<output name="2" label="Light backwards">
+					<label xml:lang="de">Licht rückwärts</label>
+					<label xml:lang="nl">Licht achteruit</label>
+				</output>
+				<output name="7" label="Acceleration off">
+					<label xml:lang="de">Beschleunigung aus</label>
+					<label xml:lang="nl">Acceleratie uit</label>
+				</output>
+				<output name="8" label="Shunting-gear">
+					<label xml:lang="de">Rangier-gang</label>
+					<label xml:lang="nl">Rangeer-stand</label>
+				</output>
+				<output name="9" label="Train-Navigation">
+					<label xml:lang="de">Zug-navigation</label>
+					<label xml:lang="nl">Trein-navigatie</label>
+				</output>
+				<size length="12.9" width="9" height="3.4" units="mm"/>
+			</model>
+			<model model="685501" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="9" numFns="14" productID="685501">
+				<output name="1" label="Light forwards">
+					<label xml:lang="de">Licht vorwärts</label>
+					<label xml:lang="nl">Licht vooruit</label>
+				</output>
+				<output name="2" label="Light backwards">
+					<label xml:lang="de">Licht rückwärts</label>
+					<label xml:lang="nl">Licht achteruit</label>
+				</output>
+				<output name="7" label="Acceleration off">
+					<label xml:lang="de">Beschleunigung aus</label>
+					<label xml:lang="nl">Acceleratie uit</label>
+				</output>
+				<output name="8" label="Shunting-gear">
+					<label xml:lang="de">Rangier-gang</label>
+					<label xml:lang="nl">Rangeer-stand</label>
+				</output>
+				<output name="9" label="Train-Navigation">
+					<label xml:lang="de">Zug-navigation</label>
+					<label xml:lang="nl">Trein-navigatie</label>
+				</output>
+				<size length="12.9" width="9" height="3.4" units="mm"/>
+			</model>
+			<model model="687301" maxInputVolts="20V" maxTotalCurrent="1.80 A" formFactor="H0" connector="NEM651" numOuts="9" numFns="14" productID="687301">
+				<output name="1" label="Light forwards">
+					<label xml:lang="de">Licht vorwärts</label>
+					<label xml:lang="nl">Licht vooruit</label>
+				</output>
+				<output name="2" label="Light backwards">
+					<label xml:lang="de">Licht rückwärts</label>
+					<label xml:lang="nl">Licht achteruit</label>
+				</output>
+				<output name="7" label="Acceleration off">
+					<label xml:lang="de">Massen simulation aus</label>
+					<label xml:lang="nl">Massa simulatie uit</label>
+				</output>
+				<output name="8" label="Shunting-gear">
+					<label xml:lang="de">Rangier-gang</label>
+					<label xml:lang="nl">Rangeer-stand</label>
+				</output>
+				<output name="9" label="Train-Navigation">
+					<label xml:lang="de">Zug-navigation</label>
+					<label xml:lang="nl">Trein-navigatie</label>
+				</output>
+				<size length="16.3" width="9.5" height="3.4" units="mm"/>
+			</model>
+			<model model="687401" maxInputVolts="20V" maxTotalCurrent="1.80 A" formFactor="H0" connector="NEM651" numOuts="9" numFns="14" productID="687401">
+				<output name="1" label="Light forwards">
+					<label xml:lang="de">Licht vorwärts</label>
+					<label xml:lang="nl">Licht vooruit</label>
+				</output>
+				<output name="2" label="Light backwards">
+					<label xml:lang="de">Licht rückwärts</label>
+					<label xml:lang="nl">Licht achteruit</label>
+				</output>
+				<output name="7" label="Acceleration off">
+					<label xml:lang="de">Massen simulation aus</label>
+					<label xml:lang="nl">Massa simulatie uit</label>
+				</output>
+				<output name="8" label="Shunting-gear">
+					<label xml:lang="de">Rangier-gang</label>
+					<label xml:lang="nl">Rangeer-stand</label>
+				</output>
+				<output name="9" label="Train-Navigation">
+					<label xml:lang="de">Zug-navigation</label>
+					<label xml:lang="nl">Trein-navigatie</label>
+				</output>
+				<size length="16.3" width="9.5" height="3.4" units="mm"/>
+			</model>
+			<model model="687501" maxInputVolts="20V" maxTotalCurrent="1.80 A" formFactor="H0" connector="NEM651" numOuts="9" numFns="14" productID="687501">
+				<output name="1" label="Light forwards">
+					<label xml:lang="de">Licht vorwärts</label>
+					<label xml:lang="nl">Licht vooruit</label>
+				</output>
+				<output name="2" label="Light backwards">
+					<label xml:lang="de">Licht rückwärts</label>
+					<label xml:lang="nl">Licht achteruit</label>
+				</output>
+				<output name="7" label="Acceleration off">
+					<label xml:lang="de">Massen simulation aus</label>
+					<label xml:lang="nl">Massa simulatie uit</label>
+				</output>
+				<output name="8" label="Shunting-gear">
+					<label xml:lang="de">Rangier-gang</label>
+					<label xml:lang="nl">Rangeer-stand</label>
+				</output>
+				<output name="9" label="Train-Navigation">
+					<label xml:lang="de">Zug-navigation</label>
+					<label xml:lang="nl">Trein-navigatie</label>
+				</output>
+				<size length="16.3" width="9.5" height="3.4" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable CV="2" item="Vstart" comment="Range 0-255" default="3">
+				<decVal max="255"/>
+				<label>Vstart (0-255)</label>
+				<label xml:lang="it">Volt Partenza (0-255)</label>
+				<label xml:lang="fr">V démarr. (0-255)</label>
+				<label xml:lang="de">Anfangsspannung (0-255)</label>
+				<label xml:lang="nl">Beginspanning (0-255)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="3" item="Accel" comment="Range 0-255" default="2">
+				<decVal max="255"/>
+				<label>Acceleration (0-255)</label>
+				<label xml:lang="it">Accellerazione (0-255)</label>
+				<label xml:lang="fr">Accelération (0-255)</label>
+				<label xml:lang="de">Beschleunigung (0-255)</label>
+				<label xml:lang="nl">Optrekvertraging (0-255)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="4" item="Decel" comment="Range 0-255" default="2">
+				<decVal max="255"/>
+				<label>Deceleration (0-255)</label>
+				<label xml:lang="it">Decellerazione (0-255)</label>
+				<label xml:lang="fr">Décélération (0-255)</label>
+				<label xml:lang="de">Bremsrate (0-255)</label>
+				<label xml:lang="nl">Afremvertraging (0-255)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="5" item="Vhigh" comment="Range 2-255" default="180">
+				<decVal max="255"/>
+				<label>Vhigh (2-255)</label>
+				<label xml:lang="it">Volt Massimi (2-255):</label>
+				<label xml:lang="de">Höchstgeschwindigkeit (2-255)</label>
+				<label xml:lang="nl">Maximumsnelheid (2-255)</label>
+				<comment>Range 2-255</comment>
+			</variable>
+			<variable CV="6" item="Vmid" comment="Range 2-255" default="0">
+				<decVal max="255"/>
+				<label>Medium speed (0-255)</label>
+				<label xml:lang="de">Mittlere Geschwindigkeit (0-255)</label>
+				<label xml:lang="nl">Medium snelheid (0-255)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="8" item="Manufacturer" default="155" readOnly="yes">
+				<decVal/>
+				<label>Manufacturer ID:</label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikanten ID: </label>
+				<tooltip>&lt;html&gt;ID 155 = Fleischmann&lt;br&gt; https://https://www.fleischmann.de/en/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;https://www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="9" item="Total PWM Period" comment="Range 0-255" default="20">
+				<decVal max="63" min="40"/>
+				<label>Total PWM Period (0-255)</label>
+				<label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)(0-255)</label>
+				<label xml:lang="de">Periode PWM (Pulsweitenmodulation der Motoransteuerung)(0-255)</label>
+				<label xml:lang="nl">Periode PWM (Pulsbreedtemodulatie van de Motoraansturing)(0-255)</label>
+				<tooltip>&lt;html&gt;0: motor frequency 100 Hz,&lt;br&gt;15: motor frequency 15 kHz,&lt;br&gt;.....&lt;br&gt;22: motor frequency 22 kHz&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;0: Motorfrequenz 100 Hz,&lt;br&gt;&lt;15: Motorfrequenz 15 kHz,&lt;br&gt;.....&lt;br&gt;22: Motorfrequenz 22 kHz&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;0: motor frequentie 100 Hz,&lt;br&gt;15: motor frequentie 15 kHz,&lt;br&gt;.....&lt;br&gt;22: motor frequentie 22 kHz&lt;br&gt;</tooltip>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="11" default="0" item="Packet timeout">
+				<decVal/>
+				<label>Packet timeout (0-255)</label>
+				<label xml:lang="de">Paket unterbrechung (0-255)</label>
+				<label xml:lang="nl">Pakket onderbreking (0-255)</label>
+				<tooltip>&lt;html&gt;Time after which a running loco without further running instructions is stopped.&lt;br&gt;Time = n *0,2s.&lt;br&gt;If 0, no timeout.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Zeit, nach der eine fahrende Lok ohne weitere Geschwindigkeitsbefehle gestoppt wird.&lt;br&gt;Zeit = n *0,2s.&lt;br&gt;Bei 0 keine Zeitüberschreitung.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Tijd, na een rijdende Loc zonder snelheid opdrachten gestopt wordt.&lt;br&gt;Tijd = n *0,2s.&lt;br&gt;bij 0, geen Tijdoverschrijding.&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="12" mask="XXXXXXXV" default="1" item="Analog mode" tooltip="Analog Mode">
+				<enumVal>
+					<enumChoice choice="Digital Operation Only" value = "0">
+						<choice>Digital Operation Only</choice>
+						<choice xml:lang="de">Gleichstrombetrieb aus.</choice>
+						<choice xml:lang="nl">Gelijkstroombedrijf uit</choice>
+					</enumChoice>
+					<enumChoice choice="Digital + Analog Operation" value = "1">
+						<choice>Digital and Analog Operation</choice>
+						<choice xml:lang="de">Digital und Gleichstrombetrieb.</choice>
+						<choice xml:lang="nl">Digitale en Gelijkstroombedrijf</choice>
+					</enumChoice>
+				</enumVal>
+				<label>protocol  </label>
+				<label xml:lang="de">Protokoll  </label>
+				<label xml:lang="nl">protocol  </label>
+			</variable>
+			<!-- CV=29 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+			
+			<variable CV="30" item="Reset error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>Delete all errors</choice>
+						<choice xml:lang="de">Lösch alle Fehler </choice>
+						<choice xml:lang="nl">Verwijder alle fouten</choice>
+					</enumChoice>
+					<enumChoice choice="No error" value = "0">
+						<choice>Delete all errors</choice>
+						<choice xml:lang="de">Lösch alle Fehler </choice>
+						<choice xml:lang="nl">Verwijder alle fouten</choice>
+						</enumChoice>
+				</enumVal>
+			</variable>
+			<variable CV="30" mask="XXXXXXXV" item="Output 1 error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
+						<choice xml:lang="de">Kurzschluss festgestellt</choice>
+						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output 1</label>
+				<label xml:lang="de">Ausgang 1</label>
+				<label xml:lang="nl">Uitgang 1</label>
+			</variable>
+			<variable CV="30" mask="XXXXXXVX" item="Output 2 error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
+						<choice xml:lang="de">Kurzschluss festgestellt</choice>
+						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output 2</label>
+				<label xml:lang="de">Ausgang 2</label>
+				<label xml:lang="nl">Uitgang 2</label>
+			</variable>
+			<variable CV="30" mask="XVXXXXXX" item="Motor error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="Short-circuit Motor" value = "1">
+						<choice>Short-circuit on Motor detected</choice>
+						<choice xml:lang="de">Kurzschluss Motor erkannt</choice>
+						<choice xml:lang="nl">Motorkortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Motor</label>
+			</variable>
+			<variable CV="30" mask="VXXXXXXX" item="Modul error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="Over-temperature" value = "1">
+						<choice>Over-temperature detected</choice>
+						<choice xml:lang="de">Übertemperatur festgestellt</choice>
+						<choice xml:lang="nl">Overtemperature gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Modul error</label>
+			</variable>
+			<variable CV="33" mask="XXXXXXXV" minOut="1" item="FL(f) controls output 1" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output 1</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang 1</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang 1</label>
+			</variable>
+			<variable CV="33" mask="XXXXXXVX" minOut="2" item="FL(f) controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output 2</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang 2</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang 2</label>
+			</variable>
+			<variable CV="33" mask="XVXXXXXX" minOut="7" item="FL(f) controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output 7</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang 7</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang 7</label>
+			</variable>
+			<variable CV="33" mask="VXXXXXXX" minOut="8" item="FL(f) controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output 8</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang 8</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang 8</label>
+			</variable>
+			<variable CV="34" mask="XXXXXXXV" minOut="1" item="FL(r) controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output 1</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang 1</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang 1</label>
+			</variable>
+			<variable CV="34" mask="XXXXXXVX" minOut="2" item="FL(r) controls output 2" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output 2</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang 2</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang 2</label>
+			</variable>
+			<variable CV="34" mask="XVXXXXXX" minOut="7" item="FL(r) controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output 7</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang 7</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang 7</label>
+			</variable>
+			<variable CV="34" mask="VXXXXXXX" minOut="8" item="FL(r) controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output 8</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang 8</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang 8</label>
+			</variable>
+			<variable CV="35" mask="XXXXXXXV" minOut="1" minFn="1" item="F1 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output 1</label>
+				<label xml:lang="de">F1 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F1 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="35" mask="XXXXXXVX" minOut="2" minFn="1" item="F1 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output 2</label>
+				<label xml:lang="de">F1 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F1 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="35" mask="XVXXXXXX" minOut="7" minFn="1" item="F1 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output 7</label>
+				<label xml:lang="de">F1 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F1 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="35" mask="VXXXXXXX" minOut="8" minFn="1" item="F1 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label> controls output 8</label>
+				<label xml:lang="de">F1 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F1 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="36" mask="XXXXXXXV" minOut="1" minFn="2" item="F2 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output 1</label>
+				<label xml:lang="de">F2 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F2 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="36" mask="XXXXXXVX" minOut="2" minFn="2" item="F2 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output 2</label>
+				<label xml:lang="de">F2 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F2 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="36" mask="XVXXXXXX" minOut="7" minFn="2" item="F2 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output 7</label>
+				<label xml:lang="de">F2 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F2 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="36" mask="VXXXXXXX" minOut="8" minFn="2" item="F2 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output 8</label>
+				<label xml:lang="de">F2 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F2 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXXV" minOut="1" minFn="3" item="F3 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output 1</label>
+				<label xml:lang="de">F3 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F3 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXVX" minOut="2" minFn="3" item="F3 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output 2</label>
+				<label xml:lang="de">F3 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F3 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="37" mask="XVXXXXXX" minOut="7" minFn="3" item="F3 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output 7</label>
+				<label xml:lang="de">F3 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F3 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="37" mask="VXXXXXXX" minOut="8" minFn="3" item="F3 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output 8</label>
+				<label xml:lang="de">F3 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F3 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="38" mask="XXXXVXXX" minOut="4" minFn="4" item="F4 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 controls output 4</label>
+				<label xml:lang="de">F4 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F4 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="38" mask="XXXVXXXX" minOut="5" minFn="4" item="F4 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 controls output 5</label>
+				<label xml:lang="de">F4 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F4 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="38" mask="XXVXXXXX" minOut="6" minFn="4" item="F4 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 controls output 6</label>
+				<label xml:lang="de">F4 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F4 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="38" mask="XVXXXXXX" minOut="7" minFn="4" item="F4 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 controls output 7</label>
+				<label xml:lang="de">F4 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F4 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="38" mask="VXXXXXXX" minOut="8" minFn="4" item="F4 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 controls output 8</label>
+				<label xml:lang="de">F4 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F4 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="39" mask="XXXXVXXX" minOut="4" minFn="5" item="F5 controls output 7" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 controls output 4</label>
+				<label xml:lang="de">F5 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F5 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="39" mask="XXXVXXXX" minOut="5" minFn="5" item="F5 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 controls output 5</label>
+				<label xml:lang="de">F5 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F5 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="39" mask="XXVXXXXX" minOut="6" minFn="5" item="F5 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 controls output 6</label>
+				<label xml:lang="de">F5 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F5 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="39" mask="XVXXXXXX" minOut="7" minFn="5" item="F5 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 controls output 7</label>
+				<label xml:lang="de">F5 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F5 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="39" mask="VXXXXXXX" minOut="8" minFn="5" item="F5 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 controls output 8</label>
+				<label xml:lang="de">F5 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F5 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="40" mask="XXXXVXXX" minOut="4" minFn="6" item="F6 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 controls output 4</label>
+				<label xml:lang="de">F6 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F6 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="40" mask="XXXVXXXX" minOut="5" minFn="6" item="F6 controls output 8" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 controls output 5</label>
+				<label xml:lang="de">F6 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F6 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="40" mask="XXVXXXXX" minOut="6" minFn="6" item="F6 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 controls output 6</label>
+				<label xml:lang="de">F6 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F6 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="40" mask="XVXXXXXX" minOut="7" minFn="6" item="F6 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 controls output 7</label>
+				<label xml:lang="de">F6 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F6 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="40" mask="VXXXXXXX" minOut="8" minFn="6" item="F6 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 controls output 8</label>
+				<label xml:lang="de">F6 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F6 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="41" mask="XXXXVXXX" minOut="4" minFn="7" item="F7 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 controls output 4</label>
+				<label xml:lang="de">F7 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F7 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="41" mask="XXXVXXXX" minOut="5" minFn="7" item="F7 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 controls output 5</label>
+				<label xml:lang="de">F7 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F7 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="41" mask="XXVXXXXX" minOut="6" minFn="7" item="F7 controls output 9" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 controls output 6</label>
+				<label xml:lang="de">F7 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F7 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="41" mask="XVXXXXXX" minOut="7" minFn="7" item="F7 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 controls output 7</label>
+				<label xml:lang="de">F7 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F7 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="41" mask="VXXXXXXX" minOut="8" minFn="7" item="F7 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 controls output 8</label>
+				<label xml:lang="de">F7 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F7 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="42" mask="XXXXVXXX" minOut="4" minFn="8" item="F8 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 controls output 4</label>
+				<label xml:lang="de">F8 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F8 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="42" mask="XXXVXXXX" minOut="5" minFn="8" item="F8 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 controls output 5</label>
+				<label xml:lang="de">F8 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F8 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="42" mask="XXVXXXXX" minOut="6" minFn="8" item="F8 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 controls output 6</label>
+				<label xml:lang="de">F8 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F8 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="42" mask="XVXXXXXX" minOut="7" minFn="8" item="F8 controls output 10" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 controls output 7</label>
+				<label xml:lang="de">F8 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F8 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="42" mask="VXXXXXXX" minOut="8" minFn="8" item="F8 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 controls output 8</label>
+				<label xml:lang="de">F8 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F8 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="43" mask="XXXXXXXV" minOut="1" minFn="9" item="F9 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 1</label>
+				<label xml:lang="de">F9 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F9 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="43" mask="XXXXXXVX" minOut="2" minFn="9" item="F9 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 2</label>
+				<label xml:lang="de">F9 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F9 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="43" mask="XXXXXVXX" minOut="3" minFn="9" item="F9 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 3</label>
+				<label xml:lang="de">F9 Steuert Ausgang 3</label>
+				<label xml:lang="nl">F9 stuurt uitgang 3</label>
+			</variable>
+			<variable CV="43" mask="XXXXVXXX" minOut="4" minFn="9" item="F9 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 4</label>
+				<label xml:lang="de">F9 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F9 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="43" mask="XXXVXXXX" minOut="5" minFn="9" item="F9 controls output 11" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 5</label>
+				<label xml:lang="de">F9 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F9 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="43" mask="XXVXXXXX" minOut="6" minFn="9" item="F9 controls output 12">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 6</label>
+				<label xml:lang="de">F9 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F9 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="43" mask="XVXXXXXX" minOut="7" minFn="9" item="F9 controls output 13">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 7</label>
+				<label xml:lang="de">F9 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F9 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="43" mask="VXXXXXXX" minOut="9" minFn="9" item="F9 controls output 14">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 controls output 8</label>
+				<label xml:lang="de">F9 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F9 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="44" mask="XXXXXXXV" minOut="1" minFn="10" item="F10 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 1</label>
+				<label xml:lang="de">F10 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F10 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="44" mask="XXXXXXVX" minOut="2" minFn="10" item="F10 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 2</label>
+				<label xml:lang="de">F10 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F10 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="44" mask="XXXXXVXX" minOut="3" minFn="10" item="F10 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 3</label>
+				<label xml:lang="de">F10 Steuert Ausgang 3</label>
+				<label xml:lang="nl">F10 stuurt uitgang 3</label>
+			</variable>
+			<variable CV="44" mask="XXXXVXXX" minOut="4" minFn="10" item="F10 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 4</label>
+				<label xml:lang="de">F10 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F10 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="44" mask="XXXVXXXX" minOut="5" minFn="10" item="F10 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 5</label>
+				<label xml:lang="de">F10 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F10 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="44" mask="XXVXXXXX" minOut="6" minFn="10" item="F10 controls output 12" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 6</label>
+				<label xml:lang="de">F10 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F10 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="44" mask="XVXXXXXX" minOut="7" minFn="10" item="F10 controls output 13">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 7</label>
+				<label xml:lang="de">F10 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F10 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="44" mask="VXXXXXXX" minOut="9" minFn="10" item="F10 controls output 14">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 8</label>
+				<label xml:lang="de">F10 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F10 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="45" mask="XXXXXXXV" minOut="1" minFn="11" item="F11 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 1</label>
+				<label xml:lang="de">F11 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F11 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="45" mask="XXXXXXVX" minOut="2" minFn="11" item="F11 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 2</label>
+				<label xml:lang="de">F11 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F11 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="45" mask="XXXXXVXX" minOut="3" minFn="11" item="F11 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 3</label>
+				<label xml:lang="de">F11 Steuert Ausgang 3</label>
+				<label xml:lang="nl">F11 stuurt uitgang 3</label>
+			</variable>
+			<variable CV="45" mask="XXXXVXXX" minOut="4" minFn="11" item="F11 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 controls output 4</label>
+				<label xml:lang="de">F11 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F11 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="45" mask="XXXVXXXX" minOut="5" minFn="11" item="F11 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 5</label>
+				<label xml:lang="de">F11 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F11 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="45" mask="XXVXXXXX" minOut="6" minFn="11" item="F11 controls output 12">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 6</label>
+				<label xml:lang="de">F11 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F11 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="45" mask="XVXXXXXX" minOut="7" minFn="11" item="F11 controls output 13" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 7</label>
+				<label xml:lang="de">F11 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F11 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="45" mask="VXXXXXXX" minOut="9" minFn="11" item="F11 controls output 14">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 controls output 8</label>
+				<label xml:lang="de">F11 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F11 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="46" mask="XXXXXXXV" minOut="1" minFn="12" item="F12 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 1</label>
+				<label xml:lang="de">F12 Steuert Ausgang 1</label>
+				<label xml:lang="nl">F12 stuurt uitgang 1</label>
+			</variable>
+			<variable CV="46" mask="XXXXXXVX" minOut="2" minFn="12" item="F12 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 2</label>
+				<label xml:lang="de">F12 Steuert Ausgang 2</label>
+				<label xml:lang="nl">F12 stuurt uitgang 2</label>
+			</variable>
+			<variable CV="46" mask="XXXXXVXX" minOut="3" minFn="12" item="F12 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 3</label>
+				<label xml:lang="de">F12 Steuert Ausgang 3</label>
+				<label xml:lang="nl">F12 stuurt uitgang 3</label>
+			</variable>
+			<variable CV="46" mask="XXXXVXXX" minOut="4" minFn="12" item="F12 controls output 10">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 4</label>
+				<label xml:lang="de">F12 Steuert Ausgang 4</label>
+				<label xml:lang="nl">F12 stuurt uitgang 4</label>
+			</variable>
+			<variable CV="46" mask="XXXVXXXX" minOut="5" minFn="12" item="F12 controls output 11">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 5</label>
+				<label xml:lang="de">F12 Steuert Ausgang 5</label>
+				<label xml:lang="nl">F12 stuurt uitgang 5</label>
+			</variable>
+			<variable CV="46" mask="XXVXXXXX" minOut="6" minFn="12" item="F12 controls output 12">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 6</label>
+				<label xml:lang="de">F12 Steuert Ausgang 6</label>
+				<label xml:lang="nl">F12 stuurt uitgang 6</label>
+			</variable>
+			<variable CV="46" mask="XVXXXXXX" minOut="7" minFn="12" item="F12 controls output 13">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 7</label>
+				<label xml:lang="de">F12 Steuert Ausgang 7</label>
+				<label xml:lang="nl">F12 stuurt uitgang 7</label>
+			</variable>
+			<variable CV="46" mask="VXXXXXXX" minOut="9" minFn="12" item="F12 controls output 14" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 controls output 8</label>
+				<label xml:lang="de">F12 Steuert Ausgang 8</label>
+				<label xml:lang="nl">F12 stuurt uitgang 8</label>
+			</variable>
+			<variable CV="51" mask="XXXXXXXV" default="1" item="motor control">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Speed Control</label>
+				<label xml:lang="de">Drehzahlregelung</label>
+				<label xml:lang="nl">Toerentalregeling</label>
+				<tooltip>&lt;html&gt;Switches off the speed control.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Schaltet Drehzahlregelung aus,&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Schakelt de snelheidsregeling uit,&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="51" mask="XVXXXXXX" default="1" item="Optici error">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Optici error message</label>
+				<label xml:lang="de">Optici Fehlermeldung</label>
+				<label xml:lang="nl">Optici foutmelding</label>
+				<tooltip>&lt;html&gt;Blinking of lights to indicate short circuit,&lt;br&gt; overheating or current overload.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Blinken der Lampen als Fehleranzeige von Kurzschluss,&lt;br&gt; Überhitzung und Summenstromüberschreibung.Schaltet Drehzahlregelung aus,&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Knipperen van de lampen als een fout indicator kortsluiting,&lt;br&gt; oververhitting en het overschrijden van het maximumstroom gebruik.&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="63" mask="XXXXXXXV" default="0" item="Train category" include="685301,685401,685501,687301,687401,687501">
+				<enumVal>
+					<enumChoice choice="..3" value = "0">
+						<choice>..3</choice>
+					</enumChoice>
+					<enumChoice choice="..4" value = "1">
+						<choice>..4</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Train category</label>
+				<label xml:lang="de">Zugkategorie</label>
+				<label xml:lang="nl">Trein-categorie</label>
+			</variable>
+			<variable CV="63" mask="XXXXXXVX" default="0" item="Train-Navigation" include="685301,685401,685501,687301,687401,687501">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+				<label>TrainNavigation</label>
+				<label xml:lang="de">Zug-navigation</label>
+				<label xml:lang="nl">Trein-navigatie</label>
+			</variable>
+			<variable CV="63" mask="XXXXXVXX" default="0" item="Funktion keys" include="685301,685401,685501,687301,687401,687501">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+				<label>Funktion keys (F7) stored permanently in CV63 Bit 2</label>
+				<label xml:lang="de">Funktionsschalter (F7) dauerhaft gespeichert in CV63 Bit 2</label>
+				<label xml:lang="nl">Functieknop (F7) permanent opgeslagen in CV63 bits 2</label>
+			</variable>
+			<variable CV="64" mask="XXXXXVVV" default="0" item="RESET">
+				<enumVal>
+					<enumChoice choice="No reset" value = "0">
+						<choice>No reset</choice>
+						<choice xml:lang="de">Kein reset</choice>
+						<choice xml:lang="nl">Geen reset</choice>
+					</enumChoice>
+					<enumChoice choice="factory values" value = "1">
+						<choice>Reset to factory values</choice>
+						<choice xml:lang="de">Reset auf Werks-werte</choice>
+						<choice xml:lang="nl">Reset op de fabriek waarde</choice>
+					</enumChoice>
+					<enumChoice choice="Speed Table" value = "3">
+						<choice>Speed step table CVs 67-95, trim values CVs 66, 95</choice>
+						<choice xml:lang="de">Fahrstufentabelle CVs 67...95, Trimwerte CVs 66, 95</choice>
+						<choice xml:lang="nl">Instelbare snelheid’s tabel CVs 67...95, Trim waarden CVs 66, 95</choice>
+					</enumChoice>
+					<enumChoice choice="3-point-curve" value = "4">
+						<choice>3-point-curve CVs 2, 5, 6, trim values CVs 66, 95</choice>
+						<choice xml:lang="de">3-Punkt-Kennlinie CVs 2, 5, 6, Trimmwerte CVs 66, 95</choice>
+						<choice xml:lang="nl">3-punts curve CVs 2, 5, 6, Trim waarden CVs 66, 95</choice>
+					</enumChoice>
+					<enumChoice choice="Address" value = "6">
+						<choice>Address (CVs 1, 17, 18, 29) is reset to 3</choice>
+						<choice xml:lang="de">Adresse (CVs 1, 17, 18, 29) wird auf 3 zurückgesetzt</choice>
+						<choice xml:lang="nl">Adres (CVs 1, 17, 18, 29) word op 3 teruggesteld</choice>
+					</enumChoice>
+				</enumVal>
+			</variable>
+			<variable CV="66" comment="Range 1-248" item="Forward Trim">
+				<decVal max="248"/>
+				<label>Forward trim (1-248)</label>
+				<label xml:lang="de">Vorwärts Trimm (1-248)</label>
+				<label xml:lang="nl">Voorwaarts trim (1-248)</label>
+				<tooltip>&lt;html&gt;Here, the speed values contained in CV67-94 can be adjusted by a percentage from 248=100%.%&lt;br&gt; E.g. 124=50%. Value valid for running forward.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier sind die Geschwindigkeitswertein CV67-94 vom Grundwert 248=100%&lt;br&gt; prozentual einstellbar, z. B. 124=50%, Wert gilt f. Vorwärtsfahrt&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier, is de in CV67-94 zijnde snelheid waarden kunnen worden aangepast met een percentage van 248 = 100%.&lt;br&gt; Bijvoorbeeld 124 = 50%. De waarde is geldig voor die voorwaarts trim.&lt;br&gt;</tooltip>
+				<comment>Range 1-248</comment>
+			</variable>
+			<variable CV="67" comment="Range 1-255" item="Speed Table">
+				<speedTableVal min="1" max="255" entries="28"/>
+				<label>                   Speed step table (CV67-94) (1-255)</label>
+				<label xml:lang="de">                   programmierbare Fahrkurve (CV67-94) (1-255)</label>
+				<label xml:lang="nl">                   Instelbare snelheid’s tabel (CV67-94) (1-255)</label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+			<variable CV="95" comment="Range 1-248" item="Reverse Trim">
+				<decVal max="248"/>
+				<label>Backwards trim (1-248)</label>
+				<label xml:lang="de">Rückwärts Trimm (1-248)</label>
+				<label xml:lang="nl">Achterwaarts trim (1-248)</label>
+				<tooltip>&lt;html&gt;Here, the speed values contained in CV67-94 can be adjusted by a percentage from 248=100%.%&lt;br&gt; E.g. 124=50%. Value valid for running Backwards.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier sind die Geschwindigkeitswertein CV67-94 vom Grundwert 248=100%&lt;br&gt; prozentual einstellbar, z. B. 124=50%, Wert gilt f. Rückwärts&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier, is de in CV67-94 zijnde snelheid waarden kunnen worden aangepast met een percentage van 248 = 100%.&lt;br&gt; Bijvoorbeeld 124 = 50%. De waarde is geldig voor die Achterwaarts trim.&lt;br&gt;</tooltip>
+				<comment>Range 1-248</comment>
+			</variable>
+			<variable CV="120" mask="XXXXXXXV" default="0" item="output A">
+				<enumVal>
+					<enumChoice choice="Light output" value = "0">
+						<choice>Light output/ switching output</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang</choice>
+					</enumChoice>
+					<enumChoice choice="flashing" value = "1">
+						<choice>Light output/ switching output with flashing function</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang mit Blinkfunktion</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang met knipper functie</choice>
+					</enumChoice>
+				</enumVal>
+				<label>output A</label>
+				<label xml:lang="de">Ausgang A</label>
+				<label xml:lang="nl">Uitgang A</label>
+			</variable>
+			<variable CV="121" mask="XXXXVVVV" default="0" item="Dim value A">
+				<decVal min="0" max="15"/>
+				<label>output A Brightness, Dim value:</label>
+				<label xml:lang="de">Ausgang A Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang A Helderheid, Dim waarde:</label>
+			</variable>
+			<variable CV="121" mask="XXXVXXXX" default="0" item="A working at">
+				<enumVal>
+					<enumChoice choice="forward" value = "0">
+						<choice>forward</choice>
+						<choice xml:lang="de">Vorwärts</choice>
+						<choice xml:lang="nl">Voorwaarts</choice>
+					</enumChoice>
+					<enumChoice choice="backward" value = "1">
+						<choice>backward</choice>
+						<choice xml:lang="de">Rückwärts</choice>
+						<choice xml:lang="nl">Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output A working at</label>
+				<label xml:lang="de">Ausgang A werkt bei</label>
+				<label xml:lang="nl">Uitgang A werkt bij</label>
+			</variable>
+			<variable CV="121" mask="XXVXXXXX" default="1" item="driving direction A">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Output A depends on the driving direction</label>
+				<label xml:lang="de">Ausgang A ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang A is van de rijrichting afhankelijk</label>
+			</variable>
+			<variable CV="121" mask="XVXXXXXX" default="0" item="DCC/Analogue A">
+				<enumVal>
+					<enumChoice choice="DCC" value = "0">
+						<choice>DCC</choice>
+					</enumChoice>
+					<enumChoice choice="DCC and Analogue" value = "1">
+						<choice>DCC and Analogue</choice>
+						<choice xml:lang="de">DCC und Analog</choice>
+						<choice xml:lang="nl">DCC en analoog</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output A valid for</label>
+				<label xml:lang="de">Ausgang A gilt für</label>
+				<label xml:lang="nl">Uitgang A geld voor</label>
+			</variable>
+			<variable CV="121" mask="VXXXXXXX" default="0" item="Driving/standstill A">
+				<enumVal>
+					<enumChoice choice="Driving and standstill" value = "0">
+						<choice>Driving and at a standstill</choice>
+						<choice xml:lang="de">Fahrt und Stillstand</choice>
+						<choice xml:lang="nl">Onder het rijden en bij stilstand</choice>
+					</enumChoice>
+					<enumChoice choice="Only driving" value = "1">
+						<choice>Only driving</choice>
+						<choice xml:lang="de">Nur bei Fahrt</choice>
+						<choice xml:lang="nl">Alleen onder het rijden</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output A active when:</label>
+				<label xml:lang="de">Ausgang A aktiv bei:</label>
+				<label xml:lang="nl">Uitgang A werkt bij:</label>
+			</variable>
+			<variable CV="122" default="0" item="flashing on A">
+				<decVal min="0" max="255"/>
+				<label>Switch-on duration of output A in flashing function</label>
+				<label xml:lang="de">Einschaltdauer des Ausgangs A bei Blinkfunktion</label>
+				<label xml:lang="nl">Inschakeltijd van uitgang A bei de knipperfunctie</label>
+			</variable>
+			<variable CV="123" default="0" item="flashing off A">
+				<decVal min="0" max="255"/>
+				<label>Switch-off duration of output A in flashing function</label>
+				<label xml:lang="de">Ausschaltdauer des Ausgangs A bei Blinkfunktion</label>
+				<label xml:lang="nl">Uitschakeltijd van uitgang A bei de knipperfunctie</label>
+			</variable>
+			<variable CV="124" default="0" item="flashing A">
+				<decVal min="0" max="255"/>
+				<label>Number of flas-/switch-cycles at flashing-/switching function on output A</label>
+				<label xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion auf Ausgang A</label>
+				<label xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties op uitgang A</label>
+			</variable>
+			<variable CV="130" mask="XXXXXXXV" default="0" item="output B">
+				<enumVal>
+					<enumChoice choice="Light output" value = "0">
+						<choice>Light output/ switching output</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang</choice>
+					</enumChoice>
+					<enumChoice choice="flashing" value = "1">
+						<choice>Light output/ switching output with flashing function</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang mit Blinkfunktion</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang met knipper functie</choice>
+					</enumChoice>
+				</enumVal>
+				<label>output B</label>
+				<label xml:lang="de">Ausgang B</label>
+				<label xml:lang="nl">Uitgang B</label>
+			</variable>
+			<variable CV="131" mask="XXXXVVVV" default="1" item="Dim value B">
+				<decVal min="0" max="15"/>
+				<label>output B Brightness, Dim value:</label>
+				<label xml:lang="de">Ausgang B Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang B Helderheid, Dim waarde:</label>
+			</variable>
+			<variable CV="131" mask="XXXVXXXX" default="1" item="B working at">
+				<enumVal>
+					<enumChoice choice="forward" value = "0">
+						<choice>forward</choice>
+						<choice xml:lang="de">Vorwärts</choice>
+						<choice xml:lang="nl">Voorwaarts</choice>
+					</enumChoice>
+					<enumChoice choice="backward" value = "1">
+						<choice>backward</choice>
+						<choice xml:lang="de">Rückwärts</choice>
+						<choice xml:lang="nl">Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output B working at</label>
+				<label xml:lang="de">Ausgang B werkt bei</label>
+				<label xml:lang="nl">Uitgang B werkt bij</label>
+			</variable>
+			<variable CV="131" mask="XXVXXXXX" default="1" item="driving direction B">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Output B depends on the driving direction</label>
+				<label xml:lang="de">Ausgang B ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang B is van de rijrichting afhankelijk</label>
+			</variable>
+			<variable CV="131" mask="XVXXXXXX" default="0" item="DCC/Analogue B">
+				<enumVal>
+					<enumChoice choice="DCC" value = "0">
+						<choice>DCC</choice>
+					</enumChoice>
+					<enumChoice choice="DCC and Analogue" value = "1">
+						<choice>DCC and Analogue</choice>
+						<choice xml:lang="de">DCC und Analog</choice>
+						<choice xml:lang="nl">DCC en analoog</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output B valid for</label>
+				<label xml:lang="de">Ausgang B gilt für</label>
+				<label xml:lang="nl">Uitgang B geld voor</label>
+			</variable>
+			<variable CV="131" mask="VXXXXXXX" default="0" item="Driving/standstill B">
+				<enumVal>
+					<enumChoice choice="Driving and standstill" value = "0">
+						<choice>Driving and at a standstill</choice>
+						<choice xml:lang="de">Fahrt und Stillstand</choice>
+						<choice xml:lang="nl">Onder het rijden en bij stilstand</choice>
+					</enumChoice>
+					<enumChoice choice="Only driving" value = "1">
+						<choice>Only driving</choice>
+						<choice xml:lang="de">Nur bei Fahrt</choice>
+						<choice xml:lang="nl">Alleen onder het rijden</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output B active when:</label>
+				<label xml:lang="de">Ausgang B aktiv bei:</label>
+				<label xml:lang="nl">Uitgang B werkt bij:</label>
+			</variable>
+			<variable CV="132" default="0" item="flashing on B">
+				<decVal min="0" max="255"/>
+				<label>Switch-on duration of output B in flashing function</label>
+				<label xml:lang="de">Einschaltdauer des Ausgangs B bei Blinkfunktion</label>
+				<label xml:lang="nl">Inschakeltijd van uitgang B bei de knipperfunctie</label>
+			</variable>
+			<variable CV="133" default="0" item="flashing off B">
+				<decVal min="0" max="255"/>
+				<label>Switch-off duration of output B in flashing function</label>
+				<label xml:lang="de">Ausschaltdauer des Ausgangs B bei Blinkfunktion</label>
+				<label xml:lang="nl">Uitschakeltijd van uitgang B bei de knipperfunctie</label>
+			</variable>
+			<variable CV="134" default="0" item="flashing B">
+				<decVal min="0" max="255"/>
+				<label>Number of flas-/switch-cycles at flashing-/switching function on output B</label>
+				<label xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion auf Ausgang B</label>
+				<label xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties op uitgang B</label>
+			</variable>
+		</variables>
+		<resets>
+			<factReset label="Reset All CVs - selected unit dependent" CV="64" default="1">
+				<label>Reset to factory values</label>
+				<label xml:lang="de">Reset auf Werks-werte</label>
+				<label xml:lang="nl">Reset op de fabriek waarde</label>
+			</factReset>
+			<factReset label="Speed Table" CV="64" default="3">
+				<label>Speed step table CVs 67-95, trim values CVs 66, 95</label>
+				<label xml:lang="de">Fahrstufentabelle CVs 67...95, Trimwerte CVs 66, 95</label>
+				<label xml:lang="nl">Instelbare snelheid’s tabel CVs 67...95, Trim waarden CVs 66, 95</label>
+			</factReset>
+			<factReset label="3-point-curve" CV="64" default="4">
+				<label>3-point-curve CVs 2, 5, 6, trim values CVs 66, 95</label>
+				<label xml:lang="de">3-Punkt-Kennlinie CVs 2, 5, 6, Trimmwerte CVs 66, 95</label>
+				<label xml:lang="nl">3-punts curve CVs 2, 5, 6, Trim waarden CVs 66, 95</label>
+			</factReset>
+			<factReset label="Reset address" CV="64" default="6">
+				<label>Address is reset to 3</label>
+				<label xml:lang="de">Adresse wird auf 3 zurückgesetzt</label>
+				<label xml:lang="nl">Adres word op 3 teruggesteld</label>
+			</factReset>
+			<factReset label="Reset errors" CV="8" default="30">
+				<label>Error messages are deleted</label>
+				<label xml:lang="de">Fehlermeldungen werden gelöscht</label>
+				<label xml:lang="nl">Foutmeldingen worden gewist</label>
+			</factReset>
+		</resets>
+	</decoder>
+	<pane nameFmt="label"> <!-- Motor -->
+		<name>Motor</name>
+		<name xml:lang="cs">Motor</name>
+		<name xml:lang="de">Motor</name>
+		<name xml:lang="fr">Moteur</name>
+		<name xml:lang="it">Motore</name>
+		<name xml:lang="nl">Motor</name>
+  <column>
+		<grid gridy="NEXT" weightx="1" ipadx="10">
+			<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+				<display item="Vstart" layout="left"/>
+				<display item="Vstart" layout="left" label="" format="hslider"/>
+			</griditem>
+			<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+				<label>
+					<text>  </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+				<display item="Accel"/>
+				<display item="Accel" layout="left" label="" format="hslider"/>
+			</griditem>
+			<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+				<display item="Decel"/>
+				<display item="Decel" layout="left" label="" format="hslider"/>
+			</griditem>
+			<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+				<label>
+					<text>  </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+				<label>
+					<text>  </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+				<display item="Total PWM Period"/>
+				<display item="Total PWM Period" layout="left" label="" format="hslider"/>
+			</griditem>
+			<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+				<label>
+					<text>  </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+				<label>
+					<text>  </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+				<display item="motor control"/>
+			</griditem>
+			</grid>
+		</column>
+	</pane>
+	<pane nameFmt="label"> <!-- Lights -->
+		<name>Lights</name>
+		<name xml:lang="ca">Llums</name>
+		<name xml:lang="cs">Osvětlení</name>
+		<name xml:lang="da">Lys</name>
+		<name xml:lang="de">Licht</name>
+		<name xml:lang="fr">Lumières</name>
+		<name xml:lang="it">Luci</name>
+		<name xml:lang="nl">Licht</name>
+		<column>
+			<row>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="2">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Output A (F0v)</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Ausgang A (F0v)</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Uitgang A (F0v)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2">
+							<display item="output A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Brightness, Dim value: (0-15)</text>
+								<text xml:lang="de">Helligkeit, Dim Wert: (0-15)</text>
+								<text xml:lang="nl">Helderheid, Dim waarde: (0-15)</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Dim value A" label=""/>
+								<display item="Dim value A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>working at</text>
+								<text xml:lang="de">Werkt bei</text>
+								<text xml:lang="nl">Werkt bij</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<display item="A working at" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Depends on the driving direction</text>
+								<text xml:lang="de">Abhängig von der Fahrtrichtung</text>
+								<text xml:lang="nl">Afhankelijk van de rijrichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<display item="driving direction A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Valid for:</text>
+								<text xml:lang="de">Gilt für:</text>
+								<text xml:lang="nl">Geld voor:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_START">
+							<display item="DCC/Analogue A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Aktiv when:</text>
+								<text xml:lang="de">Aktiv bei:</text>
+								<text xml:lang="nl">Actief bij:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<display item="Driving/standstill A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-on duration in flashing function</text>
+								<text xml:lang="de">Einschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Inschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing on A" label=""/>
+								<display item="flashing on A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-off duration in flashing function</text>
+								<text xml:lang="de">Ausschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Uitschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing off A" label=""/>
+								<display item="flashing off A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Number of blink-/switch-cycles at blinking-/switching function</text>
+								<text xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion</text>
+								<text xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="12" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing A" label=""/>
+								<display item="flashing A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>error message:</text>
+								<text xml:lang="de">Fehler Meldung:</text>
+								<text xml:lang="nl">Foutmelding:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="14" gridwidth="1" anchor="LINE_START">
+								<display item="Output 1 error" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+				<separator/>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="2">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Output B (F0r)</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Ausgang B (F0r)</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Uitgang B (F0r)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2">
+							<display item="output B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Brightness, Dim value: (0-15)</text>
+								<text xml:lang="de">Helligkeit, Dim Wert: (0-15)</text>
+								<text xml:lang="nl">Helderheid, Dim waarde: (0-15)</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Dim value B" label=""/>
+								<display item="Dim value B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>working at</text>
+								<text xml:lang="de">Werkt bei</text>
+								<text xml:lang="nl">Werkt bij</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<display item="B working at" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Depends on the driving direction</text>
+								<text xml:lang="de">Abhängig von der Fahrtrichtung</text>
+								<text xml:lang="nl">Afhankelijk van de rijrichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<display item="driving direction B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Valid for:</text>
+								<text xml:lang="de">Gilt für:</text>
+								<text xml:lang="nl">Geld voor:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_START">
+							<display item="DCC/Analogue B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Aktiv when:</text>
+								<text xml:lang="de">Aktiv bei:</text>
+								<text xml:lang="nl">Actief bij:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<display item="Driving/standstill B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-on duration in flashing function</text>
+								<text xml:lang="de">Einschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Inschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing on B" label=""/>
+								<display item="flashing on B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-off duration in flashing function</text>
+								<text xml:lang="de">Ausschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Uitschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing off B" label=""/>
+								<display item="flashing off B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Number of blink-/switch-cycles at blinking-/switching function</text>
+								<text xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion</text>
+								<text xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="12" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing B" label=""/>
+								<display item="flashing B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>error message:</text>
+								<text xml:lang="de">Fehler Meldung:</text>
+								<text xml:lang="nl">Foutmelding:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="14" gridwidth="1" anchor="LINE_START">
+								<display item="Output 2 error" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+			</row>
+		</column>
+	</pane>
+	<pane nameFmt="label"> <!-- Fleischmann -->
+		<name>Fleischmann</name>
+		<column>
+			<display item="RESET" format="radiobuttons"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Train category" format="radiobuttons"/>
+			<display item="Train-Navigation" format="radiobuttons"/>
+			<display item="Funktion keys" format="radiobuttons"/>
+		</column>
+		<column>
+			<display item="Optici error" format="radiobuttons"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Output 1 error" format="onradiobutton"/>
+			<display item="Output 2 error" format="onradiobutton"/>
+			<display item="Output 3 error" format="onradiobutton"/>
+			<display item="Output 4 error" format="onradiobutton"/>
+			<display item="Motor error" format="onradiobutton"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Modul error" format="onradiobutton"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Reset error" format="onradiobutton"/>
+		</column>
+	</pane>
+</decoder-config>

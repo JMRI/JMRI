@@ -7,12 +7,11 @@ import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -34,11 +33,11 @@ import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 
 /**
- * UserInterface.java Create a window for WiThrottle information and
- *  and create a FacelessServer thread to handle jmdns and device requests
+ * UserInterface.java Create a window for WiThrottle information and and create
+ * a FacelessServer thread to handle jmdns and device requests
  * <p>
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
@@ -70,16 +69,16 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
     UserInterface() {
         super(false, false);
-        
+
         isListen = true;
         facelessServer = (FacelessServer) InstanceManager.getOptionalDefault(DeviceManager.class).orElseGet(() -> {
-                return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
+            return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
         });
 
         // add ourselves as device listeners for any existing devices
-        for(DeviceServer ds:facelessServer.getDeviceList()) {
-           deviceList.add(ds);
-           ds.addDeviceListener(this); 
+        for (DeviceServer ds : facelessServer.getDeviceList()) {
+            deviceList.add(ds);
+            ds.addDeviceListener(this);
         }
 
         facelessServer.addDeviceListener(this);
@@ -97,16 +96,20 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     private void addIPAddressesToUI() {
         //get port# directly from prefs
         int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
-        //list the local IPv4 addresses on the UI, for manual connections
-        List<InetAddress> has = ZeroConfService.hostAddresses(); //get list of local, non-loopback addresses
-        String as = ""; //build multiline string of valid addresses
-        for (InetAddress ha : has) {
-            if (ha instanceof Inet4Address) { //ignore IPv6 addresses
-                this.portLabel.setText(ha.getHostName());
-                as += ha.getHostAddress() + ":" + port + "<br />";
-                this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
-            }
+        //list IPv4 addresses on the UI, for manual connections
+        //TODO: use some mechanism that is not tied to zeroconf networking
+        StringBuilder as = new StringBuilder(); //build multiline string of valid addresses
+        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.IPv4, false, false);
+        if (addresses.isEmpty()) {
+            // include IPv6 and link-local addresses if no non-link-local IPv4 addresses are available
+            addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, false);
         }
+        for (InetAddress ha : addresses) {
+            this.portLabel.setText(ha.getHostName());
+            as.append(ha.getHostAddress()).append(":").append(port).append("<br/>");
+        }
+        this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
     }
 
     protected void createWindow() {
@@ -248,7 +251,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         menu.add(new ControllerFilterAction());
 
-        Action prefsAction = new apps.gui3.TabbedPreferencesAction(
+        Action prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(
                 ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
                 "WITHROTTLE");
 

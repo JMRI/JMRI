@@ -20,7 +20,6 @@ package jmri.jmrit.vsdecoder;
  */
 import java.util.EventObject;
 
-@SuppressWarnings("serial")
 public class VSDecoderEvent extends EventObject {
 
     public static enum EventType {

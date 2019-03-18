@@ -215,6 +215,11 @@ public class RosterSpeedProfile {
         }
     }
 
+    public SpeedStep getSpeedStep(float speed) {
+        int iSpeedStep = Math.round(speed * 1000);
+        return speeds.get(iSpeedStep);
+    }
+
     public void setForwardSpeed(float speedStep, float forward) {
         if (forward > 0.0f) {
             _hasForwardSpeeds = true;
@@ -1000,8 +1005,8 @@ public class RosterSpeedProfile {
     /**
      * Get track speed in millimeters per second from throttle setting
      *
-     * @param speedStep - throttle setting
-     * @param isForward - direction
+     * @param speedStep  throttle setting
+     * @param isForward  direction
      * @return track speed
      */
     public float getSpeed(float speedStep, boolean isForward) {

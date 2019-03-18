@@ -29,6 +29,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      * If the name is a valid system name, it will be used for the new Sensor.
      * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
+     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -94,15 +96,29 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via user name.
+     *
+     * @param name User name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getByUserName(@Nonnull String s);
+    public Sensor getByUserName(@Nonnull String name);
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via system name
+     *
+     * @param name System name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getBySystemName(@Nonnull String s);
+    public Sensor getBySystemName(@Nonnull String name);
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -131,10 +147,10 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      * return the next free valid address up to a maximum of 10 addresses away
      * from the initial address. Used when adding add a range of Sensors.
      *
-     * @param curAddress - The hardware address of the sensor we wish to add
-     * @param prefix     - The System Prefix used to make up the systemName
+     * @param curAddress The hardware address of the sensor we wish to add
+     * @param prefix     The System Prefix used to make up the systemName
      *                   check.
-     * @return - null if the system name made from prefix and curAddress is in
+     * @return null if the system name made from prefix and curAddress is in
      *         use
      * @throws jmri.JmriException if problem calculating next address
      */

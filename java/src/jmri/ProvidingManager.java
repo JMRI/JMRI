@@ -20,6 +20,13 @@ public interface ProvidingManager<E extends NamedBean> extends Manager<E> {
      * new NamedBean. Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name which the manager will attempt to use. If that fails,
      * an exception is thrown.
+     * <p>
+     * This is similar to the specific methods found in certain
+     * type-specific managers:
+     * {@link TurnoutManager#provideTurnout},
+     * {@link SensorManager#provideSensor},
+     * et al.  Those might be more mnemonic; this one is more generic.  Neither
+     * is preferred nor deprecated; use your choice.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name

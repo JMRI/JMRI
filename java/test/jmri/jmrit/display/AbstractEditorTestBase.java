@@ -10,11 +10,15 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 /**
  * A Base set of tests for Editor objects.
  *
+ * @param <T> specific subclass of Editor to test
  * @author Paul Bender Copyright (C) 2016
  */
-abstract public class AbstractEditorTestBase {
+abstract public class AbstractEditorTestBase<T extends Editor> {
 
-    protected Editor e = null;
+    /**
+     * The instance of the Editor to test.
+     */
+    protected T e = null;
 
     @Test
     public void checkFileMenuExists() {
@@ -85,23 +89,22 @@ abstract public class AbstractEditorTestBase {
         e.putItem(to);
 
         Editor newEditor = e.changeView("jmri.jmrit.display.EditorScaffold");
-        Assert.assertNotNull("changeView Result Not Null",newEditor);
+        Assert.assertNotNull("changeView Result Not Null", newEditor);
 
         // verify the editor object on to was changed to newEditor.
-        Assert.assertEquals("to moved to new editor",newEditor,to.getEditor());
+        Assert.assertEquals("to moved to new editor", newEditor, to.getEditor());
 
         // and that the object is now in the new editor's list of objects.
 
-        Assert.assertTrue("new editor includes to", newEditor.getContents().contains(to)); 
+        Assert.assertTrue("new editor includes to", newEditor.getContents().contains(to));
         newEditor.dispose();
     }
 
-
-
-
-    // from here down is testing infrastructure
+    /**
+     * Subclasses must instantiate {@link #e} in the setUp method.
+     */
     @Before
-    abstract public void setUp(); // must set Editor e
+    abstract public void setUp();
 
     @After
     abstract public void tearDown();

@@ -29,7 +29,6 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-@SuppressWarnings("serial")
 class DieselPane extends EnginePane {
 
     static final int THROTTLE_MIN = 1;

@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.can.cbus.CbusEvent;
+import jmri.jmrix.can.cbus.CbusNameService;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -117,10 +117,9 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     
     // adds event + node name
     protected void getNameFromTable(){
-        if (_name.equals("")) {
-            CbusCommandStation cmndstat = (CbusCommandStation) jmri.InstanceManager.getDefault(jmri.CommandStation.class);
-            _name = cmndstat.getEventName(getNn(),getEn());
-            if (!_name.equals("")) {
+        if (_name.isEmpty()) {
+            _name = new CbusNameService().getEventName(getNn(),getEn());
+            if (!_name.isEmpty()) {
                 _model.setValueAt(_name, _model.eventRow(getNn(),getEn()), 
                     CbusEventRequestDataModel.NAME_COLUMN);
             }

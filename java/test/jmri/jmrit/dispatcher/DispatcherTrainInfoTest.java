@@ -1,18 +1,20 @@
 package jmri.jmrit.dispatcher;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Swing jfcUnit tests for dispatcher train info
+ * Swing tests for dispatcher train info.
  *
  * @author	Dave Duchamp
  */
-public class DispatcherTrainInfoTest extends TestCase {
+public class DispatcherTrainInfoTest {
 
+    @Test
     public void testAccessMethods() throws Exception {
 
         TrainInfo ti = new TrainInfo();
@@ -76,33 +78,13 @@ public class DispatcherTrainInfoTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public DispatcherTrainInfoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DispatcherTrainInfoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DispatcherTrainInfoTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
-        super.tearDown();
     }
 }

@@ -78,7 +78,9 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         actionsMenu = new JPopupMenu();
         jScrollPane1 = new JScrollPane();
         actionsTbl = new JTable() {
+        
             //Implement table cell tool tips.
+            @Override
             public String getToolTipText(MouseEvent e) {
                 try {
                     return getValueAt(rowAtPoint(e.getPoint()), -1).toString();

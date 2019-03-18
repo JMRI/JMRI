@@ -747,7 +747,7 @@ public class Track {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+           setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
         }
     }
 

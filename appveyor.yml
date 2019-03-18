@@ -31,6 +31,13 @@ test_script:
 - ps: |
     mvn test -P appveyor --batch-mode
 
+after_test:
+# upload results to Appveyor
+# This works, but the Appveyor display is unreliable.
+#- ps: |
+#    $wc = New-Object 'System.Net.WebClient'
+#    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit-results.xml))
+
 deploy: off
 
 artifacts:

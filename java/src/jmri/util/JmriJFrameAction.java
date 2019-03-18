@@ -36,7 +36,7 @@ public class JmriJFrameAction extends AbstractAction {
 
         if (!name.equals("")) {
             try {
-                j = (JmriJFrame) Class.forName(name).newInstance();
+                j = (JmriJFrame) Class.forName(name).getDeclaredConstructor().newInstance();
                 j.initComponents();
                 j.setVisible(true);
             } catch (java.lang.ClassNotFoundException ex1) {
