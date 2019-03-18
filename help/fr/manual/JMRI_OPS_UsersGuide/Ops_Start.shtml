@@ -26,137 +26,145 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
 
-      <h2>What does OperationsPro do?</h2>
+<h1> Utilisation de JMRI&reg; pour l'Exploitation des Trains</h1>
 
-      <div align="right">
-        <p><a href="index.shtml#startOps">Back to Index</a></p>
-      </div>
-      <hr>
+      <h2> Que fait OperationsPro?</h2>
 
-      <p>Using JMRI&reg; to operate trains allows you to build
-      computer generated car Manifests for your railroad. A
-      Manifest or Switch List details the work that a train will
-      perform during an operations session. The Manifest provides a
-      list of car pick up and set out and shows where the cars are
-      located and where they should be eventually positioned on the
-      railroad. The program allows you to build a Roster of cars,
-      define Locations on the railroad, and Routes for Trains to
-      travel. The Car Roster includes information about every car,
-      including road name, number, type of car, color, length,
-      weight, date built, and owner. Trains are assigned Routes
-      that define Locations where cars can be picked up or set out.
-      Features include the ability to control what car types, road
-      names, and car loads a Location can service, the available
-      track space for a Location, and the maximum length a the
-      train can be between any two Locations on the train's
-      Route.</p>
+      <div align = "right">
+        <p><a href="index.shtml#startOps"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>Locations can have Spurs, Yards, Staging tracks and
-      Interchange tracks. Spurs are used to service industries, and
-      can optionally have custom schedules assigned to them. Trains
-      can be configured to require a caboose. Optionally, Trains
-      can be configured to require a caboose or car with Flashing
-      Rear End Device (FRED). The program generates car Manifests
-      for each train and switch lists for any Location. A Switch
-      List for a particular Location shows the work for all the
-      Trains that visit that Location. The program can also place
-      icons representing Trains on a JMRI Panel. The icon can be
-      taught to move across the panel along with the train from
-      Location to Location.</p>
+      <p>Utilisation de JMRI&reg; pour l'Exploitation des Trains vous permet 
+      de cr&#233;er des Manifestes de Wagons g&#233;n&#233;r&#233;s par ordinateur pour votre 
+      r&#233;seau. Un Manifestes ou une liste de Man&#156;uvres d&#233;taille l'activit&#233; 
+      d'un train pendant une session d'exploitation. Le Manifeste fournit 
+      une liste de ramassage et de d&#233;pose des Wagons et indique o&#249; se 
+      trouve les Wagons et o&#249; ils pourraient &#234;tre positionn&#233;s sur le 
+      r&#233;seau. Le programme vous permet de cr&#233;er un Inventaire de Wagons, 
+      de d&#233;finir des Emplacements sur le r&#233;seau et de cr&#233;er des 
+     Itin&#233;raires pour les Trains. L'Inventaires Wagons comprend des 
+     informations sur chaque Wagon, y compris le nom de l'Itin&#233;raire, 
+     le num&#233;ro, le type de Wagon, la couleur, la longueur, le poids, la 
+     date de construction ou d'achat et le propri&#233;taire. Les Trains se 
+     voient attribuer des Itin&#233;raires qui d&#233;finissent des Emplacements 
+     o&#249; les Wagons peuvent &#234;tre r&#233;cup&#233;r&#233;es ou plac&#233;es. Les fonctions 
+     incluent la possibilit&#233; de contr&#244;ler les types de Wagons, les noms 
+     des Itin&#233;raires et les chargements de Wagons desservis par un 
+     Emplacement, l'espace de la Voie disponible pour un Emplacement 
+     et la longueur maximale d'un train pouvant se situer entre deux 
+     Emplacements quelconques sur l'Itin&#233;raire du train.</P >
 
-      <p>The OperationsPro program is included in the JMRI&reg;
-      suite of tools, so when you install and start up either
-      DecoderPro&reg; or PanelPro you will find OperationsPro menus
-      in the main menu bar under <strong>Tools &gt;
-      Operations</strong> or as an <strong>Operations</strong>
-      menu, if enabled in your <a href=
-      "Ops_Settings.shtml">OperationsPro Settings</a>.</p>
+      <p>Les Emplacements peuvent avoir des Voies d'Embranchements, de 
+      Triages, en Coulisse et Garage Temporaire. Les Embranchements 
+      sont utilis&#233;s pour les industries de services et peuvent 
+      &#233;ventuellement recevoir des horaires personnalis&#233;es. Les 
+      Trains peuvent &#234;tre configur&#233;s pour exiger un fourgon de queue. 
+      Les trains peuvent &#233;ventuellement &#234;tre configur&#233;s de mani&#232;re &#224; 
+      n&#233;cessiter un Wagon de queue ou un Wagon avec un dispositif 
+      arri&#232;re clignotant (FRED). Le programme g&#233;n&#232;re des Manifestes de 
+      Wagons pour chaque train et des listes de Man&#156;uvres pour tous les 
+      lieux. Une liste de Man&#156;uvres pour un emplacement particulier 
+      montre l'activité de tous les trains qui visitent cet endroit. 
+      Le programme peut &#233;galement placer des ic&#244;nes repr&#233;sentant des 
+      trains sur un panneau JMRI. Vous pouvez apprendre &#224; l'ic&#244;ne &#224; 
+      se d&#233;placer sur le panneau avec le train d'Emplacement en Emplacement.</P>
 
-      <h3>OperationsPro Demo Files</h3>
+      <p>Le programme OperationsPro est inclus dans la suite d'outils du 
+      fichier JMRI&reg;, donc lorsque vous installez et d&#233;marrez soit 
+      DecoderPro&reg; ou PanelPro, vous trouverez les menus 
+      d'OperationsPro dans la barre de menus principale sous <strong>
+		  Outils&gt; Exploitations</strong> ou en tant que menu <strong>
+			  Exploitations</strong>, si activ&#233; dans vos <a href= 
+			  "Ops_Settings.shtml"> Param&#232;tres d'OperationsPro</a>.</P>
 
-      <p>The OperationsPro program provides a set of demo files to
-      help introduce you to the some of the features and
-      capabilities of this program.</p>
+      <h3> Fichiers de D&#233;monstration d'OperationsPro</h3>
 
-      <table width="80%" border="0" cellspacing="1" cellpadding=
+      <p>Le programme OperationsPro fournit un ensemble de fichiers de 
+      d&#233;monstration pour vous aider &#224; vous familiariser avec certaines 
+      des fonctionnalit&#233;s de ce programme.</p>
+
+      <table width = "80%" border = "0" cellspacing = "1" cellpadding =
       "2">
         <tr>
-          <td><a href="images/Ops_Start01.png"><img src=
-          "images/Ops_Start01.png" width="243" height="241" alt=
-          "Operations in Tools Menu"></a></td>
+          <td> <a href="images/Ops_Start01.png"> <img src =
+          "images/Ops_Start01.png" width = "243" height = "241" alt =
+          "Op&#233;rations dans le menu Outils"></a></td>
 
-          <td valign="top">
-            <a href="=&quot;images/Ops_Start02.png&quot;"><img src=
-            "images/Ops_Start02.png" width="248" height="141" alt=
-            "Operations in Main Menubar"></a>
+          <td valign = "top">
+            <a href="=&quot;images/Ops_Start02.png&quot;"> <img src =
+            "images/Ops_Start02.png" width = "248" height = "141" alt =
+            "Op&#233;rations dans la barre de menu principale"></a>
 
-            <p>Load the demo files from the <strong>Tools</strong>
-            menu in the Operations &gt; Settings window, select
-            <strong>Load Demo Files</strong>; the demo files will
-            load after you restart DecoderPro.</p>
-          </td>
-        </tr>
-      </table>
+            <p>Chargez les fichiers de d&#233;monstration &#224; partir du menu 
+            <strong>Outils</strong> dans la liste Op&#233;rations&gt; Dans la 
+            fen&#234;tre Param&#232;tres, s&#233;lectionnez <strong>Charger les fichiers 
+            de d&#233;monstration</strong>. Les fichiers de d&#233;monstration 
+            seront charg&#233;s apr&#232;s le red&#233;marrage de DecoderPro.</p>
+         </td>
+       </tr>
+     </table>
 
-      <p><img src="images/Ops_Demo01.png" width="788" height="253"
-      alt="Demo"></p>
+      <p><img src = "images/Ops_Demo01.png" width = "788" height = "253"
+      alt = "d&#233;mo"></p>
 
-      <p>Selecting Load Demo Files closes DecoderPro&reg; and it
-      must be restarted to open the Demo Railroad.</p>
+      <p>La s&#233;lection du chargement des fichiers de d&#233;monstration ferme 
+      DecoderPro&reg; et il doit &#234;tre red&#233;marr&#233; pour ouvrir Demo Railroad.</p>
 
-      <p><img src="images/Ops_Demo02.png" width="796" height="151"
-      alt="Demo"></p>
+      <p><img src = "images/Ops_Demo02.png" width = "796" height = "151"
+      alt = "d&#233;mo"></p>
 
-      <p>The program will create a backup of your current
-      configuration if you have one, and then load the demo files.
-      Restart JMRI to complete the demo load process. To get rid of
-      the demo files, use the <strong>Restore</strong> function in
-      the <strong>Tools</strong> menu of the <strong>Operations
-      Settings</strong> to reload the first backup date, which is
-      the blank entry form.</p>
+      <p>Le programme cr&#233;era une sauvegarde de votre configuration 
+      actuelle si vous en avez une, puis chargera les fichiers de 
+      d&#233;monstration. Red&#233;marrez JMRI pour terminer le processus de 
+      chargement de la d&#233;mo. Pour supprimer les fichiers de d&#233;monstration, 
+      utilisez la fonction <strong>Restaurer</strong> du menu <strong>
+		  Outils</strong> du <strong>Param&#232;tres d'exploitation</strong> 
+		  pour recharger la premi&#232;re date de sauvegarde, &#224; savoir le 
+		  formulaire d'inscription vierge.</p>
 
-      <p>The program also supplies a simple Panel to show how the
-      Train icons work. Load the Panel before building any Trains
-      by selecting in the main JMRI menu, "Panels-&gt;Open Panels
-      ...". A window should appear; open the "Operations" directory
-      and then open the "Operations Demo Panel" xml file.</p>
-
+      <p>Le programme fournit &#233;galement un panneau simple pour montrer 
+      le fonctionnement des ic&#244;nes Train. Chargez le Panneau avant 
+      d'assembler des trains en s&#233;lectionnant dans le menu principal 
+      JMRI, "Panels- &gt; Ouvrir les Panneaux ...". Une fen&#234;tre devrait 
+      appara&#238;tre. Ouvrez le r&#233;pertoire "Operations" puis ouvrez le 
+      fichier xml "Operations Demo Panel".</p>
       <p><img src="images/Ops_DemoPanel.png" width="800" height=
       "220" alt="Demo panel"></p>
 
-      <h3>Quick Start</h3>
+      <h3> D&#233;marrage rapide</h3>
 
-      <p align="left">In the Main DecoderPro menu bar select the
-      <strong>Tools</strong> menu. Near the bottom you will find
-      "Operations".</p>
+      <p align = "left"> Dans la barre de menus de DecoderPro, 
+      s&#233;lectionnez le menu <strong>Outils</strong>. Au bas de la page, 
+      vous trouverez "Exploitations".</P>
 
-      <p align="left"><img src="images/Ops_menu.png" width="283"
-      height="184" alt="ops menu"></p>
+      <p align = "left"> <img src = "images/Ops_menu.png" width = "283"
+      height = "184" alt = "menu ops"></p>
 
-      <p align="left">There are six items in the submenu. It is
-      recommended that you start with <strong>Settings</strong> and
-      work your way down to <strong>Trains</strong>. We also
-      recommend that when defining your Locations that you at first
-      only use Yard spur tracks; try Staging and Interchange tracks
-      when you're more comfortable with how OperationPro
-      operates.</p>
+      <p align = "left"> Il y a six &#233;l&#233;ments dans le sous-menu. Il est 
+      recommand&#233; de commencer par <strong>Param&#232;tres</strong> et de 
+      descendre &#224; <strong>Trains</strong>. Nous vous recommandons 
+      &#233;galement, lors de la d&#233;finition de vos emplacements, d'utiliser 
+      d'abord uniquement les Voies Triage, Embranchement; essayez ensuite
+      Coulisse et Garage Temporaire lorsque vous &#234;tes plus &#224; l'aise avec 
+      le fonctionnement d'OperationPro.</p>
 
-      <h3>British Railways</h3>
+      <h3> Chemins de fer britanniques</h3>
 
-      <p>The program supports an alternate set of railway
-      terminology for our British modelers. To use British
-      terminologies, go to the JMRI Advanced Preferences (Edit
-      -&gt; Preferences...), select the <strong>Show Advanced
-      Preferences</strong> checkbox and select <em>English (United
-      Kingdom)</em> in the "Locale:" menu box. The program will
-      also convert from centimeters to meters when entering wagon,
-      locomotive, or location lengths; just append "cm" to any
-      length.</p>
+      <p>Le programme prend en charge un ensemble alternatif de 
+      terminologie ferroviaire pour nos mod&#233;listes britanniques. 
+      Pour utiliser les terminologies britanniques, acc&#233;dez &#224; Pr&#233;f&#233;rences 
+      avanc&#233;es de JMRI (Edition - &gt; Pr&#233;f&#233;rences ...), cochez la case 
+      <strong>Afficher les pr&#233;f&#233;rences avanc&#233;es</strong>, 
+      puis s&#233;lectionnez <em> Anglais (Royaume-Uni)</em> dans la bo&#238;te 
+      de menu "Locale:". Le programme convertira &#233;galement des centim&#232;tres 
+      en m&#232;tres lors de la saisie des longueurs de Wagon, de locomotive
+       ou de lieu; ajoutez simplement "cm" &#224; n'importe quelle longueur.</p>
 
-      <div align="right">
-        <p><a href="index.shtml#startOps">Back to Index</a></p>
+      <div align = "right">
+        <p><a href="index.shtml#startOps"> Retour &#224; l'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
