@@ -34,14 +34,13 @@ public class OccupancyLock implements Lock {
      */
     @Override
     public boolean isLockClear() {
-        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         for (NamedBeanHandle<Sensor> handle : list) {
             if (handle.getBean().getState() != Sensor.INACTIVE) {
-                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
-                    .setValue("Locked due to occupancy: "+handle.getBean().getDisplayName());
+                lockLogger.setStatus(this, "Locked due to occupancy: "+handle.getBean().getDisplayName());
                 return false;
             }
         }
+        lockLogger.setStatus(this, "");
         return true;
     }
     
