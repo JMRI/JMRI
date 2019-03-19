@@ -80,7 +80,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         String payload = parser.payloadFromBean(this, s);
 
         // send appropriate command
-        sendMessage(thrownText);
+        sendMessage(payload);
     }
 
     @Override
