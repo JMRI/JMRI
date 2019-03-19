@@ -614,8 +614,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * Parse the feedback message, and set the status of the turnout
      * accordingly.
      *
-     * @param l - feedback broadcast message
-     * @param startByte - first Byte of message to check
+     * @param l  feedback broadcast message
+     * @param startByte  first Byte of message to check
      *
      * @return 0 if address matches our turnout -1 otherwise
      */
@@ -685,8 +685,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * it's motion or not.  Returns true for mostion complete, false
      * otherwise.
      *
-     * @param l - feedback broadcast message
-     * @param startByte - first Byte of message to check
+     * @param l  feedback broadcast message
+     * @param startByte  first Byte of message to check
      *
      * @return true if motion complete, false otherwise
      */

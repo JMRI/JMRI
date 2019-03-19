@@ -31,13 +31,6 @@ public class ZeroConfServiceEvent extends EventObject {
     }
 
     /**
-     * @return the JmDNS server
-     */
-    public JmDNS getDNS() {
-        return this.dns;
-    }
-
-    /**
      * @return the address or null if there is an IO exception.
      */
     public InetAddress getAddress() {
