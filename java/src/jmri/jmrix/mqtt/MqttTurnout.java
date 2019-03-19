@@ -17,6 +17,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     private final String mysubTopic;
     private final int _number;   // turnout number
 
+    public void setParser(MqttContentParser<Turnout> parser) {
+        this.parser = parser;
+    }
+    
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
         private final String closedText = "CLOSED";
         private final String thrownText = "THROWN";
@@ -37,9 +41,9 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         @Override
         public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState){
             // sort out states
-            if ((newState & Turnout.CLOSED) != 0) {
+            if ((newState & Turnout.CLOSED) != 0 ^ getInverted()) {
                 // first look for the double case, which we can't handle
-                if ((newState & Turnout.THROWN) != 0) {
+                if ((newState & Turnout.THROWN ) != 0 ^ getInverted()) {
                     // this is the disaster case!
                     log.error("Cannot command both CLOSED and THROWN: {}", newState);
                     throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
