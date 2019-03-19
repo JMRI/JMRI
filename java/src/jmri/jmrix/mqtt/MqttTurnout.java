@@ -38,6 +38,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                     break;
             }
         }
+        
         @Override
         public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState){
             // sort out states
