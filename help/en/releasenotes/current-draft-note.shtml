@@ -66,7 +66,13 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>This release has an experimental method for changing the payload
+                    of MqttTurnouts, i.e. to use JSON instead of fixed strings.
+                    See the description at the bottom of the 
+                    <a href="http://jmri.org/help/en/hardware/mqtt/index.shtml#payload">bottom of the MQTT page</a>.
+                    More work is needed on this before it actually sends and receives
+                    JSON.
+                    </li>
             </ul>
 
         <h4>MRC</h4>
