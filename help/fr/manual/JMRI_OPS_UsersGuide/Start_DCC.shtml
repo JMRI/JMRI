@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//fr"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -30,45 +30,44 @@
       <h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo"
       width="163" height="117" vspace="15" class="BOXIT"></h1>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg; pour l'Exploitation des Trains</h1>
 
-      <h2>What is DCC?</h2>
+      <h2> Qu'est-ce que le DCC?</h2>
 
-      <div align="right">
-        <p><a href="Start_DCC_Systems.shtml">Next</a></p>
+      <div align = "right">
+        <p> <a href="Start_DCC_Systems.shtml"> Suivant </a></p>
 
-        <p><a href="index.shtml#GettingStarted">Back to
-        Index</a></p>
-      </div>
-      <hr>
+        <p> <a href="index.shtml#GettingStarted"> Retour &#224;
+        l'Index </a></p>
+     </div>
+      <h>
 
-      <p>In short, DCC is Digital Command Control, a system for
-      operating model railroads in a more prototypical manner. Each
-      locomotive contains a tiny, specialized controller. These
-      controllers (DCC decoders) accept digital commands over a
-      network (the rails) addressed to them and interprets them to
-      control the locomotive's speed, direction, lighting effects,
-      sound, and other functions. Each decoder responds only to
-      those commands addressed to it. Not every decoder will have
-      functions beyond basic throttle commands available. Although
-      there are NMRA&reg; standards for the format of communication
-      (allowing the decoders from different manufacturers to work
-      on the same railroad), beyond that there is considerable
-      variety in the functions supported and the implementation of
-      those functions.</p>
+      <p> En bref, DCC est le Digital Command Control, un syst&#232;me 
+      permettant d'exploiter les r&#233;seaux mod&#232;les de mani&#232;re plus 
+      concr&#232;te. Chaque locomotive contient un minuscule contr&#244;leur 
+      sp&#233;cialis&#233;. Ces contr&#244;leurs (d&#233;codeurs DCC) acceptent les commandes 
+      num&#233;riques sur un r&#233;seau (les rails) qui leur sont adress&#233;s et 
+      les interpr&#232;tent pour contr&#244;ler la vitesse, la direction, les 
+      effets d'&#233;clairage, le son et d'autres fonctions de la locomotive. 
+      Chaque d&#233;codeur ne r&#233;pond qu'aux commandes qui lui sont adress&#233;es. 
+      Tous les d&#233;codeurs ne disposent pas de fonctions autres que les 
+      r&#233;gulateurs de vitesse. Bien qu'il existe les normes NMRA&reg;
+      relatives au format de communication (permettant aux d&#233;codeurs de 
+      diff&#233;rents fabricants de travailler sur le m&#234;me cr&#233;seau), il 
+      existe par ailleurs une diversit&#233; consid&#233;rable de fonctions prises 
+      en charge et de mise en &#156;uvre de ces fonctions.</p>
 
-      <p>Although this Manual deals with just OperationsPro, the
-      JMRI&reg; suite of applications also contains software to
-      program and run DCC equipped locomotives, turnouts and
-      signals.</p>
-      <hr>
+      <p> Bien que ce manuel traite uniquement de OperationsPro, la suite 
+      d'applications JMRI&reg; contient &#233;galement un logiciel permettant 
+      de programmer et d'ex&#233;cuter des locomotives, des aiguillages et 
+      des signaux &#233;quip&#233;s de DCC.</p>
+      <h>
 
-      <div align="right">
-        <p><a href="Start_DCC_Systems.shtml">Next</a><a href=
-        "Basic_Programming.shtml"></a></p>
+      <div align = "right">
+        <p> <a href="Start_DCC_Systems.shtml"> Suivant </a> <a href =
+        "Basic_Programming.shtml"> </a></p>
 
-        <p><a href="index.shtml#GettingStarted">Back to
-        Index</a></p>
+        <p> <a href="index.shtml#GettingStarted"> Retour &#224;l'Index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
