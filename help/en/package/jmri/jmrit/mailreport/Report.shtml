@@ -45,7 +45,7 @@
       the public, but we do require a valid email address to cut
       down on spam. In the next field, enter a one-line summary of
       the problem that will appear as the subject of the upload.
-      Finally, type a few lines describing want went wrong, now to
+      Finally, type a few lines describing want went wrong, how to
       recreate it, etc.</p>
 
       <p>Normally, you leave the checkboxes marked so that the
@@ -64,8 +64,8 @@
       your program information where people can see it.</p>
 
       <p>If you want quick help with a problem, you should talk
-      some JMRI users in your area (it's always good to talk to
-      friends), or ask on the <a href=
+      with some JMRI users in your area (it's always good to talk
+      to friends), or ask on the <a href=
       "https://groups.io/g/jmriusers">JMRI
       users group</a>.</p>
       <!--#include virtual="/Footer" -->

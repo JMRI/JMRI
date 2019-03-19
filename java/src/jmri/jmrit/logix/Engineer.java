@@ -1097,7 +1097,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (speed < 0.0f) {
                 speed = 0.0f;
             }
-            _rampData = _speedUtil.rampLengthForSpeedChange(speed, endSpeed);
+            _rampData = _speedUtil.getRampForSpeedChange(speed, endSpeed);
             int timeIncrement = _rampData.getRampTimeIncrement();
 
             synchronized (this) {
@@ -1138,7 +1138,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 scriptSpeed = Float.parseFloat(ts.getValue());
                                 hasSpeed = (scriptSpeed > 0);
                                 endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType);
-                                _rampData = _speedUtil.rampLengthForSpeedChange(speed, endSpeed);
+                                _rampData = _speedUtil.getRampForSpeedChange(speed, endSpeed);
                                 rampDist = _rampData.getRampLength();
                                 advanceToCommandIndex(idx); // don't let script set speeds up to here
                             }

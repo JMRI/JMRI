@@ -1327,9 +1327,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * prevents total success. Note that warrants sharing their clearance
      * only allocate and set paths one block in advance.
      *
-     * @param show - value==1 will ignore _partialAllocate (to show route only)
+     * @param show  value==1 will ignore _partialAllocate (to show route only)
      *            parm name delay of turnout steting deprecated
-     * @param orders - BlockOrder list of route. If null, use permanent warrant
+     * @param orders  BlockOrder list of route. If null, use permanent warrant
      *            copy.
      * @return message if the first block fails allocation, otherwise null
      */
@@ -2011,8 +2011,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                                    setStoppingBlock(block);
                                    _delayStart = true;
                                }
-                           } else {
-                               controlRunTrain(ABORT);
                            }
                        }
                    }

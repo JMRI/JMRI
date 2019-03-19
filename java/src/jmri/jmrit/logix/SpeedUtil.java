@@ -2,7 +2,6 @@ package jmri.jmrit.logix;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -238,11 +237,16 @@ public class SpeedUtil {
      */
     protected float getMomentumTime(float delta, boolean increasing) {
         float incr = getThrottleSpeedStepIncrement();  // step amount
+        float time;
         if (increasing) {
-            return _ma * Math.abs(delta) / incr;   // accelerating         
+            time = _ma * Math.abs(delta) / incr;   // accelerating         
         } else {
-            return _md * Math.abs(delta) / incr;
+            time = _md * Math.abs(delta) / incr;
         }
+        if (time < 10) {
+            time = 10;  // Even with CV == 0, there must be some time to move or halt
+        }
+        return time;
     }
 
     /**
@@ -304,8 +308,8 @@ public class SpeedUtil {
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
-        _ma = 0;  // acceleration momentum time 
-        _md = 0;  // deceleration momentum time
+        _ma = 10;  // acceleration momentum time 
+        _md = 10;  // deceleration momentum time
         if (_rosterEntry!=null) {
             String fileName = jmri.jmrit.roster.LocoFile.getFileLocation() + _rosterEntry.getFileName();
             File file;
@@ -369,9 +373,9 @@ public class SpeedUtil {
             if (_rampTimeIncrement < _md) {
                 _rampTimeIncrement = (int)_md;
             }
-            if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms/step, _md= {}ms/step. throttleIncr= {} ()timeIncr= {}",
-                    _rosterId, _ma, _md, _rampThrottleIncrement, _rampTimeIncrement);
         }
+        if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms/step, _md= {}ms/step. throttleIncr= {} ()timeIncr= {}",
+                _rosterId, _ma, _md, _rampThrottleIncrement, _rampTimeIncrement);
     }
 
     // return milliseconds per one speed step

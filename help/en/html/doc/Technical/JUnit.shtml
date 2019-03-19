@@ -992,6 +992,10 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             be certain the JLabel's LabelFor property is set.  
             A Jemmy JLabelOperator can then be used to find the label,
             and retrieve the object.</li>
+      <li>When looking for a button, window or other item by it's label text, 
+            the default Jemmy string comparison is a case insensitive <code>caption.contains(match)</code>.  
+            If <code>ce</code> is true, then the <code>equals(..)</code> method is used.  
+            The <code>ccs</code> option controls case sensitivity.  
       </ul>
 
       <h4>Example of Closing a Dialog Box</h4>

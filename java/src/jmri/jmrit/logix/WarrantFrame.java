@@ -76,7 +76,6 @@ public class WarrantFrame extends WarrantRoute {
 
     JTextField _sysNameBox;
     JTextField _userNameBox;
-    JButton _stopButton;
 
     JTabbedPane _tabbedPane;
     JPanel _routePanel;
@@ -253,16 +252,6 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
         panel.add(calculatePanel(true));
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
-
-        _stopButton = new JButton(Bundle.getMessage("Stop"));
-        _stopButton.setMaximumSize(_stopButton.getPreferredSize());
-        _stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopRouteFinder();
-            }
-        });
-
         panel.add(searchDepthPanel(true));
 
         JPanel p = new JPanel();
@@ -274,12 +263,6 @@ public class WarrantFrame extends WarrantRoute {
 
         _searchStatus.setBackground(Color.white);
         _searchStatus.setEditable(false);
-        p = new JPanel();
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(_stopButton);
-        p.add(pp, BorderLayout.SOUTH);
-        panel.add(p);
         panel.add(Box.createRigidArea(new Dimension(10,
                 topLeft.getPreferredSize().height - panel.getPreferredSize().height)));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));

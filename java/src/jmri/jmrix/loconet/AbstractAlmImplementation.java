@@ -205,28 +205,28 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
 
     /**
      * Notify possible subclass that a block has changed.
-     * @param block - something about a block
+     * @param block  something about a block
      */
     public void noteChanged(int block) {
     }
 
     /**
      * Notify possible subclass that a read cmd is being handled
-     * @param block - something about a block
+     * @param block  something about a block
      */
     public void noteReadCmd(int block) {
     }
 
     /**
      * Notify possible subclass that a read reply is being handled
-     * @param block - something about a block
+     * @param block  something about a block
      */
     public void noteReadReply(int block) {
     }
 
     /**
      * Notify possible subclass that a write operation is complete
-     * @param block - something about a block
+     * @param block  something about a block
      */
     public void noteWriteComplete(int block) {
     }

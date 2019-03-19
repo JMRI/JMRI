@@ -303,7 +303,7 @@ public class ProfileManagerDialog extends JDialog {
     /**
      * Get the active profile or display a dialog to prompt the user for it.
      *
-     * @param f - The {@link java.awt.Frame} to display the dialog over
+     * @param f  The {@link java.awt.Frame} to display the dialog over
      * @return the active or selected {@link Profile}
      * @throws java.io.IOException if unable to read or set the starting Profile
      * @see ProfileManager#getStartingProfile()

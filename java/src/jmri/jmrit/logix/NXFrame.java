@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import jmri.JmriException;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -548,6 +549,9 @@ public class NXFrame extends WarrantRoute {
             text = _maxThrottleBox.getText();
             maxSpeed = formatter.parse(text).floatValue();
         } catch (java.text.ParseException pe) {
+            if (text==null) {
+                text = "\"\"";
+            }
             return Bundle.getMessage("badSpeed", text);
         }
         try {
@@ -559,98 +563,75 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("MustBeFloat", text);
         }
 
-        BlockOrder bo = _orders.get(0);
-        float len = getPathLength(bo);
-        if (len <= 0) {
-            return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
+        try {
+            _startDist = checkDistance(_originUnits.getText().equals("In"), oDist, _orders.get(0));
+        } catch (JmriException je) {
+            displayDistance(_destUnits.getText().equals("In"), oDist, _originDist, _orders.get(0));
+            return je.getMessage();
         }
-        if (oDist < 0) {
-            return Bundle.getMessage("MustBeFloat", oDist);
+
+        try {
+            _stopDist = checkDistance(_destUnits.getText().equals("In"), dDist, _orders.get(_orders.size()-1));
+        } catch (JmriException je) {
+            displayDistance(_destUnits.getText().equals("In"), dDist, _destDist, _orders.get(_orders.size()-1));
+            return je.getMessage();
         }
-        if (_originUnits.getText().equals("In")){
-            oDist *= 25.4f;
-            if (oDist > 0 && oDist < len) {
-                _startDist = oDist;
-            } else {
-                if (oDist >= len) {
-                    float num = Math.round((len-1) * 100 / 25.4f);
-                    _originDist.setText(formatter.format(num / 100f));
-                }else if (oDist <= 0) {
-                    _originDist.setText(formatter.format(0.1f));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
-            }
-        } else {
-            oDist *= 10f;
-            if (oDist > 0 && oDist < len) {
-                _startDist = oDist;
-            } else {
-                if (oDist >= len) {
-                    float num = Math.round((len-1) * 100);
-                    _originDist.setText(formatter.format(num / 1000f));
-                } else if (oDist <= 0) {
-                    _originDist.setText(formatter.format(.1));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
-            }
-        }
-        bo = _orders.get(_orders.size()-1);
-        len = getPathLength(bo);
-        if (len <= 0) {
-            return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
-        }
-        if (dDist < 0) {
-            return Bundle.getMessage("MustBeFloat", dDist);
-        }
-        if (_destUnits.getText().equals("In")) {
-            dDist *= 25.4f;
-            if (dDist >= 0 && dDist <= len) {
-                _stopDist = dDist;
-            } else {
-                if (dDist > len) {
-                    float num = Math.round(len * 100 / 25.4f);
-                    _destDist.setText(formatter.format(num / 100f));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
-            }
-        } else {
-            dDist *= 10f;
-            if (dDist >= 0 && dDist <= len) {
-                _stopDist = dDist;
-            } else {
-                if (dDist > len) {
-                    float num = Math.round(len * 100);
-                    _destDist.setText(formatter.format(num / 1000f));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
-            }
-        }
-        
+
         if (maxSpeed > 1.0f || maxSpeed < 0.008f) {
             return Bundle.getMessage("badSpeed", maxSpeed);
         }
         _maxThrottle = maxSpeed;
-        if (log.isDebugEnabled()) log.debug("_startDist= {}, _stopDist= {}, _maxThrottle= {}", _startDist, _stopDist, _maxThrottle);
         setAddress();
         return null;
     }
-    private String lengthError(String pathName, String blockName, float pathLen, float dist, boolean isInches) {
+
+    private float checkDistance(boolean isInches, float distance, BlockOrder bo) throws JmriException {
+        float pathLen = getPathLength(bo);
         if (pathLen <= 0) {
-            return Bundle.getMessage("zeroPathLength", pathName, blockName);
-        } else if (dist <= 0) {
-            return Bundle.getMessage("MustBeFloat", dist);  // positive message                                    
-        } else {
-            if (isInches) {
+            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));                        
+        }
+        if (isInches){
+            distance *= 25.4f;
+            if (distance < 0 || distance > pathLen) {
                 pathLen /= 25.4;
-                dist /= 25.4;
-                return Bundle.getMessage("BadLengthIn", pathName, blockName, pathLen, dist);                                        
-            } else {
+                distance /= 25.4;
+                throw new JmriException(Bundle.getMessage(
+                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen, distance));                                        
+            }
+        } else {
+            distance *= 10f;
+            if (distance < 0 || distance > pathLen) {
                 pathLen /= 10;
-                dist /= 10;
-                return Bundle.getMessage("BadLengthCm", pathName, blockName, pathLen, dist);                                        
+                distance /= 10;
+                throw new JmriException(Bundle.getMessage(
+                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen, distance));                                        
             }
         }
-     }
+        return distance;
+    }
+
+    private void displayDistance(boolean isInches, float distance, JTextField textBox, BlockOrder bo) {
+        float pathLen = getPathLength(bo);
+        if (pathLen <= 0) {
+            return;                        
+        }
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        if (distance < 0f) {
+            textBox.setText(formatter.format(0f));
+        } else {
+            if (isInches) {
+                float num = Math.round(pathLen * 100 / 25.4f);
+                if (distance*25.4f > pathLen) {
+                    textBox.setText(formatter.format(num / 100));
+                }
+            } else {
+                float num = Math.round(pathLen * 100);
+                if (distance*10 > pathLen) {
+                    textBox.setText(formatter.format(num / 1000));
+                }
+            }
+        }
+    }
 
     private float getPathLength(BlockOrder bo) {
         float len = bo.getPath().getLengthMm();
@@ -673,20 +654,44 @@ public class NXFrame extends WarrantRoute {
         }
        return len;
     }
+    private float adjustdistance(float fromSpeed, float toSpeed, float distance, BlockOrder bo) throws JmriException {
+        float pathLen = getPathLength(bo);
+        if (pathLen <= 0) {
+            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
+        }
+        int timeIncrement = _speedUtil.getRampTimeIncrement();
+        float minDist = _speedUtil.getDistanceOfSpeedChange(fromSpeed, toSpeed, timeIncrement) +.1f;
+        if (distance < minDist) {
+            distance = minDist;
+        } else if (distance > pathLen - minDist) {
+            distance = pathLen - minDist;
+        }
+        return distance;
+    }
     /*
      * Return length of warrant route in mm.  Assume start and end is in the middle of first
      * and last blocks.  Use a default length for blocks with unspecified length.
      */
-    private float getTotalLength() {
+    private float getTotalLength() throws JmriException {
         float totalLen = 0.0f;
         List<BlockOrder> orders = getOrders();
-        totalLen = _startDist;
-        for (int i = 1; i < orders.size() - 1; i++) {
-            BlockOrder bo = orders.get(i);
-            float len = getPathLength(bo);
-            totalLen += len;
+        float throttleIncrement = _speedUtil.getRampThrottleIncrement();
+        try {
+            _startDist = adjustdistance(0f, throttleIncrement, _startDist, orders.get(0));
+            totalLen = _startDist;
+            for (int i = 1; i < orders.size() - 1; i++) {
+                BlockOrder bo = orders.get(i);
+                float pathLen = getPathLength(bo);
+                if (pathLen <= 0) {
+                    throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
+                }
+                totalLen += pathLen;
+            }
+            _stopDist = adjustdistance(throttleIncrement, 0f, _stopDist, orders.get(0));
+            totalLen += _stopDist;
+        } catch (JmriException je) {
+            throw je;
         }
-        totalLen += _stopDist;
         return totalLen;
     }
 
@@ -716,17 +721,11 @@ public class NXFrame extends WarrantRoute {
             cmdNum = 6;
         }
 
-        float totalLen = getTotalLength();
-        if (totalLen <= 0) {
-            return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
-        }
-        if (log.isDebugEnabled()) {
-            if (hasProfileSpeeds) {
-                log.debug("maxThrottle= {} ({} meters per sec), scale= {}", 
-                        _maxThrottle, _speedUtil.getTrackSpeed(_maxThrottle), _scale);                
-            } else {
-                log.debug("maxThrottle= {} scale= {} no SpeedProfile data", _maxThrottle, _scale);                                
-            }
+        float totalLen;
+        try {
+            totalLen = getTotalLength();
+        } catch (JmriException je) {
+            return je.getMessage();
         }
 
         RampData upRamp;
@@ -741,11 +740,19 @@ public class NXFrame extends WarrantRoute {
             _maxThrottle -= prevSetting  - downIter.previous().floatValue();    // last throttle increment
             // distance attaining final speed
             intervalDist = _speedUtil.getDistanceOfSpeedChange(_maxThrottle, prevSetting, downRamp.getRampTimeIncrement());
-            log.debug("Route length= {}, upRampLength= {}, dnRampLength= {} max throttle= {}",
-                    totalLen, upRamp.getRampLength(), downRamp.getRampLength(), downRamp.getMaxSpeed());
+            log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}",
+                    totalLen, upRamp.getRampLength(), downRamp.getRampLength());
         } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
         _maxThrottle = downRamp.getMaxSpeed();
 
+        if (log.isDebugEnabled()) {
+            if (hasProfileSpeeds) {
+                log.debug("maxThrottle= {} ({} meters per sec), scale= {}", 
+                        _maxThrottle, _speedUtil.getTrackSpeed(_maxThrottle), _scale);                
+            } else {
+                log.debug("maxThrottle= {} scale= {} no SpeedProfile data", _maxThrottle, _scale);                                
+            }
+        }
         float blockLen = _startDist;    // length of path in current block
 
         // start train
@@ -764,7 +771,7 @@ public class NXFrame extends WarrantRoute {
         boolean rampsShareBlock = false;
 
         if (log.isDebugEnabled()) {
-            log.debug("Start in block \"{}\" startDist= {} startDist= {}", blockName, blockLen, _startDist);
+            log.debug("Start in block \"{}\" startDist= {} stopDist= {}", blockName, _startDist, _stopDist);
         }
         while (iter.hasNext()) {       // ramp up loop
 
