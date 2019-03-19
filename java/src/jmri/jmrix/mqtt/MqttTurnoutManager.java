@@ -32,9 +32,16 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         t = new MqttTurnout(mqttAdapter, addr);
         t.setUserName(userName);
 
+        if (parser != null) t.setParser(parser);
+        
         return t;
     }
 
+    public void setParser(MqttContentParser<Turnout> parser) {
+        this.parser = parser;
+    }
+    MqttContentParser<Turnout> parser = null;
+    
     static volatile MqttTurnoutManager _instance = null;
 
 }
