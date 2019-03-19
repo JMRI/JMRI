@@ -198,6 +198,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         eventTable.setColumnSelectionAllowed(false);
         
         eventTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        eventTable.setRowHeight(26);
         
         tcm.getColumn(CbusEventTableDataModel.NAME_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusEventTableDataModel.NODENAME_COLUMN).setCellRenderer(getRenderer());
