@@ -22,8 +22,8 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     }
     
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
-        private final String closedText = "CLOSED";
-        private final String thrownText = "THROWN";
+        private final static String closedText = "CLOSED";
+        private final static String thrownText = "THROWN";
         @Override
         public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
             switch (payload) {
