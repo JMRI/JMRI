@@ -289,7 +289,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return (T) getIdTagManager();
         }
         if (T.equals(CabSignalManager.class)) {
-            return (T) getIdTagManager();
+            return (T) getCabSignalManager();
         }
         return super.get(T);
     }

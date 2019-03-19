@@ -67,12 +67,16 @@ public class LnCabSignal extends DefaultCabSignal {
               case "Limited":
                     signalD3 = 0x19; // show vertical blinking;
                     break;
+              case "Medium":
+                    signalD3 = 0x14; // show diagonal;
+                    break;
               case "Stop":
                     signalD3 = 0x12; // show horizontal (stop);
                     break;
               case "Restricting":
               case "RestrictedSlow":
               case "Restricted":
+              case "Slow":
                     signalD3 = 0x13; // blink horizontal
                     break;
               default: {

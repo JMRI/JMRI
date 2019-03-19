@@ -4171,8 +4171,8 @@ public class LocoNetMessageInterpret {
     /**
      * Return a string which is formatted by a bundle Resource Name.
      *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
+     * @param hour    fast-clock hour
+     * @param minute  fast-clock minute
      * @return a formatted string containing the time
      */
     private static String fcTimeToString(int hour, int minute) {

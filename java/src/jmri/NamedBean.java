@@ -198,7 +198,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * Get a list of all the property change listeners that are registered using
      * a specific name
      *
-     * @param name - The name (either system or user) that the listener has
+     * @param name The name (either system or user) that the listener has
      *             registered as referencing this namedBean
      * @return empty list if none
      */

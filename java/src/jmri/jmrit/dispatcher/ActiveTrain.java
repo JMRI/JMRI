@@ -530,7 +530,7 @@ public class ActiveTrain {
     /**
      * set train type using localized string name as stored
      *
-     * @param sType - name, such as "LOCAL_PASSENGER"
+     * @param sType  name, such as "LOCAL_PASSENGER"
      */
     public void setTrainType(String sType) {
         if (sType.equals(Bundle.getMessage("LOCAL_FREIGHT"))) {

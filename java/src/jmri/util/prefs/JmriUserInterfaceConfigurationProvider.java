@@ -10,19 +10,24 @@ import jmri.profile.Profile;
 /**
  * Provides a general purpose XML element storage mechanism for the storage of
  * user interface configuration.
- *
+ * <p>
  * There are two configuration files per {@link jmri.profile.Profile} and
  * {@link jmri.util.node.NodeIdentity}, both stored in the directory
  * <code>profile:profile</code>:
  * <ul>
- * <li><code>user-interface.xml</code> preferences that are shared across
- * multiple nodes for a single profile. An example of such a preference would be
- * the Railroad Name preference.</li>
- * <li><code>&lt;node-identity&gt;/user-interface.xml</code> preferences that
- * are specific to the profile running on a specific host (&lt;node-identity&gt;
- * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
- * An example of such a preference would be a file location.</li>
+ * <li><code>{@value jmri.profile.Profile#UI_CONFIG}</code> preferences that are
+ * shared across multiple nodes for a single profile. An example of such a
+ * preference would be the Railroad Name preference.</li>
+ * <li><code>&lt;node-identity&gt;/{@value jmri.profile.Profile#UI_CONFIG}</code>
+ * preferences that are specific to the profile running on a specific host
+ * (&lt;node-identity&gt; is the identity returned by
+ * {@link jmri.util.node.NodeIdentity#networkIdentity()}). An example of such a
+ * preference would be a file location.</li>
  * </ul>
+ * <p>
+ * Non-profile specific configuration that applies to all profiles is stored in
+ * the file
+ * <code>settings:preferences/{@value jmri.profile.Profile#UI_CONFIG}</code>.
  *
  * @author Randall Wood 2015, 2016
  */

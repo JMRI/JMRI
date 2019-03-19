@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-13-3.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2016</year>
         <holder>JMRI</holder>
@@ -73,373 +73,70 @@
             <authorinitials>MM</authorinitials>
             <revremark>Add two new SD38-2 models</revremark>
         </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2019-03-14</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Move outputs to family level</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
-        <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" >
+        <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70">
             <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="825" comment="Model E5000.001BR">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-200 SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="774" comment="Model E9900.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
             <model model="ECO-RTR SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="774" comment="Model E0101.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="775" comment="Model E9900.002B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
             <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="780" comment="Model E0101.004B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="851" comment="Model E0101.002B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E????.???">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="773" comment="Model E9901.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
             <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="846" comment="Model E???">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Airhorn| ">
+                <label xml:lang="it">Tromba| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamic|Brakes">
+                <label xml:lang="it">Freni|Dinamici</label>
+            </output>
+            <output name="8" label="Short|Horn">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>

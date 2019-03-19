@@ -2934,8 +2934,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * @param destBlock - is the destination of the block we are following
-     * @param direction - is the direction of travel from the previous block
+     * @param destBlock  is the destination of the block we are following
+     * @param direction  is the direction of travel from the previous block
      * @return next block
      */
     public Block getNextBlock(Block destBlock, int direction) {

@@ -47,7 +47,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
 
     /**
      * Create a ClockControl object for a Loconet clock
-     * @param scm - the LocoNet System Connection Memo to associate with this
+     * @param scm  the LocoNet System Connection Memo to associate with this
      *              Clock Control object
      */
     public LnClockControl(LocoNetSystemConnectionMemo scm) {

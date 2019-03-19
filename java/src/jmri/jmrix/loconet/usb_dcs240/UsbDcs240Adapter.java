@@ -34,7 +34,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
      * not considered a user-settable option.  Sets the DCS240 USB interface for the appropriate
      * operating mode, based on the selected "command station type".
      *
-     * @param activeSerialPort - the port to be configured
+     * @param activeSerialPort  the port to be configured
      */
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
