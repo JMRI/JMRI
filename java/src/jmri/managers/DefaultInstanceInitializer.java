@@ -56,9 +56,8 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
     @Override
     public <T> Object getDefault(Class<T> type) {
 
-        // In order for getDefault() to be called for a particular manager,
-        // the manager also needs to be added to the method getInitalizes()
-        // below.
+        // In order for getDefault() to create a new object, the manager also
+        // needs to be added to the method getInitalizes() below.
 
         if (type == AudioManager.class) {
             return DefaultAudioManager.instance();
