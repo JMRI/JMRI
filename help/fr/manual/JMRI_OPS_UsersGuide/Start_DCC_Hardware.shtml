@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -31,54 +31,50 @@
       width="163" height="117" vspace="15" border="10" class=
       "BOXIT"></h1>
 
-      <h1>Getting Started with OperationsPro&reg;</h1>
+      <h1>Mise en route avec OperationsPro reg;</h1>
 
-      <h2>What hardware do I need?</h2>
+      <h2> De quel mat&#233;riel ai-je besoin?</h2>
 
-      <div align="right">
-        <p><a href="Start_DCC_Systems.shtml">Previous</a> <a href=
-        "Start_DecoderPro.shtml">| Next</a></p>
+      <div align = "right">
+        <p> <a href="Start_DCC_Systems.shtml"> Pr&#233;c&#233;dent </a> <a href =
+        "Start_DecoderPro.shtml"> | Suivant </a></p>
 
-        <p><a href="index.shtml#GettingStarted">Back to
-        Index</a></p>
-      </div>
-      <hr>
+        <p> <a href="index.shtml#GettingStarted"> Retour &#224; l'Index </a></p>
+     </div>
+      <h>
 
-      <p>You will need a means to connect between your computer and
-      the track on which the locomotive rests, that will take
-      serial instructions and generate DCC packets on the rails. At
-      a minimum, a Command Station/Booster (your DCC system will
-      probably suffice), an additional hardware interface to send
-      commands from your computer to the command station (this
-      could be as simple as a serial cable), and a programming
-      track set up according to the manufacturer's
-      instructions.</p>
+      <p> Vous aurez besoin d'un moyen de connexion entre votre ordinateur 
+      et la voie sur laquelle repose la locomotive, qui prendra des 
+      instructions en s&#233;rie et g&#233;n&#233;rera des paquets DCC sur les rails. 
+      Au minimum, une Centrale de Commande/Booster (votre syst&#232;me DCC 
+      suffira probablement), une interface mat&#233;rielle suppl&#233;mentaire pour 
+      envoyer des commandes de votre ordinateur &#224; la station de commande 
+      (cela pourrait &#234;tre aussi simple qu'un câble s&#233;rie) et une piste de 
+      programmation configur&#233;e. selon les instructions du fabricant.</p>
 
-      <p>For some systems, you will also need an additional
-      hardware interface to send the commands from your computer to
-      the Command Station, and from there on to the decoder in the
-      locomotive. For a Digitrax system, for example, you will need
-      either the <b>MS100 interface</b>, <strong>PR3
-      programmer</strong> or a <b>LocoBuffer</b>. The <b>PR1</b>
-      device from Digitrax is a stand-alone programmer and is
-      <span class="ACCENT">not</span> usable with this
-      software.</p>
+      <p> Sur certains syst&#232;mes, vous aurez &#233;galement besoin d'une 
+      interface mat&#233;rielle suppl&#233;mentaire pour envoyer les commandes de 
+      votre ordinateur &#224; la Centrale de Commande, puis au d&#233;codeur de la 
+      locomotive. Pour un syst&#232;me Digitrax, par exemple, vous aurez 
+      besoin de <b> l'interface MS100</b>, du <strong>programmeur PR3
+      </strong> ou d'un <b>LocoBuffer</b>. Le p&#233;riph&#233;rique <b> PR1</b> 
+      de Digitrax est un programmeur autonome et <span class = "ACCENT"> 
+		  n'est pas</span> utilisable avec ce logiciel.</P>
 
-      <p>For those who do not have any DCC hardware yet and are
-      considering purchasing a DCC locomotive and besides
-      OperationsPro want to use DecoderPro to program decoders,
-      consider the SPROG II USB. It has all the electronics in one
-      package with enough output to run a locomotive. It comes
-      complete with the USB cable, power supply, instructions and
-      JMRI on a CD-rom.</p>
-      <hr>
+      <p> Pour ceux qui ne disposent pas encore de mat&#233;riel DCC et qui 
+      envisagent d'acheter une locomotive DCC et qui souhaitent utiliser 
+      OperationsPro avec DecoderPro pour programmer des d&#233;codeurs, pensez 
+      au SPROG II USB. Il contient tous les composants &#233;lectroniques dans
+       un m&#234;me paquet avec une puissance suffisante pour faire fonctionner 
+       une locomotive. Il est livr&#233; avec le câble USB, l'alimentation, 
+       les instructions et JMRI sur un CD-ROM.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Start_DCC_Systems.shtml">Previous</a> <a href=
-        "Start_DecoderPro.shtml">| Next</a></p>
+      <div align = "right">
+        <p> <a href="Start_DCC_Systems.shtml"> Pr&#233;c&#233;dent </a> <a href =
+        "Start_DecoderPro.shtml"> | Suivant </a></p>
 
-        <p><a href="index.shtml#GettingStarted">Back to
-        Index</a></p>
+        <p> <a href="index.shtml#GettingStarted"> Retour &#224; l'Index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
