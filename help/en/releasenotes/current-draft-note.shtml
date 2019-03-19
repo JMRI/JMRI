@@ -413,7 +413,12 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li></li>
+                <li>Updated how lock information is 
+                    stored in the 'logging memory'
+                    so that it can be displayed e.g. 
+                    on a panel.  For more info,
+                    see the
+                    <a href="/help/en//html/tools/uss/index.shtml">help page</a></li>
             </ul>
 
    <h3>Switchboard Editor</h3>
