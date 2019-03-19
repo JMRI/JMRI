@@ -67,7 +67,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int opCode;
-            while (true) {  // loop permanently, program close will exit
+            while (!threadStop) {  // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) {
@@ -235,7 +235,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int waitCount;
-            while (true) { // loop permanently
+            while (!threadStop) { // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -362,17 +362,14 @@ public class LnPacketizerStrict extends LnPacketizer {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
-
-        // make sure that the xmt priority is no lower than the current priority
-        int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
+        threadStop = false;
         // start the XmtHandler in a thread of its own
         if (xmtHandler == null) {
             xmtHandler = new XmtHandlerStrict();
         }
         Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
-        log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
-        xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
+        xmtThread.setPriority(Thread.MAX_PRIORITY - 2);
         xmtThread.start();
 
         // start the RcvHandler in a thread of its own
@@ -381,7 +378,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         }
         Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.setPriority(Thread.MAX_PRIORITY - 1);
         rcvThread.start();
 
         log.info("Strict Packetizer in use");

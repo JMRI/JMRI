@@ -228,7 +228,7 @@ public class LnPacketizer extends LnTrafficController {
         public void run() {
 
             int opCode;
-            while (true) {   // loop permanently, program close will exit
+            while (!threadStop) {   // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
@@ -365,6 +365,8 @@ public class LnPacketizer extends LnTrafficController {
         }
     }
 
+    protected volatile boolean threadStop = false;
+
     /**
      * Captive class to handle transmission.
      */
@@ -376,7 +378,7 @@ public class LnPacketizer extends LnTrafficController {
         @Override
         public void run() {
 
-            while (true) {   // loop permanently
+            while (!threadStop) {   // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -459,26 +461,26 @@ public class LnPacketizer extends LnTrafficController {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
-
+        threadStop = false;
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
         rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.setPriority(Thread.MAX_PRIORITY - 1);
         rcvThread.start();
 
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
         // make sure that the xmt priority is no lower than the current priority
-        int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
+        //int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
         xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
-        log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
+        //log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
-        xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
+        xmtThread.setPriority(Thread.MAX_PRIORITY - 2);
         xmtThread.start();
 
         log.info("lnPacketizer Started");
@@ -493,18 +495,7 @@ public class LnPacketizer extends LnTrafficController {
     @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
     @Override
     public void dispose() {
-        if (xmtThread != null) {
-            xmtThread.stop(); // interrupt not sufficient?
-            try {
-                xmtThread.join();
-            } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
-        }
-        if (rcvThread != null) {
-            rcvThread.stop(); // interrupt not sufficient, because jtermios hangs in select via purejavacomm.PureJavaSerialPort$2.read
-            try {
-                rcvThread.join();
-            } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
-        }
+        threadStop = true;  // tell threads to stop
         super.dispose();
     }
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
