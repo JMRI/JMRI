@@ -1231,7 +1231,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Get the identifier for all entries in the roster.
      *
-     * @param locale - The desired locale
+     * @param locale  The desired locale
      * @return "All Entries" in the specified locale
      */
     public static String allEntries(Locale locale) {

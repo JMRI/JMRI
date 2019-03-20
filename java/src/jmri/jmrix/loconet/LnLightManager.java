@@ -117,7 +117,7 @@ public class LnLightManager extends AbstractLightManager {
      * Determine if it is possible to add a range of Lights in
      * numerical order eg. 11 thru 18, primarily used to show/not show the add
      * range box in the Add Light pane.
-     * @param systemName - an ignored parameter
+     * @param systemName  an ignored parameter
      * @return true, always
      */
     @Override

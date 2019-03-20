@@ -1404,7 +1404,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType - the connection type to test
+     * @param connectionType  the connection type to test
      * @return true if the connection for this connection type is free
      */
     @Override

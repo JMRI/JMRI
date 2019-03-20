@@ -246,7 +246,7 @@ public class CbusAddress {
 
         for (int i = 0; i < pStrings.length; i++) {
             // check validity of each
-            if (pStrings[i].equals("")) {
+            if (pStrings[i].isEmpty()) {
                 return new CbusAddress[0];
             }
             if (!hCode.reset(pStrings[i]).matches()) {

@@ -34,8 +34,8 @@ public class ZeroConfServiceManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.setUp();
+        JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.resetProfileManager();
         // ensure the manager used for tests is also the default manager should
         // some other element involved invoke the default manager

@@ -309,8 +309,8 @@ public class LayoutShape {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint      - the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller)
+     * @param hitPoint       the point
+     * @param useRectangles  whether to use (larger) rectangles or (smaller)
      *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
