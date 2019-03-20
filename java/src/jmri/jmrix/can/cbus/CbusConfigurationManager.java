@@ -277,6 +277,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (cbusPreferences == null) {
             cbusPreferences = new CbusPreferences();
+            jmri.InstanceManager.store( cbusPreferences, CbusPreferences.class );
         }
         return cbusPreferences;
     }
@@ -289,6 +290,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (cbusNodeTableDataModel == null) {
             cbusNodeTableDataModel = new CbusNodeTableDataModel(adapterMemo, 2, CbusNodeTableDataModel.MAX_COLUMN);
+            
+            if ( cbusPreferences == null ){
+                cbusPreferences = getCbusPreferences();
+            }
             cbusNodeTableDataModel.startup();
         }
         return cbusNodeTableDataModel;
@@ -299,6 +304,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     protected CbusCabSignalManager cabSignalManager;
 
     public CbusCabSignalManager getCabSignalManager() {
+        if ( adapterMemo.getDisabled() ) {
+            return null;
+        }
         if (cabSignalManager == null) {
             cabSignalManager = new CbusCabSignalManager(adapterMemo);
         }

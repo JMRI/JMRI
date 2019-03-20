@@ -88,7 +88,7 @@ public class CbusThrottle extends AbstractThrottle {
 //            case CbusConstants.DEC_MODE_14: this.speedIncrement = 8; break;
 //        }
         // Only 128 speed step supported at the moment
-        this.speedIncrement = 1;
+        this.speedIncrement = SPEED_STEP_128_INCREMENT;
 
         // start periodically sending keep alives, to keep this
         // attached
@@ -410,7 +410,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedSetting(float speed) {
-        // if (log.isDebugEnabled()) log.debug("setSpeedSetting({}) ", speed);
+        log.debug("setSpeedSetting({}) ", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
@@ -421,7 +421,7 @@ public class CbusThrottle extends AbstractThrottle {
         if (this.isForward) {
             new_spd = new_spd | 0x80;
         }
-        // if (log.isDebugEnabled()) log.debug("Sending speed/dir for speed: " + new_spd);
+        log.debug("Sending speed/dir for speed: {}",new_spd);
         // reset timeout
         mRefreshTimer.stop();
         mRefreshTimer.setRepeats(true);
