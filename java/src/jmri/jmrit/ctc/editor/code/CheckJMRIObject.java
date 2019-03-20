@@ -62,6 +62,8 @@ public class CheckJMRIObject {
                     return Bundle.getMessage("CJMRIO_Signal") + " " + _mFieldContents + " " + Bundle.getMessage("CJMRIO_DoesntExist");  // NOI18N
                 case BLOCK:
                     return Bundle.getMessage("CJMRIO_Block") + " " + _mFieldContents + " " + Bundle.getMessage("CJMRIO_DoesntExist");   // NOI18N
+                default:
+                    break;
             }
             return "";
         }
@@ -205,6 +207,8 @@ public class CheckJMRIObject {
             case BLOCK:
                 if (BLOCK_MANAGER.getBlock(JMRIObjectName) != null) return true;
                 break;
+            default:
+                return false;
         }
         return false;   // Either bad objectType or object doesn't exist in JMRI
     }

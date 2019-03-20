@@ -388,6 +388,8 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
                     } catch (IllegalAccessException e) {}   // CAN'T happen, since we ALREADY fetched it's contents previously the same way!
                 }
                 break;
+            default:
+                break;
         }
     }//GEN-LAST:event__mReplaceActionPerformed
 

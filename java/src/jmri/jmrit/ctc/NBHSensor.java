@@ -217,13 +217,13 @@ public class NBHSensor implements Sensor {
     }
 
     @Override
-    //  Deprecated 4.9.2
+    @Deprecated // 4.9.2
     public void useDefaultTimerSettings(boolean flag) {
         throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2"); // NOI18N
     }
 
     @Override
-    //  Deprecated 4.9.2
+    @Deprecated // 4.9.2
     public boolean useDefaultTimerSettings() {
         throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2"); // NOI18N
     }
