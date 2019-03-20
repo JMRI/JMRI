@@ -1,7 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,310 +24,303 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Using JMRI&#174; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&#174; pour l'Exploittation des Trains</h1>
 
-      <h2>OperationsPro: Setting your Preferences</h2>
+      <h2> OperationsPro: D&#233;finition de vos Pr&#233;f&#233;rences</h2>
 
-      <div align="right">
-        <p><a href="Start_DecoderPro.shtml">Previous</a></p>
+      <div align = "right">
+        <p><a href="Start_DecoderPro.shtml">Pr&#233;c&#233;dent</a></p>
 
-        <p><a href="index.shtml#startOps">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#startOps">Retour &#224; l'Index</a></p>
+    </div>
+      <h>
 
-      <p class="important">The current JMRI Preferences Help is
-      <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+      <p class = "important">L'Aide actuelle sur les Pr&#233;f&#233;rences JMRI est
+       <a href="../../html/setup/index.shtml#setprefs">ici</a>.</p>
 
-      <p>In either PanelPro or DecoderPro, in the main menu bar
-      click on the Edit menu -&gt; Preferences... (Windows) or
-      click on Preferences... in the PanelPro application menu (OS
-      X). This opens the <strong>Preferences</strong> panel (The
-      panel may open automatically the first time you run
-      JMRI&#174;).</p>
+      <p>Dans PanelPro ou DecoderPro, dans la barre de menus principale, 
+      cliquez sur le menu &#201;dition -&gt; Pr&#233;f&#233;rences ... (Fen&#234;tres) ou 
+      cliquez sur Pr&#233;f&#233;rences ... dans le menu de l'application PanelPro 
+      (OS X). Cela ouvre le panneau <strong>Pr&#233;f&#233;rences</strong> (le 
+      panneau peut s'ouvrir automatiquement la premi&#232;re fois que vous 
+      ex&#233;cutez JMRI&#174;).</P>
 
-      <p>The <strong>Preferences</strong> panel is split into two
-      panes: on the left side is a list of Preference groups that
-      may be set. Clicking on one of the Tabs opens that set of
-      Preference options in the right side pane where options may
-      be checked or changed.<br>
-      Note: <strong>Remember to click <input type="button" name=
-      "button9" id="button9" value="Save"> to finalize your
-      settings and then re-start JMRI to have them take
-      effect.</strong></p>
+      <p>Le panneau <strong>Pr&#233;f&#233;rences</strong> est divis&#233; en deux 
+      volets: &#224; gauche, une liste des groupes de pr&#233;f&#233;rences pouvant &#234;tre 
+      d&#233;finis. En cliquant sur l'un des onglets, vous ouvrez cet ensemble 
+      d'options Pr&#233;f&#233;rences dans le volet de droite, o&#249; les options 
+      peuvent &#234;tre coch&#233;es ou modifi&#233;es. <br>
+      Remarque: <strong>N'oubliez pas de cliquer sur <input type = "button" name =
+      "button9" id = "button9" value = "Enregistrer">pour finaliser vos 
+      param&#232;tres, puis red&#233;marrez JMRI pour les appliquer.</strong></p>
 
-      <p>To a first time user the most important part to start with
-      is the <strong>Connections</strong> Tab, where you describe
-      how your computer will talk to the DCC Command Station. You
-      may leave most of the other Tabs at their initial or
-      "default" settings until you find a need to change things to
-      suit your fancy.</p>
+      <p>Pour un utilisateur novice, la partie la plus importante au 
+      d&#233;part est l'onglet <strong>Connexions</strong>, dans lequel vous 
+      d&#233;crivez comment votre ordinateur communiquera avec votre Centrale 
+      de Commande DCC. Vous pouvez laisser la plupart des autres onglets 
+      &#224; leurs param&#232;tres initiaux ou "par d&#233;faut" jusqu'&#224; ce que vous 
+      ayez besoin de modifier les param&#232;tres &#224; votre guise.</P>
 
-      <p>The <strong>Preferences -&gt; Connections</strong> pane
-      provides access to the basic configuration information to
-      connect your computer to your DCC system. You may either set
-      up JMRI OperationsPro to work as a digital Switch List
-      generator using a "Simulator" Connection Type, or take
-      advantage of the full JMRI Suite by connecting JMRI&#174;
-      OperationsPro to your DCC layout to actually build and
-      operate trains equipped with DCC decoders and follow them on
-      your computer screen.</p>
+      <p>Le volet <strong>Pr&#233;f&#233;rences - &gt; Connexions</strong> permet 
+      d'acc&#233;der aux informations de configuration de base pour connecter 
+      votre ordinateur &#224; votre syst&#232;me DCC. Vous pouvez configurer JMRI 
+      OperationsPro pour qu'il fonctionne comme un g&#233;n&#233;rateur de liste de 
+      Man&#156;uvres num&#233;rique utilisant un type de connexion "simulateur", ou 
+      profiter de la suite JMRI compl&#232;te en connectant JMRI&#174; 
+      OperationsPro &#224; votre r&#233;seau DCC pour cr&#233;er et exploiter des 
+      trains &#233;quip&#233;s de d&#233;codeurs DCC. et les suivres sur l'&#233;cran de 
+      votre ordinateur.</p>
 
-      <p>In the following example, the Connections Tab was
-      selected:</p><img src="images/Preferences.png" width="755"
-      height="432" alt="JMRI Preferences - Connections tab">
+      <p>Dans l'exemple suivant, l'onglet Connexions a &#233;t&#233; s&#233;lectionn&#233;:
+      </p> <img src = "images/Preferences.png" width = "755"
+      height = "432" alt = "Pr&#233;f&#233;rences JMRI - Onglet Connexions">
 
-      <h3><a name="Connections"></a>Connections Pane</h3>
+      <h3> <a name="Connections"></a> Volet Connexions</h3>
 
-      <p>Select the Connections Tab at left to display the
-      Connection options on the right hand side (Tabs are
-      configured to the system your selected).</p>
+      <p>S&#233;lectionnez l'onglet Connexions &#224; gauche pour afficher les 
+      options de connexion sur le c&#244;t&#233; droit (les onglets sont configur&#233;s 
+      en fonction du syst&#232;me que vous avez s&#233;lectionn&#233;).</p>
 
-      <p>Let's set up JMRI Preferences for the Connection with your
-      Command Station. <span style="align: center;color:grey;">In
-      this example we are using a Digitrax DCS100 Super Chief
-      Command Station, (radio) interfaced to the computer via
-      LocoNet, PR3 (in MS100 mode) and USB port. We keep our JMRI
-      master roster on the System Drive.</span></p>
+      <p>Configurons les pr&#233;f&#233;rences JMRI pour la connexion avec votre 
+      Centrale de Commande  <span style = "align: center; color:gray;">
+		  Dans cet exemple, nous utilisons une Centrale de Commande 
+		  Digitrax DCS100 Super Chief, (radio) interfac&#233; &#224; l'ordinateur 
+		  via LocoNet, PR3 (en mode MS100) et un port USB. Nous 
+		  conservons notre Inventaire principale de JMRI sur le Disque System .</Span></p>
 
-      <table width="80%" border="1" align="center" cellpadding="2"
-      cellspacing="1">
+      <table width = "80%" border = "1" align = "center" cellpadding = "2"
+      cellpacing = "1">
         <tr>
-          <td width="21%">System manufacturer:</td>
+          <td width = "21%">Fabricant du Syst&#232;me:</td>
 
-          <td colspan="2">Drop-down list with all the supported DCC
-          manufacturers, select the manufacturer of your DCC
-          system.</td>
-        </tr>
-
-        <tr>
-          <td>System connection:</td>
-
-          <td colspan="2">Drop-down list with all of the supported
-          DCC system interfaces supported by the manufacturer that
-          you selected, select the interface that you are
-          using.</td>
-        </tr>
+          <td colspan = "2">Liste d&#233;roulante avec tous les fabricants 
+          DCC pris en charge, s&#233;lectionnez le fabricant de votre syst&#232;me 
+          DCC.</td>
+      </tr>
 
         <tr>
-          <td rowspan="5">Settings:</td>
+          <td> Connexion au Syst&#232;me:</td>
 
-          <td width="22%">Serial Port:</td>
-
-          <td width="57%">Drop-down list to select the serial port
-          to which your DCC interface is connected. If you do not
-          know, check your system hardware configuration manual. A
-          second drop-down list may include a selection if there
-          are more than one possibility. possibilityDrop-down list
-          to select the serial port to which your DCC interface is
-          connected. If you do not know, check your system hardware
-          configuration manual. A second drop-down list may include
-          a selection if there are more than one possibility</td>
-        </tr>
+          <td colspan = "2">Liste d&#233;roulante avec toutes les interfaces 
+          syst&#232;me DCC prises en charge et prises en charge par le 
+          fabricant que vous avez s&#233;lectionn&#233;. S&#233;lectionnez l'interface 
+          que vous utilisez.</td>
+      </tr>
 
         <tr>
-          <td>Command station type:</td>
+          <td rowspan = "5">Param&#232;tres:</td>
 
-          <td>Drop-down list to select the command station type
-          that JMRI will be using to send your DCC commands.</td>
-        </tr>
+          <td width = "22%">Port s&#233;rie:</td>
+
+          <td width = "57%">Liste d&#233;roulante permettant de s&#233;lectionner 
+          le port s&#233;rie auquel votre interface DCC est connect&#233;e. Si 
+          vous ne le savez pas, consultez le manuel de configuration du
+           mat&#233;riel de votre syst&#232;me. Une deuxi&#232;me liste d&#233;roulante peut 
+           inclure une s&#233;lection s'il existe plus d'une possibilit&#233;. 
+           </td>
+      </tr>
 
         <tr>
-          <td>Connection Prefix</td>
+          <td> Type de Centrale de Commande:</td>
 
-          <td>Include the prefix for your connection, in the case
-          shown the "L" is default</td>
-        </tr>
+          <td> Liste d&#233;roulante pour s&#233;lectionner le type de Centrale de 
+          Commande que JMRI utilisera pour envoyer vos commandes DCC.</td>
+      </tr>
 
         <tr>
-          <td>Connection Name</td>
+          <td> Pr&#233;fixe de Connexion</td>
 
-          <td>Should default to the connection used</td>
-        </tr>
+          <td> Incluez le pr&#233;fixe de votre connexion, dans le cas 
+          indiqu&#233;, "L" est la valeur par d&#233;faut</td>
+      </tr>
 
+        <tr>
+          <td> Nom de la Connexion</td>
+
+          <td> La connexion utilis&#233;e doit-elle &#234;tre d&#233;finie par d&#233;faut</td>
+      </tr>
         <tr>
           <td><input type="checkbox" name="checkbox" id="checkbox">
-          Additional Connection Settings<br>
-          if checked:</td>
+         Param&#232;tres de connexion suppl&#233;mentaires <br>
+          si coch&#233;:</td>
 
           <td>
-            <p><input type="submit" name="button2" id="button2"
-            value="Disable Connection"> will disable all the
-            connection settings.</p>
+            <p><input name = "submit" name = "button2" id = "button2"
+            value = "D&#233;sactiver Connexion">d&#233;sactivera tous les 
+            param&#232;tres de connexion.</p>
 
-            <p><input type="submit" name="button" id="button"
-            value="Delete Connection"> will delete all the
-            connection settings.</p>
-          </td>
-        </tr>
-      </table>
+            <p><input name = "submit" nom = "boutton" id = "boutton"
+            value = "Effacer Connexion">supprimera tous les param&#232;tres 
+            de connexion.</p>
+        </td>
+      </tr>
+    </table>
 
-      <p><img src="images/Preferences3.png" width="755" height=
+      <p><img src = "images/Preferences3.png" width = "755" height =
       "463"></p>
 
-      <h3><a name="Defaults"></a>Defaults Pane</h3>
+      <h3> <a name="Defaults"></a> Volet Param&#232;tres par d&#233;faut</h3>
 
-      <p>Shows the default settings which will depend upon the
-      system(s) used. Select one of your Connections as the default
-      connection for i.e. Throttles and Service Programmers. With
-      only one Connection (on the Connections Tab), that will
-      automatically be the Default and this pane not relevant.</p>
+      <p>Affiche les param&#232;tres par d&#233;faut qui d&#233;pendent du (des) syst&#232;me 
+      (s) utilis&#233; (s). S&#233;lectionnez l'une de vos connexions comme 
+      connexion par d&#233;faut pour les r&#233;gulateurs de service et les 
+      programmeurs de services. Avec une seule connexion (sous l'onglet 
+      Connexions), ce sera automatiquement la valeur par d&#233;faut et ce 
+      volet ne sera pas pertinent.</P>
 
-      <p><img src="images/JMRI_PrefsDefaults.png" width="838"
-      height="444"></p>
+      <p><img src = "images/JMRI_PrefsDefaults.png" width = "838"
+      height = "444"></p>
 
-      <h3><a name="FileLocations"></a>File Locations Pane</h3>
+      <h3> <a name="FileLocations"></a> Volet Emplacements des fichiers</h3>
 
-      <p><img src="images/Preferences5.png" width="755" height=
+      <p><img src = "images/Preferences5.png" width = "755" height =
       "302"></p>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "50%">
         <tbody>
+          <tr> <td align = "left" valign = "top" width = "200"><strong>
+            Emplacement des Fichiers Utilisateur</strong></td>
+
+            <td align = "left">S&#233;lectionnez l'emplacement de vos 
+            fichiers utilisateur sur votre syst&#232;me</td>
+        </tr>
+
           <tr>
-            <td align="left" valign="top" width="200"><strong>User
-            File Locations</strong></td>
+            <td align = "left" valign = "top"><strong>Emplacement du 
+            script Jython</strong></td>
 
-            <td align="left">Select the location for your user
-            files on your system</td>
-          </tr>
+            <td align = "left">D&#233;finissez l'emplacement des fichiers de 
+            script Jython sur votre syst&#232;me</td>
+        </tr>
+      </tbody>
+    </table>
 
-          <tr>
-            <td align="left" valign="top"><strong>Jython Script
-            Location</strong></td>
+      <h3> <a name="StartUp"></a> Autres volets de Pr&#233;f&#233;rences</h3>
 
-            <td align="left">Set the location of Jython Script
-            files on your system</td>
-          </tr>
-        </tbody>
-      </table>
+      <p>Tous les panneaux de Pr&#233;f&#233;rences sont d&#233;crits en d&#233;tail dans 
+      les <a href ="../index.shtml">Manuels</a>.</p> panneaux JMRI 
+      PanelPro&#174; et DecoderPro&#174; en ligne 
 
-      <h3><a name="StartUp"></a>Other Preference panes</h3>
-
-      <p>All the Preference panes are described in detail in the
-      JMRI PanelPro&#174; and DecoderPro&#174; online <a href=
-      "../index.shtml">Manuals</a>.</p>
-
-      <div leftmargin="40">
-        <table border="0" cellpadding="1" cellspacing="1" width=
+      <div leftmargin = "40">
+        <table border = "0" cellpadding = "1" cellspacing = "1" width =
         "80%">
           <tbody>
             <tr>
-              <td align="left" valign="top" width="200">
-              <strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#Connections">Connections</a></strong></td>
+              <td align = "left" valign = "top" width = "200">
+              <strong><a href =
+              "../DecoderPro3/Start_Preferences.shtml#Connections">
+              Connexions</a></strong></td>
 
-              <td align="left" valign="top">Allows you to select
-              the System Connection that you are using for
-              controlling DCC and the connection to your
-              computer.</td>
-            </tr>
-
-            <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#Defaults">Defaults</a></strong></td>
-
-              <td align="left" valign="top">Shows system default
-              settings</td>
-            </tr>
+              <td align = "left" valign = "top">Vous permet de 
+              s&#233;lectionner la connexion syst&#232;me que vous utilisez pour 
+              contr&#244;ler DCC et la connexion &#224; votre ordinateur.</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#FileLocations">
-              File Locations</a></strong></td>
+              <td align = "left" valign = "top"><strong><a href =
+              "../DecoderPro3/Start_Preferences.shtml#Defaults">D&#233;fauts</a></strong></td>
 
-              <td align="left" valign="top">Set default location
-              for saving User files and Script Files</td>
-            </tr>
-
-            <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#StartUp">Start
-              Up</a></strong></td>
-
-              <td align="left" valign="top">Allows you to set
-              Actions, Buttons, Files and Scripts that run at Start
-              Up</td>
-            </tr>
+              <td align = "left" valign = "top">Affiche les param&#232;tres 
+              par d&#233;faut du syst&#232;me</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#Display">Display</a></strong></td>
+              <td align = "left" valign = "top"><strong><a href =
+              "../ DecoderPro3/Start_Preferences.shtml # FileLocations">
+              Emplacement des fichiers</a></strong></td>
 
-              <td align="left" valign="top">Allows you to select
-              your computer display mode</td>
-            </tr>
+              <td align = "left" valign = "top">D&#233;finir l'emplacement 
+              par d&#233;faut pour l'enregistrement des Fichiers Utilisateur 
+              et des Fichiers de Script</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><strong><a href=
+              <td align = "left" valign = "top"><strong><a href= "../DecoderPro3/Start_Preferences.shtml#StartUp">D&#233;marrer</a></strong></td>
+
+              <td align = "left" valign = "top">Vous permet de d&#233;finir
+              Actions, Boutons, Fichiers et Scripts ex&#233;cut&#233;s au d&#233;marrage</td>
+          </tr>
+
+            <tr>
+              <td align = "left" valign = "top"><strong><a href =
+              "../DecoderPro3/Start_Preferences.shtml#Display">Affichage</a></strong></td>
+
+              <td align = "left" valign = "top">Vous permet de 
+              s&#233;lectionner le mode d'affichage de votre ordinateur</td>
+          </tr>
+
+            <tr>
+              <td align = "left" valign = "top"><strong><a href =
               "../DecoderPro3/Start_Preferences.shtml#Messages">Messages</a></strong></td>
 
-              <td align="left" valign="top">Set default actions for
-              system message when displayed</td>
-            </tr>
+              <td align = "left" valign = "top">D&#233;finit les actions par 
+              d&#233;faut du message syst&#232;me lors de l'affichage</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#Roster">Roster</a></strong></td>
+              <td align = "left" valign = "top"><strong><a href =
+              "../DecoderPro3/Start_Preferences.shtml#Roster">Inventaire</a></strong></td>
 
-              <td align="left" valign="top">Allows you to set your
-              default Programmer and Roster location</td>
-            </tr>
-
-            <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#Throttle">Throttle</a></strong></td>
-
-              <td align="left" valign="top">Allows you to set up
-              you Throttle preferences</td>
-            </tr>
+              <td align = "left" valign = "top">Vous permet de d&#233;finir 
+              l'emplacement de votre programmeur et de votre rInventaire 
+              par d&#233;faut</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><strong><a href=
+              <td align = "left" valign = "top"><strong><a href =
+             "../DecoderPro3/Start_Preferences.shtml#Throttle">R&#233;gulateur</a></strong></td>
+
+      </tr>
+              <td align = "left" valign = "top">Vous permet de configurer 
+              vos pr&#233;f&#233;rences R&#233;gulateur</td>
+          </tr>
+
+            <tr>
+              <td align = "left" valign = "top"><strong><a href =
               "../DecoderPro3/Start_Preferences.shtml#WiThrottle">WiThrottle</a></strong></td>
 
-              <td align="left" valign="top">Allows you to set up a
-              WiThrottle settings</td>
-            </tr>
+              <td align = "left" valign = "top">Vous permet de configurer 
+              des param&#232;tres R&#233;gulateur Wi</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><a href=
-              "../DecoderPro3/Start_Preferences.shtml#JOSN"><strong>
-              JSON Server</strong></a></td>
+              <td align = "left" valign = "top"><a href =
+              "../ DecoderPro3/Start_Preferences.shtml # JOSN"><strong>
+              Serveur JSON</strong></a></td>
 
-              <td align="left" valign="top">Opens JSON Server
-              Preference settings pane</td>
-            </tr>
+              <td align = "left" valign = "top">Ouvre le volet des 
+              param&#232;tres de Pr&#233;f&#233;rence du serveur JSON</td>
+          </tr>
 
             <tr>
-              <td align="left" valign="top"><strong><a href=
-              "../DecoderPro3/Start_Preferences.shtml#MiniServer">Web
-              Server</a></strong></td>
+              <td align = "left" valign = "top"><strong><a href =
+              "../DecoderPro3/Start_Preferences.shtml#MiniServer">Serveur Web</a></strong></td>
 
-              <td align="left" valign="top">Sets up the
-              DecoderPro&#174; Web Server</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3>Save your Preferences</h3>
-
-      <div style="align: center;color:red;">
-        <p>Before you exit the <strong>Preferences</strong> panel,
-        click the <input type="submit" name="button8" id="button8"
-        value="Save"> button in the bottom left hand corner to save
-        all your settings.<br>
-        You must restart DecoderPro/PanelPro for your new
-        Preferences to take effect</p>
-      </div>
-      <hr>
-
-      <div align="right">
-        <p><a href="Start_DecoderPro.shtml">Previous</a></p>
-
-        <p><a href="index.shtml#startOps">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+              <td align = "left" valign = "top">Configure le Serveur Web DecoderPro&#174;</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+
+      <h3> Enregistrez vos pr&#233;f&#233;rences</h3>
+
+      <div style = "align: center; color: red;">
+        <p>Avant de quitter le panneau <strong>Pr&#233;f&#233;rences</strong>, 
+        cliquez sur  <input type = "submit" name = "button8" id = "button8".
+        value = "Enregistrer">dans le coin inf&#233;rieur gauche pour 
+        enregistrer tous vos param&#232;tres. <br>
+        Vous devez red&#233;marrer DecoderPro/PanelPro pour que vos nouvelles 
+        pr&#233;f&#233;rences prennent effet</p>
+    </div>
+      <h>
+
+      <div align = "right">
+        <p><a href="Start_DecoderPro.shtml">Pr&#233;c&#233;dent</a></p>
+
+        <p><a href="index.shtml#startOps">Retour &#224; l'Index</a></p>
+     </div><!--#include virtual="/Footer" -->
+   </div>
+ </div>
 </body>
 </html>
