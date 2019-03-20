@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="14" lastUpdated="20190315"/>
   <version author="Michael Mosher" version="13" lastUpdated="20171103"/>
   <version author="Marc N Fournier" version="12" lastUpdated="20171031"/>
   <version author="Alain Le Marchand" version="11" lastUpdated="20140628"/>
@@ -39,6 +40,7 @@
   <!-- Version 11 - added N12K0a and N12K0b plus a few comments/tooltips -->  
   <!-- Version 12 - added D13NHJ and D13NHP , high Ver ID 38 (2014) -->  
   <!-- Version 13 - add new models -->
+  <!-- Version 14 - change D16MTC to 8 function (despite the name) and add CV115 for it alone -->
     <decoder>
     <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
@@ -133,7 +135,7 @@
         <output name="6" label="Pad" connection="solder" maxcurrent="40 mA"/>
         <size length="1.08" width="0.63" height="0.275" units="inches"/>
       </model>
-      <model model="D16MTC" numOuts="6" numFns="8" connector="21MTC" formFactor="HO">
+      <model model="D16MTC" numOuts="8" numFns="8" connector="21MTC" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
         <output name="1" label="Pin"/>
         <output name="2" label="Pin"/>
         <output name="3" label="Pin"/>
@@ -766,6 +768,18 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- NCE-specific variables -->
+      <variable CV="115" item="Global lighting option 5"  mask="XXXXXXXV" default="0" include="D16MTC">
+        <enumVal>
+          <enumChoice value="0">
+            <choice>Full Power</choice>
+          </enumChoice>
+          <enumChoice value="1">
+            <choice>Logic Level</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Full Power/Logic Level Compatibility Outputs 5,6,7,8</label>
+        <tooltip>Compatibility with either Logic Level or Full Power for outputs 5, 6, 7, 8</tooltip>
+      </variable>
       <variable CV="116" mask="VVVVVVVV" item="Dither frequency" tooltip="How frequently the motor is kicked with voltage pulses">
         <decVal/>
         <label>Torque Kick Rate</label>

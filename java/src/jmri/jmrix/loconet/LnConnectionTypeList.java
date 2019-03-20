@@ -30,7 +30,8 @@ public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.loconet.locobufferii.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.locobuffer.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.ms100.ConnectionConfig", // NOI18N
-            "jmri.jmrix.loconet.bluetooth.ConnectionConfig" // NOI18N
+            "jmri.jmrix.loconet.bluetooth.ConnectionConfig", // NOI18N
+            "jmri.jmrix.loconet.streamport.LnStreamConnectionConfig" // NOI18N
         };
     }
 

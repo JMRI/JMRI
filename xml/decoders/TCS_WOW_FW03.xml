@@ -1890,6 +1890,7 @@
 			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
 		</resets>
 	</decoder>
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>

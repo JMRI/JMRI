@@ -48,7 +48,7 @@ public interface ConditionalManager extends Manager<Conditional> {
      * Parses the Conditional system name to get the parent Logix system name,
      * then gets the parent Logix, and returns it.
      *
-     * @param name - system name of Conditional (must be trimmed and upper case)
+     * @param name system name of Conditional (must be trimmed and upper case)
      * @return the logix for the conditional
      */
     public Logix getParentLogix(String name);
@@ -59,8 +59,8 @@ public interface ConditionalManager extends Manager<Conditional> {
      * lookup. If this fails, or if x == null, looks up assuming that name is a
      * System Name. If both fail, returns null.
      *
-     * @param x    - parent Logix (may be null)
-     * @param name - name to look up
+     * @param x   parent Logix (may be null)
+     * @param name name to look up
      * @return null if no match found
      */
     public Conditional getConditional(Logix x, String name);

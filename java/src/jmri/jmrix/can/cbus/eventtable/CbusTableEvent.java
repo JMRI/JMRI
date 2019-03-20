@@ -22,14 +22,13 @@ public class CbusTableEvent extends CbusEvent {
     private Date _timestamp;
     
     public CbusTableEvent( int nn, int en, 
-        EvState state, int canid, String name, String nodeName, String comment, 
+        EvState state, int canid, String name, String comment, 
         int sesson, int sessoff, int sessin, int sessout, Date timestamp ){
         
         super(nn,en);
         _state = state;
         _canid = canid;
         _name = name;
-        _nodeName = nodeName;
         _comment = comment;
         _sesson = sesson;
         _sessoff = sessoff;

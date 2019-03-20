@@ -1314,7 +1314,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * Sets the throttle percent unless it is already less than the new setting
-     * @param throttleSetting - Max ThrottleSetting required.
+     * @param throttleSetting  Max ThrottleSetting required.
      */
     private synchronized void setToAMaximumThrottle(float throttleSetting) {
         if (throttleSetting < _targetSpeed) {
@@ -1324,7 +1324,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * Calculates the throttle setting for a given speed.
-     * @param speed - the unadjusted speed.
+     * @param speed  the unadjusted speed.
      * @return - throttle setting (a percentage)
      */
     private synchronized float getThrottleSettingFromSpeed(float speed) {
@@ -1366,7 +1366,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * sets the throttle based on an index number into _speedRatio array
-     * @param speedState - Index value
+     * @param speedState  Index value
      */
     private synchronized void setTargetSpeedState(int speedState) {
         _autoEngineer.slowToStop(false);
@@ -1946,7 +1946,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * Convert ramp rate name, stored as a string into the constant value
      * assigned.
      *
-     * @param rampRate - name of ramp rate, such as "RAMP_FAST"
+     * @param rampRate  name of ramp rate, such as "RAMP_FAST"
      * @return integer representing a ramprate constant value
      */
     public static int getRampRateFromName(String rampRate) {

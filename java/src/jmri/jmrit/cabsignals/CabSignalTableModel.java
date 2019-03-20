@@ -17,7 +17,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -50,9 +49,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     private CabSignalManager cabSignalManager;
 
     public Boolean masterSendCabData = true;
- 
-    static private int MAX_LINES = 5000;
-    TextAreaFIFO tablefeedback;
     
     // column order needs to match list in column tooltips
 
@@ -76,12 +72,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
            InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
            cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         }
-        tablefeedback = new TextAreaFIFO(MAX_LINES);
-        
-    }
-    
-    TextAreaFIFO tablefeedback(){
-        return tablefeedback;
     }
 
     // order needs to match column list top of dtabledatamodel
@@ -232,7 +222,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             cmdStatTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
        // cmdStatTable.sizeColumnsToFit(-1);
-       tablefeedback.setEditable ( false );
     }
 
     /**
@@ -280,7 +269,12 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 }
                 return chngblockbutton;
             case NEXT_BLOCK:
-                return cabSignalManager.getCabSignalArray()[row].getNextBlock();
+                Block nextBl = cabSignalManager.getCabSignalArray()[row].getNextBlock();
+                if ( nextBl != null){
+                    return nextBl.getDisplayName();
+                } else {
+                    return "";
+                }
             case NEXT_SIGNAL:
                 mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
                 if (mast!=null) {
@@ -383,54 +377,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             }
         }
     }
-    
-    
-    /**
-     * Add to Slot Monitor Console Log
-     * @param cbuserror int
-     * @param cbustext String console message
-     */
-    public void addToLog(int cbuserror, String cbustext){
-        tablefeedback.append( "\n"+cbustext);
-    }
 
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    private static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
-    }
-    
     public void dispose() {
     }
 

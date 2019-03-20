@@ -5,9 +5,22 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-     NodeConfigToolPaneTest.class,
-     NodeEditEventFrameTest.class,
-     BundleTest.class
+    BundleTest.class, 
+    CbusNodeEditEventFrameTest.class,
+    CbusNodeEditNVarFrameTest.class,
+    CbusNodeEventTablePaneTest.class,
+    CbusNodeEventVarPaneTest.class,
+    CbusNodeFcuTablePaneTest.class,
+    CbusNodeInfoPaneTest.class,
+    CbusNodeNVEditTablePaneTest.class,
+    CbusNodeNVTablePaneTest.class,
+    CbusNodeRestoreFcuFrameTest.class,
+    CbusNodeSetupPaneTest.class,
+    CbusNodeSingleEventEditTablePaneTest.class,
+    CbusNodeTablePaneTest.class,
+    CbusNodeVarPaneTest.class,
+    NodeConfigToolPaneTest.class
+     
 })
 
 /**
