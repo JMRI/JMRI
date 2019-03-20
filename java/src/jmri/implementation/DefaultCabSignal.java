@@ -99,9 +99,16 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         LocoAddress addr = getCabSignalAddress();
         for (Block blockVal : blockSet) {
             if ( blockVal.getValue() != null ) {
+                Object val = blockVal.getValue();
                 log.debug("CabSignal for {} searching block {} value {}",
-                           addr,blockVal,blockVal.getValue());
-                if (blockVal.getValue().equals(addr) ||
+                           addr,blockVal,val.toString());
+                if (val instanceof jmri.AddressedIdTag) {
+                    if( ((jmri.AddressedIdTag)val).getLocoAddress().toString().equals( 
+                         addr.toString())){
+                       setBlock(blockVal); 
+                       return;
+                    }
+                } else if (blockVal.getValue().equals(addr) ||
                     blockVal.getValue().toString().equals(addr.toString()) || 
                     blockVal.getValue().toString().equals("" + addr.getNumber())) {
                     setBlock(blockVal);

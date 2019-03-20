@@ -187,8 +187,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 1
      *
-     * @param connectTrack   - the track we want to connect to
-     * @param connectionType - where on that track we want to be connected
+     * @param connectTrack    the track we want to connect to
+     * @param connectionType  where on that track we want to be connected
      */
     protected void setNewConnect1(@Nullable LayoutTrack connectTrack, int connectionType) {
         connect1 = connectTrack;
@@ -198,8 +198,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 2
      *
-     * @param connectTrack   - the track we want to connect to
-     * @param connectionType - where on that track we want to be connected
+     * @param connectTrack    the track we want to connect to
+     * @param connectionType  where on that track we want to be connected
      */
     protected void setNewConnect2(@Nullable LayoutTrack connectTrack, int connectionType) {
         connect2 = connectTrack;

@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -41,6 +42,10 @@ public class CbusConfigurationManagerTest {
         Assert.assertNull( t.getReporterManager() );
         Assert.assertNull( t.getLightManager() );
         Assert.assertNull( t.getCommandStation() );
+        Assert.assertNull( t.getMultiMeter() );
+        Assert.assertNull( t.getCbusPreferences() );
+        Assert.assertNull( t.getCbusNodeTableDataModel() );
+        Assert.assertNull( t.getCabSignalManager() );
         
         t.dispose();
         t = null;
@@ -63,6 +68,11 @@ public class CbusConfigurationManagerTest {
         Assert.assertTrue( t.provides(jmri.ReporterManager.class) );
         Assert.assertTrue( t.provides(jmri.LightManager.class) );
         Assert.assertTrue( t.provides(jmri.CommandStation.class) );
+        Assert.assertTrue( t.provides(jmri.MultiMeter.class) );
+        Assert.assertTrue( t.provides(CbusPreferences.class) );
+        Assert.assertTrue( t.provides(CbusNodeTableDataModel.class) );
+        Assert.assertTrue( t.provides(jmri.CabSignalManager.class) );
+        
         Assert.assertFalse( t.provides(jmri.jmrix.can.cbus.CbusSensor.class) );
         
         tcis = null;
@@ -91,6 +101,11 @@ public class CbusConfigurationManagerTest {
         Assert.assertNotNull( t.get(jmri.ReporterManager.class) );
         Assert.assertNotNull( t.get(jmri.LightManager.class) );
         Assert.assertNotNull( t.get(jmri.CommandStation.class) );
+        Assert.assertNotNull( t.get(jmri.MultiMeter.class) );
+        Assert.assertNotNull( t.get(CbusPreferences.class) );
+        Assert.assertNotNull( t.get(jmri.CabSignalManager.class) );
+        t.configureManagers();
+        Assert.assertNotNull( t.get(CbusNodeTableDataModel.class) );
         
         tcis = null;
         memo = null;
@@ -132,7 +147,19 @@ public class CbusConfigurationManagerTest {
         Assert.assertTrue("lightmanager",lm == t.get(jmri.LightManager.class) );
 
         CbusCommandStation cs = t.getCommandStation();
-        Assert.assertTrue("lightmanager",cs == t.get(jmri.CommandStation.class) );        
+        Assert.assertTrue("CommandStation",cs == t.get(jmri.CommandStation.class) );        
+        
+        CbusMultiMeter cbmm = t.getMultiMeter();
+        Assert.assertTrue("MultiMeter",cbmm == t.get(jmri.MultiMeter.class) );
+        
+        CbusPreferences cbpref = t.getCbusPreferences();
+        Assert.assertTrue("CbusPreferences",cbpref == t.get(CbusPreferences.class) );
+        
+        CbusNodeTableDataModel cbntm = t.getCbusNodeTableDataModel();
+        Assert.assertTrue("CbusNodeTableDataModel",cbntm == t.get(CbusNodeTableDataModel.class) );
+        
+        CbusCabSignalManager csm = t.getCabSignalManager();
+        Assert.assertTrue("CbusCabSignalManager",csm == t.get(jmri.CabSignalManager.class) );
         
         tcis = null;
         memo = null;
@@ -147,7 +174,22 @@ public class CbusConfigurationManagerTest {
         rm = null;
         lm = null;
         cs = null;
-
+        cbmm = null;
+        cbpref = null;
+        cbntm = null;
+        csm = null;
+        
+    }
+    
+    @Test
+    public void testenableMultiMeter() {
+        
+        CbusConfigurationManager t = new CbusConfigurationManager( new CanSystemConnectionMemo() );
+        t.enableMultiMeter();
+        Assert.assertNotNull( t.get(jmri.MultiMeter.class) );
+        t.dispose();
+        t = null;
+        
     }
     
 

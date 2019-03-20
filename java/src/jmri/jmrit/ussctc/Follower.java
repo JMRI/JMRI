@@ -68,7 +68,7 @@ public class Follower implements Constants {
         rc.addSensorToRoute(sensor, !invert ? Route.ONINACTIVE : Route.ONACTIVE);
 
         // optionally, add veto
-        if (!veto.equals("")) {
+        if (!veto.isEmpty()) {
             rt.addSensorToRoute(veto, Route.VETOACTIVE);
             rc.addSensorToRoute(veto, Route.VETOACTIVE);
         }

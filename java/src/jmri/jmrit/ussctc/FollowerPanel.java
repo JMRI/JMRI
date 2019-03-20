@@ -98,7 +98,7 @@ public class FollowerPanel extends BasePanel {
         // validate
         ok &= validateTurnout(outputName.getText());
         ok &= validateSensor(sensorName.getText());
-        if (!vetoName.getText().equals("")) {
+        if (!vetoName.getText().isEmpty()) {
             ok &= validateSensor(vetoName.getText());
         }
 

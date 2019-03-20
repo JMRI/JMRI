@@ -210,11 +210,6 @@
         JMRI</a>.</li>
       </ul>
 
-      <p>Voir aussi le package d'utilitaires <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">
-      jmri.util.zeroconf</a> de Zeroconf/Bonjour pour une
-      utilisation dans JMRI.</p>
-
       <p>Voir aussi le <a href="http://www.dns-sd.org">DNS-SD</a>
       pour plus d'informations sur Zeroconf/Bonjour/"DNS Service
       Discovery" pour la mise en r&eacute;seau.</p>

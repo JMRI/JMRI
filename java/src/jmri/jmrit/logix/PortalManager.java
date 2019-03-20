@@ -107,7 +107,7 @@ public class PortalManager extends AbstractManager<Portal>
      * Method to get an existing Portal. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
-     * @param name - either System name or user name
+     * @param name  either System name or user name
      * @return Portal, if found
      */
     public Portal getPortal(String name) {

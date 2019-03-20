@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +28,7 @@ import java.util.regex.PatternSyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DropMode;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -50,12 +53,14 @@ import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.RowFilter;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -102,9 +107,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
     private JButton newevbutton;
     public String currentRowCount;
     protected JPanel filterpanel = new JPanel();
-    protected JFileChooser fc;
+    
     private final JTextField filterText = new JTextField("",8);
-    private javax.swing.filechooser.FileNameExtensionFilter fcuxmlfilter;
+    
     
     private String textForSearch = "";
     private double _splitratio = 0.95;
@@ -121,6 +126,10 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
 
     protected Highlighter tableFeedbackHighlighter;
     protected Highlighter h;
+    
+    public static JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+    public static javax.swing.filechooser.FileNameExtensionFilter fcuxmlfilter = 
+        new javax.swing.filechooser.FileNameExtensionFilter( "FCU xml", "xml");
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -132,8 +141,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                 CbusEventTableDataModel.MAX_COLUMN); // controller, row, column
         }
         
-        fcuxmlfilter = new javax.swing.filechooser.FileNameExtensionFilter( "FCU xml", "xml");
-        fc = new JFileChooser(FileUtil.getUserFilesPath());
+        
+        
         init();
     }
 
@@ -187,7 +196,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         
         eventTable.setRowSelectionAllowed(true);
         eventTable.setColumnSelectionAllowed(false);
-        eventTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        
+        eventTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        eventTable.setRowHeight(26);
         
         tcm.getColumn(CbusEventTableDataModel.NAME_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusEventTableDataModel.NODENAME_COLUMN).setCellRenderer(getRenderer());
@@ -350,7 +361,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         ActionListener newEventaction = ae -> {
             int ev = (Integer) newevnumberSpinner.getValue();
             int nd = (Integer) newnodenumberSpinner.getValue();
-            eventModel.addEvent(nd,ev,0,CbusTableEvent.EvState.UNKNOWN,"","","",0,0,0,0);
+            eventModel.addEvent(nd,ev,0,CbusTableEvent.EvState.UNKNOWN,"","",0,0,0,0);
         };
         
         newevbutton.addActionListener(newEventaction);
@@ -420,6 +431,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         
         add(pane1);
         pane1.setVisible(true);
+        
+        eventTable.setDragEnabled(true);
+        eventTable.setDropMode(DropMode.ON);
+        eventTable.setTransferHandler(new CbusEventTableRowDnDHandler());
+        
     }
     
     public void checkNewevent() {
@@ -594,7 +610,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
     /**
      * Get file to read from
      */    
-    public String fileChooser(){
+    static public String fileChooser(){
         // Get file to read from
         fc.setFileFilter(fcuxmlfilter);
         int retVal = fc.showOpenDialog(null);
@@ -756,6 +772,45 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         eventTable = null;
         eventScroll = null;
         super.dispose();
+    }
+
+    public static class CbusEventTableRowDnDHandler extends TransferHandler {
+    
+        @Override
+        public int getSourceActions(JComponent c) {
+            return COPY;
+        }
+    
+        @Override
+        public Transferable createTransferable(JComponent c) {
+            
+            if (!(c instanceof JTable )){
+                return null;
+            }
+            
+            JTable table = (JTable) c;
+            int row = table.getSelectedRow();
+            if (row < 0) {
+                return null;
+            }
+            row = table.convertRowIndexToModel(row);
+            
+            int nn = (Integer) table.getModel().getValueAt(row, CbusEventTableDataModel.NODE_COLUMN); // node number
+            int en = (Integer) table.getModel().getValueAt(row, CbusEventTableDataModel.EVENT_COLUMN); // event number
+            
+            StringBuilder jmriAddress = new StringBuilder(13);
+            jmriAddress.append("+");
+            if ( nn > 0 ) {
+                jmriAddress.append("N");
+                jmriAddress.append(nn);
+                jmriAddress.append("E");
+            }
+            jmriAddress.append(en);
+            
+            return new StringSelection( jmriAddress.toString() );
+            
+        }
+
     }
 
     /**

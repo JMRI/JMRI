@@ -1,5 +1,5 @@
 /**
- * Provides a unique network identify for JMRI instances.
+ * Provides a unique network identity for JMRI instances.
  *
  * @since JMRI 3.7.1
  */
