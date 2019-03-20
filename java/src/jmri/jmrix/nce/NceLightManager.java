@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for NCE systems
  * <P>
- * System names are "NLnnnnn", where nnnnn is the stationary decoder address.
+ * System names are "NLnnnnn", where N is the user configurable system prefix,
+ * nnnnn is the stationary decoder address.
  * <P>
  * Based in part on SerialLightManager.java
  *
@@ -69,9 +70,9 @@ public class NceLightManager extends AbstractLightManager {
         // name must be in the NLnnnnn format (N is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
+            num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
+                  );
         } catch (Exception e) {
             log.debug("illegal character in number field of system name: " + systemName);
             return (0);
@@ -119,7 +120,7 @@ public class NceLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

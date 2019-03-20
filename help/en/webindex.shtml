@@ -954,6 +954,12 @@
 
  
 <li>
+<a href="html/hardware/mqtt/index.shtml">MQTT </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml">Multi-Decoder Control </a>
 <ul></ul>
 </li>
@@ -971,6 +977,12 @@
   
 <li>
 <a href="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/openlcb/OlcbSignalMast.shtml">OpenLCB Signal Masts </a>
 <ul></ul>
 </li>
 
@@ -1661,6 +1673,12 @@
  
 </ul>
 </li>
+ 
+<li>
+<a href="html/tools/TimeTable.shtml">Timetable </a>
+<ul></ul>
+</li>
+
  
 <li>
 <a href="html/tools/tracker/index.shtml">Tracker </a>

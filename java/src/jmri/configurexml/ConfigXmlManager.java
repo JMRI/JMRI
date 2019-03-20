@@ -40,11 +40,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public ConfigXmlManager() {
     }
 
+    /** {@inheritDoc} */
     @Override
     public void registerConfig(Object o) {
         registerConfig(o, 50);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void registerPref(Object o) {
         // skip if already present, leaving in original order
@@ -92,16 +94,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return InstanceManager.getDefault(ClassMigrationManager.class).getClassName(name);
     }
 
-    /**
-     * Remove the registered preference items. This is used, for example, when a
-     * GUI wants to replace the preferences with new values.
-     */
+    /** {@inheritDoc} */
     @Override
     public void removePrefItems() {
         log.debug("removePrefItems dropped {}", plist.size());
         plist.clear();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object findInstance(Class<?> c, int index) {
         List<Object> temp = new ArrayList<>(plist);
@@ -119,6 +119,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<Object> getInstanceList(Class<?> c) {
         List<Object> result = new ArrayList<>();
@@ -136,6 +137,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void registerConfig(Object o, int x) {
         // skip if already present, leaving in original order
@@ -151,6 +153,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         clist.put(o, x);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void registerTool(Object o) {
         // skip if already present, leaving in original order
@@ -187,6 +190,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ulist.add(o);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void registerUserPrefs(Object o) {
         // skip if already present, leaving in original order
@@ -202,6 +206,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         uplist.add(o);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deregister(Object o) {
         plist.remove(o);
@@ -378,11 +383,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return true;
     }
 
-    /**
-     * Writes config, tools and user to a file.
-     *
-     * @param file config file to write
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean storeAll(File file) {
         boolean result = true;
@@ -406,14 +407,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
-    /**
-     * Writes prefs to a predefined File location.
-     */
+    /** {@inheritDoc} */
     @Override
     public void storePrefs() {
         storePrefs(prefsFile);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void storePrefs(File file) {
         synchronized (this) {
@@ -423,6 +423,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void storeUserPrefs(File file) {
         synchronized (this) {
@@ -445,11 +446,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     File prefsFile;
 
-    /**
-     * Writes prefs to a file.
-     *
-     * @param file config file to write.
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean storeConfig(File file) {
         boolean result = true;
@@ -464,14 +461,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
-    /**
-     * Writes user and config info to a file.
-     * <P>
-     * Config is included here because it doesn't hurt to read it again, and the
-     * user data (typically a panel) requires it to be present first.
-     *
-     * @param file config file to write
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean storeUser(File file) {
         boolean result = true;
@@ -489,6 +479,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean makeBackup(File file) {
         return makeBackupFile(defaultBackupDirectory, file);
@@ -517,8 +508,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         log.debug("store using {}", aName);
         XmlAdapter adapter = null;
         try {
-            adapter = (XmlAdapter) Class.forName(adapterName(object)).newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+            adapter = (XmlAdapter) Class.forName(adapterName(object)).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException 
+                    | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
             log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
         if (adapter != null) {
@@ -556,6 +548,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return load(fi, false);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean load(URL url) throws JmriConfigureXmlException {
         return load(url, false);
@@ -615,17 +608,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     private XmlFile.Validate validate = XmlFile.Validate.CheckDtdThenSchema;
 
-    /**
-     * Default XML verification. Public to allow scripting.
-     */
+    /** {@inheritDoc} */
     @Override
     public void setValidate(XmlFile.Validate v) {
         validate = v;
     }
 
-    /**
-     * Default XML verification. Public to allow scripting.
-     */
+    /** {@inheritDoc} */
     @Override
     public XmlFile.Validate getValidate() {
         return validate;
@@ -660,7 +649,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }
                 adapterName = currentClassName(adapterName);
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 int order = adapter.loadOrder();
                 log.debug("add {} to load list with order id of {}", item, order);
                 loadlist.put(item, order);
@@ -678,7 +667,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
                 XmlAdapter adapter = null;
                 try {
-                    adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
 
                     // get version info
                     // loadVersion(root, adapter);
@@ -739,6 +728,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "IllegalAccessException", null, null, e);
             result = false;
+        } catch (NoSuchMethodException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
+            result = false;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
+            result = false;
         } finally {
             // no matter what, close error reporting
             handler.done();
@@ -761,11 +758,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean loadDeferred(File fi) {
         return this.loadDeferred(FileUtil.fileToURL(fi));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean loadDeferred(URL url) {
         boolean result = true;
@@ -777,7 +776,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 log.debug("deferred load via " + adapterName);
                 XmlAdapter adapter = null;
                 try {
-                    adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     boolean loadStatus = adapter.load(item, item);
                     log.debug("deferred load status for " + adapterName + " is " + loadStatus);
 

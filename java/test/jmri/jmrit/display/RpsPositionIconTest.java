@@ -80,10 +80,9 @@ public class RpsPositionIconTest extends PositionableTestBase {
         id = newID;
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
@@ -94,9 +93,8 @@ public class RpsPositionIconTest extends PositionableTestBase {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         rpsIcon = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);

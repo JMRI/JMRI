@@ -2,9 +2,7 @@ package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the FloatTrigger class
@@ -148,6 +146,16 @@ public class FloatTriggerTest {
         Assert.assertEquals("xml match value", 0.5f, uut.getMatchValue(), 0.0);
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
 
+    }
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

@@ -57,7 +57,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
@@ -416,10 +415,9 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         log.debug("*	setManufacturer('{}')", manufacturer);
-        if (adapter != null) {
-            adapter.setManufacturer(manufacturer);
-        }
+        adapter.setManufacturer(manufacturer);
     }
 
     @Override

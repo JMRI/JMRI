@@ -5,12 +5,13 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * Manage the communication to/from a LocoIO board.
+ * 
+ * Uses the LOCONETSV1MODE programming mode.
  *
  * Uses LnProgrammer LOCOIO_PEER_CODE_SV_VER1 message format, comparable to DecoderPro LOCONETSV1MODE
  * Currently (4.11.6) this tool does not work with the HDL LocoIO rev 3 and newer boards,
  * with risk of breaking the stored config.
  *
- * @see jmri.jmrix.loconet.LnProgrammerManager#LOCONETSV1MODE
  * @see jmri.jmrix.loconet.LnOpsModeProgrammer#message(LocoNetMessage)
  *
  * Programming SV's

@@ -42,7 +42,10 @@ public class TransitTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new TransitTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.TransitTable"; 
+        a = new TransitTableAction();
     }
 
     @Override

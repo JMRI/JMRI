@@ -11,6 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ItemPaletteTest.class,
+    ColorDialogTest.class,
+    FontPanelTest.class,
     BundleTest.class,
     BackgroundItemPanelTest.class,
     ClockItemPanelTest.class,

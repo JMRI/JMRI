@@ -105,27 +105,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return Dcc4PcMessage.getExitProgMode();
     }
 
-    /**
-     * static function returning the Dcc4PcTrafficController instance to use.
-     *
-     * @return The registered Dcc4PcTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public Dcc4PcTrafficController instance() {
-        return self;
-    }
-
-    //This can be removed once multi-connection is complete
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
@@ -217,7 +196,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
@@ -317,7 +296,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             if (mLastSentMessage.isForChildBoard()) {
                 if (log.isDebugEnabled()) {
                     log.debug("This is a message for a child board " + ((Dcc4PcReply) msg).toHexString());
-                    log.debug("Originate " + (mLastMessage).toHexString());
+                    log.debug("Originate " + mLastMessage.toString());
                 }
                 if ((mLastSentMessage.getNumDataElements() - 1) == msg.getElement(1)) {
                     log.debug("message lengths match");

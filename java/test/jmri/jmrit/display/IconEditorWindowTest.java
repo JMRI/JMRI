@@ -106,9 +106,6 @@ public class IconEditorWindowTest {
     @Test
     public void testRightTOEditor() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -386,6 +383,7 @@ public class IconEditorWindowTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();

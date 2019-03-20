@@ -3,15 +3,18 @@ package jmri.jmrix.loconet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.IdTag;
 import jmri.LocoAddress;
+import jmri.Reporter;
 import jmri.PhysicalLocationReporter;
-import jmri.implementation.AbstractReporter;
+import jmri.implementation.AbstractIdTagReporter;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractReporter for LocoNet layouts.
+ * Extend jmri.AbstractIdTagReporter for LocoNet layouts.
  * <p>
  * This implementation reports Transponding messages.
  * <p>
@@ -21,8 +24,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Reports are Strings, formatted as
  * <ul>
- * <li>NNNN enter - locomotive address NNNN entered the transponding zone. Short
- *   vs long address is indicated by the NNNN value
+ *   <li>NNNN enter - locomotive address NNNN entered the transponding zone. Short
+ *                    vs long address is indicated by the NNNN value
  *   <li>NNNN exits - locomotive address NNNN left the transponding zone.
  *   <li>NNNN seen northbound - LISSY measurement
  *   <li>NNNN seen southbound - LISSY measurement
@@ -36,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
-public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
+public class LnReporter extends AbstractIdTagReporter implements LocoNetListener, PhysicalLocationReporter {
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
@@ -53,12 +56,6 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         return _number;
     }
 
-    // implementing classes will typically have a function/listener to get
-    // updates from the layout, which will then call
-    //  public void firePropertyChange(String propertyName,
-    //            Object oldValue,
-    //      Object newValue)
-    // _once_ if anything has changed state (or set the commanded state directly)
     @Override
     public void message(LocoNetMessage l) {
         // check message type
@@ -93,8 +90,16 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
             loco = l.getElement(3) * 128 + l.getElement(4);
         }
 
-        lastLoco = (enter ? loco : -1);
-        setReport("" + loco + (enter ? " enter" : " exits")); // NOI18N
+        notify(null); // set report to null to make sure listeners update
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
+        if(enter) {
+           idTag.setProperty("entryexit","enter");
+        } else {
+           idTag.setProperty("entryexit","exits");
+        }
+        log.debug("Tag: " + idTag);
+        notify(idTag);
+        setState(enter ? loco : -1);
     }
 
     /**
@@ -107,15 +112,22 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
             return;
         }
 
-        // get loco address
         int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
 
         // get direction
         boolean north = ((l.getElement(3) & 0x20) == 0);
 
+        notify(null); // set report to null to make sure listeners update
         // get loco address
-        setReport("" + loco + " seen " + (north ? "northbound" : "southbound")); // NOI18N
-
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
+        if(north) {
+           idTag.setProperty("seen","seen northbound");
+        } else {
+           idTag.setProperty("seen","seen southbound");
+        }
+        log.debug("Tag: " + idTag);
+        notify(idTag);
+        setState(loco);
     }
 
     /**
@@ -143,15 +155,17 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         super.dispose();
     }
 
-    // parseReport()
-    // Parses out a (possibly old) LnReporter-generated report string to extract info used by
-    // the public PhysicalLocationReporter methods.  Returns a Matcher that, if successful, should
-    // have the following groups defined.
-    // matcher.group(1) : the locomotive address
-    // matcher.group(2) : (enter | exit | seen)
-    // matcher.group(3) | (northbound | southbound) -- Lissy messages only
-    //
-    // NOTE: This code is dependent on the transpondingReport() and lissyReport() methods above.  If they change, the regex here must change.
+    /**
+     * Parses out a (possibly old) LnReporter-generated report string to extract info used by
+     * the public PhysicalLocationReporter methods.  Returns a Matcher that, if successful, should
+     * have the following groups defined.
+     * matcher.group(1) : the locomotive address
+     * matcher.group(2) : (enter | exit | seen)
+     * matcher.group(3) | (northbound | southbound) -- Lissy messages only
+     * <p>
+     * NOTE: This code is dependent on the transpondingReport() and lissyReport() methods.  
+     * If they change, the regex here must change.
+     */
     private Matcher parseReport(String rep) {
         if (rep == null) {
             return (null);
@@ -212,13 +226,6 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 
     // data members
     int _number;   // LocoNet Reporter number
-
-    @SuppressWarnings("unused")
-    @Deprecated
-    private boolean myAddress(int a1, int a2) {
-        // the "+ 1" in the following converts to throttle-visible numbering
-        return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
 

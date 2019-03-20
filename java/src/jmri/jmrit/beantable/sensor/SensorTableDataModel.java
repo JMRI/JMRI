@@ -325,7 +325,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
             case PULLUPCOL:
-                JComboBox<Sensor.PullResistance> c = new JComboBox<>(Sensor.PullResistance.values());
+                PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
                 c.addActionListener((ActionEvent e) -> {
                     comboBoxAction(e);
@@ -338,6 +338,13 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             default:
                 return super.getValueAt(row, col);
         }
+    }
+    
+    /**
+     * Small class to ensure type-safety of references otherwise lost to type erasure
+     */
+    static private class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
+        public PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
     }
 
     /**
@@ -363,9 +370,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 s.setUseDefaultTimerSettings(((Boolean) value));
                 break;
             case ACTIVEDELAY:
-                Long activeDeBounce  = 0L;
                 try {
-                    activeDeBounce = Long.parseLong((String) value);
+                    Long activeDeBounce = Long.parseLong((String) value);
                     if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
                     } else {
@@ -376,9 +382,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 }
                 break;
             case INACTIVEDELAY:
-                Long inactiveDeBounce  = 0L;
                 try {
-                    inactiveDeBounce = Long.parseLong((String) value);
+                    Long inactiveDeBounce = Long.parseLong((String) value);
                     if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
                     } else {
@@ -394,7 +399,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 });
                 break;
             case PULLUPCOL:
-                JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
+                PullResistanceComboBox cb = (PullResistanceComboBox) value;
                 s.setPullResistance((Sensor.PullResistance) cb.getSelectedItem());
                 break;
             case FORGETCOL:
@@ -472,11 +477,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     /**
      * Visualize state in table as a graphic, customized for Sensors (2 states).
      * Renderer and Editor are identical, as the cell contents are not actually
-     * edited, only used to toggle state using {@link #clickOn(NamedBean)}.
-     *
-     * @see jmri.jmrit.beantable.BlockTableAction#createModel()
-     * @see jmri.jmrit.beantable.LightTableAction#createModel()
-     * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
+     * edited, only used to toggle state using {@link #clickOn}.
      */
     class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
@@ -145,6 +146,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * Clear all slots.
      */
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void clearAllSlots() {
         slots.stream().forEach((s) -> {
             s.clear();
@@ -171,8 +173,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     /**
      * Find a queue entry matching the address.
      *
-     * @param a int
-     * @return the slot or null if the address is not in the queue
+     * @param address The address to locate
+     * @return The slot or null if the address is not in the queue
      */
     private SprogSlot findAddress(DccLocoAddress address) {
         for (SprogSlot s : slots) {

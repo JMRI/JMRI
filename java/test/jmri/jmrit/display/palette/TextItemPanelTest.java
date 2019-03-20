@@ -21,7 +21,7 @@ public class TextItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor es = new ControlPanelEditor("ED");
+        ControlPanelEditor es = new ControlPanelEditor("EdTextItem");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("Test ItemPalette", es);
             ip.pack();
@@ -29,12 +29,13 @@ public class TextItemPanelTest {
         TextItemPanel t = new TextItemPanel(ip, "test", es);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
-    }
+   }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

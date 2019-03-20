@@ -10,6 +10,8 @@ import jmri.ClockControl;
 import jmri.Memory;
 import jmri.Sensor;
 import jmri.Timebase;
+import jmri.TimebaseRateException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
+    public static final double MINIMUM_RATE = 0.1;
+    public static final double MAXIMUM_RATE = 100;
+    
     public SimpleTimebase() {
         super("SIMPLECLOCK");
         // initialize time-containing memory
@@ -171,7 +176,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 }
             }
         }
-        firePropertyChange("run", Boolean.valueOf(run), Boolean.valueOf(!run));
+        firePropertyChange("run", Boolean.valueOf(!run), Boolean.valueOf(run));  // old, then new
         handleAlarm();
     }
 
@@ -182,10 +187,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     // methods for setting and getting rate
     @Override
-    public void setRate(double factor) {
-        if (factor < 0.1 || factor > 100) {
-            log.error("rate of " + factor + " is out of reasonable range, set to 1");
-            factor = 1;
+    public void setRate(double factor) throws TimebaseRateException {
+        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
+            log.error("rate of " + factor + " is out of reasonable range");
+            throw new TimebaseRateException();
         }
         if (internalMaster && (!notInitialized)) {
             log.error("Probable Error - questionable attempt to change fast clock rate");
@@ -208,18 +213,18 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         setTime(now);
         // notify listeners if internal master
         if (internalMaster) {
-            firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
+            firePropertyChange("rate", Double.valueOf(oldFactor), Double.valueOf(factor));  // old, then new
         }
         handleAlarm();
     }
 
     @Override
-    public void userSetRate(double factor) {
+    public void userSetRate(double factor) throws TimebaseRateException {
         // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
-        if (factor < 0.1 || factor > 100) {
-            log.error("rate of " + factor + " is out of reasonable range, set to 1");
-            factor = 1;
+        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
+            log.error("rate of " + factor + " is out of reasonable range");
+            throw new TimebaseRateException();
         }
         double oldFactor = hardwareFactor;
         Date now = getTime();
@@ -239,7 +244,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // update memory
         updateMemory(factor);
         // notify listeners
-        firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
+        firePropertyChange("rate", Double.valueOf(oldFactor), Double.valueOf(factor)); // old, then new
         handleAlarm();
     }
 
@@ -379,13 +384,13 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     @Override
-    public void setStartStopped(boolean stopped) {
-        startStopped = stopped;
+    public void setClockInitialRunState(ClockInitialRunState state) {
+        initialState = state;
     }
 
     @Override
-    public boolean getStartStopped() {
-        return startStopped;
+    public ClockInitialRunState getClockInitialRunState() {
+        return initialState;
     }
 
     @Override
@@ -407,6 +412,31 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public boolean getStartSetTime() {
         return startSetTime;
+    }
+
+    @Override
+    public void setStartRate(double factor) {
+        startupFactor = factor;
+        haveStartupFactor = true;
+    }
+
+    @Override
+    public double getStartRate() {
+        if (haveStartupFactor) {
+            return startupFactor;
+        } else {
+            return userGetRate();
+        }
+    }
+
+    @Override
+    public void setSetRateAtStart(boolean set) {
+        startSetRate = set;
+    }
+
+    @Override
+    public boolean getSetRateAtStart() {
+        return startSetRate;
     }
 
     @Override
@@ -455,6 +485,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void initializeHardwareClock() {
+        boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
@@ -527,6 +558,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private double hardwareFactor = 1.0;  // this is the rate factor for the hardware clock
     //  The above is necessary to support hardware clock Time Sources that fiddle with mFactor to
     //      synchronize, instead of sending over a new time to synchronize.
+    private double startupFactor = 1.0;     // this is the rate requested at startup
+    private boolean startSetRate = true; // if true, the hardware rate will be set to
+    private boolean haveStartupFactor = false; // true if startup factor was ever set.
+    // startupFactor at startup.
+
     private Date startAtTime;
     private Date setTimeValue;
     private Date pauseTime;   // null value indicates clock is running
@@ -540,7 +576,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
     private boolean correctHardware = false;    // true indicates hardware correction requested
     private boolean display12HourClock = false; // true if 12-hour clock display is requested
-    private boolean startStopped = false;    // true indicates start up with clock stopped requested
+    private ClockInitialRunState initialState = ClockInitialRunState.DO_START;    // what to do with the clock running state at startup
     private boolean startSetTime = false;    // true indicates set fast clock to specified time at
     //start up requested
     private Date startTime = new Date(); // specified time for setting fast clock at start up

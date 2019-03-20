@@ -9,21 +9,21 @@ import javax.annotation.Nonnull;
 
 /**
  * Basic interface for access to named, managed objects.
- * <P>
+ * <p>
  * {@link NamedBean} objects represent various real elements, and have a "system
  * name" and perhaps "user name". A specific Manager object provides access to
  * them by name, and serves as a factory for new objects.
- * <P>
+ * <p>
  * Right now, this interface just contains the members needed by
  * {@link InstanceManager} to handle managers for more than one system.
- * <P>
+ * <p>
  * Although they are not defined here because their return type differs, any
  * specific Manager subclass provides "get" methods to locate specific objects,
  * and a "new" method to create a new one via the Factory pattern. The "get"
  * methods will return an existing object or null, and will never create a new
  * object. The "new" method will log a warning if an object already exists with
  * that system name.
- * <P>
+ * <p>
  * add/remove PropertyChangeListener methods are provided. At a minimum,
  * subclasses must notify of changes to the list of available NamedBeans; they
  * may have other properties that will also notify.
@@ -31,11 +31,11 @@ import javax.annotation.Nonnull;
  * Probably should have been called NamedBeanManager
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -124,7 +124,7 @@ public interface Manager<E extends NamedBean> {
      * Note: this is not a live array; the contents don't stay up to date
      * @return (slow) copy of system names in array form
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -139,12 +139,12 @@ public interface Manager<E extends NamedBean> {
      * Note: this is ordered by the underlying NamedBeans, not
      *       on the Strings themselves.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()}  is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -158,12 +158,12 @@ public interface Manager<E extends NamedBean> {
      * <p>
      * Note: this is ordered by the original add order, used for ConfigureXML
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()}  is faster.
      * <p>
      * Note: This is a live list, it will be updated as beans are added and removed.
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -175,12 +175,12 @@ public interface Manager<E extends NamedBean> {
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
      * of NamedBeans in system-name order.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()} is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a List of NamedBeans
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -202,7 +202,7 @@ public interface Manager<E extends NamedBean> {
     public SortedSet<E> getNamedBeanSet();
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
+     * Locate an existing instance based on a system name. Returns null if no instance
      * already exists.
      *
      * @param systemName System Name of the required NamedBean
@@ -214,7 +214,7 @@ public interface Manager<E extends NamedBean> {
     public E getBeanBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
+     * Locate an existing instance based on a user name. Returns null if no instance
      * already exists.
      *
      * @param userName System Name of the required NamedBean
@@ -225,7 +225,7 @@ public interface Manager<E extends NamedBean> {
     public E getBeanByUserName(@Nonnull String userName);
 
     /**
-     * Locate an instance based on a name. Returns null if no instance already
+     * Locate an existing instance based on a name. Returns null if no instance already
      * exists.
      *
      * @param name System Name of the required NamedBean
@@ -277,7 +277,9 @@ public interface Manager<E extends NamedBean> {
     public void removeVetoableChangeListener(@CheckForNull VetoableChangeListener l);
 
     /**
-     * Method for a UI to delete a bean, the UI should first request a
+     * Method for a UI to delete a bean. 
+     * <p>
+     * The UI should first request a
      * "CanDelete", this will return a list of locations (and descriptions)
      * where the bean is in use via throwing a VetoException, then if that comes
      * back clear, or the user agrees with the actions, then a "DoDelete" can be
@@ -356,8 +358,11 @@ public interface Manager<E extends NamedBean> {
     public int getXMLOrder();
 
     /**
-     * For instances in the code where we are dealing with just a bean and a
-     * message needs to be passed to the user or in a log.
+     * Returns the user-readable name of the type of NamedBean 
+     * handled by this manager.
+     *<p>
+     * For instance, in the code where we are dealing with just a bean and a
+     * message that needs to be passed to the user or in a log.
      *
      * @return a string of the bean type that the manager handles, eg Turnout,
      *         Sensor etc
@@ -385,7 +390,7 @@ public interface Manager<E extends NamedBean> {
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
      *
-     * @param inputName System name to provide the prefix
+     * @param inputName System Name to provide the prefix
      * @throws NamedBean.BadSystemNameException If the inputName can't be
      *                                          converted to normalized form
      * @return The length of the system-prefix part of the system name in
@@ -400,10 +405,21 @@ public interface Manager<E extends NamedBean> {
             throw new NamedBean.BadSystemNameException();
         }
 
-        // As a very special case, check for legacy prefixs - to be removed
+        // As a very special case, check for legacy prefixes - to be removed
         // This is also quite a bit slower than the tuned implementation below
         int p = startsWithLegacySystemPrefix(inputName);
         if (p > 0) {
+            if (legacyNameSet.size() == 0) {
+                if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
+                // for migration purposes, we don't insist that apps (and tests)
+                // be preconfigured with a shutdown manager before getting here
+                    InstanceManager.setDefault(ShutDownManager.class, new jmri.managers.DefaultShutDownManager());
+                }
+                // register our own shutdown
+                InstanceManager.getDefault(ShutDownManager.class)
+                                .register(legacyReportTask);
+            }
+            legacyNameSet.add(inputName);
             return p;
         }
 
@@ -417,6 +433,44 @@ public interface Manager<E extends NamedBean> {
         return i;
     }
 
+    @Deprecated  // as part of name migration, Issue #4670
+    static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet<String>(200)); // want fast search and insert
+    @Deprecated  // as part of name migration, Issue #4670
+    static ShutDownTask legacyReportTask = new jmri.implementation.AbstractShutDownTask("Legacy Name List"){
+                            public boolean execute() {
+                                if (legacyNameSet.size() == 0) return true;
+                                
+                                // as an extremely ugly hack, handle the special case of 
+                                // Reporters-with-an-M-system letter, e.g. from MERG
+                                //
+                                // We couldn't do this earlier because the name might be checked
+                                // before the bean is created
+                                ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
+                                java.util.SortedSet<String> tempSet = new java.util.TreeSet<>(); 
+                                for (String name : legacyNameSet) {
+                                    // The legacy MR name for MRC can't do Reporters
+                                    if (name.startsWith("MR") && rm.getReporter(name) != null) continue;
+                                    tempSet.add(name);
+                                }
+                                if (tempSet.size() == 0) return true;
+                                
+                                org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
+                                log.warn("The following legacy names need to be migrated:");
+                                for (String name : tempSet) log.warn("    {}", name);
+                                
+                                // now create the legacy.csv file
+                                try (java.io.PrintWriter writer = new java.io.PrintWriter(jmri.util.FileUtil.getUserFilesPath()+java.io.File.separator+"legacy_bean_names.csv");) {
+                                    for (String name : tempSet) writer.println(name);
+                                } catch (java.io.IOException e) {
+                                    log.error("Failed to write legacy name file", e);
+                                }
+                                
+                                // clean up in case invoked twice
+                                legacyNameSet.clear();
+                                return true;
+                            }
+                };
+                        
     /**
      * Provides the system prefix of the given system name.
      * <p>
@@ -440,17 +494,17 @@ public interface Manager<E extends NamedBean> {
      * that are being removed during the JMRI 4.11 cycle.
      *
      * @param prefix the system prefix
-     * @deprecated to make sure we remember to remove this post-4.11
+     * @deprecated 4.11.2 to make sure we remember to remove this post-migration
      * @since 4.11.2
      * @return true if a legacy prefix, hence non-parsable
      */
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @CheckReturnValue
     public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
         return LEGACY_PREFIXES.contains(prefix);
     }
 
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     static final TreeSet<String> LEGACY_PREFIXES = new TreeSet<>(Arrays.asList(
             new String[]{
                 "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
@@ -463,11 +517,11 @@ public interface Manager<E extends NamedBean> {
      * This is a slightly-expensive operation, and should be used sparingly
      *
      * @param prefix the system prefix
-     * @deprecated to make sure we remember to remove this post-4.11
+     * @deprecated // 4.11.2 to make sure we remember to remove this post-migration
      * @since 4.11.2
      * @return length of a legacy prefix, if present, otherwise -1
      */
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @CheckReturnValue
     public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
         // implementation replies on legacy suffix length properties to gain a bit of speed...
@@ -505,6 +559,7 @@ public interface Manager<E extends NamedBean> {
 
     /**
      * Temporarily suppress DataListener notifications.
+     * <p>
      * This avoids O(N^2) behavior when doing bulk updates, 
      * i.e. when loading lots of Beans.
      * Note that this is (1) optional, in the sense that the
@@ -592,6 +647,7 @@ public interface Manager<E extends NamedBean> {
          *
          * @return the event source
          */
+        @Override
         public Manager<E> getSource() { return source; }
   
         /**
@@ -629,6 +685,7 @@ public interface Manager<E extends NamedBean> {
          * 
          * @return A string.
          */
+         @Override
          public String toString() {
             return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
         }

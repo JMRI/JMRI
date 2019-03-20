@@ -22,7 +22,7 @@ public final class LnDplxGrpInfoImplConstants {
     public final static int DPLX_MAX_CH = 26;
 
     // helpers for performing LocoNet operations
-    public final static int IPL_QUERY_DELAY = 300; // # milliseconds to wait for results from IPL query
+    public final static int IPL_QUERY_DELAY = 1300; // # milliseconds to wait for results from IPL query
     public final static int DPLX_QUERY_DELAY = 300; // # milliseconds to wait for response to Duplex info query
     public final static int DPLX_SCAN_DELAY = 200; // # milliseconds to wait for response to scan query
     public final static int DPLX_SCAN_LOOP_COUNT = 25;

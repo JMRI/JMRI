@@ -8,7 +8,6 @@ import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -264,7 +263,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             return;
         }
         HashMap<String, NamedIcon> iconMap = _itemPanel.getIconMap();
-        ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
+        ArrayList<Sensor> selections = _itemPanel.getTableSelections();
         setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
         setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
         setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));

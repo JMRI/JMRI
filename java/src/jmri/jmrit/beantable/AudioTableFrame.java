@@ -5,6 +5,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
+import jmri.Audio;
+
 /**
  *
  * <hr>
@@ -22,7 +24,7 @@ import javax.swing.JMenuBar;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
-public class AudioTableFrame extends BeanTableFrame {
+public class AudioTableFrame extends BeanTableFrame<Audio> {
 
     AudioTablePanel audioPanel;
 

@@ -16,7 +16,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     private boolean opened = false;
 
     public InternalAdapter() {
-        super(new InternalSystemConnectionMemo());
+        super(new InternalSystemConnectionMemo(false));  // building a complete system, with dummy ConsistManager et al
         opened = true;
         this.manufacturerName = InternalConnectionTypeList.NONE;
     }

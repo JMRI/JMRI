@@ -1,7 +1,6 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.List;
 
 /**
  * Locate a CatalogTree object representing some specific information.
@@ -89,13 +88,6 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
     public boolean isIndexChanged();
     
     public void indexChanged(boolean changed);
-    /**
-     * Get a list of all CatalogTree objects' system names.
-     *
-     * @return list of all CatalogTree system names
-     */
-    @Override
-    public List<String> getSystemNameList();
 
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")

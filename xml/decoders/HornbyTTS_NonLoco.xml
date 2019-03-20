@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2015, 2018 All rights reserved -->
+<!-- $Id$      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="1" lastUpdated="20181208"/>	
+	<!--  Version 1 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van -->
+	<decoder>
+        <family name="Hornby TTS Accessory Sound Decoder" mfg="Hornby" comment="">
+		<model model="Hornby TTS Vent Van" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2">
+                <versionCV lowVersionID="2" highVersionID="120"/>
+           	</model>
+			
+		</family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+            <variable CV="7" readOnly="yes" item="Decoder Version">
+                <decVal/>
+                <label>Decoder Version: </label>
+            </variable>
+            <variable CV="8" readOnly="yes" item="Manufacturer" default="48">
+                <decVal/>
+                <label>Manufacturer ID: </label>
+			</variable>	
+			<variable CV="158" readOnly="yes" item="Decoder Sound Version" default="0">
+                <decVal/>
+                <label>Decoder sound ID: </label>
+            </variable>	
+            <variable CV="159" readOnly="yes" item="Product Number" default="0">
+                <decVal/>
+                <label>Decoder sound ID: </label>
+            </variable>
+		<!-- HORNBY VENT VAN --> 	
+			<variable CV="160" default="4" item="Sound Setting 1" tooltip="F0 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Locomotive Workshop Sounds</label>	
+            </variable>
+			<variable CV="161" default="4" item="Sound Setting 2" tooltip="F1 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Air Spanner in operation</label>	
+            </variable>
+			<variable CV="162" default="4" item="Sound Setting 3" tooltip="F2 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Grinder in Operation</label>	
+            </variable>
+			<variable CV="163" default="4" item="Sound Setting 4" tooltip="F3 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Multiple Hammer Blows</label>	
+            </variable>
+			<variable CV="164" default="4" item="Sound Setting 5" tooltip="F4 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Riveting a Boiler 1 Cycle</label>	
+            </variable>
+			<variable CV="165" default="4" item="Sound Setting 6" tooltip="F5 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>People Walking on concrete</label>	
+            </variable>
+			<variable CV="166" default="4" item="Sound Setting 7" tooltip="F6 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Coach Doors Slamming</label>	
+            </variable>
+			<variable CV="167" default="4" item="Sound Setting 8" tooltip="F7 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Passing Wagons</label>	
+            </variable>
+			<variable CV="168" default="4" item="Sound Setting 9" tooltip="F8 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Steam Train Arriving, Brakes, Announcements</label>	
+            </variable>
+			<variable CV="169" default="4" item="Sound Setting 10" tooltip="F9 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Steam Train Departing, Wheel Slip Etc</label>	
+            </variable>
+			<variable CV="170" default="4" item="Sound Setting 11" tooltip="F10 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Guard Whistle 2 Chirps</label>	
+            </variable>
+			<variable CV="171" default="4" item="Sound Setting 12" tooltip="F11 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Miscellaneous Rolling Stock Shunting Snds</label>	
+            </variable>
+			<variable CV="172" default="4" item="Sound Setting 13" tooltip="F12 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Random Wheel Tapping and Walking on Gravel</label>	
+            </variable>
+			<variable CV="173" default="4" item="Sound Setting 14" tooltip="F13 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Raking out Ash Box</label>	
+            </variable>
+			<variable CV="174" default="4" item="Sound Setting 15" tooltip="F14 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Wagons Shunting Flange Squeal</label>	
+            </variable>
+			<variable CV="175" default="4" item="Sound Setting 16" tooltip="F15 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Wagons Coupling</label>	
+            </variable>
+			<variable CV="176" default="4" item="Sound Setting 17" tooltip="F16 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Single Blast Whistle</label>	
+            </variable>
+			<variable CV="177" default="4" item="Sound Setting 18" tooltip="F17 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Waggons Clanging</label>	
+            </variable>
+			<variable CV="178" default="4" item="Sound Setting 19" tooltip="F18 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>General Stable Sounds</label>	
+            </variable>
+			<variable CV="179" default="4" item="Sound Setting 20" tooltip="F19 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Birds at Dawn</label>	
+            </variable>
+			<variable CV="180" default="4" item="Sound Setting 21" tooltip="F20 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Occasional Owl</label>	
+            </variable>
+			<variable CV="181" default="4" item="Sound Setting 22" tooltip="F21 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Crowd Sounds with Random Traffic </label>	
+            </variable>
+			<variable CV="182" default="4" item="Sound Setting 23" tooltip="F22 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Pneumatic Road drill</label>	
+            </variable>
+			<variable CV="183" default="4" item="Sound Setting 24" tooltip="F23 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Single Miaow</label>	
+            </variable>
+			<variable CV="184" default="4" item="Sound Setting 25" tooltip="F24 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Dog Barks</label>	
+            </variable>
+			<variable CV="185" default="4" item="Sound Setting 26" tooltip="F25 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Single Cock Crow</label>	
+            </variable>
+			<variable CV="186" default="4" item="Sound Setting 27" tooltip="F26 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Signalman Switches One Point</label>	
+            </variable>
+			<variable CV="187" default="4" item="Sound Setting 28" tooltip="F27 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Signalman Using Communications System</label>	
+            </variable>
+			<variable CV="188" default="4" item="Sound Setting 29" tooltip="F28 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Semaphore Signal Sound</label>	
+            </variable>
+			<variable CV="189" default="4" item="Sound Setting 32" tooltip="F29 Volume" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Telephone Ring = System Channel Occupancy Warning</label>	
+            </variable>
+			<variable CV="190" default="4" item="Sound Setting 31" tooltip="Overall vol (write only)" comment="Range 0-8" include="2">
+                <decVal max="8"/>
+                <label>Quick Set Volume level</label>
+            </variable>
+      </variables>
+        <resets>
+            <factReset label="Reset All CVs" CV="8" default="8">
+			</factReset>
+			<factReset label="Reset sound levels only" CV="8" default="5">
+			</factReset>
+        </resets>
+    </decoder>
+</decoder-config>
+			

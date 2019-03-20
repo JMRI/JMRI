@@ -40,6 +40,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
         processForPollReq(r);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void processForPollReq(SerialReply l) {
         if ((l.getElement(0) & 0xFF) == Constants.HEAD_STX) {
             // process the POLL_REQ_X10 and update/create sensors as needed

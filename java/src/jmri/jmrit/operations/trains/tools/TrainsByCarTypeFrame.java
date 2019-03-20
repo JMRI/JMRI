@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -121,9 +120,8 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(
-                new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false, this));
-        toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true,
-                this));
+                new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), false));
+        toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), true));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyTrainsByCarType", true); // NOI18N

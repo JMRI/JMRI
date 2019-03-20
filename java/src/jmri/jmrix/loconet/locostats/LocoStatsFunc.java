@@ -1,9 +1,13 @@
 package jmri.jmrix.loconet.locostats;
+
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +53,7 @@ public class LocoStatsFunc implements LocoNetListener {
     /**
      * LocoNet message handler.
      * 
-     * @param msg - incoming LocoNet message to be interpreted
+     * @param msg  incoming LocoNet message to be interpreted
      */
     @Override
     public void message(LocoNetMessage msg) {
@@ -173,13 +177,11 @@ public class LocoStatsFunc implements LocoNetListener {
      * Add a listener to the list of listeners which will be notified upon receipt 
      * a LocoNet message containing interface statistics.
      * 
-     * @param l - LocoNetInterfaceStatsListener to be added
+     * @param l  LocoNetInterfaceStatsListener to be added
      */
-    public synchronized void addLocoNetInterfaceStatsListener(LocoNetInterfaceStatsListener l) {
+    public synchronized void addLocoNetInterfaceStatsListener(@Nonnull LocoNetInterfaceStatsListener l) {
+        java.util.Objects.requireNonNull(l);
         // add only if not already registered
-        if (l == null) {
-            throw new java.lang.NullPointerException();
-        }
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
@@ -189,9 +191,10 @@ public class LocoStatsFunc implements LocoNetListener {
      * Remove a listener (if present) from the list of listeners which will be 
      * notified upon receipt LocoNet message containing interface statistics.
      * 
-     * @param l - LocoNetInterfaceStatsListener to be removed
+     * @param l  LocoNetInterfaceStatsListener to be removed
      */
-    public synchronized void removeLocoNetInterfaceStatsListener(LocoNetInterfaceStatsListener l) {
+    public synchronized void removeLocoNetInterfaceStatsListener(@Nonnull LocoNetInterfaceStatsListener l) {
+        java.util.Objects.requireNonNull(l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }

@@ -50,6 +50,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element blocks = new Element("blocks");
         setStoreElementClass(blocks);
@@ -218,10 +219,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     }
 
     void addBeanSetting(Element e, BeanSetting bs) {
-        if (bs.getBean() == null) {
-            log.error("Invalid BeanSetting - did not save");
-            return;
-        }
         // persist bean name, type and value
         Element bse = new Element("beansetting");
         // for now, assume turnout

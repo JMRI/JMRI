@@ -52,36 +52,15 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
 
     @Override
     public synchronized void message(XNetReply l) { // receive an XpressNet message and log it
-        // display the raw data if requested
-        StringBuilder raw = new StringBuilder();
-        if (rawCheckBox.isSelected()) {
-            raw.append(l.toString());
-        }
-
-        // display the decoded data
-        String text = l.toMonitorString();
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(text + "\n", new String(raw));
-
+        logMessage(l);
     }
 
     /**
      * Listen for the messages to the LI100/LI101
      */
-    @SuppressWarnings("fallthrough")
     @Override
     public synchronized void message(XNetMessage l) {
-        // display the raw data if requested  
-        StringBuilder raw = new StringBuilder("packet: ");
-        if (rawCheckBox.isSelected()) {
-            raw.append(l.toString());
-        }
-
-        // display the decoded data
-        String text=l.toMonitorString();
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(text + "\n", new String(raw));
-
+	logMessage("","packet:",l);
     }
 
     /**

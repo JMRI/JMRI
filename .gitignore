@@ -10,7 +10,9 @@ junit*.properties
 findbugs.xml
 findbugs.html
 spotbugs.xml
+spotbugs-check.xml
 spotbugs.html
+spotbugs-check.html
 jacoco.exec
 jmri-fb.html
 coveragereport
@@ -39,6 +41,7 @@ session.log
 /xml/XSLT/pages
 .run.sh
 hs_err_pid*.log
+nohup.out
 
 # private / per-user configuration files
 /nbproject/private

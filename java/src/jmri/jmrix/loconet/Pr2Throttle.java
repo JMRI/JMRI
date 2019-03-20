@@ -19,11 +19,13 @@ import org.slf4j.LoggerFactory;
  */
 public class Pr2Throttle extends AbstractThrottle {
 
-    private int addr;
+    private final int addr;
     DccLocoAddress address;
 
     /**
      * Constructor
+     * @param memo a LocoNetSystemConnectionMemo to associate with this throttle
+     * @param address a DccLocoAddress to associate with this throttle
      */
     public Pr2Throttle(LocoNetSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -64,24 +66,29 @@ public class Pr2Throttle extends AbstractThrottle {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * This implementation does not support 128 speed steps.
      */
     @Override
+    // This is a specific implementation for the PR2 that seems to 
+    // return different values from the super class.  Not sure whether
+    // that's required by the hardware or not.  If so, please edit this comment
+    // to confirm.  If not, this should use the superclass implementation after
+    // checking for available modes.
     protected int intSpeed(float fSpeed) {
-        int speed = super.intSpeed(fSpeed);
-        if (speed <= 0) {
-            return speed; // return idle and emergency stop
-        }
+        if (fSpeed< 0.) return 1;  // what the parent class does
         switch (this.getSpeedStepMode()) {
             case DccThrottle.SpeedStepMode28:
             case DccThrottle.SpeedStepMode28Mot:
                 return (int) ((fSpeed * 28) * 4) + 12;
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
+                
             default:
+                // includes the 128 case
                 log.warn("Unhandled speed step mode: {}", this.getSpeedStepMode());
-                break;
+                return super.intSpeed(fSpeed);
         }
-        return speed;
     }
 
     public void writeData() {
@@ -146,7 +153,7 @@ public class Pr2Throttle extends AbstractThrottle {
         }
 
         LocoNetMessage l = new LocoNetMessage(21);
-        l.setOpCode(LnConstants.OPC_WR_SL_DATA_EXP);
+        l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
         int i = 1;
         l.setElement(i++, 21);      // length
         l.setElement(i++, 0);       // EXP_MAST

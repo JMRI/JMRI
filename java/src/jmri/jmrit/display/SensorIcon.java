@@ -432,7 +432,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         updateSize();
     }
 
-    TableItemPanel _itemPanel;
+    TableItemPanel<Sensor> _itemPanel;
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
@@ -448,7 +448,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     protected void editItem() {
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
+        _itemPanel = new TableItemPanel<>(_paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
             updateItem();

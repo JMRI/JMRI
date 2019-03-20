@@ -47,16 +47,6 @@ public interface ShutDownTask {
     public String getName();
 
     /**
-     * Name to be provided to the user when information about this task is
-     * presented.
-     *
-     * @return the name
-     * @deprecated since 4.3.6; use {@link #getName()} instead
-     */
-    @Deprecated
-    public String name();
-
-    /**
      * Advise {@link jmri.ShutDownManager}s if {@link #execute()} may return
      * before the task is complete.
      * <p>

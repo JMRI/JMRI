@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -37,12 +38,13 @@ public class JsonPowerHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    // Nullable to override inherited NonNull requirement
+    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            PowerManager manager = InstanceManager.getDefault(PowerManager.class);
+            PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
             if (name != null && !name.isEmpty()) {
                 for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
                     if (pm.getUserName().equals(name)) {
@@ -50,28 +52,30 @@ public class JsonPowerHttpService extends JsonHttpService {
                     }
                 }
             }
-            data.put(NAME, manager.getUserName());
-            switch (manager.getPower()) {
-                case PowerManager.OFF:
-                    data.put(STATE, OFF);
-                    break;
-                case PowerManager.ON:
-                    data.put(STATE, ON);
-                    break;
-                default:
-                    data.put(STATE, UNKNOWN);
-                    break;
-            }
-            data.put(DEFAULT, false);
-            if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
-                data.put(DEFAULT, true);
+            if (manager != null) {
+                data.put(NAME, manager.getUserName());
+                switch (manager.getPower()) {
+                    case PowerManager.OFF:
+                        data.put(STATE, OFF);
+                        break;
+                    case PowerManager.ON:
+                        data.put(STATE, ON);
+                        break;
+                    default:
+                        data.put(STATE, UNKNOWN);
+                        break;
+                }
+                data.put(DEFAULT, false);
+                if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
+                    data.put(DEFAULT, true);
+                }
+            } else {
+                // No PowerManager is defined; just report it as UNKNOWN
+                data.put(STATE, UNKNOWN);
             }
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorPower"));
-        } catch (NullPointerException e) {
-            // No PowerManager is defined; just report it as UNKNOWN
-            data.put(STATE, UNKNOWN);
         }
         return root;
     }
@@ -79,30 +83,33 @@ public class JsonPowerHttpService extends JsonHttpService {
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
-        try {
-            PowerManager manager = InstanceManager.getDefault(PowerManager.class);
-            if (name != null && !name.isEmpty()) {
-                for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
-                    if (pm.getUserName().equals(name)) {
-                        manager = pm;
+        if (state != UNKNOWN) {
+            try {
+                PowerManager manager = InstanceManager.getDefault(PowerManager.class);
+                if (!name.isEmpty()) {
+                    for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
+                        if (pm.getUserName().equals(name)) {
+                            manager = pm;
+                        }
                     }
                 }
+                switch (state) {
+                    case OFF:
+                        manager.setPower(PowerManager.OFF);
+                        break;
+                    case ON:
+                        manager.setPower(PowerManager.ON);
+                        break;
+                    case UNKNOWN:
+                        // quietly ignore
+                        break;
+                    default:
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
+
+                }
+            } catch (JmriException ex) {
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex);
             }
-            switch (state) {
-                case OFF:
-                    manager.setPower(PowerManager.OFF);
-                    break;
-                case ON:
-                    manager.setPower(PowerManager.ON);
-                    break;
-                case UNKNOWN:
-                    // quietly ignore
-                    break;
-                default:
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
-            }
-        } catch (JmriException ex) {
-            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex);
         }
         return this.doGet(type, name, locale);
     }

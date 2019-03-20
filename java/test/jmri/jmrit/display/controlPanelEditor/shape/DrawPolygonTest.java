@@ -46,12 +46,14 @@ public class DrawPolygonTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         editor = new EditorScaffold();
     }
 
     @After
     public void tearDown() {
+        editor = null;
         jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         JUnitUtil.tearDown();
     }

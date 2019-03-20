@@ -22,6 +22,10 @@
 	<!-- add funtion output 7 and 8 and update sound none number -->
 	<version author="Michael Mosher" version="5" lastUpdated="20180124"/>
 	<!-- update bell to same sound option as steam so it shows up on sound pane-->
+	<version author="Michael Mosher" version="6" lastUpdated="20180727"/>
+	<!-- add read me pane -->
+	<version author="Michael Mosher" version="7" lastUpdated="20180813"/>
+	<!-- add Play xxx Quill checkboxes -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 3" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -1467,6 +1471,23 @@
 				<label>Windshield Wiper</label>
 			</variable>
 			<!-- sound CVs -->
+			<variable item="Sound Group 6 Checkbox 5" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Short Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 6" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXXVX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Medium Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 7" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXVXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Long Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 8" CV="T2CV.4.1" default="0" mask="XXXXXXXXVXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Quills in Random Order</label>
+				<tooltip>If checked, each secessive press of quill button with play random quill sound, unchecked will play in order</tooltip>
+			</variable>
 			<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate horn function will change this setting">
 				<enumVal>
 					<enumChoice choice="Fairbanks Morse"/>
@@ -1577,6 +1598,7 @@
 			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
 		</resets>
 	</decoder>
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
@@ -1587,4 +1609,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol3.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol4.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>

@@ -67,6 +67,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findOrphansPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -249,6 +250,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findEmptyPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -431,6 +433,7 @@ public class Maintenance {
      * @param text body of the message to be displayed reporting the result
      * @return true if name is found at least once as a bean name
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {
@@ -734,7 +737,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
-        java.util.List<String> sysNameList = new java.util.ArrayList(sectionManager.getSystemNameList());
+        java.util.List<String> sysNameList = new java.util.ArrayList<>(sectionManager.getSystemNameList());
 
         transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
@@ -831,7 +834,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
-        sysNameList = new java.util.ArrayList(blockManager.getSystemNameList());
+        sysNameList = new java.util.ArrayList<>(blockManager.getSystemNameList());
 
         sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         iter1 = sectionManager.getSystemNameList().iterator();
@@ -1029,7 +1032,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
-        sysNameList = new java.util.ArrayList(conditionalManager.getSystemNameList());
+        sysNameList = new java.util.ArrayList<>(conditionalManager.getSystemNameList());
 
         iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
@@ -1273,7 +1276,10 @@ public class Maintenance {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                _w.dispose();
+                // dispose on the GUI thread _later_
+                jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ 
+                    _w.dispose();
+                });
             }
         }
         ok.addActionListener(new myListener(dialog));
@@ -1295,7 +1301,10 @@ public class Maintenance {
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parent);
         dialog.pack();
-        dialog.setVisible(true);
+        // dispose on the GUI thread _later_
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ 
+            dialog.setVisible(true);
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(Maintenance.class);

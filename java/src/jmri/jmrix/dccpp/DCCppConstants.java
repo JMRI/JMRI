@@ -120,8 +120,8 @@ public final class DCCppConstants {
     public final static String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*"; // <c>
     public final static String READ_CS_STATUS_REGEX = "\\s*s\\s*";// <s>
     public final static String QUERY_SENSOR_REGEX = "\\s*[Q,q]\\s*(\\d+)\\s*";
-    public final static String WRITE_DCC_PACKET_MAIN_REGEX = "M\\s+(\\d+)(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})\\s*"; // M REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
-    public final static String WRITE_DCC_PACKET_PROG_REGEX = "P\\s+(\\d+)(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})(\\s+[0-9a-fA-F]{1,2})\\s*"; // P REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
+    public final static String WRITE_DCC_PACKET_MAIN_REGEX = "M\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // M REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
+    public final static String WRITE_DCC_PACKET_PROG_REGEX = "P\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // P REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public final static String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
     public final static String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public final static String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";
@@ -134,8 +134,8 @@ public final class DCCppConstants {
     public final static String LIST_SENSORS_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0,1])\\s*";
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
     public final static String PROGRAM_BIT_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
-    public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
-    public final static String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w+)\\s*(\\d+)";
+    public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)\\s*";
+    public final static String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+)\\s*";
     public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
     public final static String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+)\\s*";
     public final static String SENSOR_REPLY_REGEX = "\\s*[Qq]\\s*(\\d+)\\s*";

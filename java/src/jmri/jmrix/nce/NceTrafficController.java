@@ -1,6 +1,5 @@
 package jmri.jmrix.nce;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.NmraPacket;
@@ -14,11 +13,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from NCE messages. The "NceInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a NcePortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -217,35 +216,37 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     /**
-     * Default when a NCE USB isn't selected in user system preferences
+     * Default when a NCE USB isn't selected in user system preferences.
+     * <br><br>
+     * Also the case when Serial or Simulator is selected.
      */
-    static public final int USB_SYSTEM_NONE = 0;
+    public static final int USB_SYSTEM_NONE = 0;
 
     /**
-     * Create commands compatible with a NCE USB connected to a PowerCab
+     * Create commands compatible with a NCE USB connected to a PowerCab.
      */
-    static public final int USB_SYSTEM_POWERCAB = 1;
+    public static final int USB_SYSTEM_POWERCAB = 1;
 
     /**
-     * Create commands compatible with a NCE USB connected to a Smart Booster
+     * Create commands compatible with a NCE USB connected to a Smart Booster.
      */
-    static public final int USB_SYSTEM_SB3 = 2;
+    public static final int USB_SYSTEM_SB3 = 2;
 
     /**
-     * Create commands compatible with a NCE USB connected to a PowerHouse
+     * Create commands compatible with a NCE USB connected to a PowerPro.
      */
-    static public final int USB_SYSTEM_POWERHOUSE = 3;
+    public static final int USB_SYSTEM_POWERPRO = 3;
 
     /**
      * Create commands compatible with a NCE USB with {@literal >=7.*} connected
-     * to a Twin
+     * to a Twin.
      */
-    static public final int USB_SYSTEM_TWIN = 4;
+    public static final int USB_SYSTEM_TWIN = 4;
 
     /**
-     * Create commands compatible with a NCE USB with SB5
+     * Create commands compatible with a NCE USB with SB5.
      */
-    static public final int USB_SYSTEM_SB5 = 5;
+    public static final int USB_SYSTEM_SB5 = 5;
 
     private int usbSystem = USB_SYSTEM_NONE;
     private boolean usbSystemSet = false;
@@ -256,7 +257,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_NONE}
      * <LI>{@link #USB_SYSTEM_POWERCAB}
      * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_POWERPRO}
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
@@ -278,7 +279,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_NONE}
      * <LI>{@link #USB_SYSTEM_POWERCAB}
      * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_POWERPRO}
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
@@ -509,24 +510,19 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     /**
-     * static function returning the NceTrafficController instance to use.
      *
-     * @return The registered NceTrafficController instance for general use, if
-     *         need be creating one.
+     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
+     * @deprecated Since 4.13.5 duplicate of setAdapterMemo
      */
     @Deprecated
-    public static synchronized NceTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new NceTrafficController object");
-            }
-            self = new NceTrafficController();
-            // set as command station too
-            jmri.InstanceManager.store(self, jmri.CommandStation.class);
-        }
-        return self;
+    public void setSystemConnectionMemo(NceSystemConnectionMemo adaptermemo) {
+        memo = adaptermemo;
     }
 
+    /**
+     *
+     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
+     */
     public void setAdapterMemo(NceSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
     }
@@ -536,20 +532,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     private NceSystemConnectionMemo memo = null;
-    static NceTrafficController self = null;
-
-    /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     */
-    @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-//    protected synchronized void setInstance() { self = this; }
 
     @Override
     protected AbstractMRReply newReply() {
@@ -642,27 +624,22 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
     }
 
-    public void setSystemConnectionMemo(NceSystemConnectionMemo memo) {
-        adaptermemo = memo;
-    }
-
-    NceSystemConnectionMemo adaptermemo;
-
     @Override
     public String getUserName() {
-        if (adaptermemo == null) {
+        if (memo == null) {
             return "NCE";
         }
-        return adaptermemo.getUserName();
+        return memo.getUserName();
     }
 
     @Override
     public String getSystemPrefix() {
-        if (adaptermemo == null) {
+        if (memo == null) {
             return "N";
         }
-        return adaptermemo.getSystemPrefix();
+        return memo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
+
 }

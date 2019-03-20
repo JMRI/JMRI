@@ -54,8 +54,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private JToggleButton _units;
 
     static int STRUT_SIZE = 10;
-    static boolean _firstInstance = true;
-    static Point _loc = null;
+    static Point _loc = new Point(-1, -1);
     static Dimension _dim = null;
     public static final String TEST_PATH = "TEST_PATH";
 
@@ -82,12 +81,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10, 10));
         border.add(contentPane);
-        setContentPane(border);
+        setContentPane(new JScrollPane(border));
         _pathList.setPreferredSize(new java.awt.Dimension(_pathList.getFixedCellWidth(), _pathList.getFixedCellHeight() * 4));
         pack();
-        if (_firstInstance) {
-            setLocationRelativeTo(_parent._editor);
-            _firstInstance = false;
+        if (_loc.x < 0) {
+            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
         } else {
             setLocation(_loc);
             setSize(_dim);
@@ -317,8 +315,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             _pathName.setText(null);
             _length.setText("");
         }
-        int state = _block.getState() | OBlock.ALLOCATED;
-        _block.pseudoPropertyChange("state", 0, state);
+        int oldState = _block.getState();
+        int newState = oldState | OBlock.ALLOCATED;
+        _block.pseudoPropertyChange("state", oldState, newState);
     }
 
     private void showPath(OPath path) {
@@ -496,8 +495,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     //////////////////////////// end setup ////////////////////////////
     private void clearListSelection() {
         _pathList.clearSelection();
-        int state = _block.getState() & ~OBlock.ALLOCATED;
-        _block.pseudoPropertyChange("state", 0, state);
+        int oldState = _block.getState();
+        int newState = oldState & ~OBlock.ALLOCATED;
+        _block.pseudoPropertyChange("state", oldState, newState);
         _length.setText("");
     }
 
@@ -793,9 +793,10 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 ((IndicatorTrack) pos).removePath(TEST_PATH);
             }
         }
-        int state = _block.getState() & ~OBlock.ALLOCATED;
+        int oldState = _block.getState();
+        int newState = oldState & ~OBlock.ALLOCATED;
+        _block.pseudoPropertyChange("state", oldState, newState);
         _pathGroup = new ArrayList<>();
-        _block.pseudoPropertyChange("state", 0, state);
     }
 
     //////////////////////// callbacks from main frame ////////////////////////

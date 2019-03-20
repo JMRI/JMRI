@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LayoutSlip extends LayoutTurnout {
 
@@ -189,9 +189,10 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
+            default:
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
-        log.error("Invalid Connection Type " + connectionType); //I18IN
-        throw new jmri.JmriException("Invalid Connection Type " + connectionType);
     }
 
     /**
@@ -329,6 +330,9 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                     break;
                 }
+                default:
+                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected selectedPointType = {}", selectedPointType);
+                    break;
             }   // switch
             setSlipState(newSlipState);
         }
@@ -755,7 +759,7 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.isEmpty())) {
+            if (getBlockName().isEmpty()) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
@@ -997,7 +1001,7 @@ public class LayoutSlip extends LayoutTurnout {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockName != null) && (!blockName.isEmpty()) && (getLayoutBlock() != null)) {
+        if ((!getBlockName().isEmpty()) && (getLayoutBlock() != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
@@ -1115,6 +1119,24 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * Check if either turnout is inconsistent.
+     * This is used to create an alternate slip image.
+     *
+     * @return true if either turnout is inconsistent.
+     */
+    private boolean isTurnoutInconsistent() {
+        Turnout tA = getTurnout();
+        if (tA != null && tA.getKnownState() == INCONSISTENT) {
+            return true;
+        }
+        Turnout tB = getTurnoutB();
+        if (tB != null && tB.getKnownState() == INCONSISTENT) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     protected void draw1(Graphics2D g2, boolean drawMain, boolean isBlock) {
         if (isBlock && getLayoutBlock() == null) {
@@ -1167,6 +1189,29 @@ public class LayoutSlip extends LayoutTurnout {
 
         Point2D midPointAD = MathUtil.midPoint(oneThirdPointAC, twoThirdsPointBD);
         Point2D midPointBC = MathUtil.midPoint(oneThirdPointBD, twoThirdsPointAC);
+
+        if (isTurnoutInconsistent()) {
+            // If either turnout is inconsistent, draw an alternate slip image
+            // draw A<= =>C
+            if (drawMain == mainlineA) {
+                g2.setColor(colorA);
+                g2.draw(new Line2D.Double(pA, oneForthPointAC));
+            }
+            if (drawMain == mainlineC) {
+                g2.setColor(colorC);
+                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+            }
+            // draw B<= =>D
+            if (drawMain == mainlineB) {
+                g2.setColor(colorB);
+                g2.draw(new Line2D.Double(pB, oneForthPointBD));
+            }
+            if (drawMain == mainlineD) {
+                g2.setColor(colorD);
+                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+            }
+            return;
+        }
 
         int slipState = getSlipState();
 

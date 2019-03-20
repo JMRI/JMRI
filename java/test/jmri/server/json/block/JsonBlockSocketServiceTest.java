@@ -29,25 +29,33 @@ public class JsonBlockSocketServiceTest {
     public void testBlockChange() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1");
-        JsonBlockSocketService service = new JsonBlockSocketService(connection);
+        // create block *before* creating service to ensure service does not pick up change in number
+        // of blocks when creating block for test
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
         Assert.assertEquals("Block has only one listener", 1, block1.getNumPropertyChangeListeners());
+        JsonBlockSocketService service = new JsonBlockSocketService(connection);
         service.onMessage(JsonBlock.BLOCK, message, JSON.POST, Locale.ENGLISH);
         Assert.assertEquals("Block is being listened to by service", 2, block1.getNumPropertyChangeListeners());
-        Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+        JsonNode result = connection.getMessage();
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         block1.setState(Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
             return block1.getState() == Block.OCCUPIED;
         }, "Block to throw");
-        Assert.assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+        result = connection.getMessage();
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
         block1.setState(Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
             return block1.getState() == Block.UNOCCUPIED;
         }, "Block to close");
         Assert.assertEquals(Block.UNOCCUPIED, block1.getState());
-        Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
-        // test IOException handling when listening by triggering execption and
+        result = connection.getMessage();
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        // test IOException handling when listening by triggering exception and
         // observing that block1 is no longer being listened to
         connection.setThrowIOException(true);
         block1.setState(Block.OCCUPIED);
@@ -111,6 +119,7 @@ public class JsonBlockSocketServiceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

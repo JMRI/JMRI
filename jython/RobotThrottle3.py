@@ -100,6 +100,10 @@
 
 import jmri
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import javax.swing
 import java.util.Calendar
 
@@ -510,9 +514,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     if (self.debugLevel >= LowDebug) :
                         self.msgText("signal dropped, same signal being watched.")
                     if (self.compareSignalAspects(self.haltOnSignalHeadAppearance, watchAspect) >= 0) : # Only stop on dropping below this
-                    	self.findNewSpeed(self.currentBlock, self.next1Block, watchSignal)
+                        self.findNewSpeed(self.currentBlock, self.next1Block, watchSignal)
                     else :
-                    	self.msgText("Signal dropped in front of train. Halting!!")
+                        self.msgText("Signal dropped in front of train. Halting!!")
                         if (tryCount < tryCountLimit) :
                             if (self.debugLevel >= LowDebug) :
                                 self.msgText("Doing change retry: " + str(tryCount))
@@ -1436,9 +1440,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 if (b != blocks.getBlock(self.blockStart.text) and b.getValue() == self.locoAddress.text) :
                     b.setValue("")
             if (self.blockDirection.isSelected()) :
-            	self.currentDirection = jmri.Path.EAST
+                self.currentDirection = jmri.Path.EAST
             else :
-            	self.currentDirecion = jmri.Path.WEST
+                self.currentDirecion = jmri.Path.WEST
             self.startButton.setEnabled(True)
             self.haltButton.setEnabled(True)
             self.testAddBlockListener(blocks.getBlock(self.blockStart.text))
@@ -1898,7 +1902,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.redFlashSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-flashred-short.gif", "RedFlashCabSignal")
         self.darkSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-dark-short.gif", "DarkCabSignal")
         self.unknownSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/misc/Question-black.gif", "UnknownCabSignal")
-        self.throttleManager = jmri.InstanceManager.throttleManagerInstance()
+        self.throttleManager = jmri.InstanceManager.getDefault(jmri.ThrottleManager)
         if (self.throttleManager == None) :
             print("No command station found!!\nRT has no way to control the trains.\n")
             return

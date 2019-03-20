@@ -20,7 +20,8 @@ import org.slf4j.LoggerFactory;
  * Remembers writes, and returns the last written value when a read to the same
  * CV is made.
  * <p>
- * Only supports the DCC single-number address space.
+ * Only supports the DCC single-number address space, should be updated to handle
+ * any string address.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2013
  */
@@ -104,19 +105,21 @@ public class ProgDebugger implements AddressedProgrammer {
     // write CV values are remembered for later reads
     Hashtable<Integer, Integer> mValues = new Hashtable<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String decodeErrorCode(int i) {
         log.debug("decoderErrorCode " + i);
         return "error " + i;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        writeCV(Integer.parseInt(CV), val, p);
-    }
-
-    @Override
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         nOperations++;
         final ProgListener m = p;
         // log out the request
@@ -134,7 +137,7 @@ public class ProgDebugger implements AddressedProgrammer {
             public void run() {
                 log.debug("write CV reply");
                 if (l != null) {
-                    l.programmingOpReply(val, 0);
+                    notifyProgListenerEnd(l, val, 0);
                 }
             }  // 0 is OK status
         };
@@ -157,15 +160,12 @@ public class ProgDebugger implements AddressedProgrammer {
 
     boolean confirmOK;  // cached result of last compare
 
-    @Override
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
-    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV("" + CV, val, p);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CVname, int val, ProgListener p) throws ProgrammerException {
-        int CV = Integer.parseInt(CVname);
+        final int CV = Integer.parseInt(CVname);
         final ProgListener m = p;
 
         nOperations++;
@@ -192,9 +192,9 @@ public class ProgDebugger implements AddressedProgrammer {
             public void run() {
                 log.debug("read CV reply");
                 if (confirmOK) {
-                    l.programmingOpReply(result, ProgListener.OK);
+                    notifyProgListenerEnd(l, val, ProgListener.OK);
                 } else {
-                    l.programmingOpReply(result, ProgListener.ConfirmFailed);
+                    notifyProgListenerEnd(l, result, ProgListener.ConfirmFailed);
                 }
             }
         };
@@ -202,13 +202,12 @@ public class ProgDebugger implements AddressedProgrammer {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        readCV(Integer.parseInt(CV), p);
-    }
-
-    @Override
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         final ProgListener m = p;
         _lastReadCv = CV;
         nOperations++;
@@ -231,7 +230,7 @@ public class ProgDebugger implements AddressedProgrammer {
             @Override
             public void run() {
                 log.debug("read CV reply");
-                l.programmingOpReply(retval, 0);
+                notifyProgListenerEnd(l, retval, 0);
             }  // 0 is OK status
         };
         sendReturn(r);
@@ -241,6 +240,9 @@ public class ProgDebugger implements AddressedProgrammer {
     // handle mode
     protected ProgrammingMode mode;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void setMode(ProgrammingMode m) {
         log.debug("Setting mode from {} to {}", mode, m);
@@ -253,12 +255,19 @@ public class ProgDebugger implements AddressedProgrammer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final ProgrammingMode getMode() {
         return mode;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         if (address >= 0) {
             // addressed programmer
@@ -320,9 +329,9 @@ public class ProgDebugger implements AddressedProgrammer {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
      * By default, say that no verification is done.
-     *
-     * @param addr A CV address to check (in case this varies with CV range) or null for any
      * @return Always WriteConfirmMode.NotVerified
      */
     @Nonnull

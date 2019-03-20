@@ -12,8 +12,10 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -27,23 +29,21 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Turnout;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
-// import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
@@ -70,6 +70,7 @@ public class LayoutTrackEditors {
     /*=================*\
     | Edit Layout Track |
     \*=================*/
+    @InvokeOnGuiThread
     protected void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         sensorList.clear();
         if (layoutTrack instanceof PositionablePoint) {
@@ -120,6 +121,7 @@ public class LayoutTrackEditors {
      * for a default manager type class.
      * @since 4.11.2
      */
+    @InvokeOnGuiThread
     void showSensorMessage() {
         if (sensorList.isEmpty()) {
             return;
@@ -162,8 +164,6 @@ public class LayoutTrackEditors {
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JTextField editTrackSegmentArcTextField = new JTextField(5);
     private JButton editTrackSegmentSegmentEditBlockButton;
-    private JButton editTrackSegmentSegmentEditDoneButton;
-    private JButton editTrackSegmentSegmentEditCancelButton;
 
     private int editTrackSegmentMainlineTrackIndex;
     private int editTrackSegmentSideTrackIndex;
@@ -172,9 +172,28 @@ public class LayoutTrackEditors {
     private boolean editTrackSegmentOpen = false;
     private boolean editTrackSegmentNeedsRedraw = false;
 
+    private void addDoneCancelButtons(JPanel target, JRootPane rp, ActionListener doneCallback, ActionListener cancelCallback) {
+        // Done
+        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+        target.add(doneButton);  // NOI18N
+        doneButton.addActionListener(doneCallback);
+        doneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
+
+        // Cancel
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
+        target.add(cancelButton); 
+        cancelButton.addActionListener(cancelCallback);
+        cancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+
+        rp.setDefaultButton(doneButton);
+        // bind ESC to close window
+        rp.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close"); // NOI18N
+    }
     /**
      * Edit a Track Segment.
      */
+    @InvokeOnGuiThread
     protected void editTrackSegment(@Nonnull TrackSegment trackSegment) {
         this.trackSegment = trackSegment;
         sensorList.clear();
@@ -249,25 +268,9 @@ public class LayoutTrackEditors {
                 editTrackSegmentEditBlockPressed(e);
             });
             editTrackSegmentSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-            panel5.add(editTrackSegmentSegmentEditDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-            editTrackSegmentSegmentEditDoneButton.addActionListener((ActionEvent e) -> {
-                editTracksegmentDonePressed(e);
-            });
-            editTrackSegmentSegmentEditDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
 
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editTrackSegmentSegmentEditDoneButton);
-                rootPane.setDefaultButton(editTrackSegmentSegmentEditDoneButton);
-            });
-
-            // Cancel
-            panel5.add(editTrackSegmentSegmentEditCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editTrackSegmentSegmentEditCancelButton.addActionListener((ActionEvent e) -> {
-                editTrackSegmentCancelPressed(e);
-            });
-            editTrackSegmentSegmentEditCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editTrackSegmentFrame.getRootPane(), 
+                    this::editTracksegmentDonePressed, this::editTrackSegmentCancelPressed);
             contentPane.add(panel5);
         }
         // Set up for Edit
@@ -306,6 +309,7 @@ public class LayoutTrackEditors {
 
     }   // editTrackSegment
 
+    @InvokeOnGuiThread
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
@@ -333,6 +337,7 @@ public class LayoutTrackEditors {
         editTrackSegmentNeedsRedraw = true;
     }   // editTrackSegmentEditBlockPressed
 
+    @InvokeOnGuiThread
     private void editTracksegmentDonePressed(ActionEvent a) {
         // set dashed
         boolean oldDashed = trackSegment.isDashed();
@@ -388,6 +393,7 @@ public class LayoutTrackEditors {
         layoutEditor.setDirty();
     }   // editTracksegmentDonePressed
 
+    @InvokeOnGuiThread
     private void editTrackSegmentCancelPressed(ActionEvent a) {
         editTrackSegmentOpen = false;
         editTrackSegmentFrame.setVisible(false);
@@ -421,8 +427,6 @@ public class LayoutTrackEditors {
     private JComboBox<String> editLayoutTurnoutStateComboBox = new JComboBox<String>();
     private JCheckBox editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTurnout"));  // NOI18N
     private JButton editLayoutTurnoutBlockButton;
-    private JButton editLayoutTurnoutDoneButton;
-    private JButton editLayoutTurnoutCancelButton;
     private JButton editLayoutTurnoutBlockBButton;
     private JButton editLayoutTurnoutBlockCButton;
     private JButton editLayoutTurnoutBlockDButton;
@@ -624,26 +628,9 @@ public class LayoutTrackEditors {
             // Edit Block
 
             editLayoutTurnoutBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-            // Done
-            panel5.add(editLayoutTurnoutDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLayoutTurnoutDoneButton);
-                rootPane.setDefaultButton(editLayoutTurnoutDoneButton);
-            });
-
-            editLayoutTurnoutDoneButton.addActionListener((ActionEvent e) -> {
-                editLayoutTurnoutDonePressed(e);
-            });
-            editLayoutTurnoutDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-            // Cancel
-            panel5.add(editLayoutTurnoutCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLayoutTurnoutCancelButton.addActionListener((ActionEvent e) -> {
-                editLayoutTurnoutCancelPressed(e);
-            });
-            editLayoutTurnoutCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            
+            addDoneCancelButtons(panel5, editLayoutTurnoutFrame.getRootPane(), 
+                    this::editLayoutTurnoutDonePressed, this::editLayoutTurnoutCancelPressed);
             contentPane.add(panel5);
         }
 
@@ -712,8 +699,7 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockNameComboBox.getUserName();
-        if ((layoutTurnout.getBlockName() != null)
-                || !layoutTurnout.getBlockName().equals(newName)) {
+        if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -1005,11 +991,12 @@ public class LayoutTrackEditors {
                         JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
                         jmri.Manager m = jbcb.getManager();
                         if (m != null) {
-                            String[] systemNames = m.getSystemNameArray();
-                            for (int idx = 0; idx < systemNames.length; idx++) {
-                                String systemName = systemNames[idx];
-                                jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(systemName, null));
-                            }
+                            int idx = 0;
+                            for (Object obj : m.getNamedBeanSet()) {
+                                NamedBean bean = (NamedBean) obj;  // entire class needs more attention to typing
+                                String systemName = bean.getSystemName();
+                                jbcb.setItemEnabled(idx++, layoutEditor.validatePhysicalTurnout(systemName, null));
+                            }                        
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -141,7 +142,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     // TODO: Why does this if statement contain a direct false? FIXME!
-    @SuppressWarnings("unused")
     @Override
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {
@@ -470,6 +470,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueClock1224(boolean mode) {
         byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClock1224(mode);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_CLOCK_SET_REPLY_SIZE);
@@ -522,6 +523,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings({"deprecation", "unused"})
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
@@ -533,6 +535,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getNceTime() {
         double nceTime = 0;
         if (lastClockReadPacket != null) {
@@ -545,6 +548,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings({"deprecation", "unused"})
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getIntTime() {
         Date now = internalClock.getTime();
         int ms = (int) (now.getTime() % 1000);

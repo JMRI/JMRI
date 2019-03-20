@@ -28,6 +28,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.PoolTrackAction;
+import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 import jmri.jmrit.operations.locations.tools.TrackEditCommentsAction;
 import jmri.jmrit.operations.locations.tools.TrackLoadEditAction;
 import jmri.jmrit.operations.locations.tools.TrackRoadEditAction;
@@ -74,11 +75,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JPanel pDestinationOption = new JPanel();
     JPanel panelOrder = new JPanel();
 
-    // labels
-    JLabel loadOption = new JLabel();
-    JLabel shipLoadOption = new JLabel();
-    JLabel roadOption = new JLabel(Bundle.getMessage("AcceptsAllRoads"));
-    JLabel destinationOption = new JLabel();
+    // Alternate tool buttons
+    JButton loadOptionButton = new JButton(Bundle.getMessage("AcceptsAllLoads"));
+    JButton shipLoadOptionButton = new JButton(Bundle.getMessage("ShipAll"));
+    JButton roadOptionButton = new JButton(Bundle.getMessage("AcceptsAllRoads"));
+    JButton destinationOptionButton = new JButton();
 
     // major buttons
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
@@ -216,16 +217,24 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         // status panel for roads and loads
         JPanel panelRoadAndLoadStatus = new JPanel();
         panelRoadAndLoadStatus.setLayout(new BoxLayout(panelRoadAndLoadStatus, BoxLayout.X_AXIS));
+
         JPanel pRoadOption = new JPanel();
         pRoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadOption")));
-        pRoadOption.add(roadOption);
+        pRoadOption.add(roadOptionButton);
+        roadOptionButton.addActionListener(new TrackRoadEditAction(this));
+
         JPanel pLoadOption = new JPanel();
         pLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadOption")));
-        pLoadOption.add(loadOption);
+        pLoadOption.add(loadOptionButton);
+        loadOptionButton.addActionListener(new TrackLoadEditAction(this));
+
         pShipLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ShipLoadOption")));
-        pShipLoadOption.add(shipLoadOption);
+        pShipLoadOption.add(shipLoadOptionButton);
+        shipLoadOptionButton.addActionListener(new TrackLoadEditAction(this));
+
         pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
-        pDestinationOption.add(destinationOption);
+        pDestinationOption.add(destinationOptionButton);
+        destinationOptionButton.addActionListener(new TrackDestinationEditAction(this));
 
         panelRoadAndLoadStatus.add(pRoadOption);
         panelRoadAndLoadStatus.add(pLoadOption);
@@ -339,7 +348,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (Setup.isRfidEnabled()) {
             // setup the Reader dropdown.
             readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
+            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
                 readerSelector.addItem((Reporter) r);
             }
         }
@@ -555,6 +564,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         updatePickupOptions();
         updateRoadOption();
         updateLoadOption();
+        updateDestinationOption();
 
         _track.addPropertyChangeListener(this);
 
@@ -582,7 +592,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     protected void saveTrack(Track track) {
-        
+
         saveTrackDirections(track);
 
         track.setName(trackNameTextField.getText());
@@ -601,7 +611,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         // save location file
         OperationsXml.save();
     }
-    
+
     private void saveTrackDirections(Track track) {
         // save train directions serviced by this location
         int direction = 0;
@@ -657,7 +667,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (TrainCommon.splitString(trackNameTextField.getText()).length() > MAX_NAME_LENGTH) {
             log.error("Track name must be less than " + Integer.toString(MAX_NAME_LENGTH + 1) + " charaters"); // NOI18N
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
-                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
+                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),
+                    MessageFormat.format(Bundle
                             .getMessage("CanNotTrack"), new Object[]{s}),
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -675,7 +686,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 length = Integer.toString(feet);
             } catch (NumberFormatException e) {
-//                log.error("Can not convert from inches to feet");
+                //                log.error("Can not convert from inches to feet");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -688,7 +699,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int meter = (int) (cm * Setup.getScaleRatio() / 100);
                 length = Integer.toString(meter);
             } catch (NumberFormatException e) {
-//                log.error("Can not convert from cm to meters");
+                //                log.error("Can not convert from cm to meters");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -707,19 +718,20 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 return false;
             }
         } catch (NumberFormatException e) {
-//            log.error("Track length not an integer");
+            //            log.error("Track length not an integer");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"), Bundle
                     .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // track length can not be less than than the sum of used and reserved length
         if (trackLength != track.getLength() && trackLength < track.getUsedLength() + track.getReserved()) {
-//            log.warn("Track length should not be less than used and reserved");
+            //            log.warn("Track length should not be less than used and reserved");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeGreater"), Bundle
                     .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
             // does the user want to force the track length?
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("TrackForceLength"),
-                    new Object[]{track.getLength(), trackLength, Setup.getLengthUnit().toLowerCase()}), Bundle
+                    new Object[]{track.getLength(), trackLength, Setup.getLengthUnit().toLowerCase()}),
+                    Bundle
                             .getMessage("ErrorTrackLength"),
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return false;
@@ -746,15 +758,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
         return true;
     }
-    
+
     private boolean checkTrackPickups(Track track) {
         // check to see if all car types can be pulled from this track
         String status = track.checkPickups();
         if (!status.equals(Track.PICKUP_OKAY) && !track.getPickupOption().equals(Track.ANY)) {
-            JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"),
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        return true; 
+        return true;
     }
 
     private void reportTrackExists(String s) {
@@ -772,6 +785,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         setButton.setEnabled(enabled);
         deleteTrackButton.setEnabled(enabled);
         saveTrackButton.setEnabled(enabled);
+        roadOptionButton.setEnabled(enabled);
+        loadOptionButton.setEnabled(enabled);
+        shipLoadOptionButton.setEnabled(enabled);
+        destinationOptionButton.setEnabled(enabled);
         anyDrops.setEnabled(enabled);
         trainDrop.setEnabled(enabled);
         routeDrop.setEnabled(enabled);
@@ -1108,57 +1125,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void updateRoadOption() {
         if (_track != null) {
-            if (_track.getRoadOption().equals(Track.INCLUDE_ROADS)) {
-                roadOption.setText(Bundle.getMessage("AcceptOnly") +
-                        " " +
-                        _track.getRoadNames().length +
-                        " " +
-                        Bundle.getMessage("Roads"));
-            } else if (_track.getRoadOption().equals(Track.EXCLUDE_ROADS)) {
-                roadOption.setText(Bundle.getMessage("Exclude") +
-                        " " +
-                        _track.getRoadNames().length +
-                        " " +
-                        Bundle.getMessage("Roads"));
-            } else {
-                roadOption.setText(Bundle.getMessage("AcceptsAllRoads"));
-            }
+            roadOptionButton.setText(_track.getRoadOptionString());
         }
     }
 
     private void updateLoadOption() {
         if (_track != null) {
-            if (_track.getLoadOption().equals(Track.INCLUDE_LOADS)) {
-                loadOption.setText(Bundle.getMessage("AcceptOnly") +
-                        " " +
-                        _track.getLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else if (_track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
-                loadOption.setText(Bundle.getMessage("Exclude") +
-                        " " +
-                        _track.getLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else {
-                loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
-            }
-
-            if (_track.getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
-                shipLoadOption.setText(Bundle.getMessage("ShipOnly") +
-                        " " +
-                        _track.getShipLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else if (_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
-                shipLoadOption.setText(Bundle.getMessage("Exclude") +
-                        " " +
-                        _track.getShipLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else {
-                shipLoadOption.setText(Bundle.getMessage("ShipAll"));
-            }
+            loadOptionButton.setText(_track.getLoadOptionString());
+            shipLoadOptionButton.setText(_track.getShipLoadOptionString());
         }
     }
 
@@ -1218,18 +1192,23 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (_track != null) {
             if (_track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS)) {
                 pDestinationOption.setVisible(true);
-                destinationOption.setText(Bundle.getMessage("AcceptOnly") +
+                destinationOptionButton.setText(Bundle.getMessage("AcceptOnly") +
                         " " +
                         _track.getDestinationListSize() +
                         " " +
                         Bundle.getMessage("Destinations"));
             } else if (_track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
                 pDestinationOption.setVisible(true);
-                destinationOption.setText(
-                        Bundle.getMessage("Exclude") + " " + (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - _track
-                                .getDestinationListSize()) + " " + Bundle.getMessage("Destinations"));
+                destinationOptionButton.setText(
+                        Bundle.getMessage("Exclude") +
+                                " " +
+                                (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() -
+                                        _track
+                                                .getDestinationListSize()) +
+                                " " +
+                                Bundle.getMessage("Destinations"));
             } else {
-                destinationOption.setText(Bundle.getMessage("AcceptAll"));
+                destinationOptionButton.setText(Bundle.getMessage("AcceptAll"));
             }
         }
     }
@@ -1239,7 +1218,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }
-        if (_location !=null) {
+        if (_location != null) {
             _location.removePropertyChangeListener(this);
         }
         InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);

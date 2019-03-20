@@ -9,11 +9,8 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.SlotManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * tests for the Jmri package LnPr2PowerManager
@@ -66,6 +63,16 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     @Override
+    protected void hearIdle() {
+        return;
+    }
+
+    @Override
+    protected void sendIdleReply() {
+        return;
+    }
+
+    @Override
     protected int numListeners() {
         return controller.numListeners();
     }
@@ -87,6 +94,11 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
         Assert.assertEquals(LnConstants.OPC_WR_SL_DATA,controller.outbound.elementAt(index).getOpCode());
         return LnConstants.OPC_WR_SL_DATA
                 == controller.outbound.elementAt(index).getOpCode();
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return false;
     }
 
     @Test
@@ -116,13 +128,28 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     @Test
     @Override
     @Ignore("test in parent class fails for some reason")
+    @ToDo("investigate failure in parent class test and make corrections, either to initialization or to this overriden test")
     public void testDispose2() throws JmriException {
     }
 
     @Test
     @Override
     @Ignore("test in parent class fails for some reason")
+    @ToDo("investigate failure in parent class test and make corrections, either to initialization or to this overriden test")
     public void testStateOff() throws JmriException {
+    }
+    
+    @Test
+    @Override
+    public void testImplementsIdle() {
+        if (p.implementsIdle()) {
+            hearIdle();
+            try {
+                Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
+            } catch (JmriException e) {
+                Assert.fail("JmriJException occured invoking p.getPower()");
+            }
+        }
     }
 
     // setup a default interface

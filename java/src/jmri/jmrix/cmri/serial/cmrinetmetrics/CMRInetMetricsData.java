@@ -34,12 +34,12 @@ package jmri.jmrix.cmri.serial.cmrinetmetrics;
                                                     "Unrecognized Command"
                                                     };
         
-        public static int CMRInetMetricTimeout       = 0;
-        public static int CMRInetMetricTruncRecv     = 1;
-        public static int CMRInetMetricTruncReply    = 2;
-        public static int CMRInetMetricUnrecResponse = 3;
-        public static int CMRInetMetricUnrecCommand  = 4;
-        public static int CMRInetMetricErrLAST       = CMRInetMetricUnrecCommand+1;
+        public final static int CMRInetMetricTimeout       = 0;
+        public final static int CMRInetMetricTruncRecv     = 1;
+        public final static int CMRInetMetricTruncReply    = 2;
+        public final static int CMRInetMetricUnrecResponse = 3;
+        public final static int CMRInetMetricUnrecCommand  = 4;
+        public final static int CMRInetMetricErrLAST       = CMRInetMetricUnrecCommand+1;
     
         public int CMRInetMetricErrCount[]           = {
                                                      0,0, 

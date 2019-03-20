@@ -37,9 +37,9 @@ public class SE8Panel extends AbstractBoardProgPanel {
     }
 
     public SE8Panel(int boardNum) {
-        super(boardNum);
+        super(boardNum, false, "SE8C");
 
-        appendLine(provideAddressing("SE8C"));  // add read/write buttons, address // NOI18N
+        appendLine(provideAddressing());  // add read/write buttons, address // NOI18N
 
         JPanel panel2;
         appendLine(fullmode);

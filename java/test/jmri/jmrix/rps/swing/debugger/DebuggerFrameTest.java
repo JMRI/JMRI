@@ -28,6 +28,8 @@ public class DebuggerFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new RpsSystemConnectionMemo();
     }
 

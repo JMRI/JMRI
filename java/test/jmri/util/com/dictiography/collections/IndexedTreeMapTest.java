@@ -1,6 +1,6 @@
 package jmri.util.com.dictiography.collections;
 
-import junit.framework.TestCase;
+import org.junit.*;
 
 import java.util.*;
 
@@ -10,8 +10,9 @@ import java.util.*;
  * Time: 15:01
  * Email: Vitaly.Sazanovich@gmail.com
  */
-public class IndexedTreeMapTest extends TestCase {
+public class IndexedTreeMapTest {
 
+    @Test
     public void testIndexedTreeMap() throws Exception {
         long t1 = System.currentTimeMillis();
         for (int i = 0; i < 5; i++) {
@@ -34,27 +35,25 @@ public class IndexedTreeMapTest extends TestCase {
                 int ev = m.exactEntry(k).getValue().intValue();
                 int ind = m.keyIndex(ek);
 
-                assertEquals(ints[k].intValue(), ek);
-                assertEquals(ints[k].intValue(), ev);
-                assertEquals(k, ind);
+                Assert.assertEquals(ints[k].intValue(), ek);
+                Assert.assertEquals(ints[k].intValue(), ev);
+                Assert.assertEquals(k, ind);
 
             }
             Iterator<Integer> it = set.iterator();
             while (it.hasNext()) {
                 Integer next = it.next();
                 m.remove(next);
-                assertEquals(false, m.containsKey(next));
+                Assert.assertEquals(false, m.containsKey(next));
                 ((IndexedTreeMap) m).debug();
             }
-            assertEquals(0, m.size());
+            Assert.assertEquals(0, m.size());
         }
 
-        System.out.println("DONE IN:" + (System.currentTimeMillis() - t1));
+        log.debug("DONE IN:" + (System.currentTimeMillis() - t1));
     }
 
-
-
-
+    @Test
     public void testComparePutMap() throws Exception {
 
         Random random = new Random(System.currentTimeMillis());
@@ -86,9 +85,10 @@ public class IndexedTreeMapTest extends TestCase {
         }
         long t4 = System.currentTimeMillis();
 
-        System.out.println("For " + set.size() + " elements TreeMap wins IndexedTreeMap in put by:" + ((t2 - t1) - (t4 - t3)) + " milliseconds");
+        log.debug("For " + set.size() + " elements TreeMap wins IndexedTreeMap in put by:" + ((t2 - t1) - (t4 - t3)) + " milliseconds");
     }
 
+    @Test
     public void testCompareDeleteMap() throws Exception {
 
         Random random = new Random(System.currentTimeMillis());
@@ -122,7 +122,19 @@ public class IndexedTreeMapTest extends TestCase {
         }
         long t4 = System.currentTimeMillis();
 
-        System.out.println("For " + set.size() + " elements TreeMap wins IndexedTreeMap in remove by:" + ((t2 - t1) - (t4 - t3)) + " milliseconds");
+        log.debug("For " + set.size() + " elements TreeMap wins IndexedTreeMap in remove by:" + ((t2 - t1) - (t4 - t3)) + " milliseconds");
     }
+    
+    @BeforeClass
+    static public void setUpClass() {
+          jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterClass
+    static public void tearDownClass() {
+          jmri.util.JUnitUtil.tearDown();
+    }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IndexedTreeSetTest.class);
 
 }

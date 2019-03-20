@@ -51,6 +51,8 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -100,6 +102,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         return propertyColumns.get(tgt);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
@@ -114,7 +117,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         sysNameList = getManager().getSystemNameList();
         // and add them back in
         for (int i = 0; i < sysNameList.size(); i++) {
-            getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this, null, "Table View");
+            // if object has been deleted, it's not here; ignore it
+            T b = getBySystemName(sysNameList.get(i));
+            if (b != null) {
+                b.addPropertyChangeListener(this, null, "Table View");
+            }
         }
     }
 
@@ -183,13 +190,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public String getColumnName(int col) {
         switch (col) {
             case SYSNAMECOL:
-                return Bundle.getMessage("ColumnSystemName"); //"System Name";
+                return Bundle.getMessage("ColumnSystemName"); // "System Name";
             case USERNAMECOL:
-                return Bundle.getMessage("ColumnUserName"); //"User Name";
+                return Bundle.getMessage("ColumnUserName");   // "User Name";
             case VALUECOL:
-                return Bundle.getMessage("ColumnState"); //"State";
+                return Bundle.getMessage("ColumnState");      // "State";
             case COMMENTCOL:
-                return Bundle.getMessage("ColumnComment"); //"Comment";
+                return Bundle.getMessage("ColumnComment");    // "Comment";
             case DELETECOL:
                 return "";
             default:
@@ -745,6 +752,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
+        if (!allowBlockNameChange("Rename", nBean, value)) return;  // NOI18N
+
         nBean.setUserName(value);
         fireTableRowsUpdated(row, row);
         if (!value.equals("")) {
@@ -778,6 +787,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     public void removeName(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
+        if (!allowBlockNameChange("Remove", nBean, "")) return;  // NOI18N
         String msg = Bundle.getMessage("UpdateToSystemName", new Object[]{getBeanType()});
         int optionPane = JOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
@@ -789,13 +799,53 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         fireTableRowsUpdated(row, row);
     }
 
+    /*
+     * Determine whether it is safe to rename/remove a Block user name.
+     * <p>The user name is used by the LayoutBlock to link to the block and
+     * by Layout Editor track components to link to the layout block.
+     * @oaram changeType This will be Remove or Rename.
+     * @param bean The affected bean.  Only the Block bean is of interest.
+     * @param newName For Remove this will be empty, for Rename it will be the new user name.
+     * @return true to continue with the user name change.
+     */
+    boolean allowBlockNameChange(String changeType, T bean, String newName) {
+        if (!bean.getBeanType().equals("Block")) return true;  // NOI18N
+
+        // If there is no layout block or the block name is empty, Block rename and remove are ok without notification.
+        String oldName = bean.getUserName();
+        if (oldName == null) return true;
+        LayoutBlock layoutBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(oldName);
+        if (layoutBlock == null) return true;
+
+        // Remove is not allowed if there is a layout block
+        if (changeType.equals("Remove")) {
+            log.warn("Cannot remove user name for block {}", oldName);  // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("BlockRemoveUserNameWarning", oldName),  // NOI18N
+                        Bundle.getMessage("WarningTitle"),  // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Confirmation dialog
+        int optionPane = JOptionPane.showConfirmDialog(null,
+                Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
+                Bundle.getMessage("QuestionTitle"),  // NOI18N
+                JOptionPane.YES_NO_OPTION);
+        if (optionPane == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
+    }
+
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public void moveBean(int row, int column) {
         final T t = getBySystemName(sysNameList.get(row));
         String currentName = t.getUserName();
         T oldNameBean = getBySystemName(sysNameList.get(row));
 
         if ((currentName == null) || currentName.equals("")) {
-            JOptionPane.showMessageDialog(null, "Can not move an empty UserName"); // TODO I18N
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MoveDialogErrorMessage"));
             return;
         }
 
@@ -810,9 +860,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
 
         int retval = JOptionPane.showOptionDialog(null,
-                "Move " + getBeanType() + " " + currentName + " from " + oldNameBean.getSystemName(), "Move UserName",
+                Bundle.getMessage("MoveDialog", getBeanType(), currentName, oldNameBean.getSystemName()),
+                Bundle.getMessage("MoveDialogTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null); // TODO I18N
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null);
         log.debug("Dialog value {} selected {}:{}", retval, box.getSelectedIndex(), box.getSelectedItem());
         if (retval != 1) {
             return;
@@ -837,8 +888,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
             fireTableRowsUpdated(row, row);
             InstanceManager.getDefault(UserPreferencesManager.class).
-                    showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
-            //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
+                    showInfoMessage(Bundle.getMessage("ReminderTitle"),
+                            Bundle.getMessage("UpdateComplete", getBeanType()),
+                            getMasterClassName(), "remindSaveReLoad");
         }
     }
 
@@ -971,9 +1023,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 message.append(e.getMessage());
             }
             int count = t.getNumPropertyChangeListeners();
-            if (log.isDebugEnabled()) {
-                log.debug("Delete with " + count);
-            }
+            log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
                 doDelete(t);
             } else {

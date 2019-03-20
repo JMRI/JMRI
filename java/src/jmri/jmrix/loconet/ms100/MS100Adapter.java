@@ -43,7 +43,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
-    @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen

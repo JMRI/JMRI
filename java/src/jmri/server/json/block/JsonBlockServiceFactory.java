@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author mstevetodd Copyright (C) 2016
+ * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood Copyright 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)

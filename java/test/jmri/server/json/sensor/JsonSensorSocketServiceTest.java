@@ -34,18 +34,24 @@ public class JsonSensorSocketServiceTest {
             Sensor sensor1 = manager.provideSensor("IS1");
             service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in SensorManager
-            Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 not possible value
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 not possible value
             sensor1.setKnownState(Sensor.ACTIVE);
             JUnitUtil.waitFor(() -> {
                 return sensor1.getKnownState() == Sensor.ACTIVE;
             }, "Sensor ACTIVE");
-            Assert.assertEquals(JSON.ACTIVE, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt(-1));
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.ACTIVE, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
             sensor1.setKnownState(Sensor.INACTIVE);
             JUnitUtil.waitFor(() -> {
                 return sensor1.getKnownState() == Sensor.INACTIVE;
             }, "Sensor INACTIVE");
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
-            Assert.assertEquals(JSON.INACTIVE, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt(-1));
+            Assert.assertEquals(JSON.INACTIVE, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
             service.onClose();
             // TODO: test that service is no longer a listener in SensorManager
         } catch (IOException | JmriException | JsonException ex) {
@@ -97,6 +103,7 @@ public class JsonSensorSocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSensorManager();
     }
 

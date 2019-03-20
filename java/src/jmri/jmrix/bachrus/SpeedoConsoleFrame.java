@@ -30,7 +30,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.GlobalProgrammerManager;
@@ -223,7 +222,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //protected int profileAddress = 0;
     protected int readAddress = 0;
     protected Programmer prog = null;
-    protected CommandStation commandStation = null;
 
     String selectedScalePref = this.getClass().getName() + ".SelectedScale"; // NOI18N
     String customScalePref = this.getClass().getName() + ".CustomScale"; // NOI18N
@@ -269,7 +267,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     // FIXME: Why does the if statement in this method include a direct false?
-    @SuppressWarnings("unused")
     @Override
     public void initComponents() {
         prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -347,7 +344,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         customScaleLabel.setText("1: ");
         customScaleLabel.setVisible(true);
         customScaleField.setVisible(true);
-        customScaleField.setText(prefs.getProperty(customScalePref, "customScale").toString());
+        try {
+            customScaleField.setText(prefs.getProperty(customScalePref, "customScale").toString());
+        } catch(java.lang.NullPointerException npe){
+            customScaleField.setText("1");
+        }
         checkCustomScale();
         getCustomScale();
 
@@ -1300,7 +1301,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected void startRead(int cv) {
         try {
-            prog.readCV(cv, this);
+            prog.readCV(String.valueOf(cv), this);
         } catch (ProgrammerException e) {
             log.error("Exception reading CV " + cv + " " + e);
         }

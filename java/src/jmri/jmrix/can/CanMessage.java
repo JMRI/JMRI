@@ -73,7 +73,6 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public CanMessage(@Nonnull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -87,7 +86,6 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
 
     // copy type
-    @SuppressWarnings("null")
     public CanMessage(@Nonnull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -136,6 +134,11 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * default toString does not contain the header
+     * this format matches @CanReply
+     */
     @Override
     public String toString() {
         String s = String.format("[%x] ", _header);
@@ -146,6 +149,18 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
             s = StringUtil.appendTwoHexFromInt(_dataChars[i] & 255, s);
         }
         return s;
+    }
+
+    @Override
+    public String toMonitorString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(" + Integer.toHexString(getHeader())
+                + (isExtended() ? " ext)" : ")"));
+        for (int i = 0; i < getNumDataElements(); i++)
+        {
+            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+        }
+	return buf.toString();
     }
 
     @Override

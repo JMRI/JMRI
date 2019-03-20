@@ -42,8 +42,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
-    public static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
-    // protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
     private String _status = "";
@@ -129,17 +127,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (_train != null) {
             log.debug("Routing using train ({})", train.getName());
         }
-        // Has the car arrived at the car's final destination?
-        if (car.getLocation().equals(car.getFinalDestination()) &&
-                (car.getTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
-            log.debug("Car ({}) has arrived at final destination", car);
-            _status = STATUS_CAR_AT_DESINATION;
-            car.setFinalDestination(null);
-            car.setFinalDestinationTrack(null);
-            return false;
-        }
         // is car part of kernel?
-        if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+        if (car.getKernel() != null && !car.isLead()) {
             return false;
         }
         // note clone car has the car's "final destination" as its destination
@@ -263,7 +252,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         // can specific train can service car out of staging. Note that the router code will try to route the car using
         // two or more trains just to get the car out of staging.
-        if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
+        if (car.getTrack().isStaging() && _train != null && !trainServicesCar) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"),
                     new Object[]{_train.getName(), car.toString(), car.getLocationName(), clone.getDestinationName(),
                             clone.getDestinationTrackName()}));
@@ -393,7 +382,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     dest.getName(), car.toString()}));
         }
         car.setDestination(null, null);
-        if (car.getTrack().getTrackType().equals(Track.STAGING)) {
+        if (car.getTrack().isStaging()) {
             log.debug("Car ({}) departing staging, single train can't deliver car to ({}, {})", car, clone
                     .getDestinationName(), clone.getDestinationTrackName());
             return false; // try 2 or more trains
@@ -542,7 +531,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                 testCar.getDestinationName(), testCar.getDestinationTrackName()}));
             }
             // Can the specific train carry this car out of staging?
-            if (_train != null && car.getTrack().getTrackType().equals(Track.STAGING) && !specific.equals(YES)) {
+            if (_train != null && car.getTrack().isStaging() && !specific.equals(YES)) {
                 if (debugFlag) {
                     log.debug("Train ({}) can not deliver car to ({}, {})", _train.getName(), track.getLocation()
                             .getName(), track.getName());
@@ -601,7 +590,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         continue;// found a route but it doesn't start with the specific train
                     }
                     // is this the staging track assigned to the specific train?
-                    if (track.getTrackType().equals(Track.STAGING) &&
+                    if (track.isStaging() &&
                             firstTrain.getTerminationTrack() != null &&
                             firstTrain.getTerminationTrack() != track) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
@@ -915,7 +904,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             return true; // the issue is route moves or train length
         }
         // check to see if track is staging
-        if (track.getTrackType().equals(Track.STAGING) &&
+        if (track.isStaging() &&
                 _train != null &&
                 _train.getTerminationTrack() != null &&
                 _train.getTerminationTrack() != track) {
@@ -941,7 +930,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         Car clone = car.copy();
         // modify clone car length if car is part of kernel
         if (car.getKernel() != null) {
-            clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLER));
+            clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLERS));
         }
         clone.setTrack(car.getTrack());
         clone.setFinalDestination(car.getFinalDestination());
@@ -978,7 +967,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 train = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, null); // don't add to report
             }
             // Can specific train carry this car out of staging?
-            if (car.getTrack().getTrackType().equals(Track.STAGING) && !specific.equals(YES)) {
+            if (car.getTrack().isStaging() && !specific.equals(YES)) {
                 train = null;
             }
             // is the option to car by specific enabled?

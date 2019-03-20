@@ -466,10 +466,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      */
     public class NodeTableModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return nodeTableColumnsNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NODENUM_COLUMN:
@@ -494,6 +496,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == SELECT_COLUMN) {
                 return true;
@@ -527,6 +530,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             fireTableDataChanged();
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == SELECT_COLUMN) {
                 if (Bundle.getMessage("SelectEdit").equals(value)) {
@@ -1304,17 +1308,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, nodeType, _memo.getTrafficController());
-        // curNode cannot be null or an execption would have been thrown;
-        // what exceptions should this be catching (no documented exceptions are thrown by constructor)?
-        if (curNode == null) {
-            statusText1.setText(Bundle.getMessage("Error3"));
-            statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + Integer.toString(nodeAddress), "", JOptionPane.ERROR_MESSAGE);
-            log.error("Error creating Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
         nodeTableModel.addRow(curNode);
 
         // configure the new node

@@ -18,7 +18,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
+
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -134,6 +135,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         setVisible(true);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("defaultCatalog", "selectNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
@@ -204,6 +206,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         editMenu.add(deleteItem);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeIndexPanel() {
         _index = new CatalogPanel("ImageIndex", "selectIndexNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
@@ -310,23 +313,21 @@ public final class ImageIndexEditor extends JmriJFrame {
         }
     }
 
-    @SuppressWarnings("unchecked")
     int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             cnt += countSubNodes(n) + 1;
         }
         return cnt;
     }
 
-    @SuppressWarnings("unchecked")
     private int countIcons(CatalogTreeNode node) {
         int cnt = 0;
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n =(CatalogTreeNode)e.nextElement();
             cnt += countIcons(n);
         }
         cnt += node.getNumLeaves();

@@ -292,16 +292,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         sendMessage(m, reply);
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, converted to
-     * JMRI multi-system support structure
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        log.debug("deprecated setInstance should not have been called");
-    }
-    
     @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();

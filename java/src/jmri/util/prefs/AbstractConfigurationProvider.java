@@ -1,8 +1,10 @@
 package jmri.util.prefs;
 
 import java.io.File;
+import java.io.IOException;
 import jmri.profile.AuxiliaryConfiguration;
 import jmri.profile.Profile;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
 import jmri.util.node.NodeIdentity;
 
@@ -36,11 +38,17 @@ public abstract class AbstractConfigurationProvider {
         } else {
             dir = new File(this.project.getPath(), Profile.PROFILE);
             if (!shared) {
-                File nodeDir = new File(dir, NodeIdentity.identity());
+                File nodeDir = new File(dir, NodeIdentity.storageIdentity());
                 if (!nodeDir.exists()) {
-                    NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                    try {
+                        if (!ProfileUtils.copyPrivateContentToCurrentIdentity(project)) {
+                            log.debug("Starting profile with new private configuration.");
+                        }
+                    } catch (IOException ex) {
+                        log.debug("Copying existing private configuration failed.");
+                    }
                 }
-                dir = new File(dir, NodeIdentity.identity());
+                dir = new File(dir, NodeIdentity.storageIdentity());
             }
         }
         FileUtil.createDirectory(dir);
@@ -75,4 +83,5 @@ public abstract class AbstractConfigurationProvider {
         this.sharedBackedUp = sharedBackedUp;
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractConfigurationProvider.class);
 }

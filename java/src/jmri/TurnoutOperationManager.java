@@ -1,5 +1,6 @@
 package jmri;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -150,26 +151,6 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
         return InstanceManager.getDefault(TurnoutOperationManager.class);
     }
 
-    /*
-     * Did not do most of the actions described below, so not sure comments are
-     * in wrong place.
-     */
-    /**
-     * get the one-and-only instance of this class, if necessary creating it
-     * first. At creation also preload the known TurnoutOperator subclasses
-     * (done here to avoid constructor ordering problems).
-     *
-     * 
-     *
-     * @return the TurnoutOperationManager
-     * @deprecated since 4.7.1; get from the InstanceManager instead
-     */
-    @Deprecated
-    @Nonnull
-    public synchronized static TurnoutOperationManager getInstance() {
-        return getDefault();
-    }
-
     /**
      * Load the operation types given by the current TurnoutManager instance, in
      * the order given.
@@ -196,9 +177,9 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
                     // creating the instance invokes the TurnoutOperation ctor,
                     // which calls addOperation here, which adds it to the 
                     // turnoutOperations map.
-                    thisClass.newInstance();
+                    thisClass.getDeclaredConstructor().newInstance();
                     log.debug("loaded TurnoutOperation class {}", thisClassName);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e1) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e1) {
                     log.error("during loadOperationTypes", e1);
                 }
             }

@@ -14,6 +14,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20180124"/>
   <!-- new file, based on Wow diesel sound set 4 -->
+  <version author="Michael Mosher" version="2" lastUpdated="20180727"/>
+  <!-- add read me pane -->
   <decoder>
     <family name="WOW Electric Sound Set 1 Bachmann" mfg="Train Control Systems" >
       <model model="ACS64" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)"
@@ -661,6 +663,7 @@
       <factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
     </resets>
   </decoder>
+  <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
@@ -668,4 +671,5 @@
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol_grp.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol0.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>

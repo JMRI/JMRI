@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnClockControl.java
- *
  * Implementation of the Hardware Fast Clock for Loconet
  * <p>
  * This module is based on a GUI module developed by Bob Jacobsen and Alex
@@ -49,14 +47,18 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
 
     /**
      * Create a ClockControl object for a Loconet clock
+     * @param scm  the LocoNet System Connection Memo to associate with this
+     *              Clock Control object
      */
     public LnClockControl(LocoNetSystemConnectionMemo scm) {
         this(scm.getSlotManager(), scm.getLnTrafficController(), scm.getPowerManager());
     }
-    
+
     /**
      * Create a ClockControl object for a Loconet clock
      * @deprecated 4.11.5
+     * @param sm the Slot Manager associated with this object
+     * @param tc the Traffic Controller associated with this object
      */
     @Deprecated // 4.11.5
     public LnClockControl(SlotManager sm, LnTrafficController tc) {
@@ -65,6 +67,9 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
 
     /**
      * Create a ClockControl object for a Loconet clock
+     * @param sm the Slot Manager associated with this object
+     * @param tc the Traffic Controller associated with this object
+     * @param pm the Power Manager associated with this object
      */
     public LnClockControl(SlotManager sm, LnTrafficController tc, LnPowerManager pm) {
         super();
@@ -72,7 +77,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         this.sm = sm;
         this.tc = tc;
         this.pm = pm;
-        
+
         // listen for updated slot contents
         if (sm != null) {
             sm.addSlotListener(this);
@@ -120,10 +125,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
 
     /**
      * Accessor routines
+     * @return the associated name
      */
     @Override
     public String getHardwareClockName() {
-        return ("Loconet Fast Clock"); // NOI18N
+        return (Bundle.getMessage("LocoNetFastClockName"));
     }
 
     @Override
@@ -271,6 +277,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      * responding to a read from this module 3) a slot not involving the clock
      * changing
      *
+     * @param s the LocoNetSlot object which has been changed
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -323,7 +330,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             // unsolicited time change from the Loconet
             clock.setTime(new Date(nNumMSec));
         }
-        // Once we have done everything else set the flag to say we are in sync 
+        // Once we have done everything else set the flag to say we are in sync
         inSyncWithInternalFastClock = true;
     }
 
@@ -334,14 +341,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         if (setInternal || synchronizeWithInternalClock || correctFastClock) {
             // we are allowed to send commands to the fast clock
             LocoNetSlot s = sm.slot(LnConstants.FC_SLOT);
-            
+
             // load time
             s.setFcDays(curDays);
             s.setFcHours(curHours);
             s.setFcMinutes(curMinutes);
             s.setFcRate(curRate);
             s.setFcFracMins(curFractionalMinutes);
-            
+
             // set other content
             //     power (GTRK_POWER, 0x01 bit in byte 7)
             boolean power = true;
@@ -352,7 +359,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             }
             s.setTrackStatus(s.getTrackStatus() &  (~LnConstants.GTRK_POWER) );
             if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);
-            
+
             // and write
             tc.sendLocoNetMessage(s.writeSlot());
         }
@@ -374,4 +381,3 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
 
 }
-

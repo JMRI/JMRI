@@ -37,8 +37,36 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout t = l.provide("" + (getSystemName(getNumToTest1())));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
     }
+
+    @Test
+    public void testProvideIdStringName() {
+        // create
+        Turnout t = l.provide("ATNode 1:2");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ATNODE 1:2"));
+    }
+
+    @Test
+    public void testProvide16BitAddress() {
+        // create
+        Turnout t = l.provide("AT00 02:2");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName("AT00 02:2"));
+    }
+
+    @Test
+    public void testProvide64BitAddress() {
+        // create
+        Turnout t = l.provide("AT00 13 A2 00 40 A0 4D 2D:2");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t , l.getBySystemName("AT00 13 A2 00 40 A0 4D 2D:2"));
+    }
+
 
     @Override
     @Test
@@ -47,7 +75,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t , l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override

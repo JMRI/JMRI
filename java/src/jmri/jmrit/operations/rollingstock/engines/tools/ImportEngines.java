@@ -159,12 +159,28 @@ public class ImportEngines extends ImportRollingStock {
 
                 log.debug("Checking engine number ({}) road ({}) model ({}) length ({})", engineNumber, engineRoad,
                         engineModel, engineLength); // NOI18N
+                if (engineNumber.trim().equals("")) {
+                    log.info("Import line {} missing engine number", lineNum);
+                    break;
+                }
+                if (engineRoad.trim().equals("")) {
+                    log.info("Import line {} missing engine road", lineNum);
+                    break;
+                }
+                if (engineModel.trim().equals("")) {
+                    log.info("Import line {} missing engine model", lineNum);
+                    break;
+                }
+                if (engineLength.trim().equals("")) {
+                    log.info("Import line {} missing engine length", lineNum);
+                    break;
+                }
                 if (engineNumber.length() > Control.max_len_string_road_number) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                             .getMessage("EngineRoadNumberTooLong"),
                             new Object[]{(engineRoad + " " + engineNumber),
                                     engineNumber}),
-                            Bundle.getMessage("engineRoadNum"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("RoadNumMustBeLess"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineRoad.length() > Control.max_len_string_attibute) {
@@ -271,8 +287,8 @@ public class ImportEngines extends ImportRollingStock {
                                 engineLocation = engineLocation + " " + inputLine[base + ENG_LOCATION_TRACK_SEPARATOR + 1];
                             }
                         }
-                        // get track name if there's one
                     }
+                    // get track name if there's one
                     boolean foundDash = false;
                     for (int i = base + ENG_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
                         if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
@@ -280,7 +296,7 @@ public class ImportEngines extends ImportRollingStock {
                             if (inputLine.length > i + 1) {
                                 engineTrack = inputLine[++i];
                             }
-                        } else if (foundDash && !comma) {
+                        } else if (foundDash) {
                             engineTrack = engineTrack + " " + inputLine[i];
                         }
                     }
@@ -384,7 +400,7 @@ public class ImportEngines extends ImportRollingStock {
                 }
                 log.debug("Add engine ({} {}) owner ({}) built ({}) location ({}, {})", engineRoad, engineNumber,
                         engineOwner, engineBuilt, engineLocation, engineTrack);
-                Engine engine = engineManager.newEngine(engineRoad, engineNumber);
+                Engine engine = engineManager.newRS(engineRoad, engineNumber);
                 engine.setModel(engineModel);
                 engine.setLength(engineLength);
                 // does this model already have a type?
@@ -486,9 +502,6 @@ public class ImportEngines extends ImportRollingStock {
         } catch (IOException e) {
         }
 
-        // kill status panel
-        fstatus.dispose();
-
         if (importOkay) {
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),
                     new Object[]{enginesAdded}), Bundle.getMessage("SuccessfulImport"),
@@ -497,6 +510,9 @@ public class ImportEngines extends ImportRollingStock {
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),
                     new Object[]{enginesAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
         }
+        
+        // kill status panel
+        fstatus.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(ImportEngines.class);

@@ -69,7 +69,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort};
+    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort, 
+                                        (LoggerFactory.getLogger(Warrant.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;
 
@@ -109,7 +110,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return newInstance;
         });
         instance.setVisible(true);
-        instance.pack();
         return instance;
     }
 
@@ -248,7 +248,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             }
         });
         warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
-        warrantMenu.add(WarrantTableAction._trackerTable);
+        warrantMenu.add(InstanceManager.getDefault(TrackerTableAction.class));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
             @Override
@@ -292,7 +292,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         mainPanel.setLayout(new BorderLayout(5, 5));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-//        panel.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout());
         pp.add(new JLabel("A:"));
@@ -314,9 +313,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 concatenate();
             }
         });
-//        panel.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
         panel.add(concatButton, Box.CENTER_ALIGNMENT);
-//        panel.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
 
         mainPanel.add(panel);
         _concatDialog.getContentPane().add(mainPanel);
@@ -442,7 +439,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 comboBox.insertItemAt((String)value, 0);
                 comboBox.setSelectedIndex(0);
                 if (log.isDebugEnabled()) {
-                    TableModel m = table.getModel();
                     WarrantTableModel model = (WarrantTableModel)table.getModel();
                     Warrant warrant = model.getWarrantAt(row);
                     log.debug("getTableCellEditorComponent warrant= {}, selection= {}", 
@@ -467,43 +463,16 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         String msg = null;
         if (w.getRunMode() != Warrant.MODE_NONE) {
             msg = w.getRunModeMessage();
-            setStatusText(msg, Color.red, false);
-            return msg;
         }
-        w.deAllocate();
-        msg = w.setRoute(0, null);
-        setStatusText(msg, WarrantTableModel.myGold, false);
-        if (msg != null) {
+        if (msg == null) {
             w.deAllocate();
-            setStatusText(msg, Color.red, false);
-            return msg;
-        }
-/*        if (w.commandsHaveTrackSpeeds()) {
-            w.getSpeedUtil().getValidSpeedProfile(this);            
-        } else {
-            setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
-        }*/
-        
-        msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
-        if (msg != null) {
-            setStatusText(msg, Color.red, false);
-            return msg;
-        }
-        msg = w.checkStartBlock(mode);  // notify first block occupied by this train
-        if (msg != null) {
-            if (msg.equals("BlockDark")) {
-                msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());
-            } else if (msg.equals("warnStart")) {
-                msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
-            } else if (msg.equals("warnStartManual")) {
-                msg = Bundle.getMessage("warnStartManual", w.getTrainName(), w.getCurrentBlockName());
+            msg = w.setRoute(false, null);
+            if (msg == null) {
+                msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
             }
-            setStatusText(msg, WarrantTableModel.myGold, false);
         }
-        // From here on messages are status information, not abort info
-        msg = w.checkRoute();   // notify about occupation ahead
         if (msg != null) {
-            setStatusText(msg, WarrantTableModel.myGreen, false);
+            return Bundle.getMessage("CannotRun", w.getDisplayName(), msg);
         }
         return null;
     }

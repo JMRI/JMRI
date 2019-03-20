@@ -7,17 +7,17 @@ import jmri
 
 # Send a packet; the argument includes _all_ the bytes
 def send(pkt):
-	dcc.sendPacket(pkt, 1)
+    dcc.sendPacket(pkt, 1)
 
 # Send a packet; an XOR'd checksum is appended
 def sendXOR(pkt):
-	xor = 0
-	for x in pkt:
-		xor = xor^x
-	newpkt = pkt+[xor]
-	send(newpkt)
-	
-# define and send the accessory packet to 
+    xor = 0
+    for x in pkt:
+        xor = xor^x
+    newpkt = pkt+[xor]
+    send(newpkt)
+
+# define and send the accessory packet to
 # program CV 514 to 0
 # on accessory decoder 2041
 

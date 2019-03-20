@@ -9,9 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for CMRI serial systems
- * <P>
- * System names are "CTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for CMRI serial systems.
+ * <p>
+ * System names are "CTnnn", where C is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
@@ -255,10 +256,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         if (curAddress.contains(":")) {
             // Address format passed is in the form node:address
             seperator = curAddress.indexOf(":");
-            nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+            nAddress = Integer.parseInt(curAddress.substring(0, seperator));
             // check for non-numerical chars
             try {
-                bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                bitNum = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignFormat2", curAddress) + "\n" +
                         Bundle.getMessage("ErrorAssignFormatHelp"),

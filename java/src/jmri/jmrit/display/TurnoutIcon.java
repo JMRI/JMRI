@@ -367,7 +367,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         updateSize();
     }
 
-    TableItemPanel _itemPanel;
+    TableItemPanel<Turnout> _itemPanel;
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
@@ -384,7 +384,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     protected void editItem() {
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("BeanNameTurnout")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
+        _itemPanel = new TableItemPanel<>(_paletteFrame, "Turnout", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = new ActionListener() {
             @Override

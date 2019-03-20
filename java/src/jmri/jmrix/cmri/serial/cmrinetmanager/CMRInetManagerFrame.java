@@ -1,5 +1,3 @@
-//serial.cmrinetmanager
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.*;

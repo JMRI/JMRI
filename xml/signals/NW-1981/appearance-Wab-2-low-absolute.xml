@@ -27,7 +27,7 @@
 	
 	<revision>
         <revnumber>1.1</revnumber>
-        <date>2018-02-10</date>
+        <date>2018-11-26</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Corrected the operation of the Wabash dwarf, removing aspects it was not able to display.</revremark>
     </revision>
@@ -65,15 +65,6 @@
     </appearance>
 
     <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>yellow</show>
-      <reference>Page 65</reference>
-	  <comment>This may not be a valid indication on this particular style of signal.</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-low-absolute/rule-290.gif</imagelink>
-    </appearance>
-
-    <appearance>
       <aspectname>Stop and Stay</aspectname>
       <show>red</show>
       <show>red</show>
@@ -89,10 +80,6 @@
       <aspect>Stop and Stay</aspect>
     </danger>
 
-    <permissive>
-      <aspect>Restricting</aspect>
-    </permissive>
-
     <held>
       <aspect>Stop and Stay</aspect>
     </held>
@@ -104,74 +91,62 @@
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Diverging</advancedAspect>
       <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
       <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Approach Diverging</advancedAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Stay</advancedAspect>
       <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
   </aspectMappings>
 

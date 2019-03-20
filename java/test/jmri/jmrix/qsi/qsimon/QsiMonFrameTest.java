@@ -1,10 +1,3 @@
-/**
- * QsiMonFrameTest.java
- *
- * Description:	JUnit tests for the QsiProgrammer class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.qsi.qsimon;
 
 import java.awt.GraphicsEnvironment;
@@ -13,12 +6,16 @@ import jmri.jmrix.qsi.QsiListener;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
 import jmri.jmrix.qsi.QsiTrafficController;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * JUnit tests for the QsiProgrammer class
+ *
+ * @author	Bob Jacobsen
+ */
 public class QsiMonFrameTest {
 
     @Test
@@ -28,40 +25,42 @@ public class QsiMonFrameTest {
         Assert.assertNotNull("exists", f);
     }
 
-    /* Following are not reliable, apparently time-sensitive, so commented out
     @Test
     public void testMsg() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         QsiMessage m = new QsiMessage(3);
         m.setOpCode('L');
         m.setElement(1, '0');
         m.setElement(2, 'A');
 
-        QsiMonFrame f = new QsiMonFrame();
+        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
 
         f.message(m);
 
-        Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
-        Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
+        // Following lines don't match up; need to use valid content above
+        // Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
+        // Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
     }
 
     @Test
     public void testReply() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         QsiReply m = new QsiReply();
         m.setOpCode('C');
         m.setElement(1, 'o');
         m.setElement(2, ':');
 
-        QsiMonFrame f = new QsiMonFrame();
+        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
 
         f.reply(m);
 
-        Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
-        Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
+        // Following lines don't match up; need to use valid content above
+        // Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
+        // Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
     }
-     */
+
     @Test
     public void testWrite() {
-
         new QsiInterfaceScaffold();
     }
 
@@ -118,6 +117,11 @@ public class QsiMonFrameTest {
             return cmdListeners.size();
         }
 
+    }
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
     private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class);

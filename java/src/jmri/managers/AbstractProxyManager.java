@@ -127,7 +127,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
         m.addDataListener(this);
         updateOrderList();
-        updateNamedBeanSet();
+        recomputeNamedBeanSet();
 
         if (log.isDebugEnabled()) {
             log.debug("added manager " + m.getClass());
@@ -462,9 +462,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
-    @Override
     @Nonnull
+    @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
+        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
+        
         List<E> list = getNamedBeanList();
         String[] retval = new String[list.size()];
         int i = 0;
@@ -473,9 +477,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
-    @Override
     @Nonnull
+    @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
         for (E e : list) retval.add(e.getSystemName());
@@ -483,17 +489,22 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private ArrayList<String> addedOrderList = null;
+    
     protected void updateOrderList() {
         if (addedOrderList == null) return; // only maintain if requested
         addedOrderList.clear();
         for (Manager<E> m : mgrs) {
-            addedOrderList.addAll(m.getSystemNameAddedOrderList());
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
+            List<String> t = m.getSystemNameAddedOrderList();
+            addedOrderList.addAll(t);
         }
     }
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameAddedOrderList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList"); // used by configureXML
         addedOrderList = new ArrayList<>();  // need to start maintaining it
         updateOrderList();
         return Collections.unmodifiableList(addedOrderList);
@@ -501,8 +512,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @Nonnull
     public List<E> getNamedBeanList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
         for (Manager<E> m : mgrs) {
@@ -512,7 +525,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private TreeSet<E> namedBeanSet = null;
-    protected void updateNamedBeanSet() {
+    protected void recomputeNamedBeanSet() {
         if (namedBeanSet == null) return; // only maintain if requested
         namedBeanSet.clear();
         for (Manager<E> m : mgrs) {
@@ -524,8 +537,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     @Nonnull
     public SortedSet<E> getNamedBeanSet() {
-        namedBeanSet = new TreeSet<>(new NamedBeanComparator());
-        updateNamedBeanSet();
+        if (namedBeanSet == null) {
+            namedBeanSet = new TreeSet<>(new NamedBeanComparator());
+            recomputeNamedBeanSet();
+        }
         return Collections.unmodifiableSortedSet(namedBeanSet);
     }
 
@@ -558,7 +573,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
         updateOrderList();
-        updateNamedBeanSet();
+
+        if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
+            // just one element added, and we have the object reference
+            namedBeanSet.add(e.getChangedBean());
+        } else {
+            recomputeNamedBeanSet();
+        }
 
         if (muted) return;
 
@@ -583,7 +604,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
         updateOrderList();
-        updateNamedBeanSet();
+        recomputeNamedBeanSet();
 
         if (muted) return;
 

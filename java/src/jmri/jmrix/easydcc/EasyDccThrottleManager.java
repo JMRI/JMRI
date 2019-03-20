@@ -104,15 +104,12 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
                 i = i + 2;
                 m.setElement(i++, ' ');
                 m.addIntAsTwoHex(result[1] & 0xFF, i);
-                i = i + 2;
-
             } else { // short address
                 m.setElement(i++, ' ');
                 m.addIntAsTwoHex(0, i);
                 i = i + 2;
                 m.setElement(i++, ' ');
                 m.addIntAsTwoHex(result[0] & 0xFF, i);
-                i = i + 2;
             }
 
             _memo.getTrafficController().sendEasyDccMessage(m, null);

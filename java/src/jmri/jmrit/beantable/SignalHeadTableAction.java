@@ -1731,6 +1731,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     } else {
                         nbt1 = nbhm.getNamedBeanHandle(to3.getDisplayName(), t1);
                     }
+                    break;
                 default:
                     break;
             }
@@ -2587,6 +2588,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     } else {
                         ((jmri.implementation.MergSD2SignalHead) curS).setHome(true);
                     }
+                    break;
                 default:
                     break;
             }

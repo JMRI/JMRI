@@ -40,6 +40,4 @@ abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    abstract public String toMonitorString();
-
 }

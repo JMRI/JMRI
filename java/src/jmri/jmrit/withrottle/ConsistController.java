@@ -8,9 +8,9 @@ import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.Consist;
 import jmri.ConsistManager;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
@@ -135,7 +135,7 @@ public class ConsistController extends AbstractController implements ProgListene
      * @param message string containing new consist information
      */
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         try {
             if (message.charAt(0) == 'P') {  //  Change consist 'P'ositions
                 reorderConsist(message);

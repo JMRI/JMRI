@@ -6,14 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for powerline systems
- * <P>
- * System names are "PTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for Powerline systems.
+ * <p>
+ * System names are "PTnnn", where P is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author Ken Cameron Copyright (C) 2011
-  */
+ */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     SerialTrafficController tc = null;
@@ -110,7 +111,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

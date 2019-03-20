@@ -8,8 +8,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common implementations for the Programmer interface.
@@ -25,6 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractProgrammer implements Programmer {
 
+    /** {@inheritDoc} */
     @Override
     public String decodeErrorCode(int code) {
         if (code == ProgListener.OK) {
@@ -84,16 +83,13 @@ public abstract class AbstractProgrammer implements Programmer {
      */
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    /**
-     * Add a PropertyChangeListener to the listener list.
-     *
-     * @param listener The PropertyChangeListener to be added
-     */
+    /** {@inheritDoc} */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
@@ -103,23 +99,20 @@ public abstract class AbstractProgrammer implements Programmer {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        writeCV(Integer.parseInt(CV), val, p);
-    }
+    abstract public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
+    /** {@inheritDoc} */
     @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        readCV(Integer.parseInt(CV), p);
-    }
+    abstract public void readCV(String CV, ProgListener p) throws ProgrammerException;
 
+    /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
-    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(""+CV, val, p);
-    }
+    abstract public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
-    /**
+
+    /** {@inheritDoc} 
      * Basic implementation. Override this to turn reading on and off globally.
      */
     @Override
@@ -127,7 +120,7 @@ public abstract class AbstractProgrammer implements Programmer {
         return true;
     }
 
-    /**
+    /** {@inheritDoc} 
      * Checks using the current default programming mode
      */
     @Override
@@ -141,6 +134,7 @@ public abstract class AbstractProgrammer implements Programmer {
     // handle mode
     private ProgrammingMode mode = null;
 
+    /** {@inheritDoc} */
     @Override
     public final void setMode(ProgrammingMode m) {
         List<ProgrammingMode> validModes = getSupportedModes();
@@ -179,6 +173,7 @@ public abstract class AbstractProgrammer implements Programmer {
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public final ProgrammingMode getMode() {
         if (mode == null) {
@@ -190,7 +185,7 @@ public abstract class AbstractProgrammer implements Programmer {
     @Override
     abstract @Nonnull public List<ProgrammingMode> getSupportedModes();
 
-    /**
+    /** {@inheritDoc} 
      * Basic implementation. Override this to turn writing on and off globally.
      */
     @Override
@@ -198,7 +193,7 @@ public abstract class AbstractProgrammer implements Programmer {
         return true;
     }
 
-    /**
+    /** {@inheritDoc} 
      * Checks using the current default programming mode.
      */
     @Override
@@ -206,7 +201,7 @@ public abstract class AbstractProgrammer implements Programmer {
         return getCanWrite();
     }
 
-    /**
+    /** {@inheritDoc} 
      * By default, say that no verification is done.
      *
      * @param addr A CV address to check (in case this varies with CV range) or null for any
@@ -266,10 +261,10 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Find the register number that corresponds to a specific CV number.
      *
-     * @throws ProgrammerException if the requested CV does not correspond to a
-     *                             register
      * @param cv CV number (1 through 512) for which equivalent register is
      *           desired
+     * @throws ProgrammerException if the requested CV does not correspond to a
+     *                             register
      * @return register number corresponding to cv
      */
     public int registerFromCV(int cv) throws ProgrammerException {
@@ -300,6 +295,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }

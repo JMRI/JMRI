@@ -44,25 +44,30 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private final Object lock = new Object();
     private boolean replyAvailable = false;
     // Make this public so it can be overridden by a script for debug
-    public static int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
+    public int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
     
     /**
      * Create a new SprogTrafficController instance.
      *
      * @param adaptermemo the associated SystemConnectionMemo
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
-        tcThread = new Thread(this);
-        tcThread.setName("SPROG TC thread");
-        tcThread.setPriority(Thread.MAX_PRIORITY-1);
-        tcThread.start();
+
         // Set the timeout for communication with hardware
         if (memo.getSprogMode() == SprogConstants.SprogMode.OPS) {
             timeout = SprogConstants.TC_OPS_REPLY_TIMEOUT;
         } else {
             timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
         }
+
+        tcThread = new Thread(this);
+        tcThread.setName("SPROG TC thread");
+        tcThread.setPriority(Thread.MAX_PRIORITY-1);
+        tcThread.setDaemon(true);
+        log.debug("starting TC thread from {} in group {}", this, tcThread.getThreadGroup(), jmri.util.Log4JUtil.shortenStacktrace(new Exception("traceback"),6));
+        tcThread.start();
     }
 
     // Methods to implement the Sprog Interface
@@ -200,7 +205,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     // A class to remember the message and who sent it
-    private class MessageTuple {
+    static private class MessageTuple {
         private final SprogMessage message;
         private final SprogListener listener;
         
@@ -284,6 +289,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
+                return;
             }
             if (!replyAvailable) {
                 // Timed out
@@ -383,8 +389,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     OutputStream ostream = null;
 
     boolean endReply(SprogReply msg) {
-        return msg.endNormalReply() || msg.endBootReply()
-                || msg.endBootloaderReply(this.getSprogState());
+        return msg.endNormalReply() || msg.endBootReply();
     }
 
     private boolean unsolicited;

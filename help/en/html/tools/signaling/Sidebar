@@ -15,6 +15,7 @@
 		    <li><dfn><a href="SignalGroups.shtml">Signal Groups</a></dfn>
 		    <li><dfn><a href="SignalMastLogic.shtml">Signal Mast Logic</a></dfn>
 		    <li><dfn><a href="interlock/index.shtml">Entry Exit &amp; Interlocking</a></dfn>
+		    <li><dfn><a href="../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling</a></dfn>
 		    </ul>
 		</dd>
 
@@ -40,6 +41,7 @@
 			<li><dfn><a href="../speedometer/index.shtml">Speedometer</a></dfn>
 			<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
 			<li><dfn><a href="../IdTags.shtml">ID Tags</a></dfn>
+			<li><dfn><a href="../TimeTable.shtml">Timetable</a></dfn>
 	
 	    <li><dfn><a href="../index.shtml#systemSpecificTools">System-specific...</a></dfn>
 	    </ul>

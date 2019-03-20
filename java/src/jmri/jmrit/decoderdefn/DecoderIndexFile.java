@@ -235,6 +235,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     @Deprecated
     public synchronized static DecoderIndexFile instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(DecoderIndexFile.class);
     }
 
@@ -347,14 +348,19 @@ public class DecoderIndexFile extends XmlFile {
             log.warn("{}decoders was missing, though tried to create it", FileUtil.getUserFilesPath());
         }
         // create an array of file names from xml/decoders, count entries
-        for (String sx : (new File(XmlFile.xmlDir() + DecoderFile.fileLocation)).list()) {
-            if (sx.endsWith(".xml") || sx.endsWith(".XML")) {
-                // Valid name.  Does it exist in preferences xml/decoders?
-                if (!al.contains(sx)) {
-                    // no, include it!
-                    al.add(sx);
+        String[] fileList = (new File(XmlFile.xmlDir() + DecoderFile.fileLocation)).list();
+        if (fileList != null) {
+            for (String sx : fileList ) {
+                if (sx.endsWith(".xml") || sx.endsWith(".XML")) {
+                    // Valid name.  Does it exist in preferences xml/decoders?
+                    if (!al.contains(sx)) {
+                        // no, include it!
+                        al.add(sx);
+                    }
                 }
             }
+        } else {
+            log.error("Could not access decoder definition directory {}", XmlFile.xmlDir() + DecoderFile.fileLocation);
         }
         // copy the decoder entries to the final array
         String sbox[] = al.toArray(new String[al.size()]);
@@ -414,7 +420,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readMfgSection(Element decoderIndex) {
         Element mfgList = decoderIndex.getChild("mfgList");
         if (mfgList != null) {
@@ -453,7 +458,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readFamilySection(Element decoderIndex) {
         Element familyList = decoderIndex.getChild("familyList");
         if (familyList != null) {
@@ -470,7 +474,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readFamily(Element family) {
         Attribute attr;
         String filename = family.getAttribute("file").getValue();
@@ -549,7 +552,7 @@ public class DecoderIndexFile extends XmlFile {
         // create root element and document
         Element root = new Element("decoderIndex-config");
         root.setAttribute("noNamespaceSchemaLocation",
-                "http://jmri.org/xml/schema/decoder.xsd",
+                "http://jmri.org/xml/schema/decoder-4-15-2.xsd",
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));
 
@@ -615,6 +618,9 @@ public class DecoderIndexFile extends XmlFile {
                 log.error("could not read {}: {}", fileName, exj.getMessage());
             } catch (IOException exj) {
                 log.error("other exception while dealing with {}: {}", fileName, exj.getMessage());
+            } catch (Exception exq) {
+                log.error("exception reading {}", fileName, exq);
+                throw exq;
             }
         }
 

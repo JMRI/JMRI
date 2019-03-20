@@ -53,7 +53,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
-@SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {
 
     public static final String CONFIG_PROPERTY = "Config";
@@ -340,8 +339,8 @@ public class VSDConfigDialog extends JDialog {
             RosterEntry r = rosterSelector.getSelectedRosterEntries()[0];
             String profile = profileComboBox.getSelectedItem().toString();
             String path = VSDecoderManager.instance().getProfilePath(profile);
-            if ((path == null) || (profile == null)) {
-                log.debug("Path and/or Profile not selected.  Ignore Save button press.");
+            if (path == null) {
+                log.debug("Path not selected.  Ignore Save button press.");
                 return;
             } else {
                 r.setOpen(true);

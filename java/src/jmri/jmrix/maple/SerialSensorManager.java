@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the specific Sensor implementation.
  * <p>
- * System names are "KiSnnnn", where nnnn is the sensor number without padding.
+ * System names are "KSnnnn", where K is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  * <p>
@@ -115,7 +116,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -142,6 +143,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Method to register any orphan Sensors when a new Serial Node is created
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
         java.util.Iterator<String> iter
@@ -173,8 +175,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             //Address format passed is in the form of sysNode:address or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                sysNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                address = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                sysNode = Integer.parseInt(curAddress.substring(0, seperator));
+                address = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and address format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");

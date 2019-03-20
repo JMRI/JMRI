@@ -1,9 +1,8 @@
 package jmri.jmrit.beantable;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
 
-public class SensorTableTabAction extends AbstractTableTabAction {
+public class SensorTableTabAction extends AbstractTableTabAction<Sensor> {
 
     public SensorTableTabAction(String s) {
         super(s);
@@ -14,7 +13,7 @@ public class SensorTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected Manager getManager() {
+    protected Manager<Sensor> getManager() {
         return InstanceManager.sensorManagerInstance();
     }
 
@@ -24,7 +23,7 @@ public class SensorTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected AbstractTableAction getNewTableAction(String choice) {
+    protected SensorTableAction getNewTableAction(String choice) {
         return new SensorTableAction(choice);
     }
 

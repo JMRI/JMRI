@@ -9,13 +9,6 @@ package jmri.jmrix.lenz.hornbyelite;
 public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.CommandStation {
 
     /**
-     * The Hornby Elite does NOT use a service mode.
-     */
-    public boolean getHasServiceMode() {
-        return false;
-    }
-
-    /**
      * The Hornby Elite does support Ops Mode programming.
      */
     @Override

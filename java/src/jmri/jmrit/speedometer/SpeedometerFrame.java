@@ -730,7 +730,6 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
             // First read configuration
             if (root.getChild("configuration") != null) {
-                @SuppressWarnings("unchecked")
                 List<Element> l = root.getChild("configuration").getChildren();
                 if (log.isDebugEnabled()) {
                     log.debug("readFile sees " + l.size() + " configurations");
@@ -748,7 +747,6 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
             // Now read sensor information
             if (root.getChild("sensors") != null) {
-                @SuppressWarnings("unchecked")
                 List<Element> l = root.getChild("sensors").getChildren("sensor");
                 if (log.isDebugEnabled()) {
                     log.debug("readFile sees " + l.size() + " sensors");

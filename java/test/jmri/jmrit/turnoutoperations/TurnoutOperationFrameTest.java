@@ -27,6 +27,7 @@ public class TurnoutOperationFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

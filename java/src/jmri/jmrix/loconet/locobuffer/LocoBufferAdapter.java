@@ -43,7 +43,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));  // NOI18N
         options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
-        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));  // NOI18N
+        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"), packetizerOptions()));  // NOI18N
         options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"), 
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
     }
@@ -69,7 +69,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
-    @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
@@ -109,8 +108,12 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout() // NOI18N
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} enabled: {} threshold: {} enabled: {}", // NOI18N
+                    activeSerialPort.getReceiveTimeout(), 
+                    activeSerialPort.isReceiveTimeoutEnabled(),
+                    activeSerialPort.getReceiveThreshold(),
+                    activeSerialPort.isReceiveThresholdEnabled()                                        
+                );
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et); // NOI18N
             }
@@ -287,7 +290,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     /**
      * for a given readable choice return internal value
      * or the default
-     * @return - internal value
+     * <p>
+     * @param s  string containing ?a packetizer name?
+     * @return internal value
      */
     protected String getPacketizerOption(String s) {
         for (int i=0;i < packetizers.length; i++) {

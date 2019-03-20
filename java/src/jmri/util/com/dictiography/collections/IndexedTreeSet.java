@@ -170,6 +170,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return an iterator over the elements in this set in ascending order
      */
+    @Override
     public Iterator<E> iterator() {
         return m.navigableKeySet().iterator();
     }
@@ -197,6 +198,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return the number of elements in this set (its cardinality)
      */
+    @Override
     public int size() {
         return m.size();
     }
@@ -206,6 +208,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return {@code true} if this set contains no elements
      */
+    @Override
     public boolean isEmpty() {
         return m.isEmpty();
     }
@@ -214,7 +217,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * Returns {@code true} if this set contains the specified element.
      * More formally, returns {@code true} if and only if this set
      * contains an element {@code e} such that
-     * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
+     * {@code (o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))}.
      *
      * @param o object to be checked for containment in this set
      * @return {@code true} if this set contains the specified element
@@ -224,6 +227,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              and this set uses natural ordering, or its comparator
      *                              does not permit null elements
      */
+    @Override
     public boolean contains(Object o) {
         return m.containsKey(o);
     }
@@ -232,7 +236,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * Adds the specified element to this set if it is not already present.
      * More formally, adds the specified element {@code e} to this set if
      * the set contains no element {@code e2} such that
-     * <tt>(e==null&nbsp;?&nbsp;e2==null&nbsp;:&nbsp;e.equals(e2))</tt>.
+     * {@code (e==null&nbsp;?&nbsp;e2==null&nbsp;:&nbsp;e.equals(e2))}.
      * If this set already contains the element, the call leaves the set
      * unchanged and returns {@code false}.
      *
@@ -245,6 +249,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              and this set uses natural ordering, or its comparator
      *                              does not permit null elements
      */
+    @Override
     public boolean add(E e) {
         return m.put(e, PRESENT) == null;
     }
@@ -252,7 +257,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
     /**
      * Removes the specified element from this set if it is present.
      * More formally, removes an element {@code e} such that
-     * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>,
+     * {@code (o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))},
      * if this set contains such an element.  Returns {@code true} if
      * this set contained the element (or equivalently, if this set
      * changed as a result of the call).  (This set will not contain the
@@ -266,6 +271,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              and this set uses natural ordering, or its comparator
      *                              does not permit null elements
      */
+    @Override
     public boolean remove(Object o) {
         return m.remove(o) == PRESENT;
     }
@@ -274,6 +280,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * Removes all of the elements from this set.
      * The set will be empty after this call returns.
      */
+    @Override
     public void clear() {
         m.clear();
     }
@@ -289,6 +296,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              if any element is null and this set uses natural ordering, or
      *                              its comparator does not permit null elements
      */
+    @Override
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public boolean addAll(Collection<? extends E> c) {
         // Use linear-time version if applicable
@@ -464,6 +472,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return a shallow copy of this set
      */
+    @Override
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public Object clone() {
         IndexedTreeSet<E> clone = null;
@@ -489,6 +498,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * set's Comparator, or by the elements' natural ordering if
      * the set has no Comparator).
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DMI_NONSERIALIZABLE_OBJECT_WRITTEN", justification = "serialization in 3rd party code")
     private void writeObject(java.io.ObjectOutputStream s)
             throws java.io.IOException {
         // Write out any hidden stuff

@@ -26,7 +26,7 @@ import jmri.util.swing.JmriBeanComboBox;
 public class TurnoutEditAction extends BeanEditAction {
     @Override
     public String helpTarget() {
-        return "package.jmri.jmrit.beantable.TurnoutTable";
+        return "package.jmri.jmrit.beantable.TurnoutAddEdit";
     } //NOI18N
 
     @Override
@@ -184,7 +184,7 @@ public class TurnoutEditAction extends BeanEditAction {
                         break;
                     default:  // named operation
                         t.setInhibitOperation(false);
-                        t.setTurnoutOperation(TurnoutOperationManager.getInstance().
+                        t.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
                                 getOperation(((String) automationBox.getSelectedItem())));
                         break;
                 }
@@ -258,7 +258,7 @@ public class TurnoutEditAction extends BeanEditAction {
         currentOperation = null;
         automationBox.removeActionListener(automationSelectionListener);
         if (automationBox.getSelectedIndex() > 1) {
-            currentOperation = TurnoutOperationManager.getInstance().
+            currentOperation = InstanceManager.getDefault(TurnoutOperationManager.class).
                     getOperation(((String) automationBox.getSelectedItem()));
         }
 

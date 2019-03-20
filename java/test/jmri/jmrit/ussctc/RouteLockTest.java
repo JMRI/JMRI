@@ -137,7 +137,8 @@ public class RouteLockTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
     }
 
     @After

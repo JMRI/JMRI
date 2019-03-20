@@ -2,14 +2,14 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for CBUS.
@@ -30,10 +30,13 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
 
     int nodenumber;
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(CBUSNODEVARMODE);
@@ -50,9 +53,12 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     int operationValue;  // remember the value being read/written for confirmative reply
     int operationVariableNumber; // remember the variable number being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void writeCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int varnum = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("write " + varnum + " listens " + p);
         }
@@ -73,13 +79,20 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         notifyProgListenerEnd(operationValue, jmri.ProgListener.OK);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(varnum, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void readCV(int varnum, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int varnum = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + varnum + " listens " + p);
         }
@@ -114,11 +127,17 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(CanMessage m) {
         log.debug("message received and ignored: " + m.toString());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void reply(jmri.jmrix.can.CanReply m) {
         if (progState == NOTPROGRAMMING) {
@@ -150,7 +169,9 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout
      */
     @Override
@@ -167,16 +188,25 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return nodenumber;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
@@ -201,8 +231,8 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         // clear the current listener _first_
         jmri.ProgListener temp = programmerUser;
         programmerUser = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusProgrammer.class);
 }

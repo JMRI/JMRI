@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Utilities for handling JMRI's threading conventions.
@@ -18,18 +19,8 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright 2015
  */
+@ThreadSafe
 public class ThreadingUtil {
-
-    static public interface ThreadAction extends Runnable {
-
-        /**
-         * {@inheritDoc}
-         * <p>
-         * Must handle its own exceptions.
-         */
-        @Override
-        public void run();
-    }
 
     /**
      * Run some layout-specific code before returning.
@@ -79,7 +70,7 @@ public class ThreadingUtil {
      * }, 1000); 
      * }
      *
-     * @param ta    What to run, usually as a lambda expression
+     * @param ta    what to run, usually as a lambda expression
      * @param delay interval in milliseconds
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
@@ -126,6 +117,7 @@ public class ThreadingUtil {
                 Thread.currentThread().interrupt();
             } catch (InvocationTargetException e) {
                 log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUI:", e);
                 // should have been handled inside the ThreadAction
             }
         }
@@ -163,16 +155,13 @@ public class ThreadingUtil {
                 Thread.currentThread().interrupt();
             } catch (InvocationTargetException e) {
                 log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUIwithReturn:", e);
                 // should have been handled inside the ThreadAction
             }
             return result.get();
         }
     }
 
-    public interface ReturningThreadAction<E> {
-        public E run();
-    }
-    
     /**
      * Run some GUI-specific code at some later point.
      * <p>
@@ -260,7 +249,57 @@ public class ThreadingUtil {
         return s.equals(Thread.State.BLOCKED) || s.equals(Thread.State.WAITING) || s.equals(Thread.State.TIMED_WAITING);
     }
 
+    /**
+     * Check that a call is on the GUI thread. Warns (once) if not.
+     * Intended to be the run-time check mechanism for {@code @InvokeOnGuiThread}
+     * <p>
+     * In this implementation, this is the same as {@link #requireLayoutThread(org.slf4j.Logger)}
+     * @param logger The logger object from the calling class, usually "log"
+     */
+    static public void requireGuiThread(org.slf4j.Logger logger) {
+        if (!isGUIThread()) {
+            // fail, which can be a bit slow to do the right thing
+            Log4JUtil.warnOnce(logger, "Call not on GUI thread", new Exception("traceback"));
+        } 
+    }
+    
+    /**
+     * Check that a call is on the Layout thread. Warns (once) if not.
+     * Intended to be the run-time check mechanism for {@code @InvokeOnLayoutThread}
+     * <p>
+     * In this implementation, this is the same as {@link #requireGuiThread(org.slf4j.Logger)}
+     * @param logger The logger object from the calling class, usually "log"
+     */
+    static public void requireLayoutThread(org.slf4j.Logger logger) {
+        if (!isLayoutThread()) {
+            // fail, which can be a bit slow to do the right thing
+            Log4JUtil.warnOnce(logger, "Call not on Layout thread", new Exception("traceback"));
+        } 
+    }
+    
+    /**
+     * Interface for use in ThreadingUtil's lambda interfaces
+     */
+    @FunctionalInterface
+    static public interface ThreadAction extends Runnable {
 
+        /**
+         * {@inheritDoc}
+         * <p>
+         * Must handle its own exceptions.
+         */
+        @Override
+        public void run();
+    }
+
+    /**
+     * Interface for use in ThreadingUtil's lambda interfaces
+     */
+    @FunctionalInterface
+    static public interface ReturningThreadAction<E> {
+        public E run();
+    }
+    
     /**
      * Warn if a thread is holding locks. Used when transitioning to another context.
      */
@@ -289,7 +328,10 @@ public class ThreadingUtil {
         }
     }
     private static boolean lastWarnLocksLimit = false;
-    public static RuntimeException lastWarnLocksException = null;
+    private static RuntimeException lastWarnLocksException = null; 
+    public RuntimeException getlastWarnLocksException() { // public for script and test access
+        return lastWarnLocksException;
+    }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
 

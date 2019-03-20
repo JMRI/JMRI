@@ -35,18 +35,24 @@ public class JsonMemorySocketServiceTest {
             service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in MemoryManager
             // default null value of memory1 has text representation "null" in JSON
-            Assert.assertEquals("null", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals("null", message.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("throw");
             JUnitUtil.waitFor(() -> {
                 return memory1.getValue().equals("throw");
             }, "Memory to throw");
-            Assert.assertEquals("throw", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals("throw", message.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("close");
             JUnitUtil.waitFor(() -> {
                 return memory1.getValue().equals("close");
             }, "Memory to close");
             Assert.assertEquals("close", memory1.getValue());
-            Assert.assertEquals("close", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals("close", message.path(JSON.DATA).path(JSON.VALUE).asText());
             service.onClose();
             // TODO: test that service is no longer a listener in MemoryManager
         } catch (IOException | JmriException | JsonException ex) {
@@ -93,6 +99,7 @@ public class JsonMemorySocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initMemoryManager();
     }
 

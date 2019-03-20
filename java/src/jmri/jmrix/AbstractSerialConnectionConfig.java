@@ -30,14 +30,14 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the ConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process
+     * Ctor for an object being created during load process.
      *
      * @param p port being configured
      */
@@ -66,7 +66,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
@@ -80,7 +79,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String) baudBox.getSelectedItem());
-                p.addComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem()); // NOI18N
             }
         });
 
@@ -130,6 +129,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             });
         }
+
         portBox.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -319,18 +319,18 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         try {
             v = getPortNames();
             if (log.isDebugEnabled()) {
-                log.debug("loadDetails called in class " + this.getClass().getName());
-                log.debug("adapter class: " + adapter.getClass().getName());
-                log.debug("loadDetails called for " + name());
+                log.debug("loadDetails called in class {}", this.getClass().getName());
+                log.debug("adapter class: {}", adapter.getClass().getName());
+                log.debug("loadDetails called for {}", name());
                 if (v != null) {
-                    log.debug("Found " + v.size() + " ports");
+                    log.debug("Found {} ports", v.size());
                 } else {
                     log.debug("Zero-length port vector");
                 }
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
-            log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
+            log.error("java.library.path={}", System.getProperty("java.library.path", "<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
         }
@@ -350,15 +350,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
         baudBox.removeAllItems();
         if (log.isDebugEnabled()) {
-            log.debug("after remove, " + baudBox.getItemCount() + " items, first is "
-                    + baudBox.getItemAt(0));
+            log.debug("after remove, {} items, first is {}", baudBox.getItemCount(),
+                    baudBox.getItemAt(0));
         }
         for (String baudList1 : baudList) {
             baudBox.addItem(baudList1);
         }
         if (log.isDebugEnabled()) {
-            log.debug("after reload, " + baudBox.getItemCount() + " items, first is "
-                    + baudBox.getItemAt(0));
+            log.debug("after reload, {} items, first is {}", baudBox.getItemCount(),
+                    baudBox.getItemAt(0));
         }
 
         if (baudList.length > 1) {
@@ -372,7 +372,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         NUMOPTIONS = NUMOPTIONS + options.size();
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
-
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
@@ -425,7 +424,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 gbLayout.setConstraints(portBoxLabel, cL);
                 gbLayout.setConstraints(portBox, cR);
 
-                //panel.add(row1Label);
                 _details.add(portBoxLabel);
                 _details.add(portBox);
                 i++;
@@ -440,6 +438,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 _details.add(baudBox);
                 i++;
             }
+
             for (String item : options.keySet()) {
                 if (options.get(item).isAdvanced()) {
                     cR.gridy = i;
@@ -507,9 +506,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
-        if (adapter != null) {
-            adapter.setManufacturer(manufacturer);
-        }
+        setInstance();
+        adapter.setManufacturer(manufacturer);
     }
 
     @Override
@@ -619,7 +617,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
     }
 
-    @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
+    @SuppressWarnings("UseOfObsoleteCollectionType")
     protected Vector<String> getPortNames() {
         //reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen

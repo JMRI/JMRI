@@ -97,15 +97,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         };
     }
 
-    @Override
-    public String getDisplayName() {
-        String uName = getUserName();
-        if (uName != null) {
-            return uName;
-        }
-        return getSystemName();
-    }
-
     String getUniqueId() {
         return getSystemName();
     }
@@ -317,7 +308,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         final List<Color> realColorXtra = new ArrayList<Color>();
         final List<LayoutBlock> routeBlocks = new ArrayList<>();
         if (manager.useDifferentColorWhenSetting()) {
+            boolean first = true;
             for (LayoutBlock lbk : routeDetails) {
+                if (first) {
+                    // Don't change the color for the facing block
+                    first = false;
+                    continue;
+                }
                 routeBlocks.add(lbk);
                 realColorXtra.add(lbk.getBlockExtraColor());
                 realColorStd.add(lbk.getBlockTrackColor());

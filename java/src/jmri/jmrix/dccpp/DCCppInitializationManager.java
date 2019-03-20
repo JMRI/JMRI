@@ -36,24 +36,19 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
             code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
         }
+
         /* First, we load things that should work on all systems */
-        if (systemMemo.getPowerManager() == null) {
-            log.error("Power Manager not (yet) created!");
-        }
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-        if (jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
-            log.error("Power Manager not accessible!");
-        } else {
-            log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
-        }
+        log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
+
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
+
         /* Next we check the command station type, and add the
            apropriate managers */
 
         /* If we still don't  know what we have, load everything */
-        if (log.isDebugEnabled()) {
-            log.debug("Command Station is type {} build {}", base_station, code_build);
-        }
+        log.debug("Command Station is type {} build {}", base_station, code_build);
+
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);

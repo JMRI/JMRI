@@ -54,11 +54,11 @@ public class XNetAddress {
                   curAddress.contains(":")) {
                //Address format passed is in the form of encoderAddress:input or T:turnout address
                int seperator = curAddress.indexOf(":");
-               int encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-               int input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+               int encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+               int input = Integer.parseInt(curAddress.substring(seperator + 1));
                num = ((encoderAddress - 1) * 8) + input;
             } else {
-               num = Integer.valueOf(curAddress).intValue();
+               num = Integer.parseInt(curAddress);
             }
         } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: {}", systemName);

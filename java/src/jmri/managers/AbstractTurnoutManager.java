@@ -4,11 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
+import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +19,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     public AbstractTurnoutManager() {
         //super(Manager.TURNOUTS);
-        TurnoutOperationManager.getInstance();		// force creation of an instance
+        InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
@@ -78,7 +74,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}",systemName, userName);

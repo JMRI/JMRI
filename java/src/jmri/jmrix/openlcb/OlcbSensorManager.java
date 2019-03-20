@@ -18,10 +18,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the OpenLCB-specific Sensor implementation.
  *
- * System names are "MSnnn", where nnn is the sensor number without padding.
+ * System names are "MSnnn", where M is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  */
+ */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
     String prefix = "M";

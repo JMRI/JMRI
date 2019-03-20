@@ -3,6 +3,7 @@
 # of the main & sidings go OCCUPIED
 
 import java
+import java.beans
 
 class ReleaseFromSidings(java.beans.PropertyChangeListener):
   # to1, to2 are turnout objects; block1, block2 are corresponding

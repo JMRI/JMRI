@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "GiSnnnn", where Gi is the (multichar) system connection prefix,
+ * System names are "GSnnnn", where G is the (multichar) system connection prefix,
  * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
@@ -145,7 +145,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -176,6 +176,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Register any orphan Sensors when a new Serial Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
         java.util.Iterator<String> iter

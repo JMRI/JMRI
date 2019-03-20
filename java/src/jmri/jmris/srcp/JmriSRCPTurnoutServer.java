@@ -1,4 +1,3 @@
-//JmriSRCPTurnoutServer.java
 package jmri.jmris.srcp;
 
 import java.beans.PropertyChangeEvent;

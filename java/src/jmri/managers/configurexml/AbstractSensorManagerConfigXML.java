@@ -48,6 +48,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             sensors.addContent(elem);
         }
 
+        @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
         java.util.Iterator<String> iter = tm.getSystemNameAddedOrderList().iterator();
 
         // don't return an element if there are not sensors to include
@@ -120,7 +121,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * @param sensors Element containing the Sensor elements to load.
      * @return true if succeeded
      */
-    @SuppressWarnings("unchecked")
     public boolean loadSensors(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
@@ -136,7 +136,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 if (timer.getChild("goingActive") != null) {
                     String active = timer.getChild("goingActive").getText();
-                    goingActive = Long.valueOf(active);
+                    goingActive = Long.parseLong(active);
                     tm.setDefaultSensorDebounceGoingActive(goingActive);
                 }
             } catch (NumberFormatException ex) {
@@ -146,7 +146,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 if (timer.getChild("goingInActive") != null) {
                     String inActive = timer.getChild("goingInActive").getText();
-                    goingInActive = Long.valueOf(inActive);
+                    goingInActive = Long.parseLong(inActive);
                     tm.setDefaultSensorDebounceGoingInActive(goingInActive);
                 }
             } catch (NumberFormatException ex) {
@@ -197,7 +197,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 try {
                     if (timer.getChild("goingActive") != null) {
                         String active = timer.getChild("goingActive").getText();
-                        s.setSensorDebounceGoingActiveTimer(Long.valueOf(active));
+                        s.setSensorDebounceGoingActiveTimer(Long.parseLong(active));
                     }
                 } catch (NumberFormatException ex) {
                     log.error(ex.toString());
@@ -206,7 +206,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 try {
                     if (timer.getChild("goingInActive") != null) {
                         String inActive = timer.getChild("goingInActive").getText();
-                        s.setSensorDebounceGoingInActiveTimer(Long.valueOf(inActive));
+                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong(inActive));
                     }
                 } catch (NumberFormatException ex) {
                     log.error(ex.toString());

@@ -5,9 +5,13 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    OlcbLightManagerXmlTest.class,
     OlcbSensorManagerXmlTest.class,
     OlcbSignalMastXmlTest.class,
-    OlcbTurnoutManagerXmlTest.class
+    OlcbTurnoutManagerXmlTest.class,
+    ProtocolOptionsPersistenceTest.class,
+    SchemaTest.class,
+    LoadAndStoreTest.class
 })
 /**
  * Tests for the jmri.jmrix.openlcb.configurexml package.

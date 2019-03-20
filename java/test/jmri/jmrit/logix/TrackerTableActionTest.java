@@ -12,9 +12,12 @@ import org.junit.Test;
  */
 public class TrackerTableActionTest {
 
+    /**
+     * Checks automatic creation
+     */
     @Test
     public void testInstance() {
-        TrackerTableAction t = TrackerTableAction.getInstance();
+        TrackerTableAction t = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +25,7 @@ public class TrackerTableActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After

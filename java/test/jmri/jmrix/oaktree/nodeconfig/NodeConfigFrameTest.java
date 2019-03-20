@@ -46,8 +46,9 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        memo = new OakTreeSystemConnectionMemo();
+        jmri.util.JUnitUtil.resetProfileManager();
 
+        memo = new OakTreeSystemConnectionMemo();
     }
 
     @After

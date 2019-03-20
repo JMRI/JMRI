@@ -34,6 +34,8 @@ public class Mx1NamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         Mx1TrafficController tc = new Mx1TrafficController(){
            @Override
            public boolean status(){

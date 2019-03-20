@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Two address formats are supported:
  * <ul>
- *   <li>Vitnnnxxx where:
+ *   <li>Vtnnnxxx where:
  *      <ul>
- *      <li>Vi is the system connection prefix with optional index
+ *      <li>V is the system connection prefix with optional index
  *      <li>t is the type code: 'T' for turnouts, 'S' for sensors,
  *      and 'L' for lights
  *      <li>nn is the node address (0-127)
@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
  *      Examples: VT2 (node address 0, bit 2), V2S1003 (node address 1,
  *      bit 3), VL11234 (node address 11, bit234)
  *   </li>
- *   <li>VitnnnBxxxx where:
+ *   <li>VtnnnBxxxx where:
  *      <ul>
- *      <li>Vi is the system connection prefix with optional index
+ *      <li>V is the system connection prefix with optional index
  *      <li>t is the type code: 'T' for turnouts, 'S' for sensors,
  *      and 'L' for lights
  *      <li>nnn is the node address of the input or output bit (0-127)
@@ -69,7 +69,7 @@ public class SerialAddress {
         int ua;
         if (noB) {
             // This is a ViLnnxxx address
-            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -119,7 +119,7 @@ public class SerialAddress {
             // here if 'B' not found, name must be ViLnnxxx format
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+                num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             } catch (Exception e) {
                 log.error("invalid character in number field of system name: {}", systemName);
                 return (0);
@@ -171,7 +171,7 @@ public class SerialAddress {
             // This is a ViLnnnxxx address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+                num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             } catch (Exception e) {
                 log.debug("invalid character in number field system name: {}", systemName);
                 return NameValidity.INVALID;
@@ -192,7 +192,7 @@ public class SerialAddress {
             }
             int num;
             try {
-                num = Integer.valueOf(s).intValue();
+                num = Integer.parseInt(s);
             } catch (Exception e) {
                 log.debug("invalid character in node address field of system name: {}",
                         systemName);
@@ -286,14 +286,14 @@ public class SerialAddress {
         }
         if (noB) {
             // This is a ViLnnnxxx address, convert to num-style
-            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             altName = prefix + systemName.charAt(prefix.length()) + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);
         } else {
             // This is a VLnnnBxxxx address 
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             if (bitNum > 999) {
                 // bit number is out-of-range for a CLnnnxxx address
@@ -339,13 +339,13 @@ public class SerialAddress {
         char type = systemName.charAt(prefix.length());
         if (noB) {
             // This is a ViLnnnxxx address
-            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             nName = prefix + type + Integer.toString((nAddress * 1000) + bitNum);
         } else {
             // This is a ViLnnnBxxxx address
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             nName = prefix + type + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);

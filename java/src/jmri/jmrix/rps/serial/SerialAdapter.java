@@ -5,10 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+
+import jmri.InvokeOnGuiThread;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -323,6 +326,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
      *
      * @param s The new message to distribute
      */
+    @InvokeOnGuiThread
     protected void nextLine(String s) {
         // check for startup lines we ignore
         if (s.length() < 5) {

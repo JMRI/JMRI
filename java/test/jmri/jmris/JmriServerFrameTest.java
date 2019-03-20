@@ -1,4 +1,3 @@
-//JmriServerFrameTest.java
 package jmri.jmris;
 
 import java.awt.GraphicsEnvironment;
@@ -28,6 +27,7 @@ public class JmriServerFrameTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

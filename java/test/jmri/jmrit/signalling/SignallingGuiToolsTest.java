@@ -2,13 +2,7 @@ package jmri.jmrit.signalling;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
@@ -100,7 +94,8 @@ public class SignallingGuiToolsTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultSignalMastManager();
     }
 
     @After

@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Tams systems. Reworked to support binary
- * commands and polling of command station
- * <P>
- *
- * Based on work by Bob Jacobsen and Kevin Dickerson
+ * commands and polling of command station.
+ * <p>
+ * Based on work by Bob Jacobsen and Kevin Dickerson.
  *
  * @author  Jan Boen
  */
@@ -39,7 +38,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
             log.error("failed to convert systemName " + systemName + " to a turnout address");
             return null;

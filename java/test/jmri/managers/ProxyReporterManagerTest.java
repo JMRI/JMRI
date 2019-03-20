@@ -89,7 +89,7 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1"));
 
-        InternalReporterManager m = new InternalReporterManager() {
+        ReporterManager m = new jmri.jmrix.internal.InternalReporterManager() {
 
             @Override
             public String getSystemPrefix() {

@@ -25,7 +25,8 @@ public class HtmlTrainCommonTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitUtil.initIdTagManager();
+        jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();     
     }
 

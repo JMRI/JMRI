@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
+ * <p>
  * Tests for SerialDriverAdapter
  * </P>
  * @author Paul Bender Copyright (C) 2016

@@ -27,8 +27,9 @@ public class MastBuilderPane extends jmri.util.JmriJFrame {
 
     public MastBuilderPane() {
         super();
-        }
+    }
 
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("MastBuilderTitle"));
 

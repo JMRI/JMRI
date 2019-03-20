@@ -4,6 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,7 +51,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
     protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        if (sys == null) {
+        if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
         mSystemName = sys;
@@ -84,15 +86,11 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
      * 
      * @return user name if not null or empty, else return system name
      */
     @Override
-    public String getDisplayName() {
+    final public String getDisplayName() {
         String name = getUserName();
         if (name != null && !name.isEmpty()) {
             return name;
@@ -101,16 +99,11 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
-    /**
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc} */
     @Override
-    public String getFullyFormattedDisplayName() {
+    final public String getFullyFormattedDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0 && !name.equals(getSystemName())) {
+        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
             name = getSystemName() + "(" + name + ")";
         } else {
             name = getSystemName();
@@ -207,6 +200,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners();
     }
 
+    /** {@inheritDoc} */
     @Override
     final public String getSystemName() {
         return mSystemName;
@@ -255,7 +249,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @Override
-    @CheckReturnValue
+    @Nonnull
     public String describeState(int state) {
         switch (state) {
             case UNKNOWN:
@@ -267,13 +261,28 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(String key, Object value) {
-        if (parameters == null) {
-            parameters = new HashMap<>();
-        }
-        parameters.put(key, value);
+    public void setProperty(String key,Object value){
+         if (parameters == null) {
+             parameters = new HashMap<>();
+         }
+         Set<String> keySet = getPropertyKeys();
+         if(keySet.contains(key)){
+            // key already in the map, replace the value.
+            Object oldValue = getProperty(key);
+            if(!Objects.equals(oldValue, value)){
+	          removeProperty(key); // make sure the old value is removed.
+              parameters.put(key, value);
+              firePropertyChange(key,oldValue,value);
+            }
+         } else {
+            parameters.put(key, value);
+            firePropertyChange(key,null,value);
+         }
     }
 
     @Override
@@ -297,7 +306,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @OverridingMethodsMustInvokeSuper
     public void removeProperty(String key) {
-        if (parameters == null || key == null) {
+        if (parameters == null || Objects.isNull(key)) {
             return;
         }
         parameters.remove(key);
@@ -312,9 +321,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation tests that the results of
-     * {@link jmri.NamedBean#getSystemName()} and
-     * {@link jmri.NamedBean#getUserName()} are equal for this and obj.
+     * This implementation tests that 
+     * {@link jmri.NamedBean#getSystemName()}
+     * is equal for this and obj.
      *
      * @param obj the reference object with which to compare.
      * @return {@code true} if this object is the same as the obj argument;
@@ -322,39 +331,24 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     public boolean equals(Object obj) {
-        // test the obj == this
-        boolean result = super.equals(obj);
+        if (obj == this) return true;  // for efficiency
+        if (obj == null) return false; // by contract
 
-        if (!result && (obj != null) && obj instanceof AbstractNamedBean) {
+        if (obj instanceof AbstractNamedBean) {  // NamedBeans are not equal to things of other types
             AbstractNamedBean b = (AbstractNamedBean) obj;
-            if (this.getSystemName().equals(b.getSystemName())) {
-                String bUserName = b.getUserName();
-                if ((mUserName != null) && (bUserName != null)
-                        && mUserName.equals(bUserName)) {
-                    result = true;
-                }
-            }
+            return this.getSystemName().equals(b.getSystemName());
         }
-        return result;
+        return false;
     }
 
     /**
-     * Calculate our hash code.
-     *
-     * @return our hash code
+     * {@inheritDoc}
+     * 
+     * @return hash code value is based on sthe ystem name.
      */
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        if (mSystemName != null) {
-            result = mSystemName.hashCode();
-            if (mUserName != null) {
-                result = (result * 37) + mUserName.hashCode();
-            }
-        } else if (mUserName != null) {
-            result = mUserName.hashCode();
-        }
-        return result;
+        return getSystemName().hashCode(); // as the 
     }
     
     /**

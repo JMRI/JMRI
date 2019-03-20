@@ -3,10 +3,12 @@ package jmri.implementation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import jmri.JmriException;
 import jmri.Light;
 
 /**
- * Abstract class providing partial implementation of the the Light interface.
+ * Abstract class providing partial implementation of the Light interface.
  * <p>
  * Light objects require a number of instance variables. Since Light objects are
  * created using the standard JMRI systemName/userName concept, accessor
@@ -74,7 +76,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected int mState = OFF;
 
     @Override
-    @CheckReturnValue
+    @Nonnull
     public String describeState(int state) {
         switch (state) {
             case ON: return Bundle.getMessage("StateOn");
@@ -147,9 +149,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     @Override
     public void setTargetIntensity(double intensity) {
-        if (log.isDebugEnabled()) {
-            log.debug("setTargetIntensity " + intensity);
-        }
+        log.debug("setTargetIntensity {}", intensity);
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Target intensity value " + intensity + " not in legal range");
         }
@@ -402,9 +402,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     @Override
     public void setState(int newState) {
-        if (log.isDebugEnabled()) {
-            log.debug("setState " + newState + " was " + mState);
-        }
+        log.debug("setState {} was {}", newState, mState);
         //int oldState = mState;
         if (newState != ON && newState != OFF) {
             throw new IllegalArgumentException("cannot set state value " + newState);
@@ -511,8 +509,14 @@ public abstract class AbstractLight extends AbstractNamedBean
         }
     }
 
+    /** {@inheritDoc}
+     */
     @Override
     public void addLightControl(jmri.implementation.LightControl c) {
+        if (lightControlList.contains(c)) {
+            log.debug("not adding duplicate LightControl {}", c);
+            return;
+        }
         lightControlList.add(c);
     }
 
@@ -523,6 +527,43 @@ public abstract class AbstractLight extends AbstractNamedBean
             listCopy.add(lightControlList1);
         });
         return listCopy;
+    }
+
+    @Override
+    public void setCommandedAnalogValue(float value) throws JmriException {
+        float middle = (getMax() - getMin()) / 2 + getMin();
+        
+        if (value > middle) {
+            setCommandedState(ON);
+        } else {
+            setCommandedState(OFF);
+        }
+    }
+
+    @Override
+    public float getCommandedAnalogValue() {
+        return (float) getCurrentIntensity();
+    }
+
+    @Override
+    public float getMin() {
+        return (float) getMinIntensity();
+    }
+
+    @Override
+    public float getMax() {
+        return (float) getMaxIntensity();
+    }
+
+    @Override
+    public float getResolution() {
+        // AbstractLight is by default only ON or OFF
+        return (float) (getMaxIntensity() - getMinIntensity());
+    }
+
+    @Override
+    public AbsoluteOrRelative getAbsoluteOrRelative() {
+        return AbsoluteOrRelative.ABSOLUTE;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);

@@ -28,9 +28,11 @@ abstract public class AbstractController {
 
     /**
      * Break down a message and use it.
+     * @param message message for controller to parse and take action
+     * @param deviceServer DeviceServer that sent this message, used to send response messages to proper client
      *
      */
-    abstract void handleMessage(String message);
+    abstract void handleMessage(String message, DeviceServer deviceServer);
 
     /**
      * Register as listener of NamedBeans to be updated of changes.
@@ -48,6 +50,9 @@ abstract public class AbstractController {
      * jmri.Manager *Manager can implement specifics in register().
      *
      */
+    @SuppressWarnings({"unchecked", "deprecation"}) // The systemNameList assignment is List<E extends Namedbean> to List<NamedBean>
+                                    // Make this class generic on <E extends NamedBean> (and manager) to fix this.
+                                    // deprecation needs careful unwinding for Set operations
     public void buildList(jmri.Manager manager) {
         if (sysNameList == null) {
             sysNameList = manager.getSystemNameList();

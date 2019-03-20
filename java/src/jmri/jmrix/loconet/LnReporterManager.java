@@ -5,8 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the LocoNet-specific Reporter implementation. System names are
- * "LRnnn", where nnn is the Reporter number without padding.
+ * Manage the LocoNet-specific Reporter implementation.
+ * <p>
+ * System names are "LRnnn", where L is the user configurable system prefix,
+ * nnn is the Reporter number without padding.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -99,6 +101,9 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
@@ -118,7 +123,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         // message type OK, check address
         int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
 
-        LnReporter r = (LnReporter) provideReporter("LR" + addr); // NOI18N
+        LnReporter r = (LnReporter) provideReporter(this.prefix+ "R" + addr); // NOI18N
         r.message(l); // make sure it got the message
     }
 

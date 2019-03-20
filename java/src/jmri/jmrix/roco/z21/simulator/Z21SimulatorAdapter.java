@@ -167,7 +167,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming XNetMessage into an outgoing XNetReply.
-    @SuppressWarnings("fallthrough") // document values for specific cases
     private Z21Reply generateReply(Z21Message m) throws LogoffException {
         log.debug("generate Reply called with message {}",m);
         Z21Reply reply;
@@ -289,8 +288,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         reply.setLength(0x0004);
         int offset=4;
         for(int i = 0;i<xnetadapter.locoCount;i++) {
-            reply.setElement(offset++,xnetadapter.locoData[i].getAddressMsb());// byte 5, LocoAddress msb.
-            reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 5, LocoAddress lsb.
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressMsb());// byte 6, LocoAddress msb.
             reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
             reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x00);

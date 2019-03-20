@@ -1,18 +1,23 @@
 package jmri.jmrit.simpleclock;
 
+import java.beans.*;
 import java.time.Instant;
 import java.util.Date;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import jmri.TimebaseRateException;
 
 /**
  * Tests for the SimpleTimebase class
  *
  * @author	Bob Jacobsen
  */
-public class SimpleTimebaseTest extends TestCase {
+public class SimpleTimebaseTest {
 
     void wait(int msec) {
         try {
@@ -22,6 +27,7 @@ public class SimpleTimebaseTest extends TestCase {
     }
 
     // test creation
+    @Test
     public void testCreate() {
         SimpleTimebase p = new SimpleTimebase();
         Assert.assertNotNull("exists", p);
@@ -29,6 +35,7 @@ public class SimpleTimebaseTest extends TestCase {
     }
 
     // test quick access (should be quite close to zero)
+    @Test
     public void testNoDelay() {
         SimpleTimebase p = new SimpleTimebase();
         Date now = new Date();
@@ -40,6 +47,13 @@ public class SimpleTimebaseTest extends TestCase {
         p.dispose();
     }
 
+    @Test
+    public void testGetBeanType() {
+        SimpleTimebase p = new SimpleTimebase();
+        Assert.assertEquals("Time", p.getBeanType());
+    }
+    
+    @Test
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
@@ -63,18 +77,26 @@ public class SimpleTimebaseTest extends TestCase {
     }
 
     // set the time based on a date.
+    @Test
     public void testSetTimeDate() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
+        Assert.assertFalse(p.getRun());
 
         Date now = new Date();
 
         p.setTime(now);
+        Assert.assertFalse(p.getRun());  // still
         Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
+        
+        p.setRun(true);       
+        Assert.assertTrue(p.getRun());
+
         p.dispose();
     }
 
     // set the time based on an instant.
+    @Test
     public void testSetTimeInstant() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
@@ -86,31 +108,69 @@ public class SimpleTimebaseTest extends TestCase {
         p.dispose();
     }
 
-    /* 	public void testShortDelay() { */
-    /* 		SimpleTimebase p = new SimpleTimebase(); */
-    /* 		Date now = new Date(); */
-    /* 		p.setTime(now); */
-    /* 		p.setRate(100.); */
-    /* 		wait(100); */
-    /* 		Date then = p.getTime(); */
-    /* 		long delta = then.getTime()-now.getTime(); */
-    /* 		Assert.assertTrue("delta ge 50 (nominal value)", delta>=50); */
-    /* 		Assert.assertTrue("delta lt 150 (nominal value)", delta<150); */
-    /* 	} */
-    // from here down is testing infrastructure
-    public SimpleTimebaseTest(String s) {
-        super(s);
+    @Test
+    public void testSetGetRate() throws TimebaseRateException {
+        SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
+        Assert.assertEquals(1.0, p.getRate(), 0.01);
+        
+        p.setRate(2.0);
+        Assert.assertEquals(2.0, p.getRate(), 0.01);        
+        Assert.assertFalse(p.getRun());  // still
+        
+    }
+    
+    double seenNewMinutes;
+    double seenOldMinutes;
+    
+    @Test
+    public void testSetSendsUpdate() {
+        SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
+        seenNewMinutes = -1;
+        seenOldMinutes = -1;
+        p.addMinuteChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent e) {
+                seenOldMinutes = (Double) e.getOldValue();
+                seenNewMinutes = (Double) e.getNewValue();
+            }
+        });
+
+        Date date = p.getTime();
+        Date tenMinLater = new Date(10*60*1000L+date.getTime());
+
+        p.setTime(tenMinLater);
+
+        // minutes wrap at 60
+        if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
+        
+        Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
+    }
+    
+    
+    @Test
+    @Ignore("Disabled in JUnit 3")
+    public void testShortDelay() throws TimebaseRateException {
+        SimpleTimebase p = new SimpleTimebase();
+        Date now = new Date();
+        p.setTime(now);
+        p.setRate(100.);
+        wait(100);
+        Date then = p.getTime();
+        long delta = then.getTime() - now.getTime();
+        Assert.assertTrue("delta ge 50 (nominal value)", delta >= 50);
+        Assert.assertTrue("delta lt 150 (nominal value)", delta < 150);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SimpleTimebaseTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SimpleTimebaseTest.class);
-        return suite;
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 }

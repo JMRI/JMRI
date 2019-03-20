@@ -3,15 +3,12 @@ package jmri.jmrix.pi;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
 import jmri.Sensor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 
 /**
- * <P>
+ * <p>
  * Tests for RaspberryPiSensorManager
  * </P><p>
  * This is somehow not reseting the GPIO support, so each reference to a "pin"
@@ -116,17 +113,18 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @Override
     @Before
     public void setUp() {
-       apps.tests.Log4JFixture.setUp();
+       JUnitUtil.setUp();
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
-       jmri.util.JUnitUtil.resetInstanceManager();
+       JUnitUtil.resetInstanceManager();
        l = new RaspberryPiSensorManager("Pi");
     }
 
     @After
     public void tearDown() {
-       jmri.util.JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -15,6 +15,7 @@
 
 import jmri
 import java
+import java.awt
 
 # set the desired colour and size in the two lines below.
 # Many normal colour names can be used instead of WHITE 

@@ -36,7 +36,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public RaspberryPiConnectionConfig() {
         super();
@@ -155,13 +155,16 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         return "GPIO";
     }
 
+    String manuf = RaspberryPiConnectionTypeList.PI;
+
     @Override
     public String getManufacturer() {
-        return RaspberryPiConnectionTypeList.PI;
+        return manuf;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
+        manuf = manufacturer;
     }
 
     @Override

@@ -198,13 +198,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     @Test
     public void testForgetState() throws JmriException {
-	t.dispose(); // dispose of the existing sensor.
+        t.dispose(); // dispose of the existing sensor.
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface);
         s.setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.FALSE.toString());
         s.finishLoad();
 
-	t = s;  // give t a value so the test teardown functions.
-	ti.flush();
+        t = s;  // give t a value so the test teardown functions.
+        ti.flush();
         ti.tc.rcvMessage = null;
 
         ti.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
@@ -251,6 +251,67 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals("no call",0,l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
+    }
+
+    @Test
+    public void testQueryState() throws Exception {
+        OlcbSensor s = (OlcbSensor) t;
+        ti.tc.rcvMessage = null;
+        Assert.assertEquals(Sensor.UNKNOWN, s.getState());
+
+        // Default sensors listen to identified messages at all times.
+
+        ti.sendMessage(":X19544123N0102030405060708;");
+        Assert.assertEquals(Sensor.ACTIVE, s.getState());
+
+        ti.sendMessage(":X19544123N0102030405060709;");
+        Assert.assertEquals(Sensor.INACTIVE, t.getState());
+
+        ti.tc.rcvMessage = null;
+        t.requestUpdateFromLayout();
+        ti.assertSentMessage(":X198F4C4CN0102030405060708;");
+        ti.sendMessage(":X19544123N0102030405060708;");
+        Assert.assertEquals(Sensor.ACTIVE, t.getState());
+
+        // Actual sequence from sensor table data model
+        t.setKnownState(Sensor.UNKNOWN);
+        ti.tc.rcvMessage = null;
+        t.requestUpdateFromLayout();
+        ti.assertSentMessage(":X198F4C4CN0102030405060708;");
+        Assert.assertEquals(Sensor.UNKNOWN, t.getState());
+        ti.sendMessage(":X19544123N0102030405060709;");
+        Assert.assertEquals(Sensor.INACTIVE, t.getState());
+    }
+
+    @Test
+    public void testQueryStateNotAlwaysListen() throws Exception {
+        OlcbSensor s = (OlcbSensor) t;
+        s.setListeningToStateMessages(false);
+        ti.flush();
+        ti.tc.rcvMessage = null;
+        Assert.assertEquals(Sensor.UNKNOWN, s.getState());
+
+        ti.sendMessage(":X19544123N0102030405060708;");
+        Assert.assertEquals(Sensor.ACTIVE, s.getState());
+
+        ti.sendMessage(":X19544123N0102030405060709;");
+        Assert.assertEquals(Sensor.ACTIVE, s.getState()); // no change
+
+        ti.tc.rcvMessage = null;
+        t.requestUpdateFromLayout();
+        ti.assertSentMessage(":X198F4C4CN0102030405060708;");
+        Assert.assertEquals(Sensor.ACTIVE, s.getState()); // still no change
+        ti.sendMessage(":X19544123N0102030405060709;");
+        Assert.assertEquals(Sensor.INACTIVE, s.getState()); // now it changes
+
+        // Actual sequence from sensor table data model
+        t.setKnownState(Sensor.UNKNOWN);
+        ti.tc.rcvMessage = null;
+        t.requestUpdateFromLayout();
+        ti.assertSentMessage(":X198F4C4CN0102030405060708;");
+        Assert.assertEquals(Sensor.UNKNOWN, t.getState());
+        ti.sendMessage(":X19544123N0102030405060709;");
+        Assert.assertEquals(Sensor.INACTIVE, t.getState());
     }
 
     @Test

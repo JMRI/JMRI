@@ -18,6 +18,8 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.Timebase;
+import jmri.TimebaseRateException;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
@@ -34,30 +36,35 @@ public class JsonTimeHttpService extends JsonHttpService {
     @Override
     // using @Nullable to override @Nonnull in super class
     public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+        Timebase timebase = InstanceManager.getDefault(Timebase.class);
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.getDefault(jmri.Timebase.class).getTime()));
-        data.put(RATE, InstanceManager.getDefault(jmri.Timebase.class).getRate());
-        data.put(STATE, InstanceManager.getDefault(jmri.Timebase.class).getRun() ? ON : OFF);
+        data.put(TIME, new ISO8601DateFormat().format(timebase.getTime()));
+        data.put(RATE, timebase.getRate());
+        data.put(STATE, timebase.getRun() ? ON : OFF);
         return root;
     }
 
     @Override
     // using @Nullable to override @Nonnull in super class
     public JsonNode doPost(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
+        Timebase timebase = InstanceManager.getDefault(Timebase.class);
         try {
             if (data.path(TIME).isTextual()) {
-                InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                timebase.setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
-            if (data.path(RATE).isDouble()) {
-                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
+            if (data.path(RATE).isDouble() || data.path(RATE).isInt()) {
+                timebase.userSetRate(data.path(RATE).asDouble());
             }
-            if (data.path(STATE).isInt()) {
-                InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
+            int state = data.findPath(STATE).asInt(0);
+            if (state == ON || state == OFF) { // passing the state UNKNOWN (0) will not trigger change
+                timebase.setRun(state == ON);
             }
         } catch (ParseException ex) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"));
+        } catch (TimebaseRateException e) {
+            throw new JsonException(400, Bundle.getMessage(locale, "ErrorRateFactor"));
         }
         return this.doGet(type, name, locale);
     }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,48 +23,15 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable item="Vstart" CV="2" comment="Speed setting between 1 and 63" default="01">
-        <decVal max="63"/>
-        <label>Vstart</label>
-        <label xml:lang="it">Volt Partenza</label>
-        <label xml:lang="fr">V démarr.</label>
-        <label xml:lang="de">Startspannung</label>
-        <comment>Speed setting between 1 and 63</comment>
-      </variable>
-      <variable CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" item="Accel" default="02">
-        <decVal max="63"/>
-        <label>Acceleration Rate</label>
-        <label xml:lang="it">Accellerazione (0-63)</label>
-        <label xml:lang="fr">Accelération (0-63)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-63)</label>
-        <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
-      </variable>
-      <variable CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" item="Decel" default="02">
-        <decVal max="63"/>
-        <label>Deceleration Rate</label>
-        <label xml:lang="it">Decellerazione (0-63)</label>
-        <label xml:lang="fr">Décélération (0-63)</label>
-        <label xml:lang="de">Bremszeit (0-63)</label>
-        <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
-      </variable>
-      <variable item="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="48">
-        <decVal max="63"/>
-        <label>Vhigh</label>
-        <comment>Speed setting between 1 and 63</comment>
-      </variable>
-      <variable item="Vmid" CV="6" comment="Speed setting between 1 and 63" default="24">
-        <decVal max="63"/>
-        <label>Vmid</label>
-        <comment>Speed setting between 1 and 63</comment>
-      </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="8">
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="8">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
         <label xml:lang="it">ID Costruttore: </label>
@@ -74,13 +40,12 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable item="Main Motor Control" CV="49" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-        <label>Main Motor Control</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <!-- CV49 Uhlenbrock decoder configuration - common bits -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
+      <!-- CV49 specific bits for this decoder-->
       <variable item="Braking End" CV="49" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="to standstill">
@@ -98,8 +63,8 @@
       </variable>
       <variable item="Data Format" CV="49" mask="XXXVXXXX">
         <enumVal>
-          <enumChoice choice="Motorola and DDC">
-            <choice>Motorola and DDC</choice>
+          <enumChoice choice="Motorola and DCC">
+            <choice>Motorola and DCC</choice>
           </enumChoice>
           <enumChoice choice="Selectrix">
             <choice>Selectrix</choice>
@@ -111,32 +76,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Motorola Format</label>
       </variable>
-      <variable item="Lightplugs" CV="49" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="straight">
-            <choice>straight</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Lightplugs</label>
-      </variable>
-      <variable item="Braking with" CV="49" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Braking signal only">
-            <choice>Braking signal only</choice>
-          </enumChoice>
-          <enumChoice choice="with analog voltage">
-            <choice>with analog voltage</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Braking with</label>
-      </variable>
       <variable item="Function output dimming" CV="50" default="32">
         <decVal min="0" max="63"/>
         <label>Function output dimming</label>
       </variable>
+      <!-- End CV49 specifics -->
       <variable item="Analog/Digitalswitch" CV="51">
         <enumVal>
           <enumChoice choice="Digital operation">
@@ -146,7 +90,7 @@
             <choice>Analog operation</choice>
           </enumChoice>
         </enumVal>
-        <label>Analog/Digitalswitch</label>
+        <label>Analog/Digital switch</label>
       </variable>
       <variable item="End braking speed" CV="52" default="30" tooltip="Valid when CV49 Bit 2=1 and Bit 7=1">
         <decVal/>
@@ -192,20 +136,13 @@
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DDC paged mode programming">
+      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DCC paged mode programming">
         <decVal/>
         <label>Page Register</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <pane>
     <column>

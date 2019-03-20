@@ -198,15 +198,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    // keep show checkboxes consistent during a session
-    private static boolean isSelectVisible = false;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "GUI ease of use") // NOI18N
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN)));
     }
 
     public void resetCheckboxes() {
@@ -411,7 +405,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _frame.loadTableDetails(_table);
 
         // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);
@@ -567,7 +560,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getTypeName() + car.getTypeExtensions();
             }
             case KERNEL_COLUMN: {
-                if (car.getKernel() != null && car.getKernel().isLead(car)) {
+                if (car.isLead()) {
                     return car.getKernelName() + "*";
                 }
                 return car.getKernelName();
@@ -676,7 +669,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     public void run() {
                         cef = new CarEditFrame();
                         cef.initComponents();
-                        cef.loadCar(car);
+                        cef.load(car);
                     }
                 });
                 break;

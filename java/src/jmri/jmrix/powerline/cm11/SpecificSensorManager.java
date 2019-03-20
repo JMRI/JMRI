@@ -48,6 +48,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     private int newCmdCode = -1;
     private int newAddrCode = -1;
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void processForPollReq(SerialReply l) {
         // process the POLL_REQ and update/create sensors as needed
         if ((l.getElement(0) & 0xFF) == Constants.POLL_REQ) {

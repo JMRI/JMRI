@@ -6,7 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
 
 /**
  *
- * @author lionel
+ * @author Lionel Jeanson
  */
 public class MqttSystemConnectionMemo extends SystemConnectionMemo {
 
@@ -32,6 +32,9 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -43,6 +46,10 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         return false; // nothing, by default
     }    
    
+     /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
@@ -70,5 +77,4 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         mqttAdapter = ma;
     }
 
-    
 }

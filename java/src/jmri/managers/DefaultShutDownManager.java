@@ -1,15 +1,15 @@
 package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
+
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +69,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void register(ShutDownTask s) {
         Objects.requireNonNull(s, "Shutdown task cannot be null.");
@@ -79,6 +82,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void deregister(ShutDownTask s) {
         if (s == null) {
@@ -91,10 +97,14 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 0 if
-     * not aborted. Does not return under normal circumstances. Does return if
-     * the shutdown was aborted by the user, in which case the program should
-     * continue to operate.
+     * {@inheritDoc}
+     */
+    public List<ShutDownTask> tasks() {
+        return java.util.Collections.unmodifiableList(tasks);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
@@ -103,14 +113,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 100 if
-     * not aborted. Does not return under normal circumstances. Does return if
-     * the shutdown was aborted by the user, in which case the program should
-     * continue to operate.
-     *
-     * By exiting the program with status 100, the batch file (MS Windows) or
-     * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
-     * the java program.
+     * {@inheritDoc}
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
@@ -119,7 +122,8 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * First asks the shutdown tasks if shutdown is allowed. If not return false.
+     * First asks the shutdown tasks if shutdown is allowed. If not return
+     * false.
      * <p>
      * Then run the shutdown tasks, and then terminate the program with status 0
      * if not aborted. Does not return under normal circumstances. Does return
@@ -142,7 +146,7 @@ public class DefaultShutDownManager implements ShutDownManager {
             setShuttingDown(true);
             // First check if shut down is allowed
             for (ShutDownTask task : tasks) {
-                if (! task.isShutdownAllowed()) {
+                if (!task.isShutdownAllowed()) {
                     setShuttingDown(false);
                     return false;
                 }
@@ -182,7 +186,12 @@ public class DefaultShutDownManager implements ShutDownManager {
                         // do nothing
                     }
                     if ((new Date().getTime() - start.getTime()) > (timeout * 1000)) { // milliseconds
-                        log.warn("Terminating without waiting for all tasks to complete");
+                        log.warn("Terminating without waiting for the following tasks to complete");
+                        this.tasks.forEach((task) -> {
+                            if (!task.isComplete()) {
+                                log.warn("\t{}", task.getName());
+                            }
+                        });
                         break;
                     }
                 }
@@ -240,9 +249,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Check if application is shutting down.
-     *
-     * @return true if shutting down; false otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean isShuttingDown() {

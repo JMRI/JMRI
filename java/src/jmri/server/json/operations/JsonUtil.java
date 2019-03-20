@@ -104,12 +104,17 @@ public class JsonUtil {
             node.set(JSON.FINAL_DESTINATION, this.getLocationAndTrack(car.getFinalDestinationTrack(), null));
         } else if (car.getFinalDestination() != null) {
             node.set(JSON.FINAL_DESTINATION, this.getLocation(car.getFinalDestination(), null));
+        } else {
+            node.set(JSON.FINAL_DESTINATION, null);
         }
         if (car.getReturnWhenEmptyDestTrack() != null) {
             node.set(JSON.RETURN_WHEN_EMPTY, this.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null));
         } else if (car.getReturnWhenEmptyDestination() != null) {
             node.set(JSON.RETURN_WHEN_EMPTY, this.getLocation(car.getReturnWhenEmptyDestination(), null));
+        } else {
+            node.set(JSON.RETURN_WHEN_EMPTY, null);
         }
+        node.put(JSON.STATUS, car.getStatus());
         return node;
     }
 
@@ -136,6 +141,8 @@ public class JsonUtil {
         node.put(ID, location.getId());
         if (routeLocation != null) {
             node.put(ROUTE, routeLocation.getId());
+        } else {
+            node.put(ROUTE, (String) null);
         }
         return node;
     }
@@ -169,11 +176,15 @@ public class JsonUtil {
             node.set(LOCATION, this.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
         } else if (rs.getLocation() != null) {
             node.set(LOCATION, this.getLocation(rs.getLocation(), rs.getRouteLocation()));
+        } else {
+            node.set(LOCATION, null);
         }
         if (rs.getDestinationTrack() != null) {
             node.set(DESTINATION, this.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination()));
         } else if (rs.getDestination() != null) {
             node.set(DESTINATION, this.getLocation(rs.getDestination(), rs.getRouteDestination()));
+        } else {
+            node.set(DESTINATION, null);
         }
         return node;
     }

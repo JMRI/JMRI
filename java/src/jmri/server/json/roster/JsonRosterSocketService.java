@@ -63,10 +63,17 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
             case DELETE:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("DeleteNotAllowed", type));
             case POST:
+                switch (type) {
+                    case JsonRoster.ROSTER_ENTRY:
+                        this.connection.sendMessage(this.service.postRosterEntry(locale, data.path(NAME).asText(), data));
+                        break;
+                    default:
+                        throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("MethodNotImplemented", method, type));
+                }
+                break;
             case PUT:
                 throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("MethodNotImplemented", method, type));
             case GET:
-            default:
                 switch (type) {
                     case JsonRoster.ROSTER:
                         this.connection.sendMessage(this.service.getRoster(locale, data));
@@ -84,6 +91,8 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                         throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage("ErrorUnknownType", type));
                 }
                 break;
+            default:
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("UnknownMethod", method));
         }
         this.listen();
     }
@@ -154,7 +163,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
-                        // catch all events other than SAVED, and group stuff (handled elsewhere)
+                        // catch all events other than SAVED and ROSTER_GROUP_* (handled elsewhere)
                         connection.sendMessage(service.getRoster(connection.getLocale(), root));
                     }
                 } catch (JsonException ex) {
@@ -209,9 +218,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                             }
                         }
                     }
-
                 }
-
             } catch (IOException ex) {
                 onClose();
             }

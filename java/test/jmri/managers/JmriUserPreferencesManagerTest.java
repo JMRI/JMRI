@@ -934,7 +934,7 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
         Assert.assertTrue(target.exists());
         Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
@@ -974,7 +974,7 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
         Assert.assertTrue(target.exists());
         Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
@@ -999,6 +999,7 @@ public class JmriUserPreferencesManagerTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
         // ensure no existing UserPreferencesManager interferes with this test
         InstanceManager.reset(UserPreferencesManager.class);
@@ -1006,8 +1007,7 @@ public class JmriUserPreferencesManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     private static class TestJmriUserPreferencesManager extends JmriUserPreferencesManager {

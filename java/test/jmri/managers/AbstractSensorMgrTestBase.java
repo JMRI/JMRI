@@ -25,7 +25,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp();    	// load l with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
 
@@ -42,6 +42,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
+       Assert.assertNotNull("Sensor Manager Exists",l);
     }
 
     @Test
@@ -91,6 +92,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Assert.assertEquals(0, l.getSystemNameAddedOrderList().size());
         Assert.assertEquals(0, l.getSystemNameList().size());
         Assert.assertEquals(0, l.getSystemNameArray().length);
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         Assert.assertEquals(0, l.getObjectCount());
     }
 
@@ -101,7 +103,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Sensor t = l.provideSensor("" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test(expected=IllegalArgumentException.class)

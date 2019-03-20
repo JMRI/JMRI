@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.tree.DefaultTreeModel;
+import java.util.Set;
+import javax.swing.tree.*;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
@@ -44,21 +45,19 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
     public void writeCatalogTrees() throws IOException {
         log.debug("entered writeCatalogTreeValues");
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        List<String> trees = manager.getSystemNameList();
+        Set<CatalogTree> trees = manager.getNamedBeanSet();
         boolean found = false;
-        Iterator<String> iter = manager.getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            CatalogTree tree = manager.getBySystemName(sname);
+        for (CatalogTree tree : manager.getNamedBeanSet()) {
+            String sname = tree.getSystemName();
             if (log.isDebugEnabled()) {
                 log.debug("Tree: sysName= {}, userName= {}", sname, tree.getUserName());
                 CatalogTreeNode root = tree.getRoot();
                 log.debug("enumerateTree called for root= {}, has {} children", root, root.getChildCount());
 
                 @SuppressWarnings("unchecked") // root.depthFirstEnumeration isn't fully typed in JDOM2
-                Enumeration<CatalogTreeNode> e = root.depthFirstEnumeration();
+                Enumeration<TreeNode> e = root.depthFirstEnumeration();
                 while (e.hasMoreElements()) {
-                    CatalogTreeNode n = e.nextElement();
+                    CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
                     log.debug("nodeName= {} has {} leaves and {} subnodes.", n.getUserObject(), n.getLeaves().size(), n.getChildCount());
                 }
             }
@@ -107,21 +106,14 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
      * @param cat   Element to load with contents
      * @param trees List of contents
      */
-    public void store(Element cat, List<String> trees) {
-        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
+    public void store(Element cat, Set<CatalogTree> trees) {
         cat.setAttribute("class", "jmri.jmrit.catalog.DefaultCatalogTreeManagerConfigXML");
-        Iterator<String> iter = trees.iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            if (sname == null) {
-                log.error("System name null during store");
-                continue;
-            }
+        for (CatalogTree ct : trees) {
+            String sname = ct.getSystemName();
             log.debug("system name is {}", sname);
             if (sname.charAt(1) != CatalogTree.XML) {
                 continue;
             }
-            CatalogTree ct = manager.getBySystemName(sname);
             Element elem = new Element("catalogTree");
             elem.setAttribute("systemName", sname);
             String uname = ct.getUserName();
@@ -155,10 +147,9 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
             element.addContent(el);
         }
         parent.addContent(element);
-        @SuppressWarnings("unchecked") // is node.children actually of <Element> type?
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode) e.nextElement();
             storeNode(element, n);
         }
     }

@@ -6,14 +6,8 @@ import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of LayoutSlip
@@ -212,6 +206,7 @@ public class LayoutSlipTest {
 
     @Test
     @Ignore("No Test yet")
+    @ToDo("finish initialization of test and write code to test activation of turnouts")
     public void testActivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
@@ -223,6 +218,7 @@ public class LayoutSlipTest {
 
     @Test
     @Ignore("No Test yet")
+    @ToDo("finish initialization of test and write code to test deactivation of turnouts")
     public void testDeactivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
@@ -709,6 +705,7 @@ public class LayoutSlipTest {
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
             layoutEditor = new LayoutEditor();
         }
     }
@@ -718,12 +715,13 @@ public class LayoutSlipTest {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
+        layoutEditor = null;
         JUnitUtil.tearDown();
     }
 
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
+    public void setUp() {
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
             ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
@@ -731,12 +729,17 @@ public class LayoutSlipTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-        lts = null;
-        ltd = null;
-
-        // reset the instance manager.
-        JUnitUtil.tearDown();
+    public void tearDown() {
+        if(lts!=null) {
+           lts.remove();
+           lts.dispose();
+           lts = null;
+        }
+        if(ltd!=null) {
+           ltd.remove();
+           ltd.dispose();
+           ltd = null;
+        }
     }
     //private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
 }

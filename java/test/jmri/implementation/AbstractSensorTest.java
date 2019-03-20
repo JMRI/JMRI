@@ -35,7 +35,7 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         t = new AbstractSensor("Foo", "Bar"){
             @Override
                 public void requestUpdateFromLayout(){}
@@ -45,8 +45,8 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     @Override
     @After
     public void tearDown() {
-	t.dispose();
-	t = null;
+	    t.dispose();
+	    t = null;
         JUnitUtil.tearDown();
     }
 

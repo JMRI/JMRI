@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         BundleTest.class,
+        CvUtilTest.class,
         FileUtilTest.class,
         JUnitAppenderTest.class,
         IntlUtilitiesTest.class,
@@ -19,16 +20,16 @@ import org.junit.runners.Suite;
         AlphanumComparatorTest.class,
         ColorUtilTest.class,
         MathUtilTest.class,
+        JUnitSwingUtilTest.class,
         SwingTestCaseTest.class,
+        
         jmri.util.docbook.PackageTest.class,
         jmri.util.exceptionhandler.PackageTest.class,
         jmri.util.jdom.PackageTest.class,
+        jmri.util.junit.PackageTest.class,
         jmri.util.swing.PackageTest.class,
-
-        jmri.util.WaitHandlerTest.class,
-        jmri.util.PropertyChangeEventQueueTest.class,
         jmri.util.zeroconf.PackageTest.class,
-        jmri.util.DateUtilTest.class,
+
         jmri.util.prefs.PackageTest.class,
         jmri.util.javamail.PackageTest.class,
         jmri.util.davidflanagan.PackageTest.class,
@@ -36,6 +37,12 @@ import org.junit.runners.Suite;
         jmri.util.com.PackageTest.class,
         jmri.util.table.PackageTest.class,
         jmri.util.iharder.PackageTest.class,
+        jmri.util.usb.PackageTest.class,
+        jmri.util.xml.PackageTest.class,
+        
+        WaitHandlerTest.class,
+        PropertyChangeEventQueueTest.class,
+        DateUtilTest.class,
         BareBonesBrowserLaunchTest.class,
         ConnectionNameFromSystemNameTest.class,
         DnDStringImportHandlerTest.class,
@@ -62,17 +69,15 @@ import org.junit.runners.Suite;
         PhysicalLocationTest.class,
         PortNameMapperTest.class,
         ResizableImagePanelTest.class,
-        RuntimeUtilTest.class,
         SerialUtilTest.class,
         SocketUtilTest.class,
         SystemNameComparatorTest.class,
         SystemTypeTest.class,
+        TimerUtilTest.class,
         XmlFilenameFilterTest.class,
-        jmri.util.xml.PackageTest.class,
         JmriJFrameActionTest.class,
         JLogoutputFrameTest.class,
         WindowMenuTest.class,
-        jmri.util.usb.PackageTest.class,
         FileChooserFilterTest.class,
         JTreeWithPopupTest.class,
         MenuScrollerTest.class,
@@ -86,6 +91,7 @@ import org.junit.runners.Suite;
         QuickPromptUtilTest.class,
         UnzipFileClassTest.class,
         AbstractFrameActionTest.class,
+        ValidatingInputPaneTest.class,
 
         // deliberately at end
         jmri.util.Log4JErrorIsErrorTest.class,

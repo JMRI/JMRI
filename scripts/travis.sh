@@ -14,7 +14,7 @@ export MAVEN_OPTS=-Xmx1536m
 if [[ "${HEADLESS}" == "true" ]] ; then
     if [[ "${STATIC}" == "true" ]] ; then
         # compile with ECJ for warnings or errors
-        mvn antrun:run -Danttarget=tests-warnings
+        mvn antrun:run -Danttarget=tests-warnings-check
         # run SpotBugs only on headless, failing build if bugs are found
         # SpotBugs configuration is in pom.xml
         mvn clean test -U -P travis-spotbugs --batch-mode
@@ -29,7 +29,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
-            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox'"
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @chrome'"
     fi
 else
     # run full GUI test suite and fail on coverage issues
@@ -38,5 +38,5 @@ else
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
         -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags 'not @Ignore'"
+        -Dcucumber.options="--tags 'not @Ignore' --tags 'not @chrome'"
 fi

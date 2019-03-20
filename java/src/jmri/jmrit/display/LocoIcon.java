@@ -316,9 +316,6 @@ public class LocoIcon extends PositionableLabel {
     @Override
     public void doMouseReleased(MouseEvent event) {
         List<Positionable> selections = _editor.getSelectedItems(event);
-        if (selections == null) {
-            return;
-        }
         for (int i = 0; i < selections.size(); i++) {
             if (selections.get(i) instanceof IndicatorTrack) {
                 IndicatorTrack t = (IndicatorTrack) selections.get(i);

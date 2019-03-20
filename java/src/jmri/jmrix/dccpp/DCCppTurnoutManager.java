@@ -39,6 +39,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
 
     // DCCpp-specific methods
 
+    /** {@inheritDoc} */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t = null;
@@ -53,7 +54,9 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return t;
     }
 
-    // listen for turnouts, creating them as needed
+    /** {@inheritDoc}
+    * Listen for turnouts, creating them as needed.
+    */
     @Override
     public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
@@ -65,9 +68,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             if (addr >= 0) {
                 // check to see if the address has been operated before
                 // continuing.
-                if (log.isDebugEnabled()) {
-                    log.debug("message has address: {}", addr);
-                }
+                log.debug("message has address: {}", addr);
                 // reach here for switch command; make sure we know 
                 // about this one
                 String s = prefix + typeLetter() + addr;
@@ -88,9 +89,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             if (addr >= 0) {
                 // check to see if the address has been operated before
                 // continuing.
-                if (log.isDebugEnabled()) {
-                    log.debug("message has address: {}", addr);
-                }
+                log.debug("message has address: {}", addr);
                 // reach here for switch command; make sure we know 
                 // about this one
                 String s = prefix + typeLetter() + addr;
@@ -145,6 +144,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -152,6 +152,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
 
     /**
      * Get the bit address from the system name.
+     *
      * @return -1 for failure
      */
     public int getBitFromSystemName(String systemName) {
@@ -165,8 +166,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         // name must be in the DCCppTnnnnn format (DCCPP is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+            num = Integer.parseInt(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length()));
         } catch (Exception e) {
             log.error("invalid character in number field of system name: {}", systemName);
             return -1;
@@ -191,9 +192,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");

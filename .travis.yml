@@ -30,7 +30,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]]; then dbus-launch ; fi
 
 script:
-  travis_wait 40 ./scripts/travis.sh
+  - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
 
 cache:
   directories:

@@ -8,6 +8,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.beans
 import jmri
 
 # Define routine to map status numbers to text
@@ -73,18 +74,18 @@ listener = SensorListener()
 # and new sensors)
 class ManagerListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
-    list = event.source.getSystemNameList()
-    for i in range(list.size()) :
-        event.source.getSensor(list.get(i)).removePropertyChangeListener(listener)
-        event.source.getSensor(list.get(i)).addPropertyChangeListener(listener)
+    list = event.source.getNamedBeanSet()
+    for sensor in list :
+        sensor.removePropertyChangeListener(listener)
+        sensor.addPropertyChangeListener(listener)
 
 # Attach the sensor manager listener
 sensors.addPropertyChangeListener(ManagerListener())
 
 # For the sensors that exist, attach a sensor listener
-list = sensors.getSystemNameList()
-for i in range(list.size()) :
-    sensors.getSensor(list.get(i)).addPropertyChangeListener(listener)
+list = sensors.getNamedBeanSet()
+for i in list :
+    sensor.addPropertyChangeListener(listener)
 
 speak("block occupancy announcer started")
 

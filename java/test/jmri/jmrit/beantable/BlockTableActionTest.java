@@ -5,15 +5,11 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -117,15 +113,85 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
+    public void testRenameBlock() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // Create a Layout Block which will create the Block entry
+        LayoutBlockManager lbm = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlock layoutBlock = lbm.createNewLayoutBlock("ILB999", "Block Name");  // NOI18N
+        layoutBlock.initializeLayoutBlock();
+        Assert.assertNotNull(layoutBlock);
+        Assert.assertEquals("Block Name", layoutBlock.getUserName());  // NOI18N
+
+        // Get the referenced block
+        jmri.Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Block Name");  // NOI18N
+        Assert.assertNotNull(block);
+
+        // Open the block table
+        a.actionPerformed(null); // show table
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleBlockTable"));  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JTableOperator tbo = new JTableOperator(jfo);
+        Assert.assertNotNull(tbo);
+
+        // Click on the edit button, set the user name to empty for remove
+        tbo.clickOnCell(0, 5);
+        JFrameOperator jfoEdit = new JFrameOperator(Bundle.getMessage("TitleEditBlock"));  // NOI18N
+        JTextFieldOperator jtxt = new JTextFieldOperator(jfoEdit, 0);
+        jtxt.clickMouse();
+        jtxt.setText("");
+
+        // Preprare the dialog thread and click on OK
+        Thread remove = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "remove");  // NOI18N
+        new JButtonOperator(jfoEdit, "OK").doClick();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(remove.isAlive());}, "remove finished");  // NOI18N
+        tbo.clickOnCell(0, 0);  // deselect the edit button
+
+        // Click on the edit button, set the user name to a new value
+        tbo.clickOnCell(0, 5);
+        jfoEdit = new JFrameOperator(Bundle.getMessage("TitleEditBlock"));  // NOI18N
+        jtxt = new JTextFieldOperator(jfoEdit, 0);
+        jtxt.clickMouse();
+        jtxt.setText("New Block Name");  // NOI18N
+
+        // Preprare the dialog thread and click on OK
+        Thread rename = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "rename");  // NOI18N
+        new JButtonOperator(jfoEdit, "OK").doClick();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(rename.isAlive());}, "rename finished");  // NOI18N
+        tbo.clickOnCell(0, 0);  // deselect the edit button
+
+        // Confirm the layout block user name change
+        Assert.assertEquals("New Block Name", layoutBlock.getUserName());
+
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot remove user name for block Block Name");  // NOI18N
+    }
+
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
+        t.start();
+        return t;
+    }
+
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        helpTarget = "package.jmri.jmrit.beantable.BlockTable";
         a = new BlockTableAction();
     }
 
@@ -137,5 +203,4 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
-
 }

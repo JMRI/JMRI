@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
  */
-abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
+abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig implements StreamConnectionConfig {
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -32,6 +32,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
      * @param p the adapter to create a connection configuration for
      */
     public AbstractStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
+	super();
         adapter = p;
     }
 
@@ -41,8 +42,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
-     * subclass setInstance() will fill the adapter member.
+     * Ctor for a functional object with no preexisting adapter.
      */
     public AbstractStreamConnectionConfig() {
         adapter = null;
@@ -50,7 +50,6 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -132,13 +131,6 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     protected jmri.jmrix.AbstractStreamPortController adapter = null;
-
-    /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
-     */
-    @Override
-    abstract protected void setInstance();
 
     /**
      * {@inheritDoc}
@@ -249,6 +241,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         adapter.setManufacturer(manufacturer);
     }
 

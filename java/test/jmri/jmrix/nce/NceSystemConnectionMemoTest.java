@@ -1,9 +1,7 @@
 package jmri.jmrix.nce;
 
 import jmri.GlobalProgrammerManager;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * JUnit tests for the NceSystemConnectionMemo class
@@ -61,7 +59,7 @@ public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         memo.configureManagers();
     }
 
-    @Override
+    @After
     public void tearDown() {        
         jmri.util.JUnitUtil.tearDown();
     }

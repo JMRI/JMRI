@@ -418,7 +418,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new SerialTrafficController(new GrapevineSystemConnectionMemo()) {
             @Override
             void loadBuffer(AbstractMRReply msg) {

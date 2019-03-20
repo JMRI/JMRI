@@ -2,12 +2,7 @@ package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -26,19 +21,21 @@ public class OpSessionLogTest {
     @Test
     public void openAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        // create a thread that waits to close the dialog box opened later
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
-            jdo.close();
-        });
-        t.setName("OpSessionLog File Chooser Dialog Close Thread");
-        t.start();
-        
+                
         // create the window and make the log file on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             f = new jmri.util.JmriJFrame("OpSessionLog Chooser Test");
+            
+            // create a thread that waits to close the dialog box opened later
+            Thread t = new Thread(() -> {
+                // constructor for jdo will wait until the dialog is visible
+                JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
+                jdo.close();
+            });
+            t.setName("OpSessionLog File Chooser Dialog Close Thread");
+            t.start();
+
+            // get the result of closing
             retval = OpSessionLog.makeLogFile(f);
         });
         
@@ -61,10 +58,12 @@ public class OpSessionLogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        f = null;
         JUnitUtil.tearDown();
     }
 

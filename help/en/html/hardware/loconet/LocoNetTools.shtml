@@ -118,21 +118,24 @@
         </tr>
 
         <tr align="center">
-          <td><a href=
+          <td rowspan="2"><a href=
           "../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">
           Monitor LocoNet Stats</a></td>
 
-          <td>&bull;</td>
+          <td rowspan="2">&bull;</td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td>PR3, LocoBuffer, LocoBuffer-II, LocoBuffer-USB</td>
+          <td>PR3, PR4, LocoBuffer, LocoBuffer-II, LocoBuffer-USB</td>
+        </tr>
+        <tr align="center">
+            <td>When connected via its USB Interface: DCS52, DCS240</td>
         </tr>
 
         <tr align="center">
@@ -226,21 +229,25 @@
         </tr>
 
         <tr align="center">
-          <td><a href=
+          <td rowspan="2"><a href=
           "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
           Configure Command Station</a></td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td>&bull;</td>
+          <td rowspan="2">&bull;</td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
-          <td></td>
+          <td rowspan="2"></td>
 
           <td>DB150, DCS100, DCS50, DCS51</td>
+        </tr>
+        <tr align="center">
+          <td>Limited support for DCS240, DCS210, and DCS52</td>
+            
         </tr>
 
         <tr align="center">

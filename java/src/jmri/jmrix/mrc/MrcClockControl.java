@@ -346,38 +346,9 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         tc.sendMrcMessage(cmdMrc);
     }
 
-    @SuppressWarnings("unused")
-    private void issueClock1224(boolean mode) {
-        if (mode != mrcLast1224) {
-            MrcMessage cmdMrc = jmri.jmrix.mrc.MrcMessage.setClockAmPm();
-            tc.sendMrcMessage(cmdMrc);
-        }
-    }
-
     private void issueClockTime(int hh, int mm) {
         MrcMessage cmdMrc = jmri.jmrix.mrc.MrcMessage.setClockTime(hh, mm);
         tc.sendMrcMessage(cmdMrc);
-    }
-
-    @SuppressWarnings({"deprecation", "unused"})
-    private Date getMrcDate() {
-        Date now = internalClock.getTime();
-        if (lastClockReadPacket != null) {
-            now.setHours(lastClockReadPacket.getElement(CS_CLOCK_HOURS));
-            now.setMinutes(lastClockReadPacket.getElement(CS_CLOCK_MINUTES));
-            now.setSeconds(0);
-        }
-        return (now);
-    }
-
-    @SuppressWarnings("unused")
-    private double getMrcTime() {
-        double mrcTime = 0;
-        if (lastClockReadPacket != null) {
-            mrcTime = (lastClockReadPacket.getElement(CS_CLOCK_HOURS) * 3600)
-                    + (lastClockReadPacket.getElement(CS_CLOCK_MINUTES) * 60);
-        }
-        return (mrcTime);
     }
 
     private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class);

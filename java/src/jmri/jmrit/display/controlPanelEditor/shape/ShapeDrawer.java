@@ -158,7 +158,7 @@ public class ShapeDrawer {
             _currentSelection.drawHandles();
             return true;
         }
-        if (_currentSelection != null && _drawFrame == null) {
+        if (_currentSelection != null) {
             _currentSelection.removeHandles();                        
             _currentSelection = null;
         }

@@ -1,10 +1,8 @@
 package jmri.jmrix.internal;
 
-
+import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.internal.InternalTurnoutManager class.
@@ -18,12 +16,26 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         return "IT" + i;
     }
 
+    @Test
+    public void testAsAbstractFactory() {
+
+        // ask for a Turnout, and check type
+        Turnout tl = l.newTurnout("IT21", "my name");
+
+        Assert.assertTrue(null != tl);
+
+        // make sure loaded into tables
+        Assert.assertTrue(null != l.getBySystemName("IT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
+
+    }
+
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         // create and register the manager object
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();

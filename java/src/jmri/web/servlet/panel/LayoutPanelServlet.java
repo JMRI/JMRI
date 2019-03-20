@@ -104,18 +104,18 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             // include LayoutBlocks
             LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
-            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
+            java.util.Iterator<LayoutBlock> iter = tm.getNamedBeanSet().iterator();
             SensorManager sm = InstanceManager.sensorManagerInstance();
             int num = 0;
             while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during LayoutBlock store");
+                LayoutBlock b = iter.next();
+                if (b == null) {
+                    log.error("LayoutBlock null during LayoutBlock store");
+                    continue;
                 }
-                LayoutBlock b = tm.getBySystemName(sname);
                 if (b.getUseCount() > 0) {
                     // save only those LayoutBlocks that are in use--skip abandoned ones
-                    Element elem = new Element("layoutblock").setAttribute("systemname", sname);
+                    Element elem = new Element("layoutblock").setAttribute("systemname", b.getSystemName());
                     String uname = b.getUserName();
                     if (uname != null && !uname.isEmpty()) {
                         elem.setAttribute("username", uname);

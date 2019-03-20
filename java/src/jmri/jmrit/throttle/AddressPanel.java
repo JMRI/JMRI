@@ -535,6 +535,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     public void dispatchAddress() {
         if (throttle != null) {
+            int usageCount  = InstanceManager.throttleManagerInstance().getThrottleUsageCount(throttle.getLocoAddress()) - 1;
+
+            if ( usageCount != 0 ) {
+                JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
+                return;
+            }
             InstanceManager.throttleManagerInstance().dispatchThrottle(throttle, this);
             if (consistThrottle != null) {
                 InstanceManager.throttleManagerInstance().dispatchThrottle(consistThrottle, this);
@@ -596,7 +602,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      *
      * @param e The Element containing prefs as defined in DTD/throttle-config
      */
-    @SuppressWarnings("unchecked")
     public void setXml(Element e) {
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);

@@ -24,8 +24,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -285,6 +285,22 @@ public class Track {
     public String getName() {
         return _name;
     }
+    
+    public boolean isSpur() {
+        return getTrackType().equals(Track.SPUR);
+    }
+    
+    public boolean isYard() {
+        return getTrackType().equals(Track.YARD);
+    }
+    
+    public boolean isInterchange() {
+        return getTrackType().equals(Track.INTERCHANGE);
+    }
+    
+    public boolean isStaging() {
+        return getTrackType().equals(Track.STAGING);
+    }
 
     /**
      * Gets the track type
@@ -505,7 +521,7 @@ public class Track {
             return false;
         }
         // ignore reservation factor unless car is departing staging
-        if (car.getTrack() != null && car.getTrack().getTrackType().equals(STAGING)) {
+        if (car.getTrack() != null && car.getTrack().isStaging()) {
             return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
         }
         // if there's alternate, include that length in the calculation
@@ -731,7 +747,7 @@ public class Track {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+           setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
         }
     }
 
@@ -817,6 +833,26 @@ public class Track {
     public String getRoadOption() {
         return _roadOption;
     }
+    
+    public String getRoadOptionString() {
+        String s;
+        if (getRoadOption().equals(Track.INCLUDE_ROADS)) {
+            s = Bundle.getMessage("AcceptOnly") +
+                    " " +
+                    getRoadNames().length +
+                    " " +
+                    Bundle.getMessage("Roads");
+        } else if (getRoadOption().equals(Track.EXCLUDE_ROADS)) {
+            s = Bundle.getMessage("Exclude") +
+                    " " +
+                    getRoadNames().length +
+                    " " +
+                    Bundle.getMessage("Roads");
+        } else {
+            s = Bundle.getMessage("AcceptsAllRoads");
+        }
+        return s;
+    }
 
     /**
      * Set the road option for this track.
@@ -892,6 +928,26 @@ public class Track {
      */
     public String getLoadOption() {
         return _loadOption;
+    }
+    
+    public String getLoadOptionString() {
+        String s;
+        if (getLoadOption().equals(Track.INCLUDE_LOADS)) {
+            s = Bundle.getMessage("AcceptOnly") +
+                    " " +
+                    getLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else if (getLoadOption().equals(Track.EXCLUDE_LOADS)) {
+            s = Bundle.getMessage("Exclude") +
+                    " " +
+                    getLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else {
+            s = Bundle.getMessage("AcceptsAllLoads");
+        }
+        return s;
     }
 
     /**
@@ -1015,6 +1071,26 @@ public class Track {
      */
     public String getShipLoadOption() {
         return _shipLoadOption;
+    }
+    
+    public String getShipLoadOptionString() {
+        String s;
+        if (getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
+            s = Bundle.getMessage("ShipOnly") +
+                    " " +
+                    getShipLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else if (getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
+            s = Bundle.getMessage("Exclude") +
+                    " " +
+                    getShipLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else {
+            s = Bundle.getMessage("ShipAll");
+        }
+        return s;
     }
 
     /**
@@ -1226,7 +1302,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all trains
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_dropOption.equals(TRAINS)) {
@@ -1245,7 +1321,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all routes
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_dropOption.equals(EXCLUDE_ROUTES)) {
@@ -1308,7 +1384,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all trains
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_pickupOption.equals(TRAINS)) {
@@ -1327,7 +1403,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all routes
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_pickupOption.equals(EXCLUDE_ROUTES)) {
@@ -1420,13 +1496,13 @@ public class Track {
                         MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[]{getName()}); // no
             }
             // does this track (interchange) accept cars without a final destination?
-            if (getTrackType().equals(INTERCHANGE) &&
+            if (isInterchange() &&
                     isOnlyCarsWithFinalDestinationEnabled() &&
                     car.getFinalDestination() == null) {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
-            if (car.getKernel() != null && car.getKernel().isLead(car)) {
+            if (car.isLead()) {
                 length = car.getKernel().getTotalLength();
             }
             if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
@@ -1438,7 +1514,7 @@ public class Track {
         // check for loco in consist
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
-            if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
+            if (eng.isLead()) {
                 length = eng.getConsist().getTotalLength();
             }
         }
@@ -1522,7 +1598,7 @@ public class Track {
      * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
      */
     public String getServiceOrder() {
-        if (getTrackType().equals(SPUR) || getTrackType().equals(STAGING)) {
+        if (isSpur() || isStaging()) {
             return NORMAL;
         }
         return _order;
@@ -1579,7 +1655,7 @@ public class Track {
 
     public String getScheduleId() {
         // Only spurs can have a schedule
-        if (!getTrackType().equals(SPUR)) {
+        if (!isSpur()) {
             return NONE;
         }
         // old code only stored schedule name, so create id if needed.
@@ -1816,7 +1892,7 @@ public class Track {
             return OKAY;
         }
         // only spurs can have a schedule
-        if (!getTrackType().equals(SPUR)) {
+        if (!isSpur()) {
             return OKAY;
         }
         if (getScheduleId().equals(NONE)) {
@@ -1889,7 +1965,7 @@ public class Track {
 
     private String checkScheduleItem(ScheduleItem si, Car car) {
         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
-                !InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
+                !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
             TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getSetoutTrainScheduleId());
             if (sch != null) {
                 return SCHEDULE +
@@ -1990,7 +2066,7 @@ public class Track {
             return OKAY;
         }
         // is car part of a kernel?
-        if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+        if (car.getKernel() != null && !car.isLead()) {
             log.debug("Car ({}) is part of kernel ({}) not lead", car.toString(), car.getKernelName());
             return OKAY;
         }
@@ -2017,7 +2093,7 @@ public class Track {
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
                 getScheduleItemId(), getScheduleMode(), getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
         if (currentSi != null &&
-                (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || InstanceManager.getDefault(TrainManager.class)
+                (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || InstanceManager.getDefault(TrainScheduleManager.class)
                         .getTrainScheduleActiveId().equals(currentSi.getSetoutTrainScheduleId())) &&
                 car.getTypeName().equals(currentSi.getTypeName()) &&
                 (currentSi.getRoadName().equals(ScheduleItem.NONE) || car.getRoadName().equals(
@@ -2033,16 +2109,16 @@ public class Track {
             // + getLoad() + ") arrived out of sequence, needed type (" + currentSi.getType() // NOI18N
             // + ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")"); // NOI18N
             // build return message
-            String timetableName = "";
-            String currentTimetableName = "";
+            String scheduleName = "";
+            String currentTrainScheduleName = "";
             TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                    InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
+                    InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId());
             if (sch != null) {
-                timetableName = sch.getName();
+                scheduleName = sch.getName();
             }
             sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(currentSi.getSetoutTrainScheduleId());
             if (sch != null) {
-                currentTimetableName = sch.getName();
+                currentTrainScheduleName = sch.getName();
             }
             String mode = Bundle.getMessage("sequential");
             if (getScheduleMode() == 1) {
@@ -2050,8 +2126,8 @@ public class Track {
             }
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("sequentialMessage"), new Object[]{getScheduleName(),
-                            mode, car.toString(), car.getTypeName(), timetableName, car.getRoadName(),
-                            car.getLoadName(), currentSi.getTypeName(), currentTimetableName, currentSi.getRoadName(),
+                            mode, car.toString(), car.getTypeName(), scheduleName, car.getRoadName(),
+                            car.getLoadName(), currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
                             currentSi.getReceiveLoadName()});
         } else {
             log.error("ERROR Track " + getName() + " current schedule item is null!");
@@ -2323,8 +2399,12 @@ public class Track {
         }
     }
 
+    /**
+     * Get destination option for interchange or staging track
+     * @return option
+     */
     public String getDestinationOption() {
-        if (getTrackType().equals(INTERCHANGE) || getTrackType().equals(STAGING)) {
+        if (isInterchange() || isStaging()) {
             return _destinationOption;
         }
         return ALL_DESTINATIONS;
@@ -2374,6 +2454,7 @@ public class Track {
      * @param e Consist XML element
      * @param location The Location loading this track.
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Track(Element e, Location location) {
         _location = location;
         Attribute a;
@@ -2423,7 +2504,6 @@ public class Track {
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
             String[] types = new String[carTypes.size()];
             for (int i = 0; i < carTypes.size(); i++) {
@@ -2433,7 +2513,6 @@ public class Track {
                 }
             }
             setTypeNames(types);
-            @SuppressWarnings("unchecked")
             List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
             types = new String[locoTypes.size()];
             for (int i = 0; i < locoTypes.size(); i++) {
@@ -2457,7 +2536,6 @@ public class Track {
         }
         // new way of reading car loads using elements
         if (e.getChild(Xml.CAR_LOADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(Xml.CAR_LOAD);
             String[] loads = new String[carLoads.size()];
             for (int i = 0; i < carLoads.size(); i++) {
@@ -2479,7 +2557,6 @@ public class Track {
         }
         // new way of reading car loads using elements
         if (e.getChild(Xml.CAR_SHIP_LOADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carLoads = e.getChild(Xml.CAR_SHIP_LOADS).getChildren(Xml.CAR_LOAD);
             String[] loads = new String[carLoads.size()];
             for (int i = 0; i < carLoads.size(); i++) {
@@ -2492,7 +2569,6 @@ public class Track {
         }
         // new way of reading drop ids using elements
         if (e.getChild(Xml.DROP_IDS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> dropIds = e.getChild(Xml.DROP_IDS).getChildren(Xml.DROP_ID);
             String[] ids = new String[dropIds.size()];
             for (int i = 0; i < dropIds.size(); i++) {
@@ -2517,7 +2593,6 @@ public class Track {
 
         // new way of reading pick up ids using elements
         if (e.getChild(Xml.PICKUP_IDS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> pickupIds = e.getChild(Xml.PICKUP_IDS).getChildren(Xml.PICKUP_ID);
             String[] ids = new String[pickupIds.size()];
             for (int i = 0; i < pickupIds.size(); i++) {
@@ -2542,7 +2617,6 @@ public class Track {
 
         // new way of reading car roads using elements
         if (e.getChild(Xml.CAR_ROADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(Xml.CAR_ROAD);
             String[] roads = new String[carRoads.size()];
             for (int i = 0; i < carRoads.size(); i++) {
@@ -2646,7 +2720,6 @@ public class Track {
             _destinationOption = a.getValue();
         }
         if (e.getChild(Xml.DESTINATIONS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eDestinations = e.getChild(Xml.DESTINATIONS).getChildren(Xml.DESTINATION);
             for (Element eDestination : eDestinations) {
                 if ((a = eDestination.getAttribute(Xml.ID)) != null) {

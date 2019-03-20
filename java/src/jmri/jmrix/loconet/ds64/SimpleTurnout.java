@@ -1,4 +1,3 @@
-// simpleTurnout.java
 package jmri.jmrix.loconet.ds64;
 
 import org.slf4j.Logger;
@@ -74,7 +73,7 @@ public class SimpleTurnout {
     /**
      * Sets the turnout address of the simpleTurnout object.
      *
-     * @param addr - address value
+     * @param addr  address value
      */
     public void setAddress(Integer addr) {
         address = addr;
@@ -100,7 +99,7 @@ public class SimpleTurnout {
      * This position does not necessarily reflect the actual position of an associated
      * physical turnout.
      *
-     * @param isclosed - true if the object is to be marked as closed.
+     * @param isclosed  true if the object is to be marked as closed.
      */
     public void setIsClosed(boolean isclosed) {
         isClosed = isclosed;

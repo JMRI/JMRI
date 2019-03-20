@@ -357,12 +357,10 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Retrieve list of Audio Objects and remove the sources
-        List<String> audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.SOURCE) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing JoalAudioSource: " + audioName);
+                    log.debug("Removing JoalAudioSource: " + audio.getSystemName());
                 }
                 // Cast to JoalAudioSource and cleanup
                 ((JoalAudioSource) audio).cleanup();
@@ -370,12 +368,10 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
 
         // Now, re-retrieve list of Audio objects and remove the buffers
-        audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.BUFFER) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing JoalAudioBuffer: " + audioName);
+                    log.debug("Removing JoalAudioBuffer: " + audio.getSystemName());
                 }
                 // Cast to JoalAudioBuffer and cleanup
                 ((JoalAudioBuffer) audio).cleanup();
@@ -383,12 +379,10 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
 
         // Lastly, re-retrieve list and remove listener.
-        audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.LISTENER) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing JoalAudioListener: " + audioName);
+                    log.debug("Removing JoalAudioListener: " + audio.getSystemName());
                 }
                 // Cast to JoalAudioListener and cleanup
                 ((JoalAudioListener) audio).cleanup();

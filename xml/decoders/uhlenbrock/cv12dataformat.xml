@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved                            -->
-<!-- $Id$             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -35,7 +34,7 @@
   <!-- 	Uhlenbrock Decoder CV 12									-->
   <!--		for many decoders is usually in CV 49 - bits 3 and 4 	-->
   <!-- 	valid for certain decoder types only  :              		-->    
-  <!-- 						76560 (not exhaustive)             		-->  
+  <!-- 						76560, 36320 (not exhaustive)      		-->
   </revhistory>
   <variable item="Digital format" CV="12" comment="DCC and Motorola or DCC or Motorola" default="0" mask="XXXXXXVV">
 	<enumVal>
@@ -64,7 +63,7 @@
 	<label>Digital format</label>
 	<label xml:lang="de">Datenformat</label>			
 	<tooltip>If Disabled, the decoder will no longer accept commands and can only be programmed</tooltip>
-	<tooltip xml:lang="de">Wenn invalid, erhält der Decoder keine Fahrbefehle mehr und kann nur noch programmiert werden</tooltip>
+	<tooltip xml:lang="de">Wenn deaktiviert, erhält der Decoder keine Fahrbefehle mehr und kann nur noch programmiert werden</tooltip>
 	<tooltip xml:lang="it">Se disabilitato, non accetta comandi e può essere solo programmato</tooltip>
   </variable>
 </variables>

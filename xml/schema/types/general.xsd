@@ -35,7 +35,57 @@
     </xs:documentation>
   </xs:annotation>
 
+
+
+  <xs:complexType name="UnNamedBeanType">
+    <xs:annotation><xs:documentation>
+      General NamedBean type _without_ a system name specification.
+      Extend this with a definition of a specific system name type.
+    </xs:documentation></xs:annotation>
+    <xs:all>
+      <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="properties" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="property" minOccurs="1" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="key" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="class" type="classType" use="optional" />
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="value" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="class" type="classType" use="required" />
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="userName" type="userNameType">
+        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
   <xs:complexType name="NamedBeanType">
+    <xs:annotation><xs:documentation>
+      General NamedBean type with a general system name specification.
+      Extend this with a definition of a specific system name type.
+    </xs:documentation></xs:annotation>
     <xs:sequence>
       <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
@@ -72,7 +122,7 @@
       </xs:element>
     </xs:sequence>
     <xs:attribute name="systemName" type="systemNameType">
-        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of a required separate element</xs:documentation></xs:annotation>
     </xs:attribute>
     <xs:attribute name="userName" type="userNameType">
         <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
@@ -109,6 +159,62 @@
     </xs:restriction>
   </xs:simpleType>
   
+  <xs:simpleType name="turnoutSystemNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Fully enforces the format of a Turnout system name:
+          One letter and zero or more digits as a connection prefix;
+          the single letter T,
+          and a non-empty suffix.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+        <xs:pattern value="[A-Za-z][0-9]*T.+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+ <xs:simpleType name="sensorSystemNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Fully enforces the format of a Sensor system name:
+          One letter and zero or more digits as a connection prefix;
+          the single letter S,
+          and a non-empty suffix.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+        <xs:pattern value="[A-Za-z][0-9]*S.+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+ <xs:simpleType name="lightSystemNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Fully enforces the format of a Light system name:
+          One letter and zero or more digits as a connection prefix;
+          the single letter L,
+          and a non-empty suffix.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+        <xs:pattern value="[A-Za-z][0-9]*L.+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+ <xs:simpleType name="reporterSystemNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Fully enforces the format of a Reporter system name:
+          One letter and zero or more digits as a connection prefix;
+          the single letter R,
+          and a non-empty suffix.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+        <xs:pattern value="[A-Za-z][0-9]*R.+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="userNameType">
     <xs:annotation>
         <xs:documentation>
@@ -273,6 +379,8 @@
           As a special case, when there's more than one group, the 1st can be alpha numeric to indicate the type
           of formatting, e.g. "T2CV.12.34" for TCS.
           
+          Each of the n groups in n.n et al can actually be n=n with a single equals sign.
+          
           Commas, hyphens, dollar signs and quotes (single or double) need to remain 
           reserved away from CV names to permit later grouping of CV names
           in other contexts.
@@ -280,7 +388,7 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="([0-9]*)|(([0-9]*\.)*[0-9]*)|[a-zA-Z0-9]*\.(([0-9]*\.)*[0-9]*)"/>
+      <xs:pattern value="(([0-9]*)|[a-zA-Z0-9]*(=[0-9]*)?\.(([0-9]*(=[0-9]*)?\.)*([0-9]*=)?[0-9]*))|(([^(),\-:]*)\(?(([^(),\-:]+)(,[^(),\-:]+)+|([^(),\-:]*)(\d+)-(\d+)([^(),\-:]*)|([^(),\-:]*)(\d+):(-?\d+)([^(),\-:]*))\)?([^(),\-:]*))"/>
     </xs:restriction>
   </xs:simpleType>
 
