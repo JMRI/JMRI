@@ -13,33 +13,23 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017
  * @author Paul Bender Copyright (C) 2019
  */
-public class CbusMultiMeterTest {
-
-    @Test
-    public void testCtor() {
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        CbusMultiMeter t = new CbusMultiMeter(memo);
-        Assert.assertNotNull("exists",t);
-        
-        t = null;
-        tcis = null;
-        memo = null;
-    }
-
+public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        mm = new CbusMultiMeter(memo);
     }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    
+    @Test
+    @Override
+    public void testUpdateAndGetVoltage(){
+        Assert.assertEquals("no voltage", false, mm.hasVoltage() );
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusMultiMeterTest.class);
