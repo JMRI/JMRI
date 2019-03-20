@@ -132,7 +132,7 @@ public class JsonThrottleSocketServiceTest {
     }
 
     /**
-     * Test that opens a throttle using a RosterEntry ID, twiddles with function settings,
+     * Test that opens a throttle using a RosterEntry ID, presses function keys,
      * and closes it without releasing it.
      * 
      * @throws JsonException if an unexpected exception occurs
@@ -214,6 +214,71 @@ public class JsonThrottleSocketServiceTest {
         service.onClose();
         Assert.assertEquals("No throttles", 0, manager.getThrottles().size());
         JUnitAppender.assertWarnMessage("Roster Entry 42 running time not saved as entry is already open for editing");
+    }
+
+    /**
+     * Test that opens a throttle with one service, opens it with another
+     * service, verifies both services receive updates to changes made by the
+     * other service; then test that one service gets correct messages when
+     * other service throws IOException
+     * 
+     * @throws JsonException if an unexpected exception occurs
+     * @throws JmriException if an unexpected exception occurs
+     * @throws IOException   if an unexpected exception occurs
+     */
+    @Test
+    public void testRunThrottleMultipleClients() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection1 = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service1 = new JsonThrottleSocketService(connection1);
+        JsonMockConnection connection2 = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service2 = new JsonThrottleSocketService(connection2);
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
+        Assert.assertEquals("No throttles", 0, manager.getThrottles().size());
+        ObjectNode data1 = connection1.getObjectMapper().createObjectNode().put(JsonThrottle.THROTTLE, "client1");
+        ObjectNode data2 = connection2.getObjectMapper().createObjectNode().put(JsonThrottle.THROTTLE, "client2");
+        service1.onMessage(JsonThrottle.THROTTLE, data1.put(JSON.ADDRESS, 3), JSON.POST, Locale.ENGLISH);
+        JsonNode message1 = connection1.getMessage();
+        Assert.assertNotNull(message1);
+        Assert.assertEquals("One client", 1, message1.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
+        service2.onMessage(JsonThrottle.THROTTLE, data2.put(JSON.ADDRESS, 3), JSON.POST, Locale.ENGLISH);
+        Assert.assertEquals("One throttle", 1, manager.getThrottles().size());
+        Assert.assertEquals("Two services", 2, manager.getServers(manager.get(new DccLocoAddress(3, false))).size());
+        message1 = connection1.getMessage();
+        Assert.assertNotNull(message1);
+        Assert.assertEquals("Two clients", 2, message1.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
+        Assert.assertEquals("Client 1", "client1", message1.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
+        JsonNode message2 = connection2.getMessage();
+        Assert.assertNotNull(message2);
+        Assert.assertEquals("Two clients", 2, message2.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
+        Assert.assertEquals("Client 2", "client2", message2.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
+        data1 = connection1.getObjectMapper().createObjectNode().put(JsonThrottle.THROTTLE, "client1");
+        service1.onMessage(JsonThrottle.THROTTLE, data1.put(JsonThrottle.SPEED, 0.5), JSON.POST, Locale.ENGLISH);
+        message1 = connection1.getMessage();
+        Assert.assertNotNull(message1);
+        Assert.assertEquals("50% Speed", 0.5, message1.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Client 1", "client1", message1.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
+        message2 = connection2.getMessage();
+        Assert.assertNotNull(message2);
+        Assert.assertEquals("50% Speed", 0.5, message2.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Client 2", "client2", message2.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
+        connection1.setThrowIOException(true);
+        connection2.sendMessage((JsonNode) null);
+        data2 = connection2.getObjectMapper().createObjectNode().put(JsonThrottle.THROTTLE, "client2");
+        service2.onMessage(JsonThrottle.THROTTLE, data2.putNull(JsonThrottle.ESTOP), JSON.POST, Locale.ENGLISH);
+        message2 = connection2.getMessages();
+        Assert.assertNotNull(message2);
+        Assert.assertTrue(message2.isArray());
+        Assert.assertEquals("Two messages expected", 2, message2.size());
+        // order is dropped client followed by ESTOP because first client errors sending ESTOP and notification that
+        // client was dropped is sent before loop to send ESTOP to second client iterates
+        Assert.assertEquals("One client", 1, message2.path(0).path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
+        Assert.assertEquals("Client 2", "client2",
+                message2.path(0).path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
+        Assert.assertEquals("Emergency Stop", -1.0,
+                message2.path(1).path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Client 2", "client2",
+                message2.path(1).path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
+        JUnitAppender.assertWarnMessage("Unable to send message, closing connection: null");
     }
 
     @Test

@@ -72,7 +72,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     private DccLocoAddress address = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
-    private JsonThrottle(DccLocoAddress address, JsonThrottleSocketService server) {
+    protected JsonThrottle(DccLocoAddress address, JsonThrottleSocketService server) {
         this.address = address;
     }
 
