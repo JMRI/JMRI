@@ -73,14 +73,12 @@ public class WebServerTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initZeroConfServiceManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.zeroconf.ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (jmri.util.zeroconf.ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+        JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.tearDown();
     }
 }

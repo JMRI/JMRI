@@ -288,7 +288,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return (T) getIdTagManager();
         }
         if (T.equals(CabSignalManager.class)) {
-            return (T) getIdTagManager();
+            return (T) getCabSignalManager();
         }
         return super.get(T);
     }
@@ -327,7 +327,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        //InstanceManager.store(getCabSignalManager(),CabSignalManager.class);
+        InstanceManager.setReporterManager(getReporterManager());
+        
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));

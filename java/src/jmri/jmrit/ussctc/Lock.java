@@ -1,5 +1,7 @@
 package jmri.jmrit.ussctc;
 
+import java.util.*;
+
 /**
  * A Lock is the base interface for implementations that check layout conditions.
  * <p>
@@ -24,5 +26,20 @@ public interface Lock {
      */
     public boolean isLockClear();  
     
-    static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
+    /**
+     * Check a collection of Locks, handling the logging etc as needed
+     */
+    static public boolean checkLocksClear(List<Lock> locks) {
+        lockLogger.clear();
+        boolean permitted = true;
+        if (locks != null) {
+            for (Lock lock : locks) {
+                if ( ! lock.isLockClear()) permitted = false;
+            }
+        }
+        return permitted;
+    }
+
+    // static while we decide whether to access via scripts
+    final static LockLogger lockLogger = new LockLogger();
 }

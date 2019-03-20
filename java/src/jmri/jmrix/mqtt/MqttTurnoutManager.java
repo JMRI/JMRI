@@ -14,7 +14,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     private final MqttAdapter mqttAdapter;
     private final String systemPrefix;
 
-    MqttTurnoutManager(MqttAdapter ma, String p) {
+    public MqttTurnoutManager(MqttAdapter ma, String p) {
         super();
         mqttAdapter = ma;
         systemPrefix = p;        
@@ -27,10 +27,12 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        Turnout t;
+        MqttTurnout t;
         int addr = Integer.parseInt(systemName.substring(systemPrefix.length() + 1));
         t = new MqttTurnout(mqttAdapter, addr);
         t.setUserName(userName);
+
+        if (parser != null) t.setParser(parser);
 
         return t;
     }
@@ -44,5 +46,12 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
             return 250;
         }
     }
+
+    public void setParser(MqttContentParser<Turnout> parser) {
+        this.parser = parser;
+    }
+    MqttContentParser<Turnout> parser = null;
+
+    static volatile MqttTurnoutManager _instance = null;
 
 }

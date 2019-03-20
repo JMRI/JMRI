@@ -35,18 +35,24 @@ public class JsonReporterSocketServiceTest {
             service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in ReporterManager
             // default null value of memory1 has text representation "null" in JSON
-            Assert.assertEquals("null", connection.getMessage().path(JSON.DATA).path(JsonReporter.REPORT).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals("null", message.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             memory1.setReport("throw");
             JUnitUtil.waitFor(() -> {
                 return memory1.getCurrentReport().equals("throw");
             }, "Reporter to throw");
-            Assert.assertEquals("throw", connection.getMessage().path(JSON.DATA).path(JsonReporter.REPORT).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals("throw", message.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             memory1.setReport("close");
             JUnitUtil.waitFor(() -> {
                 return memory1.getCurrentReport().equals("close");
             }, "Reporter to close");
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
             Assert.assertEquals("close", memory1.getCurrentReport());
-            Assert.assertEquals("close", connection.getMessage().path(JSON.DATA).path(JsonReporter.REPORT).asText());
+            Assert.assertEquals("close", message.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             service.onClose();
             // TODO: test that service is no longer a listener in ReporterManager
         } catch (IOException | JmriException | JsonException ex) {

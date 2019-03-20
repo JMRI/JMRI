@@ -5,24 +5,25 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.SamplePane;
-import junit.extensions.jfcunit.TestHelper;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Swing jfcUnit tests for the Multipane (IDE) GUI
  *
  * @author	Bob Jacobsen Copyright 2010
  */
-public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
+public class MultiJfcUnitTest {
 
+    @Test
     public void testShow() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // Can't assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show the window
         JFrame f1 = new MultiPaneWindow("test",
                 "java/test/jmri/util/swing/xml/Gui3LeftTree.xml",
@@ -34,104 +35,71 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
         Assert.assertNotNull("found main frame", f1);
 
-        // Find the button that loads the license
-        AbstractButtonFinder finder = new AbstractButtonFinder("License");
-        JButton button = (JButton) finder.find(f1, 0);
-        Assert.assertNotNull("License button found", button);
-
-        // Click it to load license
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        // Load the license
+        JUnitUtil.pressButton(f1, "License");
 
         // Find the button that opens a sample panel
-        AbstractButtonFinder samplefinder = new AbstractButtonFinder("Sample");
-        JButton samplebutton = (JButton) samplefinder.find(f1, 0);
+        JButton samplebutton = JButtonOperator.findJButton(f1, "Sample", true, true);
         Assert.assertNotNull("Sample button found", samplebutton);
+        JButtonOperator sampleOperator = new JButtonOperator(samplebutton);
 
-        // Click it to load new pane over license
-        getHelper().enterClickAndLeave(new MouseEventData(this, samplebutton));
+        // Click the sample button to load new pane over license
+        sampleOperator.doClick();
 
         // Find the button on new panel
-        finder = new AbstractButtonFinder("Next1");
-        JButton next1button = (JButton) finder.find(f1, 0);
+        JButton next1button = JButtonOperator.findJButton(f1, "Next1", true, true);
         Assert.assertNotNull("Next1 button found", next1button);
 
         // Click it to load new window with Next2
-        getHelper().enterClickAndLeave(new MouseEventData(this, next1button));
+        new JButtonOperator(next1button).doClick();
 
         // nobody disposed yet
         Assert.assertEquals("no panes disposed", 0, SamplePane.disposed.size());
 
         // Find the Next2 button on new panel
-        finder = new AbstractButtonFinder("Next2");
-        JButton next2button = (JButton) finder.find(f1, 0);
+        JButton next2button = JButtonOperator.findJButton(f1, "Next2", true, true);
         Assert.assertNotNull("Next2 button found", next2button);
 
         // Click sample to reload 0 pane over 1 pane
-        getHelper().enterClickAndLeave(new MouseEventData(this, samplebutton));
+        sampleOperator.doClick();
 
         // Find the button on restored panel
-        finder = new AbstractButtonFinder("Next1");
-        button = (JButton) finder.find(f1, 0);
+        JButton button = JButtonOperator.findJButton(f1, "Next1", true, true);
         Assert.assertEquals("found same pane", next1button, button);
 
         // Find the button to open a pane in lower window
-        finder = new AbstractButtonFinder("Extend1");
-        JButton extendButton = (JButton) finder.find(f1, 0);
+        JButton extendButton = JButtonOperator.findJButton(f1, "Extend1", true, true);
         Assert.assertNotNull("Extend1 button found", extendButton);
         // Press it
-        getHelper().enterClickAndLeave(new MouseEventData(this, extendButton));
+        new JButtonOperator(extendButton).doClick();
 
         // Both Close1 and Close3 should be present
-        finder = new AbstractButtonFinder("Close1");
-        button = (JButton) finder.find(f1, 0);
+        button = JButtonOperator.findJButton(f1, "Close1", true, true);
         Assert.assertNotNull("Closee1 button found", button);
-        finder = new AbstractButtonFinder("Close3");
-        button = (JButton) finder.find(f1, 0);
+        button = JButtonOperator.findJButton(f1, "Close3", true, true);
         Assert.assertNotNull("Close3 button found", button);
 
         // nobody disposed yet
         Assert.assertEquals("no panes disposed", 0, SamplePane.disposed.size());
 
         // Close entire frame directly
-        TestHelper.disposeWindow(f1, this);
+        new JFrameOperator(f1).dispose();
 
         // Now they're disposed
         Assert.assertEquals("panes disposed", 3, SamplePane.disposed.size());
 
     }
 
-    // from here down is testing infrastructure
-    public MultiJfcUnitTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {MultiJfcUnitTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MultiJfcUnitTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        //jmri.util.JUnitUtil.initInternalTurnoutManager();
-        //jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<>();
         jmri.util.swing.SamplePane.index = 0;
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
-        super.tearDown();
     }
 }

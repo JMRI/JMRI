@@ -6,6 +6,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,13 +33,8 @@ public class LogixActionTest {
         Assert.assertNotNull("Memory IM6", im6);
         Assert.assertEquals("Contents IM6", "EastToWestOnSiding", im6.getValue());
 
-        /* Find Enable Logix button  <<< I'd like to use jfcunit but can't figure out the usage
-         AbstractButtonFinder finder = new AbstractButtonFinder("Enable/Disable Tests" );
-         JButton button = ( JButton ) finder.find();
-         Assert.assertNotNull(button);   // Fails here after long wait. stack overflow?
-         // Click button
-         getHelper().enterClickAndLeave( new MouseEventData( this, button ) );
-         */
+        // Find Enable Logix button  <<< Use GUI, but need Container to find button in
+        // JUnitUtil.pressButton(container, "Enable/Disable Tests");
         // OK, do it this way
         Sensor sensor = InstanceManager.sensorManagerInstance().getSensor("enableButton");
         Assert.assertNotNull("Sensor IS5", sensor);

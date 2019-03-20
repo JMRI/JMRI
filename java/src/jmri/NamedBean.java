@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -196,7 +198,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * Get a list of all the property change listeners that are registered using
      * a specific name
      *
-     * @param name - The name (either system or user) that the listener has
+     * @param name The name (either system or user) that the listener has
      *             registered as referencing this namedBean
      * @return empty list if none
      */
@@ -364,7 +366,8 @@ public interface NamedBean extends Comparable<NamedBean> {
      */
     @CheckReturnValue
     @Override
-    public default int compareTo(@Nonnull NamedBean n2) {
+    public default int compareTo(NamedBean n2) {
+        Objects.requireNonNull(n2);
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();
         String o2 = n2.getSystemName();

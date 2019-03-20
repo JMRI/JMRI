@@ -144,7 +144,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
      * special logic
      *
-     * @param name - system name of Conditional (must be trimmed and upper case)
+     * @param name  system name of Conditional (must be trimmed and upper case)
      * @return the parent Logix or null
      */
     @Override
@@ -194,8 +194,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * lookup. If this fails, or if x == null, looks up assuming that name is a
      * System Name. If both fail, returns null.
      *
-     * @param x    - parent Logix (may be null)
-     * @param name - name to look up
+     * @param x     parent Logix (may be null)
+     * @param name  name to look up
      * @return null if no match found
      */
     @Override
@@ -304,7 +304,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Overrides the bean method
      * @since 4.7.4
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet} 
      * @return a list of conditional system names regardless of parent Logix
      */
     @Deprecated // 4.11.5

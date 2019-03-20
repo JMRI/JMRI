@@ -125,7 +125,7 @@ public class SprogThrottle extends AbstractThrottle {
      * Set the speed step value and the related
      * speedIncrement value.
      *
-     * @param Mode - the current speed step mode - default should be 128 speed
+     * @param Mode  the current speed step mode - default should be 128 speed
      *             step mode in most cases
      */
     @Override

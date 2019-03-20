@@ -26,6 +26,7 @@ import org.junit.runners.Suite;
         AllocationPlanTest.class,
         AutoActiveTrainTest.class,
         AutoTrainActionTest.class,
+        LoadAtStartUpTest.class
 })
 
 /**

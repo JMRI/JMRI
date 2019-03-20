@@ -4426,7 +4426,7 @@
 
         <variable CV="256" item="Script 0 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="257" item="Script 0 Command 0 Signal" default="0" >
@@ -4436,7 +4436,7 @@
       </variable>
       <variable CV="258" item="Script 0 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="259" item="Script 0 Command 1 Signal" default="0" >
@@ -4446,7 +4446,7 @@
       </variable>
       <variable CV="260" item="Script 0 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="261" item="Script 0 Command 2 Signal" default="0" >
@@ -4456,7 +4456,7 @@
       </variable>
       <variable CV="262" item="Script 0 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="263" item="Script 0 Command 3 Signal" default="0" >
@@ -4466,7 +4466,7 @@
       </variable>
       <variable CV="264" item="Script 0 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="265" item="Script 0 Command 4 Signal" default="0" >
@@ -4476,7 +4476,7 @@
       </variable>
       <variable CV="266" item="Script 0 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="267" item="Script 0 Command 5 Signal" default="0" >
@@ -4486,7 +4486,7 @@
       </variable>
       <variable CV="268" item="Script 0 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="269" item="Script 0 Command 6 Signal" default="0" >
@@ -4496,7 +4496,7 @@
       </variable>
       <variable CV="270" item="Script 0 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="271" item="Script 0 Command 7 Signal" default="0" >
@@ -4506,7 +4506,7 @@
       </variable>
       <variable CV="272" item="Script 1 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="273" item="Script 1 Command 0 Signal" default="0" >
@@ -4516,7 +4516,7 @@
       </variable>
       <variable CV="274" item="Script 1 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="275" item="Script 1 Command 1 Signal" default="0" >
@@ -4526,7 +4526,7 @@
       </variable>
       <variable CV="276" item="Script 1 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="277" item="Script 1 Command 2 Signal" default="0" >
@@ -4536,7 +4536,7 @@
       </variable>
       <variable CV="278" item="Script 1 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="279" item="Script 1 Command 3 Signal" default="0" >
@@ -4546,7 +4546,7 @@
       </variable>
       <variable CV="280" item="Script 1 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="281" item="Script 1 Command 4 Signal" default="0" >
@@ -4556,7 +4556,7 @@
       </variable>
       <variable CV="282" item="Script 1 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="283" item="Script 1 Command 5 Signal" default="0" >
@@ -4566,7 +4566,7 @@
       </variable>
       <variable CV="284" item="Script 1 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="285" item="Script 1 Command 6 Signal" default="0" >
@@ -4576,7 +4576,7 @@
       </variable>
       <variable CV="286" item="Script 1 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="287" item="Script 1 Command 7 Signal" default="0" >
@@ -4586,7 +4586,7 @@
       </variable>
       <variable CV="288" item="Script 2 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="289" item="Script 2 Command 0 Signal" default="0" >
@@ -4596,7 +4596,7 @@
       </variable>
       <variable CV="290" item="Script 2 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="291" item="Script 2 Command 1 Signal" default="0" >
@@ -4606,7 +4606,7 @@
       </variable>
       <variable CV="292" item="Script 2 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="293" item="Script 2 Command 2 Signal" default="0" >
@@ -4616,7 +4616,7 @@
       </variable>
       <variable CV="294" item="Script 2 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="295" item="Script 2 Command 3 Signal" default="0" >
@@ -4626,7 +4626,7 @@
       </variable>
       <variable CV="296" item="Script 2 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="297" item="Script 2 Command 4 Signal" default="0" >
@@ -4636,7 +4636,7 @@
       </variable>
       <variable CV="298" item="Script 2 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="299" item="Script 2 Command 5 Signal" default="0" >
@@ -4646,7 +4646,7 @@
       </variable>
       <variable CV="300" item="Script 2 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="301" item="Script 2 Command 6 Signal" default="0" >
@@ -4656,7 +4656,7 @@
       </variable>
       <variable CV="302" item="Script 2 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="303" item="Script 2 Command 7 Signal" default="0" >
@@ -4666,7 +4666,7 @@
       </variable>
       <variable CV="304" item="Script 3 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="305" item="Script 3 Command 0 Signal" default="0" >
@@ -4676,7 +4676,7 @@
       </variable>
       <variable CV="306" item="Script 3 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="307" item="Script 3 Command 1 Signal" default="0" >
@@ -4686,7 +4686,7 @@
       </variable>
       <variable CV="308" item="Script 3 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="309" item="Script 3 Command 2 Signal" default="0" >
@@ -4696,7 +4696,7 @@
       </variable>
       <variable CV="310" item="Script 3 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="311" item="Script 3 Command 3 Signal" default="0" >
@@ -4706,7 +4706,7 @@
       </variable>
       <variable CV="312" item="Script 3 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="313" item="Script 3 Command 4 Signal" default="0" >
@@ -4716,7 +4716,7 @@
       </variable>
       <variable CV="314" item="Script 3 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="315" item="Script 3 Command 5 Signal" default="0" >
@@ -4726,7 +4726,7 @@
       </variable>
       <variable CV="316" item="Script 3 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="317" item="Script 3 Command 6 Signal" default="0" >
@@ -4736,7 +4736,7 @@
       </variable>
       <variable CV="318" item="Script 3 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="319" item="Script 3 Command 7 Signal" default="0" >
@@ -4746,7 +4746,7 @@
       </variable>
       <variable CV="320" item="Script 4 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="321" item="Script 4 Command 0 Signal" default="0" >
@@ -4756,7 +4756,7 @@
       </variable>
       <variable CV="322" item="Script 4 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="323" item="Script 4 Command 1 Signal" default="0" >
@@ -4766,7 +4766,7 @@
       </variable>
       <variable CV="324" item="Script 4 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="325" item="Script 4 Command 2 Signal" default="0" >
@@ -4776,7 +4776,7 @@
       </variable>
       <variable CV="326" item="Script 4 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="327" item="Script 4 Command 3 Signal" default="0" >
@@ -4786,7 +4786,7 @@
       </variable>
       <variable CV="328" item="Script 4 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="329" item="Script 4 Command 4 Signal" default="0" >
@@ -4796,7 +4796,7 @@
       </variable>
       <variable CV="330" item="Script 4 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="331" item="Script 4 Command 5 Signal" default="0" >
@@ -4806,7 +4806,7 @@
       </variable>
       <variable CV="332" item="Script 4 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="333" item="Script 4 Command 6 Signal" default="0" >
@@ -4816,7 +4816,7 @@
       </variable>
       <variable CV="334" item="Script 4 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="335" item="Script 4 Command 7 Signal" default="0" >
@@ -4826,7 +4826,7 @@
       </variable>
       <variable CV="336" item="Script 5 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="337" item="Script 5 Command 0 Signal" default="0" >
@@ -4836,7 +4836,7 @@
       </variable>
       <variable CV="338" item="Script 5 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="339" item="Script 5 Command 1 Signal" default="0" >
@@ -4846,7 +4846,7 @@
       </variable>
       <variable CV="340" item="Script 5 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="341" item="Script 5 Command 2 Signal" default="0" >
@@ -4856,7 +4856,7 @@
       </variable>
       <variable CV="342" item="Script 5 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="343" item="Script 5 Command 3 Signal" default="0" >
@@ -4866,7 +4866,7 @@
       </variable>
       <variable CV="344" item="Script 5 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="345" item="Script 5 Command 4 Signal" default="0" >
@@ -4876,7 +4876,7 @@
       </variable>
       <variable CV="346" item="Script 5 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="347" item="Script 5 Command 5 Signal" default="0" >
@@ -4886,7 +4886,7 @@
       </variable>
       <variable CV="348" item="Script 5 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="349" item="Script 5 Command 6 Signal" default="0" >
@@ -4896,7 +4896,7 @@
       </variable>
       <variable CV="350" item="Script 5 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="351" item="Script 5 Command 7 Signal" default="0" >
@@ -4906,7 +4906,7 @@
       </variable>
       <variable CV="352" item="Script 6 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="353" item="Script 6 Command 0 Signal" default="0" >
@@ -4916,7 +4916,7 @@
       </variable>
       <variable CV="354" item="Script 6 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="355" item="Script 6 Command 1 Signal" default="0" >
@@ -4926,7 +4926,7 @@
       </variable>
       <variable CV="356" item="Script 6 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="357" item="Script 6 Command 2 Signal" default="0" >
@@ -4936,7 +4936,7 @@
       </variable>
       <variable CV="358" item="Script 6 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="359" item="Script 6 Command 3 Signal" default="0" >
@@ -4946,7 +4946,7 @@
       </variable>
       <variable CV="360" item="Script 6 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="361" item="Script 6 Command 4 Signal" default="0" >
@@ -4956,7 +4956,7 @@
       </variable>
       <variable CV="362" item="Script 6 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="363" item="Script 6 Command 5 Signal" default="0" >
@@ -4966,7 +4966,7 @@
       </variable>
       <variable CV="364" item="Script 6 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="365" item="Script 6 Command 6 Signal" default="0" >
@@ -4976,7 +4976,7 @@
       </variable>
       <variable CV="366" item="Script 6 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="367" item="Script 6 Command 7 Signal" default="0" >
@@ -4986,7 +4986,7 @@
       </variable>
       <variable CV="368" item="Script 7 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="369" item="Script 7 Command 0 Signal" default="0" >
@@ -4996,7 +4996,7 @@
       </variable>
       <variable CV="370" item="Script 7 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="371" item="Script 7 Command 1 Signal" default="0" >
@@ -5006,7 +5006,7 @@
       </variable>
       <variable CV="372" item="Script 7 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="373" item="Script 7 Command 2 Signal" default="0" >
@@ -5016,7 +5016,7 @@
       </variable>
       <variable CV="374" item="Script 7 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="375" item="Script 7 Command 3 Signal" default="0" >
@@ -5026,7 +5026,7 @@
       </variable>
       <variable CV="376" item="Script 7 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="377" item="Script 7 Command 4 Signal" default="0" >
@@ -5036,7 +5036,7 @@
       </variable>
       <variable CV="378" item="Script 7 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="379" item="Script 7 Command 5 Signal" default="0" >
@@ -5046,7 +5046,7 @@
       </variable>
       <variable CV="380" item="Script 7 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="381" item="Script 7 Command 6 Signal" default="0" >
@@ -5056,7 +5056,7 @@
       </variable>
       <variable CV="382" item="Script 7 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="383" item="Script 7 Command 7 Signal" default="0" >
@@ -5066,7 +5066,7 @@
       </variable>
       <variable CV="384" item="Script 8 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="385" item="Script 8 Command 0 Signal" default="0" >
@@ -5076,7 +5076,7 @@
       </variable>
       <variable CV="386" item="Script 8 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="387" item="Script 8 Command 1 Signal" default="0" >
@@ -5086,7 +5086,7 @@
       </variable>
       <variable CV="388" item="Script 8 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="389" item="Script 8 Command 2 Signal" default="0" >
@@ -5096,7 +5096,7 @@
       </variable>
       <variable CV="390" item="Script 8 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="391" item="Script 8 Command 3 Signal" default="0" >
@@ -5106,7 +5106,7 @@
       </variable>
       <variable CV="392" item="Script 8 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="393" item="Script 8 Command 4 Signal" default="0" >
@@ -5116,7 +5116,7 @@
       </variable>
       <variable CV="394" item="Script 8 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="395" item="Script 8 Command 5 Signal" default="0" >
@@ -5126,7 +5126,7 @@
       </variable>
       <variable CV="396" item="Script 8 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="397" item="Script 8 Command 6 Signal" default="0" >
@@ -5136,7 +5136,7 @@
       </variable>
       <variable CV="398" item="Script 8 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="399" item="Script 8 Command 7 Signal" default="0" >
@@ -5146,7 +5146,7 @@
       </variable>
       <variable CV="400" item="Script 9 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="401" item="Script 9 Command 0 Signal" default="0" >
@@ -5156,7 +5156,7 @@
       </variable>
       <variable CV="402" item="Script 9 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="403" item="Script 9 Command 1 Signal" default="0" >
@@ -5166,7 +5166,7 @@
       </variable>
       <variable CV="404" item="Script 9 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="405" item="Script 9 Command 2 Signal" default="0" >
@@ -5176,7 +5176,7 @@
       </variable>
       <variable CV="406" item="Script 9 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="407" item="Script 9 Command 3 Signal" default="0" >
@@ -5186,7 +5186,7 @@
       </variable>
       <variable CV="408" item="Script 9 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="409" item="Script 9 Command 4 Signal" default="0" >
@@ -5196,7 +5196,7 @@
       </variable>
       <variable CV="410" item="Script 9 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="411" item="Script 9 Command 5 Signal" default="0" >
@@ -5206,7 +5206,7 @@
       </variable>
       <variable CV="412" item="Script 9 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="413" item="Script 9 Command 6 Signal" default="0" >
@@ -5216,7 +5216,7 @@
       </variable>
       <variable CV="414" item="Script 9 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="415" item="Script 9 Command 7 Signal" default="0" >
@@ -5226,7 +5226,7 @@
       </variable>
       <variable CV="416" item="Script 10 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="417" item="Script 10 Command 0 Signal" default="0" >
@@ -5236,7 +5236,7 @@
       </variable>
       <variable CV="418" item="Script 10 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="419" item="Script 10 Command 1 Signal" default="0" >
@@ -5246,7 +5246,7 @@
       </variable>
       <variable CV="420" item="Script 10 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="421" item="Script 10 Command 2 Signal" default="0" >
@@ -5256,7 +5256,7 @@
       </variable>
       <variable CV="422" item="Script 10 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="423" item="Script 10 Command 3 Signal" default="0" >
@@ -5266,7 +5266,7 @@
       </variable>
       <variable CV="424" item="Script 10 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="425" item="Script 10 Command 4 Signal" default="0" >
@@ -5276,7 +5276,7 @@
       </variable>
       <variable CV="426" item="Script 10 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="427" item="Script 10 Command 5 Signal" default="0" >
@@ -5286,7 +5286,7 @@
       </variable>
       <variable CV="428" item="Script 10 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="429" item="Script 10 Command 6 Signal" default="0" >
@@ -5296,7 +5296,7 @@
       </variable>
       <variable CV="430" item="Script 10 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="431" item="Script 10 Command 7 Signal" default="0" >
@@ -5306,7 +5306,7 @@
       </variable>
       <variable CV="432" item="Script 11 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="433" item="Script 11 Command 0 Signal" default="0" >
@@ -5316,7 +5316,7 @@
       </variable>
       <variable CV="434" item="Script 11 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="435" item="Script 11 Command 1 Signal" default="0" >
@@ -5326,7 +5326,7 @@
       </variable>
       <variable CV="436" item="Script 11 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="437" item="Script 11 Command 2 Signal" default="0" >
@@ -5336,7 +5336,7 @@
       </variable>
       <variable CV="438" item="Script 11 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="439" item="Script 11 Command 3 Signal" default="0" >
@@ -5346,7 +5346,7 @@
       </variable>
       <variable CV="440" item="Script 11 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="441" item="Script 11 Command 4 Signal" default="0" >
@@ -5356,7 +5356,7 @@
       </variable>
       <variable CV="442" item="Script 11 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="443" item="Script 11 Command 5 Signal" default="0" >
@@ -5366,7 +5366,7 @@
       </variable>
       <variable CV="444" item="Script 11 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="445" item="Script 11 Command 6 Signal" default="0" >
@@ -5376,7 +5376,7 @@
       </variable>
       <variable CV="446" item="Script 11 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="447" item="Script 11 Command 7 Signal" default="0" >
@@ -5386,7 +5386,7 @@
       </variable>
       <variable CV="448" item="Script 12 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="449" item="Script 12 Command 0 Signal" default="0" >
@@ -5396,7 +5396,7 @@
       </variable>
       <variable CV="450" item="Script 12 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="451" item="Script 12 Command 1 Signal" default="0" >
@@ -5406,7 +5406,7 @@
       </variable>
       <variable CV="452" item="Script 12 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="453" item="Script 12 Command 2 Signal" default="0" >
@@ -5416,7 +5416,7 @@
       </variable>
       <variable CV="454" item="Script 12 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="455" item="Script 12 Command 3 Signal" default="0" >
@@ -5426,7 +5426,7 @@
       </variable>
       <variable CV="456" item="Script 12 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="457" item="Script 12 Command 4 Signal" default="0" >
@@ -5436,7 +5436,7 @@
       </variable>
       <variable CV="458" item="Script 12 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="459" item="Script 12 Command 5 Signal" default="0" >
@@ -5446,7 +5446,7 @@
       </variable>
       <variable CV="460" item="Script 12 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="461" item="Script 12 Command 6 Signal" default="0" >
@@ -5456,7 +5456,7 @@
       </variable>
       <variable CV="462" item="Script 12 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="463" item="Script 12 Command 7 Signal" default="0" >
@@ -5466,7 +5466,7 @@
       </variable>
       <variable CV="464" item="Script 13 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="465" item="Script 13 Command 0 Signal" default="0" >
@@ -5476,7 +5476,7 @@
       </variable>
       <variable CV="466" item="Script 13 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="467" item="Script 13 Command 1 Signal" default="0" >
@@ -5486,7 +5486,7 @@
       </variable>
       <variable CV="468" item="Script 13 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="469" item="Script 13 Command 2 Signal" default="0" >
@@ -5496,7 +5496,7 @@
       </variable>
       <variable CV="470" item="Script 13 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="471" item="Script 13 Command 3 Signal" default="0" >
@@ -5506,7 +5506,7 @@
       </variable>
       <variable CV="472" item="Script 13 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="473" item="Script 13 Command 4 Signal" default="0" >
@@ -5516,7 +5516,7 @@
       </variable>
       <variable CV="474" item="Script 13 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="475" item="Script 13 Command 5 Signal" default="0" >
@@ -5526,7 +5526,7 @@
       </variable>
       <variable CV="476" item="Script 13 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="477" item="Script 13 Command 6 Signal" default="0" >
@@ -5536,7 +5536,7 @@
       </variable>
       <variable CV="478" item="Script 13 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="479" item="Script 13 Command 7 Signal" default="0" >
@@ -5546,7 +5546,7 @@
       </variable>
       <variable CV="480" item="Script 14 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="481" item="Script 14 Command 0 Signal" default="0" >
@@ -5556,7 +5556,7 @@
       </variable>
       <variable CV="482" item="Script 14 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="483" item="Script 14 Command 1 Signal" default="0" >
@@ -5566,7 +5566,7 @@
       </variable>
       <variable CV="484" item="Script 14 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="485" item="Script 14 Command 2 Signal" default="0" >
@@ -5576,7 +5576,7 @@
       </variable>
       <variable CV="486" item="Script 14 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="487" item="Script 14 Command 3 Signal" default="0" >
@@ -5586,7 +5586,7 @@
       </variable>
       <variable CV="488" item="Script 14 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="489" item="Script 14 Command 4 Signal" default="0" >
@@ -5596,7 +5596,7 @@
       </variable>
       <variable CV="490" item="Script 14 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="491" item="Script 14 Command 5 Signal" default="0" >
@@ -5606,7 +5606,7 @@
       </variable>
       <variable CV="492" item="Script 14 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="493" item="Script 14 Command 6 Signal" default="0" >
@@ -5616,7 +5616,7 @@
       </variable>
       <variable CV="494" item="Script 14 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="495" item="Script 14 Command 7 Signal" default="0" >
@@ -5626,7 +5626,7 @@
       </variable>
       <variable CV="496" item="Script 15 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="497" item="Script 15 Command 0 Signal" default="0" >
@@ -5636,7 +5636,7 @@
       </variable>
       <variable CV="498" item="Script 15 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="499" item="Script 15 Command 1 Signal" default="0" >
@@ -5646,7 +5646,7 @@
       </variable>
       <variable CV="500" item="Script 15 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="501" item="Script 15 Command 2 Signal" default="0" >
@@ -5656,7 +5656,7 @@
       </variable>
       <variable CV="502" item="Script 15 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="503" item="Script 15 Command 3 Signal" default="0" >
@@ -5666,7 +5666,7 @@
       </variable>
       <variable CV="504" item="Script 15 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="505" item="Script 15 Command 4 Signal" default="0" >
@@ -5676,7 +5676,7 @@
       </variable>
       <variable CV="506" item="Script 15 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="507" item="Script 15 Command 5 Signal" default="0" >
@@ -5686,7 +5686,7 @@
       </variable>
       <variable CV="508" item="Script 15 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="509" item="Script 15 Command 6 Signal" default="0" >
@@ -5696,7 +5696,7 @@
       </variable>
       <variable CV="510" item="Script 15 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="511" item="Script 15 Command 7 Signal" default="0" >
@@ -5706,7 +5706,7 @@
       </variable>
       <variable CV="512" item="Script 16 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="513" item="Script 16 Command 0 Signal" default="0" >
@@ -5716,7 +5716,7 @@
       </variable>
       <variable CV="514" item="Script 16 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="515" item="Script 16 Command 1 Signal" default="0" >
@@ -5726,7 +5726,7 @@
       </variable>
       <variable CV="516" item="Script 16 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="517" item="Script 16 Command 2 Signal" default="0" >
@@ -5736,7 +5736,7 @@
       </variable>
       <variable CV="518" item="Script 16 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="519" item="Script 16 Command 3 Signal" default="0" >
@@ -5746,7 +5746,7 @@
       </variable>
       <variable CV="520" item="Script 16 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="521" item="Script 16 Command 4 Signal" default="0" >
@@ -5756,7 +5756,7 @@
       </variable>
       <variable CV="522" item="Script 16 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="523" item="Script 16 Command 5 Signal" default="0" >
@@ -5766,7 +5766,7 @@
       </variable>
       <variable CV="524" item="Script 16 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="525" item="Script 16 Command 6 Signal" default="0" >
@@ -5776,7 +5776,7 @@
       </variable>
       <variable CV="526" item="Script 16 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="527" item="Script 16 Command 7 Signal" default="0" >
@@ -5786,7 +5786,7 @@
       </variable>
       <variable CV="528" item="Script 17 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="529" item="Script 17 Command 0 Signal" default="0" >
@@ -5796,7 +5796,7 @@
       </variable>
       <variable CV="530" item="Script 17 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="531" item="Script 17 Command 1 Signal" default="0" >
@@ -5806,7 +5806,7 @@
       </variable>
       <variable CV="532" item="Script 17 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="533" item="Script 17 Command 2 Signal" default="0" >
@@ -5816,7 +5816,7 @@
       </variable>
       <variable CV="534" item="Script 17 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="535" item="Script 17 Command 3 Signal" default="0" >
@@ -5826,7 +5826,7 @@
       </variable>
       <variable CV="536" item="Script 17 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="537" item="Script 17 Command 4 Signal" default="0" >
@@ -5836,7 +5836,7 @@
       </variable>
       <variable CV="538" item="Script 17 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="539" item="Script 17 Command 5 Signal" default="0" >
@@ -5846,7 +5846,7 @@
       </variable>
       <variable CV="540" item="Script 17 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="541" item="Script 17 Command 6 Signal" default="0" >
@@ -5856,7 +5856,7 @@
       </variable>
       <variable CV="542" item="Script 17 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="543" item="Script 17 Command 7 Signal" default="0" >
@@ -5866,7 +5866,7 @@
       </variable>
       <variable CV="544" item="Script 18 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="545" item="Script 18 Command 0 Signal" default="0" >
@@ -5876,7 +5876,7 @@
       </variable>
       <variable CV="546" item="Script 18 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="547" item="Script 18 Command 1 Signal" default="0" >
@@ -5886,7 +5886,7 @@
       </variable>
       <variable CV="548" item="Script 18 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="549" item="Script 18 Command 2 Signal" default="0" >
@@ -5896,7 +5896,7 @@
       </variable>
       <variable CV="550" item="Script 18 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="551" item="Script 18 Command 3 Signal" default="0" >
@@ -5906,7 +5906,7 @@
       </variable>
       <variable CV="552" item="Script 18 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="553" item="Script 18 Command 4 Signal" default="0" >
@@ -5916,7 +5916,7 @@
       </variable>
       <variable CV="554" item="Script 18 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="555" item="Script 18 Command 5 Signal" default="0" >
@@ -5926,7 +5926,7 @@
       </variable>
       <variable CV="556" item="Script 18 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="557" item="Script 18 Command 6 Signal" default="0" >
@@ -5936,7 +5936,7 @@
       </variable>
       <variable CV="558" item="Script 18 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="559" item="Script 18 Command 7 Signal" default="0" >
@@ -5946,7 +5946,7 @@
       </variable>
       <variable CV="560" item="Script 19 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="561" item="Script 19 Command 0 Signal" default="0" >
@@ -5956,7 +5956,7 @@
       </variable>
       <variable CV="562" item="Script 19 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="563" item="Script 19 Command 1 Signal" default="0" >
@@ -5966,7 +5966,7 @@
       </variable>
       <variable CV="564" item="Script 19 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="565" item="Script 19 Command 2 Signal" default="0" >
@@ -5976,7 +5976,7 @@
       </variable>
       <variable CV="566" item="Script 19 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="567" item="Script 19 Command 3 Signal" default="0" >
@@ -5986,7 +5986,7 @@
       </variable>
       <variable CV="568" item="Script 19 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="569" item="Script 19 Command 4 Signal" default="0" >
@@ -5996,7 +5996,7 @@
       </variable>
       <variable CV="570" item="Script 19 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="571" item="Script 19 Command 5 Signal" default="0" >
@@ -6006,7 +6006,7 @@
       </variable>
       <variable CV="572" item="Script 19 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="573" item="Script 19 Command 6 Signal" default="0" >
@@ -6016,7 +6016,7 @@
       </variable>
       <variable CV="574" item="Script 19 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="575" item="Script 19 Command 7 Signal" default="0" >
@@ -6026,7 +6026,7 @@
       </variable>
       <variable CV="576" item="Script 20 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="577" item="Script 20 Command 0 Signal" default="0" >
@@ -6036,7 +6036,7 @@
       </variable>
       <variable CV="578" item="Script 20 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="579" item="Script 20 Command 1 Signal" default="0" >
@@ -6046,7 +6046,7 @@
       </variable>
       <variable CV="580" item="Script 20 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="581" item="Script 20 Command 2 Signal" default="0" >
@@ -6056,7 +6056,7 @@
       </variable>
       <variable CV="582" item="Script 20 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="583" item="Script 20 Command 3 Signal" default="0" >
@@ -6066,7 +6066,7 @@
       </variable>
       <variable CV="584" item="Script 20 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="585" item="Script 20 Command 4 Signal" default="0" >
@@ -6076,7 +6076,7 @@
       </variable>
       <variable CV="586" item="Script 20 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="587" item="Script 20 Command 5 Signal" default="0" >
@@ -6086,7 +6086,7 @@
       </variable>
       <variable CV="588" item="Script 20 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="589" item="Script 20 Command 6 Signal" default="0" >
@@ -6096,7 +6096,7 @@
       </variable>
       <variable CV="590" item="Script 20 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="591" item="Script 20 Command 7 Signal" default="0" >
@@ -6106,7 +6106,7 @@
       </variable>
       <variable CV="592" item="Script 21 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="593" item="Script 21 Command 0 Signal" default="0" >
@@ -6116,7 +6116,7 @@
       </variable>
       <variable CV="594" item="Script 21 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="595" item="Script 21 Command 1 Signal" default="0" >
@@ -6126,7 +6126,7 @@
       </variable>
       <variable CV="596" item="Script 21 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="597" item="Script 21 Command 2 Signal" default="0" >
@@ -6136,7 +6136,7 @@
       </variable>
       <variable CV="598" item="Script 21 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="599" item="Script 21 Command 3 Signal" default="0" >
@@ -6146,7 +6146,7 @@
       </variable>
       <variable CV="600" item="Script 21 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="601" item="Script 21 Command 4 Signal" default="0" >
@@ -6156,7 +6156,7 @@
       </variable>
       <variable CV="602" item="Script 21 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="603" item="Script 21 Command 5 Signal" default="0" >
@@ -6166,7 +6166,7 @@
       </variable>
       <variable CV="604" item="Script 21 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="605" item="Script 21 Command 6 Signal" default="0" >
@@ -6176,7 +6176,7 @@
       </variable>
       <variable CV="606" item="Script 21 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="607" item="Script 21 Command 7 Signal" default="0" >
@@ -6186,7 +6186,7 @@
       </variable>
       <variable CV="608" item="Script 22 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="609" item="Script 22 Command 0 Signal" default="0" >
@@ -6196,7 +6196,7 @@
       </variable>
       <variable CV="610" item="Script 22 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="611" item="Script 22 Command 1 Signal" default="0" >
@@ -6206,7 +6206,7 @@
       </variable>
       <variable CV="612" item="Script 22 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="613" item="Script 22 Command 2 Signal" default="0" >
@@ -6216,7 +6216,7 @@
       </variable>
       <variable CV="614" item="Script 22 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="615" item="Script 22 Command 3 Signal" default="0" >
@@ -6226,7 +6226,7 @@
       </variable>
       <variable CV="616" item="Script 22 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="617" item="Script 22 Command 4 Signal" default="0" >
@@ -6236,7 +6236,7 @@
       </variable>
       <variable CV="618" item="Script 22 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="619" item="Script 22 Command 5 Signal" default="0" >
@@ -6246,7 +6246,7 @@
       </variable>
       <variable CV="620" item="Script 22 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="621" item="Script 22 Command 6 Signal" default="0" >
@@ -6256,7 +6256,7 @@
       </variable>
       <variable CV="622" item="Script 22 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="623" item="Script 22 Command 7 Signal" default="0" >
@@ -6266,7 +6266,7 @@
       </variable>
       <variable CV="624" item="Script 23 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="625" item="Script 23 Command 0 Signal" default="0" >
@@ -6276,7 +6276,7 @@
       </variable>
       <variable CV="626" item="Script 23 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="627" item="Script 23 Command 1 Signal" default="0" >
@@ -6286,7 +6286,7 @@
       </variable>
       <variable CV="628" item="Script 23 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="629" item="Script 23 Command 2 Signal" default="0" >
@@ -6296,7 +6296,7 @@
       </variable>
       <variable CV="630" item="Script 23 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="631" item="Script 23 Command 3 Signal" default="0" >
@@ -6306,7 +6306,7 @@
       </variable>
       <variable CV="632" item="Script 23 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="633" item="Script 23 Command 4 Signal" default="0" >
@@ -6316,7 +6316,7 @@
       </variable>
       <variable CV="634" item="Script 23 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="635" item="Script 23 Command 5 Signal" default="0" >
@@ -6326,7 +6326,7 @@
       </variable>
       <variable CV="636" item="Script 23 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="637" item="Script 23 Command 6 Signal" default="0" >
@@ -6336,7 +6336,7 @@
       </variable>
       <variable CV="638" item="Script 23 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="639" item="Script 23 Command 7 Signal" default="0" >
@@ -6346,7 +6346,7 @@
       </variable>
       <variable CV="640" item="Script 24 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="641" item="Script 24 Command 0 Signal" default="0" >
@@ -6356,7 +6356,7 @@
       </variable>
       <variable CV="642" item="Script 24 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="643" item="Script 24 Command 1 Signal" default="0" >
@@ -6366,7 +6366,7 @@
       </variable>
       <variable CV="644" item="Script 24 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="645" item="Script 24 Command 2 Signal" default="0" >
@@ -6376,7 +6376,7 @@
       </variable>
       <variable CV="646" item="Script 24 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="647" item="Script 24 Command 3 Signal" default="0" >
@@ -6386,7 +6386,7 @@
       </variable>
       <variable CV="648" item="Script 24 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="649" item="Script 24 Command 4 Signal" default="0" >
@@ -6396,7 +6396,7 @@
       </variable>
       <variable CV="650" item="Script 24 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="651" item="Script 24 Command 5 Signal" default="0" >
@@ -6406,7 +6406,7 @@
       </variable>
       <variable CV="652" item="Script 24 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="653" item="Script 24 Command 6 Signal" default="0" >
@@ -6416,7 +6416,7 @@
       </variable>
       <variable CV="654" item="Script 24 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="655" item="Script 24 Command 7 Signal" default="0" >
@@ -6426,7 +6426,7 @@
       </variable>
       <variable CV="656" item="Script 25 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="657" item="Script 25 Command 0 Signal" default="0" >
@@ -6436,7 +6436,7 @@
       </variable>
       <variable CV="658" item="Script 25 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="659" item="Script 25 Command 1 Signal" default="0" >
@@ -6446,7 +6446,7 @@
       </variable>
       <variable CV="660" item="Script 25 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="661" item="Script 25 Command 2 Signal" default="0" >
@@ -6456,7 +6456,7 @@
       </variable>
       <variable CV="662" item="Script 25 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="663" item="Script 25 Command 3 Signal" default="0" >
@@ -6466,7 +6466,7 @@
       </variable>
       <variable CV="664" item="Script 25 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="665" item="Script 25 Command 4 Signal" default="0" >
@@ -6476,7 +6476,7 @@
       </variable>
       <variable CV="666" item="Script 25 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="667" item="Script 25 Command 5 Signal" default="0" >
@@ -6486,7 +6486,7 @@
       </variable>
       <variable CV="668" item="Script 25 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="669" item="Script 25 Command 6 Signal" default="0" >
@@ -6496,7 +6496,7 @@
       </variable>
       <variable CV="670" item="Script 25 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="671" item="Script 25 Command 7 Signal" default="0" >
@@ -6506,7 +6506,7 @@
       </variable>
       <variable CV="672" item="Script 26 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="673" item="Script 26 Command 0 Signal" default="0" >
@@ -6516,7 +6516,7 @@
       </variable>
       <variable CV="674" item="Script 26 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="675" item="Script 26 Command 1 Signal" default="0" >
@@ -6526,7 +6526,7 @@
       </variable>
       <variable CV="676" item="Script 26 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="677" item="Script 26 Command 2 Signal" default="0" >
@@ -6536,7 +6536,7 @@
       </variable>
       <variable CV="678" item="Script 26 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="679" item="Script 26 Command 3 Signal" default="0" >
@@ -6546,7 +6546,7 @@
       </variable>
       <variable CV="680" item="Script 26 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="681" item="Script 26 Command 4 Signal" default="0" >
@@ -6556,7 +6556,7 @@
       </variable>
       <variable CV="682" item="Script 26 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="683" item="Script 26 Command 5 Signal" default="0" >
@@ -6566,7 +6566,7 @@
       </variable>
       <variable CV="684" item="Script 26 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="685" item="Script 26 Command 6 Signal" default="0" >
@@ -6576,7 +6576,7 @@
       </variable>
       <variable CV="686" item="Script 26 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="687" item="Script 26 Command 7 Signal" default="0" >
@@ -6586,7 +6586,7 @@
       </variable>
       <variable CV="688" item="Script 27 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="689" item="Script 27 Command 0 Signal" default="0" >
@@ -6596,7 +6596,7 @@
       </variable>
       <variable CV="690" item="Script 27 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="691" item="Script 27 Command 1 Signal" default="0" >
@@ -6606,7 +6606,7 @@
       </variable>
       <variable CV="692" item="Script 27 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="693" item="Script 27 Command 2 Signal" default="0" >
@@ -6616,7 +6616,7 @@
       </variable>
       <variable CV="694" item="Script 27 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="695" item="Script 27 Command 3 Signal" default="0" >
@@ -6626,7 +6626,7 @@
       </variable>
       <variable CV="696" item="Script 27 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="697" item="Script 27 Command 4 Signal" default="0" >
@@ -6636,7 +6636,7 @@
       </variable>
       <variable CV="698" item="Script 27 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="699" item="Script 27 Command 5 Signal" default="0" >
@@ -6646,7 +6646,7 @@
       </variable>
       <variable CV="700" item="Script 27 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="701" item="Script 27 Command 6 Signal" default="0" >
@@ -6656,7 +6656,7 @@
       </variable>
       <variable CV="702" item="Script 27 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="703" item="Script 27 Command 7 Signal" default="0" >
@@ -6666,7 +6666,7 @@
       </variable>
       <variable CV="704" item="Script 28 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="705" item="Script 28 Command 0 Signal" default="0" >
@@ -6676,7 +6676,7 @@
       </variable>
       <variable CV="706" item="Script 28 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="707" item="Script 28 Command 1 Signal" default="0" >
@@ -6686,7 +6686,7 @@
       </variable>
       <variable CV="708" item="Script 28 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="709" item="Script 28 Command 2 Signal" default="0" >
@@ -6696,7 +6696,7 @@
       </variable>
       <variable CV="710" item="Script 28 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="711" item="Script 28 Command 3 Signal" default="0" >
@@ -6706,7 +6706,7 @@
       </variable>
       <variable CV="712" item="Script 28 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="713" item="Script 28 Command 4 Signal" default="0" >
@@ -6716,7 +6716,7 @@
       </variable>
       <variable CV="714" item="Script 28 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="715" item="Script 28 Command 5 Signal" default="0" >
@@ -6726,7 +6726,7 @@
       </variable>
       <variable CV="716" item="Script 28 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="717" item="Script 28 Command 6 Signal" default="0" >
@@ -6736,7 +6736,7 @@
       </variable>
       <variable CV="718" item="Script 28 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="719" item="Script 28 Command 7 Signal" default="0" >
@@ -6746,7 +6746,7 @@
       </variable>
       <variable CV="720" item="Script 29 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="721" item="Script 29 Command 0 Signal" default="0" >
@@ -6756,7 +6756,7 @@
       </variable>
       <variable CV="722" item="Script 29 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="723" item="Script 29 Command 1 Signal" default="0" >
@@ -6766,7 +6766,7 @@
       </variable>
       <variable CV="724" item="Script 29 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="725" item="Script 29 Command 2 Signal" default="0" >
@@ -6776,7 +6776,7 @@
       </variable>
       <variable CV="726" item="Script 29 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="727" item="Script 29 Command 3 Signal" default="0" >
@@ -6786,7 +6786,7 @@
       </variable>
       <variable CV="728" item="Script 29 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="729" item="Script 29 Command 4 Signal" default="0" >
@@ -6796,7 +6796,7 @@
       </variable>
       <variable CV="730" item="Script 29 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="731" item="Script 29 Command 5 Signal" default="0" >
@@ -6806,7 +6806,7 @@
       </variable>
       <variable CV="732" item="Script 29 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="733" item="Script 29 Command 6 Signal" default="0" >
@@ -6816,7 +6816,7 @@
       </variable>
       <variable CV="734" item="Script 29 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="735" item="Script 29 Command 7 Signal" default="0" >
@@ -6826,7 +6826,7 @@
       </variable>
       <variable CV="736" item="Script 30 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="737" item="Script 30 Command 0 Signal" default="0" >
@@ -6836,7 +6836,7 @@
       </variable>
       <variable CV="738" item="Script 30 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="739" item="Script 30 Command 1 Signal" default="0" >
@@ -6846,7 +6846,7 @@
       </variable>
       <variable CV="740" item="Script 30 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="741" item="Script 30 Command 2 Signal" default="0" >
@@ -6856,7 +6856,7 @@
       </variable>
       <variable CV="742" item="Script 30 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="743" item="Script 30 Command 3 Signal" default="0" >
@@ -6866,7 +6866,7 @@
       </variable>
       <variable CV="744" item="Script 30 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="745" item="Script 30 Command 4 Signal" default="0" >
@@ -6876,7 +6876,7 @@
       </variable>
       <variable CV="746" item="Script 30 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="747" item="Script 30 Command 5 Signal" default="0" >
@@ -6886,7 +6886,7 @@
       </variable>
       <variable CV="748" item="Script 30 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="749" item="Script 30 Command 6 Signal" default="0" >
@@ -6896,7 +6896,7 @@
       </variable>
       <variable CV="750" item="Script 30 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="751" item="Script 30 Command 7 Signal" default="0" >
@@ -6906,7 +6906,7 @@
       </variable>
       <variable CV="752" item="Script 31 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="753" item="Script 31 Command 0 Signal" default="0" >
@@ -6916,7 +6916,7 @@
       </variable>
       <variable CV="754" item="Script 31 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="755" item="Script 31 Command 1 Signal" default="0" >
@@ -6926,7 +6926,7 @@
       </variable>
       <variable CV="756" item="Script 31 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="757" item="Script 31 Command 2 Signal" default="0" >
@@ -6936,7 +6936,7 @@
       </variable>
       <variable CV="758" item="Script 31 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="759" item="Script 31 Command 3 Signal" default="0" >
@@ -6946,7 +6946,7 @@
       </variable>
       <variable CV="760" item="Script 31 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="761" item="Script 31 Command 4 Signal" default="0" >
@@ -6956,7 +6956,7 @@
       </variable>
       <variable CV="762" item="Script 31 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="763" item="Script 31 Command 5 Signal" default="0" >
@@ -6966,7 +6966,7 @@
       </variable>
       <variable CV="764" item="Script 31 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="765" item="Script 31 Command 6 Signal" default="0" >
@@ -6976,7 +6976,7 @@
       </variable>
       <variable CV="766" item="Script 31 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="767" item="Script 31 Command 7 Signal" default="0" >
@@ -6986,7 +6986,7 @@
       </variable>
       <variable CV="768" item="Script 32 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="769" item="Script 32 Command 0 Signal" default="0" >
@@ -6996,7 +6996,7 @@
       </variable>
       <variable CV="770" item="Script 32 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="771" item="Script 32 Command 1 Signal" default="0" >
@@ -7006,7 +7006,7 @@
       </variable>
       <variable CV="772" item="Script 32 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="773" item="Script 32 Command 2 Signal" default="0" >
@@ -7016,7 +7016,7 @@
       </variable>
       <variable CV="774" item="Script 32 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="775" item="Script 32 Command 3 Signal" default="0" >
@@ -7026,7 +7026,7 @@
       </variable>
       <variable CV="776" item="Script 32 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="777" item="Script 32 Command 4 Signal" default="0" >
@@ -7036,7 +7036,7 @@
       </variable>
       <variable CV="778" item="Script 32 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="779" item="Script 32 Command 5 Signal" default="0" >
@@ -7046,7 +7046,7 @@
       </variable>
       <variable CV="780" item="Script 32 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="781" item="Script 32 Command 6 Signal" default="0" >
@@ -7056,7 +7056,7 @@
       </variable>
       <variable CV="782" item="Script 32 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="783" item="Script 32 Command 7 Signal" default="0" >
@@ -7066,7 +7066,7 @@
       </variable>
       <variable CV="784" item="Script 33 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="785" item="Script 33 Command 0 Signal" default="0" >
@@ -7076,7 +7076,7 @@
       </variable>
       <variable CV="786" item="Script 33 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="787" item="Script 33 Command 1 Signal" default="0" >
@@ -7086,7 +7086,7 @@
       </variable>
       <variable CV="788" item="Script 33 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="789" item="Script 33 Command 2 Signal" default="0" >
@@ -7096,7 +7096,7 @@
       </variable>
       <variable CV="790" item="Script 33 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="791" item="Script 33 Command 3 Signal" default="0" >
@@ -7106,7 +7106,7 @@
       </variable>
       <variable CV="792" item="Script 33 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="793" item="Script 33 Command 4 Signal" default="0" >
@@ -7116,7 +7116,7 @@
       </variable>
       <variable CV="794" item="Script 33 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="795" item="Script 33 Command 5 Signal" default="0" >
@@ -7126,7 +7126,7 @@
       </variable>
       <variable CV="796" item="Script 33 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="797" item="Script 33 Command 6 Signal" default="0" >
@@ -7136,7 +7136,7 @@
       </variable>
       <variable CV="798" item="Script 33 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="799" item="Script 33 Command 7 Signal" default="0" >
@@ -7146,7 +7146,7 @@
       </variable>
       <variable CV="800" item="Script 34 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="801" item="Script 34 Command 0 Signal" default="0" >
@@ -7156,7 +7156,7 @@
       </variable>
       <variable CV="802" item="Script 34 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="803" item="Script 34 Command 1 Signal" default="0" >
@@ -7166,7 +7166,7 @@
       </variable>
       <variable CV="804" item="Script 34 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="805" item="Script 34 Command 2 Signal" default="0" >
@@ -7176,7 +7176,7 @@
       </variable>
       <variable CV="806" item="Script 34 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="807" item="Script 34 Command 3 Signal" default="0" >
@@ -7186,7 +7186,7 @@
       </variable>
       <variable CV="808" item="Script 34 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="809" item="Script 34 Command 4 Signal" default="0" >
@@ -7196,7 +7196,7 @@
       </variable>
       <variable CV="810" item="Script 34 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="811" item="Script 34 Command 5 Signal" default="0" >
@@ -7206,7 +7206,7 @@
       </variable>
       <variable CV="812" item="Script 34 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="813" item="Script 34 Command 6 Signal" default="0" >
@@ -7216,7 +7216,7 @@
       </variable>
       <variable CV="814" item="Script 34 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="815" item="Script 34 Command 7 Signal" default="0" >
@@ -7226,7 +7226,7 @@
       </variable>
       <variable CV="816" item="Script 35 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="817" item="Script 35 Command 0 Signal" default="0" >
@@ -7236,7 +7236,7 @@
       </variable>
       <variable CV="818" item="Script 35 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="819" item="Script 35 Command 1 Signal" default="0" >
@@ -7246,7 +7246,7 @@
       </variable>
       <variable CV="820" item="Script 35 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="821" item="Script 35 Command 2 Signal" default="0" >
@@ -7256,7 +7256,7 @@
       </variable>
       <variable CV="822" item="Script 35 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="823" item="Script 35 Command 3 Signal" default="0" >
@@ -7266,7 +7266,7 @@
       </variable>
       <variable CV="824" item="Script 35 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="825" item="Script 35 Command 4 Signal" default="0" >
@@ -7276,7 +7276,7 @@
       </variable>
       <variable CV="826" item="Script 35 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="827" item="Script 35 Command 5 Signal" default="0" >
@@ -7286,7 +7286,7 @@
       </variable>
       <variable CV="828" item="Script 35 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="829" item="Script 35 Command 6 Signal" default="0" >
@@ -7296,7 +7296,7 @@
       </variable>
       <variable CV="830" item="Script 35 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="831" item="Script 35 Command 7 Signal" default="0" >
@@ -7306,7 +7306,7 @@
       </variable>
       <variable CV="832" item="Script 36 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="833" item="Script 36 Command 0 Signal" default="0" >
@@ -7316,7 +7316,7 @@
       </variable>
       <variable CV="834" item="Script 36 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="835" item="Script 36 Command 1 Signal" default="0" >
@@ -7326,7 +7326,7 @@
       </variable>
       <variable CV="836" item="Script 36 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="837" item="Script 36 Command 2 Signal" default="0" >
@@ -7336,7 +7336,7 @@
       </variable>
       <variable CV="838" item="Script 36 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="839" item="Script 36 Command 3 Signal" default="0" >
@@ -7346,7 +7346,7 @@
       </variable>
       <variable CV="840" item="Script 36 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="841" item="Script 36 Command 4 Signal" default="0" >
@@ -7356,7 +7356,7 @@
       </variable>
       <variable CV="842" item="Script 36 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="843" item="Script 36 Command 5 Signal" default="0" >
@@ -7366,7 +7366,7 @@
       </variable>
       <variable CV="844" item="Script 36 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="845" item="Script 36 Command 6 Signal" default="0" >
@@ -7376,7 +7376,7 @@
       </variable>
       <variable CV="846" item="Script 36 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="847" item="Script 36 Command 7 Signal" default="0" >
@@ -7386,7 +7386,7 @@
       </variable>
       <variable CV="848" item="Script 37 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="849" item="Script 37 Command 0 Signal" default="0" >
@@ -7396,7 +7396,7 @@
       </variable>
       <variable CV="850" item="Script 37 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="851" item="Script 37 Command 1 Signal" default="0" >
@@ -7406,7 +7406,7 @@
       </variable>
       <variable CV="852" item="Script 37 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="853" item="Script 37 Command 2 Signal" default="0" >
@@ -7416,7 +7416,7 @@
       </variable>
       <variable CV="854" item="Script 37 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="855" item="Script 37 Command 3 Signal" default="0" >
@@ -7426,7 +7426,7 @@
       </variable>
       <variable CV="856" item="Script 37 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="857" item="Script 37 Command 4 Signal" default="0" >
@@ -7436,7 +7436,7 @@
       </variable>
       <variable CV="858" item="Script 37 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="859" item="Script 37 Command 5 Signal" default="0" >
@@ -7446,7 +7446,7 @@
       </variable>
       <variable CV="860" item="Script 37 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="861" item="Script 37 Command 6 Signal" default="0" >
@@ -7456,7 +7456,7 @@
       </variable>
       <variable CV="862" item="Script 37 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="863" item="Script 37 Command 7 Signal" default="0" >
@@ -7466,7 +7466,7 @@
       </variable>
       <variable CV="864" item="Script 38 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="865" item="Script 38 Command 0 Signal" default="0" >
@@ -7476,7 +7476,7 @@
       </variable>
       <variable CV="866" item="Script 38 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="867" item="Script 38 Command 1 Signal" default="0" >
@@ -7486,7 +7486,7 @@
       </variable>
       <variable CV="868" item="Script 38 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="869" item="Script 38 Command 2 Signal" default="0" >
@@ -7496,7 +7496,7 @@
       </variable>
       <variable CV="870" item="Script 38 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="871" item="Script 38 Command 3 Signal" default="0" >
@@ -7506,7 +7506,7 @@
       </variable>
       <variable CV="872" item="Script 38 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="873" item="Script 38 Command 4 Signal" default="0" >
@@ -7516,7 +7516,7 @@
       </variable>
       <variable CV="874" item="Script 38 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="875" item="Script 38 Command 5 Signal" default="0" >
@@ -7526,7 +7526,7 @@
       </variable>
       <variable CV="876" item="Script 38 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="877" item="Script 38 Command 6 Signal" default="0" >
@@ -7536,7 +7536,7 @@
       </variable>
       <variable CV="878" item="Script 38 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="879" item="Script 38 Command 7 Signal" default="0" >
@@ -7546,7 +7546,7 @@
       </variable>
       <variable CV="880" item="Script 39 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="881" item="Script 39 Command 0 Signal" default="0" >
@@ -7556,7 +7556,7 @@
       </variable>
       <variable CV="882" item="Script 39 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="883" item="Script 39 Command 1 Signal" default="0" >
@@ -7566,7 +7566,7 @@
       </variable>
       <variable CV="884" item="Script 39 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="885" item="Script 39 Command 2 Signal" default="0" >
@@ -7576,7 +7576,7 @@
       </variable>
       <variable CV="886" item="Script 39 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="887" item="Script 39 Command 3 Signal" default="0" >
@@ -7586,7 +7586,7 @@
       </variable>
       <variable CV="888" item="Script 39 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="889" item="Script 39 Command 4 Signal" default="0" >
@@ -7596,7 +7596,7 @@
       </variable>
       <variable CV="890" item="Script 39 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="891" item="Script 39 Command 5 Signal" default="0" >
@@ -7606,7 +7606,7 @@
       </variable>
       <variable CV="892" item="Script 39 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="893" item="Script 39 Command 6 Signal" default="0" >
@@ -7616,7 +7616,7 @@
       </variable>
       <variable CV="894" item="Script 39 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="895" item="Script 39 Command 7 Signal" default="0" >
@@ -7626,7 +7626,7 @@
       </variable>
       <variable CV="896" item="Script 40 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="897" item="Script 40 Command 0 Signal" default="0" >
@@ -7636,7 +7636,7 @@
       </variable>
       <variable CV="898" item="Script 40 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="899" item="Script 40 Command 1 Signal" default="0" >
@@ -7646,7 +7646,7 @@
       </variable>
       <variable CV="900" item="Script 40 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="901" item="Script 40 Command 2 Signal" default="0" >
@@ -7656,7 +7656,7 @@
       </variable>
       <variable CV="902" item="Script 40 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="903" item="Script 40 Command 3 Signal" default="0" >
@@ -7666,7 +7666,7 @@
       </variable>
       <variable CV="904" item="Script 40 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="905" item="Script 40 Command 4 Signal" default="0" >
@@ -7676,7 +7676,7 @@
       </variable>
       <variable CV="906" item="Script 40 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="907" item="Script 40 Command 5 Signal" default="0" >
@@ -7686,7 +7686,7 @@
       </variable>
       <variable CV="908" item="Script 40 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="909" item="Script 40 Command 6 Signal" default="0" >
@@ -7696,7 +7696,7 @@
       </variable>
       <variable CV="910" item="Script 40 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="911" item="Script 40 Command 7 Signal" default="0" >
@@ -7706,7 +7706,7 @@
       </variable>
       <variable CV="912" item="Script 41 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="913" item="Script 41 Command 0 Signal" default="0" >
@@ -7716,7 +7716,7 @@
       </variable>
       <variable CV="914" item="Script 41 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="915" item="Script 41 Command 1 Signal" default="0" >
@@ -7726,7 +7726,7 @@
       </variable>
       <variable CV="916" item="Script 41 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="917" item="Script 41 Command 2 Signal" default="0" >
@@ -7736,7 +7736,7 @@
       </variable>
       <variable CV="918" item="Script 41 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="919" item="Script 41 Command 3 Signal" default="0" >
@@ -7746,7 +7746,7 @@
       </variable>
       <variable CV="920" item="Script 41 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="921" item="Script 41 Command 4 Signal" default="0" >
@@ -7756,7 +7756,7 @@
       </variable>
       <variable CV="922" item="Script 41 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="923" item="Script 41 Command 5 Signal" default="0" >
@@ -7766,7 +7766,7 @@
       </variable>
       <variable CV="924" item="Script 41 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="925" item="Script 41 Command 6 Signal" default="0" >
@@ -7776,7 +7776,7 @@
       </variable>
       <variable CV="926" item="Script 41 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="927" item="Script 41 Command 7 Signal" default="0" >
@@ -7786,7 +7786,7 @@
       </variable>
       <variable CV="928" item="Script 42 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="929" item="Script 42 Command 0 Signal" default="0" >
@@ -7796,7 +7796,7 @@
       </variable>
       <variable CV="930" item="Script 42 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="931" item="Script 42 Command 1 Signal" default="0" >
@@ -7806,7 +7806,7 @@
       </variable>
       <variable CV="932" item="Script 42 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="933" item="Script 42 Command 2 Signal" default="0" >
@@ -7816,7 +7816,7 @@
       </variable>
       <variable CV="934" item="Script 42 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="935" item="Script 42 Command 3 Signal" default="0" >
@@ -7826,7 +7826,7 @@
       </variable>
       <variable CV="936" item="Script 42 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="937" item="Script 42 Command 4 Signal" default="0" >
@@ -7836,7 +7836,7 @@
       </variable>
       <variable CV="938" item="Script 42 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="939" item="Script 42 Command 5 Signal" default="0" >
@@ -7846,7 +7846,7 @@
       </variable>
       <variable CV="940" item="Script 42 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="941" item="Script 42 Command 6 Signal" default="0" >
@@ -7856,7 +7856,7 @@
       </variable>
       <variable CV="942" item="Script 42 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="943" item="Script 42 Command 7 Signal" default="0" >
@@ -7866,7 +7866,7 @@
       </variable>
       <variable CV="944" item="Script 43 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="945" item="Script 43 Command 0 Signal" default="0" >
@@ -7876,7 +7876,7 @@
       </variable>
       <variable CV="946" item="Script 43 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="947" item="Script 43 Command 1 Signal" default="0" >
@@ -7886,7 +7886,7 @@
       </variable>
       <variable CV="948" item="Script 43 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="949" item="Script 43 Command 2 Signal" default="0" >
@@ -7896,7 +7896,7 @@
       </variable>
       <variable CV="950" item="Script 43 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="951" item="Script 43 Command 3 Signal" default="0" >
@@ -7906,7 +7906,7 @@
       </variable>
       <variable CV="952" item="Script 43 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="953" item="Script 43 Command 4 Signal" default="0" >
@@ -7916,7 +7916,7 @@
       </variable>
       <variable CV="954" item="Script 43 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="955" item="Script 43 Command 5 Signal" default="0" >
@@ -7926,7 +7926,7 @@
       </variable>
       <variable CV="956" item="Script 43 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="957" item="Script 43 Command 6 Signal" default="0" >
@@ -7936,7 +7936,7 @@
       </variable>
       <variable CV="958" item="Script 43 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="959" item="Script 43 Command 7 Signal" default="0" >
@@ -7946,7 +7946,7 @@
       </variable>
       <variable CV="960" item="Script 44 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="961" item="Script 44 Command 0 Signal" default="0" >
@@ -7956,7 +7956,7 @@
       </variable>
       <variable CV="962" item="Script 44 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="963" item="Script 44 Command 1 Signal" default="0" >
@@ -7966,7 +7966,7 @@
       </variable>
       <variable CV="964" item="Script 44 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="965" item="Script 44 Command 2 Signal" default="0" >
@@ -7976,7 +7976,7 @@
       </variable>
       <variable CV="966" item="Script 44 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="967" item="Script 44 Command 3 Signal" default="0" >
@@ -7986,7 +7986,7 @@
       </variable>
       <variable CV="968" item="Script 44 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="969" item="Script 44 Command 4 Signal" default="0" >
@@ -7996,7 +7996,7 @@
       </variable>
       <variable CV="970" item="Script 44 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="971" item="Script 44 Command 5 Signal" default="0" >
@@ -8006,7 +8006,7 @@
       </variable>
       <variable CV="972" item="Script 44 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="973" item="Script 44 Command 6 Signal" default="0" >
@@ -8016,7 +8016,7 @@
       </variable>
       <variable CV="974" item="Script 44 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="975" item="Script 44 Command 7 Signal" default="0" >
@@ -8026,7 +8026,7 @@
       </variable>
       <variable CV="976" item="Script 45 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="977" item="Script 45 Command 0 Signal" default="0" >
@@ -8036,7 +8036,7 @@
       </variable>
       <variable CV="978" item="Script 45 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="979" item="Script 45 Command 1 Signal" default="0" >
@@ -8046,7 +8046,7 @@
       </variable>
       <variable CV="980" item="Script 45 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="981" item="Script 45 Command 2 Signal" default="0" >
@@ -8056,7 +8056,7 @@
       </variable>
       <variable CV="982" item="Script 45 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="983" item="Script 45 Command 3 Signal" default="0" >
@@ -8066,7 +8066,7 @@
       </variable>
       <variable CV="984" item="Script 45 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="985" item="Script 45 Command 4 Signal" default="0" >
@@ -8076,7 +8076,7 @@
       </variable>
       <variable CV="986" item="Script 45 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="987" item="Script 45 Command 5 Signal" default="0" >
@@ -8086,7 +8086,7 @@
       </variable>
       <variable CV="988" item="Script 45 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="989" item="Script 45 Command 6 Signal" default="0" >
@@ -8096,7 +8096,7 @@
       </variable>
       <variable CV="990" item="Script 45 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="991" item="Script 45 Command 7 Signal" default="0" >
@@ -8106,7 +8106,7 @@
       </variable>
       <variable CV="992" item="Script 46 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="993" item="Script 46 Command 0 Signal" default="0" >
@@ -8116,7 +8116,7 @@
       </variable>
       <variable CV="994" item="Script 46 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="995" item="Script 46 Command 1 Signal" default="0" >
@@ -8126,7 +8126,7 @@
       </variable>
       <variable CV="996" item="Script 46 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="997" item="Script 46 Command 2 Signal" default="0" >
@@ -8136,7 +8136,7 @@
       </variable>
       <variable CV="998" item="Script 46 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="999" item="Script 46 Command 3 Signal" default="0" >
@@ -8146,7 +8146,7 @@
       </variable>
       <variable CV="1000" item="Script 46 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="1001" item="Script 46 Command 4 Signal" default="0" >
@@ -8156,7 +8156,7 @@
       </variable>
       <variable CV="1002" item="Script 46 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="1003" item="Script 46 Command 5 Signal" default="0" >
@@ -8166,7 +8166,7 @@
       </variable>
       <variable CV="1004" item="Script 46 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="1005" item="Script 46 Command 6 Signal" default="0" >
@@ -8176,7 +8176,7 @@
       </variable>
       <variable CV="1006" item="Script 46 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="1007" item="Script 46 Command 7 Signal" default="0" >
@@ -8186,7 +8186,7 @@
       </variable>
       <variable CV="1008" item="Script 47 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="1009" item="Script 47 Command 0 Signal" default="0" >
@@ -8196,7 +8196,7 @@
       </variable>
       <variable CV="1010" item="Script 47 Command 1 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 1.</tooltip>
+        <tooltip>Delay before executing the command 1.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 1.</tooltip>
       </variable>
       <variable CV="1011" item="Script 47 Command 1 Signal" default="0" >
@@ -8206,7 +8206,7 @@
       </variable>
       <variable CV="1012" item="Script 47 Command 2 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 2.</tooltip>
+        <tooltip>Delay before executing the command 2.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 2.</tooltip>
       </variable>
       <variable CV="1013" item="Script 47 Command 2 Signal" default="0" >
@@ -8216,7 +8216,7 @@
       </variable>
       <variable CV="1014" item="Script 47 Command 3 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 3.</tooltip>
+        <tooltip>Delay before executing the command 3.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 3.</tooltip>
       </variable>
       <variable CV="1015" item="Script 47 Command 3 Signal" default="0" >
@@ -8226,7 +8226,7 @@
       </variable>
       <variable CV="1016" item="Script 47 Command 4 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 4.</tooltip>
+        <tooltip>Delay before executing the command 4.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 4.</tooltip>
       </variable>
       <variable CV="1017" item="Script 47 Command 4 Signal" default="0" >
@@ -8236,7 +8236,7 @@
       </variable>
       <variable CV="1018" item="Script 47 Command 5 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 5.</tooltip>
+        <tooltip>Delay before executing the command 5.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 5.</tooltip>
       </variable>
       <variable CV="1019" item="Script 47 Command 5 Signal" default="0" >
@@ -8246,7 +8246,7 @@
       </variable>
       <variable CV="1020" item="Script 47 Command 6 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 6.</tooltip>
+        <tooltip>Delay before executing the command 6.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 6.</tooltip>
       </variable>
       <variable CV="1021" item="Script 47 Command 6 Signal" default="0" >
@@ -8256,7 +8256,7 @@
       </variable>
       <variable CV="1022" item="Script 47 Command 7 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 7.</tooltip>
+        <tooltip>Delay before executing the command 7.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 7.</tooltip>
       </variable>
       <variable CV="1023" item="Script 47 Command 7 Signal" default="0" >

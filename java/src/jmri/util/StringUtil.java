@@ -5,7 +5,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collection;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -513,7 +512,7 @@ public class StringUtil {
     /**
      * Return the last int value within a string
      * eg :XX123XX456X: will return 456
-     * eg :X123 456: will return 123
+     * eg :X123 456: will return 456
      *
      * @param str contents to process
      * @return last value in int form , -1 if not found

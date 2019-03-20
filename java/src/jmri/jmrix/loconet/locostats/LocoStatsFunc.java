@@ -53,7 +53,7 @@ public class LocoStatsFunc implements LocoNetListener {
     /**
      * LocoNet message handler.
      * 
-     * @param msg - incoming LocoNet message to be interpreted
+     * @param msg  incoming LocoNet message to be interpreted
      */
     @Override
     public void message(LocoNetMessage msg) {
@@ -177,7 +177,7 @@ public class LocoStatsFunc implements LocoNetListener {
      * Add a listener to the list of listeners which will be notified upon receipt 
      * a LocoNet message containing interface statistics.
      * 
-     * @param l - LocoNetInterfaceStatsListener to be added
+     * @param l  LocoNetInterfaceStatsListener to be added
      */
     public synchronized void addLocoNetInterfaceStatsListener(@Nonnull LocoNetInterfaceStatsListener l) {
         java.util.Objects.requireNonNull(l);
@@ -191,7 +191,7 @@ public class LocoStatsFunc implements LocoNetListener {
      * Remove a listener (if present) from the list of listeners which will be 
      * notified upon receipt LocoNet message containing interface statistics.
      * 
-     * @param l - LocoNetInterfaceStatsListener to be removed
+     * @param l  LocoNetInterfaceStatsListener to be removed
      */
     public synchronized void removeLocoNetInterfaceStatsListener(@Nonnull LocoNetInterfaceStatsListener l) {
         java.util.Objects.requireNonNull(l);

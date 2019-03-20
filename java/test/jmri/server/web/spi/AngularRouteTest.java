@@ -26,6 +26,7 @@ public class AngularRouteTest {
 
     }
 
+    @SuppressWarnings("null")
     @Test
     public void testGetConstructor() {
         try {
