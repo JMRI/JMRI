@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 
@@ -150,7 +152,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     public void close(JsonThrottleSocketService server, boolean notifyClient) {
         if (this.throttle != null) {
-            if (InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size() == 1) {
+            List<JsonThrottleSocketService> servers = InstanceManager.getDefault(JsonThrottleManager.class).getServers(this);
+            if (servers.size() == 1 && servers.get(0).equals(server)) {
                 this.throttle.setSpeedSetting(0);
             }
             this.release(server, notifyClient);
@@ -304,14 +307,16 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void sendMessage(ObjectNode data) {
-        InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).stream().forEach((server) -> {
+        new ArrayList<>(InstanceManager.getDefault(JsonThrottleManager.class).getServers(this)).stream().forEach((server) -> {
             this.sendMessage(data, server);
         });
     }
 
     public void sendMessage(ObjectNode data, JsonThrottleSocketService server) {
         try {
-            server.sendMessage(this, data);
+            // .deepCopy() ensures each server gets a unique (albeit identical) message
+            // to allow each server to modify the message as needed by its client
+            server.sendMessage(this, data.deepCopy());
         } catch (IOException ex) {
             this.close(server, false);
             log.warn("Unable to send message, closing connection: {}", ex.getMessage());
@@ -342,29 +347,25 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     @Override
     public void notifyThrottleFound(DccThrottle throttle) {
         log.debug("Found throttle {}", throttle.getLocoAddress());
-        try {
-            this.throttle = throttle;
-            throttle.addPropertyChangeListener(this);
-            switch (throttle.getSpeedStepMode()) {
-                case DccThrottle.SpeedStepMode14:
-                    this.speedSteps = 14;
-                    break;
-                case DccThrottle.SpeedStepMode27:
-                    this.speedSteps = 27;
-                    break;
-                case DccThrottle.SpeedStepMode28:
-                case DccThrottle.SpeedStepMode28Mot:
-                    this.speedSteps = 28;
-                    break;
-                case DccThrottle.SpeedStepMode128:
-                default:
-                    this.speedSteps = 126;
-                    break;
-            }
-            this.sendStatus();
-        } catch (Exception e) {
-            log.debug(e.getLocalizedMessage(), e);
+        this.throttle = throttle;
+        throttle.addPropertyChangeListener(this);
+        switch (throttle.getSpeedStepMode()) {
+            case DccThrottle.SpeedStepMode14:
+                this.speedSteps = 14;
+                break;
+            case DccThrottle.SpeedStepMode27:
+                this.speedSteps = 27;
+                break;
+            case DccThrottle.SpeedStepMode28:
+            case DccThrottle.SpeedStepMode28Mot:
+                this.speedSteps = 28;
+                break;
+            case DccThrottle.SpeedStepMode128:
+            default:
+                this.speedSteps = 126;
+                break;
         }
+        this.sendStatus();
     }
 
     @Override
