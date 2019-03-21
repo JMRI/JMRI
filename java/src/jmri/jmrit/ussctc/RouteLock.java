@@ -90,21 +90,23 @@ public class RouteLock implements Lock {
      */
     @Override
     public boolean isLockClear() {
-        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
-                if ( ! bean.check()) return true;
+                if ( ! bean.check()) {
+                    lockLogger.setStatus(this, "");
+                    return true;
+                }
             }
         }
         
         for (NamedBeanHandle<SignalHead> handle : list) {
             if ( isSignalClear(handle) ) {
-                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
-                    .setValue("Locked due to route including signal "+handle.getBean().getDisplayName());
+                lockLogger.setStatus(this, "Locked due to route including signal "+handle.getBean().getDisplayName());
                 return false;
             }
         }
+        lockLogger.setStatus(this, "");
         return true;
     }
     

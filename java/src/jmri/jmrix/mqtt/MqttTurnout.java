@@ -1,5 +1,6 @@
 package jmri.jmrix.mqtt;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -16,9 +17,49 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     private final String mysubTopic;
     private final int _number;   // turnout number
 
-    private final String closedText = "CLOSED";
-    private final String thrownText = "THROWN";
-
+    public void setParser(MqttContentParser<Turnout> parser) {
+        this.parser = parser;
+    }
+    
+    MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
+        private final static String closedText = "CLOSED";
+        private final static String thrownText = "THROWN";
+        @Override
+        public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
+            switch (payload) {
+                case closedText:                
+                    newKnownState(CLOSED);
+                    break;
+                case thrownText:
+                    newKnownState(THROWN);
+                    break;
+                default:
+                    log.warn("Unknown state : {}", payload);
+                    break;
+            }
+        }
+        
+        @Override
+        public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState){
+            // sort out states
+            if ((newState & Turnout.CLOSED) != 0 ^ getInverted()) {
+                // first look for the double case, which we can't handle
+                if ((newState & Turnout.THROWN ) != 0 ^ getInverted()) {
+                    // this is the disaster case!
+                    log.error("Cannot command both CLOSED and THROWN: {}", newState);
+                    throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
+                } else {
+                    // send a CLOSED command
+                    return closedText;
+                }
+            } else {
+                // send a THROWN command
+                return thrownText;
+            }
+        }
+    };
+    
+    
     MqttTurnout(MqttAdapter ma, int number) {
         super("MT" + number);
         _number = number;
@@ -41,20 +82,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
-                return;
-            } else {
-                // send a CLOSED command
-                sendMessage(closedText);
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(thrownText);
-        }
+        String payload = parser.payloadFromBean(this, s);
+
+        // send appropriate command
+        sendMessage(payload);
     }
 
     @Override
@@ -72,17 +103,8 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
             log.error("Got a message whose topic ({}) wasn't for me ({})", topic, mysubTopic);
             return;
         }
-        switch (message) {
-            case closedText:                
-                newKnownState(CLOSED);
-                break;
-            case thrownText:
-                newKnownState(THROWN);
-                break;
-            default:
-                log.warn("Unknow state : {} (topic : {})", message, topic);
-                break;
-        }
+        
+        parser.beanFromPayload(this, message, topic);
     }
 
     private final static Logger log = LoggerFactory.getLogger(MqttTurnout.class);
