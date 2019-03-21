@@ -2630,8 +2630,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             speedSetting = _engineer.getSpeedSetting();
             RampData rampdata = _engineer.getRamp().getRampData();
             ListIterator<Float> iter = rampdata.speedIterator(true);
-            while (iter.hasNext() && iter.next().floatValue() < speedSetting);
-            
+            while (iter.hasNext() && iter.next().floatValue() < speedSetting) {}
+
             int timeIncrement = rampdata.getRampTimeIncrement();
             float topSpeed = speedSetting;
             float rampUpDist = 0.0f;
