@@ -22,7 +22,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 public class CreateGUIObjectsXMLFile {
     private static final int START_OFFSET = 12;
     private static final int GIF_HORIZONTAL_SIZE = 65;
-    
+
     @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not write anything if it fails.")
 //  By doing this, it prevents me from accidentally accessing "_mCodeButtonHandlerDataArrayList" and screwing it up!
 //  I just have to make sure that I don't reference "passedCodeButtonHandlerDataArrayList" anywhere else in the code!
@@ -72,7 +72,7 @@ public class CreateGUIObjectsXMLFile {
                 oneOfItemsBottomEdge = 900;
                 break;
         }
-        
+
         if (otherData._mGUIDesign_AnalogClockEtc) {
             printWriter.println("    <fastclock x=\"26\" y=\"" + (oneOfItemsBottomEdge - 186) + "\" scale=\"1.0\" color=\"black\" class=\"jmri.jmrit.display.configurexml.AnalogClock2DisplayXml\" />");    // NOI18N
             generateToggle(96, oneOfItemsBottomEdge - 223, "ISCLOCKRUNNING", printWriter);  // NOI18N
@@ -109,8 +109,8 @@ public class CreateGUIObjectsXMLFile {
                     generatePanel(lastHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-blank", printWriter);   // NOI18N
                 }
                 lastHorizontalPosition = thisObjectHorizontalPosition + GIF_HORIZONTAL_SIZE;
-                
-//  Put appropriate type of panel in:                
+
+//  Put appropriate type of panel in:
                 boolean generateSwitch = (codeButtonHandlerData._mSWDI_Enabled || codeButtonHandlerData._mSWDL_Enabled);
                 boolean generateSignal = (codeButtonHandlerData._mSIDI_Enabled || codeButtonHandlerData._mSIDL_Enabled);
 //  4 possibilities: Blank again, switch, signal, switch and signal:
@@ -125,7 +125,7 @@ public class CreateGUIObjectsXMLFile {
                         generatePushButton(thisObjectHorizontalPosition + 21, adjustCodeButtonYBySize(632, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mCodeButtonInternalSensor, printWriter);
                     }
                 }
-//  O.S. occupancy sensor:                
+//  O.S. occupancy sensor:
                 if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) {
                     generateSensorIndicator(thisObjectHorizontalPosition + 21, 78, codeButtonHandlerData._mOSSectionOccupiedExternalSensor, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);    // NOI18N
                 }
@@ -157,6 +157,8 @@ public class CreateGUIObjectsXMLFile {
                                     break;
                                 case DOUBLE_CROSSOVER:
                                     generateTurnoutCrossoverIcon(thisObjectHorizontalPosition + 20, 80, codeButtonHandlerData._mSWDI_ExternalTurnout, true, codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
+                                    break;
+                                default:
                                     break;
                             }
                         }
@@ -193,6 +195,8 @@ public class CreateGUIObjectsXMLFile {
                                 case SIGNALMAST:
                                     generateSignalMast(x, 120, signal, false, printWriter);
                                     break;
+                                default:
+                                    break;
                             }
                             x -= 11;
                         }
@@ -206,6 +210,8 @@ public class CreateGUIObjectsXMLFile {
                                 case SIGNALMAST:
                                     generateSignalMast(x, 70, signal, true, printWriter);
                                     break;
+                                default:
+                                    break;
                             }
                             x += 11;
                         }
@@ -213,7 +219,7 @@ public class CreateGUIObjectsXMLFile {
                     } /*else if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.GREEN_OFF) {  // Future someday, as of 10/30/18 user CANNOT select this!
                     }*/
                 }
-//  SIDL:             
+//  SIDL:
                 if (codeButtonHandlerData._mSIDL_Enabled) { // Signal Lever:
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor)) {
                         generateSignalLever(thisObjectHorizontalPosition + 8, adjustSignalItemsYBySize(492, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDL_LeftInternalSensor, codeButtonHandlerData._mSIDL_NormalInternalSensor, codeButtonHandlerData._mSIDL_RightInternalSensor, printWriter);
@@ -248,12 +254,12 @@ public class CreateGUIObjectsXMLFile {
             }
             generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-right", printWriter); // NOI18N
         }
-        
+
         printWriter.println("  </paneleditor>");    // NOI18N
         generateEpilogue(printWriter);
         printWriter.close();
     }
-    
+
 /*
     <positionablelabel x="55" y="323" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
@@ -287,13 +293,13 @@ public class CreateGUIObjectsXMLFile {
         generateTextPositionableLabel(centerText(x, text), y, text, printWriter);
     }
     private static int centerText(int originalValue, String text) {
-        AffineTransform affinetransform = new AffineTransform();     
-        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);     
+        AffineTransform affinetransform = new AffineTransform();
+        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
         Font font = new Font(DIALOG_USED, Font.PLAIN, 11);     // Found Dialog.plain in the latest .xml files.  Probably the default
         int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
         return originalValue - (textwidth / 2);
     }
-    
+
 /*  As of 4.13.4ish:
     <positionablelabel x="0" y="0" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
@@ -301,10 +307,11 @@ public class CreateGUIObjectsXMLFile {
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-*/            
+*/
     private static void generatePanel(int x, int y, OtherData.VERTICAL_SIZE verticalSize, String resourceFilename, PrintWriter printWriter) {
 //      I use other defaults here for both positionable and showtooltip = false:
         switch(verticalSize) {
+            default:
             case SMALL:
                 resourceFilename += "-7.gif";   // NOI18N
                 break;
@@ -322,7 +329,7 @@ public class CreateGUIObjectsXMLFile {
         printWriter.println("      </icon>");   // NOI18N
         printWriter.println("    </positionablelabel>");    // NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS3:SWNI" x="0" y="0" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS2:CB</tooltip>
@@ -361,9 +368,9 @@ public class CreateGUIObjectsXMLFile {
         printWriter.println("      <iconmaps />");  // NOI18N
         printWriter.println("    </sensoricon>");   // NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
-Left:    
+Left:
     <turnouticon turnout="LT47" x="486" y="40" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
         <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" degrees="0" scale="1.0">
@@ -381,9 +388,9 @@ Left:
       </icons>
       <iconmaps />
     </turnouticon>
-Right:    
+Right:
         <closed url="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" degrees="0" scale="1.0">
-*/    
+*/
     private static void generateTurnoutIcon(int x, int y, String turnout, boolean isTurnoutLeftHanded, PrintWriter printWriter) {
         String partialFilename = isTurnoutLeftHanded ? "left/west/os-l-w" : "right/east/os-r-e";    // NOI18N
         printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");  // NOI18N
@@ -404,7 +411,7 @@ Right:
         printWriter.println("      <iconmaps />");  // NOI18N
         printWriter.println("    </turnouticon>");  // NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
     <turnouticon turnout="LT48" x="807" y="40" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
@@ -423,7 +430,7 @@ Right:
       </icons>
       <iconmaps />
     </turnouticon>
-*/    
+*/
     private static void generateTurnoutCrossoverIcon(int x, int y, String turnout, boolean isDoubleCrossover, boolean isTurnoutLeftHanded, PrintWriter printWriter) {
         String partialFilename;
         if (isDoubleCrossover) { // No left or right
@@ -449,7 +456,7 @@ Right:
         printWriter.println("      <iconmaps />");  // NOI18N
         printWriter.println("    </turnouticon>");  // NOI18N
     }
-    
+
 /*
     <signalheadicon signalhead="LH441" x="645" y="31" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>LH441</tooltip>
@@ -481,7 +488,7 @@ Right:
       </icons>
       <iconmaps />
     </signalheadicon>
-*/    
+*/
     private static void generateSignalHead(int x, int y, String signalHead, boolean isRightToLeft, PrintWriter printWriter) {
         String direction = isRightToLeft ? "left" : "right";    // NOI18N
         printWriter.println("    <signalheadicon signalhead=\"" + signalHead + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"9\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" clickmode=\"3\" litmode=\"false\" class=\"jmri.jmrit.display.configurexml.SignalHeadIconXml\">");   // NOI18N
@@ -510,19 +517,19 @@ Right:
     private static String generateSignalLineEnd(String color) {
         return "        </" + color + ">";
     }
-    
+
 /*
     <signalmasticon signalmast="SM-CS10ME" x="461" y="17" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
       <tooltip>SM-CS10ME (LF$dsm:SW-1968:SL-2(722))</tooltip>
     </signalmasticon>
-*/    
+*/
     private static void generateSignalMast(int x, int y, String signalMast, boolean isRightToLeft, PrintWriter printWriter) {
         String degrees = isRightToLeft ? "180" : "0";   // NOI18N
         printWriter.println("    <signalmasticon signalmast=\"" + signalMast + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"9\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" clickmode=\"0\" litmode=\"false\" degrees=\"" + degrees + "\" scale=\"1.0\" imageset=\"default\" class=\"jmri.jmrit.display.configurexml.SignalMastIconXml\">");    // NOI18N
         printWriter.println("      <tooltip>" + signalMast + "</tooltip>"); // NOI18N
         printWriter.println("    </signalmasticon>");   // NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS27:LEVER" x="1826" y="310" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS27:LEVER</tooltip>
@@ -540,7 +547,7 @@ Right:
       </inconsistent>
       <iconmaps />
     </sensoricon>
-*/    
+*/
     public static void generateTurnoutLever(int x, int y, String lever, PrintWriter printWriter) {
         printWriter.println("    <sensoricon sensor=\"" + lever + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");    // NOI18N
         printWriter.println("      <tooltip>" + lever + "</tooltip>");  // NOI18N
@@ -559,7 +566,7 @@ Right:
         printWriter.println("      <iconmaps />");  // NOI18N
         printWriter.println("    </sensoricon>");   // NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
     <multisensoricon x="1826" y="423" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
       <tooltip>IS28:LDGL,IS28:NGL,IS28:RDGL</tooltip>
@@ -582,7 +589,7 @@ Right:
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-*/    
+*/
     public static void generateSignalLever(int x, int y, String left, String vertical, String right, PrintWriter printWriter ) {
         printWriter.println("    <multisensoricon x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" updown=\"false\" class=\"jmri.jmrit.display.configurexml.MultiSensorIconXml\">");   // NOI18N
         printWriter.println("      <tooltip>" + left + "," + vertical + "," + right + "</tooltip>");// NOI18N
@@ -610,7 +617,7 @@ Right:
         printWriter.println("      </inconsistent>");// NOI18N
         printWriter.println("    </multisensoricon>");// NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS58:LOCKTOGGLE" x="3063" y="551" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS:SAV_PDC_LOCKLEVER</tooltip>
@@ -628,7 +635,7 @@ Right:
       </inconsistent>
       <iconmaps />
     </sensoricon>
-*/    
+*/
     public static void generateToggle(int x, int y, String sensor, PrintWriter printWriter) {
         printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");   // NOI18N
         printWriter.println("      <tooltip>" + sensor + "</tooltip>");// NOI18N
@@ -647,7 +654,7 @@ Right:
         printWriter.println("      <iconmaps />");// NOI18N
         printWriter.println("    </sensoricon>");// NOI18N
     }
-    
+
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS80:CB" x="3388" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS80:CB</tooltip>
@@ -665,7 +672,7 @@ Right:
       </inconsistent>
       <iconmaps />
     </sensoricon>
-*/    
+*/
     public static void generatePushButton(int x, int y, String sensor, PrintWriter printWriter) {
         printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");// NOI18N
         printWriter.println("      <tooltip>" + sensor + "</tooltip>");// NOI18N
@@ -696,7 +703,7 @@ Right:
                 return y + 18;
         }
     }
-    
+
     private static int adjustSignalItemsYBySize(int y, OtherData.VERTICAL_SIZE verticalSize) {
         switch(verticalSize) {
             default:
@@ -720,7 +727,7 @@ Right:
                 return y + 82;
         }
     }
-    
+
     private static int adjustCallOnItemsYBySize(int y, OtherData.VERTICAL_SIZE verticalSize) {
         switch(verticalSize) {
             default:
@@ -732,7 +739,7 @@ Right:
                 return y + 134;
         }
     }
-    
+
     private static int adjustCodeButtonYBySize(int y, OtherData.VERTICAL_SIZE verticalSize) {
         switch(verticalSize) {
             default:
