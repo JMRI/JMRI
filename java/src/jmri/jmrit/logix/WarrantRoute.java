@@ -291,7 +291,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         framePanel.setLayout(new BoxLayout(framePanel, BoxLayout.PAGE_AXIS));
         framePanel.add(Box.createGlue());
         framePanel.add(new JLabel(Bundle.getMessage("viewTitle", _speedUtil.getRosterId())));
-        framePanel.add(MergePrompt.makeEditInfoPanel());
+        framePanel.add(MergePrompt.makeEditInfoPanel(_speedUtil.getRosterId()));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createGlue());
