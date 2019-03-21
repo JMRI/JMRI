@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -31,7 +31,7 @@ public class JsonTimeSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         Timebase manager = InstanceManager.getDefault(Timebase.class);
-        ISO8601DateFormat formatter = new ISO8601DateFormat();
+        StdDateFormat formatter = new StdDateFormat();
         Assert.assertEquals("No time listeners", 0, manager.getMinuteChangeListeners().length);
         Assert.assertEquals("No change listeners", 0, manager.getNumPropertyChangeListeners());
         manager.setRun(false); // stop for testing
