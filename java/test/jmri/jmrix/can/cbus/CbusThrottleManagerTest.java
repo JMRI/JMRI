@@ -201,7 +201,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");
         
         Assert.assertEquals("speed setting",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("speed increment",1.0f,cbtmb.getThrottleInfo(addr,"SpeedIncrement"));
+        Assert.assertEquals("speed increment",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedIncrement"));
         Assert.assertEquals("speed step mode",CbusConstants.CBUS_SS_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
         
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );

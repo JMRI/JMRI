@@ -61,7 +61,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with Roster speed-profiling</li>
+                <li><a 
+                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS 
+                Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
+                <li>Track Current meter avaiable for supported Command Stations via 
+                PanelPro > Tools > Track Current Meter</li>
             </ul>
 
         <h4>MQTT</h4>
