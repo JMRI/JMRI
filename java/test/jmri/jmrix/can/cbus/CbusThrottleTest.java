@@ -26,7 +26,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F;
+        float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
