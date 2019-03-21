@@ -1898,7 +1898,7 @@ public class TrainCommon {
         addLine(file, sb.toString());
     }
 
-    public static String getStdDate(boolean isModelYear) {
+    public static String getISO8601Date(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
         // use the JMRI Timebase (which may be a fast clock).
         calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
