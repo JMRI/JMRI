@@ -6,7 +6,7 @@ import java.util.ListIterator;
 /**
 */
 
-class RampData {
+public class RampData {
 
     private int _timeInterval;
     private float _throttleInterval;

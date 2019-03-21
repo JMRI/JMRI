@@ -168,6 +168,7 @@ public class NXFrameTest {
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
 
         nxFrame._speedUtil.setRampThrottleIncrement(0.05f);     
+        nxFrame._speedUtil.setRampTimeIncrement(100);
         nxFrame.setMaxSpeed(0.6f);
         nxFrame._speedUtil.setDccAddress("666");
         nxFrame.setTrainInfo("Nick");
@@ -224,8 +225,8 @@ public class NXFrameTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #9.");
-        }, "Train starts to move at 9th command");
+            return m.endsWith("Cmd #8.");
+        }, "Train starts to move at 8th command");
 
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};

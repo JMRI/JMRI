@@ -89,7 +89,7 @@ public class RouteFinder implements Runnable {
         _quit = false;
         int level = 0;
         if (log.isDebugEnabled()) {
-            log.debug("\nOrigin= \"{}\" Path= \"{}\" Exit= \"{}\"",  _originBlockOrder.getBlock().getDisplayName(),
+            log.debug("Origin= \"{}\" Path= \"{}\" Exit= \"{}\"",  _originBlockOrder.getBlock().getDisplayName(),
                     _originBlockOrder.getPathName(), _originBlockOrder.getExitName());
             log.debug("Destination= \"{}\" Path= \"{}\" Entry= \"{}\"",  _destBlock.getDisplayName(), _dPathName, _dEntryName);
         }
@@ -167,7 +167,7 @@ public class RouteFinder implements Runnable {
                         }
                     }
                     if (!node.needsViaAncestor()) {
-                        if (log.isDebugEnabled()) {
+                        if (log.isTraceEnabled()) {
                             log.debug("Test= \"{}\" Path= {} Exit= {}",  nOrder.getBlock().getDisplayName(),
                                     path.getName(),pName);
                         }

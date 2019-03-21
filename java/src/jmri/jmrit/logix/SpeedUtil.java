@@ -758,10 +758,11 @@ public class SpeedUtil {
                     fromBlock.getDisplayName(), _rosterId, _numchanges, aveSettings, step, measuredSpeed, (isForward?"forward":"reverse"));
         }
 
-        throttle = stepIncrement * Math.round(throttle/stepIncrement);
+        setSpeed(_mergeProfile, aveSettings, measuredSpeed, isForward);
+/*        throttle = stepIncrement * Math.round(throttle/stepIncrement);
         if (_numchanges == 0 || _mergeProfile.getProfileSize() <= _sessionProfile.getProfileSize()) {
             setSpeed(_mergeProfile, throttle, measuredSpeed, isForward);
-        }
+        }*/
         clearStats();
     }
  

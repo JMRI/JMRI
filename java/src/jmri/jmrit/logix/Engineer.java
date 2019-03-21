@@ -394,6 +394,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     protected void rampSpeedTo(String endSpeedType, int endBlockIdx, boolean useIndex) {
         if (!setSpeedRatio(endSpeedType)) {
+            if (!endSpeedType.equals(Warrant.Stop) && !endSpeedType.equals(Warrant.EStop)) {
+                setWaitforClear(false);
+            }
             return;
         }
         synchronized (this) {
@@ -482,7 +485,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         // Late update to GUI is OK, this is just an informational status display
         _warrant.fireRunStatus("SpeedChange", null, _speedType);
         if (log.isDebugEnabled()) 
-            log.debug("_throttle.setSpeedSetting({}) called, _speedType={}.  warrant {}",
+            log.debug("_throttle.setSpeedSetting({}) called, ({}).  warrant {}",
                     speed, _speedType, _warrant.getDisplayName());
     }
 
@@ -1160,6 +1163,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 break;
                             }
                             speed = iter.next().floatValue();
+                            setSpeed(speed);
 
                             try {
                                 wait(timeIncrement);
@@ -1185,7 +1189,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             if (_useIndex) {
                                 if ( _warrant._idxCurrentOrder > _endBlockIdx) { // loco overran end block
                                     speed = endSpeed;
-                                } else if (_endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
+                                } else if ( _warrant._idxCurrentOrder < _endBlockIdx && 
+                                        _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
                                     // at last speed change. let loco creep to end block
                                     if (log.isDebugEnabled()) 
                                         log.debug("Extending ramp to reach block {}. speed= {}",
