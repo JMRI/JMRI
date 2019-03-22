@@ -39,7 +39,8 @@ public class RouteFinder implements Runnable {
         _maxBlocks = maxB;
     }
 
-    protected void quit() {
+    synchronized protected void quit() {
+        log.debug("quit= {}", _quit);
         _quit = true;
     }
 
@@ -87,19 +88,32 @@ public class RouteFinder implements Runnable {
         _destNodes = new ArrayList<>();
         _quit = false;
         int level = 0;
+        if (log.isDebugEnabled()) {
+            log.debug("Origin= \"{}\" Path= \"{}\" Exit= \"{}\"",  _originBlockOrder.getBlock().getDisplayName(),
+                    _originBlockOrder.getPathName(), _originBlockOrder.getExitName());
+            log.debug("Destination= \"{}\" Path= \"{}\" Entry= \"{}\"",  _destBlock.getDisplayName(), _dPathName, _dEntryName);
+        }
         RouteNode root = new RouteNode(_originBlockOrder, (_viaBlockOrder != null));
         _tree = new DefaultTreeModel(root);
         ArrayList<RouteNode> nodes = new ArrayList<>();
         nodes.add(root);
         while (level < _maxBlocks && !_quit) {
             nodes = makeLevel(nodes, level);
+            if (log.isDebugEnabled()) {
+                log.debug("level {} has {} nodes. quit= {}", level, nodes.size(), _quit);
+            }
             level++;
+            if (_quit) {
+                break;
+            }
         }
-        if (_destNodes.isEmpty()) {
-            _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder);
-        } else {
-            _caller.pickRoute(_destNodes, _tree);
-        }
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            if (_destNodes.isEmpty()) {
+                _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder);
+            } else {
+                _caller.pickRoute(_destNodes, _tree);
+            }
+        });
     }
 
     /**
@@ -122,7 +136,7 @@ public class RouteFinder implements Runnable {
             if (exitPortal != null) {
                 OBlock nextBlock = exitPortal.getOpposingBlock(pBlock);
                 List<OPath> paths = exitPortal.getPathsFromOpposingBlock(pBlock);
-                if (log.isDebugEnabled()) {
+                if (log.isTraceEnabled()) {
                     log.debug("makeLevel {} block= {}, path= {} meets {} portal paths",
                             level, pBlock.getDisplayName(), pOrder.getPathName(), paths.size());
                 }
@@ -153,14 +167,18 @@ public class RouteFinder implements Runnable {
                         }
                     }
                     if (!node.needsViaAncestor()) {
+                        if (log.isTraceEnabled()) {
+                            log.debug("Test= \"{}\" Path= {} Exit= {}",  nOrder.getBlock().getDisplayName(),
+                                    path.getName(),pName);
+                        }
                         if (_destBlock == nOrder.getBlock() && _dPathName.equals(path.getName())
                                 && _dEntryName.equals(pName)) {
                             _destNodes.add(child);
-                        } else {
-                            children.add(child);
                         }
-                    } else {
                         children.add(child);
+                        if (_quit) {
+                            break;
+                        }
                     }
                 }
             } else {
