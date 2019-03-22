@@ -49,6 +49,7 @@
             By default, the message content for turnouts is
             "CLOSED" and "THROWN".
         <h3>Changing the Coding</h3>
+        <span class="since">Since JMRI 4.15.5</span>
             You can use
             <a href="../../tools/scripting/index.shtml">scripting</a>
             to install a new 
@@ -57,6 +58,8 @@
             See the 
             <a href="/jython/SetMqttParser.py">jython/SetMqttParser.py</a>
             sample script for how to do that.
+            For a Java example, see the
+            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/mqtt/MqttTurnout.java#L24">inner class implementation in MqttTurnout</a>.
             <p>
             Note that you can call
             <code>setParser(...)</code>
