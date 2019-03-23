@@ -573,21 +573,22 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
                 removeWarrant(w, true); // removes any warrant
+                fireTableRowsDeleted(row, row);
             } else {
                 w.controlRunTrain(Warrant.ABORT);
                 if (_warNX.contains(w)) { // don't remove regular warrants
                     removeWarrant(w, false);
+                    fireTableRowsDeleted(row, row);
                 }
-
             }
             break;
         default:
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
-        if (row < getRowCount()) {
+/*        if (row < getRowCount()) {
             fireTableRowsUpdated(row, row);                    
-        }
+        }*/
         if (msg != null) {
             JOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),
