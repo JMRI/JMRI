@@ -24,7 +24,7 @@ import jmri.server.json.JsonConnection;
  */
 public class JsonMessageClientManager implements InstanceManagerAutoDefault {
 
-    ObjectMapper mapper = null;
+    final ObjectMapper mapper = new ObjectMapper();
     HashMap<String, JsonConnection> clients = new HashMap<>();
 
     /**
@@ -36,9 +36,6 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
      *                                      different connection
      */
     public void subscribe(@Nonnull String client, @Nonnull JsonConnection connection) throws IllegalArgumentException {
-        if (this.mapper == null) {
-            this.mapper = connection.getObjectMapper();
-        }
         if (this.clients.containsKey(client) && !connection.equals(this.clients.get(client))) {
             throw new IllegalArgumentException("client in use with different connection");
         }

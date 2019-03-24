@@ -9,6 +9,5 @@
             "description": "A token the client can use to subscribe to a message stream"
         }
     },
-    "additionalProperties": false,
-    "required": ["client"]
+    "additionalProperties": false
 }
