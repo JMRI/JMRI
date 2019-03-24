@@ -19,7 +19,7 @@ public class TrafficRelayTest {
         };
         s.lastIndication = SignalHeadSection.CODE_LEFT;
 
-        TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
+        TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
         Assert.assertTrue(!lock.isLockClear());
     }
@@ -33,7 +33,7 @@ public class TrafficRelayTest {
         };
         s.lastIndication = SignalHeadSection.CODE_RIGHT;
 
-        TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
+        TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
         Assert.assertTrue(lock.isLockClear());
     }

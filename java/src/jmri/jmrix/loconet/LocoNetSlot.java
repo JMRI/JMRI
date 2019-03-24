@@ -37,7 +37,7 @@ public class LocoNetSlot {
      * Create a slot based solely on a slot number.  The remainder of the slot is
      * left un-initialized.
      * <p>
-     * @param slotNum - slot number to be assigned to the new LocoNetSlot object
+     * @param slotNum  slot number to be assigned to the new LocoNetSlot object
      */
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
@@ -47,7 +47,7 @@ public class LocoNetSlot {
      * Creates a slot object based on the contents of a LocoNet message.
      * The slot number is assumed to be found in byte 2 of the message
      * <p>
-     * @param l - a LocoNet message
+     * @param l  a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
      * slot number
      */
@@ -738,7 +738,7 @@ public class LocoNetSlot {
      * <p>Note that the object's "slot" field
      * is not updated by this method.
      * <p>
-     * @param l - a LocoNet message
+     * @param l  a LocoNet message
      * @throws LocoNetException if the message is not one which
      *      contains slot-related data
      */
@@ -933,7 +933,7 @@ public class LocoNetSlot {
     /**
      * Sets the object's ID value and returns a LocoNet message to inform the
      * command station that the throttle ID has been changed.
-     * @param newID - the new ID number to set into the slot object
+     * @param newID  the new ID number to set into the slot object
      * @return a LocoNet message containing a "Slot Write" message to inform the
      * command station that a specific throttle is controlling the slot.
      */
@@ -1038,7 +1038,7 @@ public class LocoNetSlot {
     /**
      * Registers a slot listener if it is not already registered.
      * <p>
-     * @param l - a slot listener
+     * @param l  a slot listener
      */
     public synchronized void addSlotListener(SlotListener l) {
         // add only if not already registered
@@ -1050,7 +1050,7 @@ public class LocoNetSlot {
     /**
      * Un-registers a slot listener.
      * <p>
-     * @param l - a slot listener
+     * @param l  a slot listener
      */
     public synchronized void removeSlotListener(SlotListener l) {
         if (slotListeners.contains(l)) {

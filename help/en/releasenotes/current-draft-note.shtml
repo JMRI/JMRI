@@ -61,12 +61,23 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with Roster speed-profiling</li>
+                <li><a 
+                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS 
+                Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
+                <li>Track Current meter avaiable for supported Command Stations via 
+                PanelPro > Tools > Track Current Meter</li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>This release has an experimental method for changing the payload
+                    of MqttTurnouts, i.e. to use JSON instead of fixed strings.
+                    See the description at the bottom of the 
+                    <a href="http://jmri.org/help/en/hardware/mqtt/index.shtml#payload">bottom of the MQTT page</a>.
+                    More work is needed on this before it actually sends and receives
+                    JSON.
+                    </li>
             </ul>
 
         <h4>MRC</h4>
@@ -256,7 +267,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Add Trim CV to Basic Speed Control pane</li>
             </ul>
 	    
 	    <h4>Team Digital</h4>
@@ -413,7 +424,12 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li></li>
+                <li>Updated how lock information is 
+                    stored in the 'logging memory'
+                    so that it can be displayed e.g. 
+                    on a panel.  For more info,
+                    see the
+                    <a href="/help/en//html/tools/uss/index.shtml">help page</a></li>
             </ul>
 
    <h3>Switchboard Editor</h3>

@@ -149,19 +149,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     List<Lock> rightwardLocks;
     List<Lock> leftwardLocks;
     public void addRightwardLocks(List<Lock> locks) { this.rightwardLocks = locks; }
-    public void addLeftwardLocks(List<Lock> locks) { this.leftwardLocks = locks; }
-
-    protected boolean checkLockPermitted(List<Lock> locks) {
-        boolean permitted = true;
-        if (locks != null) {
-            for (Lock lock : locks) {
-                if ( ! lock.isLockClear()) permitted = false;
-            }
-        }
-        log.debug(" Lock check found permitted = {}", permitted); // NOI18N
-        return permitted;
-    }
-    
+    public void addLeftwardLocks(List<Lock> locks) { this.leftwardLocks = locks; }    
     
     /**
      * Start of sending code operation:
@@ -258,14 +246,14 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // following signal change won't drive an _immediate_ indication cycle.
         // Also, always go via stop...
         CodeGroupThreeBits  currentIndication = getCurrentIndication();
-        if (value == CODE_LEFT && checkLockPermitted(leftwardLocks)) {
+        if (value == CODE_LEFT && Lock.checkLocksClear(leftwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
             lastIndication = CODE_LEFT;
             log.debug("Layout signals set LEFT"); // NOI18N
             setListHeldState(hLeftHeads, false);
-        } else if (value == CODE_RIGHT && checkLockPermitted(rightwardLocks)) {
+        } else if (value == CODE_RIGHT && Lock.checkLocksClear(rightwardLocks)) {
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);

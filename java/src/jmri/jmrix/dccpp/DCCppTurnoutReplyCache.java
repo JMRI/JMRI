@@ -41,7 +41,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     // requestCachedStateFromLayout
     // provide any cached state to the turnout.  Otherwise, call the turnout's 
     // requestUpdateFromLayout() method.
-    // @param turnout - the DCCppTurnout object we are requesting data for.
+    // @param turnout  the DCCppTurnout object we are requesting data for.
     synchronized public void requestCachedStateFromLayout(DCCppTurnout turnout) {
         int pNumber = turnout.getNumber();
         if (messagePending[pNumber]) {
@@ -68,7 +68,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     // requestCachedStateFromLayout
     // provide any cached state a sensor.  Otherwise, call the sensor's 
     // requestUpdateFromLayout() method.
-    // @param sensor - the DCCppSensor object we are requesting data for.
+    // @param sensor  the DCCppSensor object we are requesting data for.
     //
     // TODO: We don't have DCCppSensors yet. May never have them.
     /*

@@ -3,6 +3,7 @@ package jmri.jmrit.logix;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.TreeMap;
 import jmri.DccLocoAddress;
@@ -42,6 +43,7 @@ public class SpeedUtil {
     private List<BlockOrder> _orders;
 
     private DccThrottle _throttle;
+    private boolean _isForward = true;
     private float _rampThrottleIncrement;   // user specified throttle increment for ramping
     private int _rampTimeIncrement; // user specified time for ramp step increment
 
@@ -51,7 +53,7 @@ public class SpeedUtil {
     private float _ma;  // milliseconds needed to increase speed by throttle step amount 
     private float _md;  // milliseconds needed to decrease speed by throttle step amount
 
-    public static float SCALE_FACTOR = 125; // divided by _scale, gives a rough correction for track speed
+    public static float SCALE_FACTOR = 110; // divided by _scale, gives a rough correction for track speed
 
     protected SpeedUtil(List<BlockOrder> orders) {
         if (orders !=null) {
@@ -65,6 +67,10 @@ public class SpeedUtil {
         }
     }
 
+    protected void setIsForward(boolean forward) {
+        _isForward = forward;
+    }
+    
     /**
      * If one exists, return RosterEntry for the rosterId key
      * @return RosterEntry
@@ -231,11 +237,16 @@ public class SpeedUtil {
      */
     protected float getMomentumTime(float delta, boolean increasing) {
         float incr = getThrottleSpeedStepIncrement();  // step amount
+        float time;
         if (increasing) {
-            return _ma * Math.abs(delta) / incr;   // accelerating         
+            time = _ma * Math.abs(delta) / incr;   // accelerating         
         } else {
-            return _md * Math.abs(delta) / incr;
+            time = _md * Math.abs(delta) / incr;
         }
+        if (time < 10) {
+            time = 10;  // Even with CV == 0, there must be some time to move or halt
+        }
+        return time;
     }
 
     /**
@@ -297,8 +308,8 @@ public class SpeedUtil {
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
-        _ma = 0;  // acceleration momentum time 
-        _md = 0;  // deceleration momentum time
+        _ma = 10;  // acceleration momentum time 
+        _md = 10;  // deceleration momentum time
         if (_rosterEntry!=null) {
             String fileName = jmri.jmrit.roster.LocoFile.getFileLocation() + _rosterEntry.getFileName();
             File file;
@@ -362,9 +373,9 @@ public class SpeedUtil {
             if (_rampTimeIncrement < _md) {
                 _rampTimeIncrement = (int)_md;
             }
-            if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms/step, _md= {}ms/step. throttleIncr= {} ()timeIncr= {}",
-                    _rosterId, _ma, _md, _rampThrottleIncrement, _rampTimeIncrement);
         }
+        if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms/step, _md= {}ms/step. throttleIncr= {} ()timeIncr= {}",
+                _rosterId, _ma, _md, _rampThrottleIncrement, _rampTimeIncrement);
     }
 
     // return milliseconds per one speed step
@@ -458,10 +469,9 @@ public class SpeedUtil {
      * Modification is done according to the interpretation of the speed name
      * @param tSpeed throttle setting (current)
      * @param sType speed type name
-     * @param isForward direction of travel
      * @return modified throttle setting
      */
-    protected float modifySpeed(float tSpeed, String sType, boolean isForward) {
+    protected float modifySpeed(float tSpeed, String sType) {
 //        if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
         if (sType.equals(Warrant.Stop)) {
             return 0.0f;
@@ -489,9 +499,9 @@ public class SpeedUtil {
             case SignalSpeedMap.SPEED_MPH:          // convert miles per hour to track speed
                 signalSpeed = signalSpeed / _signalSpeedMap.getLayoutScale();
                 signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph -> mm/ms
-                float trackSpeed = getTrackSpeed(throttleSpeed, isForward);
+                float trackSpeed = getTrackSpeed(throttleSpeed);
                 if (signalSpeed < trackSpeed) {
-                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed, _throttle.getIsForward());
+                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed);
                     if (throttleSpeed <= 0.0f) {
                         return signalSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
                     }
@@ -501,9 +511,9 @@ public class SpeedUtil {
             case SignalSpeedMap.SPEED_KMPH:
                 signalSpeed = signalSpeed / _signalSpeedMap.getLayoutScale();
                 signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms -> kmph
-                trackSpeed = getTrackSpeed(throttleSpeed, isForward);
+                trackSpeed = getTrackSpeed(throttleSpeed);
                 if (signalSpeed < trackSpeed) {
-                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed, _throttle.getIsForward());
+                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed);
                     if (throttleSpeed <= 0.0f) {
                         return signalSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
                     }
@@ -526,24 +536,18 @@ public class SpeedUtil {
      * for a given throttle setting and direction. 
      * SpeedProfile returns 0 if it has no speed information
      * @param throttleSetting throttle setting
-     * @param isForward direction
      * @return track speed in millimeters/millisecond (not mm/sec)
      */
-    protected float getTrackSpeed(float throttleSetting, boolean isForward) {
+    protected float getTrackSpeed(float throttleSetting) {
         if (throttleSetting <= 0.0f) {
             return 0.0f;
         }
         RosterSpeedProfile speedProfile = getSpeedProfile();
         // Note SpeedProfile uses milliseconds per second.
-        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;            
+        float speed = speedProfile.getSpeed(throttleSetting, _isForward) / 1000;            
         if (speed <= 0.0f) {
             float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
             speed = throttleSetting * factor;
-            if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by factor= {}. train= {}",
-                    throttleSetting, speed, factor, _rosterId);
-        } else {
-            if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, SpeedProfile. train= {}",
-                    throttleSetting, speed, _rosterId);            
         }
         return speed;
     }
@@ -553,12 +557,11 @@ public class SpeedUtil {
      * track speed is mm/ms.  SpeedProfile wants mm/s
      * SpeedProfile returns 0 if it has no speed information
      * @param trackSpeed in millimeters per millisecond (m/s)
-     * @param isForward direction
      * @return throttle setting or 0
      */
-    protected float getThrottleSettingForSpeed(float trackSpeed, boolean isForward) {
+    protected float getThrottleSettingForSpeed(float trackSpeed) {
         RosterSpeedProfile speedProfile = getSpeedProfile();
-        return speedProfile.getThrottleSetting(trackSpeed * 1000, isForward);
+        return speedProfile.getThrottleSetting(trackSpeed * 1000, _isForward);
     }
 
     /**
@@ -568,26 +571,24 @@ public class SpeedUtil {
      * @param speedSetting Recorded (Normal) throttle setting
      * @param speedtype speed name to modify throttle setting to get modified speed
      * @param time milliseconds
-     * @param isForward direction
      * @return distance in millimeters
      */
-    protected float getDistanceTraveled(float speedSetting, String speedtype, float time, boolean isForward) {
+    protected float getDistanceTraveled(float speedSetting, String speedtype, float time) {
         if (time <= 0) {
             return 0;
         }
-        float throttleSetting = modifySpeed(speedSetting, speedtype, isForward);
-        return getTrackSpeed(throttleSetting, isForward) * time;
+        float throttleSetting = modifySpeed(speedSetting, speedtype);
+        return getTrackSpeed(throttleSetting) * time;
     }
 
     /**
      * Get time needed to travel a distance at a constant speed.
      * @param throttleSetting Throttle setting
      * @param distance in millimeters
-     * @param isForward direction
      * @return time in milliseconds
      */
-    protected float getTimeForDistance(float throttleSetting, float distance, boolean isForward) {
-        float speed = getTrackSpeed(throttleSetting, isForward);
+    protected float getTimeForDistance(float throttleSetting, float distance) {
+        float speed = getTrackSpeed(throttleSetting);
         if (distance <= 0 || speed <= 0) {
             return 0.0f;
         }
@@ -600,78 +601,71 @@ public class SpeedUtil {
      * @param curSetting current throttle setting
      * @param curSpeedType current speed type
      * @param toSpeedType Speed type change
-     * @param isForward direction
      * @return distance in millimeters
      */
-    protected float rampLengthForRampDown(float curSetting, String curSpeedType, String toSpeedType,
-            boolean isForward) {
+    protected float rampLengthForRampDown(float curSetting, String curSpeedType, String toSpeedType) {
         if (curSpeedType.equals(toSpeedType)) {
             return 0.0f;
         }
-        float fromSpeed = modifySpeed(curSetting, curSpeedType, isForward);
-        float toSpeed = modifySpeed(curSetting, toSpeedType, isForward);
-        return rampLengthForSpeedChange(fromSpeed, toSpeed, isForward);
+        float fromSpeed = modifySpeed(curSetting, curSpeedType);
+        float toSpeed = modifySpeed(curSetting, toSpeedType);
+        return getRampForSpeedChange(fromSpeed, toSpeed).getRampLength();
     }
 
     /**
      * Get the length of ramp for a speed change
-     * @param fSpeed - starting speed setting
+     * @param fromSpeed - starting speed setting
      * @param toSpeed - ending speed setting
-     * @param isForward - direction
      * @return distance in millimeters
      */
-    protected float rampLengthForSpeedChange(float fSpeed, float toSpeed, boolean isForward) {
-        float fromSpeed = fSpeed;
-        float rampLength = 0.0f;
-        int deltaTime = getRampTimeIncrement();
-        float deltaThrottle = getRampThrottleIncrement();
-        int numSteps = 0;
-        boolean increasing = (fromSpeed <= toSpeed);
-
-        if (increasing) {
-            while (fromSpeed < toSpeed) {
-                float dist = getDistanceFromSpeedChange(fromSpeed, fromSpeed+deltaThrottle, isForward, deltaTime);
-                fromSpeed += deltaThrottle;
-                if (fromSpeed <= toSpeed) {
-                    rampLength += dist;
-                } else {
-                    rampLength += (fromSpeed - toSpeed) * dist / deltaThrottle;
-                }
-                deltaThrottle *= NXFrame.INCRE_RATE;
-                numSteps++;
-            }
-        } else {    // decreasing
-            // Get largest throttle increment to start
-            toSpeed += deltaThrottle;
-            float tempSpeed = toSpeed;
-            while (tempSpeed + deltaThrottle <= fromSpeed) {
-                tempSpeed += deltaThrottle;
-                deltaThrottle *= NXFrame.INCRE_RATE;
-            }
-            while (fromSpeed >= toSpeed) {
-                float nextSpeed;
-                if (fromSpeed < deltaThrottle) {
-                    nextSpeed = deltaThrottle - fromSpeed;
-                } else {
-                    nextSpeed = fromSpeed - deltaThrottle;
-                }
-                float dist = getDistanceFromSpeedChange(fromSpeed, nextSpeed, isForward, deltaTime);
-                if (dist <= 0.0f) {
-                    break;
-                }
-                fromSpeed -= deltaThrottle;
-                if (fromSpeed > toSpeed) {
-                    rampLength += dist;
-                } else {
-                    rampLength += (toSpeed - fromSpeed) * dist / deltaThrottle;
-                }
-                deltaThrottle /= NXFrame.INCRE_RATE;
-                numSteps++;
-            }
+    protected RampData getRampForSpeedChange(float fromSpeed, float toSpeed) {
+        RampData ramp = new RampData(_rampThrottleIncrement, _rampTimeIncrement);
+        ramp.makeThrottleSettings(fromSpeed, toSpeed);
+        if (ramp.isUpRamp()) {
+            makeUpRamp(ramp);
+        } else {
+            makeDownRamp(ramp);
         }
-        if (log.isTraceEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms from speed= {} to speed= {}",
-                rampLength, deltaTime*numSteps, fSpeed, toSpeed);
-        return rampLength;
+
+        if (log.isTraceEnabled()) log.debug("rampLengthForSpeedChange()= {} for fromSpeed= {} toSpeed= {}",
+                ramp.getRampLength(), fromSpeed, toSpeed);
+        return ramp;
+    }
+
+    private void makeUpRamp(RampData ramp) {
+        float rampLength = 0.0f;
+        float prevSetting = 0.0f;
+        float nextSetting;
+        ListIterator<Float> iter = ramp.speedIterator(true);
+        if (iter.hasNext()) {
+            prevSetting = iter.next().floatValue();
+        }
+        while (iter.hasNext()) {
+            nextSetting = iter.next().floatValue();
+            rampLength += getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement);
+//            if (log.isDebugEnabled()) log.debug("makeUpRamp()= {} for fromSpeed= {} toSpeed= {} dist= {}",
+//                    ramp.getRampLength(), prevSetting, nextSetting, getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement));
+            prevSetting = nextSetting;
+        }
+        ramp.setRampLength(rampLength);
+    }
+
+    private void makeDownRamp(RampData ramp) {
+        float rampLength = 0.0f;
+        float prevSetting = 0.0f;
+        float nextSetting;
+        ListIterator<Float> iter = ramp.speedIterator(false);
+        if (iter.hasPrevious()) {
+            prevSetting = iter.previous().floatValue();
+        }
+        while (iter.hasPrevious()) {
+            nextSetting = iter.previous().floatValue();
+            rampLength += getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement);
+//            if (log.isDebugEnabled()) log.debug("makeDownRamp()= {} for fromSpeed= {} toSpeed= {} dist= {}",
+//                    ramp.getRampLength(), prevSetting, nextSetting, getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement));
+            prevSetting = nextSetting;
+        }
+        ramp.setRampLength(rampLength);
     }
 
     /**
@@ -681,21 +675,20 @@ public class SpeedUtil {
      * 
      * @param prevSpeed throttle setting when speed changed to currSpeed
      * @param currSpeed throttle setting being set
-     * @param isForward direction of decoder
-     * @param speedTime elapsed time from when the speed change was made
+     * @param speedTime elapsed time from when the speed change was made to now
      * @return distance traveled
      */
-    protected float getDistanceFromSpeedChange(float prevSpeed, float currSpeed, boolean isForward, long speedTime) {
+    protected float getDistanceOfSpeedChange(float prevSpeed, float currSpeed, long speedTime) {
         boolean increasing = (prevSpeed <= currSpeed);
         float momentumTime = getMomentumTime(currSpeed - prevSpeed, increasing);
         if (speedTime <=momentumTime ) {
             // most likely will be too far since currSpeed is not attained
-            return getTrackSpeed((prevSpeed + currSpeed)/2, isForward) * speedTime;
+            return getTrackSpeed((prevSpeed + currSpeed)/2) * speedTime;
         }
         // assume a linear change of speed
-        float dist = getTrackSpeed((prevSpeed + currSpeed)/2, isForward) * momentumTime;
+        float dist = getTrackSpeed((prevSpeed + currSpeed)/2) * momentumTime;
         if (speedTime > momentumTime) { // time remainder at changed speed
-            dist += getTrackSpeed(currSpeed, isForward) * (speedTime - momentumTime);
+            dist += getTrackSpeed(currSpeed) * (speedTime - momentumTime);
         }
         return dist;
     }
@@ -730,7 +723,7 @@ public class SpeedUtil {
         long elapsedTime = toBlock._entryTime - _changetime;
 
         // distance traveled according to current speed profile.
-        _distanceTravelled += getDistanceFromSpeedChange(_prevSpeed, throttle, isForward, elapsedTime);
+        _distanceTravelled += getDistanceOfSpeedChange(_prevSpeed, throttle, elapsedTime);
         // weighted speed total
         _settingsTravelled += throttle * elapsedTime;
         _timeAtSpeed += elapsedTime;
@@ -765,10 +758,11 @@ public class SpeedUtil {
                     fromBlock.getDisplayName(), _rosterId, _numchanges, aveSettings, step, measuredSpeed, (isForward?"forward":"reverse"));
         }
 
-        throttle = stepIncrement * Math.round(throttle/stepIncrement);
+        setSpeed(_mergeProfile, aveSettings, measuredSpeed, isForward);
+/*        throttle = stepIncrement * Math.round(throttle/stepIncrement);
         if (_numchanges == 0 || _mergeProfile.getProfileSize() <= _sessionProfile.getProfileSize()) {
             setSpeed(_mergeProfile, throttle, measuredSpeed, isForward);
-        }
+        }*/
         clearStats();
     }
  
@@ -816,7 +810,7 @@ public class SpeedUtil {
         long time = System.currentTimeMillis();
         float throttleSetting = _throttle.getSpeedSetting();
         long elapsedTime = time - _changetime;
-        _distanceTravelled += getDistanceFromSpeedChange(_prevSpeed, throttleSetting, _throttle.getIsForward(), elapsedTime);
+        _distanceTravelled += getDistanceOfSpeedChange(_prevSpeed, throttleSetting, elapsedTime);
         _settingsTravelled += throttleSetting * elapsedTime;
         if (throttleSetting > 0.0f  ) {
             _timeAtSpeed += elapsedTime;
