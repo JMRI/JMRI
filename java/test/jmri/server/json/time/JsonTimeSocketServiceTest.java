@@ -8,6 +8,7 @@ import java.util.Locale;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,8 +24,13 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.RetryRule;
 
 public class JsonTimeSocketServiceTest {
+
+    @Rule
+    // this test is sensitive to load on test system, so allow a single retry before failing
+    public RetryRule retryRule = new RetryRule(1);
 
     @Test
     public void testOnMessage() throws IOException, JmriException, JsonException {
