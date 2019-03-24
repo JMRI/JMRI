@@ -6,6 +6,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -36,22 +38,40 @@ public class JsonMessageSocketServiceTest {
     }
 
     @Test
-    public void testOnMessage() {
+    public void testOnMessageHello() throws IOException, JmriException, JsonException {
         String type = JSON.HELLO;
         ObjectNode data = mapper.createObjectNode();
         Locale locale = Locale.ENGLISH;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
+        JsonMessageClientManager manager = InstanceManager.getDefault(JsonMessageClientManager.class);
+        Assert.assertNull("No clients", manager.getClient(connection));
+        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        instance.onMessage(type, data, JSON.POST, locale);
+        Assert.assertNull(connection.getMessage());
+        Assert.assertNull("No clients", manager.getClient(connection));
+        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        data.put(JsonMessage.CLIENT, ""); // will not subscribe, results in JsonException
         try {
             instance.onMessage(type, data, JSON.POST, locale);
-            Assert.assertNull(connection.getMessage());
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail("Unexpected exception thrown.");
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+            Assert.assertEquals("Data attribute \"client\" for type \"hello\" must not be empty.", ex.getMessage());
         }
+        Assert.assertNull("No clients", manager.getClient(connection));
+        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        data.put(JsonMessage.CLIENT, "client1"); // will subscribe
+        instance.onMessage(type, data, JSON.POST, locale);
+        Assert.assertNull(connection.getMessage());
+        Assert.assertNotNull("One client", manager.getClient(connection));
+        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        instance.onClose(); // clean up
+    }
     }
 
     @Test
-    public void testOnList() {
+    public void testOnListHello() throws IOException, JmriException {
         String type = JSON.HELLO;
         ObjectNode data = mapper.createObjectNode();
         Locale locale = Locale.ENGLISH;
@@ -60,10 +80,9 @@ public class JsonMessageSocketServiceTest {
         try {
             instance.onList(type, data, locale);
             Assert.fail("Expected exception not thrown.");
-        } catch (IOException | JmriException ex) {
-            Assert.fail("Unexpected exception thrown.");
         } catch (JsonException ex) {
-            Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+            Assert.assertEquals("hello cannot be listed.", ex.getMessage());
         }
     }
 

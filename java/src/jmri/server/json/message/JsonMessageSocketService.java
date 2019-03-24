@@ -17,15 +17,12 @@ import jmri.server.json.JsonSocketService;
 
 /**
  *
- * @author Randall Wood Copyright 2017
+ * @author Randall Wood Copyright 2017, 2019
  */
 public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpService> {
 
-    private JsonMessageClientManager messageClientManager = null;
-
     public JsonMessageSocketService(JsonConnection connection) {
         super(connection, new JsonMessageHttpService(connection.getObjectMapper()));
-        messageClientManager = InstanceManager.getDefault(JsonMessageClientManager.class);
     }
 
     @Override
@@ -36,6 +33,8 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                     String client = data.path(CLIENT).asText();
                     if (!client.isEmpty()) {
                         subscribe(client);
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type));
                     }
                 }
                 break;
@@ -46,13 +45,13 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                         if (!data.path(CLIENT).isMissingNode()) {
                             String client = data.path(CLIENT).asText();
                             if (!client.isEmpty()) {
-                               messageClientManager.unsubscribe(client);
+                               getManager().unsubscribe(client);
                             }
                         }
                         break;
                     case JSON.GET:
                         // create id for client, register it, and inform client
-                        String uuid = messageClientManager.getClient(this.connection);
+                        String uuid = getManager().getClient(this.connection);
                         if (uuid == null) {
                             uuid = UUID.randomUUID().toString();
                         }
@@ -89,15 +88,18 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
 
     @Override
     public void onClose() {
-        messageClientManager.unsubscribe(this.connection);
+        getManager().unsubscribe(this.connection);
     }
 
     private void subscribe(String client) throws JsonException {
         try {
-            messageClientManager.subscribe(client, this.connection);
+            getManager().subscribe(client, this.connection);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_CONFLICT, Bundle.getMessage(this.connection.getLocale(), "ErrorClientConflict", CLIENT));
         }
-
+    }
+    
+    private JsonMessageClientManager getManager() {
+        return InstanceManager.getDefault(JsonMessageClientManager.class);
     }
 }
