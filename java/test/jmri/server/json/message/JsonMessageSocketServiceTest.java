@@ -68,7 +68,6 @@ public class JsonMessageSocketServiceTest {
         Assert.assertEquals("One client", 1, manager.getClients(connection).size());
         instance.onClose(); // clean up
     }
-    }
 
     @Test
     public void testOnListHello() throws IOException, JmriException {
