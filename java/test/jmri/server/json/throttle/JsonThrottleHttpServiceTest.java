@@ -36,11 +36,11 @@ public class JsonThrottleHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doPost(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), Locale.ENGLISH);
+            service.doPut(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), Locale.ENGLISH);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
-            Assert.assertEquals("Error message", "Posting throttle is not allowed.", ex.getMessage());
+            Assert.assertEquals("Error message", "Putting throttle is not allowed.", ex.getMessage());
         }
     }
 
