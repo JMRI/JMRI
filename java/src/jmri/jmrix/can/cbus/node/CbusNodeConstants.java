@@ -69,7 +69,7 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Module Manufacturers
      */
-    public static final Map<Integer, String> manMap = createManMap();
+    private static final Map<Integer, String> manMap = createManMap();
 
     /*
      * Populate hashmap with format strings
@@ -101,7 +101,7 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Bus Type
      */
-    public static final Map<Integer, String> busMap = createBusMap();
+    private static final Map<Integer, String> busMap = createBusMap();
 
     /*
      * Populate hashmap with format strings
@@ -145,9 +145,9 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Module Names
      */
-    public static final Map<Integer, String> type165Map = createType165Map();
-    public static final Map<Integer, String> type70Map = createType70Map();
-    public static final Map<Integer, String> type80Map = createType80Map();
+    private static final Map<Integer, String> type165Map = createType165Map();
+    private static final Map<Integer, String> type70Map = createType70Map();
+    private static final Map<Integer, String> type80Map = createType80Map();
     
     /*
      * Populate hashmap with format strings for manufacturer 165 MERG
@@ -275,9 +275,9 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Module extra info
      */
-    public static final Map<Integer, String> extra165Map = createExtra165Map();
-    public static final Map<Integer, String> extra70Map = createExtra70Map();
-    public static final Map<Integer, String> extra80Map = createExtra80Map();
+    private static final Map<Integer, String> extra165Map = createExtra165Map();
+    private static final Map<Integer, String> extra70Map = createExtra70Map();
+    private static final Map<Integer, String> extra80Map = createExtra80Map();
     
     /*
      * Populate hashmap with format strings
@@ -398,8 +398,8 @@ public class CbusNodeConstants {
         return format;
     }
     
-    public static final Map<Integer, String> link165Map = createLink165Map();
-    public static final Map<Integer, String> link70Map = createLink70Map();
+    private static final Map<Integer, String> link165Map = createLink165Map();
+    private static final Map<Integer, String> link70Map = createLink70Map();
     
     /*
      * Populate hashmap with merg module support links
@@ -510,7 +510,7 @@ public class CbusNodeConstants {
     /**
      * Hashmap for fixed Module Numbers
      */
-    public static final Map<Integer, String> resMod = createModMap();
+    private static final Map<Integer, String> resMod = createModMap();
 
     /*
      * Populate hashmap with format strings

@@ -438,12 +438,12 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.setFeedbackMode("DELAYED");
         t.reply(m);
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "reply Turnout.THROWN didn't arrive");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "reply Turnout.THROWN didn't happen");
         
         m.setElement(0, 0x91); // ACOF OPC
         t.reply(m);
-        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "reply Turnout.CLOSED didn't arrive"); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); }, "reply Turnout.INCONSISTENT didn't happen"); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "reply Turnout.CLOSED didn't happen"); 
     }    
 
     // The minimal setup for log4J
