@@ -17,7 +17,7 @@
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20190305"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
-    <!-- Program description https://sites.google.com/site/sidloweb/elektrika/29-ard-scom-mx -->
+    <!-- Program description https://sites.google.com/site/sidloweb/elektrika/30-ard-scom-tc-12v -->
     <!-- e-shop http://dccdoma.eshop-zdarma.cz/ -->
     
     <decoder>
