@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec 2013-10-09 -->
+<!-- Translated by Herv&#233; Blorec 2019-03-25 -->
 
 <html lang="fr">
 <head>
@@ -29,10 +29,35 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Le Tableau (Liens) Automate</h1>Ceci est la page d'aide
-      help/jmri/jmrit/automat/monitor/AutomatTable 
+      <h1>Le Tableau (Liens) Automate</h1>
+      
+      La table des liens vous permet de voir les liens utilis&#233;s par les 
+      scripts qui impl&#233;mentent la classe "AbstractAutomat".
+       <p>
+       Chaque fois que la classe ex&#233;cute sa routine "handle", le compte 
+       sera incr&#233;ment&#233;. Vous pouvez arr&#234;ter le filavec le bouton.
+      
+       <p>
+       Notez que la colonne name ne sera pas particulièrement utile &#224;
+       moins que votre script ne d&#233;finisse un nom distinct:
+<pre> <code>
+	# en cr&#233;er un
+	a = AutomatExample ()
+
+	# d&#233;finir le nom
+	a.setName ("Exemple de script automatique")
+</ code></pre>
+       <p>
+       Voir le
+       <a href="../../../../../html/tools/automationviaJava.shtml"> pages 
+       de script </a> pour plus d'informations sur la r&#233;daction de scripts.
+      
+       <p> Voici la page d'aide help/jmri/jmrit/automat/monitor/AutomatTable
+      
+     
       <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
 </html>
+>
