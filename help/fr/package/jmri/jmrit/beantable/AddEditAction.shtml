@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2016/06/12-->
+<!-- UpDated by Herv&#233;Blorec 2019/02/25-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -28,90 +28,161 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Ajouter/&eacute;diter Action</h1>
+      <h1>Ajouter/&#233;diter Action</h1>
 
-      <h2>La fen&ecirc;tre Ajouter/Modifier Action</h2>
+      <h2>La Fen&#234;tre Ajouter/Modifier Action</h2>
 
       <p>Les <b><a href="ViewSpecialActions.shtml">Actions</a></b>
-      sont des t&acirc;ches qui peuvent &ecirc;tre lanc&eacute;es
-      automatiquement comme un train qui traverse en mode
-      automatique le r&eacute;seau. La fen&ecirc;tre
-      Ajouter/Modifier action (voir ci-dessous pour la
-      version"Ajouter") pr&eacute;voit la cr&eacute;ation d'actions
-      nouvelles et pour l'&eacute;dition des actions en cours. La
-      version &Acirc;&laquo;Modifier&Acirc;&raquo; de cette
-      fen&ecirc;tre est la m&ecirc;me que celle montr&eacute;e
-      ci-dessous, &agrave; l'exception du bouton <b>Cr&eacute;er
-      Nouvelle action</b> qui est est remplac&eacute; par un bouton
-      <b>Mise &agrave; Jour Action</b>et les s&eacute;lections et
-      donn&eacute;es sont remplies par les valeurs actuelles de
-      l'action en cours d'&eacute;dition.</p><img src=
-      "AddEditAction.jpg" height="236" width="307">
+      sont des t&acirc;ches qui peuvent &#234;tre lanc&#233;es automatiquement 
+      comme un train qui traverse en mode automatique le r&#233;seau. Le volet 
+      Ajouter Action permet de cr&#233;er
+       nouvelles actions:</p>
+      <img src="images/AddEditAction.png" height="309" width="460">
+      La version "Modifier" de cette fen&#234;tre est la m&#234;me que celle montr&#233;e
+      ci-dessus, canton l'exception du bouton <b>Cr&#233;er
+      Nouvelle Action</b> qui est est remplac&#233; par un bouton
+      <b>Mise canton Jour Action</b>et les s&#233;lections et
+      donn&#233;es sont remplies par les valeurs actuelles de
+      l'action en cours d'&#233;dition.
 
-      <p>Une action est d&eacute;finie en sp&eacute;cifiant
-      <b>Quelle</b> action est demand&eacute;e et
-      <b>Quand</b>l'action doit &ecirc;tre engag&eacute;e.</p>
+      <p>Une Action est d&#233;finie en deux &#233;tapes:</p>
+      <ol>
+      <li><b>Quelle</b> action doit &#234;tre ex&#233;cut&#233;e</li>
+      <li><b>Quand</b>l'action doit &#234;tre engag&#233;e.</li>
 
-      <p>Pour sp&eacute;cifier la partie <b>Quand</b>,
-      s&eacute;lectionnez une option dans le menu contextuel
-      <b>Quand</b>, et remplir toutes les donn&eacute;es qui
-      pourraient &ecirc;tre n&eacute;cessaires. Les Champs
-      d'&eacute;l&eacute;ment de donn&eacute;es ou de menus
-      appara&icirc;tront lorsque l'&eacute;l&eacute;ment qui en a
-      besoin est s&eacute;lectionn&eacute;. Chaque
-      &eacute;l&eacute;ment de donn&eacute;es est fourni avec une
-      description textuelle (bulle d'aide) qui peut &ecirc;tre
-      appel&eacute;e en pointant le curseur sur
-      l'&eacute;l&eacute;ment. Chaque option <b>Quand</b> est
-      d&eacute;crite plus en d&eacute;tail dans <b><a href=
-      "ViewSpecialActions.shtml">Actions</a></b>.</p>
+	  <a id="when" name="when"></a>
+      <h3></h3>Quand Agir</h3>
+      
+      <p>Pour sp&#233;cifier la partie <b>Quand</b>,  s&#233;lectionnez une option 
+      dans le menu contextuel <b>Quand</b>, et remplir toutes les donn&#233;es 
+      qui pourraient &#234;tre n&#233;cessaires. Les Champs d'&#233;l&#233;ment de donn&#233;es ou 
+      de menus appara&#238; tront lorsque l'&#233;l&#233;ment qui en a besoin est s&#233;lectionn&#233;. 
+      Chaque &#233;l&#233;ment de donn&#233;es est fourni avec une description textuelle 
+      (bulle d'aide) qui peut &#234;tre appel&#233;e en pointant le curseur sur
+      l'&#233;l&#233;ment. Chaque option <b>Quand</b> est d&#233;crite plus en d&#233;tail dans
+       <b><a href="ViewSpecialActions.shtml">Actions</a></b>.</p>
 
-      <p>Un retard optionnel, sp&eacute;cifi&eacute; en
+      <p>Un retard optionnel, sp&#233;cifi&#233; en
       millisecondes, est disponible pour chaque option <b>Quand</b>
-      . Aucun retard est un d&eacute;faut. Si un d&eacute;lai
-      optionnel n'est pas entr&eacute; (ou un temporisation
-      z&eacute;ro est entr&eacute;e), l'action sera lanc&eacute;e
-      imm&eacute;diatement apr&egrave;s le <i>quand</i>
-      l'&eacute;v&eacute;nement se soit produit. Si un d&eacute;lai
-      est sp&eacute;cifi&eacute;, le programme attendra pendant le
-      temps sp&eacute;cifi&eacute; apr&egrave;s le <i>quand</i>
-      l'&eacute;v&eacute;nement se soit produit avant d'initier
+      . Aucun retard est un d&#233;faut. Si un d&#233;lai
+      optionnel n'est pas entr&#233; (ou un temporisation
+      z&#233;ro est entr&#233;e), l'action sera lanc&#233;e
+      imm&#233;diatement apr&#232;s le <i>quand</i>
+      l'&#233;v&#233;nement se soit produit. Si un d&#233;lai
+      est sp&#233;cifi&#233;, le programme attendra pendant le
+      temps sp&#233;cifi&#233; apr&#232;s le <i>quand</i>
+      l'&#233;v&#233;nement se soit produit avant d'initier
       l'action.</p>
 
-      <p>Pour sp&eacute;cifier <b>Quelle</b> action est
-      demand&eacute;e, s&eacute;lectionner une option dans le menu
+      <p>Pour sp&#233;cifier <b>Quelle</b> action est
+      demand&#233;e, s&#233;lectionner une option dans le menu
       contextuel <b>Quelle</b> , et remplir toutes les
-      donn&eacute;es qui pourraient &ecirc;tre n&eacute;cessaires.
-      Les Champs d'&eacute;l&eacute;ment de donn&eacute;es
-      appara&icirc;tront lorsque l'&eacute;l&eacute;ment qui en a
-      besoin est s&eacute;lectionn&eacute;. Chaque
-      &eacute;l&eacute;ment de donn&eacute;es est fourni avec une
-      description textuelle (bulle d'aide) qui peut &ecirc;tre
-      appel&eacute;e en pointant le curseur sur
-      l'&eacute;l&eacute;ment. Chaque <b>Quelle</b> action est
-      d&eacute;crite plus en d&eacute;tail dans <b><a href=
-      "ViewSpecialActions.shtml">Actions</a></b>.</p>
+      donn&#233;es qui pourraient &#234;tre n&#233;cessaires.
+      Les Champs d'&#233;l&#233;ment de donn&#233;es
+      appara&#238; tront lorsque l'&#233;l&#233;ment qui en a
+      besoin est s&#233;lectionn&#233;. Chaque
+      &#233;l&#233;ment de donn&#233;es est fourni avec une
+      description textuelle (bulle d'aide) qui peut &#234;tre
+      appel&#233;e en pointant le curseur sur
+      l'&#233;l&#233;ment. <br>
+      Dans la liste d&#233;roulante, choisissez l'une des options suivantes:</p>
+      <ul>
+        <li> <b>Entr&#233;e de section</b>: lorsque le train automatique entre 
+        dans la section en cours (voir l'image ci-dessus).</li>
 
-      <p>Quand l'action est compl&egrave;tement d&eacute;finie
-      cliquez sur le bouton <b>Cr&eacute;er une Nouvelle Action</b>
-      (ou le bouton <b>Mise &agrave; Jour Action</b> si
-      &eacute;dition en cours). Toutes les donn&eacute;es
-      n&eacute;cessaires seront valid&eacute;es. Si un
-      probl&egrave;me est d&eacute;tect&eacute;, un message
-      appara&icirc;tra, et la fen&ecirc;tre Ajouter/&eacute;diter
+        <li> <b>&#193; la sortie de la section</b> - Lorsque le train automatique 
+        quitte la section en cours. Cela signifie que le dernier wagon 
+        d&#233;tectable quitte la section et que celle-ci est inoccup&#233;e.</Li>
+
+        <li> <b>Entr&#233;e sur canton</b>: lorsque le train automatique entre 
+        dans un canton sp&#233;cifi&#233; dans la section. Pour les sections avec 
+        un seul canton, cela &#233;quivaut canton <b>Entr&#233;e de section</b>. <br>
+        <img src="images/AddEditWhenBlock.png" height="110" width="461">
+        </li>
+
+        <li> <b>&#193; la sortie du canton</b> - Lorsque le train automatique 
+        quitte un canton sp&#233;cifi&#233; dans la section. Cela signifie que le 
+        dernier wagon d&#233;tectable quitte le canton sp&#233;cifi&#233; et que le 
+        canton est inoccup&#233;. Pour les sections avec un seul canton, 
+        cela &#233;quivaut canton <b>Sortie de section</b>.</Li>
+
+        <li> <b>&#193; l'arr&#234;t du train</b>: lorsque le train automatique 
+        s'arr&#234;te. Cela peut &#234;tre utilis&#233;, par exemple, pour arr&#234;ter la 
+        sonnerie dans un d&#233;codeur de son ou pour lancer d'autres actions 
+        lorsque le train s'arr&#234;te canton une gare. <br>
+          <img src="images/AddEditWhenStop.png" height="116" width="460">
+        </li>
+
+        <li> <b>Au d&#233;marrage du train</b> - Lorsque les trains automatiques 
+        d&#233;marrent apr&#232;s avoir &#233;t&#233; arr&#234;t&#233;s. Cela peut &#234;tre utilis&#233;, par 
+        exemple, pour d&#233;clencher des actions lorsqu'un train d&#233;marre 
+        apr&#232;s l'arr&#234;t en gare.</Li>
+
+        <li> <b>Sur le capteur ACTIF</b> - Lorsque le capteur sp&#233;cifi&#233; 
+        passe canton l'&#233;tat Actif. Le capteur sp&#233;cifi&#233; peut &#234;tre interne ou 
+        mat&#233;riel et doit figurer dans le tableau des capteurs. Cela peut 
+        &#234;tre utilis&#233;, par exemple, avec un capteur mat&#233;riel connect&#233; canton 
+        un bouton-poussoir de l'interface client pour d&#233;clencher une 
+        action. Il pourrait &#233;galement &#234;tre utilis&#233; pour d&#233;clencher des 
+        actions canton l'aide de capteurs de position mat&#233;riels sur le r&#233;seau. 
+        Avec des capteurs internes, il peut fournir un lien vers Logix. <br>
+          <img src = "images/AddEditWhenSensor.png" height = "117" width = "461">
+       </li>
+
+        <li> <b>Sur le capteur INACTIF</b> - Lorsque le capteur sp&#233;cifi&#233; 
+        passe canton l'&#233;tat Inactif. C'est la m&#234;me chose que ci-dessus, mais 
+        avec l'&#233;tat du capteur oppos&#233;. Utilisez celui qui convient le 
+        mieux canton votre mat&#233;riel ou canton Logix.</Li>
+     </ul>
+
+      <h3> Que faire</h3>
+      <p> Apr&#232;s avoir s&#233;lectionn&#233; <b>Lorsque</b>, continuez en choisissant 
+      l'une des options suivantes <b><a href =
+      "ViewSpecialActions.shtml # what"> Quoi</a></b> et remplissez les 
+      param&#232;tres:</p>
+
+      <ul>
+        <li> <b>Mettre en Pause le Train</b></li>
+        <li> <b>D&#233;finir la Vitesse Maximale</b></li>
+        <li> <b>D&#233;finir la Vitesse du Train</b></li>
+        <li> <b>Rampe de Vitesse du Train</b></li>
+        <li> <b>Acc&#233;der au Mode Manuel</b></li>
+        <li> <b>Allumer l'&#201; clairage de la Locomotive</b></li>
+        <li> <b>D&#233;marrer La Cloche</b></li>
+        <li> <b>Arr&#234;tez La Cloche</b></li>
+        <li> <b>Klaxon Sonore</b></li>
+        <li> <b>Avertisseur Sonore de mod&#232;le</b></li>
+        <li> <b>D&#233;finir la Fonction du D&#233;codeur</b></li>
+        <li> <b>D&#233;finir le Capteur ACTIF</b></li>
+        <li> <b>D&#233;finir le Capteur sur INACTIF</b></li>
+        <li> <b>Signal d'Attente</b></li>
+        <li> <b>Signal de Lib&#233;ration</b></li>
+     </ul>
+
+      <p>Quand l'action est compl&#232;tement d&#233;finie cliquez sur le bouton 
+      <b>Cr&#233;er une Nouvelle Action</b> (ou le bouton <b>Mise canton Jour 
+      Action</b> si &#233;dition en cours). Toutes les donn&#233;es n&#233;cessaires 
+      seront valid&#233;es. Si un probl&#232;me est d&#233;tect&#233;, un message
+      appara&#238; tra, et la fen&#234;tre Ajouter/&#233;diter
       Actions restera pour permettre la correction du
-      probl&egrave;me. Si tout est v&eacute;rifi&eacute;, la
-      fen&ecirc;tre Ajouter/&eacute;diter action va
-      dispara&icirc;tre et les actions(nouvelles ou
-      modifi&eacute;es) appara&icirc;tront dans la fen&ecirc;tre
+      probl&#232;me. Si tout est v&#233;rifi&#233;, la
+      fen&#234;tre Ajouter/&#233;diter action va
+      dispara&#238; tre et les actions(nouvelles ou
+      modifi&#233;es) appara&#238; tront dans la fen&#234;tre
       <b>Voir Actions</b>.</p>
 
       <p>Cliquez sur le bouton <b>Annuler</b> pour refermer la
-      fen&ecirc;tre Ajouter/Modifier l'Action, sans cr&eacute;er
+      fen&#234;tre Ajouter/Modifier l'Action, sans cr&#233;er
       une nouvelle action ou sans achever le montage d'une action
-      existante . La fermeture de la fen&ecirc;tre Ajouter/Modifier
-      l'Action &eacute;quivaut &agrave; cliquer sur le bouton
-      <b>Annuler</b>.</p><!--#include virtual="/Footer" -->
+      existante . La fermeture de la fen&#234;tre Ajouter/Modifier
+      l'Action &#233;quivaut canton cliquer sur le bouton
+      <b>Annuler</b>.</p><p> 
+		  Retour <p> Retour &#224;  la <a href="ViewSpecialActions.shtml"> Sp&#233;cial
+       Actions d'aide </a>. </ P>canton l'aide d'<a href="ViewSpecialActions.shtml"> Actions 
+		  Sp&#233;ciales </a>. </ P>
+      
+      
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
