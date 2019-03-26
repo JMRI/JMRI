@@ -453,7 +453,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Recursively walk the child compositeChoice elements, working through the
      * compositeChoiceGroup elements as needed.
      * <p>
-     * Copied from handleEnumValChildren for use in LocoIO.
+     * Adapted from handleEnumValChildren for use in LocoIO.
      */
     protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
         List<Element> local = e.getChildren();
@@ -477,7 +477,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                     var.addSetting(choice, varName, findVar(varName), value);
                 }
             } else if (el.getName().equals("compositeChoiceGroup")) {
-                // no tree as in enumGroup
+                // no tree to manage as in enumGroup
                 handleCompositeValChildren(el, var);
             }
             log.debug("element processed");
