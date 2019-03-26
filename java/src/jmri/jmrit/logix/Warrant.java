@@ -432,7 +432,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     @jmri.InvokeOnLayoutThread
     protected void fireRunStatus(String property, Object old, Object status) {
-//        jmri.util.ThreadingUtil.runOnLayout(() -> {   Will hang GUI!
+//        jmri.util.ThreadingUtil.runOnLayout(() -> {   // Will hang GUI!
         ThreadingUtil.runOnLayoutEventually(() -> { // OK but can be quite late in reporting speed changes
             firePropertyChange(property, old, status);
         });
@@ -967,9 +967,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     break;
                 case DEBUG:
-                    if (log.isDebugEnabled()) {
-                        debugInfo();
-                    }
+                    ret = debugInfo();
+                    fireRunStatus("SpeedChange", null, idx);
                     break;
                 default:
             }
@@ -1067,7 +1066,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     break;
                 case DEBUG:
                     ret = debugInfo();
-                    break;
+                    fireRunStatus("SpeedChange", null, idx);
+                    return ret;
                 default:
             }
         }

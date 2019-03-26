@@ -359,8 +359,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     @Override
     public Object getValueAt(int row, int col) {
-        // if (log.isDebugEnabled())
-        // log.debug("getValueAt: row= "+row+", column= "+col);
+//        if (log.isTraceEnabled()) {
+//            log.debug("getValueAt: row= "+row+", column= "+col);
+//        }
         Warrant w = getWarrantAt(row);
         // some error checking
         if (w == null) {
@@ -442,7 +443,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     "off");
         case CONTROL_COLUMN:
             String msg = w.getRunningMessage();
-            log.debug("getValueAt: warrant= {}, getRunningMessage= \"{}\"", w.getDisplayName(), msg);
+//            log.debug("getValueAt: warrant= {}, getRunningMessage= \"{}\"", w.getDisplayName(), msg);
             return msg;
         case EDIT_COLUMN:
             return Bundle.getMessage("ButtonEdit");
@@ -457,7 +458,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-//        if (log.isDebugEnabled())
+//        if (log.isTraceEnabled())
 //            log.debug("setValueAt: row= " + row + ", column= " + col
 //                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
         Warrant w = getWarrantAt(row);
@@ -539,7 +540,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             // a warrant change. fireTableRows then causes getValueAt() which
             // calls getRunningMessage()
             int mode = w.getRunMode();
-            if (log.isDebugEnabled()) {
+            if (log.isTraceEnabled()) {
                 log.debug("setValueAt({}) for warrant {}", value, w.getDisplayName());
             }
             if (mode == Warrant.MODE_LEARN) {
@@ -560,7 +561,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ABORT;
                     } else if (setting.equals(WarrantTableFrame.ramp)) {
                         s = Warrant.RAMP_HALT;
-                    } else if (setting.equals("Debug")) {
+                    } else /*if (setting.equals("Debug"))*/ {
                         s = Warrant.DEBUG;
                     }
                     w.controlRunTrain(s);
@@ -636,7 +637,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         } else if (e.getSource() instanceof Warrant) {
             // a value changed. Find it, to avoid complete redraw
             Warrant bean = (Warrant) e.getSource();
-//            log.debug("source is warrant "+bean.getDisplayName());
+            log.debug("source is warrant "+bean.getDisplayName());
             for (int i = 0; i < _warList.size(); i++) {
                 if (bean.equals(_warList.get(i))) {
 
