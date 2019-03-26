@@ -1571,12 +1571,17 @@
 
     </target>
 
-    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
+    <target name="logalltest" depends="tests, runtime-library-selection"
+            description="run all tests, logging coverage">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
 
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" forkmode="perBatch" dir="." timeout="3600000" reloading="false" errorProperty="test.failed" failureProperty="test.failed" logfailedtests="true">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes"
+                printsummary="false" fork="yes" forkmode="perBatch" dir="."
+                tempdir="${tempdir}" timeout="3600000" reloading="false"
+                errorProperty="test.failed" failureProperty="test.failed"
+                logfailedtests="true">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1612,6 +1617,7 @@
             </fileset>
             <report format="frames" todir="${testreport}/html"/>
         </junitreport>
+        <echo level="info">Test Report is at ${testreport}/html/index.html</echo>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
