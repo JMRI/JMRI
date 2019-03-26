@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.implementation.AbstractSensor;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
@@ -53,6 +54,15 @@ public class JsonSensorHttpServiceTest {
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
+        }
+        // test an unexpected state
+        Sensor sensor2 = new ErrorSensor("IS2");
+        try {
+            service.doGet(sensor2, "IS2", JsonSensor.SENSOR, Locale.ENGLISH);
+            Assert.fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("HTTP error code", 500, ex.getCode());
+            Assert.assertEquals("Internal error message", "Internal sensor handling error. See JMRI logs for information.", ex.getMessage());
         }
     }
 
@@ -110,6 +120,17 @@ public class JsonSensorHttpServiceTest {
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getState());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
+        }
+        // test catching error thrown by Sensor while setting state
+        Sensor sensor2 = new ErrorSensor("IS2");
+        manager.register(sensor2);
+        message = mapper.createObjectNode().put(JSON.NAME, "IS2").put(JSON.STATE, JSON.ACTIVE);
+        try {
+            service.doPost(JsonSensor.SENSOR, "IS2", message, Locale.ENGLISH);
+            Assert.fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("HTTP error code", 500, ex.getCode());
+            Assert.assertEquals("Internal error message", "jmri.JmriException: " + ErrorSensor.MESSAGE, ex.getMessage());
         }
     }
 
@@ -173,4 +194,27 @@ public class JsonSensorHttpServiceTest {
         JUnitUtil.tearDown();
     }
 
+    private static class ErrorSensor extends AbstractSensor {
+
+        public static String MESSAGE = "Deliberately thrown error";
+        
+        public ErrorSensor(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void requestUpdateFromLayout() {
+            // do nothing
+        }
+        
+        @Override
+        public int getKnownState() {
+            return -1; // return an expected to be invalid value
+        }
+
+        @Override
+        public void setKnownState(int state) throws JmriException {
+            throw new JmriException(MESSAGE);
+        }
+    }
 }
