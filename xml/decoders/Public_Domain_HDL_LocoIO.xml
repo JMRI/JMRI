@@ -113,7 +113,7 @@
       <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139">
           <decVal min="0" max="15"/>
           <label>Blink Rate:</label>
-          <tooltip>Choose from 0 = none to 15 = fast</tooltip>
+          <tooltip>Choose from 0=none to 15=fast</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXVXXXX" item="Board Active High" default="0" include="135,139,140">
@@ -161,13 +161,13 @@
       <!-- This repurposes the UserID fields on the Basic pane to show -->
       <!-- the individual address bytes.                               -->
       <!-- Note defaults must be present both locations and agree      -->
-      <variable item="User Id #1" CV="1" default="1"> <!-- v1.46 and higher -->
+      <variable item="User Id #2" CV="1" default="1"> <!-- only editable in v1.46 and higher -->
         <decVal max="127"/>
             <label>/ SubAddress (7-bit low):</label>
             <tooltip>Message DSTL byte</tooltip>
       </variable>
 
-      <variable item="User Id #2" CV="2" default="81">
+      <variable item="User Id #1" CV="2" default="81">
         <decVal min="1" max="127"/>
         <label>LocoIO Address (7-bit high):</label>
         <tooltip>Message DSTH byte</tooltip>
@@ -196,11 +196,12 @@
         <tooltip>Port 1 Value2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Old Block" CV="4" mask="VXXXXXXX" include="135,139,140">
-        <!-- only used up to version 1.40 later versions set active high/low per port-->
+      <variable item="Port1 Old Block" CV="4" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
       </variable>
 
-      <variable item="Port1 LowAddress" CV="4">
+      <variable item="Port1 LowAddress" CV="4" mask="XVVVVVVV">
         <decVal/>
         <label>Low:</label>
         <tooltip>Port 1 Value1 = (Address MINUS 1) &amp; 127</tooltip>
@@ -464,11 +465,12 @@
         <tooltip>Port 2 Value2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port2 Old Block" CV="7" mask="VXXXXXXX" include="135,139,140">
+      <variable item="Port2 Old Block" CV="7" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
         <!-- only used up to version 1.40 later versions set active high/low per port-->
       </variable>
 
-      <variable item="Port2 LowAddress" CV="7">
+      <variable item="Port2 LowAddress" CV="7" mask="XVVVVVVV">
         <decVal/>
         <label>Low:</label>
         <tooltip>Port 2 Value1 = (Address MINUS 1) &amp; 127</tooltip>
@@ -732,11 +734,12 @@
         <tooltip>Port 3 Value2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port3 Old Block" CV="10" mask="VXXXXXXX" include="135,139,140">
+      <variable item="Port3 Old Block" CV="10" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
         <!-- only used up to version 1.40 later versions set active high/low per port-->
       </variable>
 
-      <variable item="Port3 LowAddress" CV="10">
+      <variable item="Port3 LowAddress" CV="10" mask="XVVVVVVV">
         <decVal/>
         <label>Low:</label>
         <tooltip>Port 3 Value1 = (Address MINUS 1) &amp; 127</tooltip>
@@ -1000,11 +1003,12 @@
         <tooltip>Port 4 Value2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port4 Old Block" CV="13" mask="VXXXXXXX" include="135,139,140">
+      <variable item="Port4 Old Block" CV="13" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
         <!-- only used up to version 1.40 later versions set active high/low per port-->
       </variable>
 
-      <variable item="Port4 LowAddress" CV="13">
+      <variable item="Port4 LowAddress" CV="13" mask="XVVVVVVV">
         <decVal/>
         <label>Low:</label>
         <tooltip>Port 4 Value1 = (Address MINUS 1) &amp; 127</tooltip>
@@ -2025,7 +2029,7 @@
             <row>
               <display item="Port1 Config"/>
               <display item="Port1 Value2"/>
-              <display item="Port1 Old Block"/>
+              <!--<display item="Port1 Old Block"/>-->
             </row>
           </column>
 
@@ -2044,7 +2048,7 @@
             <row>
               <display item="Port3 Config"/>
               <display item="Port3 Value2"/>
-              <display item="Port3 Old Block"/>
+              <!--<display item="Port3 Old Block"/>-->
             </row>
           </column>
         </row>
@@ -2065,7 +2069,7 @@
             <row>
               <display item="Port2 Config"/>
               <display item="Port2 Value2"/>
-              <display item="Port2 Old Block"/>
+              <!--<display item="Port2 Old Block"/>-->
             </row>
           </column>
           <separator/>
@@ -2083,7 +2087,7 @@
             <row>
               <display item="Port4 Config"/>
               <display item="Port4 Value2"/>
-              <display item="Port4 Old Block"/>
+              <!--<display item="Port4 Old Block"/>-->
             </row>
           </column>
         </row>
