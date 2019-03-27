@@ -6,6 +6,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import jmri.util.JUnitAppender;
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -125,11 +127,19 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             Assert.assertTrue(s != null);
             Assert.assertTrue(! s.isEmpty());
 
-            E e = m.provide(s);
+            E e;
+
+            try {
+                e = m.provide(s);
+            } catch (IllegalArgumentException ex) {
+                // If the test is unable to provide a named bean, abort this test.
+                JUnitAppender.clearBacklog(Level.WARN);
+                return;
+            }
 
             l.register(e);
             l.register(e);
-            
+
             l.deleteBean(e, "DoDelete");
         }
     }
