@@ -2,10 +2,11 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.StringBufferInputStream;
 
 /**
  * @author Bob Jacobsen Copyright (C) 2002
@@ -39,7 +40,7 @@ public class LnPacketizerTest {
             }
             @Override
             public java.io.DataInputStream getInputStream(){
-                return new DataInputStream(new StringBufferInputStream(""));
+                return new DataInputStream(new ByteArrayInputStream(new byte[0]));
             }
             @Override
             public java.io.DataOutputStream getOutputStream(){
