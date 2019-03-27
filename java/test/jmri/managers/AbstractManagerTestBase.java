@@ -117,8 +117,8 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
     @Test
     public void testMakeSystemName() {
         String s = l.makeSystemName("1");
-        Assert.assertTrue(s != null);
-        Assert.assertTrue(! s.isEmpty());
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
     }
 
     private Field getField(Class c, String fieldName) {
@@ -139,10 +139,10 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             ProvidingManager<E> m = (ProvidingManager<E>) l;
             String s1 = l.makeSystemName("1");
             String s2 = l.makeSystemName("2");
-            Assert.assertTrue(s1 != null);
-            Assert.assertTrue(! s1.isEmpty());
-            Assert.assertTrue(s2 != null);
-            Assert.assertTrue(! s2.isEmpty());
+            Assert.assertNotNull(s1);
+            Assert.assertFalse(s1.isEmpty());
+            Assert.assertNotNull(s2);
+            Assert.assertFalse(s2.isEmpty());
 
             E e1;
             E e2;
@@ -172,8 +172,11 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             // Register the bean once. This should be OK.
             l.register(e1);
 
-            // Register bean twice. This should fail with an IllegalArgumentException.
+            String expectedMessage = "the named bean is registered twice: " + e1.getSystemName();
+
+            // Register bean twice. This should fail with a warning.
             l.register(e1);
+            JUnitAppender.assertWarnMessage(expectedMessage);
 
             // Use reflection to change the systemName of e2
             // Try to find the field
@@ -181,7 +184,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             f1.setAccessible(true);
             f1.set(e2, e1.getSystemName());
 
-            String expectedMessage = "systemName is already registered: " + e1.getSystemName();
+            expectedMessage = "systemName is already registered: " + e1.getSystemName();
             boolean hasException = false;
             try {
                 // Register different bean with existing systemName.
