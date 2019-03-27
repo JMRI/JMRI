@@ -779,6 +779,9 @@
         "html/tools/signaling/IntroToSignalingYourMRR.html">help
         file on how to start signaling your layout</a>.</li>
 
+        <li>Dave McMorran, 
+        who worked on the MQTT JSON coding</li>
+        
         <li>Mike Moir, who provided a lot of information on how
         <a href="http://www.protrak.cc/">Grapevine</a> works.</li>
 
@@ -792,7 +795,8 @@
         <li>Gert Muller fixed some issues with international
         characters, improved the layout of the on-screen throttle
         when running Linux, added improved alignment options to the
-        PanelEditor, improved adding text labels and</li>
+        PanelEditor, improved adding text labels and
+        worked on the MQTT coding.</li>
 
         <li>Robert Myers provided <a href=
         "http://jmri.org/install/OLPC_XO.shtml">instructions for
