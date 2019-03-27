@@ -122,7 +122,6 @@ public class OBlockManager extends AbstractManager<OBlock>
         if (ob == null) {
             ob = createNewOBlock(name, null);
             if (ob == null) throw new IllegalArgumentException("could not create OBlock \""+name+"\"");
-            register(ob);
         }
         return ob;
     }
