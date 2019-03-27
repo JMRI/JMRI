@@ -554,7 +554,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     /**
      * Query whether icon intersects any track icons of block
      *
-     * @return null if intersection, otherwise a messags
+     * @return null if intersection, otherwise a messages
      */
     private String iconIntersectsBlock(PortalIcon icon, OBlock block) {
         java.util.List<Positionable> list = _parent.getCircuitIcons(block);
