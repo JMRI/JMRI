@@ -156,7 +156,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
                 // Some other tests give an IllegalArgumentException here.
 
                 // If the test is unable to provide a named bean, abort this test.
-                Assume.assumeNoException(ex);
+                JUnitAppender.clearBacklog(Level.WARN);
                 return;
             }
 
