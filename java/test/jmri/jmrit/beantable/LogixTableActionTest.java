@@ -208,6 +208,11 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         return t;
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddLogix");
+    }
+
     @Before
     @Override
     public void setUp() {

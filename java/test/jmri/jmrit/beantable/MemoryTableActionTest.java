@@ -39,6 +39,11 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddMemory");
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

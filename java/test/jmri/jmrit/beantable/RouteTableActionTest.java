@@ -82,6 +82,10 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f);
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddRoute");
+    }
 
     // The minimal setup for log4J
     @Before
