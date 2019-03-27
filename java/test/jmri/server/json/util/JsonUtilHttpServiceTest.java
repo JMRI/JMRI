@@ -18,7 +18,6 @@ import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
@@ -27,8 +26,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -36,8 +36,8 @@ import org.junit.Test;
  */
 public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
 
-    public JsonUtilHttpServiceTest() {
-    }
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Before
     @Override
@@ -45,7 +45,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         super.setUp();
         JUnitUtil.resetWindows(true, false); // list open windows when running tests
         JUnitUtil.resetNodeIdentity();
-        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", folder.newFolder(Profile.PROFILE)));
         JUnitUtil.initConnectionConfigManager();
         JUnitUtil.initZeroConfServiceManager();
     }
@@ -287,7 +287,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     public void testGetNetworkService() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = null;
-        // non-existant service
+        // non-existent service
         JsonException exception = null;
         try {
             result = instance.getNetworkService(locale, "non-existant-service"); // NOI18N
@@ -392,7 +392,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      *
      * @throws jmri.server.json.JsonException if unable to read profiles
      */
-    @Ignore("See Issue #5642")
     @Test
     public void testGetConfigProfiles() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
