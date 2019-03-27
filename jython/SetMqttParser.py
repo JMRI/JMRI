@@ -23,5 +23,7 @@ class ParserReplacement (jmri.jmrix.mqtt.MqttContentParser) :
 
 # now find the MqttTurnoutManager and install one
 
-m = jmri.InstanceManager.getNullableDefault(jmri.jmrix.mqtt.MqttTurnoutManager)
+m = jmri.InstanceManager.getDefault(jmri.TurnoutManager).getManagerList()
+m = m[1]
+print m
 if (m is not None) : m.setParser(ParserReplacement())
