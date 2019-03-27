@@ -1,4 +1,4 @@
-<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <!--	Updated by Herv&#233; BLOREC on 2019-03-26 -->
 <head>
@@ -111,7 +111,7 @@ changement d'&#233;tat du capteur.</li>
 
 <a name="physicaldetails" id="physicaldetails"></a>
 <h2>D&#233;tails Physiques</h2>
-<p>D&#233;crtit la g&#233;om&#233;trie du Canton en utilisant les champs affich&#233;s.</p>
+<p>D&#233;crit la g&#233;om&#233;trie du Canton en utilisant les champs affich&#233;s.</p>
 <p><img src="images/BlocksEditPhysicalTab.png" width="460" height="191"></p>
 
 <table>
