@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.lang.reflect.Field;
 import jmri.util.JUnitAppender;
 import org.apache.log4j.Level;
 
@@ -119,18 +120,35 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertTrue(! s.isEmpty());
     }
 
+    private Field getField(Class c, String fieldName) {
+        try {
+            return c.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException ex) {
+            if (c.getSuperclass() != null)
+                return getField(c.getSuperclass(), fieldName);
+        }
+        
+        // Field not found
+        return null;
+    }
+    
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException {
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         if (l instanceof ProvidingManager)  {
             ProvidingManager<E> m = (ProvidingManager<E>) l;
-            String s = l.makeSystemName("1");
-            Assert.assertTrue(s != null);
-            Assert.assertTrue(! s.isEmpty());
+            String s1 = l.makeSystemName("1");
+            String s2 = l.makeSystemName("2");
+            Assert.assertTrue(s1 != null);
+            Assert.assertTrue(! s1.isEmpty());
+            Assert.assertTrue(s2 != null);
+            Assert.assertTrue(! s2.isEmpty());
 
-            E e;
+            E e1;
+            E e2;
 
             try {
-                e = m.provide(s);
+                e1 = m.provide(s1);
+                e2 = m.provide(s2);
             } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
                 // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
                 // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.
@@ -142,18 +160,34 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             }
 
             // Remove bean if it's already registered
-            if (l.getBeanBySystemName(e.getSystemName()) != null) {
-                l.deregister(e);
+            if (l.getBeanBySystemName(e1.getSystemName()) != null) {
+                l.deregister(e1);
+            }
+            // Remove bean if it's already registered
+            if (l.getBeanBySystemName(e2.getSystemName()) != null) {
+                l.deregister(e2);
             }
 
             // Register the bean once. This should be OK.
-            l.register(e);
+            l.register(e1);
 
-            String expectedMessage = "systemName is already registered: " + e.getSystemName();
+            String expectedMessage = "the named bean is registered twice: " + e1.getSystemName();
+            // Register bean twice. This should fail with an IllegalArgumentException.
+            l.register(e1);
+            JUnitAppender.assertWarnMessage(expectedMessage);
+
+            // Use reflection to change the systemName of e2
+            // Try to find the field
+            Field f1 = getField(e2.getClass(), "mSystemName");
+            f1.setAccessible(true);
+            f1.set(e2, e1.getSystemName());
+
+            expectedMessage = "systemName is already registered: " + e1.getSystemName();
             boolean hasException = false;
             try {
-                // Register bean twice. This should fail with an IllegalArgumentException.
-                l.register(e);
+                // Register different bean with existing systemName.
+                // This should fail with an IllegalArgumentException.
+                l.register(e2);
             } catch (IllegalArgumentException ex) {
                 hasException = true;
                 Assert.assertTrue("exception message is correct",
@@ -162,7 +196,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             }
             Assert.assertTrue("exception is thrown", hasException);
 
-            l.deregister(e);
+            l.deregister(e1);
         }
     }
 
