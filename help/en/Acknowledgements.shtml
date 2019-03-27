@@ -779,7 +779,7 @@
         "html/tools/signaling/IntroToSignalingYourMRR.html">help
         file on how to start signaling your layout</a>.</li>
 
-        <li>Dave McMorran, 
+        <li>Dave McMorran, <!-- davemc8992 -->
         who worked on the MQTT JSON coding</li>
         
         <li>Mike Moir, who provided a lot of information on how
@@ -792,7 +792,8 @@
         (lots of!) QSI and Zimo decoders; a real hero of decoder
         definition distinction</li>
 
-        <li>Gert Muller fixed some issues with international
+        <li>Gert Muller <!-- SpeedTxN -->
+        fixed some issues with international
         characters, improved the layout of the on-screen throttle
         when running Linux, added improved alignment options to the
         PanelEditor, improved adding text labels and
