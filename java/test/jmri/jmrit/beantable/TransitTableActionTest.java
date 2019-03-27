@@ -1,7 +1,7 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.Todo;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
 /**
