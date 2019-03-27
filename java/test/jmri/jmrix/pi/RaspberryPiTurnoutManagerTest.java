@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -92,10 +93,10 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     }
 
     @Test
-    @Ignore
+    @Ignore("This test doesn't work for this class")
+    @ToDo("RaspberryPiSensor.init throws the error: com.pi4j.io.gpio.exception.GpioPinExistsException: This GPIO pin already exists: GPIO 1")
     @Override
     public void testRegisterDuplicateSystemName() {
-        // This test doesn't work for this class.
     }
 
     @Override
