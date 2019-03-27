@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -131,8 +130,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
             case EV_CURRENT_HEX_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
@@ -174,10 +172,6 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     @Override
     public Object getValueAt(int row, int col) {
         
-        log.debug("getValueAt row {} col {}",row,col);
-        
-        // _ndEv.getNumEvVars()
-        
         int currEvVal = _ndEv.getEvVar(row+1);
         
         switch (col) {
@@ -185,15 +179,13 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                 return (row +1);
             case EV_CURRENT_VAL_COLUMN:
                 return currEvVal;
-                
             case EV_CURRENT_HEX_COLUMN:
                 if ( currEvVal > -1 ) {
                     return String.valueOf(Integer.toHexString(currEvVal));
-               }
+                }
                 else {
                     return currEvVal;
                 }
-                
             case EV_CURRENT_BIT_COLUMN:
                 if ( currEvVal > -1 ) {
                     return (String.format("%8s", Integer.toBinaryString(currEvVal)).replace(' ', '0')).substring(0,4) + " " +
@@ -212,7 +204,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                 if ( newEVs[(row)] != currEvVal ) {
                     return String.valueOf(Integer.toHexString(newEVs[(row)])); 
                 } else {
-                    return null;
+                    return "";
                 }
             case EV_SELECT_BIT_COLUMN:
                 if ( newEVs[(row)] != currEvVal ) {
@@ -220,7 +212,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                         (String.format("%8s", Integer.toBinaryString(newEVs[(row)])).replace(' ', '0')).substring(4,8);
                 }
                 else {
-                    return null;
+                    return "";
                 }
             default:
                 log.error("internal state inconsistent with table request for row {} col {}", row, col);
@@ -241,16 +233,8 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         }
     }
     
-    public void setViewFrame(){
-       // nodeModel.getNodeByNodeNum(_nodeNum).setNodeNVTable(this);
-    }
-    
-    public void setEditFrame(){
-      //  nodeModel.getNodeByNodeNum(_nodeNum).setEditNodeNVTable(this);
-    }
-    
     public void updateFromNode( int arrayid, int col){
-        ThreadingUtil.runOnGUIEventually( ()->{
+        ThreadingUtil.runOnGUI( ()->{
             // fireTableCellUpdated(arrayid, col);
             fireTableDataChanged();
         });
@@ -329,14 +313,13 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         
         ArrayList<CbusNodeEvent> eventArray = new ArrayList<CbusNodeEvent>(1);
         eventArray.add(newevent);
+        log.debug(" pass changes arr length {} ",newEVs.length);
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
             nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).sendNewEvSToNode( eventArray, frame, null);
         } catch (NullPointerException e) {
             log.error("Unable to get Node Table from Instance Manager");
         }
-        
-        //  log.info(" pass changes arr length {} ",newEVs.length);
         
     }
 
@@ -369,12 +352,6 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
             passNewEvToNode(frame);
             
         }
-    }
-    
-    /**
-     * disconnect from the CBUS
-     */
-    public void dispose() {
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeSingleEventTableDataModel.class);

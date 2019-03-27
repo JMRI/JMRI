@@ -1,12 +1,10 @@
 package jmri.jmrix.can.cbus.node;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeEditEventFrame;
 import jmri.util.ThreadingUtil;
@@ -24,11 +22,11 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
 
     private CbusNameService nameService;
     private CbusNode nodeOfInterest;
+    private CbusNodeEditEventFrame editEvFrame;
     
     // column order needs to match list in column tooltips
     static public final int NODE_NUMBER_COLUMN = 0;
     static public final int EVENT_NUMBER_COLUMN = 1;
-  //  static public final int EVENT_PRODUCER_COLUMN = 2;
     static public final int NODE_EDIT_BUTTON_COLUMN = 2;
     static public final int NODE_NAME_COLUMN = 3;
     static public final int EVENT_NAME_COLUMN = 4;
@@ -50,11 +48,9 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
      */
     @Override
     public int getRowCount() {
-
-        // nodetable event size
         try {
-            return nodeOfInterest.getTotalNodeEvents();
-        } catch (NullPointerException e) {
+            return Math.max(0,nodeOfInterest.getTotalNodeEvents() );
+        } catch (NullPointerException e) { // in case no node loaded
             return 0;
         }
     }
@@ -85,7 +81,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         }
         eventTable.sizeColumnsToFit(-1);
     }
-
 
     /**
      * Returns String of column name from column int
@@ -128,11 +123,9 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case EV_VARS_COLUMN:
                 return new JTextField(16).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
-    
     
     /**
     * Returns column class type.
@@ -150,7 +143,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
                 return JButton.class;
             default:
-                log.warn("no class set col {}",col);
                 return null;
         }
     }
@@ -177,45 +169,25 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     @Override
     public Object getValueAt(int row, int col) {
         
+        if ( nodeOfInterest == null ){
+            return null;
+        }
+        int nnc = nodeOfInterest.getNodeEventByArrayID(row).getNn();
+        int enc = nodeOfInterest.getNodeEventByArrayID(row).getEn();
         switch (col) {
             case NODE_NUMBER_COLUMN:
-                try {
-                    return nodeOfInterest.getNodeEventByArrayID(row).getNn();
-                } catch ( NullPointerException e ) {
-                    return -1;
-                }
+                return nnc;
             case EVENT_NUMBER_COLUMN:
-                try {
-                    return nodeOfInterest.getNodeEventByArrayID(row).getEn();
-                } catch ( NullPointerException e ) {
-                    return -1;
-                }
+                return enc;
             case NODE_EDIT_BUTTON_COLUMN:
                 return "Edit";
             case NODE_NAME_COLUMN:
-                try {
-                    int nnc = nodeOfInterest.getNodeEventByArrayID(row).getNn();
-                    return nameService.getNodeName( nnc  );
-                } catch ( NullPointerException e ) {
-                    return "";
-                }
-                
+                return nameService.getNodeName( nnc );
             case EVENT_NAME_COLUMN:
-                try {
-                    int nnc = nodeOfInterest.getNodeEventByArrayID(row).getNn();
-                    int enc = nodeOfInterest.getNodeEventByArrayID(row).getEn();
-                    return nameService.getEventName( nnc, enc  );
-                } catch ( NullPointerException e ) {
-                    return "";
-                }            
+                return nameService.getEventName( nnc, enc  );
             case EV_VARS_COLUMN:
-                try {
-                    return nodeOfInterest.getNodeEventByArrayID(row).getEvVarString();
-                } catch ( NullPointerException e ) {
-                    return("");
-                }
+                return nodeOfInterest.getNodeEventByArrayID(row).getEvVarString();
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
@@ -230,15 +202,12 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             
             ThreadingUtil.runOnGUI( ()->{
                 
-                CbusNodeEditEventFrame editEvFrame = new CbusNodeEditEventFrame(null,
+                editEvFrame = new CbusNodeEditEventFrame(null,
                     nodeOfInterest.getNodeEventByArrayID(row));
                     
                 editEvFrame.initComponents(_memo);
                 
             });
-            
-            
-          //  _mainArray.get(row).setUserName( (String) value );
             
         }
     }
@@ -252,6 +221,15 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         
     }
     
+    /**
+     * To close window after testing
+     */  
+    protected void disposeEvFrame(){
+        // if ( editEvFrame != null ) {
+            editEvFrame.dispose();
+            editEvFrame = null;
+        // }
+    }
     
     public void updateFromNode( int arrayid, int col){
         
@@ -268,12 +246,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     void removeRow(int row) {
     //   _mainArray.remove(row);
         ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
-    }
-    
-    /**
-     * disconnect from the CBUS
-     */
-    public void dispose() {
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTableDataModel.class);

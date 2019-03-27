@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -118,8 +117,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
             case NV_CURRENT_HEX_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
@@ -166,32 +164,22 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public Object getValueAt(int row, int col) {
         
-        log.debug("getValueAt row {} col {}",row,col);
-        
-        
         if ( nodeOfInterest.getTotalNVs() < 1 ) {
             return null;
         }
-        
-        int currNvVal = nodeOfInterest.getNV(row+1);
         
         switch (col) {
             case NV_NUMBER_COLUMN:
                 return (row +1);
             case NV_CURRENT_VAL_COLUMN:
-                if ( currNvVal > -1 ) {
-                    return nodeOfInterest.getNV(row+1);
-                } else {
-                    return null;
-                }
+                return nodeOfInterest.getNV(row+1);
             case NV_CURRENT_HEX_COLUMN:
                 if ( nodeOfInterest.getNV(row+1) > -1 ) {
                     return String.valueOf(Integer.toHexString(nodeOfInterest.getNV(row+1)));
                 }
                 else {
-                    return null;
+                    return "";
                 }
-                
             case NV_CURRENT_BIT_COLUMN:
                 int num =  nodeOfInterest.getNV(row+1);
                 if ( num > -1 ) {
@@ -199,7 +187,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                     (String.format("%8s", Integer.toBinaryString(num)).replace(' ', '0')).substring(4,8);
                 }
                 else {
-                    return null;
+                    return "";
                 }
             case NV_SELECT_COLUMN:
                 if ( newNVs[(row+1)] > -1 ) {
@@ -211,7 +199,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                 if ( newNVs[(row+1)] != nodeOfInterest.getNV(row+1) ) {
                     return String.valueOf(Integer.toHexString(newNVs[(row+1)])); 
                 } else {
-                    return null;
+                    return "";
                 }
             case NV_SELECT_BIT_COLUMN:
                 if ( newNVs[(row+1)] != nodeOfInterest.getNV(row+1) ) {
@@ -219,10 +207,9 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                         (String.format("%8s", Integer.toBinaryString(newNVs[(row+1)])).replace(' ', '0')).substring(4,8);
                 }
                 else {
-                    return null;
+                    return "";
                 }
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
@@ -254,19 +241,19 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         nodeOfInterest = node;
         
         // setup a new fixed length array to hold new nv values
-        if ( nodeOfInterest._nvArray == null ) {
+        if ( nodeOfInterest.getNvArray() == null ) {
             newNVs = new int[0];
         }
         else {
-            newNVs = new int[ ( nodeOfInterest._nvArray.length ) ];        
+            newNVs = new int[ ( nodeOfInterest.getNvArray().length ) ];        
             newNVs = Arrays.copyOf(
-                nodeOfInterest._nvArray,
-                nodeOfInterest._nvArray.length);
+                nodeOfInterest.getNvArray(),
+                nodeOfInterest.getNvArray().length);
         }
     }
     
     public void updateFromNode( int arrayid, int col){
-        ThreadingUtil.runOnGUIEventually( ()->{
+        ThreadingUtil.runOnGUI( ()->{
             // fireTableCellUpdated(arrayid, col);
             fireTableDataChanged();
         });
@@ -278,9 +265,8 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
             return false;
         }
         try {
-            for (int i = 0; i < getRowCount(); i++) {            
+            for (int i = 0; i < getRowCount(); i++) {
                 if ( ( (int) getValueAt(i,NV_CURRENT_VAL_COLUMN) ) < 0 ) {
-    //                log.info("current nv val less than one on row {}",i);
                     return false;
                 }
             }
@@ -334,12 +320,6 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         // log.info(" pass changes arr length {} ",newNVs.length);
         nodeOfInterest.sendNvsToNode( newNVs, frame, null);
         
-    }
-    
-    /**
-     * 
-     */
-    public void dispose() {
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModel.class);
