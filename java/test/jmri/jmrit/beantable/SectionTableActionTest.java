@@ -1,10 +1,8 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.Todo;
+import org.junit.*;
 
 /**
  *
@@ -36,6 +34,18 @@ public class SectionTableActionTest extends AbstractTableActionBase {
     @Test
     public void testIncludeAddButton(){
          Assert.assertTrue("Default include add button",a.includeAddButton());
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSection");
+    }
+
+    @Test
+    @Override
+    @Ignore("needs further setup")
+    @ToDo("must setup blocks before you can set up sections")
+    public void testAddButton() {
     }
 
     // The minimal setup for log4J

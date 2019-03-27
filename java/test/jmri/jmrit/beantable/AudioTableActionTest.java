@@ -52,6 +52,16 @@ public class AudioTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+    @Test
+    @Ignore("Audio table does not have Add... button")
+    public void testAddButton() {
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return "";
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

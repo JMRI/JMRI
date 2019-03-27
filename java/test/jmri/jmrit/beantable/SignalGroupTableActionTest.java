@@ -96,6 +96,11 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(editSignalHead.addSubFrame);
     }
 
+    @Override
+    public String getAddFrameName(){
+        return "Add Signal Group";
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

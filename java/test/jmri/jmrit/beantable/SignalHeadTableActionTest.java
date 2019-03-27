@@ -82,6 +82,11 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSignalHead");
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
