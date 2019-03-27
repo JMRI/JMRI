@@ -109,11 +109,29 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertEquals(base, l.getVetoableChangeListeners().length);
 
     }
+
     @Test
     public void testMakeSystemName() {
         String s = l.makeSystemName("1");
         Assert.assertTrue(s != null);
         Assert.assertTrue(! s.isEmpty());
+    }
+
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException {
+        if (l instanceof ProvidingManager)  {
+            ProvidingManager<E> m = (ProvidingManager<E>) l;
+            String s = l.makeSystemName("1");
+            Assert.assertTrue(s != null);
+            Assert.assertTrue(! s.isEmpty());
+
+            E e = m.provide(s);
+
+            l.register(e);
+            l.register(e);
+            
+            l.deleteBean(e, "DoDelete");
+        }
     }
 
 }
