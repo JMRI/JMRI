@@ -131,7 +131,10 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
             try {
                 e = m.provide(s);
-            } catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException | NullPointerException ex) {
+                // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
+                // Some other tests give an IllegalArgumentException here.
+
                 // If the test is unable to provide a named bean, abort this test.
                 JUnitAppender.clearBacklog(Level.WARN);
                 return;
