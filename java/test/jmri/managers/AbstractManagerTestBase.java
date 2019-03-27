@@ -141,10 +141,27 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
                 return;
             }
 
-            l.register(e);
+            // Remove bean if it's already registered
+            if (l.getBeanBySystemName(e.getSystemName()) != null) {
+                l.deregister(e);
+            }
+
+            // Register the bean once. This should be OK.
             l.register(e);
 
-            l.deleteBean(e, "DoDelete");
+            String expectedMessage = "systemName is already registered: " + e.getSystemName();
+            boolean hasException = false;
+            try {
+                // Register bean twice. This should fail with an IllegalArgumentException.
+                l.register(e);
+            } catch (IllegalArgumentException ex) {
+                hasException = true;
+                Assert.assertTrue("exception message is correct",
+                        expectedMessage.equals(ex.getMessage()));
+            }
+            Assert.assertTrue("exception is thrown", hasException);
+
+            l.deregister(e);
         }
     }
 

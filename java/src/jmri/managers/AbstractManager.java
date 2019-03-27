@@ -179,6 +179,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public void register(E s) {
         String systemName = s.getSystemName();
 
+        if (getBeanBySystemName(systemName) != null) {
+            throw new IllegalArgumentException("systemName is already registered: " + systemName);
+        }
+
         // clear caches
         cachedSystemNameArray = null;
         cachedSystemNameList = null;
