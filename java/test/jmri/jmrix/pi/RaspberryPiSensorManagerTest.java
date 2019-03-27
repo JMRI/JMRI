@@ -109,7 +109,14 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(14)));
     }
-    
+
+    @Test
+    @Ignore
+    @Override
+    public void testRegisterDuplicateSystemName() {
+        // This test doesn't work for this class.
+    }
+
     @Override
     @Before
     public void setUp() {
