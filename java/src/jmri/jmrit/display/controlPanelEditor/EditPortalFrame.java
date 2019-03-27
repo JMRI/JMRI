@@ -603,6 +603,31 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             super(flavor);
         }
 
+        /** {@inheritDoc} */
+        @Override
+        protected boolean okToDrag() {
+            String name = _portalName.getText();
+            if (name == null || name.trim().length() == 0) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("needPortalName"),
+                        Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+            PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
+            Portal p = portalMgr.getByUserName(name);
+            if (p != null && !(_homeBlock.equals(p.getFromBlock()) || _homeBlock.equals(p.getToBlock()))) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalExists", name, p.getFromBlockName(), p.getToBlockName()),
+                        Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+            PortalIcon pi = _parent.getPortalIconMap().get(name);
+            if (name.equals(_currentPortalName) || pi != null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalIconExists", name),
+                        Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+                _parent._editor.highlight(pi);
+                return false;
+            }
+            return true;
+        }
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
@@ -610,22 +635,21 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             }
             String name = _portalName.getText();
             if (name == null || name.trim().length() == 0) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("needPortalName"),
+                log.warn(Bundle.getMessage("needPortalName"),
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
             PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
             Portal p = portalMgr.getByUserName(name);
             if (p != null && !(_homeBlock.equals(p.getFromBlock()) || _homeBlock.equals(p.getToBlock()))) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalExists", name, p.getFromBlockName(), p.getToBlockName()),
+                log.warn(Bundle.getMessage("portalExists", name, p.getFromBlockName(), p.getToBlockName()),
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
                 return null;
             }
             PortalIcon pi = _parent.getPortalIconMap().get(name);
             if (name.equals(_currentPortalName) || pi != null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalIconExists", name),
+                log.warn(Bundle.getMessage("portalIconExists", name),
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
-                _parent._editor.highlight(pi);
                 return null;
             }
             Portal portal = _homeBlock.getPortalByName(name);
@@ -641,6 +665,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             _parent.addPortalIcon(pi);
             _portalList.setSelectedValue(portal, true);
             _currentPortalName = name;
+            _parent._editor.highlight(pi);
             return pi;
         }
     }
