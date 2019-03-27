@@ -11,9 +11,9 @@
 # Authors: Dave McMorran, copyright 2019
 #
 
-import jmri;
-import java;
-import json;
+import jmri
+import java
+import json
 
 PUBLISHJSON = True       # True:publish JSON, False:just the state
 RUNAFTERPANELS = True    # False to speed up (ms), but need script before panels
@@ -62,14 +62,14 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
             else:
                 data['state'] = "THROWN"                                
             json_data = json.dumps( data )
-            return json_data;
+            return json_data
 
         # Without JSON
         else:
             if ( ( newState & jmri.Turnout.CLOSED ) != 0 ^ bean.getInverted( ) ):
-                return "CLOSED";
+                return "CLOSED"
             else :
-                return "THROWN";
+                return "THROWN"
 
 # Find the MqttTurnoutManager
 m = jmri.InstanceManager.getNullableDefault( jmri.jmrix.mqtt.MqttTurnoutManager )
