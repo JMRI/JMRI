@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import jmri.util.JUnitAppender;
 import org.apache.log4j.Level;
 
+import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -155,7 +156,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
                 // Some other tests give an IllegalArgumentException here.
 
                 // If the test is unable to provide a named bean, abort this test.
-                JUnitAppender.clearBacklog(Level.WARN);
+                Assume.assumeNoException(ex);
                 return;
             }
 
