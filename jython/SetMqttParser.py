@@ -3,21 +3,19 @@
 # This is also a sample JSON coder/decoder, just ensure PUBLISHJSON = True
 #
 # The script before should be run before loading the panels
-#       (use RUNAFTERPANELS = False to gain some time)
+#   (use RUNAFTERPANELS = False to gain some time)
 # or after the panel(s) are loaded and then use RUNAFTERPANELS = True
 # 
-# Author: Bob Jacobsen, copyright 2019
-# Author: Gert Jim Muller, copyright 2019
-# Authors: Dave McMorran, copyright 2019
+# Authors: Bob Jacobsen, Gert Muller and Dave McMorran, copyright 2019
 #
 
-import jmri
-import java
-import json
+import jmri;
+import java;
+import json;
 
-PUBLISHJSON = True       # True:publish JSON, False:just the state
-RUNAFTERPANELS = True    # False to speed up (ms), but need script before panels
-                                             # True needed if Tunrouts are already loadedin the table
+PUBLISHJSON = True     # True:publish JSON, False:just the state
+RUNAFTERPANELS = True  # False to speed up (ms), but need script before panels
+                       # True needed if Tunrouts are already loadedin the table
 
 # First, create the parser class
 class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
@@ -26,8 +24,8 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
         # this needs code
         print "from Broker. Bean", bean
         print "with topic", topic
-        
-        # Try JSON first
+
+    # Try JSON first
         try:
             json_payload = json.loads( payload )
         except:
@@ -38,11 +36,11 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
             try:
                 payload_state = json_payload["state"]
             except:
-                payload_state = "INVALID"
-                
-        if ( payload_state == "THROWN" ):
+                payload_state = payload
+        
+        if   ( payload_state == "THROWN" ) or ( payload_state == "1" ) or ( payload_state == 1 ):
             bean.newKnownState( THROWN )
-        elif ( payload_state == "CLOSED" ):
+        elif ( payload_state == "CLOSED" ) or ( payload_state == "0" ) or ( payload_state == 0 ):
             bean.newKnownState( CLOSED )
         else:
             bean.newKnownState( INCONSISTENT )
@@ -50,26 +48,26 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
 
     # Parse a change in the bean
     def payloadFromBean( self, bean, newState ) :
-        # sort out states            
+        # sort out states      
         print "from Bean", bean
         print "with state", newState
 
         # JSON, if set to True
         if PUBLISHJSON:
-            data = {}            
+            data = {}      
             if ( ( newState & jmri.Turnout.CLOSED ) != 0 ^ bean.getInverted( ) ):
-                data['state'] = "CLOSED"                                
+                data['state'] = "CLOSED"                
             else:
-                data['state'] = "THROWN"                                
+                data['state'] = "THROWN"                
             json_data = json.dumps( data )
-            return json_data
+            return json_data;
 
         # Without JSON
         else:
             if ( ( newState & jmri.Turnout.CLOSED ) != 0 ^ bean.getInverted( ) ):
-                return "CLOSED"
+                return "CLOSED";
             else :
-                return "THROWN"
+                return "THROWN";
 
 # Find the MqttTurnoutManager
 m = jmri.InstanceManager.getNullableDefault( jmri.jmrix.mqtt.MqttTurnoutManager )
