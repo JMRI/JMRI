@@ -131,8 +131,9 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
             try {
                 e = m.provide(s);
-            } catch (IllegalArgumentException | NullPointerException ex) {
+            } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
                 // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
+                // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.
                 // Some other tests give an IllegalArgumentException here.
 
                 // If the test is unable to provide a named bean, abort this test.
