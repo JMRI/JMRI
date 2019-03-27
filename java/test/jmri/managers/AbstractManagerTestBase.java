@@ -158,6 +158,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
                 hasException = true;
                 Assert.assertTrue("exception message is correct",
                         expectedMessage.equals(ex.getMessage()));
+                JUnitAppender.assertErrorMessage(expectedMessage);
             }
             Assert.assertTrue("exception is thrown", hasException);
 
