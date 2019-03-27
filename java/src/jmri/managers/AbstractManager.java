@@ -181,9 +181,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
         E existingBean = getBeanBySystemName(systemName);
         if (existingBean != null) {
-            if (s == existingBean) {
-                log.warn("the named bean is registered twice: " + systemName);
-            } else {
+            if (s != existingBean) {
                 log.error("systemName is already registered: " + systemName);
                 throw new IllegalArgumentException("systemName is already registered: " + systemName);
             }

@@ -171,10 +171,8 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             // Register the bean once. This should be OK.
             l.register(e1);
 
-            String expectedMessage = "the named bean is registered twice: " + e1.getSystemName();
             // Register bean twice. This should fail with an IllegalArgumentException.
             l.register(e1);
-            JUnitAppender.assertWarnMessage(expectedMessage);
 
             // Use reflection to change the systemName of e2
             // Try to find the field
@@ -182,7 +180,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             f1.setAccessible(true);
             f1.set(e2, e1.getSystemName());
 
-            expectedMessage = "systemName is already registered: " + e1.getSystemName();
+            String expectedMessage = "systemName is already registered: " + e1.getSystemName();
             boolean hasException = false;
             try {
                 // Register different bean with existing systemName.
