@@ -42,6 +42,11 @@
       You tell JMRI about how to connect to your MQTT
       hardware via the Connections pane in the Preferences window.
       Select "MQTT" as the manufacturer name.
+      
+      <p>
+      If you don't have an MQTT system, and want to play with this, 
+      you can enter "test.mosquitto.org" for the host name
+      to use a publicly-available (non-JMRI) test server.
 
       <a id="payload" name="payload"></a>
       <h2>Message Content</h2>
