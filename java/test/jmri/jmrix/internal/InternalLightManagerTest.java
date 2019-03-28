@@ -3,9 +3,11 @@ package jmri.jmrix.internal;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +60,13 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
         Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
+    }
+
+    @Override
+    @Test
+    @Ignore("Base class test cannot create a new bean since the bean is anonymous")
+    @ToDo("provide the base class with a new bean that is not registered in the manager")
+    public void testRegisterDuplicateSystemName() {
     }
 
     // The minimal setup for log4J

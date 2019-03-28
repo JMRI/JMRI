@@ -15,6 +15,8 @@ import org.apache.log4j.Level;
 import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base for the various Abstract*MgrTestBase base classes for NamedBean Manager test classes
@@ -125,7 +127,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
     @SuppressWarnings("unchecked")  // The call Constructor.newInstance() generates an unchecked cast warning
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InstantiationException, InvocationTargetException {
         if (l instanceof ProvidingManager)  {
             ProvidingManager<E> m = (ProvidingManager<E>) l;
             String s1 = l.makeSystemName("1");
@@ -147,21 +149,13 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
                 // If the test is unable to provide a named bean, abort this test.
                 JUnitAppender.clearBacklog(Level.WARN);
+                log.debug("Cannot provide a named bean", ex);
                 Assume.assumeTrue("We got no exception", false);
                 return;
             }
 
-            try {
-                Constructor ctor = e1.getClass().getDeclaredConstructor(String.class, String.class);
-                e2 = (E) ctor.newInstance(s1, "My user name");
-            } catch (NoSuchMethodException | InstantiationException | InvocationTargetException ex) {
-                // jmri.jmrix.internal.InternalTurnoutManagerTest causes this exception
-                
-                // If the test is unable to create a named bean, abort this test.
-                JUnitAppender.clearBacklog(Level.WARN);
-                Assume.assumeTrue("We got no exception", false);
-                return;
-            }
+            Constructor ctor = e1.getClass().getDeclaredConstructor(String.class, String.class);
+            e2 = (E) ctor.newInstance(s1, "My user name");
 
             // Remove bean if it's already registered
             if (l.getBeanBySystemName(e1.getSystemName()) != null) {
@@ -199,4 +193,5 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(AbstractManagerTestBase.class);
 }

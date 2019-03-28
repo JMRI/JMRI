@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.*;
 
@@ -233,6 +234,13 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
             Assert.fail("Should have thrown");
         } catch (UnsupportedOperationException e) { /* this is OK */}
 
+    }
+
+    @Override
+    @Test
+    @Ignore("Base class test cannot create a new bean since the bean is anonymous")
+    @ToDo("provide the base class with a new bean that is not registered in the manager")
+    public void testRegisterDuplicateSystemName() {
     }
 
     // from here down is testing infrastructure

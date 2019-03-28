@@ -1,7 +1,9 @@
 package jmri.jmrix.internal;
 
+import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
 /**
@@ -28,6 +30,13 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         Assert.assertTrue(null != l.getBySystemName("IT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
 
+    }
+
+    @Override
+    @Test
+    @Ignore("Base class test cannot create a new bean since the bean is anonymous")
+    @ToDo("provide the base class with a new bean that is not registered in the manager")
+    public void testRegisterDuplicateSystemName() {
     }
 
     // from here down is testing infrastructure
