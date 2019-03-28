@@ -4,10 +4,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import jmri.jmrix.roco.z21.Z21Reply;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import jmri.util.junit.rules.*;
+import org.junit.*;
 import org.junit.rules.*;
 
 /**
