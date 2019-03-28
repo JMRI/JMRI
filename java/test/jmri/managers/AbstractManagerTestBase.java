@@ -157,6 +157,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
                 // If the test is unable to provide a named bean, abort this test.
                 JUnitAppender.clearBacklog(Level.WARN);
+                Assume.assumeTrue("We got no exception", ex == null);
                 return;
             }
 
