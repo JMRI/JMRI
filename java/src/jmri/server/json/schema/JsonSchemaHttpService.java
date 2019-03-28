@@ -25,12 +25,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        return this.doPost(type, name, this.mapper.createObjectNode(), locale);
-    }
-
-    @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         // note use of Boolean for tristate null, true, false
         // if server == null, returns both schemas in an array
         // if server != null, returns single schema for client or server as appropriate
@@ -42,7 +37,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
             if (server == null) {
                 server = !data.path(JSON.CLIENT).asBoolean();
             } else if (server == true) {
-                server = null; // server
+                server = null; // server and client are true
             }
         }
         switch (type) {
@@ -113,6 +108,16 @@ public class JsonSchemaHttpService extends JsonHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+
+    @Override
+    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        return this.doPost(type, name, this.mapper.createObjectNode(), locale);
+    }
+
+    @Override
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

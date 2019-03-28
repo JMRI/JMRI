@@ -11,6 +11,7 @@ import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -173,7 +174,13 @@ public class JsonServlet extends WebSocketServlet {
             final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-                parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], UTF8));
+                String value = URLDecoder.decode(entry.getValue()[0], UTF8);
+                log.debug("Setting parameter {} to {}", entry.getKey(), value);
+                try {
+                    parameters.setAll((ObjectNode) mapper.readTree(String.format("{\"%s\":%s}", entry.getKey(), value)));
+                } catch (JsonParseException ex) {
+                    log.error("Unable to parse JSON {\"{}\":{}}", entry.getKey(), value);
+                }
             }
             JsonNode reply = null;
             try {
@@ -184,7 +191,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                lists.add(service.doGetList(type, request.getLocale()));
+                                lists.add(service.doGetList(type, parameters, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -218,7 +225,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doGet(type, name, request.getLocale()));
+                                array.add(service.doGet(type, name, parameters, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
