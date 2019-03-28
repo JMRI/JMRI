@@ -42,7 +42,7 @@
       You tell JMRI about how to connect to your MQTT
       hardware via the Connections pane in the Preferences window.
       Select "MQTT" as the manufacturer name.
-
+      
       <a id="payload" name="payload"></a>
       <h2>Message Content</h2>
         <h3>Turnouts</h3>
@@ -75,7 +75,36 @@
             will not be changed.  This means you should 
             call a script to change this before loading any panel files
             if you want all MqttTurnouts to be modified.
-            
+        
+    <h2>Debugging</h2>
+
+      <a id="testserver" name="testserver"></a>
+      <a href="http://test.mosquitto.org">
+        <img src="https://mosquitto.org/stickers/mosquitto-mono.png" height="80" width="80" align="right"></a>
+      If you don't have an MQTT system, and want to play with this connection type, 
+      you can enter "test.mosquitto.org" for the host name
+      to use a publicly-available (non-JMRI) test server. 
+      For more information on this server, see the 
+      <a href="http://test.mosquitto.org">test.mosquitto.org</a>
+      web page.
+      <p>
+      If you install the 
+      <a href="https://mosquitto.org/download/">mosquitto tools</a>
+      on your machine,
+      you can use a command like
+<pre>
+    mosquitto_sub -h test.mosquitto.org -v -t '/trains/#'
+</pre>
+
+    to subscribe and print JMRI turnout info as it's published. 
+    To publish a change for JMRI to pick up:
+
+<pre>
+    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "CLOSED"
+    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
+</pre>
+
+
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
