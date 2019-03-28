@@ -4,33 +4,38 @@
 
 # for compiling the test directory, the java/ecj.warning.options-test file overrides this
 
-# Group (macro) checks - these need to be sorted out
+#
+# Group (macro) checks - some still need to be sorted out
+#
 -warn:+hiding
+  # about 200 cases of members hiding superclass members
 -warn:-fieldHiding
+  # very large number of places where parameters are named for members
 -warn:-localHiding 
 -warn:+typeHiding
 
 -warn:-allJavadoc
 -warn:-javadoc
 
-# 36 on next
--warn:-invalidJavadoc
--warn:-invalidJavadocTag
--warn:-invalidJavadocTagDep
--warn:-invalidJavadocTagNotVisible
+-warn:+invalidJavadoc
+-warn:+invalidJavadocTag
+-warn:+invalidJavadocTagDep
+-warn:+invalidJavadocTagNotVisible
 
 -warn:-missingJavadocTags
--warn:-missingJavadocTagsMethod
--warn:-missingJavadocTagsOverriding
+-warn:+missingJavadocTagsMethod
+-warn:+missingJavadocTagsOverriding
 
 -warn:-missingJavadocComments
 -warn:-missingJavadocCommentsOverriding
 
 -warn:+static-access
+  # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
 -warn:-indirectStatic 
 -warn:+staticReceiver
 
 -warn:+unused
+  # This tags valid "new jmri.util.WaitHandler(this);" constructs
 -warn:-unusedAllocation
 -warn:-unusedImport
 -warn:+unusedLabel
@@ -44,11 +49,15 @@
 -warn:+unusedThrownIncludeDocComment
 -warn:+unusedThrownExemptExceptionThrowable
 -warn:+unusedThrownWhenOverriding
+  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>(); 
 -warn:-unusedTypeArgs
--warn:-unusedTypeParameter
+-warn:+unusedTypeParameter
 
 
+#
 # Checks we choose to enforce
+#
+
 -warn:+allDeprecation
 -warn:+allOver-ann
 -warn:+assertIdentifier
@@ -84,57 +93,90 @@
 -warn:+semicolon
 -warn:+specialParamHiding
 -warn:+suppress
+-warn:+switchDefault
 -warn:+unavoidableGenericProblems
 -warn:+unchecked
 -warn:+uselessTypeCheck
 -warn:+varargsCast
 
+#
+# Checks we choose not to enforce as our common style
+#
 
-# Checks we choose not to enforce as a matter of style
+  # no real cost to using implicit boxing/unboxing, and it's just easier
 -warn:-boxing
+
+  # redundant super-interfaces: this is a design-style issue
+  # our inheritance tree doesn't insist on single-access to parent interfaces
 -warn:-intfRedundant
+
+  # non-NLS string literals (mostly missing // $ NON-NLS)
 -warn:-nls
+
+  # many of these in the code, and "final" for parameters is a matter of style
 -warn:-paramAssign
+
+  # JMRI doesn't anticipate use of Java serialization
 -warn:-serial
+
+  # maybe a good idea, but too expensive now
 -warn:-super
+
+  # many of these aleady in the code, and the value is not clear
 -warn:-syntheticAccess
+
+  # we don't require "this." in every variable access to reduce verbosity
 -warn:-unqualifiedField
 -warn:-unqualified-field-access
+
+  # our APIs routinely have "may need in future" parameters
 -warn:-unusedArgument
 
+  # missing enum switch cases even when default case is present; `default` can be convenient
+-warn:-enumSwitchPedantic
 
 
-# Checks we're warning on, but not enforcing
+#
+# Checks we're warning on, working to reduce, but not enforcing
+#
 
 
+#
+# Checks we will eventually put in place, but would be burdensome now
+#
 
-# Checks we're working on
-
-# 14 outstanding items
+  # 14 outstanding items
 -warn:-deadCode
 
-# 22 outstanding items
+  # missing synch in synchronized method override
+  # 22 outstanding items
 -warn:-syncOverride
 
-# 159 outstanding items
+  # raw type instead of parameterized type 
+  # 159 outstanding items (some likely to be in APIs)
 -warn:-raw
 
-# this tags some FindBugs labels?  But still useful to run occasionally
+  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings  
+  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
 -warn:-warningToken
 
-# 7 outstanding items
--warn:-switchDefault
 
+#
+# Checks still to be characterized
+#
 
-
-# Checks not yet examined 
-
--warn:-allDeadCode
 -warn:-all-static-method
 -warn:-emptyBlock
--warn:-enumSwitchPedantic
+
+-warn:-allDeadCode
+
+  # flags methods that can be made static because they don't access data member
+  # but that just seems distracting somehow
 -warn:-static-method
-#-warn:-tasks(<task1>|...|<taskN>)
+
+  # We often seem to _prefer_ the terminal else instead of bottom return
 -warn:-unnecessaryElse
+
+#-warn:-tasks(<task1>|...|<taskN>)
 
 

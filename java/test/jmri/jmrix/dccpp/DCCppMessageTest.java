@@ -43,6 +43,246 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("5th byte", '1', msg.getElement(5) & 0xFF);
     }
 
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr1ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(1, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 7, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '0', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '1', msg.getElement(6) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr1ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(1, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 7, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '0', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '0', msg.getElement(6) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr4ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(4, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 7, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '3', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '1', msg.getElement(6) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr4ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(4, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 7, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '3', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '0', msg.getElement(6) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr5ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(5, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 7, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '0', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '1', msg.getElement(6) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr5ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(5, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 7, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '0', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '0', msg.getElement(6) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr40ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(40, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 8, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '0', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '3', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '1', msg.getElement(7) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr40ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(40, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 8, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '0', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '3', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '0', msg.getElement(7) & 0xFF);
+    }
+
+     @Test
+    public void testMakeAccessoryDecoderMsgAddr41ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(41, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 8, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '0', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '1', msg.getElement(7) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr41ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(41, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 8, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '1', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '0', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '0', msg.getElement(7) & 0xFF);
+    }
+
+     @Test
+    public void testMakeAccessoryDecoderMsgAddr2040ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(2040, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 9, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '0', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '3', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", ' ', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr2040ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(2040, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 9, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '0', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '3', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", ' ', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '0', msg.getElement(8) & 0xFF);
+    }
+
+     @Test
+    public void testMakeAccessoryDecoderMsgAddr2041ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(2041, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 9, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '1', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '0', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", ' ', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr2041ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(2041, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 9, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '1', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '0', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", ' ', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '0', msg.getElement(8) & 0xFF);
+    }
+
+     @Test
+    public void testMakeAccessoryDecoderMsgAddr2044ActivateTrue() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(2044, true);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 9, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '1', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '3', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", ' ', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
+    }
+
+    @Test
+    public void testMakeAccessoryDecoderMsgAddr2044ActivateFalse() {
+	msg = DCCppMessage.makeAccessoryDecoderMsg(2044, false);
+	log.debug("accessory decoder message = {}", msg.toString());
+        Assert.assertEquals("length", 9, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '1', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", '1', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", ' ', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", '3', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", ' ', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '0', msg.getElement(8) & 0xFF);
+    }
+
     // Test the canned messages.
     @Test
     public void testGetAccessoryDecoderMsgActivateTrue() {

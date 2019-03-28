@@ -30,7 +30,7 @@ import org.netbeans.jemmy.ComponentChooser;
  */
 public class MemoryIconTest extends PositionableTestBase {
 
-    private MemoryIcon to = null;
+    protected MemoryIcon to = null;
 
     @Test
     public void testShowContent() {
@@ -40,7 +40,6 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest1", editor);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -82,11 +81,7 @@ public class MemoryIconTest extends PositionableTestBase {
         to.getPopupUtility().setBackgroundColor(Color.white);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect blank: "));
-
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
-
-        to.setMemory("IM2");
-
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("");
         jf.pack();
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -116,10 +111,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-
-        to.setMemory("IM3");
 
         jf.pack();
         jf.setVisible(true);
@@ -259,8 +251,7 @@ public class MemoryIconTest extends PositionableTestBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
@@ -272,9 +263,8 @@ public class MemoryIconTest extends PositionableTestBase {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         to = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

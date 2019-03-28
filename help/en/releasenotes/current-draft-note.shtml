@@ -1,6 +1,5 @@
 
     <h3>Hardware Support</h3>
-
         <ul>
           <li></li>
         </ul>
@@ -9,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -47,7 +46,32 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>"PR3 Standalone Programmer" mode has been updated so that only one LocoNet menu will be displayed, instead of displaying two menus.</li>
+                <li><p>JMRI's support for the Digitrax PR4 has been updated to
+                    reflect the PR4's inability to provide
+                    "LocoNet Data Signal termination". <span class="since">since
+                    4.15.5</span></p>
+
+                    <p>This is a correction to JMRI's previous implementation of
+                    PR4 functionality.  It reflects a a more-accurate understanding
+                    of PR4 features by the JMRI development team.</p>
+
+                    <p>When configuring a JMRI "connection" for the PR4, the "Command
+                    station type" of "Stand-alone LocoNet" is no longer available.
+                    Users with an existing PR4 connection which has been configured
+                    for a "Command station type" of "Stand-alone LocoNet" should
+                    change their "Command station type" to some other selection,
+                    such as "DCS100", and save the configuration profile.</p>
+
+                    <p>Because LocoNet requires some source of "LocoNet Data Signal
+                    termination", and because the PR4 is not capable of providing
+                    that feature, it will be necessary to provide it using some
+                    other piece of LocoNet hardware.  Both commercially-available and
+                    do-it-yourself options are available, as described in the
+                    "<a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml#dataterm">
+                    LocoNet Data Signal termination</a>" section of the JMRI
+                    <a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml">
+                    Standalone LocoNet</a>" help page.</p>
+                </li>
             </ul>
 
         <h4>Maple</h4>
@@ -62,12 +86,21 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with Roster speed-profiling</li>
+                <li><a
+                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS
+                Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
+                <li>Track Current meter avaiable for supported Command Stations via
+                PanelPro > Tools > Track Current Meter</li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>This release has an experimental method for changing the payload
+                    of MqttTurnouts, i.e. to use JSON instead of fixed strings.
+                    See the description at the bottom of the
+                    <a href="http://jmri.org/help/en/hardware/mqtt/index.shtml#payload">bottom of the MQTT page</a>.
+                    </li>
             </ul>
 
         <h4>MRC</h4>
@@ -77,7 +110,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li><li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -97,7 +130,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li>Fixed Delay in throttle message processing</li>
+                <li><>/li>
             </ul>
 
         <h4>Secsi</h4>
@@ -136,9 +169,9 @@
             </ul>
 
     <h3>New / Updated decoder definitions</h3>
-      <ul>
-        <li></li>
-     </ul>
+        <ul>
+          <li></li>
+        </ul>
 
         <h4>Arnold</h4>
             <ul>
@@ -257,9 +290,9 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Add Trim CV to Basic Speed Control pane</li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -306,79 +339,79 @@
             </ul>
 
     <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"/>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-          <li></li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
-        <a id="Dispatcher" name="Dispatcher"/>
+        <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
         </ul>
 
    <h3>Internationalization</h3>
-        <a id="I18N" name="I18N"/>
+        <a id="I18N" name="I18N"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
-        <a id="LE" name="LE"/>
+        <a id="LE" name="LE"></a>
         <ul>
 	        <li></li>
         </ul>
 
     <h3>Logix</h3>
-        <a id="Logix" name="Logix"/>
+        <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
         </ul>
 
     <h3>Operations</h3>
-        <a id="Operations" name="Operations"/>
+        <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Panel Editors</h3>
-        <a id="PE" name="PE"/>
+        <a id="PE" name="PE"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Preferences</h3>
-        <a id="Preferences" name="Preferences"/>
+        <a id="Preferences" name="Preferences"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Resources</h3>
-        <a id="Resources" name="Resources"/>
+        <a id="Resources" name="Resources"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"/>
+        <a id="Roster" name="Roster"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"/>
+        <a id="TLae" name="TLae"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Scripting</h3>
-        <a id="Scripting" name="Scripting"/>
+        <a id="Scripting" name="Scripting"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Signals</h3>
-        <a id="Signals" name="Signals"/>
+        <a id="Signals" name="Signals"></a>
         <ul>
             <li></li>
         </ul>
@@ -396,7 +429,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -414,48 +447,53 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li></li>
+                <li>Updated how lock information is
+                    stored in the 'logging memory'
+                    so that it can be displayed e.g.
+                    on a panel.  For more info,
+                    see the
+                    <a href="/help/en//html/tools/uss/index.shtml">help page</a></li>
             </ul>
 
    <h3>Switchboard Editor</h3>
-        <a id="SW" name="SW"/>
+        <a id="SW" name="SW"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Timetable</h3>
-        <a id="Timetable" name="Timetable"/>
+        <a id="Timetable" name="Timetable"></a>
         <span class="since">since 4.13.4</span>
         <ul>
             <li></li>
         </ul>
 
    <h3>Warrants</h3>
-        <a id="Wt" name="Wt"/>
+        <a id="Wt" name="Wt"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Web Access</h3>
-        <a id="WA" name="WA"/>
+        <a id="WA" name="WA"></a>
         <ul>
             <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
-        <a id="WS" name="WS"/>
+        <a id="WS" name="WS"></a>
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"/>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
-        <a id="Misc" name="Misc"/>
+        <a id="Misc" name="Misc"></a>
         <ul>
             <li></li>
         </ul>

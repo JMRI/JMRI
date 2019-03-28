@@ -538,7 +538,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (noneRadioButton.isSelected()) {
             _train.setRequirements(Train.NO_CABOOSE_OR_FRED);
         }
-        _train.setCabooseRoad((String) roadCabooseBox.getSelectedItem());
+        _train.setCabooseRoad((String) roadCabooseBox.getSelectedItem());        
+        if (!_train.getName().equals(trainNameTextField.getText())
+                || !_train.getRawDescription().equals(trainDescriptionTextField.getText())
+                || !_train.getComment().equals(commentTextArea.getText())) {
+            _train.setModified(true);
+        }
         _train.setName(trainNameTextField.getText().trim());
         _train.setDescription(trainDescriptionTextField.getText());
         _train.setComment(commentTextArea.getText());

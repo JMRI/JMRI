@@ -38,6 +38,11 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddIdTag");
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

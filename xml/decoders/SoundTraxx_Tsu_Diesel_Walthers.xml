@@ -23,6 +23,7 @@
   <version author="Michael Mosher" version="8" lastUpdated="20180123"/>
   <version author="Alain Le Marchand" version="8.1" lastUpdated="20180128"/>
   <version author="Michael Mosher" version="9" lastUpdated="20180817"/>
+  <version author="Michael Mosher" version="10" lastUpdated="20190226"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.                                    -->
   <!-- version 2	make more use of external includes                                                      -->
@@ -35,7 +36,8 @@
                   from SoundTraxx Product Identification guide Rev.B                                      -->
   <!-- version 8	Add GP35 model                                                                    -->
   <!-- version 8.1	Minor Airhorm name correction for GP35 model                                                                    -->
-  <!-- version 8	Add GP35 models for EL, RI, SP                                                           -->
+  <!-- version 9	Add GP35 models for EL, RI, SP                                                           -->
+  <!-- version 10	Fix bug in GP35 SP CV54                                                          -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -1819,7 +1821,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6B Effect Selection</label>
       </variable>
-      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="2" minOut="4" tooltip="Determines the second effect associated with the FX6B light output" exclude="GP35SP">
+      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="2" minOut="4" tooltip="Determines the second effect associated with the FX6B light output" include="GP35SP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6B Effect Selection</label>
       </variable>

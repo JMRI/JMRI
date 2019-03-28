@@ -286,19 +286,19 @@ public class AlignTablePane extends javax.swing.JPanel {
                     if (rc == null) {
                         return null;
                     }
-                    return new Double(rc.getPosition().x);
+                    return Double.valueOf(rc.getPosition().x);
                 case YCOL:
                     rc = Engine.instance().getReceiver(r + 1);
                     if (rc == null) {
                         return null;
                     }
-                    return new Double(rc.getPosition().y);
+                    return Double.valueOf(rc.getPosition().y);
                 case ZCOL:
                     rc = Engine.instance().getReceiver(r + 1);
                     if (rc == null) {
                         return null;
                     }
-                    return new Double(rc.getPosition().z);
+                    return Double.valueOf(rc.getPosition().z);
                 case ACTIVECOL:
                     rc = Engine.instance().getReceiver(r + 1);
                     if (rc == null) {

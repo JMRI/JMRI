@@ -2,17 +2,21 @@ package jmri.jmrix.can.cbus;
 
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
 /**
  * Class to lookup CBUS event names via the event table
  * <P>
+ * Node names from the Node Manager
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNameService {
     
     private CbusEventTableDataModel eventModel;
+    private CbusNodeTableDataModel nodeModel;
 
     public CbusNameService(){
     }
@@ -33,13 +37,12 @@ public class CbusNameService {
     public String getEventNodeString( int nn, int en ){
         // log.debug("looking up node {} event {}",nn,en);
         try {
-            eventModel = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+            eventModel = jmri.InstanceManager.getDefault(CbusEventTableDataModel.class);
             String addevbuf = eventModel.getEventString(nn,en);
-            if ( !addevbuf.equals("") ) {
+            if ( !addevbuf.isEmpty() ) {
                 return addevbuf;
             }
         } catch (NullPointerException e) {
-            // log.debug("event table not currently running");
         }
         return new CbusEvent(nn,en).toString();
     }
@@ -56,10 +59,28 @@ public class CbusNameService {
     @Nonnull
     public String getEventName( int nn, int en ){
         try {
-            eventModel = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+            eventModel = jmri.InstanceManager.getDefault(CbusEventTableDataModel.class);
             return eventModel.getEventName(nn,en);
         } catch (NullPointerException e) {
-            // log.debug("event table not currently running");
+            return ("");
+        }
+    }
+
+    /**
+     * Return a formatted String attempting locate the node name
+     * <p> 1st attempt - Node Username in node table ( eg. Control Panel West )
+     * <p> 2nd attempt - Node Type Name ( eg. CANPAN )
+     * <p> fallback empty string
+     * <P>
+     * @param nn Node Number
+     * @return Node name if available , else empty string
+     */
+    @Nonnull
+    public String getNodeName( int nn ){
+        try {
+            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+            return nodeModel.getNodeName(nn);
+        } catch (NullPointerException e) {
             return ("");
         }
     }

@@ -111,7 +111,7 @@ public class JsonClientHandler {
             this.onMessage(this.connection.getObjectMapper().readTree(string));
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"{}\"\n{}", string, pe.getMessage());
-            this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()));
+            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()));
         }
     }
 
@@ -169,7 +169,7 @@ public class JsonClientHandler {
                     return;
                 } else {
                     log.warn("Requested list type '{}' unknown.", type);
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                     return;
                 }
             } else if (!data.isMissingNode()) {
@@ -185,17 +185,17 @@ public class JsonClientHandler {
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
-                this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
             }
             if (type.equals(GOODBYE)) {
                 // close the connection if GOODBYE is received.
                 this.connection.close();
             }
         } catch (JmriException je) {
-            this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()));
+            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()));
         } catch (JsonException je) {
             this.sendErrorMessage(je);
         }

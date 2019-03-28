@@ -100,6 +100,27 @@ public class SensorTableActionTest extends AbstractTableActionBase {
         _s1Table.dispose();
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSensor");
+    }
+
+    @Test
+    @Override
+    public void testAddButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
     // The minimal setup for log4J
     @Override
     @Before

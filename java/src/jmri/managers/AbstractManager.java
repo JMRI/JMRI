@@ -6,8 +6,14 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -161,7 +167,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         } catch (PropertyVetoException e) {
             throw e;  // don't go on to check for delete.
         }
-        if (property.equals("DoDelete")) { //IN18N
+        if (property.equals("DoDelete")) { // NOI18N
             deregister(bean);
             bean.dispose();
         }
@@ -264,8 +270,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _originalOrderList.remove(systemName);
         
         // notifications
-        firePropertyChange("length", null, _beans.size());
         fireDataListenersRemoved(position, position, s);
+        firePropertyChange("length", null, _beans.size());
     }
 
     /**
@@ -323,7 +329,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");
         if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
@@ -338,7 +343,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
@@ -354,8 +358,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
-                 // Only used in ConfigureXML
     public List<String> getSystemNameAddedOrderList() {
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
@@ -365,7 +367,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<E> getNamedBeanList() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
         if (cachedNamedBeanList == null) {
@@ -400,6 +401,34 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         pcs.removePropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
@@ -421,8 +450,36 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         vcs.removeVetoableChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+        vcs.addVetoableChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public VetoableChangeListener[] getVetoableChangeListeners() {
+        return vcs.getVetoableChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
+        return vcs.getVetoableChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+        vcs.removeVetoableChangeListener(propertyName, listener);
+    }
+
     /**
-     * Method to inform all registered listerners of a vetoable change. If the
+     * Method to inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a
@@ -544,7 +601,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
-            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
+            ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
             for (ManagerDataListener<E> listener : listeners) {
                 listener.contentsChanged(e);
             }          
@@ -554,14 +611,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
         if (muted) return;
-        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
+        ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
         for (ManagerDataListener<E> m : listeners) {
             m.intervalAdded(e);
         }
     }
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
         if (muted) return;
-        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
+        ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
         for (ManagerDataListener<E> m : listeners) {
             m.intervalRemoved(e);
         }

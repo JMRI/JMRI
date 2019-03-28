@@ -107,6 +107,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // and add listeners back in
         addPropertyChangeTrains();
     }
+    
+    private synchronized Train getTrainByRow(int row) {
+        return sysList.get(row);
+    }
 
     List<Train> sysList = trainManager.getTrainsByTimeList();
     JTable _table = null;
@@ -159,7 +163,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return sysList.size();
     }
 
@@ -264,7 +268,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Train train = sysList.get(row);
+        Train train = getTrainByRow(row);
         if (train == null) {
             return "ERROR train unknown " + row; // NOI18N
         }
@@ -361,7 +365,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 actionTrain(row);
                 break;
             case BUILDBOX_COLUMN: {
-                Train train = sysList.get(row);
+                Train train = getTrainByRow(row);
                 train.setBuildEnabled(((Boolean) value).booleanValue());
                 break;
             }
@@ -371,7 +375,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public Color getRowColor(int row) {
-        Train train = sysList.get(row);
+        Train train = getTrainByRow(row);
 //          log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
@@ -386,7 +390,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Train train = sysList.get(row);
+                Train train = getTrainByRow(row);
                 log.debug("Edit train ({})", train.getName());
                 tef = new TrainEditFrame(train);
             }
@@ -396,7 +400,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     Thread build;
 
     private void buildTrain(int row) {
-        final Train train = sysList.get(row);
+        final Train train = getTrainByRow(row);
         if (!train.isBuilt()) {
             // only one train build at a time
             if (build != null && build.isAlive()) {
@@ -445,7 +449,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         if (build != null && build.isAlive()) {
             return;
         }
-        Train train = sysList.get(row);
+        Train train = getTrainByRow(row);
         // move button becomes report if failure
         if (train.getBuildFailed()) {
             train.printBuildReport();
@@ -542,7 +546,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
-            int row = sysList.indexOf(train);
+            int row;
+            synchronized (this) {
+                row = sysList.indexOf(train);
+            }
             if (Control.SHOW_PROPERTY) {
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }

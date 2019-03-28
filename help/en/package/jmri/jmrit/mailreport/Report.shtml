@@ -23,6 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JMRI: Upload Debugging Information</h1>
+      <a href="SampleReportForm.png"><img src="SampleReportForm.png" height="25%" width="25%" align="right"></a>
       <p>The "Upload
       Debugging Information" item in JMRI Help menus lets you store
       debugging information where the JMRI developers can easily
@@ -39,15 +40,15 @@
       that any useful information hasn't been overwritten.</p>
 
       <p>The "Upload Debugging Information" help item will open a
-      new window with three fields and two checkboxes. Enter your
+      new window with three fields and six checkboxes. Enter your
       email address in the top line. It won't be made visible to
       the public, but we do require a valid email address to cut
       down on spam. In the next field, enter a one-line summary of
       the problem that will appear as the subject of the upload.
-      Finally, type a few lines describing want went wrong, now to
+      Finally, type a few lines describing want went wrong, how to
       recreate it, etc.</p>
 
-      <p>Normally, you leave the two checkboxes marked so that the
+      <p>Normally, you leave the checkboxes marked so that the
       report will contain the context information (JMRI version,
       Java version, hardware types, etc) and the most recent log
       files. If you don't want to include those for some reason,
@@ -63,8 +64,8 @@
       your program information where people can see it.</p>
 
       <p>If you want quick help with a problem, you should talk
-      some JMRI users in your area (it's always good to talk to
-      friends), or ask on the <a href=
+      with some JMRI users in your area (it's always good to talk
+      to friends), or ask on the <a href=
       "https://groups.io/g/jmriusers">JMRI
       users group</a>.</p>
       <!--#include virtual="/Footer" -->

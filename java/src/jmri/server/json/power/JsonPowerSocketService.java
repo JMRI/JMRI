@@ -24,23 +24,32 @@ public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpServi
     private boolean listening = false;
 
     public JsonPowerSocketService(JsonConnection connection) {
-        super(connection, new JsonPowerHttpService(connection.getObjectMapper()));
+        this(connection, new JsonPowerHttpService(connection.getObjectMapper()));
+    }
+
+    protected JsonPowerSocketService(JsonConnection connection, JsonPowerHttpService service) {
+        super(connection, service);
     }
 
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.addListeners();
+        this.connection.sendMessage(this.service.doPost(type, data.path(NAME).asText(), data, locale));
+    }
+
+    @Override
+    public void onList(String type, JsonNode data, Locale locale) throws JsonException, IOException {
+        this.addListeners();
+        this.connection.sendMessage(this.service.doGetList(type, locale));
+    }
+
+    private void addListeners() {
         if (!this.listening) {
             InstanceManager.getList(PowerManager.class).forEach((manager) -> {
                 manager.addPropertyChangeListener(this);
             });
             this.listening = true;
         }
-        this.connection.sendMessage(this.service.doPost(type, data.path(NAME).asText(), data, locale));
-    }
-
-    @Override
-    public void onList(String type, JsonNode data, Locale locale) throws JsonException, IOException {
-        this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
     @Override

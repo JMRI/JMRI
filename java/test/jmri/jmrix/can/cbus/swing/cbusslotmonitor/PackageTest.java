@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     BundleTest.class,
     CbusSlotMonitorPaneTest.class,
-    CbusSlotMonitorDataModelTest.class
+    CbusSlotMonitorDataModelTest.class,
+    CbusSlotMonitorSessionTest.class
 })
 
 /**

@@ -161,7 +161,6 @@ public final class ImageIndexEditor extends JmriJFrame {
      * Provide node editing
      * @param evt
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private void showTreePopUp(MouseEvent evt) {
         int row = _indexTree.getRowForLocation(evt.getX(), evt.getY());
         if (row <= 0) {
