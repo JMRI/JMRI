@@ -113,7 +113,4 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("topic", "CLOSED", new String(savePayload));
     }
 
-
-
-
 }
