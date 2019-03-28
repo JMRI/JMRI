@@ -62,13 +62,6 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
     }
 
-    @Override
-    @Test
-    @Ignore("Base class test cannot create a new bean since the bean is anonymous")
-    @ToDo("provide the base class with a new bean that is not registered in the manager")
-    public void testRegisterDuplicateSystemName() {
-    }
-
     // The minimal setup for log4J
     @Before
     @Override

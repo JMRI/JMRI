@@ -32,13 +32,6 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
 
     }
 
-    @Override
-    @Test
-    @Ignore("Base class test cannot create a new bean since the bean is anonymous")
-    @ToDo("provide the base class with a new bean that is not registered in the manager")
-    public void testRegisterDuplicateSystemName() {
-    }
-
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Override

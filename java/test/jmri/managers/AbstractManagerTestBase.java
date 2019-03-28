@@ -125,9 +125,20 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertFalse(s.isEmpty());
     }
 
-    @SuppressWarnings("unchecked")  // The call Constructor.newInstance() generates an unchecked cast warning
+    private Field getField(Class c, String fieldName) {
+        try {
+            return c.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException ex) {
+            if (c.getSuperclass() != null)
+                return getField(c.getSuperclass(), fieldName);
+        }
+
+        // Field not found
+        return null;
+    }
+
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InstantiationException, InvocationTargetException {
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         if (l instanceof ProvidingManager)  {
             ProvidingManager<E> m = (ProvidingManager<E>) l;
             String s1 = l.makeSystemName("1");
@@ -142,6 +153,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
             try {
                 e1 = m.provide(s1);
+                e2 = m.provide(s2);
             } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
                 // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
                 // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.
@@ -154,8 +166,11 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
                 return;
             }
 
-            Constructor ctor = e1.getClass().getDeclaredConstructor(String.class, String.class);
-            e2 = (E) ctor.newInstance(s1, "My user name");
+            // Use reflection to change the systemName of e2
+            // Try to find the field
+            Field f1 = getField(e2.getClass(), "mSystemName");
+            f1.setAccessible(true);
+            f1.set(e2, e1.getSystemName());
 
             // Remove bean if it's already registered
             if (l.getBeanBySystemName(e1.getSystemName()) != null) {
