@@ -38,6 +38,11 @@ public class SignalMastTableActionTest extends AbstractTableActionBase {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSignalMast");
+    }
+
     // The minimal setup for log4J
     @Override
     @Before

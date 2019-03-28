@@ -40,7 +40,7 @@ public abstract class AbstractTableActionBase {
      * @return the table name used to create the window, as returned from the
      *         Bundle.
      */
-    abstract String getTableFrameName();
+    abstract public String getTableFrameName();
 
     /**
      * Check the return value of getPanel. If the class under test provides a
@@ -75,6 +75,28 @@ public abstract class AbstractTableActionBase {
     public void testHelpTarget(){
         Assert.assertEquals("help target",helpTarget,a.helpTarget());
     }
+
+    @Test
+    public void testAddButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    /**
+     * @return the name of the frame resulting from add being pressed, as 
+     *         returned from the Bundle.
+     */
+    abstract public String getAddFrameName();
+
 
     /**
      * Derived classes should use this method to set a.

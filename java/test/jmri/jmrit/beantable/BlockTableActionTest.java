@@ -180,6 +180,11 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         return t;
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddBlock");
+    }
+
     @Before
     @Override
     public void setUp() {

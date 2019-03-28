@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -46,7 +46,32 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><p>JMRI's support for the Digitrax PR4 has been updated to
+                    reflect the PR4's inability to provide
+                    "LocoNet Data Signal termination". <span class="since">since
+                    4.15.5</span></p>
+
+                    <p>This is a correction to JMRI's previous implementation of
+                    PR4 functionality.  It reflects a a more-accurate understanding
+                    of PR4 features by the JMRI development team.</p>
+
+                    <p>When configuring a JMRI "connection" for the PR4, the "Command
+                    station type" of "Stand-alone LocoNet" is no longer available.
+                    Users with an existing PR4 connection which has been configured
+                    for a "Command station type" of "Stand-alone LocoNet" should
+                    change their "Command station type" to some other selection,
+                    such as "DCS100", and save the configuration profile.</p>
+
+                    <p>Because LocoNet requires some source of "LocoNet Data Signal
+                    termination", and because the PR4 is not capable of providing
+                    that feature, it will be necessary to provide it using some
+                    other piece of LocoNet hardware.  Both commercially-available and
+                    do-it-yourself options are available, as described in the
+                    "<a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml#dataterm">
+                    LocoNet Data Signal termination</a>" section of the JMRI
+                    <a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml">
+                    Standalone LocoNet</a>" help page.</p>
+                </li>
             </ul>
 
         <h4>Maple</h4>
@@ -62,10 +87,10 @@
         <h4>MERG CBUS</h4>
             <ul>
                 <li>Fixed issue with Roster speed-profiling</li>
-                <li><a 
-                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS 
+                <li><a
+                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS
                 Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
-                <li>Track Current meter avaiable for supported Command Stations via 
+                <li>Track Current meter avaiable for supported Command Stations via
                 PanelPro > Tools > Track Current Meter</li>
             </ul>
 
@@ -73,7 +98,7 @@
             <ul>
                 <li>This release has an experimental method for changing the payload
                     of MqttTurnouts, i.e. to use JSON instead of fixed strings.
-                    See the description at the bottom of the 
+                    See the description at the bottom of the
                     <a href="http://jmri.org/help/en/hardware/mqtt/index.shtml#payload">bottom of the MQTT page</a>.
                     More work is needed on this before it actually sends and receives
                     JSON.
@@ -269,7 +294,7 @@
             <ul>
                 <li>Add Trim CV to Basic Speed Control pane</li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -406,7 +431,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -424,9 +449,9 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li>Updated how lock information is 
+                <li>Updated how lock information is
                     stored in the 'logging memory'
-                    so that it can be displayed e.g. 
+                    so that it can be displayed e.g.
                     on a panel.  For more info,
                     see the
                     <a href="/help/en//html/tools/uss/index.shtml">help page</a></li>
@@ -462,7 +487,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
