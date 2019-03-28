@@ -7,6 +7,7 @@ import jmri.Logix;
 
 import jmri.util.*;
 import jmri.util.junit.rules.*;
+import jmri.util.junit.annotations.*;
 
 import org.junit.*;
 import org.junit.rules.*;
@@ -211,6 +212,12 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Override
     public String getAddFrameName(){
         return Bundle.getMessage("TitleAddLogix");
+    }
+
+    @Test
+    @Ignore("Logix create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
     }
 
     @Before
