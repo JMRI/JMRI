@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,6 +10,8 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * This is an abstract base class for testing bean table action objects derived
@@ -96,6 +99,30 @@ public abstract class AbstractTableActionBase {
      *         returned from the Bundle.
      */
     abstract public String getAddFrameName();
+
+    @Test
+    public void testAddThroughDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	//Enter 1 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).enterText("1");
+
+	//and press create
+	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
 
 
     /**

@@ -40,6 +40,12 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     public void testAddButton() {
     }
 
+    @Test
+    @Override
+    @Ignore("no add button on signal mast logic table")
+    public void testAddThroughDialog() {
+    }
+
     // The minimal setup for log4J
     @Override
     @Before

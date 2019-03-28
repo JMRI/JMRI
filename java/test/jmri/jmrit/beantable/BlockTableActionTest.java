@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -183,6 +184,12 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     @Override
     public String getAddFrameName(){
         return Bundle.getMessage("TitleAddBlock");
+    }
+
+    @Test
+    @Ignore("Block create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
     }
 
     @Before

@@ -62,6 +62,11 @@ public class AudioTableActionTest extends AbstractTableActionBase {
         return "";
     }
 
+    @Test
+    @Ignore("Audio table does not have Add... button")
+    public void testAddThroughDialog() {
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
