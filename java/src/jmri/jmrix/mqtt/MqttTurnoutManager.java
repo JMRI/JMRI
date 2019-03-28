@@ -1,5 +1,7 @@
 package jmri.jmrix.mqtt;
 
+import javax.annotation.Nonnull;
+
 import jmri.Turnout;
 
 /**
@@ -11,10 +13,15 @@ import jmri.Turnout;
  * @author Lionel Jeanson Copyright (c) 2017
  */
 public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
-    private final MqttAdapter mqttAdapter;
-    private final String systemPrefix;
+    @Nonnull private final MqttAdapter mqttAdapter;
+    @Nonnull private final String systemPrefix;
 
-    public MqttTurnoutManager(MqttAdapter ma, String p) {
+    public void setPrefix(@Nonnull String namePrefix) {
+        this.namePrefix = namePrefix;
+    }
+    private String namePrefix = "track/turnout/";
+    
+    public MqttTurnoutManager(@Nonnull MqttAdapter ma, @Nonnull String p) {
         super();
         mqttAdapter = ma;
         systemPrefix = p;        
@@ -26,10 +33,19 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         MqttTurnout t;
-        int addr = Integer.parseInt(systemName.substring(systemPrefix.length() + 1));
-        t = new MqttTurnout(mqttAdapter, addr);
+        String suffix = systemName.substring(systemPrefix.length() + 1);
+        String topic = namePrefix+suffix;
+        
+        // if an integer, this is a legacy name
+        try { 
+            int addr = Integer.parseInt(suffix);
+        } catch (IllegalArgumentException e) {
+            log.trace("{} is not an integer", suffix);
+        }
+        
+        t = new MqttTurnout(mqttAdapter, topic);
         t.setUserName(userName);
 
         if (parser != null) t.setParser(parser);
@@ -42,7 +58,6 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     MqttContentParser<Turnout> parser = null;
     
-    static volatile MqttTurnoutManager _instance = null;
-
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnoutManager.class);
 }
 

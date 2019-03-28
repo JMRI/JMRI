@@ -31,7 +31,7 @@
       <a name= "limitations" id="limitations"></a>
       <h2>Limitations</h2>
       
-      The current code (i.e. JMRI 4.12 and later) only 
+      Older code (i.e. JMRI 4.12 and later) only 
       supports Turnouts, and requires that the name be of the form
       MTtrack/turnout/ followed by a number, i.e. MTtrack/turnout/22
       

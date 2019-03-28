@@ -3,8 +3,6 @@ package jmri.jmrix.mqtt;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Turnout interface for MQTT layouts.
@@ -14,8 +12,14 @@ import org.slf4j.LoggerFactory;
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     private final MqttAdapter mqttAdapter;
-    private final String mysubTopic;
-    private final int _number;   // turnout number
+    private final String topic;
+
+    MqttTurnout(MqttAdapter ma, String topic) {
+        super("MT" + topic);
+        this.topic = topic;
+        mqttAdapter = ma;
+        mqttAdapter.subscribe(topic, this);
+    }
 
     public void setParser(MqttContentParser<Turnout> parser) {
         this.parser = parser;
@@ -59,18 +63,6 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         }
     };
     
-    
-    MqttTurnout(MqttAdapter ma, int number) {
-        super("MT" + number);
-        _number = number;
-        mqttAdapter = ma;
-        mysubTopic = "track/turnout/" + _number;
-        mqttAdapter.subscribe(mysubTopic, this);
-    }
-
-    public int getNumber() {
-        return _number;
-    }
 
     // Turnouts do support inversion
     @Override
@@ -90,23 +82,23 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        log.debug("Send command to {} Pushbutton BT{}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
+        log.debug("Send command to {} Pushbutton BT{} not yet coded", (_pushButtonLockout ? "Lock" : "Unlock"), topic);
     }
 
     private void sendMessage(String c) {
-        mqttAdapter.publish(mysubTopic, c.getBytes());
+        mqttAdapter.publish(topic, c.getBytes());
     }
 
     @Override
-    public void notifyMqttMessage(String topic, String message) {
-        if (!topic.endsWith(mysubTopic)) {
-            log.error("Got a message whose topic ({}) wasn't for me ({})", topic, mysubTopic);
+    public void notifyMqttMessage(String receivedTopic, String message) {
+        if (!receivedTopic.endsWith(topic)) {
+            log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, topic);
             return;
         }
         
-        parser.beanFromPayload(this, message, topic);
+        parser.beanFromPayload(this, message, receivedTopic);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttTurnout.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnout.class);
 
 }

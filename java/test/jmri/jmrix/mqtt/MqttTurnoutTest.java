@@ -39,7 +39,7 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
                 }
             };
 
-        t = new MqttTurnout(a, 2);
+        t = new MqttTurnout(a, "track/turnout/2");
         JUnitAppender.assertWarnMessage("Trying to subscribe before connect/configure is done");
     }
 
