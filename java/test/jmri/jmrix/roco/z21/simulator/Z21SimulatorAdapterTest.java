@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.rules.*;
 
 /**
  * Z21SimulatorAdapterTest.java
@@ -19,6 +20,12 @@ import org.junit.Test;
  */
 public class Z21SimulatorAdapterTest {
 
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+    
     private static java.net.InetAddress host;
     private static int port = 21105; // default port for Z21 connections.
     private static Z21SimulatorAdapter a  = null;
