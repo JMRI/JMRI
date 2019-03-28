@@ -78,5 +78,4 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
-
 }
