@@ -1126,12 +1126,7 @@ public class JUnitUtil {
         java.util.Objects.requireNonNull(window, "Window cannot be null");
         
         ThreadingUtil.runOnGUI(() -> {
-            try{
-               window.dispose();
-	    } catch(java.lang.NullPointerException npe){
-	       // The window was null when we actually tried to dispose of it?
-	       // Were two dispose calls queued?
-	    }
+            window.dispose();
         });
     }
     
