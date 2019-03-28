@@ -115,8 +115,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
 
-        // save in the maps if successful
-        register(s);
+        // Some implementations of createNewTurnout() register the new bean,
+        // some don't. Also note that createNewTurnout() may change the system
+        // name. For example, AbstractTurnout does systemName.toUpperCase().
+        if (getBeanBySystemName(s.getSystemName()) == null) {
+            // save in the maps if successful
+            register(s);
+        }
+
         try {
             s.setStraightSpeed("Global");
         } catch (jmri.JmriException ex) {
