@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018 All rights reserved -->
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018, 2019 All rights reserved    -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -92,8 +92,16 @@
       <model model="HDL LocoIO v1.39" productID="139">
         <versionCV lowVersionID="136" highVersionID="139"/>
       </model>
+
+      <model model="LocoServer v1.01" productID="101">
+        <versionCV lowVersionID="101" highVersionID="101"/>
+      </model>
+      <model model="LocoServer v1.02-1.06" productID="106">
+        <versionCV lowVersionID="102" highVersionID="106"/>
+      </model>
+
       <model model="Original LocoIO" productID="135">
-      <versionCV lowVersionID="0" highVersionID="135"/>
+        <versionCV lowVersionID="0" highVersionID="135"/>
       </model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
@@ -128,10 +136,10 @@
                   <choice>Normal Ports</choice>
                   <choice xml:lang="nl">Normaal</choice>
               </enumChoice>
-              <enumChoice choice="2" value="2">
+              <enumChoice choice="2" value="2" include="101,106">
                   <choice>2-Position Servo</choice>
               </enumChoice>
-              <enumChoice choice="3" value="3">
+              <enumChoice choice="3" value="3" include="106">
                   <choice>4-Position Servo</choice>
               </enumChoice>
           </enumVal>
@@ -148,7 +156,7 @@
       <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Port Refresh:</label>
-        <tooltip>Refresh Ports, default unselected</tooltip>
+        <tooltip>Refresh Ports, default unselected = off</tooltip>
       </variable>
 
      <!-- This sets a single JMRI-style composite address in two CVs -->
@@ -161,10 +169,10 @@
       <!-- This repurposes the UserID fields on the Basic pane to show -->
       <!-- the individual address bytes.                               -->
       <!-- Note defaults must be present both locations and agree      -->
-      <variable item="User Id #2" CV="1" default="1"> <!-- only editable in v1.46 and higher -->
+      <variable item="User Id #2" CV="1" default="1"> <!-- only editable in v1.46 and higher, how to hide? -->
         <decVal max="127"/>
             <label>/ SubAddress (7-bit low):</label>
-            <tooltip>Message DSTL byte</tooltip>
+            <tooltip>Message DSTL byte (only editable in v1.46 and higher)</tooltip>
       </variable>
 
       <variable item="User Id #1" CV="2" default="81">
@@ -222,7 +230,7 @@
             <compositeSetting label="Port1 Config" value="15"/>
             <compositeSetting label="Port1 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Toggle Indirect">
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
             <choice>Input: Toggle switch - Indirect</choice>
             <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
             <compositeSetting label="Port1 Config" value="7"/>
@@ -239,17 +247,17 @@
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" include="154">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Hi" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
             <choice>Input: Occupancy - active High</choice>
             <compositeSetting label="Port1 Config" value="95"/>
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High Delayed" include="154">
+          <compositeChoice choice="Input Occu High Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active High Delayed</choice>
             <compositeSetting label="Port1 Config" value="91"/>
             <compositeSetting label="Port1 Value2" value="0"/>
@@ -260,7 +268,7 @@
             <compositeSetting label="Port1 Config" value="111"/>
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push High Indirect">
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port1 Config" value="103"/>
             <compositeSetting label="Port1 Value2" value="0"/>
@@ -270,23 +278,23 @@
             <compositeSetting label="Port1 Config" value="47"/>
             <compositeSetting label="Port1 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push Low Indirect">
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port1 Config" value="39"/>
             <compositeSetting label="Port1 Value2" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Switch Feedback Normal" include="144,145,146"> <!-- v1.44 and higher -->
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
             <choice>Input: Feedback - Normal</choice>
             <compositeSetting label="Port1 Config" value="23"/>
             <compositeSetting label="Port1 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact1" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 1</choice>
             <compositeSetting label="Port1 Config" value="55"/>
             <compositeSetting label="Port1 Value2" value="7"/>
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact2" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 2</choice>
             <compositeSetting label="Port1 Config" value="55"/>
             <compositeSetting label="Port1 Value2" value="6"/>
@@ -305,22 +313,22 @@
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Soft Reset</choice>
             <compositeSetting label="Port1 Config" value="136"/>
             <compositeSetting label="Port1 Value2" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Soft Reset</choice>
             <compositeSetting label="Port1 Config" value="136"/>
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Hard Reset</choice>
             <compositeSetting label="Port1 Config" value="140"/>
             <compositeSetting label="Port1 Value2" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Hard Reset</choice>
             <compositeSetting label="Port1 Config" value="140"/>
             <compositeSetting label="Port1 Value2" value="0"/>
@@ -430,7 +438,7 @@
               <compositeSetting label="Port1 Value2" value="1"/>
             </compositeChoice>
 
-            <compositeChoice choice="Port Not In Use">
+            <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
               <choice>Port Not In Use</choice>
               <choice xml:lang="de">Ausgang nicht genutzt</choice>
               <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -491,7 +499,7 @@
             <compositeSetting label="Port2 Config" value="15"/>
             <compositeSetting label="Port2 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Toggle Indirect">
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
             <choice>Input: Toggle switch - Indirect</choice>
             <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
             <compositeSetting label="Port2 Config" value="7"/>
@@ -508,17 +516,17 @@
             <compositeSetting label="Port2 Config" value="31"/>
             <compositeSetting label="Port2 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" include="154">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Hi" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
             <choice>Input: Occupancy - active High</choice>
             <compositeSetting label="Port2 Config" value="95"/>
             <compositeSetting label="Port2 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High Delayed" include="154">
+          <compositeChoice choice="Input Occu High Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active High Delayed</choice>
             <compositeSetting label="Port2 Config" value="91"/>
             <compositeSetting label="Port2 Value2" value="0"/>
@@ -529,7 +537,7 @@
             <compositeSetting label="Port2 Config" value="111"/>
             <compositeSetting label="Port2 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push High Indirect">
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port2 Config" value="103"/>
             <compositeSetting label="Port2 Value2" value="0"/>
@@ -539,23 +547,23 @@
             <compositeSetting label="Port2 Config" value="47"/>
             <compositeSetting label="Port2 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push Low Indirect">
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port2 Config" value="39"/>
             <compositeSetting label="Port2 Value2" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Switch Feedback Normal" include="144,145,146"> <!-- v1.44 and higher -->
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
             <choice>Input: Feedback - Normal</choice>
             <compositeSetting label="Port2 Config" value="23"/>
             <compositeSetting label="Port2 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact1" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 1</choice>
             <compositeSetting label="Port2 Config" value="55"/>
             <compositeSetting label="Port2 Value2" value="7"/>
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact2" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 2</choice>
             <compositeSetting label="Port2 Config" value="55"/>
             <compositeSetting label="Port2 Value2" value="6"/>
@@ -574,22 +582,22 @@
             <compositeSetting label="Port2 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Soft Reset</choice>
             <compositeSetting label="Port2 Config" value="136"/>
             <compositeSetting label="Port2 Value2" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Soft Reset</choice>
             <compositeSetting label="Port2 Config" value="136"/>
             <compositeSetting label="Port2 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Hard Reset</choice>
             <compositeSetting label="Port2 Config" value="140"/>
             <compositeSetting label="Port2 Value2" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Hard Reset</choice>
             <compositeSetting label="Port2 Config" value="140"/>
             <compositeSetting label="Port2 Value2" value="0"/>
@@ -699,7 +707,7 @@
                     <compositeSetting label="Port2 Value2" value="1"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Port Not In Use">
+                <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
                     <choice>Port Not In Use</choice>
                     <choice xml:lang="de">Ausgang nicht genutzt</choice>
                     <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -760,7 +768,7 @@
             <compositeSetting label="Port3 Config" value="15"/>
             <compositeSetting label="Port3 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Toggle Indirect">
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
             <choice>Input: Toggle switch - Indirect</choice>
             <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
             <compositeSetting label="Port3 Config" value="7"/>
@@ -777,17 +785,17 @@
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" include="154">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Hi" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
             <choice>Input: Occupancy - active High</choice>
             <compositeSetting label="Port3 Config" value="95"/>
             <compositeSetting label="Port3 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High Delayed" include="154">
+          <compositeChoice choice="Input Occu High Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active High Delayed</choice>
             <compositeSetting label="Port3 Config" value="91"/>
             <compositeSetting label="Port3 Value2" value="0"/>
@@ -798,7 +806,7 @@
             <compositeSetting label="Port3 Config" value="111"/>
             <compositeSetting label="Port3 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push High Indirect">
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port3 Config" value="103"/>
             <compositeSetting label="Port3 Value2" value="0"/>
@@ -808,23 +816,23 @@
             <compositeSetting label="Port3 Config" value="47"/>
             <compositeSetting label="Port3 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push Low Indirect">
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port3 Config" value="39"/>
             <compositeSetting label="Port3 Value2" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Switch Feedback Normal" include="144,145,146"> <!-- v1.44 and higher -->
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
             <choice>Input: Feedback - Normal</choice>
             <compositeSetting label="Port3 Config" value="23"/>
             <compositeSetting label="Port3 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact1" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 1</choice>
             <compositeSetting label="Port3 Config" value="55"/>
             <compositeSetting label="Port3 Value2" value="7"/>
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact2" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 2</choice>
             <compositeSetting label="Port3 Config" value="55"/>
             <compositeSetting label="Port3 Value2" value="6"/>
@@ -843,22 +851,22 @@
             <compositeSetting label="Port3 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Soft Reset</choice>
             <compositeSetting label="Port3 Config" value="136"/>
             <compositeSetting label="Port3 Value2" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Soft Reset</choice>
             <compositeSetting label="Port3 Config" value="136"/>
             <compositeSetting label="Port3 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Hard Reset</choice>
             <compositeSetting label="Port3 Config" value="140"/>
             <compositeSetting label="Port3 Value2" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140">
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Hard Reset</choice>
             <compositeSetting label="Port3 Config" value="140"/>
             <compositeSetting label="Port3 Value2" value="0"/>
@@ -968,7 +976,7 @@
                 <compositeSetting label="Port3 Value2" value="1"/>
             </compositeChoice>
 
-            <compositeChoice choice="Port Not In Use">
+            <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
                 <choice>Port Not In Use</choice>
                 <choice xml:lang="de">Ausgang nicht genutzt</choice>
                 <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -1029,7 +1037,7 @@
             <compositeSetting label="Port4 Config" value="15"/>
             <compositeSetting label="Port4 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Toggle Indirect">
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
             <choice>Input: Toggle switch - Indirect</choice>
             <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
             <compositeSetting label="Port4 Config" value="7"/>
@@ -1046,17 +1054,17 @@
             <compositeSetting label="Port4 Config" value="31"/>
             <compositeSetting label="Port4 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" include="154">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port4 Config" value="27"/>
             <compositeSetting label="Port4 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Hi" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
             <choice>Input: Occupancy - active High</choice>
             <compositeSetting label="Port4 Config" value="95"/>
             <compositeSetting label="Port4 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High Delayed" include="154">
+          <compositeChoice choice="Input Occu High Delayed" exclude="135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active High Delayed</choice>
             <compositeSetting label="Port4 Config" value="91"/>
             <compositeSetting label="Port4 Value2" value="0"/>
@@ -1067,7 +1075,7 @@
             <compositeSetting label="Port4 Config" value="111"/>
             <compositeSetting label="Port4 Value2" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push High Indirect">
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port4 Config" value="103"/>
             <compositeSetting label="Port4 Value2" value="0"/>
@@ -1077,23 +1085,23 @@
             <compositeSetting label="Port4 Config" value="47"/>
             <compositeSetting label="Port4 Value2" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Push Low Indirect">
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port4 Config" value="39"/>
             <compositeSetting label="Port4 Value2" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Switch Feedback Normal" include="144,145,146"> <!-- v1.44 and higher -->
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
             <choice>Input: Feedback - Normal</choice>
             <compositeSetting label="Port4 Config" value="23"/>
             <compositeSetting label="Port4 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact1" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 1</choice>
             <compositeSetting label="Port4 Config" value="55"/>
             <compositeSetting label="Port4 Value2" value="7"/>
           </compositeChoice>
-          <compositeChoice choice="Input Switch Feedback Contact2" include="145,146"> <!-- v1.45 and higher -->
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 2</choice>
             <compositeSetting label="Port4 Config" value="55"/>
             <compositeSetting label="Port4 Value2" value="6"/>
@@ -1237,7 +1245,7 @@
                 <compositeSetting label="Port4 Value2" value="1"/>
             </compositeChoice>
 
-            <compositeChoice choice="Port Not In Use">
+            <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
                 <choice>Port Not In Use</choice>
                 <choice xml:lang="de">Ausgang nicht genutzt</choice>
                 <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -1988,9 +1996,10 @@
         </label>
         <display item="Decoder Version"/>
 
-        <display item="Blink Rate"/>
-        <display item="Blink Rate" format="hslider"/>
-
+        <row>
+            <display item="Blink Rate"/>
+            <display item="Blink Rate" format="hslider" label=""/>
+        </row>
         <display item="Action Mode"/>
 
         <display item="Alternate Mode" format="checkbox"/>
@@ -2314,21 +2323,21 @@
 
           <label>
             <text>&lt;html&gt;
-              Original&lt;br/&gt;
+              v1.43&lt;br/&gt;
               Original&lt;br/&gt;
               v1.44&lt;br/&gt;
               v1.54&lt;br/&gt;
               v1.41&lt;br/&gt;
-              v1.41&lt;br/&gt;
+              v1.43&lt;br/&gt;
               v1.41&lt;br/&gt;
               v1.45&lt;br/&gt;
               v1.45&lt;br/&gt;
               v1.54&lt;br/&gt;
               v1.41&lt;br/&gt;
-              v1.41&lt;br/&gt;
+              v1.43&lt;br/&gt;
               v1.41&lt;br/&gt;
               &lt;br/&gt;
-              v1.54?&lt;br/&gt;
+              v1.01&lt;br/&gt;
               Original&lt;br/&gt;
               Original&lt;br/&gt;
               v1.39&lt;br/&gt;
