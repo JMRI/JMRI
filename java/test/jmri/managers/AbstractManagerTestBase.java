@@ -184,13 +184,10 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
             // Register the bean once. This should be OK.
             l.register(e1);
 
-            String expectedMessage = "the named bean is registered twice: " + e1.getSystemName();
-
-            // Register bean twice. This should fail with a warning.
+            // Register bean twice. This gives only a debug message.
             l.register(e1);
-            JUnitAppender.assertWarnMessage(expectedMessage);
 
-            expectedMessage = "systemName is already registered: " + e1.getSystemName();
+            String expectedMessage = "systemName is already registered: " + e1.getSystemName();
             boolean hasException = false;
             try {
                 // Register different bean with existing systemName.
