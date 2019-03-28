@@ -38,8 +38,8 @@
                         if (h) h.call(this, m);
                     });
                 ws._send = ws.send;
-                ws.send = function(type, data) {
-                    var m = {type: type};
+                ws.send = function(type, data, method = 'get') {
+                    var m = {type: type, method: method};
                     m = $.extend(true, m, $.extend(true, {}, settings.options, m));
                     if (data) m['data'] = data;
                     return this._send(JSON.stringify(m));

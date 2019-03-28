@@ -1,6 +1,10 @@
 /**
  * JMRI JSON protocol abstract client.
  *
+ * NOTE this library makes assumptions about JSON arrays returned by JMRI that
+ * __do not__ match documented JMRI behavior. It is recommended that no methods
+ * expecting a data array of a single type be relied upon.
+ * 
  * This library depends on jQuery 1.9 or newer.
  *
  * To be useful, you need to override one or more of the following functions:
@@ -207,7 +211,7 @@
             };
             jmri.setLight = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("light", {name: name, state: state});
+                    jmri.socket.send("light", { name: name, state: state }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "light/" + name,
@@ -232,7 +236,7 @@
             };
             jmri.setMemory = function(name, value) {
                 if (jmri.socket) {
-                    jmri.socket.send("memory", {name: name, value: value});
+                    jmri.socket.send("memory", { name: name, value: value }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "memory/" + name,
@@ -257,7 +261,7 @@
             };
             jmri.setReporter = function(name, value) {
                 if (jmri.socket) {
-                    jmri.socket.send("reporter", {name: name, value: value});
+                    jmri.socket.send("reporter", { name: name, value: value }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "reporter/" + name,
@@ -282,7 +286,7 @@
             };
             jmri.setBlock = function(name, value) {
                 if (jmri.socket) {
-                    jmri.socket.send("block", {name: name, value: value});
+                    jmri.socket.send("block", { name: name, value: value }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "block/" + name,
@@ -307,7 +311,7 @@
             };
             jmri.setLayoutBlock = function(name, value) {
                 if (jmri.socket) {
-                    jmri.socket.send("layoutBlock", {name: name, value: value});
+                    jmri.socket.send("layoutBlock", { name: name, value: value }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "layoutBlock/" + name,
@@ -322,8 +326,10 @@
                 }
             };
             /**
-             * Request a json list of the specified list type.
-             *   will also set up listeners for changes to this type
+             * Request a json list of the specified list type. Individual
+             * listeners for each instance of the type will need to be set
+             * up by the consuming client by requesting the state of each
+             * item in the returned list individually.
              * @param {String} type of list (e.g. "sensors")
              */
             jmri.getList = function(name) {
@@ -378,37 +384,37 @@
             jmri.setObject = function(type, name, state) {
                 switch (type) {
                     case "light":
-                        jmri.setLight(name, state);
+                        jmri.setLight(name, state, 'post');
                         break;
                     case "memory":
-                        jmri.setMemory(name, state);
+                        jmri.setMemory(name, state, 'post');
                         break;
                     case "reporter":
-                        jmri.setReporter(name, report);
+                        jmri.setReporter(name, report, 'post');
                         break;
                     case "block":
-                        jmri.setBlock(name, state);
+                        jmri.setBlock(name, state, 'post');
                         break;
                     case "layoutBlock":
-                        jmri.setLayoutBlock(name, state);
+                        jmri.setLayoutBlock(name, state, 'post');
                         break;
                     case "rosterEntry":
-                        jmri.setRosterEntry(name, state);
+                        jmri.setRosterEntry(name, state, 'post');
                         break;
                     case "route":
-                        jmri.setRoute(name, state);
+                        jmri.setRoute(name, state, 'post');
                         break;
                     case "sensor":
-                        jmri.setSensor(name, state);
+                        jmri.setSensor(name, state, 'post');
                         break;
                     case "signalHead":
-                        jmri.setSignalHead(name, state);
+                        jmri.setSignalHead(name, state, 'post');
                         break;
                     case "signalMast":
-                        jmri.setSignalMast(name, state);
+                        jmri.setSignalMast(name, state, 'post');
                         break;
                     case "turnout":
-                        jmri.setTurnout(name, state);
+                        jmri.setTurnout(name, state, 'post');
                         break;
                     default:
                         if (window.console) {
@@ -427,7 +433,7 @@
             };
             jmri.setPower = function(state) {
                 if (jmri.socket) {
-                    jmri.socket.send("power", {state: state});
+                    jmri.socket.send("power", { state: state }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "power",
@@ -469,7 +475,7 @@
             };
             jmri.setRoute = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("route", {name: name, state: state});
+                    jmri.socket.send("route", { name: name, state: state }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "route/" + name,
@@ -494,7 +500,7 @@
             };
             jmri.setSensor = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("sensor", {name: name, state: state});
+                    jmri.socket.send("sensor", { name: name, state: state }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "sensor/" + name,
@@ -519,7 +525,7 @@
             };
             jmri.setSignalHead = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("signalHead", {name: name, state: state});
+                    jmri.socket.send("signalHead", { name: name, state: state }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "signalHead/" + name,
@@ -544,7 +550,7 @@
             };
             jmri.setSignalMast = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("signalMast", {name: name, state: state});
+                    jmri.socket.send("signalMast", { name: name, state: state }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "signalMast/" + name,
@@ -586,7 +592,7 @@
             jmri.setThrottle = function(throttle, data) {
                 if (jmri.socket) {
                     data.throttle = throttle;
-                    jmri.socket.send("throttle", data);
+                    jmri.socket.send("throttle", data, 'post');
                     return true;
                 } else {
                     return false;
@@ -621,7 +627,7 @@
             };
             jmri.setTurnout = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("turnout", {name: name, state: state});
+                    jmri.socket.send("turnout", {name: name, state: state}, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "turnout/" + name,
@@ -901,6 +907,8 @@
                         //determine message type and call appropriate event handler
                         var m = JSON.parse(e.originalEvent.data);
                        
+                        //this makes an assumption that an array sent by JMRI contains a single
+                        //type is not expected to be a valid assumption
                         //if the message is an array, move array to data and add list type
                         if ($.isArray(m)) { 
                         	if (m.length == 0) {  //cannot determine type of empty array 
