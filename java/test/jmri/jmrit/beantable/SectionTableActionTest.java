@@ -1,5 +1,8 @@
 package jmri.jmrit.beantable;
 
+import jmri.Block;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
@@ -43,15 +46,8 @@ public class SectionTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Override
-    @Ignore("needs further setup")
-    @ToDo("must setup blocks before you can set up sections")
-    public void testAddButton() {
-    }
-
-    @Test
-    @Override
-    @Ignore("needs further setup")
-    @ToDo("must setup blocks before you can set up sections")
+    @Ignore("Section create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
     public void testAddThroughDialog() {
     }
 
@@ -62,7 +58,10 @@ public class SectionTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         helpTarget = "package.jmri.jmrit.beantable.SectionTable"; 
+        InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
         a = new SectionTableAction();
+        InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12");
+
     }
 
     @Override

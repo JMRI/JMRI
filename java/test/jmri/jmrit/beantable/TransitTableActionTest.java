@@ -1,5 +1,10 @@
 package jmri.jmrit.beantable;
 
+import jmri.Block;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.Section;
+import jmri.SectionManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
@@ -43,15 +48,8 @@ public class TransitTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Override
-    @Ignore("needs further setup")
-    @ToDo("must setup blocks before you can set up sections")
-    public void testAddButton() {
-    }
-
-    @Test
-    @Override
-    @Ignore("needs further setup")
-    @ToDo("must setup blocks before you can set up sections")
+    @Ignore("Transit create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
     public void testAddThroughDialog() {
     }
 
@@ -60,9 +58,15 @@ public class TransitTableActionTest extends AbstractTableActionBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         helpTarget = "package.jmri.jmrit.beantable.TransitTable"; 
+        InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
+        JUnitUtil.initSectionManager();
         a = new TransitTableAction();
+        Block b1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB12");
+        Section  s = InstanceManager.getDefault(SectionManager.class).createNewSection("TS1");
+        s.addBlock(b1);
+        jmri.util.JUnitAppender.assertWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
     }
 
     @Override
