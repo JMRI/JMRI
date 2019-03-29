@@ -256,7 +256,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testLowerUpper() {
         Turnout t = l.provideTurnout("mt+n1e77;-n1e45");
         Assert.assertNotNull("exists",t);
-        Assert.assertTrue("Retrievable lowercase",t == l.getTurnout(t.getSystemName().toUpperCase()));
+        Assert.assertTrue("Retrievable lowercase",t == l.getTurnout(t.getSystemName())); // case not changed
     }
 
     @Test
