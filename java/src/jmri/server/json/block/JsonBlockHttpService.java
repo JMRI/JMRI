@@ -40,6 +40,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         if (block != null) {
             switch (block.getState()) {
                 case Block.UNDETECTED:
+                case Block.UNKNOWN:
                     data.put(JSON.STATE, JSON.UNKNOWN);
                     break;
                 default:
