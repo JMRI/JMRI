@@ -48,8 +48,8 @@ public class TransitTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Override
-    @Ignore("needs further setup")
-    @ToDo("must setup blocks before you can set up sections")
+    @Ignore("Transit create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
     public void testAddThroughDialog() {
     }
 
