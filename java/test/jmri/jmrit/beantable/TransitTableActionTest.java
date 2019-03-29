@@ -48,6 +48,13 @@ public class TransitTableActionTest extends AbstractTableActionBase {
     public void testAddButton() {
     }
 
+    @Test
+    @Override
+    @Ignore("needs further setup")
+    @ToDo("must setup blocks before you can set up sections")
+    public void testAddThroughDialog() {
+    }
+
     // The minimal setup for log4J
     @Override
     @Before

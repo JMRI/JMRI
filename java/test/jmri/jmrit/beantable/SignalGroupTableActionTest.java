@@ -8,11 +8,8 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -99,6 +96,12 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Override
     public String getAddFrameName(){
         return "Add Signal Group";
+    }
+
+    @Test
+    @Ignore("Signal Group create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
     }
 
     // The minimal setup for log4J
