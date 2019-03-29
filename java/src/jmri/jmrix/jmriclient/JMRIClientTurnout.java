@@ -30,7 +30,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
      * JMRIClient turnouts use the turnout number on the remote host.
      */
     public JMRIClientTurnout(int number, JMRIClientSystemConnectionMemo memo) {
-        super(memo.getSystemPrefix() + "t" + number);
+        super(memo.getSystemPrefix() + "T" + number);
         _number = number;
         tc = memo.getJMRIClientTrafficController();
         prefix = memo.getSystemPrefix();
