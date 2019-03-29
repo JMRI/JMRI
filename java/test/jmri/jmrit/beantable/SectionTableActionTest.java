@@ -60,7 +60,7 @@ public class SectionTableActionTest extends AbstractTableActionBase {
         helpTarget = "package.jmri.jmrit.beantable.SectionTable"; 
         InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
         a = new SectionTableAction();
-        Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12");
+        InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12");
 
     }
 
