@@ -32,8 +32,8 @@
       <h2>Limitations</h2>
       
       Older code (i.e. JMRI 4.12 and later) only 
-      supports Turnouts, and requires that the name be of the form
-      MTtrack/turnout/ followed by a number, i.e. MTtrack/turnout/22
+      supports Turnouts. 
+      We hope to add Sensor, Light and Reporter support soon.
       
       <a name="connecting" id="connecting"></a>
 
@@ -54,19 +54,23 @@
         By default, the MQTT topic for a Turnout is constructed by prepending "/trains/track/turnout/"
         to the suffix.  For example, a JMRI Turnout with 
         system name MTabcd will publish and subscribe to the topic /trains/track/turnout/abcd.
-        <p>
-        You can change the prepended string using
-        a script at startup time.  See the
-        <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
-        sample script for an example.
         There are two parts to that: A base topic common
         to everything JMRI does on that connection, and 
         a type-specific topic specific to each type.
         By default the base topic is "/trains/" and can't (yet) be changed;
         the turnout-specific part is "track/turnout/",
         leading to a complete prefix of "/trains/track/turnout/".
+        When e.g. Sensors become available, they might have
+        e.g. a type-specific part of "track/sensor/".
         <p>
-        Note that any changes must be made at startup time
+        You can change the type-specific part of the prepended string using
+        a script at startup time.  See the
+        <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
+        sample script for an example.  Eventually the base topic
+        will also be configurable via the JMRI preferences
+        when you set up the MQTT connection.
+        <p>
+        Note that any changes should be made at startup time
         before creating any Turnout objects, i.e. 
         the script must be run as the 
         first startup action before any panel files are loaded.
@@ -134,8 +138,13 @@
     mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
 </pre>
 
+These commands can be run on the same machine as JMRI, or on a separate machine.
+<p>
+There are also MQTT tools available for 
+<a href="https://www.google.com/search?q=apple+app+store+mqtt&oq=apple+app+store+mqtt">iOS devices</a> and 
+<a href="https://play.google.com/store/search?q=mqtt&c=apps&authuser">Android devices</a>
+that can be useful for monitoring, testing and operating your layout.
 
-      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

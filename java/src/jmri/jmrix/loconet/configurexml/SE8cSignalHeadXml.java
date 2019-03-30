@@ -67,6 +67,10 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
         loadCommon(h, shared);
 
+        // replace if already present
+        SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(h.getSystemName());
+        if (sh != null) InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
+        
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
