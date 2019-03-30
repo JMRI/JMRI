@@ -241,7 +241,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         // now add a new type
         f.addTextBox.setText("ABC-TEST_TEST_TEST");
-        // should cause two dialog windows to appear
+        // the following should cause two dialog windows to appear
         Thread add = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -251,9 +251,11 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         add.setName("Add type attribute"); // NOI18N
         add.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return add.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        // dboudreau periodically fails on AppVeyor 3/27/2019
+        // try without the wait
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return add.getState().equals(Thread.State.WAITING);
+//        }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ModifyLocations"), Bundle.getMessage("ButtonNo"));
         JemmyUtil.pressDialogButton(Bundle.getMessage("ModifyTrains"), Bundle.getMessage("ButtonNo"));

@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import jmri.IdTag;
+import jmri.IdTagManager;
 import org.junit.*;
 
 /**
@@ -129,7 +130,7 @@ public class DefaultIdTagManagerTest {
 
     // Override init method so as not to load file
     // nor register shutdown task during tests.
-    private DefaultIdTagManager getManager() {
+    protected DefaultIdTagManager getManager() {
         return new DefaultIdTagManager() {
             @Override
             public void init() {

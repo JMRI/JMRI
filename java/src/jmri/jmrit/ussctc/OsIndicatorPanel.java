@@ -92,7 +92,7 @@ public class OsIndicatorPanel extends BasePanel {
         // validate
         ok &= validateTurnout(outputName.getText());
         ok &= validateSensor(sensorName.getText());
-        if (!lockName.getText().equals("")) {
+        if (!lockName.getText().isEmpty()) {
             ok &= validateMemory(lockName.getText());
         }
 

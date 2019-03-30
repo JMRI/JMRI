@@ -28,7 +28,7 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -317,7 +317,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             if (verString.equals("")) {
                 return comment;
             } else {
-                return PaneProgPane.addTextHTMLaware(comment, " (CV7=" + verString + ")");
+                return CvUtil.concatTextHtmlAware(comment, " (CV7=" + verString + ")");
             }
         }
     }

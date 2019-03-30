@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-13-3.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2016</year>
         <holder>JMRI</holder>
@@ -67,314 +67,76 @@
             <authorinitials>MM</authorinitials>
             <revremark>Add new SD40 and SD40T-2 and SD50 models and make use of defaultItem</revremark>
         </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2019-03-06</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Add two new SD38-2 models</revremark>
+        </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2019-03-14</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Move outputs to family level</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
-        <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" >
+        <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70">
             <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="825" comment="Model E5000.001BR">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-200 SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="774" comment="Model E9900.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
+            <model model="ECO-RTR SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="774" comment="Model E0101.001B">
+            </model>
             <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="775" comment="Model E9900.002B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
             <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="780" comment="Model E0101.004B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="851" comment="Model E0101.002B">
             </model>
             <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E????.???">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="773" comment="Model E9901.001B">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="846" comment="Model E???">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-                <size length="35" width="18" height="6" units="mm"/>
+            <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="846" comment="Model E???">
             </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Airhorn| ">
+                <label xml:lang="it">Tromba| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamic|Brakes">
+                <label xml:lang="it">Freni|Dinamici</label>
+            </output>
+            <output name="8" label="Short|Horn">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -416,7 +178,7 @@
             </variable>
             <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
                 <defaultItem default="3" include="863,864"/>
-                <defaultItem default="5" include="780,789,846"/>
+                <defaultItem default="5" include="780,789,846,851"/>
                 <defaultItem default="9" include="825"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX3 Effect Selection</label>
@@ -526,6 +288,7 @@
             <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="12" tooltip="Selects which airhorn to use">
                 <defaultItem default="2" include="825"/>
                 <defaultItem default="6" include="863,864"/>
+                <defaultItem default="7" include="851"/>
                 <defaultItem default="10" include="846"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumChoiceDieselAirHornAthearn.xml"/>
@@ -546,9 +309,9 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumDieselBellAthearn.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0" include="773,774,775,780,781,789,863,864">
-                <defaultItem default="0" include="774,775,780"/>
-                <defaultItem default="2" include="773,781,789,863,864"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0" include="774,775,850,851,780,773,789,781,863,864">
+                <defaultItem default="0" include="774,775,850,851,780"/>
+                <defaultItem default="2" include="773,789,781,863,864"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumPrimeMover1Athearn.xml"/>
                 <label>Prime Mover Select</label>
                 <tooltip>Select one of prime mover sound effects</tooltip>
@@ -600,7 +363,7 @@
                 <label>Air Compressor Volume</label>
             </variable>
             <variable CV="133" mask="VVVVVVVV" item="Sound Setting 6" default="100" tooltip="Sets the volume of the dynamic brakes">
-                <defaultItem default="0" include="774"/>
+                <defaultItem default="0" include="774,850"/>
                 <decVal/>
                 <label>Dynamic Brake Volume</label>
             </variable>
@@ -652,6 +415,70 @@
                 <decVal/>
                 <label>4K Hz Cut/Boost</label>
             </variable>
+            <variable item="Analog Mode Function Status - F21" CV="242" mask="XXXXXXXV" default="0" minFn="21">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F21</label>
+                <label xml:lang="fr">État de la fonction en analogique - F21</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F21</label>
+                <label>Analog Mode Function Status - F21</label>
+                <tooltip>Check to enable function F21 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F22" CV="242" mask="XXXXXXVX" default="0" minFn="22">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F22</label>
+                <label xml:lang="fr">État de la fonction en analogique - F22</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F22</label>
+                <label>Analog Mode Function Status - F22</label>
+                <tooltip>Check to enable function F22 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F23" CV="242" mask="XXXXXVXX" default="0" minFn="23">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F23</label>
+                <label xml:lang="fr">État de la fonction en analogique - F23</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F23</label>
+                <label>Analog Mode Function Status - F23</label>
+                <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F24" CV="242" mask="XXXXVXXX" default="0" minFn="24">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F24</label>
+                <label xml:lang="fr">État de la fonction en analogique - F24</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F24</label>
+                <label>Analog Mode Function Status - F24</label>
+                <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F25" CV="242" mask="XXXVXXXX" default="0" minFn="25">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F25</label>
+                <label xml:lang="fr">État de la fonction en analogique - F25</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F25</label>
+                <label>Analog Mode Function Status - F25</label>
+                <tooltip>Check to enable function F25 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F26" CV="242" mask="XXVXXXXX" default="0" minFn="26">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F26</label>
+                <label xml:lang="fr">État de la fonction en analogique - F26</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F26</label>
+                <label>Analog Mode Function Status - F26</label>
+                <tooltip>Check to enable function F26 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F27" CV="242" mask="XVXXXXXX" default="0" minFn="27">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F27</label>
+                <label xml:lang="fr">État de la fonction en analogique - F27</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F27</label>
+                <label>Analog Mode Function Status - F27</label>
+                <tooltip>Check to enable function F27 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F28" CV="242" mask="VXXXXXXX" default="0" minFn="28">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F28</label>
+                <label xml:lang="fr">État de la fonction en analogique - F28</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F28</label>
+                <label>Analog Mode Function Status - F28</label>
+                <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
+            </variable>
             <variable item="Analog Mode Automatic Effects - FWDD" CV="243" mask="XXXXXXXV" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction in analog power mode</tooltip>
@@ -667,6 +494,62 @@
             <variable item="Analog Mode Automatic Effects - REVS" CV="243" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction in analog power mode</tooltip>
+            </variable>
+            <variable CV="246" mask="XXXXXXXV" item="Consist Address Active For F21" default="0" minFn="21">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F21</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F21</label>
+                <label xml:lang="de">Verbundadresse aktiv für F21</label>
+                <label>Consist Address Active For F21</label>
+            </variable>
+            <variable CV="246" mask="XXXXXXVX" item="Consist Address Active For F22" default="0" minFn="22">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F22</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F22</label>
+                <label xml:lang="de">Verbundadresse aktiv für F22</label>
+                <label>Consist Address Active For F22</label>
+            </variable>
+            <variable CV="246" mask="XXXXXVXX" item="Consist Address Active For F23" default="0" minFn="23">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F23</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F23</label>
+                <label xml:lang="de">Verbundadresse aktiv für F23</label>
+                <label>Consist Address Active For F23</label>
+            </variable>
+            <variable CV="246" mask="XXXXVXXX" item="Consist Address Active For F24" default="0" minFn="24">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F24</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F24</label>
+                <label xml:lang="de">Verbundadresse aktiv für F24</label>
+                <label>Consist Address Active For F24</label>
+            </variable>
+            <variable CV="246" mask="XXXVXXXX" item="Consist Address Active For F25" default="0" minFn="25">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F25</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F25</label>
+                <label xml:lang="de">Verbundadresse aktiv für F25</label>
+                <label>Consist Address Active For F25</label>
+            </variable>
+            <variable CV="246" mask="XXVXXXXX" item="Consist Address Active For F26" default="0" minFn="26">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F26</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F26</label>
+                <label xml:lang="de">Verbundadresse aktiv für F26</label>
+                <label>Consist Address Active For F26</label>
+            </variable>
+            <variable CV="246" mask="XVXXXXXX" item="Consist Address Active For F27" default="0" minFn="27">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F27</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F27</label>
+                <label xml:lang="de">Verbundadresse aktiv für F27</label>
+                <label>Consist Address Active For F27</label>
+            </variable>
+            <variable CV="246" mask="VXXXXXXX" item="Consist Address Active For F28" default="0" minFn="28">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F28</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F28</label>
+                <label xml:lang="de">Verbundadresse aktiv für F28</label>
+                <label>Consist Address Active For F28</label>
             </variable>
             <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="0">
                 <enumVal>

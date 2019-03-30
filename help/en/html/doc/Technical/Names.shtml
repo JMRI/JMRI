@@ -368,8 +368,7 @@
         implemented as three different outputs, LT1, LT2 and LT3, the
         signal head object might be called IH3. 
         
-     <a name="special" id=
-                "special"></a></p>
+     <a name="special" id="special"></a></p>
       <p>Each different hardware system
       can specify the "suffix string" that follows the system and type
       letters. Generally, these are small numbers, but their exact
@@ -626,6 +625,19 @@
           <td>124/224/324/424</td>
         </tr>
         <tr>
+          <td>Internal</td>
+          <td>i/o</td>
+          <td>some string</td>
+          <td>whatever meaning the user wants to assign;<br>see 
+            <a href="#convention">below</a>
+            for special cases</td>
+          <td>ITsome string</td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
           <td>LocoNet</td>
           <td>i</td>
           <td>34</td>
@@ -851,7 +863,9 @@
       <!-- this table is maintained on the help/en/html/doc/Technical/Names.shtml based on information from the
       Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->
     
-      <h2>Naming Conventions For Automated Use</h2>Some
+      <a id="convention" name="convention"></a>
+      <h2>Naming Conventions For Automated Use</h2>
+      Some
       higher-level constructs create their own items. For example,
       a "Sensor Group" is really just a collection of Routes that
       implements the sensor group logic; there is no specific
@@ -946,17 +960,33 @@ SENSOR GROUP:my group:LS2
 <pre style="font-family: monospace;">
           String userName = NamedBean.normalizeUserName(input);
 </pre><br>
+          Please use that, and only that, when creating a user name
+          from human input or other source. Do not explicitly
+          call <code>String#toUpper()</code>, <code>String#strip()</code>
+          or any other formatting operation; having those spread across the code is unmaintainable.
+          
+        <p>
           Because system names may vary from type to type 
-          and manager to manager, this is manager-specific for them:
-          <br>
-<pre style="font-family: monospace;">
-          String systemName = manager.normalizeSystemName(input);
-</pre><br>
+          and manager to manager, there are two manager-specific 
+          methods of interest: <code>manager.normalizeSystemName(input)</code>
+          and <code>manager.makeSystemName(input)</code>.
+          Since most NamedBeans are created by managers, and 
+          managers know about the complete set of NamedBeans, that's the right place to
+          put them.  But it means that an individual NameBean, i.e. 
+          <code>jmri.jmrix.internal.InternalTurnout</code>, constructor can't
+          access it.  If one of those constructors discovers it can't parse a 
+          provided system name argument because it's invalid, it should throw
+          a <code>NamedBean.BadSystemNameException</code>. The constructor should
+          not in any way transform the system name that it was given. It has to use
+          it as given or, if it can't, throw the exception.
+        <p>
           For more information, see the Javadoc for
-            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>, 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#normalizeSystemName-java.lang.String-">normalizeSystemName</a>,
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#makeSystemName-java.lang.String-">makeSystemName</a>,
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadUserNameException.html">BadUserNameException</a>,
             and
-            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#normalizeSystemName-java.lang.String-">normalizeSystemName</a>
-      
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadSystemNameException.html">BadSystemNameException</a>.         
         <p>
         In general, it's better to use an input method that already handles all this.  Two are available
         now:
@@ -1016,8 +1046,8 @@ SENSOR GROUP:my group:LS2
         in selection boxes and lists, etc.  We have two <code>java.util.Comparator&lt;&gt;</code>
         implementations to handle this:
         <ul>
-            <li><code>SystemNameComparator</code> - a comparison on Strings
             <li><code>NamedBeanComparator</code> - a comparison on the NamedBeans themselves
+            <li><code>SystemNameComparator</code> - a comparison on Strings (deprecated)
         </ul>
         Please use one of these whenever you need to compare or sort by system names to keep the complexity in one place.
         <p>
@@ -1025,17 +1055,17 @@ SENSOR GROUP:my group:LS2
         If there are objects of multiple types, the type letter is put in alphabetical order next.
         Finally, the system-specific suffix is sorted.
         <p>
-        Because it works with String values, <code>SystemNameComparator</code> can only
-        do a default ordering of the system-specific suffix; it can't do anything that
+        <code>NamedBeanComparator</code> is the standard method going forward as it can 
+        do type-specific sorting of the suffix part of the names: 
+        It knows what the C/MRI suffixes in 
+        "CT2003" and "C2B2" mean and can take that into account.
+        <p>
+        Because it works with String values, <code>SystemNameComparator</code> could only
+        do a default ordering of the system-specific suffix; it couldn't do anything that
         uses any information about the system-specific meaning of that string. It therefore
         uses an alphanumeric-by-chunks sort.
         Because it's comparing on the actual NamedBean objects, <code>NamedBeanComparator</code>
-        can do more specific comparisons:  It knows what the C/MRI suffixes in 
-        "CT2003" and "C2B2" mean and can take that into account.
-        <p>
-        Therefore, if you can, do the sort/comparison with <code>NamedBeanComparator</code> and
-        then convert to Strings, rather than converting NamedBeans to Strings and using 
-        <code>SystemNameComparator</code>.
+        can do more specific comparisons.
         <p>
         Also, if you've created a system that has complex information in the suffix,
         please have your <code>NamedBean</code> subclasses implement a system-specific

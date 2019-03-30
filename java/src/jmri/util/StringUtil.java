@@ -5,7 +5,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collection;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -479,7 +478,8 @@ public class StringUtil {
 
     /**
      * Return the first int value within a string
-     * eg X X123XX456X will return 123
+     * eg :X X123XX456X: will return 123
+     * eg :X123 456: will return 123
      *
      * @param str contents to process
      * @return first value in int form , -1 if not found
@@ -489,17 +489,21 @@ public class StringUtil {
         StringBuilder sb = new StringBuilder();
         for (int i =0; i<str.length(); i ++) {
             char c = str.charAt(i);
-            if(c != ' '){
+            if (c != ' ' ){
                 if (Character.isDigit(c)) {
                     sb.append(c);
                 } else {
-                    if (!sb.toString().equals("")) {
+                    if ( sb.length() > 0 ) {
                         break;
                     }
                 }
+            } else {
+                if ( sb.length() > 0 ) {
+                    break;
+                }
             }
         }
-        if (!sb.toString().equals("")) {
+        if ( sb.length() > 0 ) {
             return (Integer.parseInt(sb.toString()));  
         }
         return -1;
@@ -507,7 +511,8 @@ public class StringUtil {
 
     /**
      * Return the last int value within a string
-     * eg XX123XX456X will return 456
+     * eg :XX123XX456X: will return 456
+     * eg :X123 456: will return 456
      *
      * @param str contents to process
      * @return last value in int form , -1 if not found
@@ -521,13 +526,17 @@ public class StringUtil {
                 if (Character.isDigit(c)) {
                     sb.insert(0, c);
                 } else {
-                    if (!sb.toString().equals("")) {
+                    if ( sb.length() > 0 ) {
                         break;
                     }
                 }
+            } else {
+                if ( sb.length() > 0 ) {
+                    break;
+                }
             }
         }
-        if (!sb.toString().equals("")) {
+        if ( sb.length() > 0 ) {
             return (Integer.parseInt(sb.toString()));  
         }
         return -1;

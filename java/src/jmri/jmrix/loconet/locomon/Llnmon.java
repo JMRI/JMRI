@@ -147,7 +147,7 @@ public class Llnmon {
      * Create a LocoNet Message Formatter. The managers allow the user names of
      * managed devices to be included in messages with the system names.
      * <p>
-     * @param prefix - system connection prefix (i.e. "L")
+     * @param prefix  system connection prefix (i.e. "L")
      * <p>
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
@@ -360,8 +360,8 @@ public class Llnmon {
     /**
      * Return a string which is formatted by a bundle Resource Name.
      *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
+     * @param hour    fast-clock hour
+     * @param minute  fast-clock minute
      * @return a formatted string containing the time
      */
     private String fcTimeToString(int hour, int minute) {

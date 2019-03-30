@@ -20,10 +20,20 @@ import jmri.web.server.WebServerPreferences;
 public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService> {
 
     private PropertyChangeListener rrNameListener;
-    private WebServerPreferences webServerPreferences = InstanceManager.getDefault(WebServerPreferences.class);
 
     public JsonUtilSocketService(JsonConnection connection) {
         super(connection, new JsonUtilHttpService(connection.getObjectMapper()));
+    }
+
+    /**
+     * Package protected method for unit testing that allows a test HTTP service
+     * to be used.
+     * 
+     * @param connection the connection to use
+     * @param service    the supporting HTTP service
+     */
+    JsonUtilSocketService(JsonConnection connection, JsonUtilHttpService service) {
+        super(connection, service);
     }
 
     @Override
@@ -49,10 +59,12 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                             this.connection.sendMessage(ex.getJsonMessage());
                         }
                     } catch (IOException ex) {
-                        webServerPreferences.removePropertyChangeListener(this.rrNameListener);
+                        InstanceManager.getDefault(WebServerPreferences.class).removePropertyChangeListener(this.rrNameListener);
                     }
                 };
-                webServerPreferences.addPropertyChangeListener(this.rrNameListener);
+                InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent((preferences) -> {
+                    preferences.addPropertyChangeListener(this.rrNameListener);
+                });
                 break;
             default:
                 this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -67,7 +79,9 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
 
     @Override
     public void onClose() {
-        webServerPreferences.removePropertyChangeListener(this.rrNameListener);
+        InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent((preferences) -> {
+            preferences.removePropertyChangeListener(this.rrNameListener);
+        });
     }
 
 }

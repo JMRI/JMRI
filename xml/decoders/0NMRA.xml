@@ -12,16 +12,52 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="7" lastUpdated="20180102"/>
-  <version author="Bob Jacobsen" version="6" lastUpdated="20100312"/>
-  <version author="Bob Jacobsen" version="5" lastUpdated="20031205"/>
-  <!-- version 3 - add consist direction - jake -->
-  <!-- version 4 - Minor formatting changes - Jack Shall -->
-  <!-- version 6 - Start of I8N -->
-  <!-- version 7 - French trasnlation -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2000</year>
+    <year>2010</year>
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname><firstname>Jack</firstname><surname>Shall</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Alain</firstname><surname>Le Marchand</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>3</revnumber><date>2002?</date><authorinitials>BJ</authorinitials>
+      <revremark>Add consist direction</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber><date>2003?</date><authorinitials>JS</authorinitials>
+      <revremark>Minor formatting changes</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber><date>2003-12-05</date><authorinitials>BJ</authorinitials>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber><date>2010-03-12</date><authorinitials>BJ</authorinitials>
+      <revremark>Start of I8N </revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber><date>2018-01-02</date><authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber><date>2019-03-10</date><authorinitials>BJ</authorinitials>
+      <revremark>se included output definition</revremark>
+    </revision>
+  </revhistory>
   <decoder>
     <family name="NMRA standard CV definitions" mfg="NMRA">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
       <model model="NMRA standard CV definitions"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

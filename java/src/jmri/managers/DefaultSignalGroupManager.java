@@ -134,7 +134,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Nonnull
     @Override
     @Deprecated //  4.15.2 use newSignaGroupWithUserName
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public SignalGroup newSignalGroup(@Nonnull String userName) {
         jmri.util.Log4JUtil.deprecationWarning(log, "newSignalGroup");
         return newSignaGroupWithUserName(userName);

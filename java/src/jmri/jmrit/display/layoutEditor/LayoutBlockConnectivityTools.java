@@ -132,16 +132,16 @@ public class LayoutBlockConnectivityTools {
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be determined, eg east to west, south to north etc.
      * <p>
-     * @param sourceBean   - The source bean (SignalHead, SignalMast or Sensor)
+     * @param sourceBean    The source bean (SignalHead, SignalMast or Sensor)
      *                     assigned to a block boundary that we are starting
      *                     from.
-     * @param destBean     - The destination bean.
-     * @param validateOnly - When set false, the system will not use layout
+     * @param destBean      The destination bean.
+     * @param validateOnly  When set false, the system will not use layout
      *                     blocks that are set as either reserved(useExtraColor
      *                     set) or occupied, if it finds any then it will try to
      *                     find an alternative path When set false, no block
      *                     state checking is performed.
-     * @param pathMethod   - Performs a check to see if any signal heads/masts
+     * @param pathMethod    Performs a check to see if any signal heads/masts
      *                     are in the path, if there are then the system will
      *                     try to find an alternative path. If set to NONE, then
      *                     no checking is performed.
@@ -415,20 +415,20 @@ public class LayoutBlockConnectivityTools {
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be determined, eg east to west, south to north etc.
      * <p>
-     * @param sourceLayoutBlock      - The layout block that we are starting
+     * @param sourceLayoutBlock       The layout block that we are starting
      *                               from, can also be considered as the block
      *                               facing a signal.
-     * @param destinationLayoutBlock - The layout block that we want to get to
-     * @param protectingLayoutBlock  - The next layout block connected to the
+     * @param destinationLayoutBlock  The layout block that we want to get to
+     * @param protectingLayoutBlock   The next layout block connected to the
      *                               source block, this can also be considered
      *                               as the block being protected by a signal
-     * @param validateOnly           - When set false, the system will not use
+     * @param validateOnly            When set false, the system will not use
      *                               layout blocks that are set as either
      *                               reserved(useExtraColor set) or occupied, if
      *                               it finds any then it will try to find an
      *                               alternative path When set true, no block
      *                               state checking is performed.
-     * @param pathMethod             - Performs a check to see if any signal
+     * @param pathMethod              Performs a check to see if any signal
      *                               heads/masts are in the path, if there are
      *                               then the system will try to find an
      *                               alternative path. If set to NONE, then no
@@ -735,9 +735,9 @@ public class LayoutBlockConnectivityTools {
                         && (lx.getLayoutBlockBD() != null)
                         && (lx.getLayoutBlockAC() != lx.getLayoutBlockBD())) {
                     if (lx.getLayoutBlockAC() == curBlock) {
-                        return canLBlockBeUsed(lx.getLayoutBlockBD());
+                        if (!canLBlockBeUsed(lx.getLayoutBlockBD())) return false;
                     } else if (lx.getLayoutBlockBD() == curBlock) {
-                        return canLBlockBeUsed(lx.getLayoutBlockAC());
+                        if (!canLBlockBeUsed(lx.getLayoutBlockAC())) return false;
                     }
                 }
             }

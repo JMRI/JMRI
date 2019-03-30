@@ -15,14 +15,13 @@
 <!-- for more details.                                                      -->
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-      <xsl:param name="JmriCopyrightYear">
-        2000 -
-            <script language="JavaScript" type="text/javascript">
-                now = new Date
-                theYear=now.getFullYear()
-                document.write(theYear)
-            </script>
-      </xsl:param>
+
+<!-- Define the copyright year for the output page
+     In batch work via running Ant, this is defined
+     via the build.xml file. We build it by concatenation
+     because XPath will evaluate '1997 - 2017' to '20'.
+-->
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2019')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details

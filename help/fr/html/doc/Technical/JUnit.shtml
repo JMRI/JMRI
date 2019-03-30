@@ -215,14 +215,13 @@ dans le journal. Il y a deux aspects pour faire ce travail:
 et leur code de d&#233;sassemblage() pour &#234;tre s&#251;r que log4j est proprement initi&#233;, et que
 le dispositif personnalis&#233; discute quand un test d&#233;marre ou s'arr&#234;te.
 <CODE><PRE>
-    // The minimal setup for log4J<br/>
-    protected void setUp() throws Exception { <br/>
-        apps.tests.Log4JFixture.setUp(); <br/>
-        super.setUp();<br/>
+    @Before<br/>
+    public void setUp() throws Exception { <br/>
+        jmri.util.JUnitUtil.setUp(); <br/>
     }<br/>
-    protected void tearDown() throws Exception { <br/>
-        super.tearDown();<br/>
-        apps.tests.Log4JFixture.tearDown(); <br/>
+    @After<br/>
+    public void tearDown() throws Exception { <br/>
+        jmri.util.JUnitUtil.tearDown(); <br/>
     }<br/>
 </PRE></code>
 <li>Quand un test invoque d&#233;lib&#233;r&#233;ment un message, il faut 
@@ -242,10 +241,7 @@ produit et qu'il ne correspond pas &#224; un appel JUnitAppender.assertWarnMessa
 
 Dans tous les cas, l'ensemble de vos routines principales() devrait commencer par
 <PRE><CODE>
-    apps.tests.Log4JFixture.initLogging();
-</CODE></PRE>
-<PRE><CODE>
-    apps.tests.Log4JFixture.initLogging();
+    jmri.util.JUnitUtil.setUp();
 </CODE></PRE>
 de sorte qu'elles peuvent &#234;tre ex&#233;cut&#233;es de fa&#231;on ind&#233;pendante.
 
@@ -265,7 +261,7 @@ effacer et r&#233;initialiser pour vous assurer d'obtenir des r&#233;sultats rep
 <p>
 D&#233;pendant du code utilis&#233; par vos gestionnaires, votre mise en &#339;uvre de <code>configuration()</code> devrait commencer par:
 <p><CODE><PRE>
-    super.setUp();<br/>
+    jmri.util.JUnitUtil.setUp();<br/>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
     jmri.util.JUnitUtil.initInternalTurnoutManager();<br/>
     jmri.util.JUnitUtil.initInternalLightManager();<br/>
@@ -280,7 +276,7 @@ Votre <code>d&#233;sassemblage()</code> doit se terminer par
 <p>
 <CODE><PRE>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
-    super.tearDown();
+    jmri.util.JUnitUtil.tearDown();
 </PRE></code>
 
 <h3><a name="RunningListeners">Travailler avec les Auditeurs</a></h3>
@@ -313,7 +309,7 @@ Notez que celui-ci ne devrait <b>pas</b> &#234;tre utilis&#233; en synchronisme 
 Voir le <a href="#testSwingCode"> Test Code Swing</a>, une section faite pour &#231;a.
 <p>
 En g&#233;n&#233;ral,vous ne devriez pas avoir d'appels pour dormir(), attendre(), produire() dans votre code.
-Utilisez l'aide de JUnitUtil et JFCUtil pour ceux en place. 
+Utilisez l'aide de JUnitUtil pour ceux en place. 
 
 <h3><a name="threads">Travailler avec les T&#226;ches</a></h3>
 
@@ -379,7 +375,7 @@ Voici quelques id&#233;es qui peuvent aider &#224; &#233;viter ces types de prob
 	    de code JMRI. Il peut &#234;tre utile de cr&#233;er un sous-r&#233;pertoire l&#224; pour les 
 	    fichiers cr&#233;&#233;s par un test particulier. Assurez-vous que le r&#233;pertoire 
 	    existe avant la cr&#233;ation de fichiers dans le r&#233;pertoire, et de cr&#233;er le 
-	    r&#233;pertoire si n&#233;cessaire.      
+	    r&#233;pertoire si n&#233;cessaire.ï¿½ï¿½ï¿½   
 		 Un exemple est montr&#233; ici:
 <CODE><PRE>
     String tempDirectoryName = "temp";<br/>

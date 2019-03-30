@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -196,7 +198,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * Get a list of all the property change listeners that are registered using
      * a specific name
      *
-     * @param name - The name (either system or user) that the listener has
+     * @param name The name (either system or user) that the listener has
      *             registered as referencing this namedBean
      * @return empty list if none
      */
@@ -357,14 +359,15 @@ public interface NamedBean extends Comparable<NamedBean> {
      * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
      * The comparison is alphanumeric on the system prefix, then alphabetic on the
      * type letter, then system-specific comparison on the two suffix parts
-     * via the {@link compareSystemNameSuffix} method.
+     * via the {@link #compareSystemNameSuffix} method.
      *
      * @param n2 The second NamedBean in the comparison ("this" is the first one)
      * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
      */
     @CheckReturnValue
     @Override
-    public default int compareTo(@Nonnull NamedBean n2) {
+    public default int compareTo(NamedBean n2) {
+        Objects.requireNonNull(n2);
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();
         String o2 = n2.getSystemName();

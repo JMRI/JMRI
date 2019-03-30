@@ -762,6 +762,19 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return null;
     }
 
+    @Override
+    public void setLength(float len) {
+        float oldLen = getLengthMm();
+        if (oldLen > 0.0f) {   // if new block, paths also have length 0
+            float ratio = getLengthMm() / oldLen;
+            List<Path> list = getPaths();
+            for (Path path : list) {
+                path.setLength(path.getLength()*ratio);
+            }
+        }
+        super.setLength(len);
+   }
+
     /**
      * Enforce unique path names within block, but allow a duplicate 
      * name of a path from another block to be
@@ -852,12 +865,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         if (msg == null && ((getState() & OBlock.ALLOCATED) == 0)) {
             msg = Bundle.getMessage("PathNotSet", pathName, getDisplayName());
-        } else if (msg == null) {  // Sanity check
-            String p = warrant.getRoutePathInBlock(this);
-            if (p!=null && !pathName.equals(p)) {
-                msg = "path \""+pathName+"\" for block \""+getDisplayName()+"\" does not agree with path \""+
-                        p+"\" in route of warrant \""+warrant.getDisplayName()+"\"";
-            }
         }
         if (msg != null) {
             log.warn(msg);

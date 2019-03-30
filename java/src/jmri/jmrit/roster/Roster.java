@@ -779,8 +779,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * </ul> Does not check for duplicates.
      *
      * @return Filename for RosterEntry
-     * @throws IllegalArgumentException if called with null or empty entry name
      * @param entry the getId() entry name from the RosterEntry
+     * @throws IllegalArgumentException if called with null or empty entry name
      * @see RosterEntry#ensureFilenameExists()
      * @since 2.1.5
      */
@@ -1231,7 +1231,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Get the identifier for all entries in the roster.
      *
-     * @param locale - The desired locale
+     * @param locale  The desired locale
      * @return "All Entries" in the specified locale
      */
     public static String allEntries(Locale locale) {

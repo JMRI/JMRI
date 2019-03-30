@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -188,7 +188,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         data.put(SHUNTING_FUNCTION, entry.getShuntingFunction());
         data.put(OWNER, entry.getOwner());
         data.put(JsonRoster.DATE_MODIFIED, (entry.getDateModified() != null)
-                ? new ISO8601DateFormat().format(entry.getDateModified())
+                ? new StdDateFormat().format(entry.getDateModified())
                 : null);
         ArrayNode labels = data.putArray(FUNCTION_KEYS);
         for (int i = 0; i <= entry.getMAXFNNUM(); i++) {

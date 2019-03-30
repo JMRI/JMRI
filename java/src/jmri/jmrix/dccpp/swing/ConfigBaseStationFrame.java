@@ -359,22 +359,25 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     JOptionPane.OK_CANCEL_OPTION);
             if (value == JOptionPane.OK_OPTION) {
                if (null != cTab) {
-                  switch (cTab) {
-                     case SENSOR:
-                       tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
-                       sensorModel.removeRow(sel);
-                       log.debug("Delete sensor {}", idx);
-                       break;
-                      case TURNOUT:
-                        String m = "T " + Integer.toString(idx);
-                        tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                        log.debug("Sending: {}", m);
-                        turnoutModel.removeRow(sel);
-                        break;
-                      case OUTPUT:
-                        tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
-                        outputModel.removeRow(sel);
-                        break;
+                    switch (cTab) {
+                        case SENSOR:
+                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
+                            sensorModel.removeRow(sel);
+                            log.debug("Delete sensor {}", idx);
+                            break;
+                        case TURNOUT:
+                            String m = "T " + Integer.toString(idx);
+                            tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
+                            log.debug("Sending: {}", m);
+                            turnoutModel.removeRow(sel);
+                            break;
+                        case OUTPUT:
+                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
+                            outputModel.removeRow(sel);
+                            break;
+                        default:
+                            jmri.util.Log4JUtil.warnOnce(log, "Unexpected cTab value = {}", cTab);
+                            break;
                    }
                 }
             }

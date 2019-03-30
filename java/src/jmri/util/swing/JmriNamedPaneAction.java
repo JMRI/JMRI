@@ -74,13 +74,13 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
     @Override
     public jmri.util.swing.JmriPanel makePanel() {
         try {
-            JmriPanel p = (JmriPanel) Class.forName(paneClass).newInstance();
+            JmriPanel p = (JmriPanel) Class.forName(paneClass).getDeclaredConstructor().newInstance();
             p.setWindowInterface(wi);
             p.initComponents();
             p.initContext(context);
 
             return p;
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex ) {
             log.warn("could not load pane class: {}", paneClass, ex);
             return null;
         }

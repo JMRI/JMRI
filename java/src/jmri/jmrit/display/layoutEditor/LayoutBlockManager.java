@@ -1861,7 +1861,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * or SignalHead) is protecting.
      *
      * @param nb    NamedBean
-     * @param panel - panel that this bean is on
+     * @param panel  panel that this bean is on
      * @return The block that the bean object is facing
      */
     @CheckReturnValue
@@ -2128,7 +2128,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * or SignalHead).
      *
      * @param nb    NamedBean
-     * @param panel - panel that this bean is on
+     * @param panel  panel that this bean is on
      * @return The block that the bean object is facing
      */
     @CheckReturnValue

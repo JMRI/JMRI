@@ -43,14 +43,17 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        JUnitUtil.resetWindows(true, false); // list open windows when running tests
+        JUnitUtil.resetNodeIdentity();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConnectionConfigManager();
+        JUnitUtil.initZeroConfServiceManager();
     }
 
     @After
     @Override
     public void tearDown() throws Exception {
-        ZeroConfService.stopAll();
+        JUnitUtil.resetZeroConfServiceManager();
         super.tearDown();
     }
 
@@ -150,7 +153,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals("JSON Version", JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
         Assert.assertEquals("Heartbeat", Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
         Assert.assertEquals("RR Name", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText());
-        Assert.assertEquals("Node Identity", NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals("Node Identity", NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
         Profile profile = ProfileManager.getDefault().getActiveProfile();
         Assert.assertNotNull(profile);
         Assert.assertEquals("Profile", profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText());
@@ -227,7 +230,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
         Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
         Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
-        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
         service.stop();
@@ -247,9 +250,12 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonNode result = instance.getNode(locale);
         this.validate(result);
         // We should have a single node with no history of nodes
+        // There are 3 "former" IDs when there is no history
         Assert.assertEquals(JSON.NODE, result.path(JSON.TYPE).asText());
-        Assert.assertEquals(NodeIdentity.identity(), result.path(JSON.DATA).path(JSON.NODE).asText());
-        Assert.assertEquals(0, result.path(JSON.DATA).path(JSON.FORMER_NODES).size());
+        Assert.assertEquals(NodeIdentity.networkIdentity(), result.path(JSON.DATA).path(JSON.NODE).asText());
+        JsonNode nodes = result.path(JSON.DATA).path(JSON.FORMER_NODES);
+        Assert.assertTrue(nodes.isArray());
+        Assert.assertEquals(3, nodes.size());
     }
 
     /**
@@ -308,7 +314,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
         Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
         Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
-        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
         service.stop();
@@ -344,8 +350,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         ObjectNode result = instance.getPanel(locale, editor, JSON.XML);
         this.validate(result);
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     /**
@@ -360,8 +366,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getPanels(locale, JSON.XML);
         this.validate(result);
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     /**
@@ -376,8 +382,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getPanels(locale);
         this.validate(result);
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     /**

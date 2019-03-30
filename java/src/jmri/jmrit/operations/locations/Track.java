@@ -546,7 +546,7 @@ public class Track {
 
     /**
      * The amount of consumed track space to be ignored when sending new rolling
-     * stock to the track.
+     * stock to the track.  See Planned Pickups in help.
      *
      * @param percentage a number between 0 and 100
      */
@@ -747,7 +747,7 @@ public class Track {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+           setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
         }
     }
 

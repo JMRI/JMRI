@@ -601,7 +601,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     /**
      * Find empty Conditional entries, called from menu.
      *
-     * @see Maintenance#findEmptyPressed(Frame)
+     * @see Maintenance#findEmptyPressed(java.awt.Frame)
      * @param e the event heard
      */
     void findEmptyPressed(ActionEvent e) {
@@ -611,7 +611,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     /**
      * Find orphaned entries, called from menu.
      *
-     * @see Maintenance#findOrphansPressed(Frame)
+     * @see Maintenance#findOrphansPressed(java.awt.Frame)
      * @param e the event heard
      */
     void findOrphansPressed(ActionEvent e) {

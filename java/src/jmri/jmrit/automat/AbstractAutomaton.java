@@ -116,7 +116,6 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides the superclass method to do local accounting.
      */
-    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     public void start() {
         if (currentThread != null) {
             log.error("Start with currentThread not null!");
@@ -974,7 +973,7 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)
@@ -1044,10 +1043,10 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
-        boolean ok = InstanceManager.throttleManagerInstance()
+        boolean ok = InstanceManager.getDefault(ThrottleManager.class)
                 .requestThrottle(re, throttleListener);
 
         // check if reply is coming

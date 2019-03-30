@@ -38,6 +38,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
@@ -1105,7 +1106,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
         m.setHeader(data * 4 + data2);
         for (j = 0; j < 8; j++) {
-            if (!dataFields[j].getText().equals("")) {
+            if (!dataFields[j].getText().isEmpty()) {
                 data = parseBinDecHexByte(dataFields[j].getText(), 255, _decimal, Bundle.getMessage("CbusConsoleTitle"),
                         Bundle.getMessage("DbxErrorDialog", j));
                 if (data == -1) {
@@ -1360,7 +1361,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
         output.append(decode(r, r.isExtended(), r.getHeader()) + " ");
 
-        if (showOpcExtraCheckBox.isSelected()) {
+        if (showOpcExtraCheckBox.isSelected() && !r.isExtended() ) {
             String cbusopc = "CTIP_" + decodeopc(r, r.isExtended(), r.getHeader());
             output.append(Bundle.getMessage(cbusopc)+ " ");
         }

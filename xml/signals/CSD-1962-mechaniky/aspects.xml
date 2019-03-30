@@ -34,6 +34,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Test set</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -227,6 +233,8 @@
     
     <appearancefile href="appearance-protection.xml"/>
       
+    <appearancefile href="appearance-test.xml"/>
+
   </appearancefiles>
 
 </aspecttable>

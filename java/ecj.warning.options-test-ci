@@ -1,0 +1,13 @@
+# addendum to ecj.warnings.options for checking the tests source code
+#
+# We relax certain requirements for the test code; this handles that
+
+-err:-dep-ann
+-err:-deprecation
+-err:-allDeprecation
+
+-err:-allOver-ann
+-err:-over-ann
+
+  # We allocate objects to test that code can run OK
+-warn:-unusedAllocation

@@ -263,9 +263,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * <P>
      * Only used in the Receive thread.
      *
-     * @param msg     message to fill
      * @param istream character source.
      * @throws IOException when presented by the input source.
+     * @return filled out message from source
      */
     private XNetReply loadChars(java.io.BufferedReader istream) throws java.io.IOException {
         // The LIUSBServer sends us data as strings of hex values.

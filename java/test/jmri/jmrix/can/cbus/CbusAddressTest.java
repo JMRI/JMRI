@@ -311,6 +311,38 @@ public class CbusAddressTest {
         Assert.assertTrue(new CbusAddress("+001").equals(v[0]));
         Assert.assertTrue(new CbusAddress("-2").equals(v[1]));
     }
+    
+    @Test
+    public void testgetIncrement() {
+        
+        Assert.assertEquals("+N34E17;-N34E17","+N34E18;-N34E18",CbusAddress.getIncrement("+N34E17;-N34E17"));
+        Assert.assertEquals("+N34E456;+N34E17","+N34E457;+N34E18",CbusAddress.getIncrement("+N34E456;+N34E17"));
+        Assert.assertEquals("-N34E456;-N34E17","-N34E457;-N34E18",CbusAddress.getIncrement("-N34E456;-N34E17"));
+        Assert.assertEquals("-N34E456;+N34E17","-N34E457;+N34E18",CbusAddress.getIncrement("-N34E456;+N34E17"));
+    }
+    
+    @Test
+    public void testvalidateSysName() {
+        try {
+            Assert.assertEquals("+0",null,CbusAddress.validateSysName("+0"));
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }        
+
+        try {
+            Assert.assertEquals("-0",null,CbusAddress.validateSysName("-0"));
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }   
+
+    }
+    
+    @Test
+    public void testhashcode() {
+        CbusAddress a = new CbusAddress("X9801D203A4");
+        Assert.assertEquals("a hashcode is present",530,a.hashCode());
+    }
+    
 
     // The minimal setup for log4J
     @Before
