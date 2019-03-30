@@ -3,7 +3,7 @@
  *
  * <h2>Related Documentation</h2>
  *
- * <a href="http://jmri.org/help/en/html/tools/TimeTable.shtml">Timetable Description</a>
+ * <a href="http://jmri.org/help/en/package/jmri/jmrit/ctc/CTC.shtml">CTC Documentation</a>
  */
 
 //@annotations for the entire package go here

@@ -68,7 +68,7 @@ public class FrmMainForm extends JFrame {
 
     public boolean _mPanelLoaded = false;
     private boolean _mAnySubFormOpen = false;   // For any BUT FrmTRL_Rules
-    public boolean _mTRL_RulesFormOpen = false; // for ONLY FrmTRL_Rules
+    boolean _mTRL_RulesFormOpen = false; // for ONLY FrmTRL_Rules
 
     @SuppressWarnings("LeakingThisInConstructor")   // NOI18N   Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {
