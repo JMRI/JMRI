@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
-import jmri.AdapterManager;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.ClockControl;
@@ -78,53 +77,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == DigitalIOManager.class) {
-            String beanNameDigitalIO = Bundle.getMessage("BeanNameDigitalIO");
-            DefaultDigitalIOManager m =
-                    new DefaultDigitalIOManager(beanNameDigitalIO, Manager.DIGITALIO);
-            
-            ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
-            for (ConnectionConfig connection : ccm.getConnections()) {
-                m.addManager(new AbstractManager<DigitalIO>() {
-
-                    @Override
-                    public String getSystemPrefix() {
-                        return connection.getConnectionName();
-                    }
-
-                    @Override
-                    public char typeLetter() {
-                        return 'D';
-                    }
-
-                    @Override
-                    public int getXMLOrder() {
-                        return Manager.DIGITALIO;
-                    }
-
-                    @Override
-                    public String getBeanTypeHandled() {
-                        return beanNameDigitalIO;
-                    }
-                });
-            }
-            
-            // Add the internal manager?
-            // jmri.jmrix.internal.InternalDigitalIOManager
-            // See: jmri.jmrix.internal.InternalLightManager
-            
-            // Add turnout manager
-            Manager<jmri.Turnout> mt = InstanceManager.getDefault(TurnoutManager.class);
-            m.addManager(new AdapterManager<>(mt));
-            
-            // Add sensor manager
-            Manager<jmri.Sensor> ms = InstanceManager.getDefault(SensorManager.class);
-            m.addManager(new AdapterManager<>(ms));
-            
-            // Add light manager
-            Manager<jmri.Light> ml = InstanceManager.getDefault(LightManager.class);
-            m.addManager(new AdapterManager<>(ml));
-            
-            return m;
+            return getDigitalIOManager();
         }
 
         if (type == LightManager.class) {
@@ -229,6 +182,57 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 VSDecoderManager.class
         ));
         return set;
+    }
+
+    private DigitalIOManager getDigitalIOManager() {
+        
+        String beanNameDigitalIO = Bundle.getMessage("BeanNameDigitalIO");
+        DefaultDigitalIOManager m =
+                new DefaultDigitalIOManager(beanNameDigitalIO, Manager.DIGITALIO);
+
+        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        for (ConnectionConfig connection : ccm.getConnections()) {
+            m.addManager(new AbstractManager<DigitalIO>() {
+
+                @Override
+                public String getSystemPrefix() {
+                    return connection.getConnectionName();
+                }
+
+                @Override
+                public char typeLetter() {
+                    return 'D';
+                }
+
+                @Override
+                public int getXMLOrder() {
+                    return Manager.DIGITALIO;
+                }
+
+                @Override
+                public String getBeanTypeHandled() {
+                    return beanNameDigitalIO;
+                }
+            });
+        }
+
+        // Add the internal manager?
+        // jmri.jmrix.internal.InternalDigitalIOManager
+        // See: jmri.jmrix.internal.InternalLightManager
+
+        // Add turnout manager
+        Manager<jmri.Turnout> mt = InstanceManager.getDefault(TurnoutManager.class);
+        m.addManager(new AdapterManager<>(mt));
+
+        // Add sensor manager
+        Manager<jmri.Sensor> ms = InstanceManager.getDefault(SensorManager.class);
+        m.addManager(new AdapterManager<>(ms));
+
+        // Add light manager
+        Manager<jmri.Light> ml = InstanceManager.getDefault(LightManager.class);
+        m.addManager(new AdapterManager<>(ml));
+
+        return m;
     }
 
 }
