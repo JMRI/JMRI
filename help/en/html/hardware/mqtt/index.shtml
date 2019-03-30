@@ -43,6 +43,36 @@
       hardware via the Connections pane in the Preferences window.
       Select "MQTT" as the manufacturer name.
       
+        <h3>Topics</h3>
+        
+        JMRI MQTT Turnouts are specified with names like "MTabcd".
+        The "M" is the system connection letter, "T" specifies 
+        Turnout, and all after that is a suffix that is used to generate
+        the specific topic which JMRI publishes and subscribes to when
+        communicating with the layout.
+        <p>
+        By default, the MQTT topic for a Turnout is constructed by prepending "/trains/track/turnout/"
+        to the suffix.  For example, a JMRI Turnout with 
+        system name MTabcd will publish and subscribe to the topic /trains/track/turnout/abcd.
+        <p>
+        You can change the prepended string using
+        a script at startup time.  See the
+        <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
+        sample script for an example.
+        There are two parts to that: A base topic common
+        to everything JMRI does on that connection, and 
+        a type-specific topic specific to each type.
+        By default the base topic is "/trains/" and can't (yet) be changed;
+        the turnout-specific part is "track/turnout/",
+        leading to a complete prefix of "/trains/track/turnout/".
+        <p>
+        Note that any changes must be made at startup time
+        before creating any Turnout objects, i.e. 
+        the script must be run as the 
+        first startup action before any panel files are loaded.
+        Changing the prefix only affects Turnouts that are
+        created after the change.
+        
       <a id="payload" name="payload"></a>
       <h2>Message Content</h2>
         <h3>Turnouts</h3>

@@ -2,6 +2,7 @@ package jmri.jmrix.mqtt;
 
 import javax.annotation.Nonnull;
 
+import jmri.JmriException;
 import jmri.Turnout;
 
 /**
@@ -14,12 +15,6 @@ import jmri.Turnout;
  */
 public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Nonnull private final MqttAdapter mqttAdapter;
-    @Nonnull private final String systemPrefix;
-
-    public void setPrefix(@Nonnull String namePrefix) {
-        this.namePrefix = namePrefix;
-    }
-    private String namePrefix = "track/turnout/";
     
     public MqttTurnoutManager(@Nonnull MqttAdapter ma, @Nonnull String p) {
         super();
@@ -27,25 +22,34 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         systemPrefix = p;        
     }
 
+    @Nonnull private final String systemPrefix; // for systemName
     @Override
     public String getSystemPrefix() {
         return systemPrefix;
+    }
+
+    public void setTopicPrefix(@Nonnull String topicPrefix) {
+        this.topicPrefix = topicPrefix;
+    }
+    @Nonnull public String topicPrefix = "track/turnout/"; // for constructing topic; public for script access
+
+    /** 
+     * {@inheritDoc} 
+     *
+    * Accepts any string.
+     */
+    @Override
+    public String createSystemName(@Nonnull String topicSuffix, @Nonnull String prefix) throws JmriException {
+        return prefix + typeLetter() + topicSuffix;
     }
 
     @Override
     public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         MqttTurnout t;
         String suffix = systemName.substring(systemPrefix.length() + 1);
-        String topic = namePrefix+suffix;
+        String topic = topicPrefix+suffix;
         
-        // if an integer, this is a legacy name
-        try { 
-            int addr = Integer.parseInt(suffix);
-        } catch (IllegalArgumentException e) {
-            log.trace("{} is not an integer", suffix);
-        }
-        
-        t = new MqttTurnout(mqttAdapter, topic);
+        t = new MqttTurnout(mqttAdapter, systemName, topic);
         t.setUserName(userName);
 
         if (parser != null) t.setParser(parser);

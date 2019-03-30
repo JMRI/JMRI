@@ -14,11 +14,14 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     private final MqttAdapter mqttAdapter;
     private final String topic;
 
-    MqttTurnout(MqttAdapter ma, String topic) {
-        super("MT" + topic);
+    /**
+     * Requires, but does not check, that the system name and topic be consistent
+     */
+    MqttTurnout(MqttAdapter ma, String systemName, String topic) {
+        super(systemName);
         this.topic = topic;
         mqttAdapter = ma;
-        mqttAdapter.subscribe(topic, this);
+        mqttAdapter.subscribe(this.topic, this);
     }
 
     public void setParser(MqttContentParser<Turnout> parser) {
