@@ -238,13 +238,27 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * @param name user/system name of the signalMast using the icons
      * @return an icons element containing icon URLs for SignalMast states
      */
+    @Deprecated
     protected Element getSignalMastIconsElement(String name) {
+        return getSignalMastIconsElement(name, "default") ;
+    }
+    
+    /**
+     * Build and return an "icons" element containing icon URLs for all
+     * SignalMast states. Element names are cleaned-up aspect names, aspect
+     * attribute is actual name of aspect.
+     *
+     * @param name user/system name of the signalMast using the icons
+     * @param imageset imageset name or "default"
+     * @return an icons element containing icon URLs for SignalMast states
+     */
+    protected Element getSignalMastIconsElement(String name, String imageset) {
         Element icons = new Element("icons");
         SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
         if (signalMast != null) {
             signalMast.getValidAspects().forEach((aspect) -> {
                 Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
-                String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
+                String url = signalMast.getAppearanceMap().getImageLink(aspect, imageset);  // use correct imageset
                 if (!url.contains("preference:")) {
                     url = "program:" + url.substring(url.indexOf("resources"));
                 }
@@ -252,7 +266,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 ea.setAttribute("url", url);
                 icons.addContent(ea);
             });
-            String url = signalMast.getAppearanceMap().getImageLink("$held", "default");  //add "Held" aspect if defined
+            String url = signalMast.getAppearanceMap().getImageLink("$held", imageset);  //add "Held" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
                     url = "program:" + url.substring(url.indexOf("resources"));
@@ -262,7 +276,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 ea.setAttribute("url", url);
                 icons.addContent(ea);
             }
-            url = signalMast.getAppearanceMap().getImageLink("$dark", "default");  //add "Dark" aspect if defined
+            url = signalMast.getAppearanceMap().getImageLink("$dark", imageset);  //add "Dark" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
                     url = "program:" + url.substring(url.indexOf("resources"));
