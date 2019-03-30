@@ -310,7 +310,7 @@ public class Columns {
         }
         for (String result : temp) returnStringBuffer.append(result);
         if (returnStringBuffer.length() > 0) {
-            return "TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2).toString();    //NOI18N
+            return "TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2);    //NOI18N
         } else {
             return "";
         }
@@ -352,7 +352,7 @@ public class Columns {
         }
         for (String result : temp)  returnStringBuffer.append(result);
         if (returnStringBuffer.length() > 0) {
-            return "Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2).toString();   //NOI18N
+            return "Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2);   //NOI18N
         } else {
             return "";
         }
