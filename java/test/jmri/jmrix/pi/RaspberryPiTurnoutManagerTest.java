@@ -21,7 +21,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @Override
     public String getSystemName(int i){
-        return "PIT"+i;
+        return "PiT"+i;
     }
 
 
@@ -32,7 +32,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
    @Test
    public void checkPrefix(){
-       Assert.assertEquals("Prefix","PI",l.getSystemPrefix());
+       Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
    }
 
     @Override    
@@ -52,7 +52,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         Turnout t = l.provide(getSystemName(20));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(20)));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(20)));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
