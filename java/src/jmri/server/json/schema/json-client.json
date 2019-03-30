@@ -15,7 +15,7 @@
         "method": {
             "type": "string",
             "enum": ["get", "put", "post", "delete", "list"],
-            "description": "HTTP Method equivalent to be performed on data; defaults to \"post\" if \"data\" is present, otherwise it defaults to \"get\""
+            "description": "HTTP Method equivalent to be performed on data; defaults to \"get\" if not specified"
         },
         "list": {
             "type": "string",
