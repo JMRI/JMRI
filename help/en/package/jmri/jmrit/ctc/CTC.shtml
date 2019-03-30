@@ -462,9 +462,39 @@ you enter them out of order, described in another section.
       can be validated. ===
       </p>
 
-    <p>===This section also gets the discussions of the action to the right of the section list.  The edit buttons are listed below.===</p>
+    
+      <h3>Action buttons (to the right of the "Presently defined CTC O.S. sections:")</h3>
+      <p>
+      These buttons are dynamically enabled or disabled based upon the selected item.  Button "Add" is always available.
+      </p>
+        <h4>Add</h4>
+        <p>
+        Allows you to add another column.
+        </p>
+        <p>
+        After pressing, configure the two values as needed.
+        </p>
+        <p>
+        <strong>Regarding the check box "GUI Generated before":</strong>
+        If checked, then this column has already been generated once before.  In case you want it to be generated
+        again when you press "Write .xml files for JMRI GUI support", clear the check box.
+        </p>
+        <h4>Delete</h4>
+        <p>
+        Allows you to delete a column <strong>if</strong> there are no references to it.
+        </p>
+        <p>
+        If you notice in the column that you are deleting that there are items in parenthesis's, you will be prevented
+        from deleting that column with an error message.  Only when the parenthesis's disappear will you be allowed
+        to delete the column.
+        </p>
+        <p>
+        The general format is #/# indicating which switch and signal column entry is referencing this entry,
+        followed by the following letter possibilities:
+        "TrL:" Traffic Locking rule references this.  If there is an 'L' appended, it indicates left traffic rules, otherwise right traffic rules.
+        "Sw:" Switch Slaved references this.
 
-      <h3>Edit Buttons</h3>
+      <h3>Edit Buttons (at the bottom of the screen)</h3>
         <a name="frmCB" id="frmCB"></a>
         <h4>Code button</h4>
         <p>
@@ -638,7 +668,7 @@ you enter them out of order, described in another section.
         However, if you are methodical and after some experience, you should find that this section is fairly straight
         forward.
         </p>
-        <p>
+        <p>      
         When you initially select Traffic Locking, the first screen that comes up will allow you to edit one of the
         directions from this O.S. section to other O.S. section(s).  <strong>Note:</strong> Having no rules <strong>always</strong> allows
         that direction of travel no matter any other condition, and may be valid in certain situations such as traveling
@@ -646,7 +676,7 @@ you enter them out of order, described in another section.
         </p>
         
         <p>
-        Now, either select Left or Right to proceed.  On the next screen that appears, you will notice that the "Rules:"
+        Select either Left or Right to proceed.  On the next screen that appears, you will notice that the "Rules:"
         area is blank, and that "Add New" is only button enabled.  Press "Add New" now, and notice how the bottom half of the
         screen is enabled for editing of this new rule.
         </p>
@@ -701,11 +731,136 @@ you enter them out of order, described in another section.
         
         <a name="frmTUL" id="frmTUL"></a>
         <h4>Turnout locking</h4>
-        <p>=== form details ===</p>
+        <p>
+        <strong>Background:</strong>
+        On my layout for main line turnouts, I have a local push button for each DS-54 and DS-64 that locally requests
+        the turnout to "flip" the other way.  By locally, I mean no computer involvement.  I originally designed it
+        this way so that if the computer failed for any reason, the layout could still be operated without any
+        computer system involvement.  This is fail safe: No computer, "Mother may I" via phones to the Dispatcher
+        with a magnet (or some such) board of the track plan for collision avoidance.
+        </p>
+        <p>
+        All of the main line turnouts on my layout use the other bit available of 2 available inputs for each turnout
+        on the DS-54 or DS-64 for feedback.  JMRI's parlance for this is "Mode = INDIRECT" in the Turnouts table.        
+        </p>
+        <p>
+        <strong>How "Lock implementation: Greg's" works in this situation (the ONLY supported possibility at this time):</strong>
+        </p>
+        <p>
+        If the JMRI software monitored the LocoNet network for turnout commands, the switch could not
+        be locked properly, because the local button generates no messages to LocoNet.  However, with the
+        feedback available (INDIRECT), what my software does is when it sees a feedback message that disagrees
+        with the locked state of the turnout, it immediately send a countermand command to restore the turnout
+        to its proper locked state that the dispatcher wants/controls.  As a consequence, an operator when
+        pushing the local push button while the dispatcher has the switch locked notices that the switch goes
+        about 1/2 way, and then returns to its locked position.  Repeated pushing of the switch just repeats
+        this.  The dispatcher will see the Switch indicators blink back and forth without input from the
+        dispatcher, so they know someone is trying to wrongly change the switch.  One could say that by
+        the switch going 1/2 way, a train going over the switch would derail, and you'd be correct.  But
+        since my layout has the push buttons right next to the switch it controls, hopefully an operator
+        won't attempt to purposely derail a train.         
+        </p>
+        <p>
+        There are two main situations that need to be considered separately:
+        </p>
+        <p>
+        <u>Turnout locks in an O.S. section:</u>
+        </p>
+        <p>
+        This is the typical case, and requires nothing special be done.  In the prototype, the O.S. section <strong>must be</strong> unoccupied
+        in order for a turnout to be unlocked.  Locking a turnout can always occur at any time.  There are two situations to be considered:
+        </p>
+        <ol>
+        <li>The turnout has local control but that is never granted by the dispatcher.</li>
+        <li>The turnout has local control that can be granted to the crews in the field by the dispatcher.</li>
+        </ol>
+        <p>
+        1. is for all main line turnouts typically, that do not go to a siding that is switched by the crews.  In this way the turnout
+        is locked permanently, and the dispatcher cannot grant local control.  In this case, press "Just" a locked turnout, and fields
+        are cleared that are not needed, which are fields Dispatcher sensor lock toggle, Dispatcher sensor unlocked
+        indicator.  The field Actual turnout is required.
+        </p>
+        <p>
+        2. is for those turnouts that are normally locked by the dispatcher, but the local crews can ask
+        for local control to do switching.
+        </p>
+        <p>
+        Configure the rest of the screen as needed.
+        </p>
+
+        <p>
+        <u>Turnout locks in a non O.S. section (and how to create them):</u>
+        </p>
+        <p>
+        Just create the section that contains the turnout <strong>as if</strong> it was an O.S. section.  Use a switch number
+        that is higher than the highest value you will use on the CTC machine, or for safety, use values starting with
+        1001.  For the GUI column #, use the proper number to create both the code button and the lock/unlock toggle
+        switch in the proper place.
+        </p>
+        <p>
+        However, <strong>do not</strong> check and features except the Turnout Locking check box for this fake O.S.
+        section.  This is how this is differentiated from the above true O.S. section lock.
+        </p>
+        <p>
+        When configuring the Code Button, you will be required to enter an occupancy sensor.  Enter the occupancy sensor <Strong>containing</Strong> the turnout to be locked.
+        </p>
+        <p>
+        For this situation, the prototype <strong>required</strong> occupancy of that section to exist when unlock(s) of the turnout(s) are to occur.  The
+        purpose of this on the prototype is safety: so that the Dispatcher does not accidentally unlock an unoccupied block and leave
+        it that way, thereby possibly causing a derailment sometime in the future, or for signals to not clear into this block            
+        </p>
+        <p>
+        Feedbacks different check boxes:
+        </p>
+        <p>
+        Normally, the feedback value matches the commanded value.  JMRI allows for both being backwards, and in order to
+        fix that, you put a check the "Inverted" column in the Turnouts Table in JMRI.  However, in case the feedback value
+        is different than the commanded value, then you put a check in that column.  The following table lists the possibilities:
+        </p>
+        <table>
+            <tr>
+                <th>Command:</th>
+                <th>Feedback:</th>
+                <th>JMRI Turnout inverted checked:</th>
+                <th>CTCEditor feedbacks different checked:</th>
+            </tr>
+            <tr>
+                <td>Normal</td>
+                <td>Normal</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Reversed</td>
+                <td>Reversed</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Normal</td>
+                <td>Reversed</td>
+                <td>No</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Reversed</td>
+                <td>Normal</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+        </table>
 
         <a name="frmIL" id="frmIL"></a>
         <h4>Indication locking</h4>
-        <p>=== form details ===</p>
+        <p>
+        Defines any additional locking  of an O.S. section above and beyond what is normally expected
+        by this system.
+        </p>
+        <p>
+        As indicated on the screen, specify the signal head(s) / signal mast(s) that when any are
+        non-red, the O.S. section is considered indication locked.  When an O.S. section is locked
+        this way, the turnout and turnout lock/unlock functions are disabled so long as any of these are non-red.    
+        </p>
 
     <a name="ctcFiles" id="ctcFiles"></a>
     <h2>Files</h2>

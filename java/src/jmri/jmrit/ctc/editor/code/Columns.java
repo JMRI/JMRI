@@ -298,7 +298,7 @@ public class Columns {
 
     private String getListOfTrafficLockingRulesOSSectionsReferenced(CodeButtonHandlerData currentCodeButtonHandlerData,
                                                                     ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
-        StringBuffer returnString = new StringBuffer("");
+        StringBuffer returnStringBuffer = new StringBuffer("");
         TreeSet<String> temp = new TreeSet<>();
         int currentUniqueID = currentCodeButtonHandlerData._mUniqueID;
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
@@ -308,9 +308,14 @@ public class Columns {
                 checkThisSSVList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList, temp);   //NOI18N
             }
         }
-        for (String result : temp) returnString.append(result);
-        if (returnString.length() > 0) returnString.append("TrL: " + returnString.substring(0, returnString.length() - 2));       //NOI18N
-        return returnString.toString();
+        for (String result : temp) returnStringBuffer.append(result);
+        if (returnStringBuffer.length() > 0) {
+            return "TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2).toString();    //NOI18N
+        } else {
+            return "";
+        }
+//      if (returnStringBuffer.length() > 0) returnStringBuffer.append("TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));       //NOI18N
+//      return returnStringBuffer.toString();
     }
 
     private void checkThisSSVList(int ourUniqueID, int otherUniqueID, String lr, String trafficLockingRulesSSVList, TreeSet<String> setOfUniqueIDs) {
@@ -333,7 +338,7 @@ public class Columns {
 
     private String getListOfSwitchSlavedToOSSectionsReferenced( CodeButtonHandlerData currentCodeButtonHandlerData,
                                                                 ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
-        StringBuffer returnString = new StringBuffer("");
+        StringBuffer returnStringBuffer = new StringBuffer("");
         TreeSet<String> temp = new TreeSet<>();
         int currentUniqueID = currentCodeButtonHandlerData._mUniqueID;
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
@@ -345,9 +350,14 @@ public class Columns {
                 }
             }
         }
-        for (String result : temp)  returnString.append(result);
-        if (returnString.length() > 0)  returnString.append("Sw: " + returnString.substring(0, returnString.length() - 2));   //NOI18N
-        return returnString.toString();
+        for (String result : temp)  returnStringBuffer.append(result);
+        if (returnStringBuffer.length() > 0) {
+            return "Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2).toString();   //NOI18N
+        } else {
+            return "";
+        }
+//      if (returnStringBuffer.length() > 0)  returnStringBuffer.append("Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));   //NOI18N
+//      return returnStringBuffer.toString();
     }
 
 //  Anything in error, return ERROR_STRING

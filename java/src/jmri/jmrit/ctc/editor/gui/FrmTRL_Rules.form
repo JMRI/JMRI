@@ -56,10 +56,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="786" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="_mAddNew" min="-2" pref="81" max="-2" attributes="0"/>
-                                  <Component id="_mEditBelow" min="-2" max="-2" attributes="0"/>
-                                  <Component id="_mDelete" min="-2" pref="81" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="_mEditBelow" max="32767" attributes="0"/>
+                                  <Component id="_mAddNew" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="_mDelete" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
