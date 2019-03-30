@@ -9,16 +9,23 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+
+import org.junit.*;
+import org.junit.rules.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
 public class ImportCarsTest extends OperationsTestCase {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(60); // 60 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCTor() {
