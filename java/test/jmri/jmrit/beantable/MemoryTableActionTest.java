@@ -1,10 +1,8 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Tests for classes in the jmri.jmrit.beantable package
@@ -42,6 +40,12 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
     @Override
     public String getAddFrameName(){
         return Bundle.getMessage("TitleAddMemory");
+    }
+
+    @Test
+    @Ignore("Memory create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
     }
 
     @Before
