@@ -534,8 +534,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 _statusHistory.remove(0);
             }
         }
-
     }
+
+    protected String getStatus() {
+        return _status.getText();
+    }
+
     static String BLANK = "                                                                                                 ";
 
     private final static Logger log = LoggerFactory.getLogger(WarrantTableFrame.class);

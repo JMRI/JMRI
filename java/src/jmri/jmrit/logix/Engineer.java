@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.locks.ReentrantLock;
@@ -997,29 +996,51 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         String msg;
         java.awt.Color color = WarrantTableModel.myGreen;
         WarrantTableFrame f = WarrantTableFrame.getDefault();
+        _idxSkipToSpeedCommand = 0;
+        OBlock block = warrant.getBlockAt(0);
+        OBlock endBlk = _warrant.getCurrentBlockOrder().getBlock();
         if (_warrant.equals(warrant)) {
-            _idxCurrentCommand = 0;
-            OBlock block = _warrant.getBlockAt(0);
             if (block.equals(_warrant.getCurrentBlockOrder().getBlock())) {
-                warrant.startupWarrant();
-                msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
+                msg = warrant.setRoute(false, null);
+                cmdBlockIdx = 0;    // reset block command number  
+                _idxCurrentCommand = 0;
+                if (msg == null) {
+                    warrant.startupWarrant();
+                }
             } else {
                 msg = Bundle.getMessage("warnStart",  _warrant.getTrainName(), block.getDisplayName());
                 color = java.awt.Color.red;
             }
-        } else {    //_warrant.getCurrentOrderIndex()
+        } else {    // different warrants
             if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
-                // same train is continuing on linked warrant
-                OBlock block = warrant.getfirstOrder().getBlock();
-                block.deAllocate(_warrant);     // insure warrant can start
+                // same train is continuing on different linked warrant
+                if (block.equals(endBlk)) {
+                    _warrant.deAllocate();     // insure warrant can start
+                    msg = warrant.setRoute(false, null);
+                    if (msg == null) {
+                        msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+                        if (msg == null) {
+                            msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
+                        }
+                    }
+                } else {    // same engine can't continue from its current block
+                    msg = Bundle.getMessage("warnStart",  _warrant.getTrainName(), block.getDisplayName());
+                    color = java.awt.Color.red;
+                }
+            } else {    // different train will have to be on a different block
+                // messages from WarrantTableFrame will do
+                msg = f.runTrain(warrant, Warrant.MODE_RUN);
             }
-            msg = f.runTrain(warrant, Warrant.MODE_RUN);
-            if (msg != null) {
-                msg = Bundle.getMessage("UnableToAllocate",
-                        warrant.getDisplayName()) + msg;
-                color = java.awt.Color.red;
+        }
+        if (msg != null) {
+            msg = Bundle.getMessage("CannotRun", warrant.getDisplayName(), msg);
+            color = java.awt.Color.red;
+        } else {
+            if (_warrant.equals(warrant)) {
+                msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
             } else {
-                msg = Bundle.getMessage("linkedLaunch", warrant.getDisplayName(), _warrant.getDisplayName());
+                msg = Bundle.getMessage("linkedLaunch", 
+                        warrant.getDisplayName(), _warrant.getDisplayName(), block.getDisplayName(), endBlk.getDisplayName());
             }
         }
         final String m = msg;

@@ -633,6 +633,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
+            if (DataFlavor.stringFlavor.equals(flavor)) {
+                return null;
+            }
             String name = _portalName.getText();
             if (name == null || name.trim().length() == 0) {
                 log.warn(Bundle.getMessage("needPortalName"),

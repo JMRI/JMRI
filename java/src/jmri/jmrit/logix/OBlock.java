@@ -127,7 +127,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return _statusNameMap.get(str);
     }
-    ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
+    private ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
@@ -428,7 +428,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (warrant == null) {
             return false;
         }
-        return (warrant == _warrant);
+        return warrant.equals(_warrant);
     }
 
     public String getAllocatedPathName() {
@@ -711,6 +711,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                 portal.getName(), path.getName(), getDisplayName());
                     }
                 }
+            }
+            iter = getPaths().iterator();
+            while (iter.hasNext()) {
+                OPath path = (OPath) iter.next();
                 if (path.getFromPortal() == null && path.getToPortal() == null) {
                     removePath(path);
                     if (log.isDebugEnabled()) {
@@ -963,6 +967,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             // remove portal and stub paths through portal in opposing block
             opBlock.removePortal(portal);
         }
+        _portals.removeAll(_portals);
         List<Path> pathList = getPaths();
         for (int i = 0; i < pathList.size(); i++) {
             removePath(pathList.get(i));

@@ -253,6 +253,7 @@ public class WarrantManagerXml //extends XmlFile
             for (int k=0; k<orders.size(); k++) {
                 BlockOrder bo = loadBlockOrder(orders.get(k));
                 if (bo==null) {
+                    log.error("Bad BlockOrder in warrant \"{}\".", warrant.getDisplayName());
                     break;
                 }
                 warrant.addBlockOrder(bo);
@@ -352,23 +353,21 @@ public class WarrantManagerXml //extends XmlFile
         List<Element> blocks = elem.getChildren("block");
         if (blocks.size()>1) log.error("More than one block present: {}", blocks.size());
         if (blocks.size()>0) {
-            // sensor
             String name = blocks.get(0).getAttribute("systemName").getValue();
-            try {
-                block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).provideOBlock(name);
-            } catch (IllegalArgumentException ex) {
-                log.error("Unknown Block \"{}\" is null in BlockOrder.", name);
-                return null;
+            block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name);
+            if (block == null) {
+                log.error("No such Block \"{}\" found.", name);
             }
-            if (log.isDebugEnabled()) log.debug("Load Block {}.", name);
+        if (log.isDebugEnabled()) log.debug("Load Block {}.", name);
         } else {
             log.error("Null BlockOrder element");
             return null;
         }
         Attribute attr = elem.getAttribute("pathName");
         String pathName = null;
-        if (attr != null)
+        if (attr != null) {
             pathName = attr.getValue();
+        }
 
         attr = elem.getAttribute("entryName");
         String entryName = null;

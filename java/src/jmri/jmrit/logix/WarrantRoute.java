@@ -1281,6 +1281,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             }
             switch (col) {
                 case BLOCK_COLUMN:
+                    OBlock b = bo.getBlock();
+                    if (b == null) {
+                        return "null";
+                    }
                     return bo.getBlock().getDisplayName();
                 case ENTER_PORTAL_COL:
                     return bo.getEntryName();

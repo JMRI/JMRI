@@ -1195,7 +1195,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_totalAllocated) {
             return null;
         }
-        _totalAllocated = false;
         if (orders != null) {
             _orders = orders;
         }
@@ -1247,6 +1246,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             String msg = block.allocate(this);
             if (msg != null && _message == null) {
                 _message = msg;
+                if (!this.equals(block.getWarrant())) {
+                    _waitForWarrant = true;
+                } else {
+                    _waitForBlock = true;
+                }
                 passageDenied = true;
             }
             if (!passageDenied) {
@@ -2052,6 +2056,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (dealloc && prevBlock.isAllocatedTo(this)) {
                 prevBlock.setValue(null);
                 prevBlock.deAllocate(this);
+                _totalAllocated = false;
                 fireRunStatus("blockRelease", null, block);
             }
         }
@@ -2302,12 +2307,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         String msg = block.allocate(this);
         if (msg != null) {
-            /* setPath() happens in the previous block, so.... maybe not?             
-            Warrant w = block.getWarrant();
-            if (w != null && !w.equals(this)) {
+            if (!this.equals(block.getWarrant())) {
                 _waitForWarrant = true;
-            }*/
-            _waitForBlock = true;
+            } else {
+                _waitForBlock = true;
+            }
             setStoppingBlock(block);
             speedType = Warrant.Stop;
         } else if ((block.getState() & OBlock.OCCUPIED) != 0) {
@@ -2761,7 +2765,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * This implementation tests that 
      * {@link jmri.NamedBean#getSystemName()}
      * is equal for this and obj.
-     * To allow a warrant to run with sections, train name is included to test equality
+     * To allow a warrant to run with sections, DccLocoAddress is included to test equality
      *
      * @param obj the reference object with which to compare.
      * @return {@code true} if this object is the same as the obj argument;
@@ -2773,11 +2777,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         if (obj instanceof Warrant) {  // NamedBeans are not equal to things of other types
             Warrant b = (Warrant) obj;
-            String trainName = this.getTrainName();
-            if (trainName == null) {
-                return (b.getTrainName() == null);
+            DccLocoAddress addr = this._speedUtil.getDccAddress();
+            if (addr == null) {
+                if (b._speedUtil.getDccAddress() != null) {
+                    return false;
+                }
+                return (this.getSystemName().equals(b.getSystemName()));
             }
-            return (this.getSystemName().equals(b.getSystemName()) && trainName.equals(b.getTrainName()));
+            return (this.getSystemName().equals(b.getSystemName()) && addr.equals(b._speedUtil.getDccAddress()));
         }
         return false;
     }
@@ -2785,11 +2792,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * {@inheritDoc}
      * 
-     * @return hash code value is based on the system and train names.
+     * @return hash code value is based on the system name and DccLocoAddress.
      */
     @Override
     public int hashCode() {
-        return (getSystemName().concat(getTrainName())).hashCode();
+        return (getSystemName().concat(_speedUtil.getDccAddress().toString())).hashCode();
     }
     
     private final static Logger log = LoggerFactory.getLogger(Warrant.class);
