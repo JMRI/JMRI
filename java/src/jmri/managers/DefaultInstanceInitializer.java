@@ -2,15 +2,19 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
+import jmri.AdapterManager;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
+import jmri.DigitalIO;
+import jmri.DigitalIOManager;
 import jmri.IdTagManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.LogixManager;
+import jmri.Manager;
 import jmri.MemoryManager;
 import jmri.RailComManager;
 import jmri.ReporterManager;
@@ -27,6 +31,8 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -69,6 +75,56 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == ConditionalManager.class) {
             return new DefaultConditionalManager();
+        }
+
+        if (type == DigitalIOManager.class) {
+            String beanNameDigitalIO = Bundle.getMessage("BeanNameDigitalIO");
+            DefaultDigitalIOManager m =
+                    new DefaultDigitalIOManager(beanNameDigitalIO, Manager.DIGITALIO);
+            
+            ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+            for (ConnectionConfig connection : ccm.getConnections()) {
+                m.addManager(new AbstractManager<DigitalIO>() {
+
+                    @Override
+                    public String getSystemPrefix() {
+                        return connection.getConnectionName();
+                    }
+
+                    @Override
+                    public char typeLetter() {
+                        return 'D';
+                    }
+
+                    @Override
+                    public int getXMLOrder() {
+                        return Manager.DIGITALIO;
+                    }
+
+                    @Override
+                    public String getBeanTypeHandled() {
+                        return beanNameDigitalIO;
+                    }
+                });
+            }
+            
+            // Add the internal manager?
+            // jmri.jmrix.internal.InternalDigitalIOManager
+            // See: jmri.jmrix.internal.InternalLightManager
+            
+            // Add turnout manager
+            Manager<jmri.Turnout> mt = InstanceManager.getDefault(TurnoutManager.class);
+            m.addManager(new AdapterManager<>(mt));
+            
+            // Add sensor manager
+            Manager<jmri.Sensor> ms = InstanceManager.getDefault(SensorManager.class);
+            m.addManager(new AdapterManager<>(ms));
+            
+            // Add light manager
+            Manager<jmri.Light> ml = InstanceManager.getDefault(LightManager.class);
+            m.addManager(new AdapterManager<>(ml));
+            
+            return m;
         }
 
         if (type == LightManager.class) {
@@ -154,6 +210,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 BlockManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
+                DigitalIOManager.class,
                 IdTagManager.class,
                 LightManager.class,
                 LogixManager.class,
