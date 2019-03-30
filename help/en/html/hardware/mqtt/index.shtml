@@ -141,8 +141,8 @@
 These commands can be run on the same machine as JMRI, or on a separate machine.
 <p>
 There are also MQTT tools available for 
-<a href="https://www.google.com/search?q=apple+app+store+mqtt&oq=apple+app+store+mqtt">iOS devices</a> and 
-<a href="https://play.google.com/store/search?q=mqtt&c=apps&authuser">Android devices</a>
+<a href="https://www.google.com/search?q=apple+app+store+mqtt&amp;oq=apple+app+store+mqtt">iOS devices</a> and 
+<a href="https://play.google.com/store/search?q=mqtt&amp;c=apps&amp;authuser">Android devices</a>
 that can be useful for monitoring, testing and operating your layout.
 
       <!--#include virtual="/Footer" -->
