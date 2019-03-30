@@ -936,9 +936,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         // preserve the non-sensor states when being OCCUPIED and remove non-OCCUPIED sensor states
         setState((getState() & ~(UNKNOWN|UNOCCUPIED|INCONSISTENT)) | OCCUPIED);
         if (_warrant != null) {
-//            ThreadingUtil.runOnLayout(()->{
+            ThreadingUtil.runOnLayout(()->{
                 _warrant.goingActive(this);
-//            });
+            });
         }
     }
 
