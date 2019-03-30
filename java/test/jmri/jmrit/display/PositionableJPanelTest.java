@@ -1,29 +1,28 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PositionableJPanelTest extends PositionableTestBase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists",p);
+        Assert.assertNotNull("exists", p);
     }
 
     @Test
     @Override
-    public void testGetAndSetRotationDegrees(){
+    public void testGetAndSetRotationDegrees() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         p.rotate(50);
         // setting rotation is currently ignored by PositionableJPanel 
         // and it's sub classes.
-        Assert.assertEquals("Degrees",0,p.getDegrees());
+        Assert.assertEquals("Degrees", 0, p.getDegrees());
     }
 
     @Test
@@ -37,22 +36,14 @@ public class PositionableJPanelTest extends PositionableTestBase {
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-
-        if(!GraphicsEnvironment.isHeadless()){
-           editor = new EditorScaffold();
-           p = new PositionableJPanel(editor);
-           ((PositionableJPanel)p).setName("PositionableJPanel");
+        super.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            editor = new EditorScaffold();
+            p = new PositionableJPanel(editor);
+            ((PositionableJPanel) p).setName("PositionableJPanel");
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableJPanelTest.class);

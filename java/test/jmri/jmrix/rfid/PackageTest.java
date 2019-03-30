@@ -32,6 +32,7 @@ import org.junit.runners.Suite;
      RfidNetworkPortControllerTest.class,
      RfidPortControllerTest.class,
      BundleTest.class,
+     RfidStreamConnectionConfigTest.class,
 })
 
 /**

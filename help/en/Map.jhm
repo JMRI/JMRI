@@ -62,6 +62,8 @@
 
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
 
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_splitvalExample" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#splitvalExample"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_AllowLocalCarMovements" url="package/jmri/jmrit/operations/Operations.shtml#AllowLocalCarMovements"/>
 
 <mapID target="html.tools.Blocks_addBlock" url="html/tools/Blocks.shtml#addBlock"/>
@@ -394,6 +396,8 @@
 
 <mapID target="html.hardware.cmri.CMRI_L459" url="html/hardware/cmri/CMRI.shtml#L459"/>
 
+<mapID target="html.hardware.loconet.DCS240" url="html/hardware/loconet/DCS240.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_LocomotiveConsists" url="package/jmri/jmrit/operations/Operations.shtml#LocomotiveConsists"/>
 
 <mapID target="html.apps.DecoderPro.Install" url="html/apps/DecoderPro/Install.shtml"/>
@@ -521,6 +525,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_CopyAutomation" url="package/jmri/jmrit/operations/Operations.shtml#CopyAutomation"/>
 
 <mapID target="manual.DecoderPro.Comp_Analog_Top" url="manual/DecoderPro/Comp_Analog.shtml#Top"/>
+
+<mapID target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs240/swing/Dcs240UsbModeSelect.shtml"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_WiThrottle" url="manual/DecoderPro/Start_Preferences.shtml#WiThrottle"/>
 
@@ -1352,8 +1358,6 @@
 
 <mapID target="manual.DecoderPro3.Comp_Setup_Roster" url="manual/DecoderPro3/Comp_Setup_Roster.shtml"/>
 
-<mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane_selection" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#selection"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_CarsEdit" url="package/jmri/jmrit/operations/Operations.shtml#CarsEdit"/>
 
 <mapID target="html.hardware.cmri.CMRI_L547" url="html/hardware/cmri/CMRI.shtml#L547"/>
@@ -1413,6 +1417,8 @@
 <mapID target="manual.DecoderPro3.Main_LocoNet_SoundDownloader" url="manual/DecoderPro3/Main_LocoNet.shtml#SoundDownloader"/>
 
 <mapID target="html.tools.signaling.IntroToSignalingYourMRR" url="html/tools/signaling/IntroToSignalingYourMRR.html"/>
+
+<mapID target="package.jmri.jmrix.loconet.usb_dcs52.swing.Dcs52UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs52/swing/Dcs52UsbModeSelect.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter3_ViewPanels" url="html/tools/throttle/ThrottleChapter3.shtml#ViewPanels"/>
 
@@ -1626,6 +1632,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_PrintOptions" url="package/jmri/jmrit/operations/Operations.shtml#PrintOptions"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane_setup" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#setup"/>
+
 <mapID target="html.hardware.tmcc.index_hardware" url="html/hardware/tmcc/index.shtml#hardware"/>
 
 <mapID target="html.tools.signaling.SignalingSetup_magic" url="html/tools/signaling/SignalingSetup.shtml#magic"/>
@@ -1800,6 +1808,8 @@
 
 <mapID target="manual.DecoderPro3.Main_RPS_Tracking" url="manual/DecoderPro3/Main_RPS.shtml#Tracking"/>
 
+<mapID target="package.jmri.jmrit.cabsignals.CabSignalPane" url="package/jmri/jmrit/cabsignals/CabSignalPane.shtml"/>
+
 <mapID target="html.tools.tracker.index" url="html/tools/tracker/index.shtml"/>
 
 <mapID target="package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame_Roster" url="package/jmri/jmrit/symbolicprog/tabbedframe/PaneOpsProgFrame.shtml#Roster"/>
@@ -1951,6 +1961,8 @@
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_controls" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#controls"/>
 
 <mapID target="html.hardware.sprog.SPROG_tools" url="html/hardware/sprog/SPROG.shtml#tools"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane_table" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#table"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_Display" url="manual/DecoderPro/Start_Preferences.shtml#Display"/>
 
@@ -2151,6 +2163,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_MakeDepartureTrackAvailable" url="package/jmri/jmrit/operations/Operations.shtml#MakeDepartureTrackAvailable"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_filemenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#filemenu"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane_nodeinfo" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodeinfo"/>
 
 <mapID target="manual.DecoderPro3.Comp_PrintData_a_Top" url="manual/DecoderPro3/Comp_PrintData_a.shtml#Top"/>
 
@@ -2606,6 +2620,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_PlannedPickUps" url="package/jmri/jmrit/operations/Operations.shtml#PlannedPickUps"/>
 
+<mapID target="package.jmri.jmrix.loconet.pr4.swing.Pr4Select" url="package/jmri/jmrix/loconet/pr4/swing/Pr4Select.shtml"/>
+
 <mapID target="html.setup.index_startprog" url="html/setup/index.shtml#startprog"/>
 
 <mapID target="manual.DecoderPro3.index_AdvancedProgrammer" url="manual/DecoderPro3/index.shtml#AdvancedProgrammer"/>
@@ -2721,6 +2737,8 @@
 <mapID target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"/>
 
 <mapID target="html.setup.index_Top" url="html/setup/index.shtml#Top"/>
+
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_splitval" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#splitval"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ManifestComments" url="package/jmri/jmrit/operations/Operations.shtml#ManifestComments"/>
 
@@ -3346,6 +3364,8 @@
 
 <mapID target="html.hardware.XPressNet.index_connectLi100" url="html/hardware/XPressNet/index.shtml#connectLi100"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane_fcuimport" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#fcuimport"/>
+
 <mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml"/>
 
 <mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_prodidwarn" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#prodidwarn"/>
@@ -3395,6 +3415,8 @@
 <mapID target="html.apps.DecoderPro.Programmer_id" url="html/apps/DecoderPro/Programmer.shtml#id"/>
 
 <mapID target="html.tools.signaling.index_scripting" url="html/tools/signaling/index.shtml#scripting"/>
+
+<mapID target="html.hardware.loconet.DCS52" url="html/hardware/loconet/DCS52.shtml"/>
 
 <mapID target="html.hardware.loconet.LocoNetClasses" url="html/hardware/loconet/LocoNetClasses.shtml"/>
 

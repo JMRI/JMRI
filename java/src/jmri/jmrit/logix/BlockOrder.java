@@ -100,7 +100,7 @@ public class BlockOrder {
     /**
      * Set Path. Note that the Path's 'fromPortal' and 'toPortal' have no
      * bearing on the BlockOrder's entryPortal and exitPortal.
-     * @param path - Name of the OPath connecting the entry and exit Portals
+     * @param path  Name of the OPath connecting the entry and exit Portals
      */
     protected void setPathName(String path) {
         _pathName = path;

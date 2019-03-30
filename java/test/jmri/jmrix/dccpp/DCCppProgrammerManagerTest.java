@@ -1,9 +1,9 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -14,8 +14,9 @@ import org.junit.Assert;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppProgrammerManagerTest extends TestCase {
+public class DCCppProgrammerManagerTest {
 
+    @Test
     public void testCtor() {
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -24,31 +25,13 @@ public class DCCppProgrammerManagerTest extends TestCase {
         Assert.assertNotNull(t);
     }
 
-    // from here down is testing infrastructure
-    public DCCppProgrammerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppProgrammerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppProgrammerManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

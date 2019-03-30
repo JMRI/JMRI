@@ -420,7 +420,7 @@ public interface Throttle {
      * <P>
      * Normally, release ends with a call to dispose.
      *
-     * @param l {@link ThrottleListener} to release
+     * @param l {@link ThrottleListener} to release. May be null if no {@link ThrottleListener} is currently held.
      */
     public void release(ThrottleListener l);
 

@@ -246,7 +246,7 @@ public class CbusAddress {
 
         for (int i = 0; i < pStrings.length; i++) {
             // check validity of each
-            if (pStrings[i].equals("")) {
+            if (pStrings[i].isEmpty()) {
                 return new CbusAddress[0];
             }
             if (!hCode.reset(pStrings[i]).matches()) {
@@ -326,8 +326,6 @@ public class CbusAddress {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         switch (v.length) {
-            case 0:
-                throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
             case 1:
                 if ( address.startsWith("+") || address.startsWith("-") ) {
                     break;
@@ -385,7 +383,7 @@ public class CbusAddress {
             // ignoring anything starting with x or X as it may be a HEX value
             // which is checked by core CbusAddress
             try {
-                if ( (part.charAt(0) != 'x') && (part.charAt(0) != 'X') ) {
+                if ( (part.toUpperCase().charAt(0) != 'X') ) {
                     log.debug("not an int or hex {}",part);
                     
                     // it's got a string in somewhere, start by checking event number
@@ -399,9 +397,6 @@ public class CbusAddress {
                     }
                     int firsta =  StringUtil.getFirstIntFromString(part);
                     log.debug("first string {}",firsta);
-                    if ( firsta == 0 ){
-                        throw new IllegalArgumentException("Node cannot be 0 in address: " + part);
-                    }
                     if ( firsta > 65535 ){
                         throw new IllegalArgumentException("Node Too Large in address: " + part);
                     }

@@ -9,8 +9,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +30,7 @@ import org.netbeans.jemmy.ComponentChooser;
  */
 public class MemoryIconTest extends PositionableTestBase {
 
-    private MemoryIcon to = null;
+    protected MemoryIcon to = null;
 
     @Test
     public void testShowContent() {
@@ -38,7 +40,6 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest1", editor);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -80,11 +81,7 @@ public class MemoryIconTest extends PositionableTestBase {
         to.getPopupUtility().setBackgroundColor(Color.white);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect blank: "));
-
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
-
-        to.setMemory("IM2");
-
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("");
         jf.pack();
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -114,10 +111,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-
-        to.setMemory("IM3");
 
         jf.pack();
         jf.setVisible(true);
@@ -132,6 +126,87 @@ public class MemoryIconTest extends PositionableTestBase {
         }
 
     }
+
+    @Test
+    public void testShowNumber() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JmriJFrame();
+        jf.setTitle("Expect Number");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
+
+        jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
+
+        jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
+
+	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(42);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        jf.pack();
+        jf.setVisible(true);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+
+        jf.setVisible(false);
+        JUnitUtil.dispose(jf);
+    }
+
+    @Test
+    public void testShowRosterEntry() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JmriJFrame();
+        jf.setTitle("Expect Roster Entry");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
+
+        jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
+
+        jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
+
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+
+	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        jf.pack();
+        jf.setVisible(true);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+
+        jf.setVisible(false);
+        JUnitUtil.dispose(jf);
+    }
+
+    @Test
+    public void testShowIdTag() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JmriJFrame();
+        jf.setTitle("Expect Roster Entry");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
+
+        jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
+
+        jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
+
+        jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
+
+	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(tag);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        jf.pack();
+        jf.setVisible(true);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+
+        jf.setVisible(false);
+        JUnitUtil.dispose(jf);
+    }
+
 
     int[] getColor(String frameName, String label, int x, int y, int n) {
         // Find window by name
@@ -176,8 +251,7 @@ public class MemoryIconTest extends PositionableTestBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
@@ -189,9 +263,8 @@ public class MemoryIconTest extends PositionableTestBase {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         to = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

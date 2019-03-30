@@ -128,7 +128,7 @@ abstract public class AbstractMRTrafficController {
 
     // The methods to implement the abstract Interface
 
-    protected Vector<AbstractMRListener> cmdListeners = new Vector<AbstractMRListener>();
+    protected final Vector<AbstractMRListener> cmdListeners = new Vector<AbstractMRListener>();
 
     protected synchronized void addListener(AbstractMRListener l) {
         // add only if not already registered
@@ -158,6 +158,7 @@ abstract public class AbstractMRTrafficController {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<AbstractMRListener> v;
         synchronized (this) {
+            // FIXME: unnecessary synchronized; the Vector IS already thread-safe.
             v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
@@ -271,6 +272,7 @@ abstract public class AbstractMRTrafficController {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector<AbstractMRListener> v;
         synchronized (this) {
+            // FIXME: unnecessary synchronized; the Vector IS already thread-safe.
             v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
@@ -936,6 +938,9 @@ abstract public class AbstractMRTrafficController {
      * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
+	if(istream == null) {
+                throw new IOException("Input Stream NULL when reading");
+	}
         while (true) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);

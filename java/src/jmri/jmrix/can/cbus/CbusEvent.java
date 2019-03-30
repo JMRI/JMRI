@@ -45,6 +45,13 @@ public class CbusEvent {
         return _nn;
     }
     
+    public void setEn ( int en ) {
+        _en = en;
+    }
+
+    public void setNn ( int nn ) {
+        _nn = nn;
+    }
     
     public void setName( String name ) {
         _name = name;
@@ -54,13 +61,8 @@ public class CbusEvent {
         return _name;
     }
     
-    // will not exist when there's a node table
-    public void setNodeName( String name ) {
-        _nodeName = name;
-    }
-    
     public String getNodeName() {
-        return _nodeName;
+        return new CbusNameService().getNodeName( getNn() );
     }
     
     public Boolean matches(int nn, int en) {
@@ -131,8 +133,8 @@ public class CbusEvent {
             addevbuf.append (":");
             addevbuf.append (_nn);
             addevbuf.append (" ");
-            if (!_nodeName.equals("")) {
-                addevbuf.append (_nodeName);
+            if ( !getNodeName().isEmpty() ) {
+                addevbuf.append ( getNodeName() );
                 addevbuf.append (" ");
             }
         }
@@ -140,8 +142,8 @@ public class CbusEvent {
         addevbuf.append (":");
         addevbuf.append (_en);
         addevbuf.append (" ");
-        if (!_name.equals("")) {
-            addevbuf.append (_name);
+        if ( !getName().isEmpty() ) {
+            addevbuf.append ( getName() );
             addevbuf.append (" ");
         }
         return addevbuf.toString();

@@ -30,7 +30,6 @@ public class SimpleServer extends JmriServer {
      * @deprecated since 4.7.1 use @link{InstanceManager.getDefault()} instead.
      */
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method
     public static JmriServer instance() {
         if (InstanceManager.getNullableDefault(SimpleServer.class) == null) {
             InstanceManager.store(new SimpleServer(),SimpleServer.class);
@@ -73,7 +72,7 @@ public class SimpleServer extends JmriServer {
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
         outStream.writeBytes("RAILROAD " + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + " \n");
-        outStream.writeBytes("NODE " + NodeIdentity.identity() + " \n");
+        outStream.writeBytes("NODE " + NodeIdentity.networkIdentity() + " \n");
 
         while (true) {
             inputScanner.skip("[\r\n]*");// skip any stray end of line characters.

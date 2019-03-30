@@ -155,13 +155,16 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         return "GPIO";
     }
 
+    String manuf = RaspberryPiConnectionTypeList.PI;
+
     @Override
     public String getManufacturer() {
-        return RaspberryPiConnectionTypeList.PI;
+        return manuf;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
+        manuf = manufacturer;
     }
 
     @Override

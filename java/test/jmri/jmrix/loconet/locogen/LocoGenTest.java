@@ -1,9 +1,7 @@
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.junit.Assert;
 
 /**
@@ -11,14 +9,16 @@ import org.junit.Assert;
  *
  * @author Bob Jacobsen Copyright 2001, 2003
  */
-public class LocoGenTest extends TestCase {
+public class LocoGenTest {
 
+    @Test
     public void testPacketNull() {
         LocoGenPanel t = new LocoGenPanel();
         LocoNetMessage m = t.createPacket("");
         Assert.assertEquals("null pointer", null, m);
     }
 
+    @Test
     public void testPacketCreate() {
         LocoGenPanel t = new LocoGenPanel();
         LocoNetMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
@@ -31,23 +31,6 @@ public class LocoGenTest extends TestCase {
         Assert.assertEquals("5th byte", 0x06, m.getElement(5) & 0xFF);
         Assert.assertEquals("6th byte", 0x0B, m.getElement(6) & 0xFF);
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
-    }
-
-    // from here down is testing infrastructure
-    public LocoGenTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LocoGenTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LocoGenTest.class);
-        return suite;
     }
 
 }

@@ -24,6 +24,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -4382,7 +4383,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     // Ensure minimal setup for log4J
-    @Override
+    @Before
     public void setUp() {
         super.setUp();
         

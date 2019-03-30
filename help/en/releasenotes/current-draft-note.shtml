@@ -1,6 +1,5 @@
 
     <h3>Hardware Support</h3>
-
         <ul>
           <li></li>
         </ul>
@@ -47,7 +46,32 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><p>JMRI's support for the Digitrax PR4 has been updated to
+                    reflect the PR4's inability to provide
+                    "LocoNet Data Signal termination". <span class="since">since
+                    4.15.5</span></p>
+
+                    <p>This is a correction to JMRI's previous implementation of
+                    PR4 functionality.  It reflects a a more-accurate understanding
+                    of PR4 features by the JMRI development team.</p>
+
+                    <p>When configuring a JMRI "connection" for the PR4, the "Command
+                    station type" of "Stand-alone LocoNet" is no longer available.
+                    Users with an existing PR4 connection which has been configured
+                    for a "Command station type" of "Stand-alone LocoNet" should
+                    change their "Command station type" to some other selection,
+                    such as "DCS100", and save the configuration profile.</p>
+
+                    <p>Because LocoNet requires some source of "LocoNet Data Signal
+                    termination", and because the PR4 is not capable of providing
+                    that feature, it will be necessary to provide it using some
+                    other piece of LocoNet hardware.  Both commercially-available and
+                    do-it-yourself options are available, as described in the
+                    "<a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml#dataterm">
+                    LocoNet Data Signal termination</a>" section of the JMRI
+                    <a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml">
+                    Standalone LocoNet</a>" help page.</p>
+                </li>
             </ul>
 
         <h4>Maple</h4>
@@ -62,15 +86,21 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Turnouts now accept DIRECT and DELAYED feedback.</li>
-                <li>Querying a turnout will also query any feedback sensors for that turnout.<li>
-                <li>Event Request monitoring has moved from the Event Table to a stand-alone request monitoring table.</li>
-                <li>The CBUS console will attempt to lookup event ( and node ) names from the Event Table.</li>
+                <li>Fixed issue with Roster speed-profiling</li>
+                <li><a
+                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS
+                Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
+                <li>Track Current meter avaiable for supported Command Stations via
+                PanelPro > Tools > Track Current Meter</li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>This release has an experimental method for changing the payload
+                    of MqttTurnouts, i.e. to use JSON instead of fixed strings.
+                    See the description at the bottom of the
+                    <a href="http://jmri.org/help/en/hardware/mqtt/index.shtml#payload">bottom of the MQTT page</a>.
+                    </li>
             </ul>
 
         <h4>MRC</h4>
@@ -80,7 +110,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li><li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -100,7 +130,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li><>/li>
             </ul>
 
         <h4>Secsi</h4>
@@ -139,9 +169,9 @@
             </ul>
 
     <h3>New / Updated decoder definitions</h3>
-      <ul>
-        <li></li>
-     </ul>
+        <ul>
+          <li></li>
+        </ul>
 
         <h4>Arnold</h4>
             <ul>
@@ -180,7 +210,15 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>
+                    ESU LokSound decoder users can now read the loaded Sound Project Name
+                    (and other decoder information) on the Information Pane.
+                    <br><br>
+                    This allows cross-referencing to the ESU website
+                    (copy the "Loco Name" to search the Projects section) in order to
+                    find the ESU bulletin and hence determine
+                    Sound Slot and Function Key names. (Dave Heap)
+                </li>
             </ul>
 
         <h4>Hornby</h4>
@@ -260,7 +298,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Add Trim CV to Basic Speed Control pane</li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -309,86 +347,126 @@
             </ul>
 
     <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"/>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-          <li></li>
+            <li>
+                Changes to
+                <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#splitval"
+                   target="_blank">Split Variables</a>.
+                <ul>
+                    <li>
+                        More than 2 CVs can be specified for
+                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
+                           target="_blank">splitVal</a>
+                        and the other new types, using a new notation format.
+                    </li>
+                    <li>
+                        A new
+                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html"
+                           target="_blank">splitHexVal</a>
+                        type for hexadecimal entry/display.
+                    </li>
+                    <li>
+                        A new
+                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html"
+                           target="_blank">splitDateTimeVal</a>
+                        type for Date/Time information stored across CVs
+                        (e.g. dates in the RailCom&reg; CV page).
+                    </li>
+                    <li>
+                        A new
+                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html"
+                           target="_blank">splitTextVal</a>
+                        type for entry and display of text strings stored across CVs .
+                    </li>
+                </ul>
+                For more information see
+                <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#splitval"
+                   target="_blank">Advanced Decoder Definitions</a>. (Dave Heap)
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>
-        <a id="Dispatcher" name="Dispatcher"/>
+        <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
         </ul>
 
    <h3>Internationalization</h3>
-        <a id="I18N" name="I18N"/>
+        <a id="I18N" name="I18N"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
-        <a id="LE" name="LE"/>
+        <a id="LE" name="LE"></a>
         <ul>
 	        <li></li>
         </ul>
 
     <h3>Logix</h3>
-        <a id="Logix" name="Logix"/>
+        <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
         </ul>
 
     <h3>Operations</h3>
-        <a id="Operations" name="Operations"/>
+        <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Panel Editors</h3>
-        <a id="PE" name="PE"/>
+        <a id="PE" name="PE"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Preferences</h3>
-        <a id="Preferences" name="Preferences"/>
+        <a id="Preferences" name="Preferences"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Resources</h3>
-        <a id="Resources" name="Resources"/>
+        <a id="Resources" name="Resources"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"/>
+        <a id="Roster" name="Roster"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"/>
+        <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed an issue where Reporters with a system letter of M
-                were erroneously tagged as 
-                <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">requiring migration</a>.</li>
+            <li>The handling of Turnout system names has been updated
+                to be (more, hopefully completely) consistent with the
+                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.  
+                Specifically, case now (generally) matters in system names:
+                <ul>
+                    <li>You can now have an internal turnout named "ITsome lower case name".
+                    <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
+                        "ITSome LoWeR cAse Name" and get the same one.
+                </ul>
+                This should not require any migration for stored configurations or 
+                panel files, as they have been automatically been being kept consistent 
+                since JMRI 4.8.  But you might have case errors in i.e. scripts which
+                will fixing inconsistent references in your scripts.
+                </li>
         </ul>
 
     <h3>Scripting</h3>
-        <a id="Scripting" name="Scripting"/>
+        <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Geoff Bunza provided sample scripts supporting bulk 
-            <a href="http://jmri.org/jython/serialinput/Sensor_Channel_To_JMRI/Sensor_Channels_Readme.md">sensor channels</a>
-            and
-            <a href="http://jmri.org/jython/serialinput/Turnout_Channel_from_JMRI/Turnout_Channels_Readme.md">turnout channels</a>
-            via USB between JMRI Sensor and Turnout Tables and Arduino interfaces to hardware.</li>.
-            For more information, see the Readme files linked just above.
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
-        <a id="Signals" name="Signals"/>
+        <a id="Signals" name="Signals"></a>
         <ul>
             <li></li>
         </ul>
@@ -399,7 +477,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>Fix an XML validation problem when reading files with RGB heads</li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -424,63 +502,54 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li></li>
+                <li>Updated how lock information is
+                    stored in the 'logging memory'
+                    so that it can be displayed e.g.
+                    on a panel.  For more info,
+                    see the
+                    <a href="/help/en//html/tools/uss/index.shtml">help page</a></li>
             </ul>
 
    <h3>Switchboard Editor</h3>
-        <a id="SW" name="SW"/>
+        <a id="SW" name="SW"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Timetable</h3>
-        <a id="Timetable" name="Timetable"/>
+        <a id="Timetable" name="Timetable"></a>
+        <span class="since">since 4.13.4</span>
         <ul>
-            <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
-            CSV file that can be imported into a spreadsheet program.  This can
-            be used to create a traditional timetable.</li>
-            <li>New menu item: <strong>Import CSV File</strong> &mash; Import a
-            CSV file that contains external timetable data to create a new
-            layout defintion or extend an existing layout definition.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
-        <a id="Wt" name="Wt"/>
+        <a id="Wt" name="Wt"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Web Access</h3>
-        <a id="WA" name="WA"/>
+        <a id="WA" name="WA"></a>
         <ul>
             <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
-        <a id="WS" name="WS"/>
+        <a id="WS" name="WS"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"/>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
-        <a id="Misc" name="Misc"/>
+        <a id="Misc" name="Misc"></a>
         <ul>
-            <li>We're building the release note a
-                <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
-                starting with this release.</li>
-            <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
-            <li>The Windows "installer" and "launcher" have been updated to support 
-                Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
-            <li>Starting with the release, 
-                <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
-                will cause JMRI to issues a warning at startup.  This warning can't be suppressed
-                without migrating the prefix in the connection configuration (and any associated
-                panel files and scripts).
+            <li></li>
         </ul>
 

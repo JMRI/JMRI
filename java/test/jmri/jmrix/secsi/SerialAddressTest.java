@@ -3,9 +3,9 @@ package jmri.jmrix.secsi;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -14,11 +14,12 @@ import org.junit.Assert;
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007
  */
-public class SerialAddressTest extends TestCase {
+public class SerialAddressTest {
 
     private SerialTrafficControlScaffold tcis = null;
     private SecsiSystemConnectionMemo memo = null;
 
+    @Test
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - VL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("VL2", 'L', "V"));
         Assert.assertTrue("valid format - VL0B2", NameValidity.VALID == SerialAddress.validSystemNameFormat("VL0B2", 'L', "V"));
@@ -82,6 +83,7 @@ public class SerialAddressTest extends TestCase {
         //JUnitAppender.assertWarnMessage("invalid character in bit number field of system name: VL2B5x");
     }
 
+    @Test
     public void testGetBitFromSystemName() {
         Assert.assertEquals("VL2", 2, SerialAddress.getBitFromSystemName("VL2", "V"));
         Assert.assertEquals("VL2002", 2, SerialAddress.getBitFromSystemName("VL2002", "V"));
@@ -101,6 +103,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("VL11B2048", 2048, SerialAddress.getBitFromSystemName("VL11B2048", "V"));
     }
 
+    @Test
     public void testGetNodeFromSystemName() {
         SerialNode d = new SerialNode(14, SerialNode.DAUGHTER, tcis);
         SerialNode c = new SerialNode(17, SerialNode.DAUGHTER, tcis);
@@ -115,6 +118,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("node of VL11B7", null, SerialAddress.getNodeFromSystemName("VL11B7", tcis));
     }
 
+    @Test
     public void testValidSystemNameConfig() {
         SerialNode d = new SerialNode(4, SerialNode.DAUGHTER, tcis);
         SerialNode c = new SerialNode(10, SerialNode.DAUGHTER, tcis);
@@ -170,6 +174,7 @@ public class SerialAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testConvertSystemNameFormat() {
         Assert.assertEquals("convert VL14007", "VL14B7", SerialAddress.convertSystemNameToAlternate("VL14007", "V"));
         Assert.assertEquals("convert VS7", "VS0B7", SerialAddress.convertSystemNameToAlternate("VS7", "V"));
@@ -183,6 +188,7 @@ public class SerialAddressTest extends TestCase {
         //JUnitAppender.assertWarnMessage("node address field out of range in system name: VL128B7");
     }
 
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize VL14007", "VL14007", SerialAddress.normalizeSystemName("VL14007", "V"));
         Assert.assertEquals("normalize V2L007", "V2L7", SerialAddress.normalizeSystemName("V2L007", "V2"));
@@ -196,34 +202,16 @@ public class SerialAddressTest extends TestCase {
         //JUnitAppender.assertWarnMessage("node address field out of range in system name: VL128B7");
     }
 
-    // from here down is testing infrastructure
-    public SerialAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialAddressTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
 
         memo = new SecsiSystemConnectionMemo(); // needed to create tcis
         tcis = new SerialTrafficControlScaffold(memo);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

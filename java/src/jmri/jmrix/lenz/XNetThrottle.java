@@ -262,7 +262,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Set the speed step value and the related speedIncrement value.
      *
-     * @param Mode - the current speed step mode - default should be 128
+     * @param Mode  the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
     @Override

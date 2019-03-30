@@ -13,8 +13,10 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.ConfigureManager;
+import jmri.jmrix.AbstractStreamConnectionConfig;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.StreamConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.InstanceManager;
@@ -36,7 +38,7 @@ import jmri.jmrix.ieee802154.xbee.XBeeNode;
  * class.
  * <p>
  * The classes referenced are the specific subclasses of
- * {@link jmri.jmrix.ConnectionConfig} which provides the methods providing data
+ * {@link jmri.jmrix.StreamConnectionConfig} which provides the methods providing data
  * to the configuration GUI, and responding to its changes.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
@@ -46,11 +48,14 @@ public class StreamConfigPane extends JmrixConfigPane {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(StreamConfigPane.class);
 
+    private XBeeNode confNode = null;
+
     /*
      * Create panel is seperated off from the instance and synchronized, so that only
      * one connection can be configured at once, this prevents multiple threads from
      * trying to create the same panel at the same time.
      */
+
     /**
      * Create a new connection configuration panel.
      *
@@ -60,7 +65,7 @@ public class StreamConfigPane extends JmrixConfigPane {
      *         index did not match an existing connection configuration
      */
     public static synchronized StreamConfigPane createPanel(XBeeNode node) {
-        ConnectionConfig c = node.getConnectionConfig();
+        StreamConnectionConfig c = node.getConnectionConfig();
         return createPanel(c);
     }
 
@@ -70,7 +75,7 @@ public class StreamConfigPane extends JmrixConfigPane {
      * @param c the connection; if null, the panel is ready for a new connection
      * @return the new panel
      */
-    public static synchronized StreamConfigPane createPanel(ConnectionConfig c) {
+    public static synchronized StreamConfigPane createPanel(StreamConnectionConfig c) {
         StreamConfigPane pane = new StreamConfigPane(c);
         if (c == null) {
             pane.isDirty = true;
@@ -99,9 +104,13 @@ public class StreamConfigPane extends JmrixConfigPane {
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             cmOD.deregister(confPane);
-            cmOD.deregister(confPane.ccCurrent);
+            //cmOD.deregister(confPane.ccCurrent);
         }
         InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
+    }
+
+    public void setXBeeNode(XBeeNode node){
+       confNode = node;
     }
 
     private boolean isDirty = false;
@@ -111,20 +120,20 @@ public class StreamConfigPane extends JmrixConfigPane {
 
     JPanel details = new JPanel();
     String[] classConnectionNameList;
-    ConnectionConfig[] classConnectionList;
+    StreamConnectionConfig[] classConnectionList;
     String[] manufactureNameList;
 
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
-    ConnectionConfig ccCurrent = null;
+    StreamConnectionConfig ccCurrent = null;
 
     /**
      * Use "instance" to get one of these. That allows it to reconnect to
-     * existing information in an existing ConnectionConfig object. It's
+     * existing information in an existing StreamConnectionConfig object. It's
      * permitted to call this with a null argument, e.g. for when first
      * configuring the system.
      */
-    protected StreamConfigPane(ConnectionConfig original) {
+    protected StreamConfigPane(StreamConnectionConfig original) {
         ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
         ccCurrent = original;
 
@@ -133,31 +142,35 @@ public class StreamConfigPane extends JmrixConfigPane {
 
         manuBox.addItem(NONE_SELECTED);
 
-        //manufactureNameList = manager.getConnectionManufacturers();
-        /*Set<Class<? extends AbstractStreamPortController>> subTypes = reflections.getSubTypesOf(AbstractStreamPortController.class);
-        for (Class cType : subTypes) {
-            manuBox.addItem(cType.getName());
-        }*/
-        manuBox.addItem("jmri.jmrix.lenz.XNetStreamPortController.class");
+        manufactureNameList = manager.getConnectionManufacturers();
+        for (String manuName : manufactureNameList) {
+            if (original != null && original.getManufacturer() != null
+                    && original.getManufacturer().equals(manuName)) {
+                manuBox.addItem(manuName);
+                manuBox.setSelectedItem(manuName);
+            } else {
+                manuBox.addItem(manuName);
+            }
+        }
         manuBox.addActionListener((ActionEvent evt) -> {
             updateComboConnection();
         });
 
         // get the list of ConnectionConfig items into a selection box
         classConnectionNameList = manager.getConnectionTypes((String) manuBox.getSelectedItem());
-        classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
+        classConnectionList = new jmri.jmrix.StreamConnectionConfig[classConnectionNameList.length + 1];
         modeBox.addItem(NONE_SELECTED);
-        if (manuBox.getSelectedIndex() != 0) {
+        //if (manuBox.getSelectedIndex() != 0) {
             modeBox.setEnabled(true);
-        } else {
+        //} else {
             modeBox.setSelectedIndex(0);
             modeBox.setEnabled(false);
-        }
+        //}
         int n = 1;
         if (manuBox.getSelectedIndex() != 0) {
             for (String className : classConnectionNameList) {
                 try {
-                    ConnectionConfig config;
+                    StreamConnectionConfig config;
                     if (original != null && original.getClass().getName().equals(className)) {
                         config = original;
                         log.debug("matched existing config object");
@@ -168,13 +181,19 @@ public class StreamConfigPane extends JmrixConfigPane {
                         }
                     } else {
                         Class<?> cl = Class.forName(className);
-                        config = (ConnectionConfig) cl.newInstance();
-                        modeBox.addItem(config.name());
+			try {
+                           config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
+                           modeBox.addItem(config.name());
+			} catch (ClassCastException cce) {
+		           // the list may include non-StreamConnectinoConfig 
+			   // objects, so just ignore those.
+			   continue;
+			}
                     }
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
                     log.error("Attempt to load {} failed.", className, e);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.debug("Attempt to load {} failed: {}.", className, e);
                 }
             }
@@ -215,7 +234,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         modeBox.removeAllItems();
         modeBox.addItem(NONE_SELECTED);
         classConnectionNameList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnectionTypes((String) manuBox.getSelectedItem());
-        classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
+        classConnectionList = new jmri.jmrix.StreamConnectionConfig[classConnectionNameList.length + 1];
 
         if (manuBox.getSelectedIndex() != 0) {
             modeBox.setEnabled(true);
@@ -228,15 +247,20 @@ public class StreamConfigPane extends JmrixConfigPane {
         if (manuBox.getSelectedIndex() != 0) {
             for (String classConnectionNameList1 : classConnectionNameList) {
                 try {
-                    jmri.jmrix.ConnectionConfig config;
+                    jmri.jmrix.StreamConnectionConfig config;
                     Class<?> cl = Class.forName(classConnectionNameList1);
-                    config = (jmri.jmrix.ConnectionConfig) cl.newInstance();
+                    config = (jmri.jmrix.StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
                     modeBox.addItem(config.name());
                     classConnectionList[n++] = config;
                     if (classConnectionNameList.length == 1) {
                         modeBox.setSelectedIndex(1);
                     }
-                } catch (NullPointerException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassCastException cce) {
+		    // the list may include non-StreamConnectinoConfig 
+		    // objects, so just ignore those.
+	            continue;
+                } catch (NullPointerException | ClassNotFoundException | InstantiationException | 
+                            IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);
                 }
             }
@@ -251,7 +275,7 @@ public class StreamConfigPane extends JmrixConfigPane {
     }
 
     void select() {
-        ConnectionConfig old = this.ccCurrent;
+        StreamConnectionConfig old = this.ccCurrent;
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         // first choice is -no- protocol chosen
@@ -269,8 +293,14 @@ public class StreamConfigPane extends JmrixConfigPane {
             }
         }
         if (old != this.ccCurrent) {
-            this.ccCurrent.register();
+              // store the connection config with the node.
+              if(ccCurrent instanceof AbstractStreamConnectionConfig) {
+                 confNode.setPortController((AbstractStreamConnectionConfig)ccCurrent); 
+                 //confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent); 
+              // this.ccCurrent.register();
+              }
         }
+
         validate();
 
         repaint();
@@ -313,7 +343,7 @@ public class StreamConfigPane extends JmrixConfigPane {
     }
 
     @Override
-    public ConnectionConfig getCurrentObject() {
+    public StreamConnectionConfig getCurrentObject() {
         int current = modeBox.getSelectedIndex();
         if (current != 0) {
             return classConnectionList[current];

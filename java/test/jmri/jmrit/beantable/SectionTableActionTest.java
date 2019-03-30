@@ -1,10 +1,11 @@
 package jmri.jmrit.beantable;
 
+import jmri.Block;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.ToDo;
+import org.junit.*;
 
 /**
  *
@@ -38,6 +39,18 @@ public class SectionTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSection");
+    }
+
+    @Test
+    @Override
+    @Ignore("Section create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
@@ -45,7 +58,10 @@ public class SectionTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         helpTarget = "package.jmri.jmrit.beantable.SectionTable"; 
+        InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
         a = new SectionTableAction();
+        InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12");
+
     }
 
     @Override

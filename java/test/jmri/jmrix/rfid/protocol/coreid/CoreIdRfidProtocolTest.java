@@ -1,16 +1,19 @@
 package jmri.jmrix.rfid.protocol.coreid;
 
 import jmri.jmrix.AbstractMRReply;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the CoreIdRfidProtocol class
  *
  * @author Matthew Harris
  */
-public class CoreIdRfidProtocolTest extends TestCase {
+public class CoreIdRfidProtocolTest {
 
     AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u000204171F04FEF6\r\n\u0003");
     AbstractMRReply msgConcentrator = new AbstractMRReplyImpl("A04171F04FEF6\r\n>");
@@ -20,6 +23,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of getMaxSize method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetMaxSize() {
         assertEquals(16, CoreIdRfidProtocol.getMaxSize());
     }
@@ -27,6 +31,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of initString method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testInitString() {
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
         assertEquals("", instance.initString());
@@ -35,6 +40,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of getTag method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetTag() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -47,6 +53,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of providesChecksum method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testProvidesChecksum() {
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
         assertEquals(true, instance.providesChecksum());
@@ -55,6 +62,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of getCheckSum method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetCheckSum() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -67,6 +75,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of isValid method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testIsValid() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -81,6 +90,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of isCheckSumValid method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testIsCheckSumValid() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -96,6 +106,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of endOfMessage method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testEndOfMessage() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -108,6 +119,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of getReaderPort method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetReaderPort() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -122,6 +134,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     /**
      * Test of toMonitorString method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testToMonitorString() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
@@ -150,33 +163,13 @@ public class CoreIdRfidProtocolTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public CoreIdRfidProtocolTest(String testName) {
-        super(testName);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CoreIdRfidProtocolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CoreIdRfidProtocolTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

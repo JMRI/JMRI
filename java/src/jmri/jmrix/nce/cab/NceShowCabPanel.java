@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * currently selected loco look at memory location 0x8a00 + 32 dec (0x20). This
  * will be address 0x8a20.
  * <p>
- * <p>
+ * <br>
  * To determine if a cab is active (plugged in at any point this session) you
  * will need to look at the byte "FLAGS1" (offset 101)
  * <p>
@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
  * Cab04 other cab without an LCD (type B) Bit 7,0 = 1,0 USB or similar device
  * (type C) Bit 7,0 = 1,1 AIU or similar device (type D)
  * <p>
- * <p>
+ * <br>
  * CAB_BASE EQU 0 ; LCD_TOP_LINE EQU 0 ;16 chars (in ASCII) for top line of LCD
  * LCD_BOT_LINE EQU 16 ;16 chars (in ASCII) for bottom line of LCD
  * <p>
@@ -87,7 +87,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * ALIAS EQU 38 ;If loco is in consist this is the consist address
  * <p>
- * <p>
+ * <br>
  * FUNC13_20 EQU 82 ;bit map of current functions (bit 0=F13) FUNC21_28 EQU 83
  * ;bit map of current functions (bit 0=F21)
  * <p>

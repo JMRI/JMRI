@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.25.1
+; - Fix bug introduced by disabling alternate launcher with JDK 11
+; -------------------------------------------------------------------------
 ; - Version 0.1.25.0
 ; - Add option to use standard launcher '/noalt'
 ; - Disable use of alternate launcher when JDK 11 in use.
@@ -153,7 +156,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2019 JMRI Community" ; Copyright string
-!define VER        "0.1.25.0"                     ; Launcher version
+!define VER        "0.1.25.1"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -305,7 +308,14 @@ Section "Main"
     ; -- JDK 11 doesn't seem to like our 'default' behaviour of running from
     ; -- a temp directory with a renamed 'java.exe' so switch that off here
     ; -- We only need to do this if JDK has been found
-    IfErrors FoundJavaInstallPoint
+    IfErrors 0 DisableAltLauncher
+    ; -- As we've just cleared the error flag, we need to set it again
+    ; -- otherwise we'll think that we've found an installation
+    ; -- Gotta love the spaghetti...
+    SetErrors
+    Goto FoundJavaInstallPoint
+    
+  DisableAltLauncher:
     DetailPrint "Switching off alternate launcher..."
     StrCpy $ALTLAUNCH ${FLAG_NO}
 

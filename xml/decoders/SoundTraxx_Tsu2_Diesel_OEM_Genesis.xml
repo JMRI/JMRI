@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-13-3.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2016</year>
         <holder>JMRI</holder>
@@ -65,1362 +65,177 @@
             <revnumber>6</revnumber>
             <date>2019-01-15</date>
             <authorinitials>MM</authorinitials>
-            <revremark>Add new model GP7 and second SD60E</revremark>
+            <revremark>Add new model GP7u and second SD60E</revremark>
+        </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2019-03-06</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Add 18 new models GP7s GP9s GP38-2s GP39-2s GP40-2s ES44ACs</revremark>
+        </revision>
+        <revision>
+            <revnumber>8</revnumber>
+            <date>2019-03-14</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Move outputs to family level</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
-        <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" >
+        <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71">
             <model model="TSU-GN2200 F3/7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="782" comment="Model T0102.006B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 F3/7 w/DB/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="783" comment="Model T0102.008B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 F3/7 w/DB/gyra2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="806" comment="Model T0102.015B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="770" comment="Model T0102.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-            </model>
-            <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="870" comment="Model 8T??">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="771" comment="Model T0102.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="871" comment="Model 8T0103.005">
+            </model>
+            <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="870" comment="Model 8T0103.004">
             </model>
             <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="793" comment="Model T0102.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-            </model>
-            <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="788" comment="Model T0102.016B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="824" comment="Model T0102.017B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
-            <model model="TSU-GN2200 GP9 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="772" comment="Model T0102.004B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="788" comment="Model T0102.016B">
             </model>
-            <model model="TSU-GN2200 GP9 w/DB,gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="794" comment="Model T0102.009B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="858" comment="Model T0102.004">
             </model>
             <model model="TSU-GN2200 GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="795" comment="Model T0102.010B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP9 w/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="796" comment="Model T0102.011B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2200 GP9 w/beacon3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="838" comment="Model T0102.019B">
+            </model>
+            <model model="TSU-GN2208 GP9 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="857" comment="Model 8T0102.018">
+            </model>
+            <model model="TSU-GN2200 GP9 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="772" comment="Model T0102.004B">
+            </model>
+            <model model="TSU-GN2200 GP9 w/DB,beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="837" comment="Model T0102.004B">
+            </model>
+            <model model="TSU-GN2200 GP9 w/DB,gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="794" comment="Model T0102.009B">
             </model>
             <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="787" comment="Model T0102.014B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
-            <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="797" comment="Model T0200.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="861" comment="Model 8T0102.021">
             </model>
             <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="798" comment="Model T0201.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="799" comment="Model T0201.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="800" comment="Model T0201.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="797" comment="Model T0200.001B">
             </model>
             <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="776" comment="Model T0203.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="844" comment="Model T0203.007B">
             </model>
             <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="777" comment="Model T0203.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="840" comment="Model T0203.002B">
+            </model>
+            <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="842" comment="Model T0203.005B">
+            </model>
+            <model model="TSU-GN2200 GP38-2 w/DB/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="841" comment="Model T0203.004B">
+            </model>
+            <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="843" comment="Model T0203.006B">
+            </model>
+            <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="845" comment="Model T0203.009B">
+            </model>
+            <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="852" comment="Model T0203.010B">
             </model>
             <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="828" comment="Model T0202.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="829" comment="Model T0202.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="830" comment="Model T0205.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="831" comment="Model T0205.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="832" comment="Model T0205.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
-            <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="784" comment="Model T0204.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="849" comment="Model T0204.006B">
+            </model>
+            <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="848" comment="Model T0204.005B">
+            </model>
+            <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="847" comment="Model T0204.005B">
             </model>
             <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="785" comment="Model T0204.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="786" comment="Model T0204.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="784" comment="Model T0204.001B">
             </model>
             <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="804" comment="Model T0302.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD60I w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="803" comment="Model T0302.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD60M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="802" comment="Model T0302.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD60M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="805" comment="Model T0302.004B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-            </model>
-            <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-            </model>
-            <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="791" comment="Model T0303.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="836" comment="Model T0303.001">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B">
+            </model>
+            <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B">
             </model>
             <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            </model>
+            <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001">
+            </model>
+            <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004">
             </model>
             <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="815" comment="Model T1004.001B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
             <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="817" comment="Model T1004.003B">
-                <versionCV lowVersionID="71"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Airhorn| ">
-                    <label xml:lang="it">Tromba| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamic|Brakes">
-                    <label xml:lang="it">Freni|Dinamici</label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Straight|to 8"/>
-                <output name="10" label="General|Service"/>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="HEP|Mode"/>
-                <output name="14" label="Ind/Train|Brake"/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
             </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Airhorn| ">
+                <label xml:lang="it">Tromba| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamic|Brakes">
+                <label xml:lang="it">Freni|Dinamici</label>
+            </output>
+            <output name="8" label="Short|Horn">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Straight|to 8"/>
+            <output name="10" label="General|Service"/>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="HEP|Mode"/>
+            <output name="14" label="Ind/Train|Brake"/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -1459,7 +274,7 @@
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/OEMAthearnCV.xml"/>
             <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV" default="0" >
-                <defaultItem default="1" include="795,796,824"/>
+                <defaultItem default="1" include="795,796,824,845"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
                 <label>Locomotive Direction</label>
                 <label xml:lang="cs">Směr lokomotivy</label>
@@ -1602,45 +417,46 @@
                 <label>F12 controls output Brake</label>
             </variable>
             <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,836,870,884"/>
+                <defaultItem default="1" include="813,814,835,836,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Headlight F0(f) Light Type</label>
             </variable>
             <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,836,870,884"/>
+                <defaultItem default="1" include="813,814,835,836,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Backup Light F0(r) Light Type</label>
             </variable>
-            <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="9" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
-                <defaultItem default="0" include="791,802,815,828,831,832,836,870"/>
+            <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
+                <defaultItem default="0" include="791,802,815,828,831,832,836,852,855,856,857,858,861,870,871"/>
                 <defaultItem default="2" include="787,788"/>
                 <defaultItem default="3" include="783,786,794,806,813"/>
                 <defaultItem default="5" include="805,830"/>
-                <defaultItem default="7" include="777,795,796,798,799,820,824,829"/>
+                <defaultItem default="7" include="777,795,796,798,799,820,824,829,837,838,841,843,848"/>
                 <defaultItem default="8" include="814"/>
-                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817"/>
-                <defaultItem default="15" include="770,771,772,776,778,782,784,793"/>
+                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817,845"/>
+                <defaultItem default="15" include="770,771,772,776,778,782,784,793,840,842,844,847,849"/>
                 <defaultItem default="19" include="835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX3 Effect Selection</label>
             </variable>
             <variable item="FX5 Grade Crossing Logic" CV="51" mask="XVXXXXXX" minOut="3" default="0" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817"/>
+                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817,845"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Grade Crossing Logic</label>
             </variable>
             <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX3 Light Type</label>
             </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="9" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
-                <defaultItem default="0" include="791,802,815,828,831,832,836,870"/>
+            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
+                <defaultItem default="0" include="791,802,815,828,831,832,836,852,855,856,857,858,861,870,871"/>
                 <defaultItem default="2" include="787,788"/>
                 <defaultItem default="3" include="786,794"/>
-                <defaultItem default="5" include="777,795,796"/>
-                <defaultItem default="8" include="798,799,820,824,829,830"/>
-                <defaultItem default="15" include="770,771,772,776,778,782,784,793"/>
+                <defaultItem default="5" include="777,795,796,841"/>
+                <defaultItem default="8" include="798,799,820,824,829,830,837,838,843,848"/>
+                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817,845"/>
+                <defaultItem default="15" include="770,771,772,776,778,782,784,793,840,842,844,847,849"/>
                 <defaultItem default="19" include="813,814"/>
                 <defaultItem default="20" include="835,884"/>
                 <defaultItem default="21" include="783,806"/>
@@ -1649,25 +465,27 @@
                 <label>FX4 Effect Selection</label>
             </variable>
             <variable item="FX6 Phase Selection" CV="52" mask="XXVXXXXX" minOut="4" default="0" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="1" include="779,785,792,797,800,803,804,816,817"/>
+                <defaultItem default="1" include="779,785,792,797,800,803,804,816,817,845"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX4 Phase Selection</label>
             </variable>
             <variable item="FX6 Grade Crossing Logic" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817"/>
+                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817,845"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Grade Crossing Logic</label>
             </variable>
             <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX4 Light Type</label>
             </variable>
             <variable item="FX5B Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
-                <defaultItem default="5" include="798,799,820,829,832"/>
+                <defaultItem default="0" include="791,795,796,802,805,806,815,824,828,830,836,837,838,855,856,857,858,861,870"/>
+                <defaultItem default="3" include="843,848"/>
+                <defaultItem default="5" include="798,799,820,829,832,847,852,871"/>
                 <defaultItem default="7" include="787,831"/>
-                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,884"/>
-                <defaultItem default="15" include="770,771,772,776,777,778,779,782,783,784,793"/>
+                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,845,884"/>
+                <defaultItem default="15" include="770,771,772,776,777,778,779,782,783,784,793,840,841,842,844,849"/>
                 <defaultItem default="20" include="813,814"/>
                 <defaultItem default="21" include="786,788,794"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
@@ -1678,64 +496,71 @@
                 <label>FX5 Phase Selection</label>
             </variable>
             <variable item="FX5B Grade Crossing Logic" CV="53" mask="XVXXXXXX" default="0" minOut="5" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,884"/>
+                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX5 Grade Crossing Logic</label>
             </variable>
             <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" default="0" minOut="5" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX5 Light Type</label>
             </variable>
             <variable item="FX6B Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6" tooltip="Determines the second effect associated with the FX6 light output">
+                <defaultItem default="0" include="791,795,796,798,799,802,805,806,815,820,824,828,829,830,836,837,838,855,856,857,858,861,870,871"/>
                 <defaultItem default="3" include="813,814"/>
                 <defaultItem default="8" include="831"/>
-                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,884"/>
-                <defaultItem default="15" include="770,771,772,776,777,778,779,782,783,784,786,788,793,794"/>
+                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,845,884"/>
+                <defaultItem default="15" include="770,771,772,776,777,778,779,782,783,784,786,788,793,794,840,841,842,843,844,848,849"/>
                 <defaultItem default="21" include="787"/>
-                <defaultItem default="25" include="832"/>
+                <defaultItem default="25" include="832,847,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX6 Effect Selection</label>
             </variable>
             <variable item="FX6B Phase Selection" CV="54" mask="XXVXXXXX" default="0" minOut="6" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,884"/>
+                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX6 Phase Selection</label>
             </variable>
             <variable item="FX6B Grade Crossing Logic" CV="54" mask="XVXXXXXX" default="0" minOut="6" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,884"/>
+                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX6 Grade Crossing Logic</label>
             </variable>
             <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" default="0" minOut="6" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX6 Light Type</label>
             </variable>
-            <variable item="FX7 Effect Selection" CV="55" mask="XXXVVVVV" default="9" minOut="7" tooltip="Determines the second effect associated with the FX6 light output">
-                <defaultItem default="8" include="870"/>
+            <variable item="FX7 Effect Selection" CV="55" mask="XXXVVVVV" default="0" minOut="7" tooltip="Determines the second effect associated with the FX6 light output">
+                <defaultItem default="0" include="855,856,858,861"/>
+                <defaultItem default="7" include="857"/>
+                <defaultItem default="8" include="870,871"/>
+                <defaultItem default="9" include="835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
             </variable>
             <variable item="FX7 Phase Selection" CV="55" mask="XXVXXXXX" default="0" minOut="7" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
             </variable>
-            <variable item="FX7 Grade Crossing Logic" CV="55" mask="XVXXXXXX" default="1" minOut="7" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="0" include="870"/>
+            <variable item="FX7 Grade Crossing Logic" CV="55" mask="XVXXXXXX" default="0" minOut="7" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+                <defaultItem default="1" include="835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX7 Light Type" CV="55" mask="VXXXXXXX" default="1" minOut="7" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
             </variable>
-            <variable item="FX8 Effect Selection" CV="56" mask="XXXVVVVV" default="9" minOut="8" tooltip="Determines the second effect associated with the FX6 light output">
-                <defaultItem default="0" include="870"/>
+            <variable item="FX8 Effect Selection" CV="56" mask="XXXVVVVV" default="0" minOut="8" tooltip="Determines the second effect associated with the FX6 light output">
+                <defaultItem default="0" include="855,856,858,861,870"/>
+                <defaultItem default="7" include="871"/>
+                <defaultItem default="8" include="857"/>
+                <defaultItem default="9" include="835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
             </variable>
-            <variable item="FX8 Phase Selection" CV="56" mask="XXVXXXXX" default="1" minOut="8" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="0" include="870"/>
+            <variable item="FX8 Phase Selection" CV="56" mask="XXVXXXXX" default="0" minOut="8" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+                <defaultItem default="1" include="835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
             </variable>
-            <variable item="FX8 Grade Crossing Logic" CV="56" mask="XVXXXXXX" default="1" minOut="8" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="0" include="870"/>
+            <variable item="FX8 Grade Crossing Logic" CV="56" mask="XVXXXXXX" default="0" minOut="8" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+                <defaultItem default="1" include="835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Light Type" CV="56" mask="VXXXXXXX" default="1" minOut="8" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
@@ -1754,17 +579,17 @@
                 <label>FX3 Forward Directional Control</label>
             </variable>
             <variable item="FX6 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
-                <defaultItem default="0" include="786,787,788,794,832"/>
+                <defaultItem default="0" include="786,787,788,794,832,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Forward Directional Control</label>
             </variable>
             <variable item="FX5B Forward Directional Control" CV="57" mask="XXXVXXXX" default="0" minOut="5"  tooltip="Check to enable FX5 function output in Forward direction">
-                <defaultItem default="1" include="786,787,788,793,794,795,796,798,799,805,806,813,814,820,824,829,830,831,832,870"/>
+                <defaultItem default="1" include="786,787,788,793,794,795,796,798,799,805,806,813,814,820,824,829,830,831,832,837,838,843,847,848,852,857,870,871"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX5 Forward Directional Control</label>
             </variable>
             <variable item="FX6B Forward Directional Control" CV="57" mask="XXVXXXXX" default="0" minOut="6"  tooltip="Check to enable FX6 function output in Forward direction">
-                <defaultItem default="1" include="786,787,788,793,794,795,796,798,799,805,806,813,814,820,824,829,830,831,832"/>
+                <defaultItem default="1" include="786,787,788,793,794,795,796,798,799,805,806,813,814,820,824,829,830,831,832,837,838,847,848,852,857,871"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX6 Forward Directional Control</label>
             </variable>
@@ -1783,17 +608,17 @@
                 <label>Backup Light F0(r) Reverse Directional Control</label>
             </variable>
             <variable item="FX5 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="0" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
-                <defaultItem default="1" include="777,795,796,798,799,814,820,824,829,830,835,870,884"/>
+                <defaultItem default="1" include="777,795,796,798,799,814,820,824,829,830,835,837,838,841,843,848,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Reverse Directional Control</label>
             </variable>
             <variable item="FX6 Reverse Directional Control" CV="58" mask="XXXXVXXX" default="0" minOut="4" tooltip="Check to enable FX4 function output in Reverse direction">
-                <defaultItem default="1" include="777,783,786,787,788,794,795,796,798,799,806,813,814,820,824,829,830,832,835,870,884"/>
+                <defaultItem default="1" include="777,783,786,787,788,794,795,796,798,799,806,813,814,820,824,829,830,832,835,837,838,841,843,848,852,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Reverse Directional Control</label>
             </variable>
             <variable item="FX5B Reverse Directional Control" CV="58" mask="XXXVXXXX" default="1" minOut="5"  tooltip="Check to enable FX5 function output in Reverse direction">
-                <defaultItem default="0" include="870"/>
+                <defaultItem default="0" include="843,848,870"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX5 Reverse Directional Control</label>
             </variable>
@@ -1802,15 +627,16 @@
                 <label>FX6 Reverse Directional Control</label>
             </variable>
             <variable item="FX7 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="0" minOut="7">
-                <defaultItem default="1" include="870"/>
+                <defaultItem default="1" include="857,870,871"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="0" minOut="8">
+                <defaultItem default="1" include="857,871"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="7" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
                 <defaultItem default="4" include="805"/>
-                <defaultItem default="5" include="795,796,798,799,824,870"/>
+                <defaultItem default="5" include="795,796,798,799,824,837,838,857,858,861,870,871"/>
                 <defaultItem default="10" include="835,884"/>
                 <decVal max="15"/>
                 <label>Hyperlight Flash Rate (0-15)</label>
@@ -1823,23 +649,23 @@
             </variable>
             <variable CV="61" item="Brightness 1" default="153" tooltip="Adjust the brightness level of any output set to the on/off brightness 1 effect">
                 <defaultItem default="50" include="835,870,884"/>
-                <defaultItem default="70" include="813,814"/>
+                <defaultItem default="70" include="813,814,855,856,857,858,861,871"/>
                 <decVal/>
                 <label>Brightness 1 Level (0-255)</label>
             </variable>
             <variable CV="62" item="Brightness 2" default="153" tooltip="Adjust the brightness level of any output set to the on/off brightness 2 effect">
-                <defaultItem default="50" include="813,814"/>
+                <defaultItem default="50" include="813,814,855,856,857,858,861,871"/>
                 <defaultItem default="70" include="835,870,884"/>
                 <decVal/>
                 <label>Brightness 2 Level (0-255)</label>
             </variable>
             <variable CV="63" item="Dimmer" default="153" tooltip="Adjust the brightness level of the on/off dimmable headlight effect">
-                <defaultItem default="130" include="813,814,836"/>
+                <defaultItem default="130" include="813,814,836,855,856,857,858,861,871"/>
                 <decVal/>
                 <label>Dimmer Level (0-255)</label>
             </variable>
             <variable CV="64" item="Master Brightness" default="255" tooltip="Adjust the brightness level of all lighting outputs">
-                <defaultItem default="192" include="813,814,835,836,870,884"/>
+                <defaultItem default="192" include="813,814,835,836,855,856,857,858,861,870,871,884"/>
                 <decVal/>
                 <label>Master Brightness</label>
             </variable>
@@ -1859,8 +685,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Low-pressure alarm bell</label>
             </variable>
-            <variable CV="112" mask="XXXXXVXX" item="Sound Option 17" default="1" include="835,870,884">
-                <defaultItem default="0" include="870"/>
+            <variable CV="112" mask="XXXXXVXX" item="Sound Option 17" default="0" include="835,855,856,857,858,861,870,871,884">
+                <defaultItem default="1" include="835,855,856,884"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Steam Generator</choice>
@@ -1876,7 +702,7 @@
                         for passenger cars in the train.
                         &lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="112" mask="XXXXVXXX" item="Sound Option 18" default="0" include="835,870,884">
+            <variable CV="112" mask="XXXXVXXX" item="Sound Option 18" default="0" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>True-Idle Enable</label>
                 <tooltip>&lt;html&gt;
@@ -1903,18 +729,21 @@
             </variable>
             <!-- Sound Selection follows -->
             <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="23" tooltip="Selects which airhorn to use">
-                <defaultItem default="0" include="784,785,802,805,870"/>
-                <defaultItem default="3" include="815,816,817"/>
+                <defaultItem default="0" include="784,785,802,805,852,870"/>
+                <defaultItem default="1" include="847"/>
+                <defaultItem default="3" include="815,816,817,855,856"/>
                 <defaultItem default="4" include="797"/>
                 <defaultItem default="6" include="800,804,835"/>
                 <defaultItem default="8" include="791,792,836"/>
                 <defaultItem default="10" include="806"/>
-                <defaultItem default="11" include="776,777,778,779,786,794,824"/>
+                <defaultItem default="11" include="776,777,778,779,786,794,824,845"/>
+                <defaultItem default="15" include="848"/>
+                <defaultItem default="18" include="861"/>
                 <defaultItem default="21" include="770,771,782,783,787,788"/>
-                <defaultItem default="23" include="798,799,803,814,820,828,829,831,832"/>
-                <defaultItem default="24" include="884"/>
-                <defaultItem default="28" include="772,793,795,796"/>
-                <defaultItem default="29" include="830"/>
+                <defaultItem default="23" include="798,799,803,814,820,828,829,831,832,840,841,849,871"/>
+                <defaultItem default="24" include="842,884"/>
+                <defaultItem default="28" include="772,793,795,796,837,838,857,858"/>
+                <defaultItem default="29" include="830,843,844"/>
                 <defaultItem default="37" include="813"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHornAthearn.xml"/>
@@ -1931,17 +760,18 @@
                 <label>Auxiliary Airhorn Select</label>
             </variable>
             <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="12" tooltip="Bell sound effect and ring-rate">
-                <defaultItem default="13" include="817"/>
-                <defaultItem default="17" include="787,788,793,794,795,796,806,870"/>
+                <defaultItem default="12" include="770,771,772,776,777,778,779,782,783,784,785,786,798,813,814,820,828,829,830,831,832,840,841,842,843,844,845,847,848,849,858"/>
+                <defaultItem default="13" include="817,856"/>
+                <defaultItem default="17" include="787,788,793,794,795,796,806,861,870,871"/>
                 <defaultItem default="20" include="797,800,802,803,804,805"/>
-                <defaultItem default="24" include="824"/>
-                <defaultItem default="36" include="791,792,815,816,835,836,884"/>
+                <defaultItem default="24" include="824,837,838,857"/>
+                <defaultItem default="36" include="791,792,815,816,835,836,852,855,884"/>
                 <defaultItem default="37" include="799"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="770,771,793,772,782,783,794,795,796,787,806,788,824,870" default="2" tooltip="Select one of prime mover sound effects">
-                <defaultItem default="3" include="870"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="770,771,793,772,782,783,788,794,795,796,787,806,824,837,838,857,858,861,870,871" default="2" tooltip="Select one of prime mover sound effects">
+                <defaultItem default="3" include="870,871"/>
                 <enumVal>
                     <enumChoice>
                         <choice>EMD 567 Non-Transition Switcher</choice>
@@ -1961,11 +791,11 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="1" include="787,798,799,800,776,777,784,785,786" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="1" include="797,798,799,800,776,777,840,841,842,843,844,845,852,784,785,786,847,848,849" tooltip="Select one of prime mover sound effects">
                 <defaultItem default="0" include="797"/>
                 <defaultItem default="1" include="798,799,800"/>
-                <defaultItem default="2" include="776,777"/>
-                <defaultItem default="4" include="784,785,786"/>
+                <defaultItem default="2" include="776,777,840,841,842,843,844,845,852"/>
+                <defaultItem default="4" include="784,785,786,847,848,849"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselEMD645Athearn.xml"/>
                 </enumVal>
@@ -1990,7 +820,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="816,815,817" default="4" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="816,815,817,855,856" default="4" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselGEAthearn.xml"/>
                 </enumVal>
@@ -2026,13 +856,13 @@
                 <label>Prime Mover Select</label>
             </variable>
             <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" default="3" tooltip="Select one of air compressor sound effects">
-                <defaultItem default="0" include="770,771,772,782,783,787,788,791,792,793,794,795,796,806,813,814,824,836,870"/>
-                <defaultItem default="2" include="815,816,817"/>
+                <defaultItem default="0" include="770,771,772,782,783,787,788,791,792,793,794,795,796,806,813,814,824,836,837,838,857,858,861,870,871"/>
+                <defaultItem default="2" include="815,816,817,855,856"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="125" mask="XXXXXVVV" item="Sound Option 16" default="1" include="835,870,884">
-                <defaultItem default="0" include="870"/>
+            <variable CV="125" mask="XXXXXVVV" item="Sound Option 16" default="0" include="835,855,856,857,858,861,870,871,884">
+                <defaultItem default="1" include="835,855,856,884"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Poppet Valve</choice>
@@ -2054,16 +884,19 @@
             <!-- Volume Controls follow -->
             <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="225" tooltip="Sets the overall volume of all sound channels">
                 <defaultItem default="100" include="836"/>
+                <defaultItem default="110" include="855,856"/>
                 <defaultItem default="125" include="835,884"/>
+                <defaultItem default="150" include="840,841,842,843,844,845"/>
                 <defaultItem default="160" include="813,814"/>
                 <defaultItem default="175" include="815,816,817"/>
                 <defaultItem default="192" include="828,829,830,831,832"/>
-                <defaultItem default="235" include="824,870"/>
+                <defaultItem default="235" include="824,837,838,857,858,861,870,871"/>
                 <decVal/>
                 <label>Master Volume Control</label>
             </variable>
             <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="125" tooltip="Sets the volume of the airhorn">
                 <defaultItem default="150" include="815,816,817,828,829"/>
+                <defaultItem default="160" include="855,856"/>
                 <defaultItem default="190" include="813,814"/>
                 <defaultItem default="192" include="830,831,832"/>
                 <defaultItem default="200" include="791,792,802,803,804,805,835,836,884"/>
@@ -2073,17 +906,17 @@
             <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="58" tooltip="Sets the volume of the bell">
                 <defaultItem default="35" include="806"/>
                 <defaultItem default="55" include="828,829,830,831,832"/>
-                <defaultItem default="65" include="813,814"/>
-                <defaultItem default="100" include="824,870"/>
+                <defaultItem default="65" include="813,814,855,856"/>
+                <defaultItem default="100" include="824,837,838,857,858,861,870,871"/>
                 <decVal/>
                 <label>Bell Volume</label>
             </variable>
             <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="255" tooltip="Sets the volume of the prime mover">
                 <defaultItem default="140" include="778,779"/>
                 <defaultItem default="150" include="815,816,817"/>
-                <defaultItem default="155" include="813,814"/>
+                <defaultItem default="155" include="813,814,855,856"/>
                 <defaultItem default="200" include="791,792,806,830,831,832,836"/>
-                <defaultItem default="225" include="824,828,829,870"/>
+                <defaultItem default="225" include="824,828,829,837,838,857,858,861,870,871"/>
                 <defaultItem default="230" include="802,803,804,805,835,884"/>
                 <decVal/>
                 <label>Prime Mover Volume</label>
@@ -2092,11 +925,12 @@
                 <defaultItem default="50" include="778,779,791,792,802,803,804,805,835,836,884"/>
                 <defaultItem default="115" include="830,831,832"/>
                 <defaultItem default="128" include="815,816,817,828,829"/>
+                <defaultItem default="225" include="855,856"/>
                 <decVal/>
                 <label>Air Compressor Volume</label>
             </variable>
             <variable CV="133" mask="VVVVVVVV" item="Sound Setting 6" default="150" tooltip="Sets the volume of the dynamic brakes">
-                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,870"/>
+                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871"/>
                 <decVal/>
                 <label>Dynamic Brake Volume</label>
             </variable>
@@ -2119,7 +953,7 @@
                 <label>Poppet Valve Volume</label>
             </variable>
             <variable CV="144" mask="VVVVVVVV" item="Sound Setting 17" default="50" tooltip="Sets the volume of the Steam Generator">
-                <defaultItem default="0" include="835,870,884"/>
+                <defaultItem default="0" include="835,855,856,857,861,870,871,884"/>
                 <decVal/>
                 <label>Steam Generator Volume</label>
             </variable>
@@ -2132,7 +966,7 @@
                 <label>Relay Clicks Volume</label>
             </variable>
             <variable CV="153" mask="VVVVVVVV" item="Sound Setting 26" default="150">
-                <defaultItem default="125" include="824,870"/>
+                <defaultItem default="125" include="824,837,838,857,858,861,870,871"/>
                 <decVal/>
                 <label>Clickety Clack Volume</label>
             </variable>
@@ -2305,8 +1139,9 @@
                 <decVal/>
                 <label>Constant Brake Distance (0-255)</label>
             </variable>
-            <variable CV="223" item="Sound Group 3 Option 5" default="128" include="835,870,884">
-                <defaultItem default="88" include="870"/>
+            <variable CV="223" item="Sound Group 3 Option 5" default="128" include="835,855,856,857,858,861,870,871,884">
+                <defaultItem default="88" include="856,857,870"/>
+                <defaultItem default="168" include="861"/>
                 <decVal/>
                 <label>Prime Mover Pitch Shift</label>
                 <tooltip>&lt;html&gt;
@@ -2323,17 +1158,18 @@
                 <decVal/>
                 <label>High-Pass Filter Cutoff Frequency</label>
             </variable>
-            <variable item="Equalizer Control" CV="225" mask="XXXXXVVV" default="7" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
-                <defaultItem default="3" include="770,771,772,776,777,784,785,786,787,788,793,794,795,796,797,798,799,800,820,824,870"/>
+            <variable item="Equalizer Control" CV="225" mask="XXXXXVVV" default="3" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+                <defaultItem default="7" include="778,779,782,783,791,792,802,803,804,805,806,813,814,815,816,817,828,829,830,831,832,835,836,855,856,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEQ.xml"/>
                 <label>Equalizer Control</label>
             </variable>
             <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="0" include="828,829,830,831,832"/>
+                <defaultItem default="0" include="828,829,830,831,832,855,856"/>
                 <decVal/>
                 <label>62 Hz Cut/Boost</label>
             </variable>
             <variable item="125 Hz Cut/Boost" CV="227" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="0" include="855,856"/>
                 <defaultItem default="160" include="806"/>
                 <defaultItem default="200" include="828,829,830,831,832"/>
                 <decVal/>
@@ -2341,6 +1177,7 @@
             </variable>
             <variable item="250 Hz Cut/Boost" CV="228" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
                 <defaultItem default="140" include="806"/>
+                <defaultItem default="145" include="855,856"/>
                 <defaultItem default="160" include="813,814"/>
                 <defaultItem default="165" include="778,779,782,783,791,792,802,803,804,805,815,816,817,835,836,884"/>
                 <defaultItem default="180" include="828,829,830,831,832"/>
@@ -2349,18 +1186,21 @@
             </variable>
             <variable item="500 Hz Cut/Boost" CV="229" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
                 <defaultItem default="92" include="806"/>
+                <defaultItem default="120" include="855,856"/>
                 <defaultItem default="140" include="778,779,782,783,791,792,802,803,804,805,813,814,815,816,817,835,836,884"/>
                 <defaultItem default="160" include="830,831,832"/>
                 <decVal/>
                 <label>500 Hz Cut/Boost</label>
             </variable>
             <variable item="1K Hz Cut/Boost" CV="230" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="55" include="855,856"/>
                 <defaultItem default="100" include="813,814,828,829,830,831,832"/>
                 <defaultItem default="160" include="778,779,782,783,791,792,802,803,804,805,815,816,817,835,836,884"/>
                 <decVal/>
                 <label>1K Hz Cut/Boost</label>
             </variable>
             <variable item="2K Hz Cut/Boost" CV="231" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="80" include="855,856"/>
                 <defaultItem default="96" include="806"/>
                 <defaultItem default="140" include="791,792,802,803,804,805,815,816,817,828,829,835,836,884"/>
                 <defaultItem default="145" include="778,779,782,783"/>
@@ -2370,6 +1210,7 @@
             </variable>
             <variable item="4K Hz Cut/Boost" CV="232" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
                 <defaultItem default="50" include="802,803,804,805,835,884"/>
+                <defaultItem default="85" include="855,856"/>
                 <defaultItem default="96" include="806"/>
                 <defaultItem default="100" include="813,814"/>
                 <defaultItem default="160" include="791,792,815,816,817,828,829,836"/>
@@ -2394,28 +1235,152 @@
                 <decVal/>
                 <label>Reverb Gain</label>
             </variable>
+            <variable item="Analog Mode Function Status - F21" CV="242" mask="XXXXXXXV" default="0" minFn="21">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F21</label>
+                <label xml:lang="fr">État de la fonction en analogique - F21</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F21</label>
+                <label>Analog Mode Function Status - F21</label>
+                <tooltip>Check to enable function F21 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F22" CV="242" mask="XXXXXXVX" default="0" minFn="22">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F22</label>
+                <label xml:lang="fr">État de la fonction en analogique - F22</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F22</label>
+                <label>Analog Mode Function Status - F22</label>
+                <tooltip>Check to enable function F22 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F23" CV="242" mask="XXXXXVXX" default="0" minFn="23">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F23</label>
+                <label xml:lang="fr">État de la fonction en analogique - F23</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F23</label>
+                <label>Analog Mode Function Status - F23</label>
+                <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F24" CV="242" mask="XXXXVXXX" default="0" minFn="24">
+                <defaultItem default="1" include="855,856,857,858,861,870,871"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F24</label>
+                <label xml:lang="fr">État de la fonction en analogique - F24</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F24</label>
+                <label>Analog Mode Function Status - F24</label>
+                <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F25" CV="242" mask="XXXVXXXX" default="0" minFn="25">
+                <defaultItem default="1" include="855,856,857,858,861,870,871"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F25</label>
+                <label xml:lang="fr">État de la fonction en analogique - F25</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F25</label>
+                <label>Analog Mode Function Status - F25</label>
+                <tooltip>Check to enable function F25 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F26" CV="242" mask="XXVXXXXX" default="0" minFn="26">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F26</label>
+                <label xml:lang="fr">État de la fonction en analogique - F26</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F26</label>
+                <label>Analog Mode Function Status - F26</label>
+                <tooltip>Check to enable function F26 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F27" CV="242" mask="XVXXXXXX" default="0" minFn="27">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F27</label>
+                <label xml:lang="fr">État de la fonction en analogique - F27</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F27</label>
+                <label>Analog Mode Function Status - F27</label>
+                <tooltip>Check to enable function F27 when the unit is operating in analog power mode</tooltip>
+            </variable>
+            <variable item="Analog Mode Function Status - F28" CV="242" mask="VXXXXXXX" default="0" minFn="28">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label xml:lang="it">Stato Funzioni in analogico - F28</label>
+                <label xml:lang="fr">État de la fonction en analogique - F28</label>
+                <label xml:lang="de">Funktionsstatus im Analogbetrieb - F28</label>
+                <label>Analog Mode Function Status - F28</label>
+                <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
+            </variable>
             <variable item="Analog Mode Automatic Effects - FWDD" CV="243" mask="XXXXXXXV" default="0">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction in analog power mode</tooltip>
             </variable>
             <variable item="Analog Mode Automatic Effects - REVD" CV="243" mask="XXXXXXVX" default="0">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction in analog power mode</tooltip>
             </variable>
             <variable item="Analog Mode Automatic Effects - FWDS" CV="243" mask="XXXXXVXX" default="0">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction in analog power mode</tooltip>
             </variable>
             <variable item="Analog Mode Automatic Effects - REVS" CV="243" mask="XXXXVXXX" default="0">
-                <defaultItem default="1" include="813,814,835,870,884"/>
+                <defaultItem default="1" include="813,814,835,855,856,857,858,861,870,871,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction in analog power mode</tooltip>
             </variable>
+            <variable CV="246" mask="XXXXXXXV" item="Consist Address Active For F21" default="0" minFn="21">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F21</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F21</label>
+                <label xml:lang="de">Verbundadresse aktiv für F21</label>
+                <label>Consist Address Active For F21</label>
+            </variable>
+            <variable CV="246" mask="XXXXXXVX" item="Consist Address Active For F22" default="0" minFn="22">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F22</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F22</label>
+                <label xml:lang="de">Verbundadresse aktiv für F22</label>
+                <label>Consist Address Active For F22</label>
+            </variable>
+            <variable CV="246" mask="XXXXXVXX" item="Consist Address Active For F23" default="0" minFn="23">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F23</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F23</label>
+                <label xml:lang="de">Verbundadresse aktiv für F23</label>
+                <label>Consist Address Active For F23</label>
+            </variable>
+            <variable CV="246" mask="XXXXVXXX" item="Consist Address Active For F24" default="0" minFn="24">
+                <defaultItem default="1" include="855,856,857,858,861,870,871"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F24</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F24</label>
+                <label xml:lang="de">Verbundadresse aktiv für F24</label>
+                <label>Consist Address Active For F24</label>
+            </variable>
+            <variable CV="246" mask="XXXVXXXX" item="Consist Address Active For F25" default="0" minFn="25">
+                <defaultItem default="1" include="855,856,857,858,861,870,871"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F25</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F25</label>
+                <label xml:lang="de">Verbundadresse aktiv für F25</label>
+                <label>Consist Address Active For F25</label>
+            </variable>
+            <variable CV="246" mask="XXVXXXXX" item="Consist Address Active For F26" default="0" minFn="26">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F26</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F26</label>
+                <label xml:lang="de">Verbundadresse aktiv für F26</label>
+                <label>Consist Address Active For F26</label>
+            </variable>
+            <variable CV="246" mask="XVXXXXXX" item="Consist Address Active For F27" default="0" minFn="27">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F27</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F27</label>
+                <label xml:lang="de">Verbundadresse aktiv für F27</label>
+                <label>Consist Address Active For F27</label>
+            </variable>
+            <variable CV="246" mask="VXXXXXXX" item="Consist Address Active For F28" default="0" minFn="28">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+                <label xml:lang="it">Indirizzo Consist Attivo per F28</label>
+                <label xml:lang="fr">Adresse d'Unité Multiple active pour F28</label>
+                <label xml:lang="de">Verbundadresse aktiv für F28</label>
+                <label>Consist Address Active For F28</label>
+            </variable>
             <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="1">
-                <defaultItem default="1" include="835,870,884"/>
+                <defaultItem default="1" include="835,855,856,857,858,861,870,871,884"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -2427,7 +1392,7 @@
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
             <variable CV="247" mask="XXXXXXVX" item="Consist Automatic Effects - REVD" default="0">
-                <defaultItem default="1" include="835,870,884"/>
+                <defaultItem default="1" include="835,855,856,857,858,861,870,871,884"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -2439,7 +1404,7 @@
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
             <variable CV="247" mask="XXXXXVXX" item="Consist Automatic Effects - FWDS" default="0">
-                <defaultItem default="1" include="835,870,884"/>
+                <defaultItem default="1" include="835,855,856,857,858,861,870,871,884"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -2451,7 +1416,7 @@
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
             <variable CV="247" mask="XXXXVXXX" item="Consist Automatic Effects - REVS" default="0">
-                <defaultItem default="1" include="835,870,884"/>
+                <defaultItem default="1" include="835,855,856,857,858,861,870,871,884"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -2475,29 +1440,30 @@
             </variable>
             <!-- Extended Function Map -->
             <variable CV="1.259" item="Extended Function Map FX3 Effect" default="5" minOut="3">
-                <defaultItem default="24" include="870"/>
+                <defaultItem default="6" include="855,856"/>
+                <defaultItem default="24" include="857,858,861,870,871"/>
                 <defaultItem default="255" include="805,835,884"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX3 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.260" item="Extended Function Map FX4 Effect" default="5" minOut="4">
-                <defaultItem default="6" include="813,814,835,884"/>
-                <defaultItem default="25" include="870"/>
+                <defaultItem default="6" include="813,814,835,852,855,856,884"/>
+                <defaultItem default="25" include="857,858,861,870,871"/>
                 <defaultItem default="255" include="783,805,806"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX4 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.261" item="Extended Function Map FX5 Effect" default="6" minOut="5">
-                <defaultItem default="5" include="797,798,799,800,802,803,804,815,816,817,820,829,835,836,884"/>
+                <defaultItem default="5" include="797,798,799,800,802,803,804,815,816,817,820,829,835,836,845,855,856,884"/>
                 <defaultItem default="255" include="786,788,794,813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX5 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.262" item="Extended Function Map FX6 Effect" default="6" minOut="6">
-                <defaultItem default="5" include="797,800,802,803,804,815,816,817,835,836,884"/>
+                <defaultItem default="5" include="797,800,802,803,804,815,816,817,835,836,845,855,856,884"/>
                 <defaultItem default="255" include="787,813,814"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX6 Effect</label>
@@ -2569,12 +1535,10 @@
                 <label>Fuel Loading</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.314" item="Extended Function Map Straight-to-Idle" default="19" include="835,870,884">
+            <variable CV="1.314" item="Extended Function Map Straight-to-Idle" default="19" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Straight-to-Idle</label>
-                <tooltip>&lt;html&gt;
-                        Mapping function keys F0-F28 to any of the decoder's effects
-                        &lt;/html&gt;</tooltip>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <!-- Effect Auxiliary Map Registers -->
             <variable CV="1.387" mask="XXXXXXXV" item="FX3 Effect Automatic Effects - FWDD" default="0" minOut="3">
@@ -2930,28 +1894,29 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0" include="835,870,884">
+            <variable CV="1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0" include="835,870,884">
+            <variable CV="1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0" include="835,870,884">
+            <variable CV="1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0" include="835,870,884">
+            <variable CV="1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0" include="835,870,884">
+            <variable CV="1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0" include="835,855,856,857,858,861,870,871,884">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
             <variable CV="2.289" mask="VVVVVVVV" item="Alt Sound Setting 1" default="62" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="75" include="815,816,817,828,829"/>
+                <defaultItem default="80" include="855,856"/>
                 <defaultItem default="95" include="813,814"/>
                 <defaultItem default="96" include="830,831,832"/>
                 <defaultItem default="100" include="791,792,802,803,804,805,835,836,884"/>
@@ -2961,17 +1926,17 @@
             <variable CV="2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="29" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="18" include="806"/>
                 <defaultItem default="27" include="828,829,830,831,832"/>
-                <defaultItem default="33" include="813,814"/>
-                <defaultItem default="50" include="824,870"/>
+                <defaultItem default="33" include="813,814,855,856"/>
+                <defaultItem default="50" include="824,837,838,857,858,861,870,871"/>
                 <decVal/>
                 <label>Bell Alt Volume</label>
             </variable>
             <variable CV="2.291" mask="VVVVVVVV" item="Alt Sound Setting 3" default="128" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="70" include="778,779"/>
                 <defaultItem default="75" include="815,816,817"/>
-                <defaultItem default="78" include="813,814"/>
+                <defaultItem default="78" include="813,814,855,856"/>
                 <defaultItem default="100" include="791,792,806,830,831,832,836"/>
-                <defaultItem default="112" include="824,828,829,870"/>
+                <defaultItem default="112" include="824,828,829,837,838,857,858,861,870,871"/>
                 <defaultItem default="115" include="802,803,804,805,835,884"/>
                 <decVal/>
                 <label>Prime Mover Alt Volume</label>
@@ -2980,11 +1945,12 @@
                 <defaultItem default="25" include="778,779,791,792,802,803,804,805,835,836,884"/>
                 <defaultItem default="57" include="830,831,832"/>
                 <defaultItem default="64" include="815,816,817,828,829"/>
+                <defaultItem default="113" include="855,856"/>
                 <decVal/>
                 <label>Air Compressor Alt Volume</label>
             </variable>
             <variable CV="2.293" mask="VVVVVVVV" item="Alt Sound Setting 5" default="75" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,870"/>
+                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871"/>
                 <decVal/>
                 <label>Dynamic Brake Alt Volume</label>
             </variable>
@@ -3019,7 +1985,7 @@
                 <label>Poppet Valve Alt Volume</label>
             </variable>
             <variable CV="2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="25" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="835,870,884"/>
+                <defaultItem default="0" include="835,855,856,857,861,870,871,884"/>
                 <decVal/>
                 <label>Steam Generator Alt Volume</label>
             </variable>
@@ -3044,7 +2010,7 @@
                 <label>All Aboard!/Coach Doors Alt Volume</label>
             </variable>
             <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="75" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="62" include="824,870"/>
+                <defaultItem default="62" include="824,837,838,857,858,861,870,871"/>
                 <decVal/>
                 <label>Clickety-Clack Alt Volume</label>
             </variable>
@@ -3110,7 +2076,7 @@
                 <label>Load Sensitivity</label>
             </variable>
             <variable CV="3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1">
-                <defaultItem default="2" include="778,779,791,792,802,803,804,805,813,814,815,816,817,820,835,836,884"/>
+                <defaultItem default="2" include="778,779,791,792,802,803,804,805,813,814,815,816,817,820,835,836,855,856,884"/>
                 <enumVal>
                     <enumChoice value="1">
                         <choice>2 axles per truck</choice>

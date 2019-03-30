@@ -119,7 +119,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         }
         //If the new hardware address does not already exist then this can
         //be considered the next valid address.
-        Sensor snew = getBySystemName(prefix + newaddr);
+        Sensor snew = getBySystemName(prefix + typeLetter() + newaddr);
         if (snew == null) {
             return newaddr;
         }

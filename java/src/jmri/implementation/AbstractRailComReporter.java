@@ -38,7 +38,7 @@ public class AbstractRailComReporter extends AbstractIdTagReporter {
         // IdTags passed by RailCom reporters are actually jmri.RailCom objects
         // so we use properties of the RailCom object here.
         RailCom cr = (RailCom) this.getCurrentReport();
-        return cr.getDccLocoAddress();
+        return cr.getLocoAddress();
     }
 
 }

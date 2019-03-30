@@ -3,9 +3,11 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author	Bob Jacobsen Copyright 2003, 2006
@@ -45,6 +47,7 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
     // end of abstract members
     
     // test the handling of radix masks
+    @Test
     public void testBaseMasks3() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -75,6 +78,7 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
                        
     }
 
+    @Test
     public void testBaseMasksDecimalValues() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -108,21 +112,13 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", 39, cv.getValue());
     }
     
-    // from here down is testing infrastructure
-    public DecVariableValueTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        super.setUp();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DecVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DecVariableValueTest.class);
-        return suite;
-    }
-
 }

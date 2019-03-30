@@ -78,9 +78,10 @@ public class Profile implements Comparable<Profile> {
      * @param path Location to store the profile; {@value #EXTENSION} will be
      *             appended to this path if needed.
      * @throws java.io.IOException If unable to create the profile at path
+     * @throws IllegalArgumentException If a profile already exists at or within path
      */
     public Profile(@Nonnull String name, @Nonnull String id, @Nonnull File path) throws IOException, IllegalArgumentException {
-        File pathWithExt; // path with extention
+        File pathWithExt; // path with extension
         if (path.getName().endsWith(EXTENSION)) {
             pathWithExt = path;
         } else {
@@ -147,7 +148,7 @@ public class Profile implements Comparable<Profile> {
      * @throws java.io.IOException If the profile's preferences cannot be read.
      */
     protected Profile(@Nonnull File path, @Nonnull String id, boolean isReadable) throws IOException {
-        File pathWithExt; // path with extention
+        File pathWithExt; // path with extension
         if (path.getName().endsWith(EXTENSION)) {
             pathWithExt = path;
         } else {
@@ -358,7 +359,7 @@ public class Profile implements Comparable<Profile> {
      * @since 3.9.4
      */
     public static boolean isProfile(File path) {
-        if (path.isDirectory()) {
+        if (path.exists() && path.isDirectory()) {
             // version 2
             if ((new File(path, SHARED_PROPERTIES)).canRead()) {
                 return true;
