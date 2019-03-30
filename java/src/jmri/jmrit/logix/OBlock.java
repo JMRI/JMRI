@@ -936,9 +936,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         // preserve the non-sensor states when being OCCUPIED and remove non-OCCUPIED sensor states
         setState((getState() & ~(UNKNOWN|UNOCCUPIED|INCONSISTENT)) | OCCUPIED);
         if (_warrant != null) {
-            ThreadingUtil.runOnLayout(()->{
+//            ThreadingUtil.runOnLayout(()->{
                 _warrant.goingActive(this);
-            });
+//            });
         }
     }
 
@@ -967,7 +967,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             // remove portal and stub paths through portal in opposing block
             opBlock.removePortal(portal);
         }
-        _portals.removeAll(_portals);
+        _portals.clear();
         List<Path> pathList = getPaths();
         for (int i = 0; i < pathList.size(); i++) {
             removePath(pathList.get(i));
