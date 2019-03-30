@@ -19,7 +19,7 @@ if( m is None ):
 
 # Now set a sample prefix
 if( m is not None ):
-    m.setPrefix(" /foo/bar/jmri-sample-prefix/")  # can be anything but probably should start and end with "/"
+    m.setTopicPrefix("foo/bar/jmri-sample-prefix/")  # can be anything but should have a / at end but not at start
     print( "MQTT prefix updated" )
 else:
     print( "MQTT prefix not updated" )
