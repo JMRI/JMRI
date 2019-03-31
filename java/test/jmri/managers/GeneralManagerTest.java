@@ -78,10 +78,10 @@ public class GeneralManagerTest {
         Assert.assertTrue("bean is a light", d instanceof Light);
         Assert.assertTrue("bean is the expected bean", d == l2);
         
-        DigitalIO digitalIO = new MyDigitalIO("ID1");
+        DigitalIO digitalIO = new MyDigitalIO("II1");
         InstanceManager.getDefault(DigitalIOManager.class).register(digitalIO);
         
-        d = InstanceManager.getDefault(DigitalIOManager.class).getNamedBean("ID1");
+        d = InstanceManager.getDefault(DigitalIOManager.class).getNamedBean("II1");
         Assert.assertNotNull("digitalIO exists", d);
         Assert.assertTrue("bean is the expected bean", d == digitalIO);
     }
@@ -90,10 +90,10 @@ public class GeneralManagerTest {
     public void testAnalogIO() {
         AnalogIO d;
         
-        AnalogIO analogIO = new MyAnalogIO("IA1");
+        AnalogIO analogIO = new MyAnalogIO("IV1");
         InstanceManager.getDefault(AnalogIOManager.class).register(analogIO);
         
-        d = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean("IA1");
+        d = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean("IV1");
         Assert.assertNotNull("analogIO exists", d);
         Assert.assertTrue("bean is the expected bean", d == analogIO);
     }
@@ -102,10 +102,10 @@ public class GeneralManagerTest {
     public void testStringIO() {
         StringIO d;
         
-        StringIO stringIO = new MyStringIO("IS1");
+        StringIO stringIO = new MyStringIO("IZ1");
         InstanceManager.getDefault(StringIOManager.class).register(stringIO);
         
-        d = InstanceManager.getDefault(StringIOManager.class).getNamedBean("IS1");
+        d = InstanceManager.getDefault(StringIOManager.class).getNamedBean("IZ1");
         Assert.assertNotNull("stringIO exists", d);
         Assert.assertTrue("bean is the expected bean", d == stringIO);
     }
