@@ -906,26 +906,28 @@
                         jmri.console(e.originalEvent.data);
                         //determine message type and call appropriate event handler
                         var m = JSON.parse(e.originalEvent.data);
-                       
-                        //this makes an assumption that an array sent by JMRI contains a single
-                        //type is not expected to be a valid assumption
-                        //if the message is an array, move array to data and add list type
-                        if ($.isArray(m)) { 
-                        	if (m.length == 0) {  //cannot determine type of empty array 
-                        		jmri.log("WARN: empty json array received, could not handle");
-                        		return;
-                        	} else { //use type of first entry to determine list type
-                            	var lt = jmri.getListType(m[0].type);
-                            	m = {type: lt, data: m}; //wrap up the message as data for list type
-                        	}
+
+                        if ($.isArray(m)) {
+                            m.forEach(o => {
+                                h = jmri.events[o.type];
+                                if (h) {
+                                    h.call(this, o);
+                                } else if (!o.type) {
+                                    jmri.log("ERROR: missing type property in " + o);
+                                } else if (!h) {
+                                    jmri.log("Ignoring JSON type ", o.type);
+                                }
+                            })
+                        } else {
+                            h = jmri.events[m.type];
+                            if (h) {
+                                h.call(this, m);
+                            } else if (!m.type) {
+                                jmri.log("ERROR: missing type property in " + m);
+                            } else if (!h) {
+                                jmri.log("Ignoring JSON type ", m.type);
+                            }
                         }
-                        h = jmri.events[m.type];
-                        if (h) h.call(this, m);
-                        if (!m.type) {
-                        	jmri.log("ERROR: 'type' element not found in json message:" +
-                        			e.originalEvent.data);
-                        } else if (!h)
-                        	jmri.log("ERROR: json type '" + m.type +"' received, but not handled");
                     }
                 });
             };
