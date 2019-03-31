@@ -307,7 +307,7 @@ public class JUnitUtil {
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted", unexpectedMessageSeen);
+        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+JUnitAppender.unexpectedMessageSeen(severity), unexpectedMessageSeen);
         
         // Optionally, check that no threads were left running (controlled by jmri.util.JUnitUtil.checkRemnantThreads environment var)
         if (checkRemnantThreads) {
