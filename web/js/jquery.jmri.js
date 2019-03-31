@@ -869,22 +869,6 @@
             		}
             }
 
-            /**
-             * get the name (type) used for list from the name used for a single item
-             *
-             * @param {string} name of item
-             * @returns {string} name for a list of that item
-             */
-            jmri.getListType = function(name) {
-            	var lt = name + "s"; //assume simplest case: "sensor" -> "sensors"
-            	if (name == "rosterEntry") {  
-            		lt = "roster";
-            	} else if (name == "memory") {
-            		lt = "memories";
-            	} else if (name == "metadata") { 
-            		lt = "metadata";
-            	}
-            	return lt;
             }
 
             jmri.reconnect = function() {
