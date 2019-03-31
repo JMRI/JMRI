@@ -68,7 +68,7 @@ public class StringIOManagerInstanceInitializer extends AbstractInstanceInitiali
 
                 @Override
                 public char typeLetter() {
-                    return 'S';
+                    return 'Z';
                 }
 
                 @Override

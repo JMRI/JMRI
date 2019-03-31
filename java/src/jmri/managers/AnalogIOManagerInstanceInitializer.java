@@ -68,7 +68,7 @@ public class AnalogIOManagerInstanceInitializer extends AbstractInstanceInitiali
 
                 @Override
                 public char typeLetter() {
-                    return 'A';
+                    return 'V';
                 }
 
                 @Override

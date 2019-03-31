@@ -71,7 +71,7 @@ public class DigitalIOManagerInstanceInitializer extends AbstractInstanceInitial
 
                 @Override
                 public char typeLetter() {
-                    return 'D';
+                    return 'I';
                 }
 
                 @Override
