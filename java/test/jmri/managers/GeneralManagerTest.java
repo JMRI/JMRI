@@ -80,7 +80,6 @@ public class GeneralManagerTest {
         
         d = InstanceManager.getDefault(DigitalIOManager.class).getNamedBean("ID1");
         Assert.assertNotNull("digitalIO exists", d);
-        Assert.assertTrue("bean is a digitalIO", d instanceof DigitalIO);
         Assert.assertTrue("bean is the expected bean", d == digitalIO);
     }
     
