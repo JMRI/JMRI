@@ -482,7 +482,10 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Better messages when a Turnout Signal Mast encounters errors
+                    due to part of its configuration not completed.</li>
+                <li>Better reporting of issues when Signal Mast Logic encounters
+                    a problem with a Signal Mast</li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -518,7 +521,6 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
-        <span class="since">since 4.13.4</span>
         <ul>
             <li></li>
         </ul>
