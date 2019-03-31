@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.SortedSet;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.util.com.dictiography.collections.IndexedTreeSet;
 
 /**
  * Manager for the generic types DigitalIO, AnalogIO and StringIO.
@@ -15,28 +16,43 @@ import jmri.NamedBean;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class GenericManager<A extends NamedBean> extends AbstractProxyManager<A> {
+public class GenericManager<E extends NamedBean> extends AbstractProxyManager<E> {
 
     private final String _beanTypeHandled;
     private final int _xmlOrder;
     
     public GenericManager(String beanTypeHandled, int xmlOrder) {
+        super(new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
+            @Override
+            public int compare(Manager<E> e1, Manager<E> e2) {
+                int result = e1.getSystemPrefix().compareTo(e2.getSystemPrefix());
+                if (result == 0) {
+                    if (e1.typeLetter() < e2.typeLetter()) {
+                        result = -1;
+                    } else {
+                        result = e1.typeLetter() == e2.typeLetter() ? 0 : 1;
+                    }
+                }
+                return result;
+            }
+        }));
+        
         this._beanTypeHandled = beanTypeHandled;
         this._xmlOrder = xmlOrder;
     }
     
     @Override
-    protected Manager<A> makeInternalManager() {
+    protected Manager<E> makeInternalManager() {
         return null;
     }
 
     @Override
-    protected A makeBean(int index, String systemName, String userName) {
+    protected E makeBean(int index, String systemName, String userName) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
-    public A provide(String name) throws IllegalArgumentException {
+    public E provide(String name) throws IllegalArgumentException {
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -58,4 +74,5 @@ public class GenericManager<A extends NamedBean> extends AbstractProxyManager<A>
     public String getBeanTypeHandled() {
         return _beanTypeHandled;
     }
+
 }

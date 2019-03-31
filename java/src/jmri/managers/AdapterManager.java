@@ -219,5 +219,5 @@ public class AdapterManager<A extends NamedBean, B extends A, C extends Manager<
         }
         
     }
-    
+
 }
