@@ -6,7 +6,6 @@ import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
-import jmri.DigitalIOManager;
 import jmri.IdTagManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -155,7 +154,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 BlockManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
-                DigitalIOManager.class,
                 IdTagManager.class,
                 LightManager.class,
                 LogixManager.class,
