@@ -116,8 +116,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
 
         // Some implementations of createNewTurnout() register the new bean,
-        // some don't. Also note that createNewTurnout() may change the system
-        // name. For example, AbstractTurnout does systemName.toUpperCase().
+        // some don't. 
         if (getBeanBySystemName(s.getSystemName()) == null) {
             // save in the maps if successful
             register(s);
