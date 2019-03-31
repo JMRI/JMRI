@@ -68,9 +68,13 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     // package-level access for testing
     static boolean unexpectedFatalSeen = false;
+    static String  unexpectedFatalContent = null;  
     static boolean unexpectedErrorSeen = false;
+    static String  unexpectedErrorContent = null;  
     static boolean unexpectedWarnSeen = false;
+    static String  unexpectedWarnContent = null;  
     static boolean unexpectedInfoSeen = false;
+    static String  unexpectedInfoContent = null;  
 
     public static boolean unexpectedMessageSeen(Level l) {
         if (l == Level.FATAL) {
@@ -88,20 +92,46 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
+    public static String unexpectedMessageContent(Level l) {
+        if (l == Level.FATAL) {
+            return unexpectedFatalContent;
+        }
+        if (l == Level.ERROR) {
+            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            return unexpectedErrorContent;
+        }
+        if (l == Level.WARN) {
+            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            if (unexpectedErrorContent != null ) return unexpectedErrorContent;
+            return unexpectedWarnContent;
+        }
+        if (l == Level.INFO) {
+            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            if (unexpectedErrorContent != null ) return unexpectedErrorContent;
+            if (unexpectedWarnContent != null ) return unexpectedWarnContent;
+            return unexpectedInfoContent;
+        }
+        throw new java.lang.IllegalArgumentException("Did not expect " + l);
+    }
+
     public static void resetUnexpectedMessageFlags(Level severity) {
         // cases statements are organized to flow 
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 unexpectedInfoSeen = false;
+                unexpectedInfoContent = null;
                 //$FALL-THROUGH$
             case Level.WARN_INT:
                 unexpectedWarnSeen = false;
+                unexpectedWarnContent = null;
                 //$FALL-THROUGH$
             case Level.ERROR_INT:
                 unexpectedErrorSeen = false;
+                unexpectedErrorContent = null;
                 //$FALL-THROUGH$
             case Level.FATAL_INT:
                 unexpectedFatalSeen = false;
+                unexpectedFatalContent = null;
                 break;
             default:
                 Log.warn("Unhandled serverity code: {}", severity.toInt());
@@ -140,19 +170,23 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     void superappend(LoggingEvent l) {
         if (l.getLevel() == Level.FATAL) {
             unexpectedFatalSeen = true;
+            unexpectedFatalContent = l.getMessage().toString();
         }
         if (l.getLevel() == Level.ERROR) {
             if (compare(l, "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
                 // still an error, just suppressed
             } else {
                 unexpectedErrorSeen = true;
+                unexpectedErrorContent = l.getMessage().toString();
             }
         }
         if (l.getLevel() == Level.WARN) {
             unexpectedWarnSeen = true;
+            unexpectedWarnContent = l.getMessage().toString();
         }
         if (l.getLevel() == Level.INFO) {
             unexpectedInfoSeen = true;
+            unexpectedInfoContent = l.getMessage().toString();
         }
 
         super.append(l);
