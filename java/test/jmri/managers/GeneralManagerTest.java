@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Set;
+import jmri.AnalogIO;
+import jmri.AnalogIOManager;
 import jmri.DigitalIO;
 import jmri.DigitalIOManager;
 import jmri.InstanceManager;
@@ -14,9 +16,10 @@ import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.StringIO;
+import jmri.StringIOManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrix.AbstractConnectionConfig;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SerialPortAdapter;
@@ -83,6 +86,30 @@ public class GeneralManagerTest {
         Assert.assertTrue("bean is the expected bean", d == digitalIO);
     }
     
+    @Test
+    public void testAnalogIO() {
+        AnalogIO d;
+        
+        AnalogIO analogIO = new MyAnalogIO("IA1");
+        InstanceManager.getDefault(AnalogIOManager.class).register(analogIO);
+        
+        d = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean("IA1");
+        Assert.assertNotNull("analogIO exists", d);
+        Assert.assertTrue("bean is the expected bean", d == analogIO);
+    }
+    
+    @Test
+    public void testStringIO() {
+        StringIO d;
+        
+        StringIO stringIO = new MyStringIO("IS1");
+        InstanceManager.getDefault(StringIOManager.class).register(stringIO);
+        
+        d = InstanceManager.getDefault(StringIOManager.class).getNamedBean("IS1");
+        Assert.assertNotNull("stringIO exists", d);
+        Assert.assertTrue("bean is the expected bean", d == stringIO);
+    }
+    
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -113,37 +140,12 @@ public class GeneralManagerTest {
     }
 
 
-    private static class MyDigitalIO implements DigitalIO {
+    private static abstract class AbstractIO implements NamedBean {
 
         private final String _systemName;
 
-        public MyDigitalIO(String systemName) {
+        public AbstractIO(String systemName) {
             this._systemName = systemName;
-        }
-
-        @Override
-        public boolean isConsistentState() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setCommandedState(int s) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public int getCommandedState() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public int getKnownState() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void requestUpdateFromLayout() {
-            throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
@@ -276,6 +278,95 @@ public class GeneralManagerTest {
             return suffix1.compareTo(suffix2);
         }
         
+    }
+
+    private static class MyDigitalIO extends AbstractIO implements DigitalIO {
+        
+        public MyDigitalIO(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public boolean isConsistentState() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setCommandedState(int s) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public int getCommandedState() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public int getKnownState() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void requestUpdateFromLayout() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+    }
+
+    private static class MyAnalogIO extends AbstractIO implements AnalogIO {
+        
+        public MyAnalogIO(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void setCommandedAnalogValue(float value) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public float getCommandedAnalogValue() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public float getMin() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public float getMax() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public float getResolution() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public AbsoluteOrRelative getAbsoluteOrRelative() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+    }
+
+    private static class MyStringIO extends AbstractIO implements StringIO {
+        
+        public MyStringIO(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void setCommandedStringValue(String value) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public String getCommandedStringValue() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
     }
 
 }
