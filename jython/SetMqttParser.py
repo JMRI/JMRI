@@ -8,13 +8,14 @@
 # 
 # Author: Bob Jacobsen, copyright 2019
 # Author: Gert Jim Muller, copyright 2019
-# Author: Dave McMorran, copyright 2019#
+# Author: Dave McMorran, copyright 2019
+#
 
 import jmri
 import java
 import json
 
-PUBLISHJSON = True     # True:publish JSON, False:just the state
+PUBLISHJSON = False    # True:publish JSON, False:just the state
 RUNAFTERPANELS = True  # False to speed up (ms), but need script before panels
                        # True needed if Tunrouts are already loadedin the table
 
@@ -26,7 +27,7 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
         print "from Broker. Bean", bean
         print "with topic", topic
 
-    # Try JSON first
+        # Try JSON first
         try:
             json_payload = json.loads( payload )
         except:
@@ -41,9 +42,9 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
         
         # THROWN/CLOSED is the default behavior, here so you can modify it as desired
         if   ( payload_state == "THROWN" ) or ( payload_state == "1" ) or ( payload_state == 1 ):
-            bean.newKnownState( THROWN )
+            bean.newKnownState(  CLOSED if bean.getInverted( ) else THROWN )
         elif ( payload_state == "CLOSED" ) or ( payload_state == "0" ) or ( payload_state == 0 ):
-            bean.newKnownState( CLOSED )
+            bean.newKnownState(  THROWN if bean.getInverted( ) else CLOSED )
         else:
             bean.newKnownState( INCONSISTENT )
         return
@@ -55,42 +56,55 @@ class ParserReplacement( jmri.jmrix.mqtt.MqttContentParser ):
         print "with state", newState
 
         # JSON, if set to True
-        if PUBLISHJSON:
-            data = {}      
-            if ( ( newState & jmri.Turnout.CLOSED ) != 0 ^ bean.getInverted( ) ):
-                data['state'] = "CLOSED"                
-            else:
-                data['state'] = "THROWN"                
+        if PUBLISHJSON :
+            data = {}
+            if ( not bean.getInverted( ) ) :
+                if ( newState & jmri.Turnout.CLOSED ) :
+                    data['state'] = "CLOSED"                
+                else:
+                    data['state'] = "THROWN"
+            else :
+                if ( newState & jmri.Turnout.CLOSED ) :
+                    data['state'] = "THROWN"                
+                else:
+                    data['state'] = "CLOSED"
+                
             json_data = json.dumps( data )
             return json_data
 
         # Without JSON - this is the same as the default behavior, here so you can modify it as desired
         else:
-            if ( ( newState & jmri.Turnout.CLOSED ) != 0 ^ bean.getInverted( ) ):
-                return "CLOSED"
+            if ( not bean.getInverted( ) ) :
+                if  ( newState & jmri.Turnout.CLOSED ) :
+                    return "CLOSED"
+                else :
+                    return "THROWN"
             else :
-                return "THROWN"
+                if  ( newState & jmri.Turnout.CLOSED ) :
+                    return "THROWN"
+                else :
+                    return "CLOSED"
 
 # Find the MqttTurnoutManager
 m = jmri.InstanceManager.getNullableDefault( jmri.jmrix.mqtt.MqttTurnoutManager )
 print "From InstanceManager as MqttTurnoutManager: ", m
-if( m is None ):
+if ( m is None ) :
     # Might only have one connection, 
     m = jmri.InstanceManager.getDefault( jmri.TurnoutManager ).getManagerList( )
-    m = m[1]   # 1 is only appropriate if the MQTT connection is first configured in JMRI
+    m = m[1]   # 1 is only appropriate if the MQTT connection is configured first in JMRI
     print "From InstanceManager as TurnoutManager: ", m
 
 # Install the Parser
-if( m is not None ):
+if ( m is not None ) :
     p = ParserReplacement( )
-    
+
     # install in Manager for all future-defined turnouts
     m.setParser( p )
     print( "ParserReplacement installed" )
 
     # install in any turnouts that have already been created
-    if RUNAFTERPANELS:
-        for turnout in m.getNamedBeanSet( ):
+    if RUNAFTERPANELS :
+        for turnout in m.getNamedBeanSet( ) :
             turnout.setParser( p )
 else:
     print( "ParserReplacement not installed" )
