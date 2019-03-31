@@ -63,7 +63,6 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         setLocale(locale);
         connection.sendMessage(service.doGetList(type, locale));
-        addListenersToBeans();
     }
 
 
@@ -88,12 +87,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         }
     }
 
-    protected void addListenersToBeans() {
-        for (T bean : service.getManager().getNamedBeanSet()) {
-            if (!beanListeners.containsKey(bean.getSystemName())) {
-                addListenerToBean(bean, bean.getSystemName());
-            }
-        }
+    protected void removeListenersFromRemovedBeans() {
         for (String name : new HashSet<>(beanListeners.keySet())) {
             if (service.getManager().getBeanBySystemName(name) == null) {
                 beanListeners.remove(name);
@@ -131,7 +125,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
                     connection.sendMessage(service.doGetList(service.getType(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToBeans();
+                        removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());

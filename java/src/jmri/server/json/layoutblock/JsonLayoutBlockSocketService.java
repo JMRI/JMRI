@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -61,19 +62,15 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
         this.connection.sendMessage(this.service.doGetList(type, locale));
         log.debug("adding LayoutBlocksListener");
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(layoutBlocksListener); //add parent listener
-        addListenersToChildren();        
     }
 
-    private void addListenersToChildren() {
-        InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet().stream().forEach((lb) -> { //add listeners to each child (if not already)
-            String lbn = lb.getSystemName();
-            if (!layoutBlockListeners.containsKey(lbn)) {
-                log.debug("adding LayoutBlockListener for LayoutBlock '{}'", lbn);
-                layoutBlockListeners.put(lbn, new LayoutBlockListener(lb));
-                lb.addPropertyChangeListener(this.layoutBlockListeners.get(lbn));
+    private void removeListenersFromRemovedBeans() {
+        for (String name : new HashSet<>(layoutBlockListeners.keySet())) {
+            if (InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name) == null) {
+                layoutBlockListeners.remove(name);
             }
-        });
-    }    
+        }
+    }
 
     @Override
     public void onClose() {
@@ -122,7 +119,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
                     connection.sendMessage(service.doGetList(LAYOUTBLOCKS, getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToChildren();
+                        removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending LayoutBlocks: {}", ex.getJsonMessage());

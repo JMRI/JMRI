@@ -69,20 +69,10 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
             managerListener = new SignalHeadsListener();
             InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(managerListener);
         }
-        addListenersToBeans();
     }
 
-    private void addListenersToBeans() {
+    private void removeListenersFromRemovedBeans() {
         SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
-        manager.getNamedBeanSet().stream().forEach((bean) -> {
-            String name = bean.getSystemName();
-            if (!beanListeners.containsKey(name)) {
-                log.debug("adding SignalHeadListener for SignalHead '{}'", name);
-                SignalHeadListener listener = new SignalHeadListener(bean);
-                beanListeners.put(name, listener);
-                bean.addPropertyChangeListener(listener);
-            }
-        });
         for (String name : new HashSet<>(beanListeners.keySet())) {
             if (manager.getBeanBySystemName(name) == null) {
                 beanListeners.remove(name);
@@ -135,7 +125,7 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
                     connection.sendMessage(service.doGetList(SIGNAL_HEADS, getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToBeans();
+                        removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending SignalHeads: {}", ex.getJsonMessage());
