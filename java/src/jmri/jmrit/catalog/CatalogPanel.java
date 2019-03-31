@@ -475,7 +475,6 @@ public class CatalogPanel extends JPanel {
     /**
      * Create panel element containing a "View on:" drop down list.
      * Employs a normal JComboBox, no Panel Background option.
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
      */

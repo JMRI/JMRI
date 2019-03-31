@@ -41,6 +41,7 @@ import org.junit.runners.Suite;
         DCCppTurnoutManagerTest.class,
         DCCppTurnoutReplyCacheTest.class,
         BundleTest.class,
+	DCCppStreamConnectionConfigTest.class
 })
 
 /**

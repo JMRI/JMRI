@@ -142,7 +142,7 @@
       <!-- </variable> -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv100error.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv57lissy.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>

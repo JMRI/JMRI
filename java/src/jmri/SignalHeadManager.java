@@ -30,16 +30,37 @@ public interface SignalHeadManager extends Manager<SignalHead> {
     @Override
     public void dispose();
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing SignalHead or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
+     *
+     * @param name User name or system name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull public SignalHead getSignalHead(@Nonnull String name);
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing SignalHead or return null if it doesn't exist. 
+     * 
+     * Locates via user name.
+     *
+     * @param name User name o to match
+     * @return null if no match found
+     */
     @CheckReturnValue
-    @CheckForNull public SignalHead getByUserName(@Nonnull String s);
+    @CheckForNull public SignalHead getByUserName(@Nonnull String name);
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing SignalHead or return null if it doesn't exist. 
+     * 
+     * Locates via system name.
+     *
+     * @param name System name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
-    @CheckForNull public SignalHead getBySystemName(@Nonnull String s);
+    @CheckForNull public SignalHead getBySystemName(@Nonnull String name);
 
 }

@@ -116,7 +116,7 @@ public class LnPacketizer extends LnTrafficController {
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify(); 
+                xmtHandler.notifyAll(); 
             }
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
@@ -500,7 +500,7 @@ public class LnPacketizer extends LnTrafficController {
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         if (rcvThread != null) {
-            rcvThread.interrupt();
+            rcvThread.stop(); // interrupt not sufficient, because jtermios hangs in select via purejavacomm.PureJavaSerialPort$2.read
             try {
                 rcvThread.join();
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}

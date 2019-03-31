@@ -1,49 +1,31 @@
 package jmri.jmrit.throttle;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of ThrottlesListPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class ThrottlesListPanelTest extends TestCase {
+public class ThrottlesListPanelTest {
 
+    @Test
     public void testCtor() {
         ThrottlesListPanel panel = new ThrottlesListPanel();
-        Assert.assertNotNull("exists", panel );
+        Assert.assertNotNull("exists", panel);
     }
 
-    // from here down is testing infrastructure
-    public ThrottlesListPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ThrottlesListPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ThrottlesListPanelTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         jmri.util.JUnitUtil.setUp();
 
     }
-    
-    @Override
+
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
         jmri.util.JUnitUtil.tearDown();
 
     }

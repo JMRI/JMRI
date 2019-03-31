@@ -99,7 +99,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     log.debug("Read {} {} adapter {}", type, name, adapter);
                     try {
                         log.debug("Creating {} {} adapter {}...", type, name, adapter);
-                        ((XmlAdapter) Class.forName(adapter).newInstance()).load(action, null); // no perNode preferences
+                        ((XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance()).load(action, null); // no perNode preferences
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", adapter, action, ex);
                         this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),

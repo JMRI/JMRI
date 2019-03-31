@@ -1,16 +1,23 @@
 package jmri.beans;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * Tests for {@link jmri.beans.Beans} static methods.
  *
  * @author Randall Wood
  */
-public class BeansTest extends TestCase {
+public class BeansTest {
 
     private static final String CLASS = "class";
     private static final String PROPERTY_NAMES = "propertyNames";
@@ -20,23 +27,10 @@ public class BeansTest extends TestCase {
     private static final String OLD_VALUE = "old";
     private static final String NEW_VALUE = "new";
 
-    public BeansTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test of setIndexedProperty method, of class Beans.
      */
+    @Test
     public void testSetIndexedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -51,6 +45,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of setIntrospectedIndexedProperty method, of class Beans.
      */
+    @Test
     public void testSetIntrospectedIndexedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -65,6 +60,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of getIndexedProperty method, of class Beans.
      */
+    @Test
     public void testGetIndexedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -79,6 +75,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of getIntrospectedIndexedProperty method, of class Beans.
      */
+    @Test
     public void testGetIntrospectedIndexedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -93,6 +90,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of setProperty method, of class Beans.
      */
+    @Test
     public void testSetProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -105,6 +103,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of setIntrospectedProperty method, of class Beans.
      */
+    @Test
     public void testSetIntrospectedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -117,6 +116,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of getProperty method, of class Beans.
      */
+    @Test
     public void testGetProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -129,6 +129,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of getIntrospectedProperty method, of class Beans.
      */
+    @Test
     public void testGetIntrospectedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -141,6 +142,7 @@ public class BeansTest extends TestCase {
     /**
      * Test of hasProperty method, of class Beans.
      */
+    @Test
     public void testHasProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -153,6 +155,7 @@ public class BeansTest extends TestCase {
         assertFalse(Beans.hasProperty(introspectedTarget, NOT_A_PROPERTY));
     }
 
+    @Test
     public void testHasIndexedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -167,9 +170,11 @@ public class BeansTest extends TestCase {
         assertTrue(Beans.hasIndexedProperty(hashedTarget, INDEXED_PROPERTY));
         assertTrue(Beans.hasIndexedProperty(introspectedTarget, INDEXED_PROPERTY));
     }
+
     /**
      * Test of hasIntrospectedProperty method, of class Beans.
      */
+    @Test
     public void testHasIntrospectedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -182,6 +187,7 @@ public class BeansTest extends TestCase {
         assertFalse(Beans.hasIntrospectedProperty(introspectedTarget, NOT_A_PROPERTY));
     }
 
+    @Test
     public void testHasIntrospectedIndexedProperty() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -200,6 +206,7 @@ public class BeansTest extends TestCase {
     /**
      * Test getting properties via getPropertyNames.
      */
+    @Test
     public void testGetPropertyNames() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -220,6 +227,7 @@ public class BeansTest extends TestCase {
     /**
      * Test getting introspected properties via getIntrospectedPropertyNames.
      */
+    @Test
     public void testGetIntrospectedPropertyNames() {
         Object introspectedTarget = new Target();
         Object hashedTarget = new ArbitraryTarget();
@@ -238,6 +246,7 @@ public class BeansTest extends TestCase {
         assertNotSame(expResult, itResult);
     }
 
+    @Test
     public void testImplementsBeanInterface() {
         assertEquals(false, Beans.implementsBeanInterface(null));
         assertEquals(false, Beans.implementsBeanInterface(new Object()));

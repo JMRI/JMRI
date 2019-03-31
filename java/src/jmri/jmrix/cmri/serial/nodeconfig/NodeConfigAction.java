@@ -26,7 +26,6 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {

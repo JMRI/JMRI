@@ -104,6 +104,11 @@ public class LightTableActionTest extends AbstractTableActionBase {
         _l1Table.dispose();
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddLight");
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

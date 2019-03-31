@@ -1,6 +1,6 @@
 package jmri.jmrix;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -119,9 +119,9 @@ abstract public class AbstractThrottle implements DccThrottle {
      * to the system state (eg. the speed is the same, or effectivly the same, as the existing speed).
      * Then, the boolean options can affect this behaviour.
      *
-     * @param speed - the new speed
-     * @param allowDuplicates - don't suppress messages
-     * @param allowDuplicatesOnStop - don't suppress messages if the new speed is 'stop'
+     * @param speed  the new speed
+     * @param allowDuplicates  don't suppress messages
+     * @param allowDuplicatesOnStop  don't suppress messages if the new speed is 'stop'
      */
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
@@ -134,7 +134,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * setSpeedSettingAgain - set the speed and don't ever supress the sending of messages to the system
      *
-     * @param speed - the new speed
+     * @param speed  the new speed
      */
     @Override
     public void setSpeedSettingAgain(float speed) {
@@ -1390,7 +1390,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", "" + currentDuration);
-        re.putAttribute("LastOperated", new ISO8601DateFormat().format(new Date()));
+        re.putAttribute("LastOperated", new StdDateFormat().format(new Date()));
         //Only store if the roster entry isn't open.
         if (!re.isOpen()) {
             re.store();

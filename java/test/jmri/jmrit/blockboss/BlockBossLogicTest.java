@@ -1,10 +1,14 @@
 package jmri.jmrit.blockboss;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assume;
@@ -348,6 +352,16 @@ public class BlockBossLogicTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
 
+        // clear the BlockBossLogic static list
+        Enumeration<BlockBossLogic> en = BlockBossLogic.entries();
+        ArrayList<SignalHead> heads = new ArrayList<>();
+        while (en.hasMoreElements()) {
+            heads.add(en.nextElement().getDrivenSignalNamedBean().getBean());
+        }
+        for (SignalHead head : heads) {  // avoids ConcurrentModificationException
+            BlockBossLogic.getStoppedObject(head);
+        }
+        
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
         t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");

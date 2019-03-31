@@ -1,38 +1,29 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
 import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -40,7 +31,6 @@ import javax.swing.UIManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -56,8 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
 
-    TrafficController tc;
-
     private JScrollPane scrolltablefeedback;
     private JSplitPane split;
     private double _splitratio = 0.95;
@@ -66,16 +54,10 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     protected CbusSlotMonitorDataModel slotModel=null;
     protected JTable slotTable=null;
     protected final XTableColumnModel tcm = new XTableColumnModel();
-
-    private JMenu cabsigMenu = new JMenu(Bundle.getMessage("SigDataOpt"));
-    private JMenu cabsigSpeedMenu = new JMenu(Bundle.getMessage("Speed"));
     private JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
-    private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
     
     // private JMenu cancmdMenu = new JMenu("CANCMD Setup");
     protected List<JCheckBoxMenuItem> colMenuList = new ArrayList<JCheckBoxMenuItem>();
-    protected List<JCheckBoxMenuItem> cabSigColMenuList = new ArrayList<JCheckBoxMenuItem>();    
-    private JToggleButton masterSendCabDataButton;
     
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -120,9 +102,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             if (colnumber<10) {
                 colMenu.add(showcol); // session columnds
             }
-            else { 
-                cabSigColMenu.add(showcol); // cabsig columns
-            }
+            
         }
 
         for (int i = 0; i < CbusSlotMonitorDataModel.MAX_COLUMN; i++) {
@@ -150,27 +130,17 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         slotTable.setAutoCreateRowSorter(true);
         
         final TableRowSorter<CbusSlotMonitorDataModel> sorter = new TableRowSorter<CbusSlotMonitorDataModel>(slotModel);
-        slotTable.setRowSorter(sorter);        
+        slotTable.setRowSorter(sorter);
+        slotTable.setRowHeight(26); // to match estop button icon size
         
         // configure items for GUI
         slotModel.configureTable(slotTable);
         
-        slotTable.addMouseListener(new CbusSlotButtonMouseListener(slotTable));
-        
-        TableCellRenderer dataButtonRenderer = new DataButtonRenderer();
         TableColumn estopColumn = tcm.getColumnByModelIndex(CbusSlotMonitorDataModel.ESTOP_COLUMN);                
         estopColumn.setMinWidth(60);
-        //  estopColumn.setMaxWidth(80);        
-        estopColumn.setCellRenderer(dataButtonRenderer);
-        // needed ?? 
-        estopColumn.setCellEditor(new ButtonEditor(new JButton()));
-        
-        TableCellRenderer chngBlockDirRenderer = new ChngBlockDirRenderer();
-        TableColumn ChngBlockDirColumn = tcm.getColumnByModelIndex(CbusSlotMonitorDataModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN);                
-        ChngBlockDirColumn.setMinWidth(80);
-        //  ChngBlockDirColumn.setMaxWidth(80);        
-        ChngBlockDirColumn.setCellRenderer(chngBlockDirRenderer);        
-        
+        estopColumn.setCellRenderer( new ButtonRenderer() );
+        estopColumn.setCellEditor( new ButtonEditor( new JButton() ) );    
+
         slotScroll = new JScrollPane(slotTable);
         slotScroll.setPreferredSize(new Dimension(400, 200));
         
@@ -189,8 +159,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         Dimension scrolltablefeedbackminimumSize = new Dimension(150, 20);
         scrolltablefeedback.setMinimumSize(scrolltablefeedbackminimumSize);
         
-
-        
         JButton estopButton = new JButton("Stop All");
         estopButton.setIcon(new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
         estopButton.setToolTipText(("ThrottleToolBarStopAllToolTip"));
@@ -204,33 +172,8 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         });
         
         toppanelcontainer.add(estopButton);
-        
         toppanelcontainer.add(new LargePowerManagerButton(true));
         
-        masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
-        masterSendCabDataButton.setSelected(false);
-        masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
-        
-        masterSendCabDataButton.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (masterSendCabDataButton.isSelected()) {
-                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOff"));
-                    masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png"));                    
-                    slotModel.masterSendCabData = false;
-                    slotModel.masterSendCabDataButton(false);
-                }
-                else {
-                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOn"));
-                    masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
-                    slotModel.masterSendCabData = true;
-                    slotModel.masterSendCabDataButton(true);
-                }
-            }
-        }); 
-        
-        toppanelcontainer.add(masterSendCabDataButton);
-
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
             slotScroll, scrolltablefeedback);
         split.setResizeWeight(_splitratio);
@@ -247,61 +190,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         log.debug("class name {} ",CbusSlotMonitorPane.class.getName());
     }
     
-	private static class DataButtonRenderer implements TableCellRenderer {		
-		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton button = (JButton)value;
-            // if (slotTable.sessionidarr.get(i)) {
-            //    button.setIcon(new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "resources/icons/throttles/RedPowerLED.gif"));
-            // } else {
-            //    button.setIcon(null);
-            // }
-			if (isSelected){
-                button.setForeground(table.getSelectionForeground());
-                button.setBackground(table.getSelectionBackground());
-            }
-            else {
-                button.setForeground(table.getForeground());
-                button.setBackground(UIManager.getColor("Button.background"));
-                }
-			return button;	
-		}
-	}    
-    
-	private static class ChngBlockDirRenderer implements TableCellRenderer {		
-		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton button = (JButton)value;
-			if (isSelected){
-                    button.setForeground(table.getSelectionForeground());
-                    button.setBackground(table.getSelectionBackground());
-                }
-                else {
-                    button.setForeground(table.getForeground());
-                    button.setBackground(UIManager.getColor("Button.background"));
-                }
-			return button;	
-		}
-	}    
-    
-    private static class CbusSlotButtonMouseListener extends MouseAdapter {
-		private final JTable table;
-		public CbusSlotButtonMouseListener(JTable table) {
-			this.table = table;
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
-			int row    = e.getY()/table.getRowHeight(); 
-
-			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
-			    Object value = table.getValueAt(row, column);
-			    if (value instanceof JButton) {
-			    	((JButton)value).doClick();
-			    }
-			}
-		}
-	}
-    
     @Override
     public String getTitle() {
         if (memo != null) {
@@ -310,7 +198,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         return Bundle.getMessage("MenuItemCbusSlotMonitor");
     }
 
-    
     public CbusSlotMonitorPane() {
         super();
     }
@@ -321,42 +208,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
-        
-        JMenuItem resetBlocks = new JMenuItem(Bundle.getMessage("ResetBlocks"));
-        resetBlocks.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                slotModel.initblocks();
-            }
-        });        
-        
-        JCheckBoxMenuItem autorevblock = new JCheckBoxMenuItem(Bundle.getMessage("MAutoRev"));
-        autorevblock.setSelected(true);
-        autorevblock.setToolTipText(Bundle.getMessage("MAutoRevTip"));
-        autorevblock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                slotModel.autoreverseblockdir = autorevblock.isSelected();
-            }
-        });
-        
-        cabsigMenu.add(resetBlocks);
-        cabsigMenu.add(cabsigSpeedMenu);
-        cabsigMenu.add(autorevblock);
-        
-        ButtonGroup speedgroup = new ButtonGroup();
-        JRadioButtonMenuItem speeddisabled = new JRadioButtonMenuItem(Bundle.getMessage("HighlightDisabled"));
-        // CbusSlotMonitorDataModel.cabspeedtype=0;
-        speeddisabled.setSelected(true);
-        speedgroup.add(speeddisabled);
-        cabsigSpeedMenu.add(speeddisabled);
-
-        // cancmdMenu.setEnabled(false);        
-        // menuList.add(cancmdMenu);
-        
         menuList.add(colMenu);
-        menuList.add(cabSigColMenu);
-        menuList.add(cabsigMenu);
         return menuList;
     }
 

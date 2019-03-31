@@ -39,6 +39,7 @@ public enum LnCommandStationType {
     COMMAND_STATION_DCS200("DCS200", true, false, "LnThrottleManager", "SlotManager", true, false), // NOI18N
     COMMAND_STATION_DCS050("DCS50 (Zephyr)", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
     COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
+    COMMAND_STATION_DCS052("DCS52 (Zephyr Express)", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
     COMMAND_STATION_DB150("DB150 (Empire Builder)", false, true, "LnThrottleManager", "SlotManager", true, false), // NOI18N
 
     // the following command stations are assumed to not support "OPC_IDLE"
@@ -50,7 +51,10 @@ public enum LnCommandStationType {
     // the following command stations are known to not support "OPC_IDLE"
     COMMAND_STATION_PR3_ALONE("PR3 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
     COMMAND_STATION_PR2_ALONE("PR2 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
-    COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager", false, false);  // NOI18N
+    COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager", false, false),  // NOI18N
+    COMMAND_STATION_PR4_ALONE("PR4 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
+    COMMAND_STATION_USB_DCS240_ALONE("DCS240 USB interface as standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
+    COMMAND_STATION_USB_DCS52_ALONE("DCS52 USB interface as standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false); // NOI18N
 
     // Note that the convention is that the first word (space-separated token) of the name is the
     // name of a configuration file for loconet.cmdstnconfig
@@ -79,6 +83,7 @@ public enum LnCommandStationType {
 
     /**
      * Can this command station read back from decoders?
+     * @return whether the command station can perform CV reads
      */
     public boolean getCanRead() {
         return canRead;
@@ -91,6 +96,7 @@ public enum LnCommandStationType {
 
     /**
      * Does a programming operation turn track power off?
+     * @return whether the programming operation turns track power off
      */
     public boolean getProgPowersOff() {
         return progEndOp;
@@ -107,6 +113,9 @@ public enum LnCommandStationType {
 
     /**
      * Get a new ThrottleManager of the right type for this command station.
+     * 
+     * @param memo the LocoNetSystemConnectionMemo object which hosts throttles
+     * @return the ThrottleManager object for the connection and the command station
      */
     public ThrottleManager getThrottleManager(LocoNetSystemConnectionMemo memo) {
         try {
@@ -137,6 +146,9 @@ public enum LnCommandStationType {
 
     /**
      * Get a new SlotManager of the right type for this command station.
+     * 
+     * @param tc the LnTrafficController object which hosts the slot manager
+     * @return the SlogManager object for the connection and the command station
      */
     public SlotManager getSlotManager(LnTrafficController tc) {
         try {

@@ -4171,8 +4171,8 @@ public class LocoNetMessageInterpret {
     /**
      * Return a string which is formatted by a bundle Resource Name.
      *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
+     * @param hour    fast-clock hour
+     * @param minute  fast-clock minute
      * @return a formatted string containing the time
      */
     private static String fcTimeToString(int hour, int minute) {
@@ -4297,6 +4297,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT500");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS52");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
             case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:

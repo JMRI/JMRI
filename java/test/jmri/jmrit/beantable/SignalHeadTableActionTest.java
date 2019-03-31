@@ -8,11 +8,8 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -80,6 +77,17 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     @Test
     public void testIncludeAddButton(){
          Assert.assertTrue("Default include add button",a.includeAddButton());
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSignalHead");
+    }
+
+    @Test
+    @Ignore("Signal Head create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
     }
 
     // The minimal setup for log4J

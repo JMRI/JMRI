@@ -19,7 +19,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     private final static String PROTOCOL = "tcp://";
     private final static String CLID = "JMRI";
-    private final static String BASETOPIC = "/trains/";
+    public final static String BASETOPIC = "/trains/";  // probably shouldn't be static some day; public for script access
 
     HashMap<String, ArrayList<MqttEventListener>> mqttEventListeners;
 

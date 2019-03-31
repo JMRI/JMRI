@@ -43,21 +43,27 @@ public class JsonSignalMastSocketServiceTest {
 
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in SignalMastManager
-            Assert.assertEquals(JSON.ASPECT_UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.ASPECT_UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asText());
 
             //change to Approach, and wait for change to show up
             s.setAspect("Approach");
             JUnitUtil.waitFor(() -> {
                 return s.getAspect().equals("Approach");
             }, "SignalMast is now Approach");
-            Assert.assertEquals("Approach", connection.getMessage().path(JSON.DATA).path(JSON.STATE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals("Approach", message.path(JSON.DATA).path(JSON.STATE).asText());
 
             //change to Stop, and wait for change to show up
             s.setAspect("Stop");
             JUnitUtil.waitFor(() -> {
                 return s.getAspect().equals("Stop");
             }, "SignalMast is now Stop");
-            Assert.assertEquals("Stop", connection.getMessage().path(JSON.DATA).path(JSON.STATE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals("Stop", message.path(JSON.DATA).path(JSON.STATE).asText());
 
             service.onClose();
 //            // TODO: test that service is no longer a listener in SignalMastManager
@@ -71,7 +77,6 @@ public class JsonSignalMastSocketServiceTest {
         JsonNode message;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
-
         //create a signalmast for testing
         String sysName = "IF$shsm:basic:one-searchlight(IH2)";
         String userName = "SM2";
@@ -81,7 +86,7 @@ public class JsonSignalMastSocketServiceTest {
 
         try {
             // SignalMast Stop
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, "Stop");
+            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals("Stop", s.getAspect()); //aspect should be Stop
         } catch (IOException | JmriException | JsonException ex) {
@@ -91,7 +96,7 @@ public class JsonSignalMastSocketServiceTest {
         // Try to set SignalMast to Unknown, should throw error, remain at Stop
         Exception exception = null;
         try {
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
+            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals("Stop", s.getAspect());
         } catch (IOException | JmriException | JsonException ex) {

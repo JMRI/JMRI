@@ -6,6 +6,8 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.beans.PropertyChangeProvider;
+import jmri.beans.VetoableChangeProvider;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -43,7 +45,7 @@ import javax.annotation.Nonnull;
  * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public interface Manager<E extends NamedBean> {
+public interface Manager<E extends NamedBean> extends PropertyChangeProvider, VetoableChangeProvider {
 
     /**
      * Provides access to the system prefix string. This was previously called
@@ -305,6 +307,8 @@ public interface Manager<E extends NamedBean> {
      * The non-system-specific SignalHeadManagers use this method extensively.
      *
      * @param n the bean
+     * @throws IllegalArgumentException if a different bean with the same
+     * system name is already registered in the manager
      */
     public void register(@Nonnull E n);
 

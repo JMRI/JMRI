@@ -1227,7 +1227,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * Check for valid macro, return number if valid, -1 if not.
      *
-     * @param s - string of macro number
+     * @param s  string of macro number
      * @return mN - int of macro number or -1 if invalid
      */
     private int validMacro(String s) {
@@ -1453,7 +1453,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * USB Write 1 byte of NCE memory
      *
-     * @param value - byte being written
+     * @param value  byte being written
      */
     private void writeUsbMemory1(int value) {
         replyLen = NceMessage.REPLY_1; // Expect 1 byte response

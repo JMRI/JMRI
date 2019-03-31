@@ -20,9 +20,6 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
     //@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED")
     //private final transient String defaultText = " ";
 
-    /**
-     * {@inheritDoc}
-     */
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
         log.debug("BlockContentsIcon ctor= {}", BlockContentsIcon.class.getName());
