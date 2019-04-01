@@ -43,9 +43,16 @@
       hardware via the Connections pane in the Preferences window.
       Select "MQTT" as the manufacturer name.
       
+      <p>
+      Currently, JMRI can handle only one MQTT connection at a time.
+      You can combine that MQTT connection with other connection types,
+      but two MQTT connections won't work properly. This 
+      may be improved at some later point if people find a 
+      reason to need two MQTT connections.
+      
         <h3>Topics</h3>
         
-        JMRI MQTT Turnouts are specified with names like "MTabcd".
+        JMRI MQTT Turnouts are specified with JMRI system names like "MTabcd".
         The "M" is the system connection letter, "T" specifies 
         Turnout, and all after that is a suffix that is used to generate
         the specific topic which JMRI publishes and subscribes to when
@@ -57,19 +64,29 @@
         There are two parts to that: A base topic common
         to everything JMRI does on that connection, and 
         a type-specific topic specific to each type.
-        By default the base topic is "/trains/" and can't (yet) be changed;
+        <p>
+        By default the base topic is "/trains/";
         the turnout-specific part is "track/turnout/",
         leading to a complete prefix of "/trains/track/turnout/".
         When e.g. Sensors become available, they might have
         e.g. a type-specific part of "track/sensor/".
         <p>
+        <a href="MQTT_Preferences.png"><img src="MQTT_Preferences.png" align="right" height="211" width="345"></a>
+        You can change the base topic by 
+        going to the JMRI Connection preferences,
+        selecting your MQTT connection's preference
+        pane, checking the "Additional Connection Settings" box,
+        and then entering the desired value in the "MQTT channel"
+        selection box.  Depending on which kind of computer you
+        have, you might have to click once or twice in that box
+        before you can enter your new prefix text.  Then
+        save your changes and restart the program.
+        
+        <p>
         You can change the type-specific part of the prepended string using
         a script at startup time.  See the
         <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
-        sample script for an example.  Eventually the base topic
-        will also be configurable via the JMRI preferences
-        when you set up the MQTT connection.
-        <p>
+        sample script for an example.  
         Note that any changes should be made at startup time
         before creating any Turnout objects, i.e. 
         the script must be run as the 
