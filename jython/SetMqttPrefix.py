@@ -13,8 +13,13 @@ m = jmri.InstanceManager.getNullableDefault( jmri.jmrix.mqtt.MqttTurnoutManager 
 print "From InstanceManager as MqttTurnoutManager: ", m
 if( m is None ):
     # Might only have one connection, 
-    m = jmri.InstanceManager.getDefault( jmri.TurnoutManager ).getManagerList( )
-    m = m[1]   # 1 is only appropriate if the MQTT connection is first configured in JMRI
+    mList = jmri.InstanceManager.getDefault( jmri.TurnoutManager ).getManagerList( )
+    #print mList
+    for m in mList:
+        if( isinstance( m, jmri.jmrix.mqtt.MqttTurnoutManager ) ):
+            break
+        m = None
+        #m = mList[1]   # 1 is only appropriate if the MQTT connection is first configured in JMRI
     print "From InstanceManager as TurnoutManager: ", m
 
 # Now set a sample prefix
