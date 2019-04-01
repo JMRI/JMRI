@@ -4,7 +4,6 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.simulator.CbusDummyCSSession;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -138,7 +137,7 @@ public class CbusDummyCSTest {
         t.message(m);        
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>2); }, "error reply 2 didn't arrive");
         Assert.assertEquals("dkeep no session", "[5f8] 63 02 00 03",
-            tc.inbound.elementAt(tc.inbound.size() - 1).toString());         
+            tc.inbound.elementAt(tc.inbound.size() - 1).toString());
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_DSPD, 1  },0x12 ); // speed dir session 1
         t.message(m);
