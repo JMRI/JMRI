@@ -82,11 +82,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                         Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
                             if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
-                                String imageset = e.getAttributeValue("imageset") ;
-                                if (imageset == null) {
-                                    imageset = "default" ;
-                                }
-                                e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast"), imageset));
+                                e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast"), e.getAttributeValue("imageset")));
                             }
                             try {
                                 e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
