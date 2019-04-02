@@ -144,7 +144,7 @@ public class CbusOpCodes {
     /**
      * Hashmap for decoding CBUS opcodes {@code <opc, string description>}
      */
-    public static final Map<Integer, String> opcodeMap = createMap();
+    private static final Map<Integer, String> opcodeMap = createMap();
 
     /*
      * Populate hashmap with format strings keyed by opcode
@@ -533,7 +533,7 @@ public class CbusOpCodes {
     /**
      * Hashmap for decoding CBUS opcodes {@code <opc, string description>}
      */
-    public static final Map<Integer, String> opcMap = createoMap();
+    private static final Map<Integer, String> opcMap = createoMap();
 
     /*
      * Populate hashmap with format strings keyed by opcode
@@ -682,7 +682,7 @@ public class CbusOpCodes {
     /**
      * Set of CBUS event opcodes
      */
-    public static final Set<Integer> eventOpcodes = createEventOPC();
+    private static final Set<Integer> eventOpcodes = createEventOPC();
 
     /**
      * Test if CBUS opcode represents an event
@@ -748,7 +748,7 @@ public class CbusOpCodes {
     /**
      * Set of CBUS event opcodes excluding requests + fastclock
      */
-    public static final Set<Integer> eventNotRequestOpCodes = createEventNROPC();
+    private static final Set<Integer> eventNotRequestOpCodes = createEventNROPC();
 
     /**
      * Test if CBUS opcode represents a JMRI event table event
@@ -811,7 +811,7 @@ public class CbusOpCodes {
     /**
      * Set of CBUS DCC opcodes
      */
-    public static final Set<Integer> dccOpcodes = createDccOPC();
+    private static final Set<Integer> dccOpcodes = createDccOPC();
 
     /**
      * Test if CBUS opcode represents a dcc message
@@ -877,7 +877,7 @@ public class CbusOpCodes {
     /**
      * Set of CBUS ON event opcodes
      */
-    public static final Set<Integer> onEvOpcodes = createOnEv();
+    private static final Set<Integer> onEvOpcodes = createOnEv();
 
     /**
      * Test if CBUS opcode represents an on event
@@ -924,7 +924,7 @@ public class CbusOpCodes {
     /**
      * Set of CBUS event request opcodes
      */
-    public static final Set<Integer> evRequestOpcodes = createRequests();
+    private static final Set<Integer> evRequestOpcodes = createRequests();
 
     /**
      * Test if CBUS opcode represents an event request
@@ -951,7 +951,7 @@ public class CbusOpCodes {
     /**
      * Set of CBUS short event opcodes
      */
-    public static final Set<Integer> shortOpcodes = createShort();
+    private static final Set<Integer> shortOpcodes = createShort();
 
     /**
      * Test if CBUS opcode represents a short event

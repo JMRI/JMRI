@@ -7129,8 +7129,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //turnout is valid and unique.
             o.setTurnout(turnoutName);
 
-            if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-                turnoutNameComboBox.setText(turnoutName.toUpperCase());
+            if (o.getTurnout().getSystemName().equals(turnoutName)) {
+                turnoutNameComboBox.setText(turnoutName);
             }
         } else {
             o.setTurnout("");
@@ -7143,8 +7143,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //turnout is valid and unique.
             o.setTurnoutB(turnoutName);
 
-            if (o.getTurnoutB().getSystemName().equals(turnoutName.toUpperCase())) {
-                extraTurnoutNameComboBox.setText(turnoutName.toUpperCase());
+            if (o.getTurnoutB().getSystemName().equals(turnoutName)) {
+                extraTurnoutNameComboBox.setText(turnoutName);
             }
         } else {
             o.setTurnoutB("");
@@ -7214,8 +7214,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //turnout is valid and unique.
             o.setTurnout(turnoutName);
 
-            if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-                turnoutNameComboBox.setText(turnoutName.toUpperCase());
+            if (o.getTurnout().getSystemName().equals(turnoutName)) {
+                turnoutNameComboBox.setText(turnoutName);
             }
         } else {
             o.setTurnout("");
@@ -7265,7 +7265,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 String sname = t.getSystemName();
                 String uname = t.getUserName();
                 log.debug("{}: Turnout tested '{}' and '{}'.", lt.getName(), sname, uname);
-                if ((sname.equals(inTurnoutName.toUpperCase()))
+                if ((sname.equals(inTurnoutName))
                         || ((uname != null) && (uname.equals(inTurnoutName)))) {
                     result = false;
                     break;
@@ -7281,7 +7281,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     String sname = t.getSystemName();
                     String uname = t.getUserName();
                     log.debug("{}: 2nd Turnout tested '{}' and '{}'.", lt.getName(), sname, uname);
-                    if ((sname.equals(inTurnoutName.toUpperCase()))
+                    if ((sname.equals(inTurnoutName))
                             || ((uname != null) && (uname.equals(inTurnoutName)))) {
                         result = false;
                         break;
@@ -7298,7 +7298,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     String sname = t.getSystemName();
                     String uname = t.getUserName();
                     log.debug("{}: slip Turnout tested '{}' and '{}'.", sl.getName(), sname, uname);
-                    if ((sname.equals(inTurnoutName.toUpperCase()))
+                    if ((sname.equals(inTurnoutName))
                             || ((uname != null) && (uname.equals(inTurnoutName)))) {
                         result = false;
                         break;
@@ -7310,7 +7310,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     String sname = t.getSystemName();
                     String uname = t.getUserName();
                     log.debug("{}: slip Turnout B tested '{}' and '{}'.", sl.getName(), sname, uname);
-                    if ((sname.equals(inTurnoutName.toUpperCase()))
+                    if ((sname.equals(inTurnoutName))
                             || ((uname != null) && (uname.equals(inTurnoutName)))) {
                         result = false;
                         break;

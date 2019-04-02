@@ -36,15 +36,15 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    }
 
    public RaspberryPiTurnout(String systemName, GpioController _gpio) {
-        super(systemName.toUpperCase());
+        super(systemName);
         log.trace("Provisioning turnout '{}'",systemName);
-        init(systemName.toUpperCase(),_gpio);
+        init(systemName,_gpio);
    }
 
    public RaspberryPiTurnout(String systemName, String userName,GpioController _gpio) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         log.trace("Provisioning turnout '{}' with username '{}'",systemName, userName);
-        init(systemName.toUpperCase(),_gpio);
+        init(systemName,_gpio);
    }
 
    /**
