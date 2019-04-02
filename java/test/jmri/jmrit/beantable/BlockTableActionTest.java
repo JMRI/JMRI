@@ -4,6 +4,8 @@ import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
@@ -207,6 +209,47 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
+
+    @Test
+    public void testSetDefaultSpeed() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	    //Enter 1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("1");
+	    //and press create
+	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+
+        // Open Speed pane to test Speed menu, which displays a JOptionPane
+        JFrameOperator main = new JFrameOperator(getTableFrameName()); 
+        // Use GUI menu to open Speeds pane:
+	
+	//This is a modal JOptionPane, so create a thread to dismiss it.
+	Thread t = new Thread(() -> {
+            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("SpeedsMenuItemDefaults"),"","OK");
+        });
+        t.setName("Default Speeds Dialog Close Thread");
+        t.start();
+        // pushMenuNoBlock is used, because dialog is modal
+        JMenuBarOperator mainbar = new JMenuBarOperator(main);
+        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        JPopupMenu jpm = jmo.getPopupMenu();
+        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
+        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        jmio.pushNoBlock();
+        // clean up
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
 
     @Before
     @Override
