@@ -989,11 +989,24 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         java.awt.Color color = java.awt.Color.red;
 
         if (msg == null) {
-            cmdBlockIdx = 0;    // reset block command number  
-            Thread checker = new checkForTermination(_warrant, warrant, num);
-            checker.start();
-            if (log.isDebugEnabled()) log.debug("Exit runWarrant");
-            return;
+            if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
+                cmdBlockIdx = 0;    // reset block command number  
+                Thread checker = new checkForTermination(_warrant, warrant, num);
+                checker.start();
+                if (log.isDebugEnabled()) log.debug("Exit runWarrant");
+                return;
+            } else {
+                msg = WarrantTableFrame.getDefault().runTrain(warrant, Warrant.MODE_RUN);
+                if (msg != null) {
+                    msg = Bundle.getMessage("CannotRun", warrant.getDisplayName(), msg);
+                } else {
+                    msg = Bundle.getMessage("linkedLaunch",
+                            warrant.getDisplayName(), _warrant.getDisplayName(),
+                            warrant.getfirstOrder().getBlock().getDisplayName(),
+                            _warrant.getfirstOrder().getBlock().getDisplayName());
+                    color = WarrantTableModel.myGreen;
+               }
+            }
         } else {
             msg = Bundle.getMessage("CannotRun", warrant.getDisplayName(), msg);
         }
@@ -1046,35 +1059,22 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (log.isDebugEnabled()) log.debug("checkForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
 
             java.awt.Color color = java.awt.Color.red;
-            if (oldWarrant.getSpeedUtil().getDccAddress().equals(newWarrant.getSpeedUtil().getDccAddress())) {
-                msg = newWarrant.setRoute(false, null);
-                if (msg == null) {
-                    msg = newWarrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-                }
-                if (msg != null) {
-                    msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
-                } else {
-                    if (oldWarrant.equals(newWarrant)) {
-                        msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
-                    } else {
-                        msg = Bundle.getMessage("linkedLaunch",
-                                newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
-                                newWarrant.getfirstOrder().getBlock().getDisplayName(),
-                                endBlock.getDisplayName());
-                    }
-                    color = WarrantTableModel.myGreen;
-                }
+            msg = newWarrant.setRoute(false, null);
+            if (msg == null) {
+                msg = newWarrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+            }
+            if (msg != null) {
+                msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
             } else {
-                msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
-                if (msg != null) {
-                    msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
+                if (oldWarrant.equals(newWarrant)) {
+                    msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
                 } else {
                     msg = Bundle.getMessage("linkedLaunch",
                             newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
                             newWarrant.getfirstOrder().getBlock().getDisplayName(),
-                            oldWarrant.getfirstOrder().getBlock().getDisplayName());
-                    color = WarrantTableModel.myGreen;
-               }
+                            endBlock.getDisplayName());
+                }
+                color = WarrantTableModel.myGreen;
             }
             String m = msg;
             java.awt.Color c = color;

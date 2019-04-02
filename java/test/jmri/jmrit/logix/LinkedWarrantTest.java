@@ -80,7 +80,6 @@ public class LinkedWarrantTest {
        // OBlock of route
         String[] route = {"OB12", "OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11", "OB12"};
         OBlock block = _OBlockMgr.getOBlock("OB12");
-        OBlock westBlk = _OBlockMgr.getOBlock("West");
         
         // Run the train, then checks end location
         Assert.assertEquals("LoopDeLoop after first leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
