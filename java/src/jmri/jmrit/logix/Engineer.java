@@ -986,7 +986,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         num--;
         ts.setValue(Integer.toString(num));
-        java.awt.Color color = java.awt.Color.red;;
+        java.awt.Color color = java.awt.Color.red;
 
         if (msg == null) {
             cmdBlockIdx = 0;    // reset block command number  
