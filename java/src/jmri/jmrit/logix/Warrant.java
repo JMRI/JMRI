@@ -737,6 +737,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _otherShareBlock = null;
             _myShareBlock = null;
         }
+        deAllocate();
+        int oldMode = _runMode;
+        _runMode = MODE_NONE;
         if (_student != null) {
             _student.dispose(); // releases throttle
             _student = null;
@@ -746,9 +749,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _engineer.stopRun(abort, turnOffFunctions); // release throttle
             _engineer = null;
         }
-        deAllocate();
-        int oldMode = _runMode;
-        _runMode = MODE_NONE;
         if (abort) {
             fireRunStatus("runMode", oldMode, MODE_ABORT);
         } else {

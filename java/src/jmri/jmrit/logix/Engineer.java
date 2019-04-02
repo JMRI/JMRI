@@ -295,9 +295,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         // shut down
         setSpeed(0.0f); // for safety to be sure train stops                               
-        ThreadingUtil.runOnLayout(() -> {
-            _warrant.stopWarrant(_abort);
-        });
+        _warrant.stopWarrant(_abort);
     }
 
     protected int getCurrentCommandIndex() {
@@ -968,9 +966,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    /**
-     * @param ts Throttle setting
-     */
+
     private void runWarrant(ThrottleSetting ts) {
         NamedBean bean = ts.getNamedBeanHandle().getBean();
         if (!(bean instanceof Warrant)) {
@@ -978,77 +974,114 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return;
         }
         Warrant warrant =  (Warrant)bean;
+        String msg = null;
         int num = 0;
         try {
             num = Integer.parseInt(ts.getValue());
         } catch (NumberFormatException nfe) {
-            log.error("Could not parse \"" + ts.getValue() + "\". " + nfe);
+            msg = Bundle.getMessage("InvalidNumber", ts.getValue());
         }
         if (num == 0) {
-            log.info("Warrant \"{}\" completed last launch of \"{}\".",
-                     _warrant.getDisplayName(), ts.getBeanDisplayName());
+            msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
+        }
+        num--;
+        ts.setValue(Integer.toString(num));
+        java.awt.Color color = java.awt.Color.red;;
+
+        if (msg == null) {
+            cmdBlockIdx = 0;    // reset block command number  
+            Thread checker = new checkForTermination(_warrant, warrant, num);
+            checker.start();
+            if (log.isDebugEnabled()) log.debug("Exit runWarrant");
             return;
-        }
-        if (num > 0) {
-            num--;
-            ts.setValue(Integer.toString(num));
-        }
-        String msg;
-        java.awt.Color color = WarrantTableModel.myGreen;
-        WarrantTableFrame f = WarrantTableFrame.getDefault();
-        _idxSkipToSpeedCommand = 0;
-        OBlock block = warrant.getBlockAt(0);
-        OBlock endBlk = _warrant.getCurrentBlockOrder().getBlock();
-        if (_warrant.equals(warrant)) {
-            if (block.equals(_warrant.getCurrentBlockOrder().getBlock())) {
-                msg = warrant.setRoute(false, null);
-                cmdBlockIdx = 0;    // reset block command number  
-                _idxCurrentCommand = 0;
-                if (msg == null) {
-                    warrant.startupWarrant();
-                }
-            } else {
-                msg = Bundle.getMessage("warnStart",  _warrant.getTrainName(), block.getDisplayName());
-                color = java.awt.Color.red;
-            }
-        } else {    // different warrants
-            if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
-                // same train is continuing on different linked warrant
-                if (block.equals(endBlk)) {
-                    _warrant.deAllocate();     // insure warrant can start
-                    msg = warrant.setRoute(false, null);
-                    if (msg == null) {
-                        msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-                        if (msg == null) {
-                            msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
-                        }
-                    }
-                } else {    // same engine can't continue from its current block
-                    msg = Bundle.getMessage("warnStart",  _warrant.getTrainName(), block.getDisplayName());
-                    color = java.awt.Color.red;
-                }
-            } else {    // different train will have to be on a different block
-                // messages from WarrantTableFrame will do
-                msg = f.runTrain(warrant, Warrant.MODE_RUN);
-            }
-        }
-        if (msg != null) {
-            msg = Bundle.getMessage("CannotRun", warrant.getDisplayName(), msg);
-            color = java.awt.Color.red;
         } else {
-            if (_warrant.equals(warrant)) {
-                msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
-            } else {
-                msg = Bundle.getMessage("linkedLaunch", 
-                        warrant.getDisplayName(), _warrant.getDisplayName(), block.getDisplayName(), endBlk.getDisplayName());
-            }
+            msg = Bundle.getMessage("CannotRun", warrant.getDisplayName(), msg);
         }
         final String m = msg;
         java.awt.Color c = color;
         ThreadingUtil.runOnLayout(()->{
-            f.setStatusText(m, c, true);
+            WarrantTableFrame.getDefault().setStatusText(m, c, true);
         });
-        if (log.isDebugEnabled()) log.debug(msg);
+        if (log.isDebugEnabled()) log.debug("Exit runWarrant - " + msg);
+    }
+
+    class checkForTermination extends Thread implements Runnable {
+
+        Warrant oldWarrant;
+        Warrant newWarrant;
+        int num;
+
+        checkForTermination(Warrant oldWar, Warrant newWar, int n) {
+            oldWarrant = oldWar;
+            newWarrant = newWar;
+            num = n;
+            if (log.isDebugEnabled()) log.debug("checkForTermination({}, {}, {})",
+                    oldWarrant.getDisplayName(), newWarrant.getDisplayName(), num);
+         }
+
+        @Override
+        public void run() {
+            OBlock endBlock = oldWarrant.getLastOrder().getBlock();
+            long time = 0;
+            String msg = null;
+            try {
+                while (time < 10000) {
+                    if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
+                        break;
+                    }
+                    synchronized (this) {
+                        wait(200);
+                        time += 200;
+                    }
+                }
+                if (time >= 10000) {
+                    msg = Bundle.getMessage("cannotLaunch",
+                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName());
+                }
+            } catch (InterruptedException ie) {
+                log.warn("Warrant \"{}\" InterruptedException message= \"{}\" time= {}",
+                        oldWarrant.getDisplayName(), ie.toString(), time);
+                Thread.currentThread().interrupt();
+            }
+            if (log.isDebugEnabled()) log.debug("checkForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
+
+            java.awt.Color color = java.awt.Color.red;
+            if (oldWarrant.getSpeedUtil().getDccAddress().equals(newWarrant.getSpeedUtil().getDccAddress())) {
+                msg = newWarrant.setRoute(false, null);
+                if (msg == null) {
+                    msg = newWarrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+                }
+                if (msg != null) {
+                    msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
+                } else {
+                    if (oldWarrant.equals(newWarrant)) {
+                        msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
+                    } else {
+                        msg = Bundle.getMessage("linkedLaunch",
+                                newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
+                                newWarrant.getfirstOrder().getBlock().getDisplayName(),
+                                endBlock.getDisplayName());
+                    }
+                    color = WarrantTableModel.myGreen;
+                }
+            } else {
+                msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
+                if (msg != null) {
+                    msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
+                } else {
+                    msg = Bundle.getMessage("linkedLaunch",
+                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(),
+                            newWarrant.getfirstOrder().getBlock().getDisplayName(),
+                            oldWarrant.getfirstOrder().getBlock().getDisplayName());
+                    color = WarrantTableModel.myGreen;
+               }
+            }
+            String m = msg;
+            java.awt.Color c = color;
+            ThreadingUtil.runOnLayoutEventually(() -> { // delay until current warrant can complete
+                WarrantTableFrame.getDefault().setStatusText(m, c, true);
+            });
+        }
     }
 
     /*

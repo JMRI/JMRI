@@ -374,7 +374,7 @@ public class NXFrameTest {
      * <p>Works through a list of OBlocks, gets its sensor,
      * activates it, then inactivates the previous OBlock sensor.
      * Leaves last sensor ACTIVE to show the train stopped there.
-     * @param route Array of detection sensors of the route
+     * @param route Array of OBlock names of the route
      * @param mgr OBLock manager
      * @return active end sensor
      * @throws Exception exception thrown
@@ -389,7 +389,7 @@ public class NXFrameTest {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
-            }, "Train occupies block "+i+" of "+route.length);
+            }, "Train occupies block "+i+" ("+blk.getDisplayName()+") of "+route.length);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
             block = mgr.getOBlock(route[i]);
@@ -401,28 +401,23 @@ public class NXFrameTest {
                     try {
                         nextSensor.setState(Sensor.ACTIVE);
                     } catch (jmri.JmriException e) {
-                        Assert.fail("Unexpected Exception: " + e);
-                    }
-                });
-                jmri.util.ThreadingUtil.runOnLayout(() -> {
-                    try {
-                        nextSensor.setState(Sensor.ACTIVE);
-                    } catch (jmri.JmriException e) {
-                        Assert.fail("Unexpected Exception: " + e);
+                        Assert.fail("Set "+nextSensor.getDisplayName()+" ACTIVE Exception: " + e);
                     }
                 });
                 new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
             } else {
                 nextSensor = null;
             }
-            final Sensor tsensor = sensor;
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
-                try {
-                    tsensor.setState(Sensor.INACTIVE);
-                } catch (jmri.JmriException e) {
-                    Assert.fail("Unexpected Exception: " + e);
-                }
-            });
+            if (sensor != null) {
+                final Sensor tsensor = sensor;
+                jmri.util.ThreadingUtil.runOnLayout(() -> {
+                    try {
+                        tsensor.setState(Sensor.INACTIVE);
+                    } catch (jmri.JmriException e) {
+                        Assert.fail("Set "+tsensor.getDisplayName()+" INACTIVE Exception: " + e);
+                    }
+                });
+            }
             if (!dark) {
                 sensor = nextSensor;
             }
