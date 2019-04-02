@@ -981,17 +981,16 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         } catch (NumberFormatException nfe) {
             msg = Bundle.getMessage("InvalidNumber", ts.getValue());
         }
-        if (num == 0) {
-            msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
+        if (num > 0) {
+            num--;
         }
-        num--;
         ts.setValue(Integer.toString(num));
         java.awt.Color color = java.awt.Color.red;
 
         if (msg == null) {
             if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
                 cmdBlockIdx = 0;    // reset block command number  
-                Thread checker = new checkForTermination(_warrant, warrant, num);
+                Thread checker = new CheckForTermination(_warrant, warrant, num);
                 checker.start();
                 if (log.isDebugEnabled()) log.debug("Exit runWarrant");
                 return;
@@ -1018,13 +1017,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug("Exit runWarrant - " + msg);
     }
 
-    class checkForTermination extends Thread implements Runnable {
+    class CheckForTermination extends Thread implements Runnable {
 
         Warrant oldWarrant;
         Warrant newWarrant;
         int num;
 
-        checkForTermination(Warrant oldWar, Warrant newWar, int n) {
+        CheckForTermination(Warrant oldWar, Warrant newWar, int n) {
             oldWarrant = oldWar;
             newWarrant = newWar;
             num = n;
