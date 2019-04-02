@@ -237,7 +237,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
      *
      * @param name user/system name of the signalMast using the icons
      * @return an icons element containing icon URLs for SignalMast states
-     * @deprecated since 4.15.4 use {@ #getSignalMastIconsElement(String name, String imageset)} instead
+     * @deprecated since 4.15.4 use {@link #getSignalMastIconsElement(String, String)} instead
      */
     @Deprecated  
     protected Element getSignalMastIconsElement(String name) {
