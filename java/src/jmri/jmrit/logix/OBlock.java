@@ -751,7 +751,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     public List<Portal> getPortals() {
-        return _portals;
+        ArrayList<Portal> clone = new ArrayList<Portal>();
+        Iterator<Portal> iter = _portals.iterator();
+        while (iter.hasNext()) {
+            clone.add(iter.next());
+        }
+        return clone;
     }
 
     @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
@@ -960,17 +965,18 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void dispose() {
-        List<Portal> list = getPortals();
-        for (int i = 0; i < list.size(); i++) {
-            Portal portal = list.get(i);
+        Iterator<Portal> iter = getPortals().iterator();
+        while (iter.hasNext()) {
+            Portal portal = iter.next();
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
             opBlock.removePortal(portal);
+            portal.dispose();
         }
         _portals.clear();
-        List<Path> pathList = getPaths();
-        for (int i = 0; i < pathList.size(); i++) {
-            removePath(pathList.get(i));
+        Iterator<Path> it = getPaths().iterator();
+        while (it.hasNext()) {
+            removePath(it.next());
         }
         jmri.InstanceManager.getDefault(OBlockManager.class).deregister(this);
         super.dispose();

@@ -740,6 +740,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         deAllocate();
         int oldMode = _runMode;
         _runMode = MODE_NONE;
+
         if (_student != null) {
             _student.dispose(); // releases throttle
             _student = null;

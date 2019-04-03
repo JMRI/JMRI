@@ -1055,7 +1055,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         oldWarrant.getDisplayName(), ie.toString(), time);
                 Thread.currentThread().interrupt();
             }
-            if (log.isDebugEnabled()) log.debug("checkForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
+            if (log.isDebugEnabled()) log.debug("CheckForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
 
             java.awt.Color color = java.awt.Color.red;
             msg = newWarrant.setRoute(false, null);

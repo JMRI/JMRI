@@ -122,6 +122,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             } else {
                 _warList.remove(w);
             }
+            cleanBlockOrderList(w); // removes bad BlockOrders
             tempList.add(w); // add old or any new warrants
         }
         // remove listeners from any deleted warrants
@@ -136,6 +137,18 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             tempList.add(_warNX.get(i));
         }
         _warList = tempList;
+    }
+
+    private void cleanBlockOrderList(Warrant warrant) {
+        ArrayList<BlockOrder> valid = new ArrayList<>();
+        Iterator<BlockOrder> iter = warrant.getBlockOrders().iterator();
+        while (iter.hasNext()) {
+            BlockOrder bo = iter.next();
+            if (WarrantRoute.pathIsValid(bo.getBlock(), bo.getPathName()) == null) {
+                valid.add(bo);
+            }
+        }
+        warrant.setBlockOrders(valid);
     }
 
     protected void haltAllTrains() {

@@ -40,8 +40,6 @@ public class LinkedWarrantTest {
     private WarrantManager _warrantMgr;
 
     // tests a warrant launching itself. (origin, destination the same to make continuous loop)
-    // Does not yet work - reallocation, although correctly called, does not happen or is deallocated somehow
-    // Lots of debug code lines (System.out.prinln, try catch etc.) until problem solved
     @Test
     public void testLoopedWarrant() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -116,7 +114,7 @@ public class LinkedWarrantTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    // Tests warrant launching a different warrant (of course, different address, different origin location)
+    // Tests warrant launching a different warrant with different address. Origin location cannot be destination of the other)
     @Test
     public void testLinkedWarrant() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

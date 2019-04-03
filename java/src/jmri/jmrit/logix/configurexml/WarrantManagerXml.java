@@ -254,9 +254,9 @@ public class WarrantManagerXml //extends XmlFile
                 BlockOrder bo = loadBlockOrder(orders.get(k));
                 if (bo==null) {
                     log.error("Bad BlockOrder in warrant \"{}\".", warrant.getDisplayName());
-                    break;
+                } else {
+                    warrant.addBlockOrder(bo);
                 }
-                warrant.addBlockOrder(bo);
             }
             String c = elem.getChildText("comment");
             if (c != null) {
@@ -357,8 +357,9 @@ public class WarrantManagerXml //extends XmlFile
             block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name);
             if (block == null) {
                 log.error("No such Block \"{}\" found.", name);
+                return null;
             }
-        if (log.isDebugEnabled()) log.debug("Load Block {}.", name);
+            if (log.isDebugEnabled()) log.debug("Load Block {}.", name);
         } else {
             log.error("Null BlockOrder element");
             return null;
