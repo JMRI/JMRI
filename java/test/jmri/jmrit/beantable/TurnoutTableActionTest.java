@@ -3,17 +3,15 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.TurnoutTableAction class.
@@ -97,38 +95,54 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         // close pane
         JButtonOperator jbo = new JButtonOperator(am, "OK");
         jbo.pushNoBlock(); // instead of .push();
+        am.dispose();
 
         // Open Speed pane to test Speed menu, which displays a JOptionPane
-        //System.out.println("Speed pane started at " + java.time.LocalTime.now()); // debug
-        // method 1: open as method
-        //_t1Table.setDefaultSpeeds(null); // create dialog (bypassing menu, but is not found)
-        //_t1Table.setDefaultSpeeds(t1Frame); // create dialog by frame (bypassing menu, but is also not found)
-//        JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); // create dialog (through menu)
-        // method 2: Alternatively, used GUI menu to open Speeds pane:
+        log.debug("Speed pane started at " + java.time.LocalTime.now()); // debug
+        JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); 
+        // Use GUI menu to open Speeds pane:
+	
+	//This is a modal JOptionPane, so create a thread to dismiss it.
+	Thread t = new Thread(() -> {
+            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"),"","OK");
+        });
+        t.setName("Default Speeds Dialog Close Thread");
+        t.start();
         // pushMenuNoBlock is used, because dialog is modal
-//        JMenuBarOperator mainbar = new JMenuBarOperator(main);
-//        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
-//        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
-//        JPopupMenu jpm = jmo.getPopupMenu();
-//        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
-//        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
-//        jmio.pushNoBlock();
-        // wait for Speeds dialog
-        // for Jemmy to work, we need the Turnout Speeds pane inside a JDialog
-        // TODO activate test when we manage to find pane:
-//        JDialogOperator as = new JDialogOperator(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"));
-//        Assert.assertNotNull("found Speeds menu dialog", as);
-        //System.out.println("Speed pane found at " + java.time.LocalTime.now()); // debug
-        // close pane
-//        JButtonOperator jbs = new JButtonOperator(as, "OK");
-//        jbs.pushNoBlock();
+        JMenuBarOperator mainbar = new JMenuBarOperator(main);
+        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        JPopupMenu jpm = jmo.getPopupMenu();
+        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
+        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        jmio.pushNoBlock();
         // clean up
         JUnitUtil.dispose(af);
-        am.dispose();
         //as.dispose(); // uncomment when test is Speeds menu activated
         JUnitUtil.dispose(tof);
         _t1Table.dispose();
         JUnitUtil.dispose(t1Frame);
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddTurnout");
+    }
+
+    @Test
+    @Override
+    public void testAddButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J
@@ -150,6 +164,6 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class);
+    private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class);
 
 }

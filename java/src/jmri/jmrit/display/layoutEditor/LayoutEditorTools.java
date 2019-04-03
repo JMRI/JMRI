@@ -4906,7 +4906,6 @@ public class LayoutEditorTools {
             String uname = turnout2.getUserName();
             if ((uname == null) || uname.isEmpty()
                     || !uname.equals(ttotTurnoutName2)) {
-                ttotTurnoutName2 = ttotTurnoutName2.toUpperCase();
                 turnout2ComboBox.setText(ttotTurnoutName2);
             }
             layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtThroatToThroatTurnoutsFrame);
@@ -4957,7 +4956,6 @@ public class LayoutEditorTools {
             }
             String uname = turnout1.getUserName();
             if ((uname == null) || uname.isEmpty() || !uname.equals(ttotTurnoutName1)) {
-                ttotTurnoutName1 = ttotTurnoutName1.toUpperCase();
                 turnout1ComboBox.setText(ttotTurnoutName1);
             }
             // have turnout 1 - get corresponding layoutTurnout
@@ -5013,7 +5011,6 @@ public class LayoutEditorTools {
                 }
                 uname = turnout2.getUserName();
                 if ((uname == null) || uname.isEmpty() || !uname.equals(ttotTurnoutName2)) {
-                    ttotTurnoutName2 = ttotTurnoutName2.toUpperCase();
                     turnout2ComboBox.setText(ttotTurnoutName2);
                 }
                 layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtThroatToThroatTurnoutsFrame);
@@ -13426,10 +13423,10 @@ public class LayoutEditorTools {
             if (to != null) {
                 String uname = to.getUserName();
                 String sname = to.getSystemName();
-                if (!inTurnoutNameA.isEmpty() && (sname.equals(inTurnoutNameA.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
+                if (!inTurnoutNameA.isEmpty() && (sname.equals(inTurnoutNameA) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
                     layoutTurnout = layoutTurnout1 = layoutTurnoutA = lt;
                 }
-                if (!inTurnoutNameB.isEmpty() && (sname.equals(inTurnoutNameB.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
+                if (!inTurnoutNameB.isEmpty() && (sname.equals(inTurnoutNameB) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
                     layoutTurnout2 = layoutTurnoutB = lt;
                 }
             }
