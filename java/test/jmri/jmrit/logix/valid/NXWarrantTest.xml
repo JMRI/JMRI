@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>15</minor>
-    <test>4</test>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -87,7 +87,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="3:20 PM">
+    <memory value="9:48 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -1327,7 +1327,7 @@
     <PortalIcon x="507" y="88" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Exit" toBlockName="OB5" fromBlockName="East" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "Exit" between OBlocks "East" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="581" y="86" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="East Meets West" toBlockName="West" fromBlockName="East" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="581" y="86" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="East Meets West" toBlockName="West" fromBlockName="East" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "East Meets West" between OBlocks "East" and "West"</tooltip>
     </PortalIcon>
     <indicatortrackicon x="591" y="95" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
@@ -1365,104 +1365,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Feb 26 15:18:39 PST 2019</date>
+      <date>Wed Apr 03 09:45:34 PDT 2019</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Feb 26 15:18:47 PST 2019</date>
+      <date>Wed Apr 03 09:45:48 PDT 2019</date>
       <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Tue Feb 26 14:11:14 PST 2019</date>
+          <date>Tue Feb 26 15:18:39 PST 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Tue Feb 26 14:11:23 PST 2019</date>
+          <date>Tue Feb 26 15:18:47 PST 2019</date>
           <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Tue Feb 26 13:32:16 PST 2019</date>
+              <date>Tue Feb 26 14:11:14 PST 2019</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Tue Feb 26 13:34:04 PST 2019</date>
+              <date>Tue Feb 26 14:11:23 PST 2019</date>
               <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Mon Feb 25 15:17:35 PST 2019</date>
+                  <date>Tue Feb 26 13:32:16 PST 2019</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Mon Feb 25 15:17:42 PST 2019</date>
+                  <date>Tue Feb 26 13:34:04 PST 2019</date>
                   <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Mon Feb 25 15:01:56 PST 2019</date>
+                      <date>Mon Feb 25 15:17:35 PST 2019</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Mon Feb 25 15:02:04 PST 2019</date>
+                      <date>Mon Feb 25 15:17:42 PST 2019</date>
                       <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Feb 17 18:01:02 PST 2019</date>
+                          <date>Mon Feb 25 15:01:56 PST 2019</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Feb 17 18:01:10 PST 2019</date>
+                          <date>Mon Feb 25 15:02:04 PST 2019</date>
                           <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Feb 17 18:12:25 PST 2019</date>
+                          <date>Mon Feb 25 15:13:17 PST 2019</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Mon Feb 25 15:13:17 PST 2019</date>
+                      <date>Mon Feb 25 15:22:42 PST 2019</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Mon Feb 25 15:22:42 PST 2019</date>
+                  <date>Tue Feb 26 13:43:30 PST 2019</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Tue Feb 26 13:43:30 PST 2019</date>
+              <date>Tue Feb 26 14:27:54 PST 2019</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Tue Feb 26 14:27:54 PST 2019</date>
+          <date>Tue Feb 26 15:20:58 PST 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Feb 26 15:20:58 PST 2019</date>
+      <date>Wed Apr 03 09:48:14 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.15.4ish+pete_+2019-02-26T23:18:31Z+R34a1f3b479 on Tue Feb 26 15:20:58 PST 2019-->
+  <!--Written by JMRI version 4.15.5ish+pete_+2019-04-03T16:45:02Z+R16fa12d253 on Wed Apr 03 09:48:14 PDT 2019-->
 </layout-config>
