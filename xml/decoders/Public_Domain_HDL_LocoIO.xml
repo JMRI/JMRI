@@ -47,69 +47,45 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-03-26</date>
+        <date>2019-03-29</date>
         <authorinitials>EB</authorinitials>
-        <revremark>Use compositeVal type values (ports 1-4), updated decoder schema</revremark>
+        <revremark>Use compositeVal type values (ports 1-4 for now), updated decoder schema,
+            add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7)
+        </revremark>
       </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
-  <version author="Egbert Broerse" version="3" lastUpdated="20190326"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190329"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
-      <model model="HDL LocoIO v1.54" productID="154">
-          <versionCV lowVersionID="154" highVersionID="154"/>
-      </model>
-      <!--including other, older models relies on exclude/include support in compositeValType-->
-      <model model="HDL LocoIO v1.53" productID="153">
-        <versionCV lowVersionID="150" highVersionID="153"/>
-      </model>
-      <model model="HDL LocoIO v1.49" productID="149">
-        <versionCV lowVersionID="149" highVersionID="149"/>
-      </model>
-      <model model="HDL LocoIO v1.48" productID="148">
-        <versionCV lowVersionID="147" highVersionID="148"/>
-      </model>
-      <model model="HDL LocoIO v1.46" productID="146">
-        <versionCV lowVersionID="146" highVersionID="146"/>
-      </model>
-      <model model="HDL LocoIO v1.45" productID="145">
-        <versionCV lowVersionID="145" highVersionID="145"/>
-      </model>
-      <model model="HDL LocoIO v1.44" productID="144">
-        <versionCV lowVersionID="143" highVersionID="144"/>
-      </model>
-      <model model="HDL LocoIO v1.42" productID="142">
-        <versionCV lowVersionID="142" highVersionID="142"/>
-      </model>
-      <model model="HDL LocoIO v1.41" productID="141">
-        <versionCV lowVersionID="141" highVersionID="141"/>
-      </model>
-      <model model="HDL LocoIO v1.40" productID="140">
-        <versionCV lowVersionID="140" highVersionID="140"/>
-      </model>
-      <model model="HDL LocoIO v1.39" productID="139">
-        <versionCV lowVersionID="136" highVersionID="139"/>
-      </model>
+      <model model="HDL LocoIO v1.54" productID="154"/>
+      <!--including other models relies on exclude/include support in compositeValType-->
+      <model model="HDL LocoIO v1.53" productID="153"/>
+      <model model="HDL LocoIO v1.49" productID="149"/>
+      <model model="HDL LocoIO v1.48" productID="148"/>
+      <model model="HDL LocoIO v1.46" productID="146"/>
+      <model model="HDL LocoIO v1.45" productID="145"/>
+      <model model="HDL LocoIO v1.44" productID="144"/>
+      <model model="HDL LocoIO v1.42" productID="142"/>
+      <model model="HDL LocoIO v1.41" productID="141"/>
+      <model model="HDL LocoIO v1.40" productID="140"/>
+      <model model="HDL LocoIO v1.39" productID="139"/>
 
       <model model="LocoServer v1.01" productID="101">
-        <versionCV lowVersionID="101" highVersionID="101"/>
+          <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
       </model>
-      <model model="LocoServer v1.02-1.06" productID="106">
-        <versionCV lowVersionID="102" highVersionID="106"/>
-      </model>
+      <model model="LocoServer v1.02-1.06" productID="106"/>
 
-      <model model="Original LocoIO" productID="135">
-        <versionCV lowVersionID="0" highVersionID="135"/>
-      </model>
+      <model model="Original LocoIO" productID="135"/>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV1MODE</mode>
     </programming>
     <variables>
 
-      <variable CV="100" readOnly="yes" item="Decoder Version" default="154">
+      <variable CV="100" readOnly="yes" item="Decoder Version" default="68">
           <decVal/>
           <label>PIC Version: </label>
           <label xml:lang="it">Versione PIC: </label>
@@ -2389,15 +2365,18 @@
         </label>
         <separator/>
           <label>
-              <text>&lt;html&gt;&lt;h3&gt;TEST for SV Programming Ops Mode addressing (LOCONETSV1MODE), no Reading&lt;/h3&gt;&lt;html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Experimenteller SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), nicht Lesen&lt;/h3&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;TEST voor SV's Programmeren via POM (LOCONETSV1MODE), niet Uitlezen&lt;/h3&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;h3&gt;TEST for SV Programming Ops Mode addressing (LOCONETSV1MODE), no Reading?&lt;/h3&gt;&lt;br&gt;
+                You have to select your PIC version and model when creating a roster entry.&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Experimenteller SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), nicht Lesen?&lt;/h3&gt;&lt;br&gt;
+                Manueller Modell- u. Versionsauswahl erforderlich&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;TEST voor SV's Programmeren via POM (LOCONETSV1MODE), niet Uitlezen?&lt;/h3&gt;&lt;br&gt;
+                Kies handmatig het type en PIC-versie bij het aanmaken van een Loc-definitie.&lt;/html&gt;</text>
           </label>
           <label>
               <text>&lt;html&gt;
                   As an alternative for the HDL Windows LocoIO Config program, follow these steps:&lt;br/&gt;
                   &lt;br/&gt;
-                  Be careful to disconnect all other LocoIO devices when changing a board's address (broadcast).&lt;br/&gt;
+                  Be careful to first disconnect all other LocoIO devices before changing a board's (sub)address (Broadcast).&lt;br/&gt;
                   &lt;br/&gt;
                   Step 1: Connect power and LocoNet to the unit.&lt;br/&gt;
                   Step 2: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;
