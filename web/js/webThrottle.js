@@ -2189,7 +2189,7 @@ var getUrlParameters = function() {			//Item 'undefined' if index not found
 		hash = hashes[i].split('=');
 		key = hash[0].toLowerCase();
 		vars.push(decodeURIComponent(key));
-		vars[key] = decodeURIComponent(hash[1]);
+		vars[key] = decodeURIComponent(hash[1]).replace(/\+/g, " "); //undo server query string space replacements
 	}
 	return vars;
 };
