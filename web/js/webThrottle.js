@@ -1735,7 +1735,7 @@ var openPanel = function(e, name, URL) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	// URL not used for now
-	var url = document.URL.split('?')[0] + '?panelname=' + encodeURI(name);
+	var url = document.URL.split('?')[0] + '?panelname=' + encodeURIComponent(name);
 	if ($toFrame) {
 		if (addToFrameList(url + '&inframe')) window.open(document.URL.split('?')[0], $pageInFrame ? '_top' : '_self');
 	} else window.open(url, url);
@@ -1901,7 +1901,7 @@ var changeLoco = function(e) {
 	var roster = $jmri.getRoster($rosterGroup);
 	if (roster.length) roster.forEach(function(loco) {$locoList.push(loco.id + ' (' + loco.dccAddress + ')');});
 	var f = function(i) {
-		var url = document.URL.split('?')[0] + '?loconame=' + encodeURI($locoList[i].substring(0, $locoList[i].lastIndexOf(' ')));
+		var url = document.URL.split('?')[0] + '?loconame=' + encodeURIComponent($locoList[i].substring(0, $locoList[i].lastIndexOf(' ')));
 		if ($inFrame) {
 			if (replaceInFrameList(document.URL, url + '&inframe')) window.parent.$('#' + encodeId(document.URL)).attr('src', url + '&inframe').attr('id', encodeId(url + '&inframe'));
 		}

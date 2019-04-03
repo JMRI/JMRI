@@ -4,6 +4,9 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class to represent an event stored on a node.
  *
@@ -34,11 +37,15 @@ public class CbusNodeEvent extends CbusEvent {
     /**
      * Set the value of the event variable array by index
      *
-     * @param index variable array index, index 0 should be total variables in array
+     * @param index event variable index, minimum 1
      * @param value min 0 max 255
      */
     public void setEvVar(int index, int value) {
-        _evVarArr[(index-1)]=value;
+        if ( index < 1 ) {
+            log.error("Event Index needs to be > 0");
+        } else {
+            _evVarArr[(index-1)]=value;
+        }
     }
     
     /**
@@ -137,5 +144,7 @@ public class CbusNodeEvent extends CbusEvent {
     public int getNumEvVars() {
         return _evVarArr.length;
     }
+    
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeEvent.class);
 
 }
