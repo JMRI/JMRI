@@ -1087,7 +1087,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * *************************************************************************************
      */
      class ThrottleRamp extends Thread implements Runnable {
-         
 
          private RampData _rampData;
          private String _endSpeedType;
@@ -1123,6 +1122,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         RampData getRampData () {
             return _rampData;
         }
+
         @Override
         @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
         public void run() {
