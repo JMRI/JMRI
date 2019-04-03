@@ -1017,7 +1017,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug("Exit runWarrant - " + msg);
     }
 
-    class CheckForTermination extends Thread implements Runnable {
+    static private class CheckForTermination extends Thread implements Runnable {
 
         Warrant oldWarrant;
         Warrant newWarrant;
