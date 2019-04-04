@@ -427,7 +427,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     public void testDelayedTurnoutThrownCanReply() throws jmri.JmriException {
         
         CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=2;
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
         t.setFeedbackMode("DELAYED");
         
         CanReply m = new CanReply(tcis.getCanid());
@@ -449,9 +449,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     @Test
     public void testDelayedTurnoutClosedCanReply() throws jmri.JmriException {
         
-        CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=2;
-        t.setFeedbackMode("DELAYED");
+        CbusTurnout n = new CbusTurnout("MT","+N54321E12345",tcis);
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
+        n.setFeedbackMode("DELAYED");
         
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
@@ -461,12 +461,13 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
         
-        t.reply(r);
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
-            "closed Turnout.INCONSISTENT didn't happen"); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
-            " Turnout.CLOSED didn't happen after delayed feedback");
+        n.reply(r);
+        JUnitUtil.waitFor(()->{ return(n.getKnownState() == Turnout.INCONSISTENT); },
+            "closed Turnout.INCONSISTENT didn't happen add retry?"); 
+        JUnitUtil.waitFor(()->{ return(n.getKnownState() == Turnout.CLOSED); }, 
+            " Turnout.CLOSED didn't happen after delayed feedback add retry?");
         
+        n.dispose();
         r = null;
     }
 
