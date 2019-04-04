@@ -106,6 +106,7 @@ public class Z21SimulatorAdapterTest {
 	cannedMessageCheck("getZ21SerialNumberReply","08 00 10 00 00 00 00 00");
     }
 
+    @Ignore("test gives different results depending on test ordering, due to static simulator object")
     @Test
     public void Z21BroadCastFlagsReply(){
 	cannedMessageCheck("getZ21BroadCastFlagsReply","08 00 51 00 01 00 01 0F");
