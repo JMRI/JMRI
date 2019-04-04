@@ -67,7 +67,7 @@ public class SprogIIUpdateFrame
                 msg = new SprogMessage("b 1 1 1");
                 tc.sendSprogMessage(msg, this);
                 // SPROG II and 3 will not reply to this so just wait a while
-                tc.setSprogState(SprogState.SIIBOOTMODE);
+//                tc.setSprogState(SprogState.SIIBOOTMODE);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
