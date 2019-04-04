@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-04-->
 
 <html lang="fr&quot;">
 <head>
@@ -31,89 +31,182 @@
     <div id="mainContent">
       <h1>Le tableau Logix</h1>
 
-      <p>Logix est un petit groupe de Conditions concentr&eacute;es
-      sur une t&acirc;che unique sur le r&eacute;seau. Chaque
-      Condition peut &ecirc;tre consid&eacute;r&eacute;e comme une
-      d&eacute;claration de la forme:</p>
+      <p>Logix est un petit groupe de Conditions concentr&#233;es sur une 
+      t&#226;che unique sur le r&#233;seau. Chaque Condition peut &#234;tre consid&#233;r&#233;e 
+      comme une d&#233;claration de la forme:</p>
 
-      <div style="margin-left: 2em">
-        si (expression logique) alors (action).
-      </div>L 'expression logique" partie d'une condition teste
-      l'&eacute;tat d'un groupe de conditions
-      sp&eacute;cifi&eacute;es par l'utilisateur sur le
-      r&eacute;seau, par exemple, si certains aiguillages sont
-      droits ou d&eacute;vi&eacute;s, ou si un canton est
-      occup&eacute;. La partie "action" de la condition
-      sp&eacute;cifie quelle action doit &ecirc;tre prise si
-      l'&eacute;tat de l'expression logique change.
+      <div style="margin-left: 2em"> si (expression logique) alors (action).
+      </div> L'expression logique" partie d'une condition teste l'&#233;tat 
+      d'un groupe de conditions sp&#233;cifi&#233;es par l'utilisateur sur le
+      r&#233;seau, par exemple, si certains aiguillages sont droits ou d&#233;vi&#233;s, 
+      ou si un canton est occup&#233;. La partie "action" de la condition
+      sp&#233;cifie quelle action doit &#234;tre prise si l'&#233;tat de l'expression 
+      logique change.
 
-      <p>Le tableau Logix r&eacute;pertorie tous les Logixs
-      actuellement d&eacute;finis par leur nom syst&egrave;me et
-      nom utilisateur. La derni&egrave;re colonne du tableau
-      fournit trois choses que vous pouvez faire avec un Logix; le
-      modifier, le dupliquer ou le supprimer. Il suffit de cliquer
-      <b>S&eacute;lectionner</b> et il fera appara&icirc;tre un
-      menu avec les choix: <b>Modifier</b>, <b>Copier</b>,
-      <b>Supprimer</b> La s&eacute;lection <b>Modifier</b> fera
-      appara&icirc;tre la fen&ecirc;tre &eacute;diter Logix qui
-      permet d'&eacute;diter un Logix et ses conditions. Voir
-      <a href="LogixAddEdit.shtml">la page d'aide sur l'ajout de
-      Logix</a> pour plus d'informations sur la cr&eacute;ation et
-      l'&eacute;dition de Conditions Logix. La s&eacute;lection
-      <b>Copier</b> fera appara&icirc;tre des fen&ecirc;tres qui
-      vous permettent de faire une nouvelle copie de Logix et de
-      ses Conditions ou de copier ses conditions dans un Logix
-      existants. La s&eacute;lection <b>Supprimer</b> permet de
-      supprimer le Logix et ses Conditions.</p>
-
-      <p>La colonne <b>Activer</b> vous permet d'activer (case
-      coch&eacute;e) ou d&eacute;sactiver (Non coch&eacute;e) un
-      Logix. Un Logix n'a pas un &eacute;tat comme beaucoup
-      d'entit&eacute;s JMRI ont. Un Logix doit avoir la
-      capacit&eacute; d'&ecirc;tre "activ&eacute;" ou
-      "d&eacute;sactiv&eacute;". Quand un Logix n'est pas
-      activ&eacute;, les expressions logiques de ses Conditions
-      sont encore &eacute;valu&eacute;es, mais les mesures
-      sp&eacute;cifi&eacute;es dans les Conditions ne sont pas
-      prises. Quand un Logix est activ&eacute; apr&egrave;s avoir
-      &eacute;t&eacute; d&eacute;sactiv&eacute;, ses Conditions
-      sont recalcul&eacute;s et les mesures appropri&eacute;es sont
+      <p>Le tableau Logix r&#233;pertorie tous les Logixs actuellement d&#233;finis 
+      par leur nom syst&#232;me et nom utilisateur.</p>
+      
+      <h2> Colonnes de la table Logix </h2>
+       <p> Vous pouvez modifier l'ordre des colonnes en faisant glisser 
+       leurs titres et trier les lignes en cliquant sur l'un des triangles 
+       de tri en regard d'un titre de colonne. </p>
+      
+      <p>La derni&#232;re colonne du tableau fournit quatre choses que vous 
+      pouvez faire avec un Logix; le Modifier, Le Parcourir, le Dupliquer 
+      ou le Supprimer.  Il suffit de cliquer <strong>S&#233;lectionner</strong> 
+      et il fera appara&#238;tre un menu avec les choix: <strong>Modifier</strong>, 
+      <strong>Copier</strong>, <strong>Parcourir</strong>, <strong>Supprimer
+      </strong>.</p>
+      <ul>
+	    <li>
+        La s&#233;lection <strong>Modifier</strong> fera  appara&#238;tre la fen&#234;tre 
+        &#201;diter Logix qui permet d'&#233;diter un Logix et ses conditions. Voir
+        <a href="../conditional/ConditionalListEditor.shtml">&#201;diteur de 
+        liste</a> ou <a href="../conditional/ConditionalTreeEditor.shtml">
+		&#201;diteur d'arbre</a> la page d'aide  pour plus d'informations sur 
+		la cr&#233;ation et l'&#233;dition de Conditions Logix. </li>
+		<li>
+		Si vous s&#233;lectionnez <strong>Parcourir </strong>, la fen&#234;tre du 
+		Navigateur Condition s'affiche. La fen&#234;tre fournit une vue 
+		r&#233;capitulative des Conditions et de leurs d&#233;finitions dans Logix. 
+		Les valeurs entre parenth&#232;ses indiquent l'&#233;tat actuel et pour les
+		variables conditionnelles, s'il s'agit d'un d&#233;clencheur. 
+		Lorsque vous avez termin&#233;, fermez la fen&#234;tre.	
+		<span class="since">since 4.7.3</span><br>
+        <a href="images/ConditionalBrowser.png">
+        <img src="images/ConditionalBrowser.png"
+        alt="Logix Browser Window" height="296" width="562">
+        </a>
+        </li>
+        <li>
+		La s&#233;lection de <strong>Copier</strong> fera appara&#238;tre des fen&#234;tres qui
+		vous permettent de faire une nouvelle copie de Logix et de
+		ses Conditions ou de copier ses Conditions dans un Logix
+		existants.</li>
+	  </ul>
+        <li>
+        La s&#233;lection <strong>Supprimer</strong> permet de
+        supprimer le Logix et ses Conditions. </li>
+	  </ul>
+      <p>La colonne <strong>Activer</strong> vous permet d'activer (case
+      coch&#233;e) ou d&#233;sactiver (Non coch&#233;e) un Logix. Un Logix n'a pas un 
+      &#233;tat comme beaucoup d'entit&#233;s JMRI ont. Un Logix doit avoir la
+      capacit&#233; d'&#234;tre "activ&#233;" ou "d&#233;sactiv&#233;". Quand un Logix n'est pas
+      activ&#233;, les expressions logiques de ses Conditions sont encore 
+      &#233;valu&#233;es, mais les mesures sp&#233;cifi&#233;es dans les Conditions ne sont
+      pas prises. Quand un Logix est activ&#233; apr&#232;s avoir &#233;t&#233; d&#233;sactiv&#233;, 
+      ses Conditions sont recalcul&#233;s et les mesures appropri&#233;es sont
       prises.</p>
+      
+      <h2>Cr&#233;ation d'un Logix</h2>
 
-      <p>Pour cr&eacute;er un nouveau Logix, cliquez sur
-      <b>Ajouter</b> situ&eacute; au bas du tableau Logix . Cela
-      fera appara&icirc;tre une fen&ecirc;tre Cr&eacute;er Logix.
-      Saisir un nom syst&egrave;me et un nom utilisateur, puis
-      cliquez sur <b>Cr&eacute;er Logix</b>, va cr&eacute;er le
-      Logix, et ouvrir la fen&ecirc;tre Modifier Logix. Une fois
-      que Logix est cr&eacute;&eacute;, son nom syst&egrave;me ne
-      peut pas &ecirc;tre chang&eacute;. Son nom utilisateur,
-      cependant, peut &ecirc;tre modifi&eacute; soit dans le
-      tableau Logix ou la fen&ecirc;tre Modifier Logix. Un nouveau
-      nom utilisateur peut &ecirc;tre n'importe quel texte utile,
-      &agrave; condition que le nouveau nom d'utilisateur ne soit
-      pas d&eacute;j&agrave; &eacute;t&eacute; attribu&eacute;
-      &agrave; un autre Logix. (Voir aussi la <a href=
-      "LogixAddEdit.shtml">page d'aide sur l'ajout
-      s&eacute;par&eacute; de Logix</a>)</p>
+      <p>Pour cr&#233;er un nouveau Logix, cliquez sur
+      <strong>Ajouter</strong> situ&#233; au bas du tableau Logix . Cela
+      fera appara&#238;tre une fen&#234;tre Cr&#233;er Logix. Saisir un Nom Syst&#232;me et 
+      un Nom Utilisateur, puis cliquez sur <strong>Cr&#233;er Logix</strong>, 
+      va cr&#233;er le Logix, et ouvrir la fen&#234;tre Modifier Logix. Une fois
+      que Logix est cr&#233;&#233;, son Nom Syst&#232;me ne peut pas &#234;tre chang&#233;. Son 
+      Nom Utilisateur, cependant, peut &#234;tre modifi&#233; soit dans le tableau 
+      Logix ou la fen&#234;tre Modifier Logix. Un nouveau Nom Utilisateur peut 
+      &#234;tre n'importe quel texte utile, &#224; condition que le nouveau Nom 
+      Utilisateur ne soit pas d&#233;j&#224; &#233;t&#233; attribu&#233; &#224; un autre Logix. (Voir
+      aussi la <a href = "LogixAddEdit.shtml">page d'aide s&#233;par&#233;e sur 
+      l'ajout de Logix</a> et un guide pas &#224; pas 
+      <a href= "../../../../html/tools/Logix.shtml#start"></a>)</p>
+ 
+	  <h2>Menu Tableau Logix</h2>
 
-      <p>Le menu <b>Fichier</b> en haut de la Table Logix permet
+      <p>Le menu <strong>Fichier</strong> en haut de la Table Logix permet
       l'impression de ce tableau et pour le stockage des Logixs et
       leurs conditions dans un fichier de configuration de
-      r&eacute;seau . S&eacute;lectionner l'option stocker fera
-      appara&icirc;tre une bo&icirc;te de dialogue pour nommer un
-      fichier de configuration pour l'&eacute;criture
+      r&#233;seau . S&#233;lectionner l'option stocker fera
+      appara&#238;tre une bo&#238;te de dialogue pour nommer un
+      fichier de configuration pour l'&#233;criture
       d'informations Logix et tous les autres informations de
       configuration (par exemple, les capteurs, les
-      lumi&egrave;res, les aiguillages, les t&ecirc;tes de signal,
-      les itin&eacute;raires, etc.) Si vous mettez &agrave; jour un
+      lumi&#232;res, les aiguillages, les t&#234;tes de signal,
+      les itin&#233;raires, etc.) Si vous mettez &#224; jour un
       fichier existant, cliquez simplement sur son nom, et il sera
-      copi&eacute; dans l'entr&eacute;e du nom.</p>
+      copi&#233; dans l'entr&#233;e du nom.</p>
 
-      <p>Pour plus d'informations, consulter la <a href=
-      "../../../../html/tools/Logix.shtml">documentation principale
-      Logix</a>.</p><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+      <a name="logixOptions" id="logixOptions"></a>
+      <p>Le menu <strong>Options</strong> a 3 sections.<br>
+      <div style="margin-left: 2em">
+      <a href="images/LogixOptions.png">
+      <img src="images/LogixOptions.png"
+      alt="Logix Options Menu" height="186" width="262">
+      </a>
+      </div>
+      
+
+	  <p>La premi&#232;re section est utilis&#233;e pour <strong>Activer</strong> 
+	  ou <strong>d&#233;sactiver</strong> toutes les d&#233;finitions Logix. <br> 
+	  <span class = "since"> depuis 4.7.3</span > La deuxi&#232;me section 
+	  permet de s&#233;lectionner l'une des trois m&#233;thodes de saisie des noms 
+	  d'&#233;l&#233;ment pour les Variables et les Actions des Conditions Logix:</p>
+      <ul>
+        <li>Les Listes de S&#233;lection Traditionnelles, m&#233;thode par d&#233;faut, 
+          utilisent un champ de texte dans lequel le Nom Syst&#232;me ou Utilisateur 
+          est entr&#233;, tel que l'aiguillage ou le capteur. Cette m&#233;thode 
+          fournit &#233;galement une Fen&#234;tre Liste de S&#233;lection avec des onglets 
+          pour chaque type d'objet. Lorsqu'un objet est s&#233;lectionn&#233;, tel 
+          qu'un capteur, l'onglet appropri&#233; dela Liste de S&#233;lection est
+          automatiquement s&#233;lectionn&#233;. <br>
+          Faites glisser un nom de la liste de s&#233;lection et d&#233;posez-le dans le champ du nom.</Li>
+        <li>La m&#233;thode Listes de S&#233;lection Simples utilise &#233;galement un 
+          champ de texte, mais la liste de s&#233;lection affiche uniquement les 
+          noms de l'objet actuel, tels que des capteurs. Cliquez sur un nom 
+          dans la liste de s&#233;lection pour copier automatiquement le nom 
+          dans le champ de texte.</Li>
+        <li>La m&#233;thode Zone de liste D&#233;roulante modifie le champ de texte 
+		  en une liste d&#233;roulante . Cliquez et s&#233;lectionnez un &#233;l&#233;ment 
+		  dans la liste.</Li>
+     </ul>
+      <p> <span class = "since"> depuis la 4.9.2</span> La troisi&#232;me section 
+      permet de s&#233;lectionner l'&#201;diteur de Condition.</p>
+      <ul>
+        <li>Editeur de Listes de Conditions- Il s'agit de l'&#233;diteur 
+        traditionnel qui ouvre plusieurs fen&#234;tres en fonction de l'activit&#233; 
+        en cours. Ceci est la s&#233;lection par d&#233;faut. Voir
+        <a href="../conditional/ConditionalListEditor.shtml"> &#201;diteur de 
+        Liste</a> pour obtenir des informations d&#233;taill&#233;es.</li>
+        <li>&#201;diteur d'Arborescence de Condition - Il s'agit d'un &#233;diteur 
+        &#224; fen&#234;tre unique qui utilise une arborescence pour parcourir les 
+        donn&#233;es des Conditions d'un Logix. Voir 
+        <a href="../conditional/ConditionalTreeEditor.shtml"> Editeur 
+        d'arborescence </a> pour plus d'informations.
+          <a href="images/TreeEditor.png">
+          <img src = "images / TreeEditor.png"
+          alt = "&#201;diteur d'arborescence conditionnelle" height = "241" width = "576">
+          </a></li>
+     </ul>
+
+      <p> Le menu <strong>Outils</strong> contient 5 &#233;l&#233;ments:</p>
+      <ul>
+        <li>Ouvrir les Tables de S&#233;lection - Ouvre l'onglet tableaux des 
+        Liste de S&#233;lection d&#233;crites ci-dessus pour la premi&#232;re m&#233;thode.</li>
+        <li>Rechercher des &#201;l&#233;ments Orphelins - Identifiez les &#233;l&#233;ments 
+        standard, tels que les aiguillages, qui ont &#233;t&#233; d&#233;finis mais 
+        jamais utilis&#233;s.
+       </li>
+        <li>Recherche des Conditions Vides</li>
+        <li>Rechercher des R&#233;f&#233;rences Crois&#233;es - Cr&#233;ez une liste d'emplacements 
+        dans lesquels un &#233;l&#233;ment, tel qu'un capteur, est utilis&#233;.
+       </li>
+        <li>R&#233;f&#233;rences de Variables Conditions - Cr&#233;ez une liste de Conditions 
+        r&#233;f&#233;renc&#233;es par d'autres Conditions . <span class = "since"> 
+			depuis la 4.7.4</span> <br> <a href="images/VariableReferences.png">
+          <img src = "images / VariableReferences.png"
+          alt = "Fen&#234;tre de r&#233;f&#233;rence de variable" height = "320" width = "339">
+          </a>
+       </li>
+     </ul>
+
+      <p> Pour plus d'informations, consultez la <a href =
+      "../../../../html/tools/Logix.shtml"> Documentation principale Logix
+      </a>.</p>
+      <! - # include virtual = "/ Footer" ->
+   </div> <! - ferme #mainContent ->
+ </div> <! - ferme #mBody ->
 </body>
 </html>
