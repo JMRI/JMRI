@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec  2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec  2019-04-04-->
 
 <html lang="fr">
 <head>
@@ -29,25 +29,41 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Ajout/Modification de M&eacute;moires</h1>&Acirc; &Acirc;
-      &Acirc; &Acirc; Pour cr&eacute;er une variable
-      m&eacute;moire, cliquez sur le bouton "Ajouter ..." sur le
-      <a href="MemoryTable.shtml">Tableau m&eacute;moire</a>. Cela
-      ouvrira une petite fen&ecirc;tre avec un espace pour y entrer
-      un nom syst&egrave;me et un nom 'utilisateur pour la nouvelle
-      m&eacute;moire, plus et bouton "Ajouter".
+      <h1> Ajout de variables m&#233;moire</h1>
+      <p>Pour cr&#233;er une variable m&#233;moire, cliquez sur le bouton "Ajouter ..." du bouton <a href =.
+      "MemoryTable.shtml"> Table de variables m&#233;moire </a>. Cela 
+      ouvrira un nouveau volet avec un espace permettant de saisir un Nom 
+      Syst&#232;me et un Nom Utilisateur pour la nouvelle Variable M&#233;moire, 
+      ainsi qu'un bouton "Cr&#233;er" en bas.</P>
+      <img src = "images/MemoryAdd.png" width = "594" height = "162">
 
-      <p>Vous devez entrer un nom syst&egrave;me unique. Les noms
-      syst&egrave;me de m&eacute;moires n'ont pas de mod&egrave;le.
-      Vous pouvez tous mettre tout ce que vous voulez. Il y a une
-      faible convention pour les commencer par "IM" pour
-      "m&eacute;moire interne", mais ce n'est pas
-      n&eacute;cessaire.</p>
+      <p>Vous devez entrer un Nom Syst&#232;me unique. Les Noms Syst&#232;me des 
+      Variables M&#233;moire n'ont pas de mod&#232;le d&#233;fini. Vous pouvez les 
+      appeler comme vous voulez. Il existe une faible convention consistant 
+      &#224; les d&#233;marrer avec "MI" pour "M&#233;moire interne", mais ce n'est pas 
+      obligatoire.</P>
 
-      <p>Le nom utilisateur est facultatif, mais si on le donne, il
-      doit &ecirc;tre unique. 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+      <p>Le Nom Utilisateur est facultatif, sauf si vous cochez la case 
+      "&#201;noncer automatiquement le Nom Syst&#232;me". Si vous en entrez un, il 
+      doit &#234;tre unique dans votre configuration JMRI. Reportez-vous &#224; la 
+      page "<a href="../../../../html/doc/Technical/Names.shtml">Noms</a>" 
+      pour plus d'informations.</P>
+
+      <h2> Cr&#233;ation d'un nombre de m&#233;moires</h2>
+
+      <p>Il est &#233;galement possible de cr&#233;er plusieurs m&#233;moires en une fois.<br>
+      Si vous cochez la case "Ajouter une plage s&#233;quentielle", le champ 
+      "Nombre d'&#233;l&#233;ments" sera activ&#233;. D&#233;finissez le nombre de m&#233;moires 
+      que vous souhaitez ajouter. Cliquez sur [Cr&#233;er] pour cr&#233;er un 
+      certain nombre de m&#233;moires num&#233;rot&#233;es s&#233;quentiellement. <br>
+      Si un Nom Utilisateur a &#233;t&#233; saisi, un num&#233;ro sera ajout&#233; &#224; la fin 
+      de ce nom (en commen&#231;ant par le deuxi&#232;me &#233;l&#233;ment) pour que chaque 
+      Nom Utilisateur en m&#233;moire reste unique.</P>
+
+      <p>Retour &#224; la page d'aide<a href="MemoryTable.shtml"> Tableau 
+      Variable M&#233;moire Table </a>.</P>
+      <! - # include virtual = "/ Footer" ->
+   </div> <! - ferme #mainContent ->
+ </div> <! - ferme #mBody ->
 </body>
 </html>
