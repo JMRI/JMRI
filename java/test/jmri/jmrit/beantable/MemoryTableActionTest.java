@@ -66,6 +66,12 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
+    @Ignore("no Edit button in memory Table")
+    public void testEditButton() {
+    }
+
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

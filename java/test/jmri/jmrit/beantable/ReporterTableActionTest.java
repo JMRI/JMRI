@@ -59,6 +59,12 @@ public class ReporterTableActionTest extends AbstractTableActionBase {
         return Bundle.getMessage("TitleAddReporter");
     }
 
+    @Test
+    @Override
+    @Ignore("No Edit button on Reporter table")
+    public void testEditButton() {
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
