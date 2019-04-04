@@ -99,6 +99,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     @Override
     public void testClosedText(){
          Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
 
     @After
     public void tearDown() {
