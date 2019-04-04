@@ -91,6 +91,7 @@ public class TransitTableActionTest extends AbstractTableActionBase {
         ((JTextField)jlo.getLabelFor()).setText("1");
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
 	// find the "Edit" button and press it.  This may be in the table body.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonEdit"));

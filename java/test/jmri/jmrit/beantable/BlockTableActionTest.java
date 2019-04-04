@@ -261,6 +261,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         jf.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JTableOperator tbl = new JTableOperator(jfo, 0);
 	// find the "Edit" button and press it.  This is in the table body.
 	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
