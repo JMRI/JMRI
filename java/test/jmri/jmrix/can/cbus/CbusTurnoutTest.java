@@ -442,8 +442,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
         JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
             "Turnout.THROWN didn't happen after delayed feedback");
-        
-        t = null;
+
         m = null;
     }
     
@@ -468,7 +467,6 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
             " Turnout.CLOSED didn't happen after delayed feedback");
         
-        t = null;
         r = null;
     }
 
