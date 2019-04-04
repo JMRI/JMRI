@@ -152,7 +152,6 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Override
-    @Ignore("hangs")
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -161,28 +160,31 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
-	jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
-        JFrame f1 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
-        JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "Hardware address:"
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");
 
-	//and press close 
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        //and press create 
+	    jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
-	// find the "Edit" button and press it.  This is in the table body.
-	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
-        JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0,TurnoutTableAction.EDITCOL);
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
-
-	JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
+    }
+
+    @Override
+    public String getEditFrameName(){
+        return "Edit Turnout IT1";
     }
 
     // The minimal setup for log4J
