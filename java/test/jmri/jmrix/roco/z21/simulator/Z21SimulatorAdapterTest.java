@@ -3,6 +3,7 @@ package jmri.jmrix.roco.z21.simulator;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import jmri.jmrix.roco.z21.Z21Reply;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.*;
 import org.junit.*;
@@ -63,7 +64,7 @@ public class Z21SimulatorAdapterTest {
               Assert.fail("IOException writing to network port");
             }
 
-          /*  try {
+            try {
                byte buffer[] = new byte[100];
                DatagramPacket p = new DatagramPacket(buffer,100,host,port);
                // set the timeout on the socket.
@@ -79,7 +80,7 @@ public class Z21SimulatorAdapterTest {
               Assert.fail("Socket Timeout Exception reading from network port");
             } catch(java.io.IOException ioe) {
               Assert.fail("IOException reading from network port");
-            }*/
+            }
         } catch(java.net.SocketException se) {
             Assert.fail("Failure Creating Socket");
         }
@@ -143,6 +144,9 @@ public class Z21SimulatorAdapterTest {
     static public void tearDown() {
         a.getSystemConnectionMemo().getTrafficController().terminateThreads();
         a.terminateThread();
+        // suppress two timeout messages that occur
+	JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN,"Timeout on reply to message:");
+	JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN,"Timeout on reply to message:");
         a.dispose();
         JUnitUtil.tearDown();
     }
