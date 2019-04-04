@@ -66,6 +66,7 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
     @Override
     public void testClosedText(){
          Assert.assertEquals("closed text","Closed (-)",l.getClosedText());
+    }
 
     @After
     public void tearDown() {
