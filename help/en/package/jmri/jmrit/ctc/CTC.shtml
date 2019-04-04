@@ -36,7 +36,7 @@
 
       <h2>Overview</h2>
       <p>
-      The CTC system consists of three main compoments.  The first one is the
+      The CTC system consists of three main components.  The first one is the
       <strong>CTCEditor</strong> which is used to define the CTC system.  The
       second component is <strong>CTCMain</strong>, which is a run time
       component which executes the rules created by the editor.  These
@@ -63,9 +63,9 @@
 
       <p>
       As an option to support creation of the GUI portion of the CTC machine,
-      a Panel Editor panel can be created by pressing a single button. This
+      an external Panel Editor panel file can be created by pressing a single button. This
       facilitates the design of the full GUI CTC panel.  This feature also
-      creates a minimal panel xml file that contains all of the CTC specific
+      creates a 2nd minimal panel xml file that contains all of the CTC specific
       internal sensors.
       </p>
 
@@ -169,8 +169,8 @@
       </p>
 
       <p>
-      The <strong>Exit without saving</strong> menu item discards any changes
-      and closes the CTCEditor.
+      The <strong>Exit without saving</strong> menu item after asking for confirmation
+      that you really want to do this, discards any changes and closes the CTCEditor.
       </p>
 
       <a name="menuEditFind" id="menuEditFind"></a>
@@ -218,7 +218,7 @@
           </p>
           <p>
           <strong>Replace completely</strong>:  The entire line no matter where
-          the search string is found is replaced by the <strong>Replace with:
+          the search string is found is replaced by the "<strong>Replace with:
           </strong>" text.  This is not a common choice.
           </p>
           <p>
@@ -275,17 +275,19 @@
         <h5>Defaults</h5>
         <p><strong>Signal System Type</strong>: Select either Signal Heads or Signal Masts.</p>
 
-        <p><strong>Time values</strong>: These are values that are given to
-        each CTC O.S. section as default values when the CTC O.S. section is
-        created. The timing values edit boxes are standard CTC values, refer to
-        Definitions for more information on each.</p>
-
-        <p><strong>Turnout locks enabled at startup</strong>:  The default is
+        <p><strong>Turnout locks enabled at startup</strong> and <strong>Seconds
+        until all lockable turnouts locked</strong>:  The default is
         checked and the CTC system will lock all of the turnouts automatically
         at startup.  Some layouts require locks to be unlocked at CTC system
-        startup for other external initialization requirements.  You can then
+        startup for other external (to CTC) initialization requirements.  You can then
         have your dispatcher manually lock all of the locked turnouts before
-        the layout starts operation.  Or you can invoke the following lines
+        the layout starts operation.  Or, you can set the "Seconds until all lockable
+        turnouts locked" to a value >0 (in seconds), and the CTC system will do
+        this automatically after that time period.  <strong>Note</strong>: each time JMRI
+        is started, it takes a variable amount of time to complete, so this value
+        may have to be set a bit higher than the quickest time, in order to give
+        the system a chance to stabilize before locking the turnouts.        
+        Or you can invoke the following lines
         (however you want) in a Jython script file in order to have this done
         automatically by your script(s) after your special external
         initialization requirements are done:</p>
@@ -295,6 +297,12 @@
         CTCMain = jmri.jmrit.ctc.CTCJythonAccessInstanceManager._mCTCMain
         CTCMain.externalLockTurnout()
         </pre></div>
+
+        <p><strong>Time values</strong> (for Signal and Switch
+        directions): These are values that are given to
+        each CTC O.S. section as default values when the CTC O.S. section is
+        created. The timing values edit boxes are standard CTC values, refer to
+        Definitions for more information on each.</p>
 
         <p><strong>No code button delay in milliseconds</strong>:  This is the
         default for newly created O.S. Sections. Individual O.S. sections can be
@@ -329,8 +337,8 @@
         of the on-screen objects of a typical CTC installation, it is important
         that you realize how this program works with these "patterns"".  By
         using them, you do not have to spend dozens of hours to enter all of
-        this in manually, or in the process entering it in invalid, and have
-        the JMRI runtime system complain of problems - back and forth, make a
+        this in manually, or make a mistake and have
+        the JMRI runtime system complain of problem(s) - back and forth, make a
         change, run JMRI, find another problem, etc.  Using patterns prevents
         this.
         </p>
@@ -344,17 +352,17 @@
         </p>
 
         <p>
-        The pattern format is IS#:XXX. The "#" charcters in the edit boxes are
+        The pattern format is IS#:XXX. The "#" character in the edit boxes are
         substituted automatically when the CTC O.S. section is first created.
         The respective switch / signal areas use the respective switch # /
-        signal # given for the O.S. Section.  If more than one "#", every "#"
+        signal # given for the O.S. Section.  If more than one "#" appears, every "#"
         will get the corresponding substituted number.
-        </p>
-
-In this way you do not have to do all of the manual typing or selecting
+        In this way you do not have to do all of the manual typing or selecting
         associated with creating all of these sensor strings.
-
-Patterns usage by this program and its advantages over other methods
+        <p>
+        </p>
+        <strong>Patterns usage by this program and its advantages over other methods</strong>
+        </p>
 
         <p>
         Every time an O.S. section is created, the program will apply a set
@@ -364,16 +372,16 @@ Patterns usage by this program and its advantages over other methods
         In order to see these default patterns, start the program and choose
         "Configure / Patterns"".
         </p>
-
-Patterns - the most important part for easy "auto magic" entry of information
         <p>
         Changing anything on this screen has no effect on existing information
-        in the system.  It is only used when a new O.S. section (Add button) is
+        in the system.  It is only used when a <strong>new</strong> O.S. section (via Add button) is
         created.  However, you may selectively re-apply this pattern to the
-        whole system or individual pieces of the system.  Here"s how:
-Reapplying patterns to existing information
-Once you"ve changed this screen, you may want the new pattern to be selectively applied.  There are two choices:
-Reapply pattern to selected item (a single O.S. section).
+        whole system or individual pieces of the system.  Here's how:
+        </p>
+        <p>
+        <strong>Reapplying patterns to existing information:</strong>
+Once you've changed this screen, you may want the new pattern to be selectively applied.  There are two choices:
+1.) Reapply pattern to selected item (a single O.S. section) or 2.)
 Reapply pattern to selected item (a single O.S. section) specific sub-system.
 To do 1, get to the main screen, and select a single O.S. section.  The "Reapply patterns to selected item"
 button will be enabled.  When you press this button, a confirmation dialog will appear.  Pressing "Yes" will
@@ -383,31 +391,40 @@ the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems
 so what follows may not appear.  You will then see a button at the bottom of the sub-system selected with
 "Reapply patterns - this form ONLY!".  Pressing that will immediately show you the results of the new
 pattern in the edit boxes of that screen.
-
+        </p>
 
 
         <a name="menuCfgGui" id="menuCfgGui"></a>
         <h5>GUI Design</h5>
 <p>
-GUI Design - automatic creation of the JMRI GUI screen
+<strong>GUI Design - automatic creation of the JMRI GUI screen</strong>:
 An additional feature of this program is to be able to automatically create a "standard" USS CTC panel
 from the parameters specified elsewhere in this program.  This screen configures those available options.
 See "Files created for support...." for more information and procedures for loading them into the JMRI system.
-Everything is put in pre-determined locations on the screen.  It is an easy procedure in JMRI to reposition those items.
-Caveat emptor
+Everything is put in pre-determined locations on the screen.  It is an easy procedure in JMRI's Panel Editor
+(or other) to reposition those items.
+<strong>Caveat emptor:</strong>
 If you do change the locations of these items, JMRI does not modify the files created by this program.
 It is not designed to keep track of which file contains which modifications.  Only if you save the panel to
 completely different panel name will those changes be saved.  You should completely design the CTC panel using
 this program before saving to another name in JMRI, and then begin the final changes to that panel from within JMRI.
-Extra blank columns after last defined O.S. Section to create:
+</p>
+<p>
+<strong>Extra blank columns after last defined column to create:</strong>
 Normally, if this is 0, this program creates after the last CTC O.S. Section column specified a "right
 edge of CTC machine panel".  If you want additional blank column(s) between your last CTC O.S. Sections
 column # and the right edge, enter that number here.
-Type of CTC panel:
+</p>
+<p>
+<strong>Type of CTC panel</strong>:
 Presently only USS is available at this time (10/31/2018).  More may be available in the future.
-Vertical size:
+</p>
+<p>
+<strong>Vertical size:</strong>
 JMRI provides blank panel items in each of the sizes listed.  Choose one.
-Signals on panel
+</p>
+<p>
+<strong>Signals on panel</strong>
 All O.S. Section signals - All of the signals specified in the Signal Direction Indicators sub-system are
 created on the screen for you.  This is not a prototype practice, but will help in your development of
 SSL (Simple Signal Logic) and CTC design.  You can see the state of the signals in the field with this.  Signal
@@ -415,46 +432,60 @@ heads or Signal masts will be created per your specification.
 Green/off only (Future feature) - Not available at this time.  The prototype in certain installations have
 a single green indicator indicating all signal(s) at that location are displaying stop (red) (green indicator
 off) or permissive of some form (one or more signals at that location non-stop (non-red)).
-None
-Builder Plate
+</p>
+<p>
+<strong>Builder Plate</strong>
 Check this if you want the builder plate on the machine face.
-Turnouts on panel
+</p>
+<p>
+<strong>Turnouts on panel</strong>
 Normally you want to generate turnouts on the CTC track board, which is the default "Generate checked".  If
 you don"t want this feature, uncheck this.
-Fleeting toggle switch (only if fleeting configured)
+</p>
+<p>
+<strong>Fleeting toggle switch (only if fleeting configured)</strong>
 Create the toggle switch on the panel if checked.
-Analog clock and clock on toggle
+</p>
+<p>
+<strong>Analog clock and clock on toggle</strong>
 Create an analog clock on the panel, along with above it a toggle switch to turn it on / off.
-Reload CTC system button
+</p>
+<p>
+<strong>Reload CTC system button</strong>
 Create a button on the screen to perform this.
-CTC Debug on toggle
+</p>
+<p>
+<strong>CTC Debug on toggle</strong>
 Ditto.
-Future feature: Create variety of track pieces
+</p>
+<p>
+<strong>Create variety of track pieces</strong> (future feature):
 A variety of track pieces are created on the screen, so that it is easier to "copy / paste" all of these objects as the designer desires.
-O.S. Occupancy sensor blinks red when unknown or inconsistent
+</p>
+<p>
+<strong>O.S. Occupancy sensor blinks red when unknown or inconsistent</strong>
 Normally, JMRI will display an "X" or "?" on a sensor when its state is unknown or inconsistent.  By checking
 this checkbox, the program will substitute a blinking indicator for these to draw better attention to them.
 I personally use these for optical sensors on my layout because of the number of sensors on my layout causes
 LocoNet to loose messages at system startup.
-
 </p>
 
 
       <a name="osList" id="osList"></a>
       <h3>OS Section List</h3>
 
-The Prototype CTC machine and this program
+<h4>The Prototype CTC machine and this program</h4>
 A prototype CTC machine is organized by columns (my term).  A single CTC machine column can be blank, or contain an O.S.
 section and all of the associated controls.  I begin the numbering of my CTC machine columns with 1.  This column number
-has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. section.  It can be as many columns
-and your computer screen(s) that will run JMRI can fit and JMRI can support (JMRI is technically unlimited).
-OS Sections
+has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. section.  You can create as many columns
+as you like on the computer screen(s).
+<h4>OS Sections</h4>
 A non-blank column always has an O.S. section with a code button associated with it.  An O.S. section always has an odd
-switch number and an even signal number associated with it, where the signal number is always one more than the switch number.
+switch number and an even signal number, where the signal number is always one more than the switch number.
 Each O.S. section as it is created does not have to be 2 more than the prior switch number entry.  Example: 1, 3, 7, 15, 17....
 They do not have to be in ascending sequence, their order has no impact on the program.  However, it is strongly suggested per
 prototype practice that they are in ascending sequence.  You may re-order them on the main screen using up/down buttons in case
-you enter them out of order, described in another section.
+you entered them out of order, which is described in another section.
 
       <p>=== Needs discussion JMRI validation.  A new system cannot have validation until the debug and reload
       sensors exist in the panel xml file.  The basic process is set the configuration options, do the file export process, load
