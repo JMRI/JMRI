@@ -22,13 +22,6 @@ public class TimeTablePrintGraphTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         TimeTablePrintGraph g = new TimeTablePrintGraph(1, 1, true, false);
-
-//         JmriJFrame gf = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
-//         gf.setMinimumSize(new Dimension(600, 300));
-//         gf.getContentPane().add(g);
-//         gf.pack();
-//         gf.addHelpMenu("package.jmri.jmrit.timetable.TimeTableGraph", true);  // NOI18N
-//         gf.setVisible(true);
         Assert.assertNotNull(g);
 
         JUnitAppender.suppressWarnMessage("No scale found, defaulting to HO");
