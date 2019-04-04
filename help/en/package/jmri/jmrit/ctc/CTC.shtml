@@ -359,8 +359,8 @@
         will get the corresponding substituted number.
         In this way you do not have to do all of the manual typing or selecting
         associated with creating all of these sensor strings.
-        <p>
         </p>
+        <p>
         <strong>Patterns usage by this program and its advantages over other methods</strong>
         </p>
 
@@ -795,7 +795,7 @@ you entered them out of order, which is described in another section.
         There are two main situations that need to be considered separately:
         </p>
         <p>
-        <u>Turnout locks in an O.S. section:</u>
+        Turnout locks in an O.S. section:
         </p>
         <p>
         This is the typical case, and requires nothing special be done.  In the prototype, the O.S. section <strong>must be</strong> unoccupied
@@ -820,7 +820,7 @@ you entered them out of order, which is described in another section.
         </p>
 
         <p>
-        <u>Turnout locks in a non O.S. section (and how to create them):</u>
+        Turnout locks in a non O.S. section (and how to create them):
         </p>
         <p>
         Just create the section that contains the turnout <strong>as if</strong> it was an O.S. section.  Use a switch number
