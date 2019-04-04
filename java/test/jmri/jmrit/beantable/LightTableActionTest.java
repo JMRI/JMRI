@@ -127,6 +127,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         new JTextFieldOperator(hwAddressField).typeText("1");
         //and press create
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0,tbl.getColumnCount() -1); // edit column is last in light table.

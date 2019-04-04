@@ -134,6 +134,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
 
         // close the add frame
         jf.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
