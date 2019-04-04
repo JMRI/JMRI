@@ -119,7 +119,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JFrameOperator jfo = new JFrameOperator(f);
         jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        JFrameOperator jf = new JFrameOperator(f1);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
