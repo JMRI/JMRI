@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
+import jmri.util.junit.annotations.*;
 
 /**
  *
@@ -44,6 +45,13 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     @Override
     @Ignore("no add button on signal mast logic table")
     public void testAddThroughDialog() {
+    }
+
+    @Test
+    @Override
+    @Ignore("no add button on signal mast logic table")
+    @ToDo("re-write parent class test to add signal mast logic then edit")
+    public void testEditButton() {
     }
 
     // The minimal setup for log4J

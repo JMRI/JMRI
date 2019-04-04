@@ -90,6 +90,13 @@ public class RouteTableActionTest extends AbstractTableActionBase {
     public void testAddThroughDialog() {
     }
 
+    @Test
+    @Ignore("Route create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name, or add without dialog")
+    public void testEditButton() {
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
