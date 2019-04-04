@@ -29,155 +29,119 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1><a name="Adding/Editing LItin&eacute;raires"></a>
-      Ajout/Edition LItin&eacute;raire</h1>
+      <h1><a name="Adding/Editing LItin&#233;raires"></a>
+      Ajout/Edition LItin&#233;raire</h1>
 
-      <p>Il y a quatre onglets pour ajouter et &eacute;diter
-      LItin&eacute;raires: Onglet</p>
+      <p>Il y a quatre onglets pour ajouter et &#233;diter
+      LItin&#233;raires: </p>
 
-      <h3>1. LItin&eacute;raire Basique</h3>
+      <h3>Onglet 1. LItin&#233;raire Basique</h3>
 
-      <p>La premi&egrave;re chose que vous devez faire lors de la
-      cr&eacute;ation d'un itin&eacute;raire est de le nommer. Dans
-      la case "Nom syst&egrave;me", entrez un nom unique pour votre
-      LItin&eacute;raire. Le pr&eacute;fixe "RTX" sera
-      ajout&eacute; au nom syst&egrave;me, Vous pouvez
-      &eacute;ventuellement entrer un nom plus descriptif dans la
-      case ''Nom Uilisateur ".</p>
+      <p>La premi&#232;re chose que vous devez faire lors de la
+      cr&#233;ation d'un itin&#233;raire est de le nommer. Dansla case "Nom 
+      Syst&#232;me", entrez un nom unique pour votre LItin&#233;raire. Le pr&#233;fixe 
+      "RTX" sera ajout&#233; au Nom Syst&#232;me, Vous pouvez &#233;ventuellement entrer 
+      un nom plus descriptif dans la case "Nom Uilisateur".</p>
 
       <dl>
-        <dt>Type d'Itin&eacute;raire</dt>
-
-        <dt>Logix</dt>
-
-        <dd>Les boutons radio sous les descriptions d'onglet
-        r&egrave;glent le mode de d&eacute;clenchement pour les
-        variables "v&eacute;to" de commande (voir ci-dessous pour
-        une explication de v&eacute;to). Pour &eacute;muler le
-        comportement des itin&eacute;raires (par opposition
-        &agrave; LItin&eacute;raires) s&eacute;lectionner les
-        <b>Anciennes</b> options. (Les Itin&eacute;raires standard
-        ne se d&eacute;clenchent pas lorsque la condition de
-        v&eacute;to est retir&eacute;e.) Si vous voulez que le
-        L-Itin&eacute;raire se d&eacute;clenche lorsque la
-        condition de v&eacute;to est supprim&eacute;e,
-        s&eacute;lectionnez les <b>Nouvelles</b> options.</dd>
-      </dl>Les boutons situ&eacute;s au bas du Tableau
-      LItin&eacute;raire
+        <dt>Type d'Itin&#233;raire Logix</dt>
+       
+        <dd>Les boutons radio sous les descriptions d'onglet r&#232;glent le 
+        mode de d&#233;clenchement pour les variables "v&#233;to" de commande 
+        (voir ci-dessous pour une explication de v&#233;to). Pour &#233;muler le
+        comportement des itin&#233;raires (par opposition &#224; LItin&#233;raires) 
+        s&#233;lectionner les <b>Anciennes</b> options. (Les Itin&#233;raires Standard
+        ne se d&#233;clenchent pas lorsque la condition de v&#233;to est retir&#233;e.) 
+        Si vous voulez que le L-Itin&#233;raire se d&#233;clenche lorsque la
+        condition de v&#233;to est supprim&#233;e, s&#233;lectionnez les <b>Nouvelles</b> 
+        options.</dd>
+      </dl>Les boutons situ&#233;s au bas du Tableau LItin&#233;raire
 
       <dl>
-        <dt>Ajouter Itin&eacute;raire</dt>
+        <dt>Ajouter Itin&#233;raire</dt>
 
-        <dd>Appuyez sur ce bouton pour ajouter un nouvel
-        Itin&eacute;raire Logix.</dd>
+        <dd>Appuyez sur ce bouton pour ajouter un nouvel Itin&#233;raire Logix.</dd>
 
         <dt>Annuler</dt>
 
-        <dd>Appuyez sur ce bouton pour annuler
-        l'&eacute;dition.</dd>
-      </dl>Onglet
+        <dd>Appuyez sur ce bouton pour annuler l'&#233;dition.</dd>
+      </dl>
 
-      <h3>2. Actions (sortie)</h3>
+      <h3>Onglet 2. Actions (sortie)</h3>
 
-      <p>Cet onglet contient une liste de s&eacute;lection de tous
-      les capteurs, les aiguillages, les lumi&egrave;res et signaux
-      qui ont &eacute;t&eacute; cr&eacute;&eacute;s. Cochez la case
-      dans la colonne <b>Inclure</b> pour s&eacute;lectionner le
-      p&eacute;riph&eacute;rique que vous souhaitez inclure dans le
-      L-Itin&eacute;raire. Ensuite choisissez l'action que vous
-      voulez que l'appareil r&eacute;alise lorsque le
-      L-Itin&eacute;raire est d&eacute;clench&eacute; &agrave;
-      partir du menu d&eacute;roulant dans la colonne <b>Obtenir
-      Action</b>.</p>
+      <p>Cet onglet contient une liste de s&#233;lection de tous les Capteurs,
+       Aiguillages, Lumi&#232;res et Signaux qui ont &#233;t&#233; cr&#233;&#233;s. Cochez la case
+      dans la colonne <b>Inclure</b> pour s&#233;lectionner le p&#233;riph&#233;rique 
+      que vous souhaitez inclure dans le L-Itin&#233;raire. Ensuite choisissez 'action que vous
+      voulez que l'appareil r&#233;alise lorsque le  L-Itin&#233;raire est d&#233;clench&#233; 
+      &#224; partir du menu d&#233;roulant dans la colonne <b>D&#233;finir Action</b>.</p>
 
-      <p>Les boutons radio vous permettent de limiter l'affichage
-      des p&eacute;riph&eacute;riques &agrave; seulement ceux que
-      vous avez s&eacute;lectionn&eacute;s.</p>Onglet
+      <p>Les boutons radio vous permettent de limiter l'affichage des
+       p&#233;riph&#233;riques &#224; seulement ceux que  vous avez s&#233;lectionn&#233;s.</p>
 
-      <h3>3. D&eacute;clencheurs/Commandes (entr&eacute;e)</h3>
+      <h3>Onglet 3. D&#233;clencheurs/Commandes (entr&#233;e)</h3>
 
-      <p>Cet onglet contient une liste de s&eacute;lection de tous
-      les capteurs, aiguillages, lumi&egrave;res et signaux qui ont
-      &eacute;t&eacute; cr&eacute;&eacute;s. Cochez la case dans la
-      colonne <b>Inclure</b> pour s&eacute;lectionner l'appareil
-      que vous souhaitez utiliser pour la commande du
-      L-Itin&eacute;raire. Ensuite, choisissez l'&eacute;tat que
-      vous voulez que le p&eacute;riph&eacute;rique &agrave;
-      utiliser prenne pour d&eacute;clencher le L-Itin&eacute;raire
-      dans le menu d&eacute;roulant dans la colonne <b>Etat
-      D&eacute;clencheur</b>.</p>
+      <p>Cet onglet contient une liste de s&#233;lection de tous les Capteurs, 
+      Aiguillages, Lumi&#232;res et Signaux qui ont &#233;t&#233; cr&#233;&#233;s. Cochez la case 
+      dans la colonne <b>Inclure</b> pour s&#233;lectionner l'appareil que vous 
+      souhaitez utiliser pour la commande du L-Itin&#233;raire. Ensuite, 
+      choisissez l'&#233;tat dans lequel vous voulez que le p&#233;riph&#233;rique soit 
+      pour d&#233;clencher le L-Itin&#233;raire  dans le menu d&#233;roulant dans la 
+      colonne <b>Etat D&#233;clencheur</b>.</p>
 
-      <p>Les P&eacute;riph&eacute;riques s&eacute;lectionn&eacute;s
-      avec des &eacute;tats "non- v&eacute;to" sont
-      regroup&eacute;s comme une clause "OR". Les
-      D&eacute;clencheurs s&eacute;lectionn&eacute;s avec un Etat
-      "v&eacute;to" sont regroup&eacute;s comme une clause "ET".
-      Autrement dit, lorsque tout &eacute;tat de "Non- veto"
-      devient vrai, le L-Itin&eacute;raire est capable de se
-      d&eacute;clencher. Toutefois, si l'un des &eacute;tats
-      "Veto",est vrai,le L-Itin&eacute;raire ne d&eacute;clenchera
-      pas.</p>
+      <p>Les P&#233;riph&#233;riques s&#233;lectionn&#233;s avec des &#233;tats "non- v&#233;to" sont
+      regroup&#233;s comme une clause "OR". Les D&#233;clencheurs s&#233;lectionn&#233;s avec 
+      un Etat "v&#233;to" sont regroup&#233;s comme une clause "AND". Autrement dit, 
+      lorsque tout &#233;tat de "Non- V&#233;to" devient Vrai, le L-Itin&#233;raire est
+      capable de se d&#233;clencher. Toutefois, si <i>l'un</i> des &#233;tats  
+      "V&#233;to",est Vrai, le L-Itin&#233;raire ne d&#233;clenchera pas.</p>
 
-      <p>sur l'onglet 1, le <b>Nouveau</b> type d'itin&eacute;raire
-      Logix sera mis &agrave; la logique ci-dessus en un seul Logix
-      condition. Si <b>l'Ancienne</b> option est
-      s&eacute;lectionn&eacute;e, chaque d&eacute;clenchement d'un
-      &eacute;tat "non- veto" est mis dans une condition
-      s&eacute;par&eacute;e. Le comportement de cette option est
-      que le L- itin&eacute;raire sera d&eacute;clench&eacute;
-      &agrave; chaque fois qu'un de ces &eacute;tats d'appareil
-      devient vrai - m&ecirc;me si l'expression logique dans son
-      ensemble est d&eacute;j&agrave; vrai. Une autre
-      diff&eacute;rence quand <b>l'Ancienne</b> option est
-      sp&eacute;cifi&eacute;e, c'est que les variables de
-      "v&eacute;to" ne sont pas activ&eacute;es pour le
-      d&eacute;clenchement. Cela signifie que les actions ne sont
-      pas d&eacute;clench&eacute;es lorsque les v&eacute;tos sont
-      supprim&eacute;s. Utilisez la <b>Nouvelle</b> option si vous
-      voulez que les actions se d&eacute;clenchent lorsque les
-      v&eacute;tos sont supprim&eacute;s. En r&eacute;sum&eacute;,
-      <b>l'Ancienne</b> option &eacute;mule un itin&eacute;raire
+      <p>Sur l'Onglet 1, le <b>Nouveau</b> Type d'Itin&#233;raire Logix sera 
+      mis &#224; la logique ci-dessus dans une seule Condition Logix. Si 
+      <b>l'Ancienne</b> option est s&#233;lectionn&#233;e, chaque d&#233;clenchement 
+      d'un &#233;tat "non- veto" est mis dans une condition s&#233;par&#233;e. Le 
+      comportement de cette option fait que le LItin&#233;raire sera d&#233;clench&#233;
+      &#224; chaque fois qu'un de ces &#233;tats d'appareil devient vrai - m&#234;me si 
+      l'expression logique dans son ensemble est d&#233;j&#224; vrai. Une autre
+      diff&#233;rence quand <b>l'Ancienne</b> option est sp&#233;cifi&#233;e, est que 
+      les variables de "v&#233;to" ne sont pas activ&#233;es pour le d&#233;clenchement. 
+      Cela signifie que les actions ne sont pas d&#233;clench&#233;es lorsque les 
+      v&#233;tos sont supprim&#233;s. Utilisez la <b>Nouvelle</b> option si vous
+      voulez que les actions se d&#233;clenchent lorsque les v&#233;tos sont 
+      supprim&#233;s. En r&#233;sum&#233;, <b>l'Ancienne</b> option &#233;mule un itin&#233;raire
       standard et la <b>Nouvelle</b> option a le comportement d'une
-      Condition Standart Logix. Les variations sur ces
-      comportements peuvent &ecirc;tre r&eacute;gl&eacute;es avec
-      des modifications suppl&eacute;mentaires dans le tableau
-      Logix.</p>
+      Condition Standart Logix. Les variations sur ces comportements 
+      peuvent &#234;tre r&#233;gl&#233;es avec des modifications suppl&#233;mentaires dans 
+      le tableau Logix.</p>
 
-      <p>Notez que certaines variables de commandle avec "sur le
-      changement", d&eacute;clare avoir besoin d'une Condition
-      Logix s&eacute;par&eacute;e pour les actions pour
-      d&eacute;clencher L-Itin&eacute;raire &agrave; chaque
-      changement d'&eacute;tat de ces variables.</p>
+      <p>Notez que certaines variables de commande avec "sur le changement", 
+      d&#233;clare avoir besoin d'une Condition Logix s&#233;par&#233;e pour les actions 
+      pour d&#233;clencher L-Itin&#233;raire &#224; chaque changement d'&#233;tat de ces 
+      variables.</p>
 
       <p>Les boutons radio vous permettent de limiter l'affichage
-      des p&eacute;riph&eacute;riques &agrave; seulement ceux que
-      vous avez s&eacute;lectionn&eacute;s.</p>Onglet
+      des p&#233;riph&#233;riques &#224; seulement ceux que vous avez s&#233;lectionn&#233;s.</p>
 
-      <h3>4. Alignement/Verrous/ Etc.</h3>
+      <h3>Onglet 4. Alignement/Verrous/ Etc.</h3>
 
-      <p>Cet onglet contient une liste de s&eacute;lection des
-      capteurs qui ont &eacute;t&eacute; cr&eacute;&eacute;s.
-      Cochez la case dans la colonne <b>Inclure</b> pour
-      s&eacute;lectionner un capteur que vous souhaitez utiliser
-      pour indiquer l'ach&egrave;vement des actions
-      L-Itin&eacute;raire. Ensuite, choisissez le type d'action que
-      vous voulez que le capteur commande &agrave; partir du menu
-      d&eacute;roulant dans la colonne <b>Alignement</b>. Vous
-      pouvez choisir d'avoir le capteur indiqu&eacute; dans type
-      particulier (capteur,aiguillage, de la lumi&egrave;re, le
-      t&ecirc;te de signal, ou tous)</p>
+      <p>Cet onglet contient une liste de s&#233;lection des capteurs qui ont 
+      &#233;t&#233; cr&#233;&#233;s. Cochez la case dans la colonne <b>Inclure</b> pour
+      s&#233;lectionner un capteur que vous souhaitez utiliser pour indiquer 
+      l'ach&#232;vement des actions L-Itin&#233;raire. Ensuite, choisissez le type 
+      d'action que vous voulez que le Capteur commande &#224; partir du menu
+      d&#233;roulant dans la colonne <b>Alignement</b>. Vous pouvez choisir 
+      d'avoir le capteur indiqu&#233; dans type particulier (Capteur, Aiguillage, 
+       Lumi&#232;re, Signal, ou "Tous")</p>
 
-      <p>Les boutons radio vous permettent de limiter l'affichage
-      des p&eacute;riph&eacute;riques &agrave; seulement ceux que
-      vous avez s&eacute;lectionn&eacute;.</p>
+      <p>Les boutons radio vous permettent de limiter l'affichage des 
+      p&#233;riph&#233;riques &#224; seulement ceux que vous avez s&#233;lectionn&#233;.</p>
 
-      <p>Un fichier son peut &ecirc;tre inscrit pour jouer lorsque
-      le L-Itin&eacute;raire est d&eacute;clench&eacute;. De
-      m&ecirc;me un fichier script peut &ecirc;tre
-      ex&eacute;cut&eacute; lorsque le L-Itin&eacute;raire est
-      d&eacute;clench&eacute;. 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+      <p>Un fichier son peut &#234;tre inscrit pour jouer lorsque
+      le L-Itin&#233;raire est d&#233;clench&#233;. De  m&#234;me un fichier script peut &#234;tre
+      ex&#233;cut&#233; lorsque le L-Itin&#233;raire est d&#233;clench&#233;. 
+      <p> Retour &#224; la <a href="LRouteTable.shtml"> page d'aide du 
+      Tableau L-Itin&#233;raire </a>. </p> <! - # include virtual = "/ Footer" ->
+     </div> <! - ferme #mainContent ->
+   </div> <! - ferme #mBody ->
 </body>
 </html>
