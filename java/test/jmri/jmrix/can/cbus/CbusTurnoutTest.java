@@ -469,7 +469,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
             " Turnout.CLOSED didn't happen after delayed feedback");
         
         t = null;
-        m = null;
+        r = null;
     }
 
     // The minimal setup for log4J
