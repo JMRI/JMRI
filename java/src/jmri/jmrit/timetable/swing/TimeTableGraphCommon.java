@@ -3,6 +3,7 @@ package jmri.jmrit.timetable.swing;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.awt.print.*;
 import java.util.*;
 import javax.swing.*;
 import jmri.jmrit.timetable.*;
@@ -30,7 +31,7 @@ import jmri.jmrit.timetable.*;
  * reverse will be "z2-y2-z2-c2-b1-a1".  Notice:  While c is in both segments, for
  * train stop purposes, the arrival "c" is used and the departure "c" is skipped.
  */
-public class TimeTableGraph extends JPanel {
+public class TimeTableGraphCommon {
 
     /**
      * Initialize the data used by paint() and supporting methods when the
@@ -41,7 +42,7 @@ public class TimeTableGraph extends JPanel {
      * @param showTrainTimes When true, include the minutes portion of the
      * train times at each station.
      */
-    void init(int segmentId, int scheduleId, boolean showTrainTimes) {
+    void init(int segmentId, int scheduleId, boolean showTrainTimes, double height, double width, boolean displayType) {
         _segmentId = segmentId;
         _scheduleId = scheduleId;
         _showTrainTimes = showTrainTimes;
@@ -55,10 +56,12 @@ public class TimeTableGraph extends JPanel {
         _duration = _schedule.getDuration();
         _stations = _dataMgr.getStations(_segmentId, true);
         _trains = _dataMgr.getTrains(_scheduleId, 0, true);
+        _dimHeight = height;
+        _dimWidth = width;
     }
 
-    final Font _stdFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-    final Font _smallFont = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+    final Font _stdFont = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+    final Font _smallFont = new Font(Font.SANS_SERIF, Font.PLAIN, 8);
     final static BasicStroke gridstroke = new BasicStroke(0.5f);
     final static BasicStroke stroke = new BasicStroke(2.0f);
 
@@ -93,6 +96,9 @@ public class TimeTableGraph extends JPanel {
     double _graphRight = 0;
     Graphics2D _g2;
     boolean _showTrainTimes;
+    PageFormat _pf;
+    double _dimHeight = 0;
+    double _dimWidth = 0;
 
     // ------------ train variables ------------
     ArrayList<Rectangle2D> _textLocation = new ArrayList<>();
@@ -122,9 +128,7 @@ public class TimeTableGraph extends JPanel {
     double _sizeMinute;
     double _throttleX;
 
-
-    @Override
-    public void paint(Graphics g) {
+    public void doPaint(Graphics g) {
         if (g instanceof Graphics2D) {
             _g2 = (Graphics2D) g;
         } else {
@@ -135,16 +139,18 @@ public class TimeTableGraph extends JPanel {
         _hourGrid.clear();
         _textLocation.clear();
 
-        Dimension dim = getSize();
-        double dimHeight = dim.getHeight();
-        double dimWidth = dim.getWidth();
+//         Dimension dim = getSize();
+//         double dimHeight = _pf.getImageableHeight();
+//         double dimWidth = _pf.getImageableWidth() * 2;
+//         double dimHeight = _dimHeight;
+//         double dimWidth = _dimWidth;
 
         // Get the height of the throttle section and set the graph top
         _graphTop = 70.0;
         if (_layout.getThrottles() > 4) {
             _graphTop = _layout.getThrottles() * 15.0;
         }
-        _graphHeight = dimHeight - _graphTop - 30.0;
+        _graphHeight = _dimHeight - _graphTop - 30.0;
         _graphBottom = _graphTop + _graphHeight;
 
         // Draw the left column components
@@ -153,7 +159,7 @@ public class TimeTableGraph extends JPanel {
 
         // Set the horizontal graph dimensions based on the width of the left column
         _graphLeft = _infoColWidth + 50.0;
-        _graphWidth = dimWidth - _infoColWidth - 65.0;
+        _graphWidth = _dimWidth - _infoColWidth - 65.0;
         _graphRight = _graphLeft + _graphWidth;
 
         drawHours();
@@ -657,5 +663,5 @@ public class TimeTableGraph extends JPanel {
         return _hourMap.get(hour) + (min * _sizeMinute);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraph.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraphCommon.class);
 }
