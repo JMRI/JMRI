@@ -424,8 +424,12 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     
     
     @Test
-    public void testDelayedTurnoutCanReply() throws jmri.JmriException {
+    public void testDelayedTurnoutThrownCanReply() throws jmri.JmriException {
+        
         CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=2;
+        t.setFeedbackMode("DELAYED");
+        
         CanReply m = new CanReply(tcis.getCanid());
         m.setNumDataElements(5);
         m.setElement(0, 0x90); // ACON OPC
@@ -434,17 +438,39 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=1;
-        t.setFeedbackMode("DELAYED");
         t.reply(m);
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "reply Turnout.THROWN didn't happen");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
+            "Turnout.THROWN didn't happen after delayed feedback");
         
-        m.setElement(0, 0x91); // ACOF OPC
-        t.reply(m);
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); }, "reply Turnout.INCONSISTENT didn't happen"); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "reply Turnout.CLOSED didn't happen"); 
-    }    
+        t = null;
+        m = null;
+    }
+    
+    @Test
+    public void testDelayedTurnoutClosedCanReply() throws jmri.JmriException {
+        
+        CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=2;
+        t.setFeedbackMode("DELAYED");
+        
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, 0x91); // ACOF OPC
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        
+        t.reply(r);
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
+            "closed Turnout.INCONSISTENT didn't happen"); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
+            " Turnout.CLOSED didn't happen after delayed feedback");
+        
+        t = null;
+        m = null;
+    }
 
     // The minimal setup for log4J
     @Before
