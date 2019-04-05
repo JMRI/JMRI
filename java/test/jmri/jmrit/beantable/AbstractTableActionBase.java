@@ -10,6 +10,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
@@ -100,6 +101,15 @@ public abstract class AbstractTableActionBase {
      */
     abstract public String getAddFrameName();
 
+    /**
+     * @return the name of the frame resulting from edit being pressed, as 
+     *         returned from the Bundle.
+     */
+    public String getEditFrameName(){
+	    // defaults to the same as the add frame name
+	    return getAddFrameName();
+    }
+
     @Test
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -121,6 +131,39 @@ public abstract class AbstractTableActionBase {
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        JFrameOperator jfo = new JFrameOperator(f);
+	jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	//Enter 1 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).enterText("1");
+
+	//and press create
+	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+	// find the "Edit" button and press it.  This is in the table body.
+	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
+        JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.dispose(f2);
+
+	JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 

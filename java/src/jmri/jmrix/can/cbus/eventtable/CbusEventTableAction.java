@@ -79,7 +79,7 @@ public class CbusEventTableAction {
     public File _saveFile = null;
     private String _saveFileName = null;
     public boolean _saved = false;
-    private boolean sessionConfirmDeleteRow=true; // display confirm popup
+    protected boolean sessionConfirmDeleteRow=true; // display confirm popup
     
     private void updatejmricell(int row, Boolean ison, String name){
         String bb;

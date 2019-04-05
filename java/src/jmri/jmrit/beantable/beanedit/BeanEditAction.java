@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-abstract class BeanEditAction extends AbstractAction {
+public abstract class BeanEditAction extends AbstractAction {
 
     public BeanEditAction(String s) {
         super(s);

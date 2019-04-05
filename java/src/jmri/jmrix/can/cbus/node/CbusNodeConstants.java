@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus.node;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -42,6 +43,9 @@ public class CbusNodeConstants {
      */
     public static void setTraits( CbusNode node ){
         
+        // defaults
+        node.setsendsWRACKonNVSET(true);
+        
         if ( node.getParameter(1) == 165 ) { // MERG MODULE
             if ( node.getParameter(3) == 29 ) { // CANPAN
             
@@ -50,7 +54,56 @@ public class CbusNodeConstants {
             }
         }
     }
-
+    
+    // reset a Dummy Node to its virgin condition
+    public static void setDummyNodeParameters( CbusDummyNode thisNode, int manu, int type ){
+        
+        if ( manu == 165 ) { // MERG MODULE
+            if ( type == 29 ) { // CANPAN
+                
+                int[] _params = new int[]{ 
+                20, /* 0 num parameters   */
+                165, /* 1 manufacturer ID   */
+                89, /* 2 Minor code version   */
+                29, /* 3 Manufacturer module identifier   */
+                128, /* 4 Number of supported events   */
+                13, /* 5 Number of Event Variables per event   */
+                1, /* 6 Number of Node Variables   */
+                1, /* 7 Major version   */
+                13, /* 8 Node flags   */ 
+                13, /* 9 Processor type   */
+                1, /* 10 Bus type   */
+                0, /* 11 load address, 1/4 bytes   */
+                8, /* 12 load address, 2/4 bytes   */
+                0, /* 13 load address, 3/4 bytes   */
+                0, /* 14 load address, 4/4 bytes   */
+                0, /* 15 CPU manufacturer's id 1/4  */
+                0, /* 16 CPU manufacturer's id 2/4  */
+                0, /* 17 CPU manufacturer's id 3/4  */
+                0, /* 18 CPU manufacturer's id 4/4  */
+                1, /* 19 CPU manufacturer code   */
+                1, /* 20 Beta revision   */
+                };
+                
+                thisNode.setParameters(_params);
+                thisNode.setNVs( new int[]{ 1 , 0 } );
+            }
+            else {
+            
+                // default MERG module in SLiM mode
+                thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+                thisNode.setNVs( new int[]{ 0 } );
+            }
+        }
+        else {
+            thisNode.setParameters( new int[]{ 7,165,0,0,0,0,0,0 } );
+            thisNode.setNVs( new int[]{ 0 } );
+        }
+        
+        setTraits( thisNode );
+        
+    }
+    
     /**
      * Return a string representation of a decoded Module Manufacturer
      * @param man manufacturer int
