@@ -13,5 +13,5 @@ public class DefaultAnalogIOManager extends GenericManager<AnalogIO> implements 
     public DefaultAnalogIOManager(String beanTypeHandled, int xmlOrder) {
         super(beanTypeHandled, xmlOrder);
     }
-    
+
 }
