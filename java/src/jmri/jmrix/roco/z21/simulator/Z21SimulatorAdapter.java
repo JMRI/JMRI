@@ -163,7 +163,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             log.error("Exception opening socket", ex0);
             return; // can't continue from this
         } catch (RuntimeException rte) {
-            // sublcases of RuntimeException may occur at times other than 
+            // subclasses of RuntimeException may occur at times other than 
             // when opening the socket.
             log.error("Exception performing operation on socket", rte);
             return; // can't continue from this
