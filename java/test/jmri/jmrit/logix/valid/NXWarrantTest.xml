@@ -87,7 +87,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="11:25 AM">
+    <memory value="7:05 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -672,7 +672,7 @@
       <throttleCommand time="1000" command="F2" value="true" block="OB10" />
       <throttleCommand time="3000" command="F2" value="false" block="OB10" />
       <throttleCommand time="1000" command="F0" value="false" block="OB10" />
-      <train trainId="" dccAddress="6" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Heuy" />
+      <train trainId="" dccAddress="6" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Huey" />
     </warrant>
   </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
@@ -1577,20 +1577,37 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Apr 04 11:10:42 PDT 2019</date>
+      <date>Thu Apr 04 19:03:48 PDT 2019</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Apr 04 11:10:58 PDT 2019</date>
+      <date>Thu Apr 04 19:03:57 PDT 2019</date>
       <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
-      <filehistory />
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Thu Apr 04 11:10:42 PDT 2019</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Apr 04 11:10:58 PDT 2019</date>
+          <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
+          <filehistory />
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Apr 04 11:25:03 PDT 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Apr 04 11:25:03 PDT 2019</date>
+      <date>Thu Apr 04 19:05:10 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.15.5ish+pete_+2019-04-04T18:10:24Z+Rb2c1aa951f on Thu Apr 04 11:25:03 PDT 2019-->
+  <!--Written by JMRI version 4.15.5ish+pete_+2019-04-05T02:03:41Z+R3eabc83dbe on Thu Apr 04 19:05:10 PDT 2019-->
 </layout-config>
