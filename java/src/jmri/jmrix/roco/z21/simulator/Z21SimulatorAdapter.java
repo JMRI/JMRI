@@ -159,6 +159,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 }
                 log.debug("Client Disconnect");
             }
+        } catch (BindException bex ) {
+            log.error("Exception binding to port {}",COMMUNICATION_UDP_PORT,bex);
+	    return;
         } catch (SocketException ex0 ) {
             log.error("Exception opening socket", ex0);
             return; // can't continue from this
@@ -167,7 +170,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             // when opening the socket.
             log.error("Exception performing operation on socket", rte);
             return; // can't continue from this
-        }
+        } 
     } // end of run.
 
     // generateReply is the heart of the simulation.  It translates an
