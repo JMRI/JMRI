@@ -33,6 +33,12 @@
       (too numerous to list) exist on the Internet as well, such as Mike
       Burgett's web site (since shut down, but may be active in the future again).
       </p>
+      
+      <p>
+      <strong>Important</strong>: A requirement of CTC is that a fully functional
+      ABS (Automatic Block Signaling) signaling system exist already in your system.
+      As you may already know, CTC is just a layer on top of ABS.
+      </p>
 
       <h2>Overview</h2>
       <p>
@@ -84,56 +90,56 @@
       </p>
 
       <ol>
-        <li><a href="#editor">CTCEditor 2</a>
+        <li><a href="#editor">CTCEditor</a>
           <ol>
-            <li>Menus 3
+            <li>Menus
               <ol>
-                <li>File menu 4
+                <li>File menu
                   <ol>
-                    <li><a href="#menuFile">New 5</a></li>
-                    <li><a href="#menuFile">Save 5</a></li>
-                    <li><a href="#menuFile">Exit without saving 5</a></li>
+                    <li><a href="#menuFile">New</a></li>
+                    <li><a href="#menuFile">Save</a></li>
+                    <li><a href="#menuFile">Exit without saving</a></li>
                   </ol>
                 </li>
-                <li>Edit menu 4
+                <li>Edit menu
                   <ol>
-                    <li><a href="#menuEditFind">Find and Replace... 5</a></li>
-                    <li><a href="#menuEditFix">Fix Error(s)... 5</a></li>
+                    <li><a href="#menuEditFind">Find and Replace...</a></li>
+                    <li><a href="#menuEditFix">Fix Error(s)...</a></li>
                   </ol>
                 </li>
-                <li>Configure menu 4
+                <li>Configure menu
                   <ol>
-                    <li><a href="#menuCfgDeb">Debugging 5</a></li>
-                    <li><a href="#menuCfgDef">Defaults 5</a></li>
-                    <li><a href="#menuCfgFlt">Fleeting 5</a></li>
-                    <li><a href="#menuCfgPat">Patterns 5</a></li>
-                    <li><a href="#menuCfgGui">GUI Design 5</a></li>
+                    <li><a href="#menuCfgDeb">Debugging</a></li>
+                    <li><a href="#menuCfgDef">Defaults</a></li>
+                    <li><a href="#menuCfgFlt">Fleeting</a></li>
+                    <li><a href="#menuCfgPat">Patterns</a></li>
+                    <li><a href="#menuCfgGui">GUI Design</a></li>
                   </ol>
                 </li>
               </ol>
             </li>
-            <li><a href="#osList">O.S. Sections List 3</a>
+            <li><a href="#osList">O.S. Sections List</a>
 <!--              <ol>
               </ol>  -->
             </li>
-            <li>Edit Buttons 3
+            <li>Edit Buttons
               <ol>
-                <li><a href="#frmCB">Code button 4</a></li>
-                <li><a href="#frmSIDI">Signal direction indicators 4</a></li>
-                <li><a href="#frmSIDL">Signal direction lever 4</a></li>
-                <li><a href="#frmSWDI">Switch direction indicators 4</a></li>
-                <li><a href="#frmSWDL">Switch direction lever 4</a></li>
-                <li><a href="#frmCO">Call On 4</a></li>
-                <li><a href="#frmTRL">Traffic locking 4</a></li>
-                <li><a href="#frmTol">Turnout locking 4</a></li>
-                <li><a href="#frmIL">Indication locking 4</a></li>
+                <li><a href="#frmCB">Code button</a></li>
+                <li><a href="#frmSIDI">Signal direction indicators</a></li>
+                <li><a href="#frmSIDL">Signal direction lever</a></li>
+                <li><a href="#frmSWDI">Switch direction indicators</a></li>
+                <li><a href="#frmSWDL">Switch direction lever</a></li>
+                <li><a href="#frmCO">Call On</a></li>
+                <li><a href="#frmTRL">Traffic locking</a></li>
+                <li><a href="#frmTol">Turnout locking</a></li>
+                <li><a href="#frmIL">Indication locking</a></li>
               </ol>
             </li>
           </ol>
         </li>
-        <li><a href="#ctcFiles">Files 2</a></li>
-        <li><a href="#ctcMain">CTCMain 2</a></li>
-        <li><a href="#ctcDefinitions">Definitions 2</a></li>
+        <li><a href="#ctcFiles">Files</a></li>
+        <li><a href="#ctcMain">CTCMain</a></li>
+        <li><a href="#ctcDefinitions">Definitions</a></li>
       </ol>
 
     <a name="editor" id="editor"></a>
@@ -487,8 +493,28 @@ They do not have to be in ascending sequence, their order has no impact on the p
 prototype practice that they are in ascending sequence.  You may re-order them on the main screen using up/down buttons in case
 you entered them out of order, which is described in another section.
 
-      <p>=== Needs discussion JMRI validation.  A new system cannot have validation until the debug and reload
-      sensors exist in the panel xml file.  The basic process is set the configuration options, do the file export process, load
+<h4>"JMRI Validation" and "Check everything with JMRI" (grayed out at start)</h4>
+<p>
+<strong>Prerequisite</strong>: A new system displays "JMRI Validation: Disabled", and also
+the button "Check everything with JMRI" is grayed out (disabled).  This is normal for a new system.
+</p>
+<p>
+Once both of the sensors defined in Configure/Debugging are contained in the panel file
+and that panel file is loaded, then "JMRI Validation: Enabled" will be displayed and the
+button "Check everything with JMRI" is available for pressing.
+</p>
+<h5>The purpose of pressing "Check everything with JMRI":</h5>
+<p>
+Pressing this will then present you with a dialog asking if you want to see all of the errors listed on a separate
+screen.  It will then go thru <strong>every</strong> JMRI object that is backed by a real device (sensor, signals, etc) defined
+in the CTC system and verify that a definition exists for it within JMRI already.
+This is just a sanity check, and normally you should not encounter any errors.  If you
+do, then define the missing object(s) in JMRI.
+</p>
+
+
+
+      <p>===The basic process is set the configuration options, do the file export process, load
       sensors, save JMRI and restart with the updated panel xml file.  Now setting up OS sections and related Edit buttons
       can be validated. ===
       </p>
@@ -897,16 +923,25 @@ you entered them out of order, which is described in another section.
     <h2>Files</h2>
     <p>
     === Discuss file storage located at user files location, ctc directory. ===
+    Say that it's in the user files location .  See "Help/Locations..."
+    That within Help/Locations you have a "ctc" directory which is under "user files location"
+    The 3 files are there.
     </p>
 
     <p>
     === Describe the 3 Editor files, especially CTCSystem.xml ===
+    DON'T DESCRIBE 3rd file of virtual signals, its deprecated.
     </p>
 
     <p>
     === Describe the CTC integration of sensors and a populated PE panel.  Warn
     about the "GUI Generated before" feature and its side effects.  Namely, a different panel
     object. ===
+    GUi file (don't load more than once), sensors(no danger here, can merge at will). 
+    
+    Get your O.S. section list DONE to the BEST of your knowledge, then load GUIObjects.xml panel
+    in, and review the results.  If you are not happy, then DELETE the panel, save the panel
+    file, and re-iterate the process (i.e. CTCEditor, write files, etc.).
     </p>
 
     <p>
@@ -921,11 +956,21 @@ you entered them out of order, which is described in another section.
     === Needs to cover starting CTCMain from either the Tools menu or using
     a startup action, which can be either real time or delayed by adding a
     button to the PP main panel. ===
+    (See my 3 captured images in xfer!)
+    REMEMBER: Before you start CTC runtime, you NEED to load the panel.
+    IDEALLY: Before you start CTC Editor, you ALSO load the panel to get
+    reference checking of your JMRI objects (turnouts, sensors, etc.).
+    Also, explain how to put up the "two buttons" on the main JMRI screen
+    for convienence during development.
     </p>
     <p>
     === Include the three global icons:  Debug, Reload and Fleeting. Mention
     using the system console to look for errors, especially during CTCMain
     startup.===
+    Explain purpose of buttons, and whether or not they want them at all?
+    Reload and debug are a convience and can be removed once development is complete.
+    Fleeting is a concept within "normal" CTC, and may or not be useful.  Why?
+    Most MODEL (not prototype) dispatchers don't use it even if available.
     </p>
 
     <a name="ctcDefinitions" id="ctcDefinitions"></a>
