@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-05-->
 
 <html lang="fr">
 <head>
@@ -30,118 +30,100 @@
     <div id="mainContent">
       <h1>Le Tableau Capteur</h1>
 
-      <p>Cette table contient une liste des capteurs qui existent
+      <p> Le tableau des capteurs contient une liste des capteurs existants 
       pour ce panneau.</p>
 
-      <h2>Colonnes Tableau Capteur</h2>
-
+      <h2>Colonnes du tableau de capteurs</h2>
+      (Vous pouvez modifier l'ordre des colonnes en faisant glisser leurs 
+      titres et trier les lignes en cliquant sur l'un des triangles de 
+      tri en regard d'une colonne).
       <dl>
         <dt>Nom Utilisateur</dt>
 
-        <dd>Vous pouvez directement saisir ou modifier le champ
-        "Nom Utilisateur" pour un capteur existant.</dd>
+	<dd>Vous pouvez directement saisir ou modifier le "Nom Utilisateur" 
+	d'un capteur existant (double-cliquez dans la cellule).</dd>
 
-        <dt>&eacute;tat</dt>
+        <dt>&#201;tat</dt>
 
-        <dd>Appuyer sur le bouton "&eacute;tat" va changer
-        l'&eacute;tat d'un capteur existant.</dd>
+        <dd>Appuyez sur le bouton/l'ic&#244;ne "Etat" pour changer l'&#233;tat d'un 
+        capteur existant. <img src = "images/SensorTableGraphic.png" 
+        height = "187" width = "307" align = "right" alt = "Colonne 
+        graphique d'&#233;tat du capteur"> Choisissez entre l'affichage textuel 
+        et graphique de l'&#233;tat du capteur dans <a href = 
+        "../../../ apps/TabbedPreferences.shtml # Display"> Pr&#233;f&#233;rences d'affichage</a>.
+       </dd>
 
         <dt>Supprimer</dt>
 
         <dd>
-          Appuyer le bouton "Supprimer" supprimera le capteur du
-          tableau.
+          Appuyez sur le bouton "Supprimer" pour retirer le capteur du tableau.
 
-          <p>Notez que cela ne supprime pas le capteur de tous les
-          fichiers que vous avez sauvegard&eacute;s qui le
-          contiennent Si vous chargez un de ces fichiers,
-          peut-&ecirc;tre lorsque vous red&eacute;marrez le
-          programme, le capteur va r&eacute;appara&icirc;tre. Vous
-          devez utiliser l'option "Stocker dans un fichier" dans le
-          menu"Fichier" pour enregistrer de nouvelles versions de
-          tous les fichiers qui contiennent ce capteur.</p>
-        </dd>
+          <p>Notez que cela ne supprime pas le capteur des fichiers que 
+          vous avez enregistr&#233;s qui le contiennent. Si vous chargez l'un 
+          de ces fichiers, le capteur r&#233;appara&#238;tra peut-&#234;tre au red&#233;marrage 
+          du programme. Utilisez l'une des options "Stocker dans un fichier" 
+          du menu "Fichier" pour enregistrer les nouvelles versions de tout 
+          fichier contenant ce capteur.</P>
+       </dd>
 
-        <dt>Invers&eacute;</dt>
+        <dt>Invers&#233;</dt>
 
-        <dd>Quand elle est coch&eacute;e, la commande du capteur et
-        le statut sont invers&eacute;. Par exemple, un capteur
-        invers&eacute; signifie que lorsque le r&eacute;seau envoie
-        une commande "actif" du capteur, il devient "inactif" pour
-        JMRI.</dd>
+        <dd>Lorsque cette case est coch&#233;e, la commande et l'&#233;tat du 
+        capteur sont invers&#233;s. Par exemple, un capteur invers&#233; signifie 
+        que lorsque le r&#233;seau envoie une commande de capteur "actif", 
+        e capteur devient "inactif" pour JMRI.</Dd>
 
-        <dt>Utilisez Retard Global</dt>
+        <dt>Utiliser le D&#233;lai Global</dt>
 
         <dd>
-          Quand elle est coch&eacute;e, le capteur va utiliser les
-          valeurs sp&eacute;cifi&eacute;es dans le syst&egrave;me
-          de "AntiRebond&brvbar; d&eacute;faut" option de menu pour
-          toute la dur&eacute;e o&ugrave; le syst&egrave;me attend
-          avant d'enregistre le changement d'&eacute;tat. <a href=
-          "#Debounce"></a>
+          Lorsque cette case est coch&#233;e, le capteur utilisera les valeurs 
+          syst&#232;me sp&#233;cifi&#233;es dans l'option de menu "Options anti-rebond ... ..." 
+          pendant la dur&#233;e que le syst&#232;me attend avant d'enregistrer le 
+          changement d'&#233;tat.
 
-          <p>Voir le Capteur AntiRebond ci-dessous</p>
-        </dd>
+          <p><a href="#Debounce"> Voir Capteur Anti-Rebond ci-dessous</a></p>
+       </dd>
 
-        <dt>Retard actif/Retard inactif</dt>
+        <dt>D&#233;lai Actif/D&#233;lai InActif</dt>
 
         <dd>
-          Sp&eacute;cifiez la dur&eacute;e du temps en
-          millisecondes pendant lequel le syst&egrave;me attend
-          avant l'enregistrement du changement d'&eacute;tat d'un
-          capteur. <a href="#Debounce"></a>
+          Sp&#233;cifiez la dur&#233;e en millisecondes pendant laquelle le syst&#232;me 
+          attend avant d'enregistrer le changement d'&#233;tat d'un Capteur.
 
-          <p>Voir Capteur AntiRebond ci-dessous</p>
-        </dd>
-      </dl>
+          <p><a href="#Debounce"> Voir Capteur Anti-Rebond ci-dessous</a></p>
+       </dd>
+     </dl>
 
-      <h2>Commandes Tableau Capteur</h2>Il y a aussi un bouton au
-      bas de la Table Capteur
+      <h2>Commandes du Tableau de Capteurs</h2> Un bouton se trouve au 
+      bas du Tableau de Capteurs:
 
       <dl>
-        <dt>Ajouter</dt>
+        <dt>Ajouter ...</dt>
 
-        <dd>Appuyez sur ce bouton pour ajouter un nouveau capteur.
-        Pour plus d'informations, voir <a href=
-        "SensorAddEdit.shtml">Ajouter/&eacute;diter
-        Capteurs</a>.</dd>
+        <dd>Appuyez sur ce bouton pour ajouter un nouveau capteur. Pour 
+        plus d'informations, voir <a href= "SensorAddEdit.shtml"> 
+			Ajout/Modification de capteurs</a>.</Dd></dl>
 
-        <dt>&lt;/ DL&gt;</dt>
+      <h2><a name="Debounce" id="Debounce"></a>Anti-Rebond Capteur</h2>
 
-        <dd>
-          <h2><a name="Debounce" id="Debounce"></a> Capteur
-          AntiRebond</h2>
+      <p>La fonction Anti-Rebond Capteur est con&#231;ue pour emp&#234;cher que les 
+      faux d&#233;clenchements d'un capteur soit transmis au syst&#232;me et
+      d&#233;clenche d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
+      Ces faux d&#233;clenchements pourraient &#234;tre dus &#224; un morceau de voie 
+      encrass&#233; ou &#224; des interf&#233;rences &#233;lectriques.</P>
 
-          <p>L'installation d'un Capteur Antirebond est l&agrave;
-          pour aider &agrave; pr&eacute;venir les faux
-          d&eacute;clenchements d'un capteur et le
-          d&eacute;clenchement d'autres &eacute;v&eacute;nements
-          dans le syst&egrave;me.<br>
-          Ces faux d&eacute;clenchements pourrait &ecirc;tre
-          d&ugrave; &agrave; un zone de la voie sale ou des
-          interf&eacute;rences &eacute;lectriques.</p>
-
-          <p>L'installation vous permet d'assigner une dur&eacute;e
-          en millisecondes avant que le changement soit
-          enregistr&eacute; avec le reste du syst&egrave;me. Si
-          apr&egrave;s cette p&eacute;riode l'&eacute;tat n'a pas
-          chang&eacute; alors l'&eacute;tat du capteur sera
-          transmis au reste du syst&egrave;me.<br>
-          Toutefois, si l'&eacute;tat des capteurs est
-          diff&eacute;rent apr&egrave;s que la temporisation soit
-          termin&eacute;e, alors le syst&egrave;me va
-          red&eacute;marrer le processus, cette fois apr&egrave;s
-          que le minuteur ait termin&eacute;, il v&eacute;rifiera
-          si l'&eacute;tat du capteur est dans le m&ecirc;me
-          &eacute;tat qu'il &eacute;tait avant qu'il ait
-          red&eacute;marr&eacute; le processus. Si ce n'est pas le
-          cas , le processus est relanc&eacute; &agrave; nouveau
-          jusqu'&agrave; ce que l'&eacute;tat soit le m&ecirc;me
-          avant et apr&egrave;s que le chronom&egrave;tre ait
-          &eacute;t&eacute; lanc&eacute;.</p>
-        </dd><!--#include virtual="/Footer" -->
-      </dl>
-    </div>
-  </div>
+      <p>Debounce vous permet d'attribuer une p&#233;riode en millisecondes 
+      avant que la modification ne soit enregistr&#233;e avec le reste du 
+      syst&#232;me. Si, au cours de cette p&#233;riode, l'&#233;tat n'a pas chang&#233;, 
+      l'&#233;tat du capteur sera transmis au reste du syst&#232;me. <br>
+      Toutefois, si l'&#233;tat des capteurs est diff&#233;rent &#224; la fin de la 
+      temporisation, le syst&#232;me red&#233;marre le processus. Cette fois, une 
+      fois que le chronom&#232;tre est termin&#233;, il v&#233;rifie si le capteur est 
+      dans le m&#234;me &#233;tat qu'il &#233;tait avant le red&#233;marrage du processus. 
+      Sinon, le processus est red&#233;marr&#233; jusqu'&#224; ce que l'&#233;tat soit le 
+      m&#234;me avant et apr&#232;s l'ex&#233;cution du temporisateur.
+       <!-- # include virtual = "/Footer"--></p>
+   </div> <!-- closes #mainContent -->
+ </div> <!-- closes #mBody -->
 </body>
 </html>
