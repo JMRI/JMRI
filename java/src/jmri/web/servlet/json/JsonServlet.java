@@ -44,38 +44,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide JSON formatted responses for requests to requests for information
+ * Provide JSON formatted responses to requests for information
  * from the JMRI Web Server.
  * <p>
- * This server supports long polling in some GET requests, but also provides a
- * WebSocket to provide a more extensive control and monitoring capability.
- * <p>
- * This server responds to HTTP requests for objects in following manner:
- * <table>
- * <caption>HTTP methods handled by this servlet.</caption>
- * <tr>
- * <th>Method</th>
- * <th>List</th>
- * <th>Object</th>
- * </tr>
- * <tr>
- * <th>GET</th>
- * <td>Returns the list</td>
- * <td>Returns the object <em>if it already exists</em></td>
- * </tr>
- * <tr>
- * <th>POST</th>
- * <td>Invalid</td>
- * <td>Modifies the object <em>if it already exists</em></td>
- * </tr>
- * <tr>
- * <th>PUT</th>
- * <td>Invalid</td>
- * <td>Modifies the object, creating it if required</td>
- * </tr>
- * </table>
+ * See {@link jmri.server.json} for details on how this Servlet handles
+ * JSON requests.
  *
- * @author Randall Wood Copyright (C) 2012, 2013, 2016
+ * @author Randall Wood Copyright (C) 2012, 2013, 2016, 2019
  */
 @WebServlet(name = "JsonServlet",
         urlPatterns = {"/json"})
