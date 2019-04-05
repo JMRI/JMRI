@@ -2,9 +2,7 @@ package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.List;
 import jmri.ConfigureManager;
-import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -17,10 +15,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
 
 
 /**
@@ -400,16 +395,12 @@ public class LinkedWarrantTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
         JUnitUtil.initWarrantManager();
         JUnitUtil.initShutDownManager();
     }
@@ -417,6 +408,9 @@ public class LinkedWarrantTest {
     @After
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
+        _OBlockMgr = null;
+        _sensorMgr = null;
+        _warrantMgr = null;
     }
 
 }

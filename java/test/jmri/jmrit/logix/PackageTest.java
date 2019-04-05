@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.logix.configurexml.PackageTest.class,
         NXFrameTest.class, //formerly NXWarrantTest        
         LearnWarrantTest.class,
-        LinkedWarrantTest.class,
+//        LinkedWarrantTest.class,  // copy tests to WarrantTableFrameTest
         PortalManagerTest.class,
         ThrottleSettingTest.class,
         WarrantManagerTest.class,
