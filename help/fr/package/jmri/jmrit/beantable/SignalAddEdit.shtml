@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-12-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-05-->
 
 <html lang="fr">
 <head>
@@ -29,348 +29,389 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Ajout/Edition des T&ecirc;tes de signal</h1><a href=
-      "../../../../images/SigAdd.gif"><img src=
-      "../../../../images/SigAdd.gif" align="right" width="181"
-      height="218" hspace="0" vspace="0" alt=
-      "chiffre simple panneau de signaux logiques"></a>
+      <h1>Ajout/Edition des Signaux</h1>
 
-      <p>JMRI a besoin de savoir comment une t&ecirc;te de signal
-      sur le r&eacute;seau est connect&eacute;e au mat&eacute;riel
-      &eacute;lectrique. Une fois qu'il le sait , il peut envoyer
-      les bonnes commandes pour commander l'apparence de la
-      t&ecirc;te de signal.</p>
+      <p>Le panneau "&#201;dition Signal" permet de visualiser et de modifier 
+      les informations facultatives des Signaux existants. Utilisez le 
+      bouton "Modifier" de la Table des Signaux pour ouvrir une bo&#238;te de 
+      dialogue pour ce Signal. Un seul Signal peut &#234;tre modifi&#233;e &#224; la fois. 
+      Le type de Signal et le Syst&#232;me de Signalisation ne peuvent plus 
+      &#234;tre modifi&#233; s une fois qu'ils ont &#233;t&#233; cr&#233;&#233;s. Une fois les 
+      modifications apport&#233;es dans la bo&#238;te de dialogue, cliquez sur le 
+      bouton "Mettre &#224; jour" en bas du panneau pour modifier les 
+      informations du Signal. Cliquez sur "Annuler" pour quitter sans 
+      apporter de modifications. Fermer le panneau Modifier Signal revient 
+      &#224; cliquer sur "Annuler". </P>
 
-      <p>Le dialogue "Ajouter T&ecirc;te de signal" vous donne un
-      certain nombre de choix diff&eacute;rents pour savoir comment
-      la t&ecirc;te de signal est connect&eacute;e:</p>
+       <p>La bo&#238;te de dialogue "Ajouter un Nouveau Signal" s'ouvre en 
+       cliquant sur le bouton "Ajouter ..." en bas du tableau des Signaux. 
+       Elle vous permet de choisir un type de connexion de Signaux dans 
+       la liste suivante. </p>
+
+       <h2> Types de Connexion de Signal Disponibles</h2>
+
 
       <dl>
-        <dt>Sortie triple</dt>
+		 <dt>Virtuel</dt>
+
+        <dd>Ce type ne se connecte pas du tout au r&#233;seau. Utilisez-le 
+        lorsque vous souhaitez par exemple afficher un signal sur un 
+        panneau, mais n'en avez pas un r&#233;el sur la r&#233;seau.</dd>
+
+        <a href="images/SignalHeadAddAcela.png"> 
+			<img src = "images/SignalHeadAddAcela.png" align = "right"
+			 height = "109" width = "118"></a> <dt>Acela</dt >
 
         <dd>
-          Ce type de contr&ocirc;le d'une t&ecirc;te de signal via
-          trois connexions &eacute;lectriques. On va &agrave; une
-          lampe/LED verte, &agrave; une jaune, et le
-          troisi&egrave;me &agrave; une rouge.
+          Ce type contr&#244;le les signaux reli&#233;s &#224; un <a href= 
+          "http://www.cti-electronics.com"> CTI Electronics</a> 
+          <a href = "http://www.cti-electronics.com/hardware .htm "> 
+			  Module Acela SignalMan</a>.
 
-          <p>Ces connexions sont command&eacute;es via le
-          l'aiguillage logique JMRI et donc appara&icirc;tre dans
-          la table Aiguillage. Elles ne sont pas vraiment
-          li&eacute;es &agrave; la commutation des moteurs,
-          m&ecirc;me si, elles sont simplement des sorties
-          &eacute;lectriques.</p>
+          <p>Dans le champ de texte, entrez un Nom Syst&#232;me pour un signal 
+          Acela, par ex. AH01. Pour plus d'informations sur le mat&#233;riel 
+          Acela, consultez la <a href= "../../../../html/hardware/acela/"> 
+		  page d'aide sur le mat&#233;riel Acela</a>.</P>
+       </dd>
 
-          <p>Pour chaque connexion, saisissez l'aiguillage JMRI
-          pour le raccordement &eacute;lectrique sur le
-          r&eacute;seau, soit comme un nombre (1,2,3) ou comme un
-          Nom JMRI (nom syst&egrave;me, comme LT1, CT2 ou un nom
-          utilisateur d&eacute;j&agrave; d&eacute;fini). Ils n'ont
-          pas besoin d'&ecirc;tre cons&eacute;cutives ou dans un
-          ordre particulier.</p>
+        <dt>D&#233;codeur de Signal DCC</dt>
 
-          <p>Si vous avez besoin de d&eacute;boguer une de ces
-          T&ecirc;tes de signal, commencez par v&eacute;rifier si
-          les connexions Aiguillage travaillent. Vous pouvez le
-          faire en allant au <a href="TurnoutTable.shtml">Tableau
-          Aiguillage</a> et changer le r&eacute;glage de la sortie.
-          R&eacute;glage par exemple de l'aiguillage sur la
-          connexion "vert", D&eacute;vi&eacute; devrait allumer la
-          lampe verte.</p>
-        </dd>
+        <dd>
+          Ce type contr&#244;le les Signaux attach&#233;s &#224; un d&#233;codeur qui utilise 
+          les paquets de signaux DCC d&#233;finis par le <a href= 
+          "http://www.nmra.org/standards/DCC/DCCHome.html"> groupe de 
+          travail NMRA DCC</a>. pour le contr&#244;le. (Vous pourrez peut-&#234;tre 
+          trouver des informations sur ces paquets DCC &#224; la page 9 &#224; 
+          l'adresse <a href= 
+          "http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"></a>
+          Il est difficile de se connecter au site Web de NMRA  Si cela ne 
+          fonctionne pas, recherchez "Format de Paquet de Commande de 
+          D&#233;codeur d'Accessoire &#201;tendu NMRA 9.2.1"). Il s'agit d'un
+          protocole sp&#233;cial d&#233;fini pour piloter les Signaux,et il diff&#232;re 
+          de la mani&#232;re dont les "d&#233;codeurs d'accessoires" (par exemple, 
+          les sorties d'aiguillage) sont contr&#244;l&#233;s.
+
+          <p>Entrez l'adresse DCC sous forme de nombre. La case &#224; cocher 
+          Adresse de d&#233;calage utilise une autre interpr&#233;tation du sch&#233;ma 
+          d'adressage &#233;ventuellement utilis&#233;.<br>
+          <! - du groupe d'utilisateurs JMRI le 04/05/2014 gr&#226;ce &#224; Suzie Tall et Ken Cameron ->
+          Chaque num&#233;ro possible du Signal se voit attribuer un num&#233;ro 
+          diff&#233;rent; &#224; partir de l&#224;, vous pouvez attribuer des num&#233;ros 
+          diff&#233;rents pour chaque aspect en fonction du mat&#233;riel utilis&#233;.<br>
+          Le <a href= 
+          "http://www.teamdigital1.com/prod_catalogue/shd2_product/shd2.html"> 
+          D&#233;codeur de Signal Team Digital SHD2</a> est un d&#233;codeur de 
+          signal utilisant une adresse diff&#233;rente pour chaque signal. 
+          Un m&#226;t de signaux connect&#233; au SHD2 doit &#234;tre configur&#233; comme 
+          un ou plusieurs m&#226;ts contr&#244;l&#233;s par Signal Head utilisant le 
+          type de connexion de signal DCC. Les instructions sont 
+          disponibles sur le site Web de Team Digital sous l'<a href= 
+          "http://www.teamdigital1.com/applications/shd2_apps/shd2_jmri_application.html">
+          Applications &gt; Menu SHD2</a>.<br>
+          Remarque: le Signalist SC1 peut &#233;galement &#234;tre configur&#233; en 
+          tant que signalisation individuelles (projecteur &#224; LED bicolores, 
+          tricolores ou RVB ou multi-lampes &#224; LED individuelles), mais 
+          son utilisation est beaucoup plus simple lorsqu'elle est 
+          configur&#233;e en tant que m&#226;t de signal complet avec tous les 
+          signaux sur une adresse DCC unique &#224; l'aide du <a href=
+          "signalmasttable.shtml#dccsmd"> pilote DCC Signal Mast</a>. 
+          Dans ce cas, vous n'avez pas besoin d'ajouter de signal 
+          pour votre signalisation. La principale diff&#233;rence entre un signal et 
+          un m&#226;t de signal est le nombre d'&#233;tats diff&#233; rents que chacun 
+          pourrait avoir. Un signal a seulement (jusqu'&#224;) 8 entr&#233;es 
+          d'apparence, mais un m&#226;t de signal peut avoir jusqu'&#224; 32 &#233;tats 
+          possibles (0 &#224; 31), appel&#233;s Aspects dans ce cas. La commande 
+          qui sort est la m&#234;me mais le nombre de valeurs <em> possibles</em> diff&#232;re.</P>
+       </dd>
+
+        <dd><a href="images/SignalHeadAdd1.png"> 
+			<img src = "images/SignalHeadAdd1.png" align = "right" 
+			width = "127" height = "200" hspace = "0" vspace = "0 "
+			alt =" Figure 1 du panneau Add Signal Head "></a></dd>
+
+        <dt>Sortie unique 
+		  
+		  <dd>
+		  Ce type de connexion commande un Signal avec une sortie. Une 
+		  connexion Signal qui utilise une seule ligne de sortie 
+		  pour indiquer jusqu'&#224; 2 apparences plus le clignotant. Vous 
+		  pouvez s&#233;lectionner 2 apparences dans la liste suivante: &#201;teint, 
+		  Rouge, Jaune, Vert et Lunaire. Le codage de sortie est tel 
+		  qu'un &#233;tat d'aiguillage <em>D&#233;vi&#233;</em> contr&#244;le l'apparence 
+		  et <em> Droit</em> r&#233;gule l'autre. Le clignotement permet une 
+		  troisi&#232;me apparence qui clignotera entre les deux apparences 
+		  configur&#233;es. La connexion peut &#234;tre &#233;tablie avec une seule 
+		  lampe/LED pour afficher un seul aspect. Une autre m&#233;thode 
+		  consiste &#224; connecter une paire de voyants &#224; la sortie unique 
+		  c&#226;bl&#233;e, de sorte que lorsque la sortie du d&#233;codeur est activ&#233;e, 
+		  vous obtenez une couleur et lorsque la sortie est d&#233;sactiv&#233;e, 
+		  vous obtenez l'autre. Ce type pourrait &#233;galement &#234;tre utilis&#233; 
+		  pour contr&#244;ler des signaux &#224; commande m&#233;canique qui n'ont que 
+		  deux apparences et ont donc toujours une apparence. Il est 
+		  possible de gagner une troisi&#232;me apparence "clignotante". Si 
+		  vous avez s&#233;lectionn&#233; &#201;teint et une couleur, le r&#233;sultat final 
+		  est une option de couleur Flash suppl&#233;mentaire. Si deux couleurs 
+		  ont &#233;t&#233  s&#233;lectionn&#233;es, une option Flash vous est propos&#233;e, mais 
+		  les couleurs clignotent alternativement. Ces connexions sont 
+		  contr&#244;l&#233;es via la logique d'aiguillage JMRI et apparaissent 
+		  donc dans le Tableau Aiguillage. Ils ne sont pas connect&#233;s pour 
+		  commuter des moteurs, cependant, ce sont juste des sorties &#233;lectriques.
+
+          <p>Pour chaque connexion, entrez l'Aiguillage JMRI appropri&#233; 
+          pour la connexion &#233;lectrique sur le r&#233;seau, soit dans la liste 
+          d&#233;roulante des Aiguillages d&#233;j&#224; d&#233;finis, soit en cr&#233;ant un 
+          nouvel Aiguillage pour une connexion particuli&#232;re.</p>
+
+          <p>S&#233;lectionnez l'une des apparences r&#233;pertori&#233;es pour les deux:<br>
+          Apparence &#224; l'&#233;tat D&#233;vi&#233;  - Apparence affich&#233;e lorsque la 
+          connexion est &#224; l'&#233;tat D&#233;vi&#233;.<br>
+          Apparence &#224; l'&#233;tat Droit: apparence affich&#233;e lorsque la 
+          connexion est &#224; l'&#233;tat Droit.</P>
+       </dd>
+
+        <dd><a href="images/SignalHeadAdd2.png"> <img src =
+        "images/SignalHeadAdd2.png" align = "right" width = "130" height = "169"
+        hspace = "0" vspace = "0" alt =
+        "Ajouter un signal &#224;  la figure 2"></a></dd>
 
         <dt>Double sortie</dt>
 
         <dd>
-          Ce type commande une t&ecirc;te de signal via deux
-          connexions &eacute;lectriques. On va &agrave; une
-          lampe/LED verte, et l'autre &agrave; un rouge. le jaune
-          est cr&eacute;&eacute; en les allumant &agrave; la fois
-          en m&ecirc;me temps.
+          Ce type commande un signal via deux connexions &#233;lectriques. 
+          L'une va &#224; un voyant/led Vert, et l'autre &#224; un rouge. Le jaune 
+          est cr&#233;&#233; en les allumant tous les deux en m&#234;me temps.
 
-          <p>Ces connexions sont contr&ocirc;l&eacute;es via
-          l'aiguillage logique JMRI , etvont donc appara&icirc;tre
-          dans le tableau Aiguillage. Elles ne sont pas vraiment
-          li&eacute;es &agrave; la commutation des moteurs,
-          m&ecirc;me si, elles sont simplement des sorties
-          &eacute;lectriques.</p>
+          <p>Pour chaque connexion, entrez l'aiguillage JMRI appropri&#233; 
+          pour la connexion &#233;lectrique sur le r&#233;seau, soit dans la liste 
+          d&#233;roulante des Aiguillages d&#233;j&#224; d&#233;finis, soit en cr&#233;ant un 
+          nouveal Aiguillage pour une connexion particuli&#232;re. Ils ne 
+          doivent pas n&#233;cessairement &#234;tre cons&#233;cutifs ou dans un ordre 
+          particulier.</P>
+       </dd>
 
-          <p>Pour chaque connexion, saisissez l'aiguillage JMRI
-          pour le raccordement &eacute;lectrique sur le
-          r&eacute;seau, soit comme un nombre (1,2) ou comme un Nom
-          JMRI (nom syst&egrave;me, comme LT1, CT2 ou un nom
-          utilisateur d&eacute;j&agrave; d&eacute;fini). Ils n'ont
-          pas besoin d'&ecirc;tre cons&eacute;cutives ou dans un
-          ordre particulier.</p>
+        <dt>Double t&#234;te de sortie</dt>
+
+        <dd>Une connexion Signal qui utilise seulement deux lignes de 
+        sortie pour indiquer 4 aspects de signal.<br> G&#233;n&#233;ralement, 
+        ces aspects sont les suivants: Libre, Approche, Arr&#234;t et &#201;teint. 
+        Le codage de sortie est tel qu'un aiguillage D&#233;vi&#233;e commande l'arr&#234;t 
+        et l'autre D&#233;vi&#233; commande Libre. Les deux sorties D&#233;vi&#233;e contr&#244;lent 
+        l'approche et les deux Droits sont &#201;teints. Chaque changement 
+        d'aspect n&#233;cessite l'envoi de deux commandes d'aiguillage.</Dd>
+
+                <dt>Sortie triple</dt>
+
+        <dd>
+         Ce type de contr&#244;le d'un signal via trois connexions &#233;lectriques. 
+         Une va &#224; une lampe/LED verte, une autre &#224; une jaune, et la
+         troisi&#232;me &#224; une rouge.</br>
+		 Ces connexions sont command&#233;es via la logique d'aiguillage
+         JMRI et donc appara&#238;tre dans le Tableau Aiguillage. Elles ne 
+         sont pas vraiment li&#233;es &#224; la commutation des moteurs, m&#234;me si, 
+         elles sont simplement des sorties &#233;lectriques.
+
+         <p>Pour chaque connexion, entrez le branchement JMRI appropri&#233; 
+         pour la connexion &#233;lectrique sur le r&#233;seau, soit dans la liste 
+         d&#233;roulante des aiguillages d&#233;j&#224; d&#233;finis, soit en cr&#233;ant un 
+         nouvel aiguillage pour une connexion particuli&#232;re. Ils n'ont 
+         pas besoin d'&#234;tre cons&#233;cutifs ni dans un ordre particulier.<br>
+         Si vous avez besoin de d&#233;boguer l'un de ces signaux, commencez 
+         par v&#233;rifier si les connexions Aiguillage fonctionnent. </P>
+		</dd>
+
+        <dt>Triple Sortie RVB</dt>
+
+        <dd>
+          Ce type commande un Signal via trois sorties pour indiquer 5 
+          aspects de signal. G&#233;n&#233;ralement, ces aspects sont Libre, Approche, 
+          Arr&#234;t, Restriction et &#201;teint.<br>
+          Le codage de sortie est tel qu'un Aiguillage D&#233;vi&#233; contr&#244;le 
+          l'Arr&#234;t et un autre D&#233;vi&#233;  (On) contr&#244;le Libre. Deux de ces 
+          sorties D&#233;vi&#233;s (On) contr&#244;lent l'Approche, les trois D&#233;vi&#233;s 
+          contr&#244;lent &#201;teint. Chaque changement d'aspect n&#233;cessite l'envoi 
+          de trois commandes.<br>
+          La premi&#232;re connexion alimente une lampe/LED verte, la seconde 
+          une lampe rouge et la troisi&#232; me une lampe bleue. 
+          Ils sont contr&#244;l&#233;s via la logique d'Aiguillage JMRI et apparaissent 
+          donc dans le Tableau Aiguillage. Ils ne sont pas li&#233;es &#224; la 
+          commutation des moteurs, cependant, ce sont juste des sorties 
+          &#233;lectriques.
+
+          <p>Pour chaque connexion, entrez l'Aiguillage JMRI appropri&#233; 
+          pour la connexion &#233;lectrique sur le r&#233;seau, soit dans la liste 
+          d&#233;roulante des Aiguillages d&#233;j&#224; d&#233;finis, soit en cr&#233;ant un 
+          nouvel Aiguillage pour une connexion particuli&#232;re. Ils ne 
+          doivent pas n&#233;cessairement &#234;tre cons&#233;cutifs ou dans un ordre 
+          particulier. </P>
         </dd>
-
+          
         <dt>sortie Quadruple</dt>
 
         <dd>
-          Ce type commande d'une t&ecirc;te de signal via quatre
-          connexions &eacute;lectriques. On va &agrave; une lampe
-          /LED verte, &agrave; une jaune, &agrave; une rouge, et le
-          quatri&egrave;me &agrave; une "lunaire" (blanc).
+          Ce type commande d'un signal via quatre
+          connexions &#233;lectriques. On va &#224; une lampe
+          /LED verte, &#224; une jaune, &#224; une rouge, et le
+          quatri&#232;me &#224; une "lunaire" (blanc).<br>
+		   Ces connexions sont command&#233;es via la logique aiguillage
+           JMRI, et vont donc appara&#238;tre dans le Tableau Aiguillage. Elles 
+           ne sont pas vraiment li&#233;es &#224; la commutation des moteurs, m&#234;me 
+           si, elles sont simplement des sorties &#233;lectriques.</p>
 
-          <p>Ces connexions sont command&eacute;es via l'aiguillage
-          logique JMRI, et donc appara&icirc;tre dans le Tableau
-          Aiguillage. Elles ne sont pas vraiment li&eacute;es
-          &agrave; la commutation des moteurs, m&ecirc;me si, elles
-          sont simplement des sorties &eacute;lectriques.</p>
+          <p>Pour chaque connexion, entrez l'adresse de l'Aiguillage 
+          JMRI appropri&#233;e pour la connexion &#233;lectrique sur le r&#233;seau, 
+          soit dans la liste d&#233;roulante des aiguillages d&#233;j&#224; d&#233;finis, 
+          soit en cr&#233;ant un nouvel aiguillage pour une connexion 
+          particuli&#232;re. Ils ne doivent pas n&#233;cessairement &#234;tre cons&#233;cutifs 
+          ou dans un ordre particulier. </P>
 
-          <p>Pour chaque connexion, saisissez l'aiguillage JMRI
-          pour le raccordement &eacute;lectrique sur le
-          r&eacute;seau soit comme un nombre (1,2,3) ou comme un
-          Nom JMRI (nom syst&egrave;me, comme LT1, CT2 ou un nom
-          utilisateur d&eacute;j&agrave; d&eacute;fini). Ils n'ont
-          pas besoin d'&ecirc;tre cons&eacute;cutives ou dans un
-          ordre particulier.</p>
-
-          <p>Si vous avez besoin de d&eacute;boguer une de ces
-          T&ecirc;tes de signal, commencez par v&eacute;rifier si
-          les connexions Aiguillage travaillent. Vous pouvez le
-          faire en allant au <a href="TurnoutTable.shtml">Tableau
-          Aiguillage</a> et changer le r&eacute;glage de la sortie.
-          R&eacute;glage par exemple l'aiguillage sur la connexion
-          "vert", D&eacute;vi&eacute; devrait allumer la lampe
-          verte.</p>
-        </dd>
-
-        <dt>Sortie unique</dt>
+        <dt>SE8c 4 aspects</dt>
 
         <dd>
-          Ce type commande une t&ecirc;te de signal avec une seule
-          connexion &eacute;lectrique. La connexion peut &ecirc;tre
-          &agrave; une seule lampe/LED pour afficher une apparence
-          unique. Une m&eacute;thode alternative consiste &agrave;
-          connecter une paire de diodes &agrave; la sortie unique
-          du c&acirc;bles adapt&eacute;s de sorte que lorsque la
-          sortie du d&eacute;codeur est ON vous obtenez une couleur
-          et alors que la sortie est d&eacute;sactiv&eacute;e, vous
-          obtenez l'autre. Ce type pourrait aussi &ecirc;tre
-          utilis&eacute; pour contr&ocirc;ler les T&ecirc;tes de
-          signal &agrave; commande m&eacute;canique qui n'ont que
-          deux apparences et ont donc toujours une apparence. Il
-          est possible de gagner une troisi&egrave;me apparence
-          "clignotant". Si vous avez Eteint et une couleur
-          s&eacute;lectionn&eacute;e, alors le r&eacute;sultat
-          final est une option clignotant suppl&eacute;mentaire
-          S'il y a deux couleurs choisies, alors vous donnez un
-          clignotement pour les deux couleurs , mais Cependant ceci
-          fera l'option flash entra&icirc;nant les couleurs
-          clignotantes alternativement.
+          La sortie est contr&#244;l&#233;e par une seule commande d'aiguillage 
+          par changement d'aspect. Une commande d'aiguillage change entre 
+          "Arr&#234;t" et "Libre", et la deuxi&#232;me commande d'aiguille 
+          change entre "Approche" et "&#201;teint".
 
-          <p>Ces connexions sont command&eacute;es via l'aiguillage
-          logique JMRI , et donc appara&icirc;tre dans le Tableau
-          Aiguillage. Elles ne sont pas vraiment li&eacute;es
-          &agrave; la commutation des moteurs, m&ecirc;me si, Elles
-          sont simplement des sorties &eacute;lectriques.</p>
+          <p>Ce type contr&#244;le les signaux attach&#233;s &#224; 
+          une <a href= "http://www.digitrax.com"> Digitrax</a> 
+          <a href = "http://www.digitrax.com/prd_statdec_se8c.php ">
+			  Carte de Pilote de Signal SE8C</a>.</P>
 
-          <p>Pour chaque connexion, saisissez l'aiguillage JMRI
-          pour le raccordement &eacute;lectrique sur le
-          r&eacute;seau soit comme un nombre (1,2,3) ou comme un
-          Nom JMRI (nom syst&egrave;me, comme LT1, CT2 ou un nom
-          utilisateur d&eacute;j&agrave; d&eacute;fini). Ils n'ont
-          pas besoin d'&ecirc;tre cons&eacute;cutives ou dans un
-          ordre particulier.</p>
+          <p>Etant donn&#233; que chaque signal Aspect SE8C 4 fonctionne 
+          avec une adresse DCC sp&#233;cifique, son nom de syst&#232;me 
+          est d&#233;termin&#233; automatiquement &#224; partir de cette 
+          adresse; vous n'&#234;tes pas oblig&#233; d'y entrer. Par exemple, 
+          le signal SE8C 4 Aspect pour l'adresse mat&#233;rielle 257 se 
+          verra attribuer un nom de syst&#232;me bas&#233; sur celui-ci. 
+          Voir pages 5 &#224; 7 du <a href= 
+          "http://www.digitrax.com/staticapps/products/detection-signaling/se8c/documents/SE8C.pdf">
+          Manuel Digitrax SE8C</a>.</P >
 
-          <p>Si vous avez besoin de d&eacute;boguer une de ces
-          t&ecirc;tes de signal, commencez par v&eacute;rifier si
-          les connexions Aiguillage travaillent. Vous pouvez le
-          faire en allant au <a href="TurnoutTable.shtml">Tableau
-          Aiguillage</a> et changer le r&eacute;glage de la sortie
-          .</p>
+          <p><a href="images/Add_New_SE8C_Signal.png"> <img src =
+          "images/Add_New_SE8C_Signal.png" align = "right" height = "153"
+          width = "131"></a> Vous pouvez &#233;ventuellement entrer un Nom 
+          Utilisateur plus lisible si vous le souhaitez.</p>
 
-          <p>Apparence "droit"- L'apparence donn&eacute;e lorsque
-          la connexion est &agrave; l'&eacute;tat droit Apparence
-          "d&eacute;vi&eacute;" - L'apparence donn&eacute;e lorsque
-          la connexion est dans l'&eacute;tat
-          d&eacute;vi&eacute;.</p>
-        </dd>
+          <p>Dans le champ "Num&#233;ro d'Aiguillage", entrez l'adresse 
+          DCC appropri&#233;e de la sortie SE8C sous forme de nombre. Par 
+          exemple, le 1&#232;re signal de la 1&#232;re SE8C, telle que 
+          configur&#233;e &#224; l'usine Digitrax, est "257". 
+          S&#233;lectionnez "Cr&#233;er nouveau", puis s&#233;lectionnez 
+          votre connexion de r&#233;seau (g&#233;n&#233;ralement "LocoNet") 
+          dans la liste d&#233;roulante, puis entrez "257" dans le champ 
+          &#224; c&#244;t&#233;. Faites la m&#234;me chose dans le second 
+          champ Aiguillage, en entrant "258" comme deuxi&#232;me adresse 
+          de Signal.</P>
 
-        <dt>Virtuel</dt>
+          <p>Pour des utilisations plus avanc&#233;es, par exemple si vous utilisez
+          plusieurs types de mat&#233;riel de r&#233;seau, vous pouvez 
+          soit s&#233;lectionner un Aiguillage dans la liste d&#233;roulante 
+          des interventions d&#233;j&#224; d&#233;finies, soit en cr&#233;ant 
+          un nouvel Aiguillage pour une connexion particuli&#232;re.</p>
+       </dd>
 
-        <dd>Ce type ne se connecte pas du tout au r&eacute;seau
-        Utilisez-le quand vous voulez par exemple afficher une
-        t&ecirc;te de signal sur un panneau, mais ne pas en avoir
-        un vrai sur le r&eacute;seau.</dd>
-
-        <dt>Aspect SE8c 4 aspects</dt>
-
-        <dd>
-          Ce type commande des t&ecirc;tes de signal
-          attach&eacute;es &agrave; un <a href=
-          "http://www.digitrax.com/prd_statdec_se8c.php">SE8c carte
-          de pilotage de t&ecirc;te de signal</a> <a href=
-          "http://www.digitrax.com">Digitrax</a>.
-
-          <p>Parce que chaque Aspect t&ecirc;te de signal SE8c 4
-          travaille avec une adresse DCC sp&eacute;cifique , son
-          nom syst&egrave;me est d&eacute;termin&eacute;e
-          automatiquement &agrave; partir de cette adresse. Vous
-          n'avez pas &agrave; l'entrer. Par exemple, l'Aspect
-          t&ecirc;te de signal SE8c 4 pour l'adresse
-          mat&eacute;rielle 257, il lui sera donn&eacute; un nom
-          syst&egrave;me bas&eacute; sur cecis.</p>
-
-          <p>Vous pouvez &eacute;ventuellement entrer un nom
-          utilisateur si vous le souhaitez.</p>
-
-          <p>Dans le champ "num&eacute;ro d'Aiguillage", entrez
-          l'adresse DCC appropri&eacute;e de la sortie SE8c comme
-          un nombre. Par exemple, la 1&egrave;re t&ecirc;te de
-          signal du 1er SE8c, tel qu'il est configur&eacute; en
-          usine par Digitrax est "257" par s&eacute;lection de
-          "cr&eacute;er aiguillage", pui s&eacute;lectionnez
-          "LocoNet" dans le menu d&eacute;roulant, entrez "257"dans
-          le champssuivant our lui. Voir par exemple les page 5 et
-          7 du manuel Digitrax SE8c ( <a href=
-          "http://www.digitrax.com/ftp/se8c.pdf">http://www.digitrax.com/ftp/se8c.pdf</a>).
-          De m&ecirc;me dans le champs du second aiguillage, entrez
-          en "258".</p>
-
-          <p>Alternativement, si vous utilisez plus d'un type de
-          mat&eacute;riel, vous pourriez avoir besoin de
-          sp&eacute;cifier un nom complet utilisateur ou
-          syst&egrave;me. Dans ce cas, mettre le nom de l' Adresse
-          la plus basse de l'aiguillage, par exemple NT257, dans le
-          champ "num&eacute;ro de aiguillage". et l'adresse de
-          aiguillage sup&eacute;rieur, par exemple NT258, dans le
-          champ "Deuxi&egrave;me Aiguillage".</p>
-        </dd>
 
         <dt>LDT LS-DEC</dt>
 
         <dd>
-          Ce type est particuli&egrave;rement utile pour la
-          signalisation europ&eacute;enne. Il contr&ocirc;le les
-          signaux attach&eacute;s &agrave; un <a href=
+          Ce type est particuli&#232; rement utile pour la signalisation 
+          europ&#233;enne. Il contr&#244;le les signaux reli&#233;s &#224; un <a href=
           "http://www.ldt-infocenter.com/dokuwiki/doku.php?id=fr:ldt-infocenter">
           Littfinski DatenTechnik (LDT)</a> et <a href=
           "http://www.ldt-infocenter.com/dokuwiki/doku.php?id=fr:ldt-infocenter#ls-dec">
-          D&eacute;codeur Signal LS-DEC</a> , ou d'un
-          d&eacute;codeur DP2N <a href=
-          "http://www.marathonmodel.cz/">mod&egrave;le
-          Marathon</a>.
+          D&#233;codeur Signal LS-DEC</a> , ou un d&#233;codeur DP2N <a href=
+          "http://www.marathonmodel.cz/">mod&#232;le Marathon</a>.
 
-          <p>Ces contr&ocirc;leurs utilisent sept adresses DCC
-          d'aiguillage (accessoire d&eacute;codeur) pour
-          sp&eacute;cifier les adresses des sept apparences
-          possibles de la t&ecirc;te de signal. Entrez celles-ci,
-          soit &agrave; partir de la liste d&eacute;roulante des
-          aiguillages d&eacute;j&agrave; d&eacute;finis ou en
-          cr&eacute;ant un nouvel aiguillage pour une connexion
-          particuli&egrave;re. Ils n'ont pas besoin d'&ecirc;tre
-          cons&eacute;cutives ou dans un ordre particulier</p>
+          <p>Ces contr&#244;leurs utilisent sept adresses DCC d'Aiguillage 
+          (accessoire d&#233;codeur) pour sp&#233;cifier les adresses des sept 
+          Apparences possibles du Signal. Entrez celles-ci, soit &#224; partir 
+          de la liste d&#233;roulante des Aiguillages d&#233;j&#224;  d&#233;finis ou en
+          cr&#233;ant un nouvel aiguillage pour une connexion particuli&#232;re. 
+          Ils n'ont pas besoin d'&#234;tre cons&#233;cutives ou dans un ordre 
+          particulier</p>
 
           <p>Pour plus d'informations sur la configuration de ces
-          t&ecirc;tes de signal, voir la <a href=
+           signaux, voir la <a href=
           "../../../../html/tools/signaling/ldt/output.shtml">page
           exemples</a>.</p>
         </dd>
 
-        <dt>D&eacute;codeur de signal DCC&lt;/ dt&gt;</dt>
+        <dt>Pilote de Signal MERG</dt>
 
         <dd>
-          Ce type commande les t&ecirc;tes de signal
-          attach&eacute;es &agrave; un d&eacute;codeur qui utilise
-          les <a href=
-          "http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">
-          paquets de t&ecirc;tes de signal d&eacute;finies par
-          le</a> <a href=
-          "http://www.nmra.org/standards/DCC/DCCHome.html">groupe
-          de travail NMRA DCC</a> pour la commande. Ceci est un
-          protocole sp&eacute;cial d&eacute;fini pour le pilotage
-          des t&ecirc;tes de signal, et est diff&eacute;rent de la
-          fa&ccedil;on dont sont command&eacute;s les
-          "D&eacute;codeurs d'accessoires" (sorties d'aiguillage,
-          par exemple).
+          Ce type de pilote contr&#244;le un Signal utilisant un Pilote de 
+          Signal MERG (SD2). Un SD2 est connect&#233; au DCC &#224; l'aide d'un 
+          d&#233;codeur d'accessoires &#224; &#233;tat stable. Le nombre d'aspects &#224; 
+          afficher sur le M&#226;t de Signalisation d&#233;terminera le nombre de 
+          sorties <a href="TurnoutAddEdit.shtml">Aiguillage</a> requises, 
+          par exemple.<br>
+          2 aspects: n&#233;cessite 1 Aiguillage (photo de droite)<br>
+          3 aspects: n&#233;cessite 2 Aiguillages<br>
+          4 aspects: n&#233;cessite 3 Aiguillages
 
-          <p>Entrez l'adresse de DCC comme un nombre.La case
-          &agrave; cocher compensation utilise une autre
-          interpr&eacute;tation du sch&eacute;ma d'adressage qui
-          pourrait &ecirc;tre en cours d'utilisation.</p>
-
-          <p>Chaque aspect est attribu&eacute; un num&eacute;ro
-          diff&eacute;rent, &agrave; partir de l&agrave;, vous
-          pouvez attribuer des num&eacute;ros diff&eacute;rents
-          pour chaque aspect en fonction du mat&eacute;riel
-          utilis&eacute;.</p>
-        </dd>
+          <p>Le Pilote de Signal MERG dans JMRI a &#233;t&#233; configur&#233; pour 
+          contr&#244;ler uniquement la sortie Aspect SD2. Il ne contr&#244;le pas 
+          les autres fonctionnalit&#233;s du SD2 telles que "R&#232;gles Vapeur" ou 
+          "Feather", mais elles peuvent facilement &#234;tre configur&#233;es &#224; 
+          l'aide de Logix ou de Itin&#233;raires.<br>
+          <b> Remarques</b> - Le pilote MERG SD2 ne prend pas en charge 
+          le format jaune clignotant. Pour les aspects jaune clignotant, 
+          un circuit suppl&#233; mentaire est requis, comme indiqu&#233; dans les 
+          Bulletins techniques MERG.<br>
+          Comme le pilote MERG SD2 d&#233;passe les aspects Vert/Jaune/Rouge 
+          pris en charge dans JMRI avec un aspect Double jaune (jaune sur 
+          jaune), l'&#233;tat Double jaune est repr&#233;sent&#233; dans l'&#233; tat par "Lunar".<br>
+          Pour plus d'informations sur le pilote de signal Merg, consultez 
+          la page <a href="http://www.merg.info"> MERG</a></p>.
+       </dd>
 
         <dt>Grapevine</dt>
 
-        <dd>
-          Ce type de contr&ocirc;le des t&ecirc;tes de signal
-          attach&eacute;es &agrave; un <a href=
-          "http://www.protrak.cc/t%C3%AAte%20de%20signals.htm">Noeud
-          Grapevine</a> <a href=
-          "http://www.protrak.cc/">Protrak</a>.
+        <dd>Ce type contr&#244;le les Signaux attach&#233;es &#224; un <a href= 
+        "http://www.protrak.cc/"> ProTrak</a> <a href = 
+        "http://www.protrak.cc/signals. htm "> n&#156;ud Grapevine</a>.<br>
+        Dans le champ de texte, entrez un Nom Syst&#232;me pour un signal 
+        Grapevine, par ex. GH1204 pour le 4&#232;me connecteur sur le 2&#232;me 
+        connecteur de banque du 1er noeud. Pour plus d'informations sur 
+        la mani&#232;re dont ces noms sont g&#233;n&#233;r&#233;s, voir la <a href= 
+        "../../../../html/hardware/grapevine/Names.shtml"> page sur les 
+        noms de Gravepine</a>. </dd>
+     </dl>
 
-          <p>Dans le champ texte, entrez un nom syst&egrave;me pour
-          une t&ecirc;te de signal Grapevine , par exemple GH1204
-          pour le 4&egrave;me connecteur sur la 2e banque du 1er
-          n&#399;ud. Pour plus d'informations sur la fa&ccedil;on
-          dont ces noms sont g&eacute;n&eacute;r&eacute;s,
-          consultez la <a href=
-          "../../../../html/hardware/grapevine/Names.shtml">Page
-          sur les noms de Grapevine</a>. &lt;/ Dd&gt;</p>
-        </dd>
+      <h2> Notes</h2>
 
-        <dt>Pilote de Signal MERG 2</dt>
+      <ul>
+        <li>Si vous devez d&#233;boguer l'un de ces Signaux, commencez par 
+        v&#233;rifier que les connexions (aiguillage) fonctionnent. Pour ce 
+        faire, acc&#233;dez au <a href= "TurnoutTable.shtml"> Tableau 
+        Aiguillage</a> et modifiez le param&#232;tre de sortie &#224; cet endroit. 
+        R&#233;glage par exemple de l'aiguillage sur la connexion "Vert" pour
+        D&#233;vi&#233; devrait allumer le voyant vert.</li>
+     </ul>
 
-        <dd>
-          Ce type commande un signal qui utilise un Pilote de
-          Signal MERG 2 pour commander ses aspects affich&eacute;s.
-          Le SD2 est pilot&eacute; &agrave; l'aide d'un
-          d&eacute;codeur d'accessoires &agrave; &eacute;tat
-          stable. Le nombre d'aspects qui sont affich&eacute;es sur
-          la t&ecirc;te de signal, va d&eacute;terminer le nombre
-          de sorties d'aiguillage requises. Par exemple.<br>
-          2 Aspects n&eacute;cessitent une aiguillage<br>
-          3 Aspects n&eacute;cessitent deux aiguillages<br>
-          4 Aspects n&eacute;cessitent 3 aiguillages
+      <p>Retour &#224; la <a href="SignalHeadTable.shtml"> page d'aide du 
+      Tableau des Signaux</a>. <! - Pied de page -></p>
+      <hr class = "hide">
 
-          <p>Le Pilote de Signal sur JMRI a &eacute;t&eacute;
-          configur&eacute; pour contr&ocirc;ler la sortie du seul
-          aspect de la SD2, il ne commande pas les autres
-          caract&eacute;ristiques de la SD2 comme les
-          "R&egrave;gles de vapeur" ou "Feather". Cependant ceux-ci
-          peuvent facilement &ecirc;tre configur&eacute;s &agrave;
-          l'aide de Logixs normaux ou d'itin&eacute;raires.</p>
-
-          <p><b>Notes</b> - Le pilote MERG SD2 ne supporte pas
-          l'aspect clignotement jaune, pour flasher les aspects
-          jaune un circuit suppl&eacute;mentaire est
-          n&eacute;cessaire tel que document&eacute; dans les
-          Bulletins Techniques MERG.<br>
-          Comme le pilote MERG SD2 va au-del&agrave; des aspects
-          Vert/Jaune/Rouge pris en charge dans JMRI avec un double
-          aspect jaune, l'&eacute;tat double jaune est
-          repr&eacute;sent&eacute;e dans le statut de
-          "lunaire".</p>
-
-          <p>De plus amples informations sur le Pilote de Signal
-          peuvent &ecirc;tre trouv&eacute;es &agrave; <a href=
-          "http://www.merg.org.uk/&quot;">MERG</a></p>
-        </dd>
-      </dl>La fen&ecirc;tre de Dialogue "Modifier t&ecirc;te de
-      signal" fournit pour la visualisation et la modification
-      optionnelle d'information pour les T&ecirc;tes de signal
-      existant. Utilisez le bouton"&eacute;diter" du Tableau
-      T&ecirc;te de signal pour s&eacute;lectionner une t&ecirc;te
-      de signal. Le type de t&ecirc;te de signal et le nom
-      syst&egrave;me peut ne pas &ecirc;tre chang&eacute;.
-      Apr&egrave;s avoir effectu&eacute; des modifications dans la
-      bo&icirc;te de dialogue, cliquez sur "Mise &agrave; Jour"
-      pour le changement des informations t&ecirc;te de signal.
-      Cliquez sur "Annuler" pour quitter sans apporter des
-      modifications. La Fermeture de la fen&ecirc;tre Modifier la
-      t&ecirc;te de signal est &eacute;quivalent &agrave; cliquer
-      "Annuler". Une seule t&ecirc;te de signal peut &ecirc;tre
-      &eacute;dit&eacute;e &agrave; la fois 
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+      <div id = "footer">
+        <! - Piwik ->
+        <script type = "text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol)? "https://apps.sourceforge.net/piwik/jmri/": "http://apps.sourceforge.net/piwik/jmri/ ");
+        document.write (unescape ("% 3Cscript src = '" + pkBaseURL + "piwik.js' type = 'text/javascript'% 3E% 3C/script% 3E"));
+       </script> <script type = "text/javascript">
+piwik_action_name = '';
+        piwik_idsite = 1;
+        piwik_url = pkBaseURL + "piwik.php";
+        piwik_log (piwik_action_name, piwik_idsite, piwik_url);
+       </script> <objet>
+          <noscript>
+          <p><img src =
+          "http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1"
+          alt = "piwik"></p></noscript>
+       </object> <! - End Piwik Tag ->
+     </div> <! - ferme #footer ->
+      <! - # include virtual = "/ Footer" ->
+   </div> <! - ferme #mainContent ->
+ </div> <! - ferme #mBody ->
 </body>
 </html>
