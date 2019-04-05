@@ -161,6 +161,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
