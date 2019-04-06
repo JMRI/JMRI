@@ -424,7 +424,6 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
-        <span class="since">since 4.13.4</span>
         <ul>
             <li></li>
         </ul>

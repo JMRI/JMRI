@@ -47,6 +47,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         tm=null;
         _cs.dispose();
         _cs = null;
+        if (cbtm != null) { 
+            cbtm.dispose();
+        }
         cbtm = null;
     }
 
@@ -361,11 +364,12 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CbusThrottleListen throtListen = new CbusThrottleListen();
         cbtmb.requestThrottle(addr,throtListen);
         CbusThrottle cbt = new CbusThrottle(memo,addr,1);
-        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)>0); }, "reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)>0); }, "Throttle count did not increase");
         Assert.assertEquals("throttle use 1", 1, cbtmb.getThrottleUsageCount(addr));
         
         cbtmb.disposeThrottle(cbt,throtListen);
-        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)==0); }, "reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)==0); }, 
+            "Throttle Count did not go 0 on dispose, add retry rule for this if regular?");
         Assert.assertEquals("disposed throttle use 0", 0, cbtmb.getThrottleUsageCount(addr));
         Assert.assertNull("NULL",cbtmb.getThrottleInfo(addr,Throttle.F28));
     }

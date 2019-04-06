@@ -1,24 +1,15 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
-import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.jmrix.can.cbus.CbusSend;
-import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
 import jmri.util.ThreadingUtil;
-import java.util.TimerTask;
-import jmri.util.TimerUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Cbus Nodes imported from MERG FCU
@@ -44,7 +35,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public CbusNodeFromFcuTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         super (memo, row, column);
         
-        log.debug("Starting MERG CBUS Node Table");
         _mainArray = new ArrayList<CbusNodeFromFcu>();
         _memo = memo;
         
@@ -142,8 +132,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
             case NODE_USER_NAME_COLUMN:
                 return new JTextField(13).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
@@ -163,7 +152,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
             case NODE_TYPE_NAME_COLUMN:
                 return String.class;
             default:
-                log.warn("no class set col {}",col);
                 return null;
         }
     }
@@ -184,7 +172,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      */
     @Override
     public Object getValueAt(int row, int col) {
-        // log.info("requesting row {} col {}",row,col);
         switch (col) {
             case NODE_NUMBER_COLUMN:
                 return _mainArray.get(row).getNodeNumber();
@@ -199,14 +186,12 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
             case NODE_TOTAL_BYTES_COLUMN:
                 return _mainArray.get(row).totalNodeBytes();
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
     
     /**
-     * Capture new comments or node names.
-     * Button events
+     * Ignored as data from file.
      * @param value object value
      * @param row int row number
      * @param col int col number
@@ -216,16 +201,18 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
 
     /**
-     * Unused, even simulated nodes / command stations normally respond with CanReply
+     * Ignored as data from file
      * @param m canmessage
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
-    //    int opc = CbusMessage.getOpcode(m);
     }
     
-    
-     // returns the row number from a node number
+     /**
+     * returns the row number from a node number
+     * @param nodenum Node Number to search for
+     * @return Row number, else -1 if not on table
+     */
     @Override
     public int getNodeRowFromNodeNum( int nodenum ) {
         for (int i = 0; i < getRowCount(); i++) {
@@ -236,12 +223,9 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         return -1;
     }
     
-    
-    
-    
     /**
-     * Capture node and event, check isevent and send to parse from reply.
-     * @param m canmessage
+     * Ignored as data from file
+     * @param m canframe
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
@@ -272,7 +256,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
             }
         }
         CbusNodeFromFcu cs = new CbusNodeFromFcu(_memo, nodenum);
-        cs.startParamsLookup();
+        // cs.startParamsLookup();
         addNode(cs);
         return cs;        
     }
@@ -306,11 +290,11 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
     
     /**
-     * No need to disconnect from the tc, we should be connected in this type of node
+     * No need to disconnect from the tc, we should not be connected in this type of node
      */
     @Override
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
 }

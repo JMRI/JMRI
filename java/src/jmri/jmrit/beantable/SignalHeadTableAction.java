@@ -782,6 +782,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(systemNameLabel);
+            systemNameLabel.setLabelFor(systemNameTextField);
             p.add(systemNameTextField);
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             p.add(dccOffSetAddress);
@@ -791,6 +792,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(userNameLabel);
+            userNameLabel.setLabelFor(userNameTextField);
             p.add(userNameTextField);
             userNameTextField.setToolTipText(Bundle.getMessage("SignalHeadUserNameTooltip"));
             panelHeader.add(p);

@@ -45,11 +45,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, PropertyChangeListener {
 
     protected AbstractTurnout(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     protected AbstractTurnout(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
