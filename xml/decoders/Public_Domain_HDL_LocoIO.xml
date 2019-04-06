@@ -85,7 +85,7 @@
     </programming>
     <variables>
 
-      <variable CV="100" readOnly="yes" item="Decoder Version" default="68">
+      <variable CV="100" readOnly="yes" item="Decoder Version">
           <decVal/>
           <label>PIC Version: </label>
           <label xml:lang="it">Versione PIC: </label>
@@ -1489,12 +1489,9 @@
       <variable item="Dummy 98" CV="98">
         <decVal/>
       </variable>
-      <variable item="Dummy 99" CV="99">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 100" CV="100">
-        <decVal/>
-      </variable>
+
+      <!--CV100/SV100 was already defined above-->
+
       <variable item="Dummy 101" CV="101">
         <decVal/>
       </variable>
@@ -1999,6 +1996,7 @@
           </label>
         </row>
         <separator/>
+
         <row>
           <column>
             <label>
@@ -2017,24 +2015,11 @@
               <!--<display item="Port1 Old Block"/>-->
             </row>
           </column>
-
-          <separator/>
           <column>
+            <!--Opcode 1 2 option-->
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Port 3&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text>OpCode1/2: To Do</text>
             </label>
-            <row>
-              <display item="Port3 Address"/>
-              <display item="Port3 HiAddress"/>
-              <display item="Port3 LowAddress"/>
-            </row>
-            <display item="Port3 Type"/>
-            <row>
-              <display item="Port3 Config"/>
-              <display item="Port3 Value2"/>
-              <!--<display item="Port3 Old Block"/>-->
-            </row>
           </column>
         </row>
         <separator/>
@@ -2057,7 +2042,43 @@
               <!--<display item="Port2 Old Block"/>-->
             </row>
           </column>
-          <separator/>
+          <column>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>OpCode1/2: To Do</text>
+            </label>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Port 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 3&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Port3 Address"/>
+              <display item="Port3 HiAddress"/>
+              <display item="Port3 LowAddress"/>
+            </row>
+            <display item="Port3 Type"/>
+            <row>
+              <display item="Port3 Config"/>
+              <display item="Port3 Value2"/>
+              <!--<display item="Port3 Old Block"/>-->
+            </row>
+          </column>
+          <column>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>OpCode1/2: To Do</text>
+            </label>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
           <column>
             <label>
               <text>&lt;html&gt;&lt;strong&gt;Port 4&lt;/strong&gt;&lt;/html&gt;</text>
@@ -2074,6 +2095,12 @@
               <display item="Port4 Value2"/>
               <!--<display item="Port4 Old Block"/>-->
             </row>
+          </column>
+          <column>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>OpCode1/2: To Do</text>
+            </label>
           </column>
         </row>
         <separator/>
