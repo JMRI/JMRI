@@ -47,7 +47,7 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-03-29</date>
+        <date>2019-04-06</date>
         <authorinitials>EB</authorinitials>
         <revremark>Use compositeVal type values (ports 1-4 for now), updated decoder schema,
             add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7)
@@ -56,18 +56,21 @@
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
-  <version author="Egbert Broerse" version="3" lastUpdated="20190329"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190406"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
       <model model="HDL LocoIO v1.54" productID="154"/>
-      <!--including other models relies on exclude/include support in compositeValType-->
+      <!--filtering model specific options relies on new exclude/include support in compositeValType-->
       <model model="HDL LocoIO v1.53" productID="153"/>
+        <!--Docs: 1.50-1.52 should update to 1.53, same options-->
       <model model="HDL LocoIO v1.49" productID="149"/>
       <model model="HDL LocoIO v1.48" productID="148"/>
+        <!--Docs: 1.47 should update to 1.48, same options-->
       <model model="HDL LocoIO v1.46" productID="146"/>
       <model model="HDL LocoIO v1.45" productID="145"/>
       <model model="HDL LocoIO v1.44" productID="144"/>
+        <!--Docs: 1.43 should update to 1.44, same options-->
       <model model="HDL LocoIO v1.42" productID="142"/>
       <model model="HDL LocoIO v1.41" productID="141"/>
       <model model="HDL LocoIO v1.40" productID="140"/>
@@ -451,7 +454,7 @@
 
       <variable item="Port2 Old Block" CV="7" mask="VXXXXXXX" default="0" include="135,139,140">
         <decVal/>
-        <!-- only used up to version 1.40 later versions set active high/low per port-->
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
       </variable>
 
       <variable item="Port2 LowAddress" CV="7" mask="XVVVVVVV">
