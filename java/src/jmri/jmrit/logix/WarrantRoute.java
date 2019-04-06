@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -84,7 +85,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private JFrame _debugFrame;
     private RouteFinder _routeFinder;
     private final JTextField _searchDepth = new JTextField(5);
-    JButton _calculateButton = new JButton(Bundle.getMessage("Calculate"));
+    private JButton _calculateButton = new JButton(Bundle.getMessage("Calculate"));
+    private JButton _stopButton;
 
     private final JComboBox<String> _rosterBox = new JComboBox<>();
     private final JTextField _dccNumBox = new JTextField();
@@ -154,9 +156,21 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 calculate();
             }
         });
-        JPanel p = new JPanel();
-        p.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
-        return p;
+
+        _stopButton = new JButton(Bundle.getMessage("Stop"));
+        _stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stopRouteFinder();
+            }
+        });
+
+        JPanel panel = new JPanel();
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
+//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeTextBoxPanel(vertical, _stopButton, "StopSearch", null));
+        return panel;
     }
     public JPanel makePickListPanel() {
         JButton button = new JButton(Bundle.getMessage("MenuBlockPicker"));
@@ -277,7 +291,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         framePanel.setLayout(new BoxLayout(framePanel, BoxLayout.PAGE_AXIS));
         framePanel.add(Box.createGlue());
         framePanel.add(new JLabel(Bundle.getMessage("viewTitle", _speedUtil.getRosterId())));
-        framePanel.add(MergePrompt.makeEditInfoPanel());
+        framePanel.add(MergePrompt.makeEditInfoPanel(_speedUtil.getRosterId()));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createGlue());

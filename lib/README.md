@@ -102,11 +102,11 @@ After that, add and commit the additional files that were created within lib/
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.8.11.jar, jackson-core-2.8.11.jar, jackson-databind-2.8.11.jar
+##### jackson-annotations-2.9.8.jar, jackson-core-2.9.8.jar, jackson-databind-2.9.8.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.8.11
+- version 2.9.8
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.11
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8
 
 ##### mqtt-client-0.4.0.jar
 starting in JMRI 4.11.5

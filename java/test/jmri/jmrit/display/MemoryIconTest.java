@@ -30,7 +30,7 @@ import org.netbeans.jemmy.ComponentChooser;
  */
 public class MemoryIconTest extends PositionableTestBase {
 
-    private MemoryIcon to = null;
+    protected MemoryIcon to = null;
 
     @Test
     public void testShowContent() {
@@ -40,7 +40,6 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest1", editor);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -82,11 +81,7 @@ public class MemoryIconTest extends PositionableTestBase {
         to.getPopupUtility().setBackgroundColor(Color.white);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect blank: "));
-
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
-
-        to.setMemory("IM2");
-
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("");
         jf.pack();
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -116,10 +111,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-
-        to.setMemory("IM3");
 
         jf.pack();
         jf.setVisible(true);

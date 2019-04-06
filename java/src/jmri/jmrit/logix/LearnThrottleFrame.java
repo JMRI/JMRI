@@ -65,7 +65,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     private ButtonFrame _buttonPanel;
     private WarrantFrame _warrantFrame;
     private float _currentSpeed;
-    private boolean _isForward;
 
     private DccThrottle _throttle;
 
@@ -269,7 +268,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     /* Record throttle commands that have been sent to the throttle from ControlPanel */
 
     protected void setSpeedSetting(float speed) {
-        _warrantFrame.setSpeedCommand(speed, _isForward );
+        _warrantFrame.setSpeedCommand(speed);
         _currentSpeed = speed;
     }
     /* from ControlPanel */
@@ -302,7 +301,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     protected void setButtonForward(boolean isForward) {
         _buttonPanel.setForwardDirection(isForward);
         _warrantFrame.setThrottleCommand("Forward", Boolean.toString(isForward));
-        _isForward = isForward;
     }
     /* from ButtonPanel */
 

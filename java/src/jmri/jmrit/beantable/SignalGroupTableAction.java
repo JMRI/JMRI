@@ -484,6 +484,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             namesGrid.setLayout(layout);
             // row 1: add system name label + field/label
             namesGrid.add(nameLabel);
+            nameLabel.setLabelFor(_systemName);
             JPanel ps = new JPanel();
             ps.setLayout(new BoxLayout(ps, BoxLayout.X_AXIS));
             ps.add(_systemName);
@@ -500,6 +501,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             namesGrid.add(ps);
             // row 2: add user name label + field
             namesGrid.add(userLabel);
+            userLabel.setLabelFor(_userName);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(_userName);

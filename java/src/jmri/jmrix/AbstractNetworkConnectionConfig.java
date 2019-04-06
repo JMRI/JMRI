@@ -275,6 +275,16 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         return adapter.getCurrentPortName();
     }
 
+    protected void checkOptionValueValidity(String i, JComboBox<String> opt) {
+        if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
+            // no, set 1st option choice
+            opt.setSelectedIndex(0);
+            // log before setting new value to show old value
+            log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
+            adapter.setOptionState(i, (String) opt.getSelectedItem());
+        }
+    }
+    
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;
@@ -287,14 +297,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
+                
                 // check that it worked
-                if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
-                    // no, set 1st option choice
-                    opt.setSelectedIndex(0);
-                    // log before setting new value to show old value
-                    log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
-                    adapter.setOptionState(i, (String) opt.getSelectedItem());
-                }
+                checkOptionValueValidity(i, opt);
+                
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }
