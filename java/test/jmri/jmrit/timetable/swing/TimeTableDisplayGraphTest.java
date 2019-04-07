@@ -9,26 +9,19 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the TimeTableGraph Class
- * @author Dave Sand Copyright (C) 2018
+ * Tests for the TimeTableDisplayGraph Class
+ * @author Dave Sand Copyright (C) 2019
  */
-public class TimeTableGraphTest {
+public class TimeTableDisplayGraphTest {
 
     @Rule
     public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
-    public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new TimeTableGraph();
-    }
-
-    @Test
     public void testGraph() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        TimeTableGraph g = new TimeTableGraph();
-        g.init(1, 1, true);
+        TimeTableDisplayGraph g = new TimeTableDisplayGraph(1, 1, true);
 
         JmriJFrame gf = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
         gf.setMinimumSize(new Dimension(600, 300));
@@ -39,9 +32,9 @@ public class TimeTableGraphTest {
         Assert.assertNotNull(gf);
 
         gf.dispose();
-        
+
         JUnitAppender.suppressWarnMessage("No scale found, defaulting to HO");
-        
+
     }
     @Before
     public void setUp() {
