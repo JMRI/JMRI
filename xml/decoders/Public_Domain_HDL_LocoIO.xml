@@ -47,9 +47,9 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-04-06</date>
+        <date>2019-04-07</date>
         <authorinitials>EB</authorinitials>
-        <revremark>Use compositeVal type values (ports 1-4 for now), updated decoder schema,
+        <revremark>Use compositeVal type values (ports 1-5 for now), updated decoder schema, add LocoServo,
             add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7)
         </revremark>
       </revision>
