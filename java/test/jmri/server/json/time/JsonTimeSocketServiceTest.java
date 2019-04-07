@@ -112,7 +112,7 @@ public class JsonTimeSocketServiceTest {
         data.put(JsonTimeServiceFactory.TIME, formatter.format(waitFor));
         service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
         message = connection.getMessage();
-        // current = manager.getTime();
+        current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", 100, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
