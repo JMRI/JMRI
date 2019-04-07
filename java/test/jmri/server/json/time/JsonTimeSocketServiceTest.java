@@ -60,7 +60,7 @@ public class JsonTimeSocketServiceTest {
         data.put(JSON.STATE, JSON.ON); // start the fast clock -- to test that listeners set in onMessage work
         service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
         message = connection.getMessage();
-        current = manager.getTime();
+        // current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", 60, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
