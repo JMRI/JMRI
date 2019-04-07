@@ -428,27 +428,60 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) {
-        VariableValue v;
-        List<Element> lChoice = child.getChildren("compositeChoice");
-        CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, lChoice.size() - 1, _cvModel.allCvMap(), _status, item);
-        v = v1; // v1 is of CompositeVariableType, so doesn't need casts
-        // loop over the choices
-        for (int k = 0; k < lChoice.size(); k++) {
-            // Create the choice
-            Element choiceElement = lChoice.get(k);
-            String choice = LocaleSelector.getAttribute(choiceElement, "choice");
-            v1.addChoice(choice);
-            // for each choice, capture the settings
-            List<Element> lSetting = choiceElement.getChildren("compositeSetting");
-            for (int n = 0; n < lSetting.size(); n++) {
-                Element settingElement = lSetting.get(n);
-                String varName = LocaleSelector.getAttribute(settingElement, "label");
-                String value = settingElement.getAttribute("value").getValue();
-                v1.addSetting(choice, varName, findVar(varName), value);
+        int count = 0;
+        IteratorIterable<Content> iterator = child.getDescendants();
+        while (iterator.hasNext()) {
+            Object ex = iterator.next();
+            if (ex instanceof Element) {
+                if (((Element) ex).getName().equals("compositeChoice")) {
+                    count++;
+                }
             }
         }
+
+        VariableValue v;
+        CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, count, _cvModel.allCvMap(), _status, item);
+        v = v1; // v1 is of CompositeVariableType, so doesn't need casts
+
+        v1.nItems(count);
+        handleCompositeValChildren(child, v1);
         v1.lastItem();
         return v;
+    }
+
+    /**
+     * Recursively walk the child compositeChoice elements, working through the
+     * compositeChoiceGroup elements as needed.
+     * <p>
+     * Adapted from handleEnumValChildren for use in LocoIO.
+     */
+    protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
+        List<Element> local = e.getChildren();
+        for (int k = 0; k < local.size(); k++) {
+            Element el = local.get(k);
+            log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
+            if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
+                log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
+                continue;
+            }
+            if (el.getName().equals("compositeChoice")) {
+                // Create the choice
+                String choice = LocaleSelector.getAttribute(el, "choice");
+                var.addChoice(choice);
+                // for each choice, capture the settings
+                List<Element> lSetting = el.getChildren("compositeSetting");
+                for (int n = 0; n < lSetting.size(); n++) {
+                    Element settingElement = lSetting.get(n);
+                    String varName = LocaleSelector.getAttribute(settingElement, "label");
+                    String value = settingElement.getAttribute("value").getValue();
+                    var.addSetting(choice, varName, findVar(varName), value);
+                }
+            } else if (el.getName().equals("compositeChoiceGroup")) {
+                // no tree to manage as in enumGroup
+                handleCompositeValChildren(el, var);
+            }
+            log.debug("element processed");
+        }
     }
 
     protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
@@ -467,7 +500,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
-
         int count = 0;
         IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
@@ -484,7 +516,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
 
         v1.nItems(count);
-        handleENumValChildren(child, v1);
+        handleEnumValChildren(child, v1);
         v1.lastItem();
         return v;
     }
@@ -493,7 +525,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
      */
-    protected void handleENumValChildren(Element e, EnumVariableValue var) {
+    protected void handleEnumValChildren(Element e, EnumVariableValue var) {
         List<Element> local = e.getChildren();
         for (int k = 0; k < local.size(); k++) {
             Element el = local.get(k);
@@ -512,11 +544,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 }
             } else if (el.getName().equals("enumChoiceGroup")) {
                 var.startGroup(LocaleSelector.getAttribute(el, "name"));
-                handleENumValChildren(el, var);
+                handleEnumValChildren(el, var);
                 var.endGroup();
             }
             log.debug("element processed");
-
         }
     }
 
