@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-08-->
 
 <html lang="fr">
 <head>
@@ -27,7 +27,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>Le Tableau Lumi&egrave;re</h1>
-
+	  
       <p>Les Lumi&egrave;res sont des bits de sortie
       num&eacute;rique qui fonctionnent comme des interrupteurs
       marche/arr&ecirc;t. Les Lumi&egrave;res ont &eacute;t&eacute;
@@ -67,16 +67,21 @@
       besoins.</p>
 
       <p>En option, un lumi&egrave;re peut &ecirc;tre
-      command&eacute;e de cinq fa&ccedil;ons: elle peut &ecirc;tre
-      command&eacute;e par un seul capteur, par deux capteurs, par
-      un aiguillage, par l'horloge rapide JMRI , ou allum&eacute;e
-      pendant un certain temps par un capteur. Un ou plusieurs des
+      command&eacute;e de cinq fa&ccedil;ons: 
+      <ul>
+         <li> par un seul capteur </li>
+         <li> par deux capteurs </li>
+         <li> par un taux de participation </li>
+         <li> par l'horloge rapide JMRI </li>
+         <li> ou activ&eacute; pendant un temps sp&eacute;cifi&eacute; par un capteur. </li>
+       </ul> 
+      
+      Une ou plusieurs des
       ces coommandes peuvent &ecirc;tre sp&eacute;cifi&eacute;es
       quand la lumi&egrave;re est cr&eacute;&eacute;e, ou quand
-      elle est &eacute;dit&eacute;e via le tableau
-      lumi&egrave;re.</p>
+      elle est &eacute;dit&eacute;e via le Tableau Lumi&egrave;re.</p>
 
-      <p>Quand une lumi&egrave;re est cr&eacute;&eacute;e, ou quand
+      <p>Quand une Lumi&egrave;re est cr&eacute;&eacute;e, ou quand
       elle est lue &agrave; partir d'un fichier de configuration,
       la lumi&egrave;re est "activ&eacute;e", elle est mise en
       place pour surveiller automatiquement les changements de
@@ -103,6 +108,13 @@
       <p>Une lumi&egrave;re peut aussi &ecirc;tre une variable
       lumi&egrave;re. Cela d&eacute;pendra de l'interface et du
       mat&eacute;riel de pilotage de la lumi&egrave;re.</p>
+      
+      <img src = "images/LightTableGraphic.png" height = "135" width = "276"
+       align = "right" alt = "Colonne d'&eacute;tat de la lumi&egrave;re graphique">
+       <p> Choisissez entre l'affichage textuel et graphique de l'&eacute;tat 
+       Lumi&egrave;re dans les <a href=
+       "../../../apps TabbedPreferences.shtml#Display"> Pr&eacute;f&eacute;rences d'affichage </a>.
+       </ p>
 
       <h2>Commutation d'une Lumi&egrave;re Allum&eacute;e(On) ou
       &eacute;teinte(Off)</h2>
@@ -182,8 +194,11 @@
       configuration. Lorsque les Lumi&egrave;res sont
       charg&eacute;es &agrave; partir d'un fichier de
       configuration, elles sont tous activ&eacute;es.</p>
+      
+      <p> Retour &agrave; l' <a href="../../../../html/tools/Lights.shtml"> 
+		  intro de l'aide de Lumi&egrave;res </a>. </p>
       <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
