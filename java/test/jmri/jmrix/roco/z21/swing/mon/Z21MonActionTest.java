@@ -41,6 +41,7 @@ public class Z21MonActionTest {
     public void tearDown() {
         jmri.InstanceManager.deregister(memo, jmri.jmrix.roco.z21.Z21SystemConnectionMemo.class);
         memo=null;
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
     }

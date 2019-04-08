@@ -11,6 +11,9 @@ import org.junit.*;
  **/
 
 public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgrTestBase {
+        
+    private Z21SystemConnectionMemo memo;
+    private Z21InterfaceScaffold tc;
 
     @Override
     public String getSystemName(String i) {
@@ -33,8 +36,8 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
+        memo = new Z21SystemConnectionMemo();
+        tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         l = new Z21ReporterManager(memo);
@@ -42,6 +45,10 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
 
    @After
    public void tearDown(){
+        l = null;
+        tc.terminateThreads();
+        memo = null;
+        tc = null;
         JUnitUtil.tearDown();
    }
 
