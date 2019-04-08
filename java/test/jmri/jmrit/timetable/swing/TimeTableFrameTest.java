@@ -66,8 +66,12 @@ public class TimeTableFrameTest {
         Assert.assertTrue(timeMenuItem.getText().equals(Bundle.getMessage("MenuTrainTimes")));  // NOI18N
         new JMenuItemOperator(timeMenuItem).doClick();
 
+        JMenuItem twoPageMenuItem = (JMenuItem)jpm.getComponent(2);
+        Assert.assertTrue(twoPageMenuItem.getText().equals(Bundle.getMessage("MenuTwoPage")));  // NOI18N
+        new JMenuItemOperator(twoPageMenuItem).doClick();
+
         Thread openDialog = createModalDialogOperatorThread("Open", Bundle.getMessage("ButtonCancel"), "openDialog");  // NOI18N
-        JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(2);
+        JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(4);
         Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImportSgn")));  // NOI18N
         new JMenuItemOperator(importMenuItem).doClick();
         JUnitUtil.waitFor(()->{return !(openDialog.isAlive());}, "open dialog finished");
@@ -457,7 +461,7 @@ public class TimeTableFrameTest {
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline"}));  // NOI18N
         Thread misc1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonOK"), "misc1");  // NOI18N
-        new JButtonOperator(_jfo, Bundle.getMessage("ButtonGraph")).doClick();  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonDisplay")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(misc1.isAlive());}, "misc1 finished");
 
         // Other buttons
