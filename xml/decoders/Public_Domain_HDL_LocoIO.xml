@@ -47,7 +47,7 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-04-07</date>
+        <date>2019-04-08</date>
         <authorinitials>EB</authorinitials>
         <revremark>Use compositeVal type values (ports 1-5 for now), updated decoder schema, add LocoServo,
             add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7)
@@ -56,7 +56,7 @@
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
-  <version author="Egbert Broerse" version="3" lastUpdated="20190407"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190408"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -104,6 +104,7 @@
       <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139">
           <decVal min="0" max="15"/>
           <label>Blink Rate:</label>
+          <choice xml:lang="nl">Knippertempo:</choice>
           <tooltip>Choose from 0=none to 15=fast</tooltip>
       </variable>
 
@@ -113,21 +114,30 @@
         <tooltip>Default: unselected = Active Low</tooltip>
       </variable>
 
-      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0">
-          <enumVal>
-              <enumChoice choice="0" value="0" exclude="101,102,103,104,105,106">
-                  <choice>Normal Ports</choice>
-                  <choice xml:lang="nl">Normaal</choice>
-              </enumChoice>
-              <enumChoice choice="2" value="2" include="101,102,103,104,105,106">
-                  <choice>2-Position Servo</choice>
-              </enumChoice>
-              <enumChoice choice="3" value="3" include="102,103,104,105,106">
-                  <choice>4-Position Servo</choice>
-              </enumChoice>
-          </enumVal>
-          <label>Board Port type:</label>
-          <tooltip>Select how the ports on this board should operate</tooltip>
+      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0" exclude="101,102,103,104,105,106">
+        <enumVal>
+          <enumChoice choice="0" value="0" exclude="101,102,103,104,105,106">
+              <choice>Normal Ports</choice>
+              <choice xml:lang="nl">Normaal</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Board Port type:</label>
+        <tooltip>How the ports on this board should operate</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="2" include="101,102,103,104,105,106">
+        <enumVal>
+            <enumChoice choice="2" value="2">
+                <choice>2-Position Servos</choice>
+                <choice xml:lang="nl">2-Positie Servo's</choice>
+            </enumChoice>
+            <enumChoice choice="3" value="3">
+                <choice>4-Position Servos</choice>
+                <choice xml:lang="nl">4-Positie Servo's</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Board Port type:</label>
+        <tooltip>How the servo ports 5-12 on this board should operate</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0" exclude="135,139">
@@ -1471,6 +1481,7 @@
 
         </compositeVal>
         <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
 
