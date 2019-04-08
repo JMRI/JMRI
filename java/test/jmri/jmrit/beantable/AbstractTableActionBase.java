@@ -89,6 +89,7 @@ public abstract class AbstractTableActionBase {
 
         // find the "Add... " button and press it.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f1);

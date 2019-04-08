@@ -60,6 +60,7 @@ public class TransitTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	    //Enter 1 in the text field labeled "System Name:"
@@ -91,6 +92,7 @@ public class TransitTableActionTest extends AbstractTableActionBase {
         ((JTextField)jlo.getLabelFor()).setText("1");
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
 	// find the "Edit" button and press it.  This may be in the table body.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonEdit"));
