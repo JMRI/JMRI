@@ -3,7 +3,6 @@ package jmri.implementation;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
@@ -12,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
+import jmri.beans.Beans;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -164,7 +164,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
-        if (listener != null) {
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }
@@ -174,7 +174,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
-        if (listener != null && !Arrays.asList(pcs.getPropertyChangeListeners()).contains(listener)) {
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }

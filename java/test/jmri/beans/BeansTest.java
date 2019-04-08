@@ -6,6 +6,9 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeListenerProxy;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -254,11 +257,25 @@ public class BeansTest {
         }));
     }
 
+    @Test
+    public void testContains() {
+        Listener l1 = new Listener();
+        Listener l2 = new Listener();
+        Listener l3 = new Listener();
+        PropertyChangeListener[] listeners = {l1, l2};
+        assertTrue(Beans.contains(listeners, l1));
+        assertTrue(Beans.contains(listeners, l2));
+        assertFalse(Beans.contains(listeners, l3));
+        listeners[1] = new PropertyChangeListenerProxy("foo", l2);
+        assertTrue(Beans.contains(listeners, l1));
+        assertTrue(Beans.contains(listeners, l2));
+        assertFalse(Beans.contains(listeners, l3));
+    }
+
     /*
      * The following two classes define the properties "stringProperty" and
      * "indexedProperty", however ArbitraryTarget uses a HashMap to define those
-     * properties, while Target uses standard JavaBeans APIs and
-     * conventions.
+     * properties, while Target uses standard JavaBeans APIs and conventions.
      */
     public class Target extends UnboundBean {
 
@@ -282,7 +299,7 @@ public class BeansTest {
         }
 
         /*
-         * Throws IndexOutOfBoundsException if index > size. 
+         * Throws IndexOutOfBoundsException if index > size.
          */
         public void setIndexedProperty(int index, String string) {
             if (index < this.indexedProperty.size()) {
@@ -294,8 +311,8 @@ public class BeansTest {
     }
 
     /*
-     * The properties "stringProperty" and "indexedProperty" are not visible
-     * in the "*Introspected*" tests, but are exposed using jmri.beans.Beans
+     * The properties "stringProperty" and "indexedProperty" are not visible in
+     * the "*Introspected*" tests, but are exposed using jmri.beans.Beans
      * methods in other tests.
      */
     public class ArbitraryTarget extends UnboundArbitraryBean {
@@ -304,5 +321,17 @@ public class BeansTest {
             this.setProperty(STRING_PROPERTY, OLD_VALUE);
             this.setIndexedProperty(INDEXED_PROPERTY, 0, OLD_VALUE);
         }
+    }
+
+    /*
+     * A simple listener class to avoid too many anonymous identical objects.
+     */
+    private class Listener implements PropertyChangeListener {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            // do nothing
+        }
+        
     }
 }
