@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
@@ -37,10 +38,14 @@ public class JsonTimeHttpService extends JsonHttpService {
     // using @Nullable to override @Nonnull in super class
     public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
+        return doGet(type, timebase, timebase.getTime(), locale);
+    }
+
+    public JsonNode doGet(String type, Timebase timebase, Date date, Locale locale) throws JsonException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new StdDateFormat().format(timebase.getTime()));
+        data.put(TIME, new StdDateFormat().format(date));
         data.put(RATE, timebase.getRate());
         data.put(STATE, timebase.getRun() ? ON : OFF);
         return root;
