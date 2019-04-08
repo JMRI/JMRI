@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-08-->
 
 <html lang="fr">
 <head>
@@ -11,17 +11,10 @@
   <title>JMRI: Adding/Editing Routes</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help Route Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -31,13 +24,16 @@
     <div id="mainContent">
       <h1><a name="Adding/Editing Routes"></a> Ajout/modification
       d'Itin&eacute;raires</h1>
+      
+      <p> Apr&#232;s avoir cliqu&#233; sur <strong> Ajouter ... </strong> sous la 
+      table d'Itin&#233;raire, le panneau suivant appara&#238;t: </p> <a href= 
+      "images/RouteAddEdit.png"> <img src = "images / RouteAddEdit .png 
+      "width =" 518 "height =" 394 "> </a>
 
-      <p>La premi&egrave;re chose que vous devez faire lors de la
-      cr&eacute;ation d'un Itin&eacute;raire c'est son nom. Dans la
-      case "Nom syst&egrave;me Itin&eacute;raire" entrez un nom
-      unique pour votre itin&eacute;raire. Vous pouvez
-      &eacute;ventuellement entrer un nom plus descriptif dans la
-      boite "Nom Utilisateur Itin&eacute;raire " .</p>
+      <p>La premi&#232;re chose &#224; faire lors de la cr&#233;ation d'un itin&#233;raire 
+      est de le nommer. Dans la zone intitul&#233;e "Nom Syst&#232;me", entrez 
+      un nom unique pour votre itin&#233;raire. Vous pouvez &#233;ventuellement 
+      entrer un nom plus descriptif dans la case "Nom Utilisateur".</P>
 
       <p>Le bouton radio en dessous du "Nom Utilisateur de
       l'Itin&eacute;raire" vous permet d'afficher seuls les
@@ -55,24 +51,28 @@
       d&eacute;clench&eacute; s&eacute;lectionnez "D&eacute;finir
       D&eacute;vi&eacute;" dans le menu d&eacute;roulant.</p>
 
-      <p>Dessous les tableaux aiguillage et capteurs il y a trois
-      caract&eacute;ristiques en option. Lecture d'un fichier son,
-      ex&eacute;cution d'un script, et sp&eacute;cifier &agrave; un
-      capteur d'&ecirc;tre actif quand tous les aiguillages
-      sp&eacute;cifi&eacute;s pour l'Itin&eacute;raire sont
-      correctement align&eacute;s. Les fichiers Audio et Scripts
-      sont configur&eacute;s en appuyant sur le bouton
-      "ConfigurationSet" appropri&eacute; et en
-      s&eacute;lectionnant le fichier sonore &agrave; jou&eacute;,
-      ou le fichier de script &agrave; ex&eacute;cuter lorsque
-      l'Itin&eacute;raire est d&eacute;clench&eacute;. Pour ajouter
-      un capteur qui va devenir actif lorsque les aiguillages sont
-      align&eacute;s, entrez le nom syst&egrave;me du capteur dans
-      la bo&icirc;te. Le capteur va devenir Actif lorsque les
-      aiguillages sont correctement align&eacute;s pour
-      l'Itin&eacute;raire.</p>
+      <p>Dessous les tableaux Aiguillage et Capteurs il y a trois
+      proc&#233;dures en option:</p>
 
-      <p>Un itin&eacute;raire peut &eacute;ventuellement &ecirc;tre
+       <ul>
+         <li> Lecture d'un fichier son </li>
+
+         <li> Ex&#233;cuter un script et </li>li>
+
+         <li> Sp&#233;cifier un capteur &#224; activer lorsque tous les 
+         aiguillages sp&#233;cifi&#233;s pour l'itin&#233;raire sont correctement align&#233;s. </li>
+       </ul>
+       
+        Les fichiers Audio et Scripts sont configur&eacute;s en appuyant 
+        sur le bouton "...." appropri&eacute; et en s&eacute;lectionnant 
+        le fichier son &agrave; jou&eacute;, ou le fichier de script &agrave; 
+        ex&eacute;cuter lorsque l'Itin&eacute;raire est d&eacute;clench&eacute;.<br>
+        Pour ajouter un Capteur qui va devenir actif lorsque tous les 
+        aiguillages sont align&eacute;s, s&#233;lectionnez le Capteur dans la
+		liste. Le Capteur deviendra Actif lorsque les Aiguillages seront 
+		correctement align&eacute;s pour l'Itin&eacute;raire.</p>
+
+      <p>Un Itin&eacute;raire peut &eacute;ventuellement &ecirc;tre
       d&eacute;clench&eacute; par l'un des trois capteurs
       indiqu&eacute; dans le tableau. Entrez leurs noms (nom
       syst&egrave;me ou nom utilisateur) et s&eacute;lectionner
@@ -82,38 +82,33 @@
       d'Itin&eacute;raires &agrave; partir de Capteurs</a> .</p>
 
       <p>Une Itin&eacute;raire peut aussi &ecirc;tre
-      d&eacute;clench&eacute; par un aiguillage. Entrez le nom de
-      l'aiguillage (nom syst&egrave;me ou nom d'utilisateur) et
-      s&eacute;lectionnez l'action de l'aiguillage qui va
-      d&eacute;clencher l'Itin&eacute;raire. Les choix logique sont
-      expliqu&eacute;s en d&eacute;tail dans <a href=
+      d&eacute;clench&eacute; par un Aiguillage. Entrez le nom de
+      l'Aiguillage depuis la liste et s&eacute;lectionnez l'Action de 
+      l'aiguillage qui va d&eacute;clencher l'Itin&eacute;raire. Les 
+      choix Logique sont expliqu&eacute;s en d&eacute;tail dans <a href=
       "../../../../html/tools/Routes.shtml#turnoutlogic">Commande
       Itin&eacute;raires &agrave; partir d'un Aiguillage</a>.</p>
 
       <p>Dans certains cas, il pourrait &ecirc;tre
-      n&eacute;cessaire de retarder ou de ralentir l'ordre que JMRI
-      envoie pour changer les aiguillages sur le r&eacute;seau. En
-      entrant une valeur dans la case "retard &agrave; ajouter:",
-      vous pouvez augmenter la quantit&eacute; de temps (en
-      millisecondes) entre l'envoi de la commande et le moment
-      o&ugrave; l'aiguillage est d&eacute;clench&eacute;. Par
-      d&eacute;faut JMRI ins&egrave;re un d&eacute;lai minimum de
+      n&eacute;cessaire de retarder (de ralentir) l'ordre que JMRI
+      envoie pour changer les Aiguillages sur le r&eacute;seau. En
+      entrant une valeur dans la case "Retard Ajouter:",
+      vous pouvez augmenter l'intervalle de temps (en millisecondes) 
+      entre les commandes d'activation lorsque cet itin&#233;raire est 
+      d&#233;clench&#233;. Par d&eacute;faut JMRI ins&egrave;re un d&eacute;lai minimum de
       250 millisecondes (1/4 de seconde) entre les commandes des
       aiguillages.</p>
 
-      <p>La zone de texte suivante vous permet d'entrer un
-      aiguillage qui verrouille cette voie. Lorsqu'un
-      Itin&eacute;raire est verrouill&eacute; tous les aiguillages
-      d&eacute;finis pour l'itin&eacute;raire deviennent
-      verrouill&eacute;s. Voir <a href=
-      "#Turnout%20lock%20feature">ci-dessous</a> pour plus
-      d'info.</p>
+      <p> Le prochain menu d&#233;roulant vous permet de s&#233;lectionner un 
+      aiguillage qui verrouille cet itin&#233;raire. Lorsqu'un itin&#233;raire 
+      est verrouill&#233;, tous les aiguillages d&#233;finis pour l'itin&#233;raire 
+      deviennent <a href= "#Turnout%20lock%20feature"> verrouill&#233;s </a>. </ P>
 
       <p>Une fois que vous &ecirc;tes satisfait de votre
       itin&eacute;raire, utilisez le bouton " Ajouter
       Itin&eacute;raire" pour cr&eacute;er l'itin&eacute;raire.
       Pour enregistrer votre Itin&eacute;raire, vous devez utiliser
-      la commande "Stocker Panneau "qui se trouve sous le" Panneaux
+      la commande "Enregistrer Panneau "qui se trouve sous le" Panneaux
       "du menu principal. Si vous d&eacute;cider que vous devez
       changer votre itin&eacute;raire, utiliser la fonction
       "Modifier" et "Mise &agrave; jour Itin&eacute;raire "pour
@@ -137,6 +132,22 @@
       Tous les aiguillages qui sont surveill&eacute;s par le
       programme JMRI et qui sont inclus dans l'itin&eacute;raire
       seront verrouill&eacute;s.</p>
+      
+      <h2><a name="Turnout Lock feature"> Fonction Verrouillage Aiguillage</a> </h2
+
+	   <p>La fonction Verrouillage Aiguillage vous permet de d&#233;sactiver 
+	   s&#233;lectivement les commandes d'accessoires (d'aiguillage) depuis 
+	   les cabines et/ou les boutons-poussoirs câbl&#233;s localement. JMRI 
+	   d&#233;sactive les boutons de commande en envoyant des commandes de 
+	   d&#233;sactivation de bouton de commande aux d&#233;codeurs Aiguillage 
+	   lorsque la route est verrouill&#233;e et active les boutons de commande 
+	   lorsque la route est d&#233;verrouill&#233;e. Lors du verrouillage d'une 
+	   commande Aiguillage depuis cabine, le programme JMRI surveillera 
+	   l'adresse de l'accessoire d'Aiguillage et, s'il d&#233;tecte une 
+	   commande de changement depuis une cabine, annulera imm&#233;diatement 
+	   la commande en envoyant la commande oppos&#233;e &#224; l'Aiguillage. Tous les 
+	   Aiguillages surveill&#233;s par le programme JMRI et inclus dans 
+	   l'Itin&#233;raire seront verrouill&#233;s. </p>
 
       <p>Pour vous aider &agrave; s&eacute;lectionner un ensemble
       d'appareils de voie &agrave; verrouiller ou &agrave;
@@ -146,18 +157,20 @@
       contr&ocirc;le de l' aiguillage en option est disponible.
       Vous pouvez utiliser la commande de verrouillage de
       l'aiguillage pour activer ou d&eacute;sactiver la fonction de
-      verrouillage d'itin&eacute;raire depuis un du panneau
-      d'ic&ocirc;ne d'aiguillage, un aiguillage du TCO ou un
-      aiguillage fant&ocirc;me. Une aiguillage fant&ocirc;me est un
+      verrouillage d'itin&eacute;raire depuis un du Panneau
+      d'ic&ocirc;ne d'Aiguillage, un aiguillage du TCO ou un
+      aiguillage fant&ocirc;me. Un Aiguillage fant&ocirc;me est un
       aiguillage qui peut &ecirc;tre consult&eacute; par votre
       cabine, mais n'existe pas r&eacute;ellement sur votre
       r&eacute;seau.</p>
 
-      <p>Pour plus d'informations sur comment configurer le
-      verrouillage d'aiguillage S'il vous pla&icirc;t voir la
-      <a href="TurnoutTable.shtml#Turnout%20lock%20feature">Page
-      Tableau Aiguillage</a>.</p><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+      <p> Pour plus d'informations sur la d&#233;finition du verrouillage 
+      des aiguillages, voir la <a href= 
+      "TurnoutTable.shtml#Turnout%20lock%20feature"> page Tableau Aiguillage</a>. </p>
+
+       <p> Retour &#224; la <a href="RouteTable.shtml"> page d'aide du Tableau Iin&#233;raire</a>. </p>
+		 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
