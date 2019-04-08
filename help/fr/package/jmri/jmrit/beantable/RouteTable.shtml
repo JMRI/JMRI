@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-08-->
 
 <html lang="fr">
 <head>
@@ -13,15 +13,7 @@
   "text/html; charset=us-ascii">
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI help Route Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -107,13 +99,13 @@
 
         <dt>Modifier</dt>
 
-        <dd>Appuyez sur ce bouton pour modifier
+        <dd>Appuyez sur un de ces boutons pour modifier
         l'itin&eacute;raire. Pour plus d'informations, voir:
-        <a href="RouteAddEdit.shtml">Ajout/modification
+        <a href="RouteAddEdit.shtml">Ajout/Modification
         d'itin&eacute;raires</a>.</dd>
       </dl>
 
-      <h3>Commandes Tableau Itin&eacute;raire</h3>Il y a aussi un
+      <h3>Commandes Tableau Itin&eacute;raire</h3>Il y a un
       bouton au bas du tableau Itin&eacute;raire
 
       <dl>
@@ -122,49 +114,14 @@
         <dd>Appuyez sur ce bouton pour ajouter un nouvel
         itin&eacute;raire. Pour plus d'informations, voir <a href=
         "RouteAddEdit.shtml">Ajout/modification
-        d'itin&eacute;raires</a>.</dd>
+        d'Itin&eacute;raires</a>.</dd>
       </dl>
 
-      <h2><a name="Turnout lock feature">Fonction de verrouillage
-      Aiguillage</a></h2>
+      <h2><a name="Turnout lock feature">Verrouillage Aiguillage</a></h2>
 
-      <p>La fonction de verrouillage d'aiguillage vous permet de
-      d&eacute;sactiver de mani&egrave;re s&eacute;lective des
-      commandes d'accessoires (aiguillages) &agrave; partir de
-      pupitre et/ou boutons - poussoirs locaux c&acirc;bl&eacute;s.
-      JMRI d&eacute;sactive les poussoirs en envoyant une commande
-      de d&eacute;sactivation au d&eacute;codeur d'aiguillage
-      lorsque l'itin&eacute;raire est bloqu&eacute;, et autorise
-      les boutons poussoirs lorsque l'itin&eacute;raire est
-      d&eacute;verrouill&eacute;. Lors du verrouillage d'un
-      aiguillage &agrave; partir d'un pupitre de commandes , le
-      programme JMRI surveille l'adresse accessoire de l'aiguillage
-      et si il d&eacute;tecte une commande de changement depuis un
-      pupitre, il va annuler la commande imm&eacute;diatement en
-      envoyant la commande oppos&eacute;e &agrave; l'aiguillage.
-      Tous les aiguillages qui sont surveill&eacute;s par le
-      programme JMRI et sont inclus dans l'itin&eacute;raire seront
-      verrouill&eacute;s.</p>
-
-      <p>Pour vous aider &agrave; s&eacute;lectionner un ensemble
-      d'appareils de voie pour verrouiller ou d&eacute;verrouiller,
-      un itin&eacute;raire peut &ecirc;tre verrouill&eacute; ou
-      d&eacute;verrouill&eacute;. Dans la fen&ecirc;tre
-      &eacute;diter l'itin&eacute;raire, un verrou commandant en
-      option l'aiguillage est disponible. Vous pouvez utiliser la
-      commande de verrouillage de l'aiguillage pour activer ou
-      d&eacute;sactiver la fonction de verrouillage
-      itin&eacute;raire depuis une ic&ocirc;ne du panneau
-      d'aiguillage, un aiguillage TCO ou un aiguillage
-      fant&ocirc;me. Une aiguillage fant&ocirc;me est un aiguillage
-      qui peut &ecirc;tre consult&eacute; par votre pupitre, mais
-      n'existe pas r&eacute;ellement sur votre r&eacute;seau.</p>
-
-      <p>Pour plus d'informations sur comment configurer les
-      aiguillages devant &ecirc;tre verrouill&eacute;s S'il vous
-      pla&icirc;t voir la <a href=
-      "TurnoutTable.shtml#Turnout%20lock%20feature">Page Table
-      Aiguillage</a>.</p><!--#include virtual="/Footer" -->
+      <p>Pour plus d'informations sur  les Itin&#233;raires, voir la <a href=
+      "../../../../html/tools/Routes.shtml">Page d'aide 
+      Itin&#233;raires</a>.</p><!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
