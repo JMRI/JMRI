@@ -123,7 +123,7 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("Service is not listening to time", 0, manager.getMinuteChangeListeners().length);
         Assert.assertEquals("Service is not listening to changes", 0, manager.getNumPropertyChangeListeners());
     }
-
+    
     @Test
     public void testOnList() {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
