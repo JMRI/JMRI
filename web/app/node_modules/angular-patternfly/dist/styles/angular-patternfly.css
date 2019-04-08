@@ -368,7 +368,7 @@ pf-topology {
   stroke-width: 0px;
 }
 .pf-topology-svg g.weak use {
-  opacity: .6;
+  opacity: 0.6;
 }
 .pf-topology-svg g circle {
   stroke: #aaa;
@@ -582,7 +582,7 @@ pf-topology {
 pf-filter-panel .dropdown > .dropdown-menu,
 pf-filter-panel .input-group-btn > .dropdown-menu {
   margin-top: 5px;
-  opacity: .95;
+  opacity: 0.95;
 }
 pf-filter-panel input:-moz-placeholder {
   font-style: italic;
