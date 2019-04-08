@@ -1,27 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- UpDated by Herv&#233; Blorec 2019-04-06-->
 
 <html lang="fr">
-<head>
+head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Adding/Editing Sensors</title>
+  <title>JMRI: Add/Edit Sections</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI help Sensor Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Section Add Edit">
+  <!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -29,277 +21,184 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Ajout/Modification de capteurs</h1>
+	  <h1>Ajout/Modification de Sections</h1> <a name="addSection" id= "addSection"> </a>
 
-      <p>Lorsque vous ajoutez un capteur, vous s&eacute;lectionnez
-      dans la liste d&eacute;roulante le systeme auquel le capteur
-      est fix&eacute; &agrave;.</p><img src="AddSensor.png">
+      <h2>Ajout d'une nouvelle Section</h2>
 
-      <p>Entrez une adresse valide pour ce capteur et si vous le
-      souhaitez saisissez un nom utilisateur qui peut &ecirc;tre
-      tout ce que vous voulez pour d&eacute;crire le capteur.</p>
+      <p>Pour ajouter une nouvelle Section, proc&#233;dez comme suit:</p>
 
-      <h2>Cr&eacute;er un nombre de capteurs</h2>
+      <ol>
+        <li>
+          <p>Cliquez sur <b><a href="SectionTable.shtml">Sections</a></b> 
+          dans le sous-menu <b>Tableaux</b> du menu <b>Outils</b> pour 
+          afficher la Tableau de la section. <br>
+		  En bas &#224; gauche, cliquez sur le bouton <b>Ajouter ...</b> en 
+		  bas du Tableau pour afficher le volet Ajouter une section:</p> 
+		  <img src = "images/SectionAddFrame.png" height = " 708 "width =" 693 ">
+       </li>
 
-      <p>Il est &eacute;galement possible de cr&eacute;er un
-      certain nombre de capteurs.<br>
-      O&ugrave; est affich&eacute; "Ajouter une plage" cochez la
-      case pour l'activ&eacute;e.</p><img src=
-      "AddTurnoutNumber.png">
+        <li>
+          <p>Entrez un <b>Nom Syst&#232;me</b>, conform&#233;ment &#224; la convention 
+          JMRI. Les sections &#233;tant des objets internes, la premi&#232;re 
+          lettre doit &#234;tre "I" (pour interne). La deuxi&#232;me lettre devrait 
+          &#234;tre "Y" pour indiquer une section. Ceci est g&#233;n&#233;ralement suivi 
+          d'un nombre, mais le programme acceptera tous les caract&#232;res 
+          num&#233;riques ou alphab&#233;tiques. Le Nom Syst&#232;me doit &#234;tre diff&#233;rent 
+          du Nom du Syst&#232;me des autres Sections. JMRI forcera tous les 
+          caract&#232;res alphab&#233;tiques du Nom Syst&#232;me en majuscules.</P>
+       </li>
 
-      <p>Lors de la validation de la case "Ajouter Plage", sera
-      ensuite activer le champ "nombre &agrave; ajouter". Ici
-      entrez le nombre de capteurs que vous souhaitez ajouter, ce
-      qui cr&eacute;era ensuite un num&eacute;ro de capteurs
-      s&eacute;quentiels.</p>Si un nom utilisateur n'a pas
-      &eacute;t&eacute; entr&eacute;, un num&eacute;ro sera
-      ajout&eacute; &agrave; la fin du nom pour garder chaque nom
-      utilisateur unique.
+        <li>
+          <p>Entrez un <b>Nom Utilisateur</b>. Toute cha&#238;ne de caract&#232;res 
+          diff&#233;rente du Nom Utilisateur d'autres sections sera accept&#233;e, 
+          mais il est conseill&#233; d'utiliser une cha&#238;ne d&#233;crivant l'utilisation 
+          pr&#233;vue de la section.</P>
+       </li>
 
-      <h2>Informations mat&eacute;rielles sp&eacute;cifiques</h2>
+        <li>
+          <p>Ajoutez ensuite <b>cCantons</b> &#224; la section. Chaque section 
+          doit avoir au moins un canton, mais peut en avoir plus. Les 
+          cantons doivent &#234;tre connect&#233;s et doivent &#234;tre entr&#233;s dans 
+          l'ordre. S&#233;lectionnez le canton dont vous souhaitez commencer 
+          la section dans le menu contextuel. &#193; tout moment pendant 
+          l'ajout de cantons, le menu contextuel r&#233;pertorie uniquement 
+          les cantons pouvant &#234;tre ajout&#233;s. Cliquez sur <b>Ajouter un 
+          canton s&#233;lectionn&#233;</b> pour ajouter le premier canton de la section.</P>
+       </li>
 
-      <h3>Num&eacute;ro NCE AIU pour la cartographie capteur
-      JMRI</h3>L'Unit&eacute; Auxilliaire d'Entr&eacute;e ou l'AIU
-      de NCE permet &agrave; lacentrale NCE de v&eacute;rifier
-      l'&eacute;tat des entr&eacute;es depuis le r&eacute;seau. Ils
-      sont r&eacute;f&eacute;renc&eacute;s dans JMRI comme capteurs
-      avec des noms comme "NS785". "NS" signifie "capteur NCE", et
-      785 est le num&eacute;ro d'une Entr&eacute;e capteur
-      sp&eacute;cifique.
+        <li>
+          <p>Si la section doit avoir plusieurs cantons, ajoutez plus 
+          de cantons de la m&#234;me mani&#232;re. S&#233;lectionnez le canton &#224; ajouter 
+          dans le menu contextuel, puis cliquez sur <b>Ajouter un canton 
+          s&#233;lectionn&#233;</b>. Remarque importante: l'ordre des cantons ajout&#233; 
+          d&#233;termine les directions <b>AVANT</b> et <b>ARRI&#200;RE</b> de 
+          la section. La direction AVANT va du canton sup&#233;rieur au canton 
+          inf&#233;rieur. Si vous souhaitez recommencer &#224; tout moment, cliquez 
+          sur <b>Effacer les cantons de la section</b> pour effacer le 
+          Tableau des Cantons et revenir &#224; l'&#233;tape 4 ci-dessus.</P>
+       </li>
 
-      <p>L'adresse mat&eacute;rielle peut &ecirc;tre saisi de deux
-      fa&ccedil;ons diff&eacute;rentes</p>
+        <li>
+          <p>D&#233;finissez ensuite la <b>direction de d&#233;placement</b> de 
+          chaque <b>point d'entr&#233;e</b> sur la section. Au fur et &#224; mesure 
+          de la saisie des cantons, le programme a rassembl&#233; une liste de 
+          tous les points d'entr&#233;e dans la nouvelle section. Dans la 
+          colonne <b>Canton entr&#233; depuis</b>, tous les cantons qui ne 
+          figurent pas dans la section, mais qui sont connect&#233;s &#224; des 
+          cantons de la section sont r&#233;pertori&#233;s. Pour chaque canton, le 
+          Nom Syst&#232;me et le Nom Utilisateur (entre parenth&#232;ses) sont 
+          affich&#233;s, suivis de la direction du chemin. Normalement, la 
+          direction du Chemin peut &#234;tre ignor&#233;e, mais s'il existe deux 
+          points d'entr&#233;e appartenant au m&#234;me canton, la direction du 
+          Chemin devrait vous permettre d'identifier  qui est qui.</P>
 
-      <dl>
-        <dd>
-          <p>Entrez l'Adresse AIU de la cabine suivie par le
-          num&eacute;ro Pin s&eacute;par&eacute;s par un ":"<br>
-          Donc, pour un capteur sur Adresse Pupitre AIU 50, la
-          broche 2, vous voulez entrer dans le champ Adresse
-          mat&eacute;rielle:<br>
-          50:2</p>
+          Les entr&#233;es de colonne <p><b>Direction de trajet</b> sont des 
+          menus contextuels qui doivent &#234;tre d&#233;finis sur AVANT si un 
+          train entrant dans la section de ce canton circulera dans le 
+          sens AVANT de la section ou sur INVERSE si un train entrant dans 
+          ce cantonse circulera dans la direction INVERSE de la section. 
+          Remarque: ne confondez pas les instructions AVANT et INVERSE 
+          dans une section, avec les r&#233;glages avant et arri&#232;re d'un 
+          R&#233;gulateur. Il s'agit de deux choses diff&#233;rentes.</P>
 
-          <p>Le num&eacute;ro de capteurs peut aussi &ecirc;tre
-          trouv&eacute; et saisi dans le champ adresse
-          mat&eacute;rielle en utilisant la formule suivante:</p>
+          <p>Dans la mesure du possible, le programme est entr&#233; pour vous 
+          dans AVANT ou RETOUR. S'il ne pouvait d&#233;terminer la direction 
+          sans ambiguït&#233;, il entrait dans <b>INCONNU</b>. Vous devez 
+          attribuer toutes les directions de trajet INCONNUES avant de 
+          pouvoir cr&#233;er la nouvelle section. Remarque importante: 
+          <b>Les assignations de sens de d&#233;placement doivent &#234;tre 
+          coh&#233;rentes.</B> Si la nouvelle section ne comporte qu'un seul 
+          canton, la direction que vous choisissez comme AVANT n'a pas 
+          d'importance, mais une fois que vous avez fait ce choix, toutes 
+          les assignations doivent s'y conformer. Si la nouvelle section 
+          comporte plusieurs cantons, la direction VERS L'AVANT est celle 
+          qu'un train emprunterait s'il se d&#233;pla&#231;ait du canton sup&#233;rieur 
+          au canton inf&#233;rieur.</P>
+       </li>
+        
+		<li>
+          <p>Si vous utilisez des <b>capteurs de direction</b>, entrez 
+          les noms de vos <b>capteurs Avant</b> et <b>Capteur Inverse</b> 
+          dans les champs d&#233;sign&#233;s. Ces capteurs sont g&#233;n&#233;ralement des 
+          capteurs internes (commen&#231;ant par "IS" dans leur nom de syst&#232;me). 
+          Si vous n'avez pas encore cr&#233;&#233; les capteurs, entrez leurs Noms 
+          Syst&#232;me et les entr&#233;es seront effectu&#233;es dans la Tableau des 
+          Capteurs pour ces capteurs. Vous trouverez plus d'informations 
+          sur les capteurs de direction et leur utilisation dans l'aide 
+          de la <a href= "SectionTable.shtml"> Aide de la Tableau des 
+          Sections </a>. Si les capteurs de direction ne sont pas n&#233;cessaires, 
+          laissez les champs vides - vous pouvez toujours les ajouter 
+          ult&#233;rieurement via la fonction &#201;diter.</P>
+       </li>
 
-          <p>ID = Capteur (Adresse Cabine AIU - 1) * 16 + (NIP sur
-          AIU) -1</p>
+        <li>
+          <p>Si vous utilisez des <b>Capteurs d'Arr&#234;t</b>, entrez les noms 
+          de vos <b>capteurs d'Arr&#234;t Avant</b> et <b>Capteur d'Arr&#234;t Inverse</b> 
+          dans les champs correspondants. Ces capteurs sont des capteurs 
+          physiques sur le r&#233;seau qui deviennent actifs lorsqu'un train 
+          atteint la fin de la section lorsqu'il se d&#233;place dans le sens 
+          AVANT ou INVERSE. Si vous n'avez pas encore cr&#233;&#233; d'entr&#233;es pour 
+          ces capteurs dans le Tableau Capteurs, entrez leurs Noms Syst&#232;me 
+          et les entr&#233;es seront ajout&#233;es au Tableau Capteurs. Pour plus 
+          d'informations sur les capteurs d'Arr&#234;t et leur utilisation, 
+          reportez-vous &#224; la <a href="SectionTable.shtml"> aide relative 
+          au Tableau des Sections </a>. Si les Capteurs d'Arr&#234;t ne sont 
+          n&#233;cessaires, laissez les champs vides. Vous pourrez toujours 
+          les ajouter ult&#233;rieurement via la fonction &#201;diter.</P>
+       </li>
 
-          <p>Par exemple: L'adresse de la cabine AIU est
-          fix&eacute; &agrave; 50 et l'un des BD20s est
-          reli&eacute; &agrave; la broche 2. Par cons&eacute;quent,
-          l'ID du capteur serait:</p>
+        <li>
+          <p>Cliquez sur le bouton <b>Cr&#233;er</b> en bas de la fen&#234;tre. Si 
+          tout va bien, la fen&#234;tre se ferme et une nouvelle section appara&#238;t 
+          dans le Tableauau des sections. En cas de probl&#232;me, un message 
+          indiquant l'erreur et les mesures &#224; prendre pour le r&#233;soudre 
+          s'affiche. Corrigez l'erreur et cliquez &#224; nouveau sur <b>Cr&#233;er</b>.</P>
+       </li>
+     </ol>
 
-          <p>ID = Capteur (50 - 1) * 16 + (2) -1</p>
-        </dd>
+      <h2>Modification d'une section existante</h2>
+      <p>Pour &#233;diter une section existante, suivez cette proc&#233;dure:</p>
 
-        <dt>Capteur ID = 785</dt>
-      </dl>
+      <ol>
+        <li>
+          <p>Cliquez sur le bouton <b>Modifier</b> d'une section dans la 
+          <a href= "TableSectionTable.shtml"> Table de sections </a> pour 
+          afficher le volet Modifier une section. La fen&#234;tre sera identique 
+          &#224; celle pr&#233;sent&#233;e ci-dessus, sauf que le nom du syst&#232;me sera 
+          corrig&#233; et que le bouton <b>Cr&#233;er</b> sera remplac&#233; par un bouton 
+          <b>Mettre &#224; jour</b>.</P> 
+          <img src = "images/SectionEditFrame.png" height = "179" width = "693">
+       </li>
 
-      <h3>Capteur LocoNet pour Cartographie Capteur de JMRI</h3>ur
+        <li>
+          <p>Apportez les modifications ou les ajouts n&#233;cessaires aux 
+          informations de la fen&#234;tre. Notez que le Nom Syst&#232;me de la 
+          section modifi&#233;e ne peut pas &#234;tre modifi&#233;, mais le Nom Utilisateur 
+          peut &#234;tre modifi&#233;. Les &#233;l&#233;ments pouvant &#234;tre modifi&#233;s sont 
+          d&#233;crits <a href="#addSection"> ci-dessus </a> aux &#233;tapes 3 &#224; 8 
+          de la proc&#233;dure d'ajout d'une nouvelle section.</P>
+       </li>
 
-      <p>Les adresses des capteurs LocoNet sont constitu&eacute;s
-      de deux parties diff&eacute;rentes du num&eacute;ro de carte
-      et le num&eacute;ro de canal.<br>
-      Les capteurs peuvent &eacute;galement &ecirc;tre
-      configur&eacute;s &agrave; partir des adresses Aiguillages
-      pour l'entr&eacute;e Aux et interrupteur.</p>
+        <li>
+          <p>Apr&#232;s avoir modifi&#233; les informations de la section, cliquez 
+          sur <b>Mettre &#224; jour</b> pour modifier la section s&#233;lectionn&#233;e. 
+          Si tout va bien, la fen&#234;tre se fermera. En cas de probl&#232;me, 
+          un message indiquant l'erreur et les mesures &#224; prendre pour le 
+          r&#233;soudre s'affiche. Corrigez l'erreur et cliquez &#224; nouveau sur
+           <b>Mettre &#224; jour</b>.</P>
+       </li>
 
-      <p>L'adresse mat&eacute;rielle peut &ecirc;tre entr&eacute;e
-      suivant un certain nombre de fa&ccedil;ons
-      diff&eacute;rentes</p>
+        <li> Cliquez sur <b>Annuler</b> pour quitter sans modifier la 
+        section s&#233;lectionn&#233;e. Si la fen&#234;tre Ajouter/Modifier une section 
+        est rejet&#233;e (ferm&#233;e) lors de la modification, <b>Annuler</b> est 
+        automatiquement s&#233;lectionn&#233; et aucune modification n'est apport&#233;e 
+        &#224; la section s&#233;lectionn&#233;e.</Li>
+     </ol>
 
-      <dl>
-        <dd>
-          Entrez le num&eacute;ro de la carte, suivi par le
-          num&eacute;ro de canal s&eacute;par&eacute; par un
-          ":"<br>
-          Donc, pour un capteur de la carte 11, le canal 1 vous
-          pouvez entrer dans le champ Adresse
-          mat&eacute;rielle:<br>
-          11:01
-
-          <p>Pour les capteurs fix&eacute;s sur les aiguillages,
-          vous entrez dans le champ adresse mat&eacute;rielle "T:"
-          suivie du num&eacute;ro de l'aiguillage. Cela va ajouter
-          l'entr&eacute;e auxiliaire associ&eacute;e &agrave;
-          l'aiguillage, ajouter les entr&eacute;es auxiliaires et
-          du commutateur, cliquez sur ajouter la gamme et
-          d&eacute;finir le nombre &agrave; ajouter &agrave; 2.<br>
-          Donc pour le capteur fix&eacute; &agrave; l'aiguillage 81
-          vous saisissez les informations suivantes:<br>
-          T: 81</p>
-
-          <p>L'autre m&eacute;thode consiste &agrave; calculer
-          l'adresse du Capteur et l'ajouter manuellement dans le
-          champ adresse mat&eacute;rielle en utilisant la
-          m&eacute;thode suivante</p>
-
-          <p>Si vous voulez calculer l'adresse d'une entr&eacute;e
-          BDL168, vous pouvez utiliser<br>
-          = nombre 16 * (num&eacute;ro de la carte) +
-          (num&eacute;ro de canal) - 16</p>
-
-          <p>o&ugrave; "le num&eacute;ro de canal" va de 1 &agrave;
-          16. Par exemple, le premier circuit (num&eacute;ro 1) de
-          la carte 11 a le num&eacute;ro:<br>
-          num&eacute;ro = 16 * (11) + (1) - 16 = 161</p>comme nous
-          l'avons vu dans l'exemple ci-dessus.
-
-          <p>Si vous voulez calculer l'adresse d'une entr&eacute;e
-          auxiliaire DS54, utilisez:<br>
-          num&eacute;ro = 2 * (num&eacute;ro d'aiguillage - 1) +
-          1</p>
-
-          <p>Par exemple, l'entr&eacute;e auxiliaire
-          associ&eacute;e &agrave; l'aiguillage81 a le
-          num&eacute;ro:<br>
-          nombre = 2 * (81 - 1) + 1 = 161</p>
-
-          <p>Si c'est l'entr&eacute;e du commutateur, vous ajouter
-          un plus &agrave; ce que:<br>
-          num&eacute;ro= 2 * (num&eacute;ro d'aiguillage - 1) +
-          2</p>
-
-          <p>Par exemple, l'entr&eacute;e du commutateur
-          associ&eacute;s &agrave; l'aiguillage 12 a :<br>
-          num&eacute;ro = 2 * (12 - 1) + 2 = 24</p>
-        </dd>
-      </dl>
-
-      <h3>Les Capteur Lenz XpressNet pour la Cartographie Capteur
-      JMRI</h3>
-
-      <p>Les adresses capteurs XpressNet sont constitu&eacute;es de
-      deux parties diff&eacute;rentes l'adresse de l'encodeur de
-      r&eacute;trosignalisation et l'adresse du contact.</p>
-
-      <p>L'adresse mat&eacute;rielle peut &ecirc;tre entr&eacute;e
-      dans un certain nombre de fa&ccedil;ons
-      diff&eacute;rentes</p>
-
-      <dl>
-        <dd>
-          Entrez l'adresse de l'encodeur, suivie par le contact
-          s&eacute;par&eacute;s par un ":"<br>
-          Donc, pour un capteur sur l'adresse retour codeur 99,
-          contact 3 que vous saisissez dans le champ Adresse
-          mat&eacute;rielle:<br>
-          99:3
-
-          <p>Si vous souhaitez calculer l'adresse du capteur, il
-          faut soustraire 1 de l'adresse du retour codeur,
-          multipliez ce r&eacute;sultat par 8, puis ajouter le
-          num&eacute;ro de l'entr&eacute;e que vous utilisez.<br>
-          Par exemple, si vous utilisez le contact 3 sur un
-          encodeur avec l'adresse 99, 99 - 1 = 98. 98 * 8 = 784.
-          784 3 = 787.<br>
-          L'adresse des r&eacute;trosignalisations que vous allez
-          utiliser est 787.</p>
-        </dd>
-      </dl>
-
-      <h3>Capteur Maple et C/MRI pour Cartographie Capteur
-      JMRI</h3>
-
-      <p>Les adresses capteur Maple et C/MRI sont
-      constitu&eacute;es de deux parties diff&eacute;rentes un ID
-      de n&#399;ud et une ID broche/Capteur.</p>
-
-      <p>L'adresse mat&eacute;rielle peut &ecirc;tre entr&eacute;e
-      dans un certain nombre de fa&ccedil;ons
-      diff&eacute;rentes</p>
-
-      <dl>
-        <dd>
-          Entrez l'ID de n&#399;ud, suivi par l'ID du capteur,
-          s&eacute;par&eacute;s par un ":". Cette m&eacute;thode
-          peut &eacute;galement &ecirc;tre utilis&eacute; pour
-          l'adressage alternatif/&eacute;tendu.<br>
-          Donc, pour un capteur sur le n&#399;ud 2, broche 3 vous
-          pouvez entrer la ligne suivante dans le champ adresse
-          mat&eacute;rielle:<br>
-          02:03
-
-          <p>Une autre m&eacute;thode d'ajout de l'adresse du
-          capteur, est d'utiliser la formule suivante</p>Node Id x
-          1000 + broche.<br>
-          Donc, pour un capteur sur le n&#399;ud 2, broche 3<br>
-          (2x1000) 3 = 2003
-
-          <p>Pour utiliser le sch&eacute;ma adressage
-          alternatif/&eacute;tendu, se r&eacute;f&eacute;rer au
-          guide de connexion du mat&eacute;riel.</p>
-        </dd>
-      </dl>
-
-      <h3>Capteur Grapevine pour la Cartographie Capteur
-      JMRI</h3>Il ya trois types distincts de capteurs Grapevine:
-
-      <dl>
-        <dt>D&eacute;tecteurs S&eacute;rie Avanc&eacute;s</dt>
-
-        <dd>
-          Jusqu'&agrave; trois cartes D&eacute;tecteur S&eacute;rie
-          Avanc&eacute;e peuvent &ecirc;tre attach&eacute;es
-          &agrave; un n&#399;ud Grapevine. Chaqu'une offre huit
-          d&eacute;tecteurs d'occupation, et associe un
-          d&eacute;tecteur de mouvement avec chacun de ceux-ci.
-          Carte l
-
-          <table>
-            <tr>
-              <th></th>
-
-              <th>Occupation</th>
-
-              <th>Mouvement</th>
-            </tr>
-
-            <tr>
-              <td>Maitre</td>
-
-              <td>1-8</td>
-
-              <td>9-16</td>
-            </tr>
-
-            <tr>
-              <td>Esclave 1</td>
-
-              <td>17-24</td>
-
-              <td>25-32</td>
-            </tr>
-
-            <tr>
-              <td>Esclave 2</td>
-
-              <td>33-40</td>
-
-              <td>41-48</td>
-            </tr>
-          </table>
-        </dd>
-
-        <dt>Capteurs de S&eacute;rie Originaux</dt>
-
-        <dd>Les capteurs d'Occupation sur les cartes originales de
-        s&eacute;rie remplacent les capteurs fix&eacute;s par les
-        Cartes avanc&eacute;es aux adresses 1 &agrave; 8. Il n'y a
-        pas de d&eacute;tecteurs de mouvement dans ce cas.</dd>
-
-        <dt>Capteurs Parall&egrave;les</dt>
-
-        <dd>Pour les capteurs parall&egrave;les, les connecteurs
-        sur le n&#399;ud de Grapevine lui-m&ecirc;me, apparaissent
-        comme des capteurs JMRI 101 &agrave; 108 sur le n&#399;ud.
-        Si la seconde banque optionnelle de capteurs de
-        s&eacute;rie est pr&eacute;sente, ils apparaissent comme
-        des capteurs de 109 &agrave; 116 sur le n&#399;ud.</dd>
-      </dl><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+      <p>Retour &#224; la <a href="SectionTable.shtml"> page d'aide du Tableau 
+      des Sections </a>.</p>
+      <!-- # include virtual = "/Footer" -->
+   </div> <!-- closes #mainContent -->
+ </div> <!-- closes #mBody -->
 </body>
-</html>
+</html
