@@ -111,6 +111,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         JUnitUtil.dispose(f1);
@@ -128,6 +129,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
