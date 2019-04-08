@@ -116,7 +116,8 @@ public class JsonTimeSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", 100, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        Assert.assertEquals("Time is current", formatter.format(current),
+        Assert.assertEquals("Time is current",
+                formatter.format(current),
                 message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         service.onClose(); // clean up listeners
         Assert.assertEquals("Service is not listening to time", 0, manager.getMinuteChangeListeners().length);
