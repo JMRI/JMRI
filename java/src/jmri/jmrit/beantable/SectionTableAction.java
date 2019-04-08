@@ -331,7 +331,6 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     // add/create variables
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(5);
-    JLabel sysNameFixed = new JLabel("");
     JTextField userName = new JTextField(17);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -374,7 +373,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             // no section - should never happen, but protects against a $%^#@ exception
             return;
         }
-        sysNameFixed.setText(sName);
+        sysName.setText(sName);
         editMode = true;
         addEditPressed();
     }
@@ -389,7 +388,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
-            p.add(sysNameFixed);
+            sysNameLabel.setLabelFor(sysName);
             p.add(sysName);
             p.add(_autoSystemName);
             _autoSystemName.addActionListener(new ActionListener() {
@@ -407,6 +406,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             JPanel pu = new JPanel();
             pu.setLayout(new FlowLayout());
             pu.add(userNameLabel);
+            userNameLabel.setLabelFor(userName);
             pu.add(userName);
             userName.setToolTipText(rbx.getString("SectionUserNameHint"));
             addFrame.getContentPane().add(pu);
@@ -622,8 +622,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             sysNameLabel.setEnabled(true);
             create.setVisible(false);
             update.setVisible(true);
-            sysName.setVisible(false);
-            sysNameFixed.setVisible(true);
+            sysName.setVisible(true);
+            sysName.setEnabled(false);
             initializeEditInformation();
             addFrame.setTitle(Bundle.getMessage("TitleEditSection"));
         } else {
@@ -632,7 +632,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             create.setVisible(true);
             update.setVisible(false);
             sysName.setVisible(true);
-            sysNameFixed.setVisible(false);
+            sysName.setEnabled(true);
             autoSystemName();
             clearForCreate();
             addFrame.setTitle(Bundle.getMessage("TitleAddSection"));

@@ -159,10 +159,18 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 }
                 log.debug("Client Disconnect");
             }
-        } catch (SocketException | RuntimeException ex0 ) {
+        } catch (BindException bex ) {
+            log.error("Exception binding to port {}",COMMUNICATION_UDP_PORT,bex);
+	    return;
+        } catch (SocketException ex0 ) {
             log.error("Exception opening socket", ex0);
             return; // can't continue from this
-        }
+        } catch (RuntimeException rte) {
+            // subclasses of RuntimeException may occur at times other than 
+            // when opening the socket.
+            log.error("Exception performing operation on socket", rte);
+            return; // can't continue from this
+        } 
     } // end of run.
 
     // generateReply is the heart of the simulation.  It translates an
@@ -208,6 +216,18 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // Get Railcom Data
                 reply = getZ21RailComDataChangedReply();
                 break;
+             case 0x00A2:
+                  // loconet data from lan
+                  reply = null; // for now, no reply to this message.
+		  break;
+             case 0x00A3:
+                  // loconet dispatch address
+                  reply = getLocoNetDispatchReply(m);
+		  break;
+             case 0x00A4:
+                  // get loconet detector status
+                  reply = getLocoNetDetectorStatusReply(m);
+		  break;
              case 0x0060:
                 // get loco mode
              case 0x0061:
@@ -222,12 +242,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // program RMBus module
              case 0x0085:
                 // get system state
-             case 0x00A2:
-                  // loconet data from lan
-             case 0x00A3:
-                  // loconet dispatch address
-             case 0x00A4:
-                  // get loconet detector status
              default:
                 reply=getXPressNetUnknownCommandReply();
         }
@@ -326,6 +340,32 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         for (int i = 0; i < m.getNumDataElements(); i++) {
             r.setElement(i + 4, m.getElement(i));
         }
+        return(r);
+    }
+
+    private Z21Reply getLocoNetDispatchReply(Z21Message m) {
+        if(m==null) throw new IllegalArgumentException();
+        Z21Reply r=new Z21Reply();
+        r.setLength(m.getNumDataElements() + 5);
+        r.setOpCode(m.getOpCode());
+	int i;
+        for (i = 0; i < m.getNumDataElements(); i++) {
+            r.setElement(i + 4, m.getElement(i));
+        }
+	r.setElement(i+4,0x00);
+        return(r);
+    }
+
+    private Z21Reply getLocoNetDetectorStatusReply(Z21Message m) {
+        if(m==null) throw new IllegalArgumentException();
+        Z21Reply r=new Z21Reply();
+        r.setLength(m.getNumDataElements() + 5);
+        r.setOpCode(m.getOpCode());
+	int i;
+        for (i = 0; i < m.getNumDataElements(); i++) {
+            r.setElement(i + 4, m.getElement(i));
+        }
+	r.setElement(i+4,0x00);
         return(r);
     }
 

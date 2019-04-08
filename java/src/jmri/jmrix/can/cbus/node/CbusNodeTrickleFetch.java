@@ -36,13 +36,15 @@ public class CbusNodeTrickleFetch implements CanListener {
         trickleTimeoutValue = timeoutValue;
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        if (tc != null ) {
-            tc.addCanListener(this);
-        }
+        tc.addCanListener(this);
         
         networkActive = false;
         // start timer
-        startTrickleTimer();
+        if ( timeoutValue > 0L ) {
+            startTrickleTimer();
+        } else {
+            dispose();
+        }
         
     }
 
@@ -96,9 +98,7 @@ public class CbusNodeTrickleFetch implements CanListener {
     
     public void dispose(){
         stopTrickleTimer();
-        if (tc != null) {
-            tc.removeCanListener(this);
-        }
+        tc.removeCanListener(this);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeTrickleFetch.class);

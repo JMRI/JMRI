@@ -735,9 +735,9 @@ public class LayoutBlockConnectivityTools {
                         && (lx.getLayoutBlockBD() != null)
                         && (lx.getLayoutBlockAC() != lx.getLayoutBlockBD())) {
                     if (lx.getLayoutBlockAC() == curBlock) {
-                        return canLBlockBeUsed(lx.getLayoutBlockBD());
+                        if (!canLBlockBeUsed(lx.getLayoutBlockBD())) return false;
                     } else if (lx.getLayoutBlockBD() == curBlock) {
-                        return canLBlockBeUsed(lx.getLayoutBlockAC());
+                        if (!canLBlockBeUsed(lx.getLayoutBlockAC())) return false;
                     }
                 }
             }

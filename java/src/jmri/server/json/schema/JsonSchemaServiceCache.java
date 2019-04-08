@@ -122,7 +122,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
                 }
             }
             if (result == null) {
-                throw new IllegalArgumentException("type \"" + type + "\" is not a valid JSON server type");
+                throw new IllegalArgumentException("type \"" + type + "\" is not a valid JSON " + (server ? "server" : "client") + " type");
             }
         }
         return result;

@@ -972,7 +972,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         getSourceMast().setAspect(aspectSet);
                     });
                 } catch (Exception ex) {
-                    log.error("Exception while setting Signal Logic {}", ex.getMessage());
+                    log.error("Exception while setting Signal Logic: {}", ex);
                 }
                 return;
             }
@@ -2164,11 +2164,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         if ((levelXing.getLayoutBlockAC() != null)
                                 && (levelXing.getLayoutBlockBD() != null)
                                 && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                            if (lblks.contains(levelXing.getLayoutBlockAC())) {
+                            if (lblks.contains(levelXing.getLayoutBlockAC()) &&
+                                    levelXing.getLayoutBlockAC() != facingBlock) {  // Don't include the facing xing blocks
                                 block.put(levelXing.getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
                                 xingAutoBlocks.add(levelXing.getLayoutBlockBD().getBlock());
                                 blockInXings.add(levelXing);
-                            } else if (lblks.contains(levelXing.getLayoutBlockBD())) {
+                            } else if (lblks.contains(levelXing.getLayoutBlockBD()) &&
+                                    levelXing.getLayoutBlockBD() != facingBlock) {  // Don't include the facing xing blocks
                                 block.put(levelXing.getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
                                 xingAutoBlocks.add(levelXing.getLayoutBlockAC().getBlock());
                                 blockInXings.add(levelXing);

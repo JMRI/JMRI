@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanListener;
@@ -72,7 +71,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
         
-        
         setBackgroundAllocateListener( preferences.getAllocateNNListener() );
         
         if ( preferences.getStartupSearchForCs() ) {
@@ -83,14 +81,11 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             send.searchForNodes();
         }        
         
-        
     }
     
-    
-
     // start listener for nodes requesting a new node number
     public void setBackgroundAllocateListener( boolean newState ){
-        if (newState){
+        if (newState  && !java.awt.GraphicsEnvironment.isHeadless() ) {
             if (allocate == null) {
                 allocate = new CbusAllocateNodeNumber( _memo, this );
             } else {
@@ -105,7 +100,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
     
     
-
     // order needs to match column list top of dtabledatamodel
     public static final String[] columnToolTips = {
         null,
@@ -208,8 +202,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case BYTES_REMAINING_COLUMN:
                 return new JTextField(13).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
@@ -233,7 +226,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NODE_IN_LEARN_MODE_COLUMN:
                 return Boolean.class;
             default:
-                log.warn("no class set col {}",col);
                 return null;
         }
     }
@@ -276,7 +268,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NODE_TOTAL_BYTES_COLUMN:
                 return _mainArray.get(row).totalNodeBytes();
             case BYTES_REMAINING_COLUMN:
-               //  return ;
                 return _mainArray.get(row).floatPercentageRemaining();
             case NODE_IN_LEARN_MODE_COLUMN:
                 return _mainArray.get(row).getNodeInLearnMode();
@@ -310,15 +301,13 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
-    //    int opc = CbusMessage.getOpcode(m);
     }
     
-    
-    int csFound=0;
-    int ndFound = 0;
+    private int csFound=0;
+    private int ndFound = 0;
     
     /**
-     * Capture node and event, check isevent and send to parse from reply.
+     * Listen on the network for incoming STAT and PNN OPC's
      * @param m incoming CanReply
      */
     @Override
@@ -336,6 +325,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 CbusNode cs = provideCsByNum(csnum,nodenum);
                 cs.setFW(m.getElement(5),m.getElement(6),m.getElement(7));
                 cs.setCsFlags(m.getElement(4));
+                cs.setCanId(CbusMessage.getId(m));
             }
             csFound++;
         }
@@ -347,6 +337,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 nd.setManuModule(m.getElement(3),m.getElement(4));
                 nd.setNodeFlags(m.getElement(5));
                 nd.sendExitLearnMode();
+                nd.setCanId(CbusMessage.getId(m));
             }
             ndFound++;
         }
@@ -376,7 +367,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             if ( _mainArray.get(i).getCsNum() == csnum ) {
                 return _mainArray.get(i);
             }
-        }        
+        }
         return null;
     }
 
@@ -501,7 +492,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * Returns a string ArrayList of all Node Number and User Names on the table
      * @param node Node Number, NOT row number
      * @param col Table Column Number
-     */       
+     */
     public void updateFromNode( int node, int col){
         
         //  log.info("table update from node {} column {}",node,col);
@@ -510,7 +501,11 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         });
     }
     
-    
+    /**
+     * Single Node User Name
+     * @param nn Node Number, NOT row number
+     * @return Node Username, if unset returns node type name
+     */
     public String getNodeName( int nn ) {
         int rownum = getNodeRowFromNodeNum(nn);
         if ( rownum < 0 ) {
@@ -524,7 +519,12 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }        
         return "";
     }
-    
+
+    /**
+     * Returns the next available Node Number
+     * @param higherthan Node Number
+     * @return calculated next available number, else original value
+     */      
     public int getNextAvailableNodeNumber( int higherthan ) {
         if ( getRowCount() > 0 ) {
             for (int i = 0; i < getRowCount(); i++) {
@@ -930,9 +930,22 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
     
     /**
-     * disconnect from the CBUS
+     * Disconnect from the network
+     * <p>
+     * Close down any background listeners
+     * <p>
+     * Cancel outstanding Timers
      */
     public void dispose() {
+        
+        clearSearchForNodesTimeout();
+        clearUrgentFetchTimer();
+        if ( trickleFetch != null ) {
+            trickleFetch.dispose();
+            trickleFetch = null;
+        }
+        
+        setBackgroundAllocateListener(false); // stop listening for node number requests
         if (tc != null) {
             tc.removeCanListener(this);
         }

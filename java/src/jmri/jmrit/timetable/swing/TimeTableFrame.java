@@ -1,13 +1,6 @@
 package jmri.jmrit.timetable.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -84,6 +77,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     TimeTableDataManager _dataMgr;
     boolean _isDirty = false;
     boolean _showTrainTimes = false;
+    boolean _twoPage = false;
 
     // ------------ Tree variables ------------
     JTree _timetableTree;
@@ -176,7 +170,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     JPanel _graphButtonPanel;
     JButton _addButton = new JButton();
     JButton _deleteButton = new JButton();
-    JButton _graphButton = new JButton();
+    JButton _displayButton = new JButton();
+    JButton _printButton = new JButton();
     JButton _saveButton = new JButton();
 
     // ------------ Create Panel and components ------------
@@ -303,17 +298,32 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _moveButtonPanel.setVisible(false);
         _leftButtonBar.add(_moveButtonPanel);
 
-        // ------------ Graph Button ------------
-        _graphButton = new JButton(Bundle.getMessage("ButtonGraph"));  // NOI18N
-        _graphButton.setToolTipText(Bundle.getMessage("HintGraphButton"));     // NOI18N
-        _graphButton.addActionListener(new ActionListener() {
+        // ------------ Graph Buttons ------------
+        JLabel graphLabel = new JLabel(Bundle.getMessage("LabelGraph"));      // NOI18N
+
+        _displayButton = new JButton(Bundle.getMessage("ButtonDisplay"));  // NOI18N
+        _displayButton.setToolTipText(Bundle.getMessage("HintDisplayButton"));     // NOI18N
+        _displayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                graphPressed();
+                graphPressed("Display");  // NOI18N
             }
         });
+
+        _printButton = new JButton(Bundle.getMessage("ButtonPrint"));  // NOI18N
+        _printButton.setToolTipText(Bundle.getMessage("HintPrintButton"));     // NOI18N
+        _printButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                graphPressed("Print");  // NOI18N
+            }
+        });
+
         _graphButtonPanel = new JPanel();
-        _graphButtonPanel.add(_graphButton);
+        _graphButtonPanel.add(graphLabel);
+        _graphButtonPanel.add(_displayButton);
+        _graphButtonPanel.add(new JLabel("|"));
+        _graphButtonPanel.add(_printButton);
         _leftButtonBar.add(_graphButtonPanel);
 
         footer.add(_leftButtonBar, BorderLayout.WEST);
@@ -365,8 +375,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     /**
      * Create a Options/Tools menu.
      * - Option: Show train times on the graph.
+     * - Option: Enable two page graph printing.
      * - Tool: Import a SchedGen data file.
-     * - Tool: Export a CVS data file.
+     * - Tool: Import a CSV data file.
+     * - Tool: Export a CSV data file.
      * Include the standard Windows and Help menu bar items.
      */
     void createMenu() {
@@ -379,6 +391,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             _showTrainTimes = trainTime.isSelected();
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     setSimplePreferenceState("jmri.jmrit.timetable:TrainTimes", _showTrainTimes);  // NOI18N
+        });
+
+        _twoPage = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                getSimplePreferenceState("jmri.jmrit.timetable:TwoPage");      // NOI18N
+
+        JCheckBoxMenuItem twoPage = new JCheckBoxMenuItem(Bundle.getMessage("MenuTwoPage"));  // NOI18N
+        twoPage.setSelected(_twoPage);
+        twoPage.addActionListener((ActionEvent event) -> {
+            _twoPage = twoPage.isSelected();
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    setSimplePreferenceState("jmri.jmrit.timetable:TwoPage", _twoPage);  // NOI18N
         });
 
         JMenuItem impsgn = new JMenuItem(Bundle.getMessage("MenuImportSgn"));  // NOI18N
@@ -398,6 +421,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         JMenu ttMenu = new JMenu(Bundle.getMessage("MenuTimetable"));  // NOI18N
         ttMenu.add(trainTime);
+        ttMenu.addSeparator();
+        ttMenu.add(twoPage);
         ttMenu.addSeparator();
         ttMenu.add(impsgn);
         ttMenu.add(impcsv);
@@ -2174,7 +2199,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _moveButtonPanel.setVisible(true);
     }
 
-    void graphPressed() {
+    void graphPressed(String graphType) {
+
         // select a schedule if necessary
         Segment segment = _dataMgr.getSegment(_curNodeId);
         Layout layout = _dataMgr.getLayout(segment.getLayoutId());
@@ -2207,15 +2233,21 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             }
         }
 
-        TimeTableGraph graph = new TimeTableGraph();
-        graph.init(_curNodeId, scheduleId, _showTrainTimes);
+        if (graphType.equals("Display")) {
+            TimeTableDisplayGraph graph = new TimeTableDisplayGraph(_curNodeId, scheduleId, _showTrainTimes);
 
-        JmriJFrame f = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
-        f.setMinimumSize(new Dimension(600, 300));
-        f.getContentPane().add(graph);
-        f.pack();
-        f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
-        f.setVisible(true);
+            JmriJFrame f = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
+            f.setMinimumSize(new Dimension(600, 300));
+            f.getContentPane().add(graph);
+            f.pack();
+            f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
+            f.setVisible(true);
+        }
+
+        if (graphType.equals("Print")) {
+            TimeTablePrintGraph print = new TimeTablePrintGraph(_curNodeId, scheduleId, _showTrainTimes, _twoPage);
+            print.printGraph();
+        }
     }
 
     JFileChooser fileChooser;

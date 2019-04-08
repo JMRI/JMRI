@@ -3,7 +3,8 @@ package jmri.web.servlet.operations;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Iterator;
@@ -527,11 +528,11 @@ public class HtmlManifest extends HtmlTrainCommon {
         try {
             if (Setup.isPrintTrainScheduleNameEnabled()) {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
-                        getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
+                        getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
                         InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
             } else {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "Validity"),
-                        getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())));
+                        getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())));
             }
         } catch (NullPointerException ex) {
             log.warn("Manifest for train {} (id {}) does not have any validity.", this.train.getIconName(), this.train

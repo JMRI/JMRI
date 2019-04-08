@@ -150,7 +150,7 @@
           </xs:attribute>
           <xs:attribute name="transpRead" type="yesNoType" default="no">
             <xs:annotation><xs:documentation>
-                Not a programming mode per say, this indicates that the
+                Not a programming mode per se, this indicates that the
                 decoder is capable of replying to CV reads via Digitrax Transponding.
             </xs:documentation></xs:annotation>
           </xs:attribute>
@@ -790,10 +790,10 @@
                 </xs:element>
                 <xs:element name="splitVal" >
                   <xs:annotation><xs:documentation>
-                      A decimal value, but stored across two CVs using some simple calculations
+                      A decimal value, but stored across multiple CVs using some simple calculations
                   </xs:documentation></xs:annotation>
                   <xs:complexType>
-                    <xs:attribute name="highCV" type="cvNameType" use="required" />
+                      <xs:attribute name="highCV" type="cvNameType" />
                     <xs:attribute name="min" type="xs:int" default="0"/>
                     <xs:attribute name="max" type="xs:int" default="255"/>
                     <xs:attribute name="default" type="xs:int"/>
@@ -803,29 +803,69 @@
                     <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
                   </xs:complexType>
                 </xs:element>
-                <xs:element name="compositeVal" >
+                <xs:element name="splitHexVal" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            A hexadecimal value, but stored across multiple CVs using some simple calculations
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:attribute name="highCV" type="cvNameType" />
+                        <xs:attribute name="min" type="xs:int" default="0"/>
+                        <xs:attribute name="max" type="xs:int" default="255"/>
+                        <xs:attribute name="default" type="xs:int"/>
+                        <xs:attribute name="factor" type="xs:int" default="1"/>
+                        <xs:attribute name="offset" type="xs:int" default="0"/>
+                        <xs:attribute name="comment" type="xs:string"/>
+                        <xs:attribute name="case" type="caseType" default="default" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="splitTextVal" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            A text value, but stored across multiple CVs using some simple calculations
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:attribute name="highCV" type="cvNameType" />
+                        <xs:attribute name="min" type="xs:int" default="0"/>
+                        <xs:attribute name="max" type="xs:int" default="255"/>
+                        <xs:attribute name="default" type="xs:int"/>
+                        <xs:attribute name="factor" type="xs:int" default="1"/>
+                        <xs:attribute name="offset" type="xs:int" default="0"/>
+                        <xs:attribute name="comment" type="xs:string"/>
+                        <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                        <xs:attribute name="match" type="xs:string"/>
+                        <xs:attribute name="termByte" type="unsignedByteOrBlankType"/>
+                        <xs:attribute name="padByte" type="unsignedByteOrBlankType"/>
+                        <xs:attribute name="charSet" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="splitDateTimeVal" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            A date and time value, stored across multiple CVs,
+                            The attribute "base" is required and is the epoch (reference date) for this value
+                            , stored in the format "YYYY-MM-DDThh:mm:ss"
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:attribute name="highCV" type="cvNameType" />
+                        <xs:attribute name="min" type="xs:int" default="0"/>
+                        <xs:attribute name="max" type="xs:int" default="255"/>
+                        <xs:attribute name="default" type="xs:int"/>
+                        <xs:attribute name="comment" type="xs:string"/>
+                        <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                        <xs:attribute name="base" type="xs:dateTime" use="required"/>
+                        <xs:attribute name="factor" type="xs:int" default="1"/>
+                        <xs:attribute name="unit" type="temporalUnitsType" default="Seconds"/>
+                        <xs:attribute name="display" type="temporalDisplayType" default="default"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="compositeVal" type="CompositeValType">
                   <xs:annotation><xs:documentation>
-                      A value made up of references to others
+                    A fixed set of choices is defined, made up of references to others
                   </xs:documentation></xs:annotation>
-                  <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                      <xs:element name="compositeChoice" >
-                        <xs:complexType>
-                          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                            <xs:element name="compositeSetting" >
-                              <xs:complexType>
-                                <xs:attribute name="label" type="xs:string" use="required"/>
-                                <xs:attribute name="value" type="xs:int" use="required" />
-                              </xs:complexType>
-                            </xs:element>
-                          </xs:sequence>
-                          <xs:attribute name="choice" type="xs:string" use="required"/>
-                          <xs:attribute name="comment" type="xs:string"/>
-                        </xs:complexType>
-                      </xs:element>
-                    </xs:sequence>
-                    <xs:attribute name="comment" type="xs:string"/>
-                  </xs:complexType>
                 </xs:element>
                 <xs:element ref="xi:include" minOccurs="0" maxOccurs="1" />
               </xs:choice>
@@ -1018,6 +1058,98 @@
     <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
 
+  <xs:complexType name="CompositeValType">
+    <xs:annotation><xs:documentation>
+      A variable containing a fixed set of choices is defined, each choice corresponding to a specific value
+    </xs:documentation></xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element type="CompositeChoiceType" name="compositeChoice" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="CompositeChoiceGroupType" name="compositeChoiceGroup" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="CompositeChoiceType">
+    <xs:annotation><xs:documentation>
+      Defines one choice within a compositeVal element (may be grouped in one or more
+      intermediate compositeValGroup elements)
+    </xs:documentation></xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation>Multiple elements provide internationalized choice text</xs:documentation></xs:annotation>
+      <xs:element name="choice" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="compositeSetting">
+        <xs:complexType>
+          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="value" type="xs:int" use="required" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="choice" type="xs:string">
+      <xs:annotation><xs:documentation>Deprecated in favor of the choice sub-element</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="include" type="xs:string"/>
+    <xs:attribute name="exclude" type="xs:string"/>
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="CompositeChoiceGroupType">
+    <xs:annotation><xs:documentation>
+      Allows grouping of compositeValChoice elements within an CompositeValType element.
+    </xs:documentation></xs:annotation>
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>User-visible name for this group, can be repeated for I18N</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element type="CompositeChoiceType" name="compositeChoice" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element type="CompositeChoiceGroupType" name="compositeChoiceGroup" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="include" type="xs:string"/>
+    <xs:attribute name="exclude" type="xs:string"/>
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
   <xs:simpleType name="maskType">
     <xs:annotation>
       <xs:documentation>
@@ -1066,6 +1198,69 @@
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="temporalUnitsType">
+      <xs:annotation>
+          <xs:documentation>
+              Content limited to the temporal units (plural form) that can be manipulated in the LocalDateTime class.
+          </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+          <xs:enumeration value="Nanos"/>
+          <xs:enumeration value="Micros"/>
+          <xs:enumeration value="Millis"/>
+          <xs:enumeration value="Seconds"/>
+          <xs:enumeration value="Minutes"/>
+          <xs:enumeration value="Hours"/>
+          <xs:enumeration value="HalfDays"/>
+          <xs:enumeration value="Days"/>
+          <xs:enumeration value="Weeks"/>
+          <xs:enumeration value="Months"/>
+          <xs:enumeration value="Years"/>
+          <xs:enumeration value="Decades"/>
+          <xs:enumeration value="Centuries"/>
+          <xs:enumeration value="Millennia"/>
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="temporalDisplayType">
+      <xs:annotation>
+          <xs:documentation>
+              Content limited to the display options available in splitDateTimeVal.
+          </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+          <xs:enumeration value="dateOnly"/>
+          <xs:enumeration value="timeOnly"/>
+          <xs:enumeration value="default"/>
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="caseType">
+      <xs:annotation>
+          <xs:documentation>
+              General definition of case that's either "upper", "lower" or "default".
+          </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:token">
+          <xs:enumeration value="upper"/>
+          <xs:enumeration value="lower"/>
+          <xs:enumeration value="default"/>
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="unsignedByteOrBlankType">
+      <xs:annotation>
+          <xs:documentation>
+              Allows for:
+              an unsigned byte value ("0" to "255" with optional leading zeros)
+              or an empty string ("").
+          </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+          <xs:pattern value="(\d{0,2}|[0-1]\d{2}|2[0-4]\d|25[0-5])"/>
+      </xs:restriction>
   </xs:simpleType>
 
 </xs:schema>
