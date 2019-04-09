@@ -179,12 +179,37 @@ public class GeneralManagerTest {
         }
 
         @Override
+        public void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public void addPropertyChangeListener(PropertyChangeListener l) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
+        public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public void removePropertyChangeListener(PropertyChangeListener l) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public PropertyChangeListener[] getPropertyChangeListeners() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
