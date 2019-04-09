@@ -169,7 +169,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                   log.info("Attempt {}: Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT);
 	          retryCount++;
 		  try {
-		     Thread.sleep(retryCount * 1000); // wait a few seconds before attempting to bind again.
+		     Thread.sleep((long)(retryCount * 1000)); // wait a few seconds before attempting to bind again.
 		  } catch(InterruptedException ie){ 
 
    		  }
