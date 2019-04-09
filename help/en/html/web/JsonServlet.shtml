@@ -147,118 +147,88 @@
           <dd><code>true</code> if the schema is for a response or message from the
             JMRI server; <code>false</code> if the schema is for a query or message from the client.</dd>
           <dt>schema</dt>
-          <dd>The schema as a <a href="http://json-schema.org"></a>JSON schema</a> object.</dd>
+          <dd>The schema as a <a href="http://json-schema.org">JSON schema</a> object.</dd>
+        </dl>
 
+        <h2>WebSocket</h2>
 
-          <p>The returned data consists of two parts:</p>
+        <p>The <b>WebSocket</b> feature of this servlet currently
+          handles JSON strings in four different forms:</p>
 
-          <ul>
-            <li><b>Type:</b> The type of item returned, which in this
-              case is "power"</li>
+        <ul>
+          <li>individual item state requests in the form:
+            <code>{"type":"turnout","data":{"name":"LT14"}}</code> that
+            are passed to type-specific handlers. These requests will
+            initiate "listeners", which will send updated responses
+            every time the item's state changes.
 
-            <li><b>Data:</b> Data that is specific to the type of
-              object returned. For example, in this case the state of
-              track power</li>
-          </ul>
+            <ul>
+              <li>an item's state can be set by adding a
+                <strong>state</strong> node to the <em>data</em> node
+                in an HTTP POST request:
+                <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code></li>
 
+              <li>individual types can be created if the request is
+                an HTTP PUT request. Note that not all types support
+                this.</li>
+            </ul>
+          </li>
 
-          <h2>Using HTTP JSON POST/PUT/DELETE</h2>
+          <li>list requests in the form:
+            <code>{"list":"trains"}</code> or
+            <code>{"type":"list","list":"trains"}</code> that return an
+            array of items, or an empty array (<code>[]</code>). This request
+            initiates a "listener" which will resend
+            the entire list when items are added or removed, as well as
+            set individual listeners for each item (see above).</li>
 
-          <p>You can also insert, update, or delete items in the lists
-            above using the HTTP POST, PUT, and DELETE methods. Not all
-            combinations are supported.</p>
+          <li>a heartbeat in the form <code>*</code> or
+            <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
+            gets no response, while the JSON heartbeat causes a
+            <code>{"type":"pong"}</code> response.</li>
 
-          <p>You can use these type names to set values. Continuing
-            with the power example above, you can turn the power on by
-            posting to a URL like this:</p>
-          <pre>
-    myjmri:12080/json/power
-</pre>
+          <li>a signoff in the form: <code>{"type":"goodbye"}</code>
+            to which an identical response is sent before the
+            connection gets closed.</li>
+        </ul>
 
-          <p>With this as the body</p>
-          <pre>
-    {"state":2}
-</pre>
+        <p>The <b>WebSocket</b> feature of the servlet can be seen by
+          browsing to the <b>/json/</b> url, where a <b>JSON
+            console</b> is providing for testing.<br>
+          Example commands and responses:</p>
 
-          <h2>WebSocket</h2>
+        <h2><a name="jmri_json_server">JMRI JSON Server</a></h2>
 
-          <p>The <b>WebSocket</b> feature of this servlet currently
-            handles JSON strings in four different forms:</p>
+        <p>The JMRI JSON server is functionally identical to the JSON
+          WebSocket, but running over a standard network socket.</p>
 
-          <ul>
-            <li>individual item state requests in the form:
-              <code>{"type":"turnout","data":{"name":"LT14"}}</code> that
-              are passed to type-specific handlers. These requests will
-              initiate "listeners", which will send updated responses
-              every time the item's state changes.
+        <h2><a name="jquery_jmri">jquery.jmri</a></h2>
 
-              <ul>
-                <li>an item's state can be set by adding a
-                  <strong>state</strong> node to the <em>data</em> node
-                  in an HTTP POST request:
-                  <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code></li>
+        <p><em>jquery.jmri</em> is a JavaScript library that ships
+          with JMRI and makes the JSON protocol support just work on
+          most current browsers.<br />
+          Note: The support for non-WebSocket browsers is limited by the number
+          of open connections allowed. Maybe 5-10 active objects.</p>
 
-                <li>individual types can be created if the request is
-                  an HTTP PUT request. Note that not all types support
-                  this.</li>
-              </ul>
-            </li>
+        <p>Examples of use of the jquery.jmri JavaScript library that
+          ships with JMRI include (example links assume you are reading
+          this on your JMRI web server):</p>
 
-            <li>list requests in the form:
-              <code>{"list":"trains"}</code> or
-              <code>{"type":"list","list":"trains"}</code> that return an
-              array of items, or an empty array (<code>[]</code>). This request
-              initiates a "listener" which will resend
-              the entire list when items are added or removed, as well as
-              set individual listeners for each item (see above).</li>
+        <ul>
+          <li><a href="/operations">Operations Conductor</a>
+            (implemented in <a
+              href="https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a></li>
 
-            <li>a heartbeat in the form <code>*</code> or
-              <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
-              gets no response, while the JSON heartbeat causes a
-              <code>{"type":"pong"}</code> response.</li>
+          <li><a href="/panel">Panel</a> (implemented in <a
+              href="https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a></li>
 
-            <li>a signoff in the form: <code>{"type":"goodbye"}</code>
-              to which an identical response is sent before the
-              connection gets closed.</li>
-          </ul>
+          <li><a href="/json">JSON Console</a> (implemented in
+            <a href="https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a></li>
 
-          <p>The <b>WebSocket</b> feature of the servlet can be seen by
-            browsing to the <b>/json/</b> url, where a <b>JSON
-              console</b> is providing for testing.<br>
-            Example commands and responses:</p>
-
-          <h2><a name="jmri_json_server">JMRI JSON Server</a></h2>
-
-          <p>The JMRI JSON server is functionally identical to the JSON
-            WebSocket, but running over a standard network socket.</p>
-
-          <h2><a name="jquery_jmri">jquery.jmri</a></h2>
-
-          <p><em>jquery.jmri</em> is a JavaScript library that ships
-            with JMRI and makes the JSON protocol support just work on
-            most current browsers.<br />
-            Note: The support for non-WebSocket browsers is limited by the number
-            of open connections allowed. Maybe 5-10 active objects.</p>
-
-          <p>Examples of use of the jquery.jmri JavaScript library that
-            ships with JMRI include (example links assume you are reading
-            this on your JMRI web server):</p>
-
-          <ul>
-            <li><a href="/operations">Operations Conductor</a>
-              (implemented in <a
-                href="https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a></li>
-
-            <li><a href="/panel">Panel</a> (implemented in <a
-                href="https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a></li>
-
-            <li><a href="/json">JSON Console</a> (implemented in
-              <a href="https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a></li>
-
-            <li><a href="/web/power.html">
-                Power Demonstration</a> (view the page source for the implementation)</li>
-          </ul>
-          <!--#include virtual="/Footer" -->
+          <li><a href="/web/power.html">
+              Power Demonstration</a> (view the page source for the implementation)</li>
+        </ul>
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
