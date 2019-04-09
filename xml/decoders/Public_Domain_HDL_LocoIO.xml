@@ -47,16 +47,17 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-04-08</date>
+        <date>2019-04-09</date>
         <authorinitials>EB</authorinitials>
         <revremark>Use compositeVal type values (ports 1-5 for now), updated decoder schema, add LocoServo,
-            add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7)
+            add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7),
+            Opcode (only for Port1)
         </revremark>
       </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
-  <version author="Egbert Broerse" version="3" lastUpdated="20190408"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190409"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -104,7 +105,8 @@
       <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139">
           <decVal min="0" max="15"/>
           <label>Blink Rate:</label>
-          <choice xml:lang="nl">Knippertempo:</choice>
+          <label xml:lang="de"> Blinkgeschw.:</label>
+          <label xml:lang="nl">Knippertempo:</label>
           <tooltip>Choose from 0=none to 15=fast</tooltip>
       </variable>
 
@@ -118,6 +120,7 @@
         <enumVal>
           <enumChoice choice="0" value="0" exclude="101,102,103,104,105,106">
               <choice>Normal Ports</choice>
+              <choice xml:lang="de">Normal</choice>
               <choice xml:lang="nl">Normaal</choice>
           </enumChoice>
         </enumVal>
@@ -137,7 +140,7 @@
             </enumChoice>
         </enumVal>
         <label>Board Port type:</label>
-        <tooltip>How the servo ports 5-12 on this board should operate</tooltip>
+        <tooltip>How servo ports 5-12 on this board should operate</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0" exclude="135,139">
@@ -435,6 +438,100 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+      <!--Port1 Opcode1-->
+      <variable item="Port1 Opcode1 Address" CV="52" mask="XVVVVVVV">
+        <splitVal highCV="53" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 Opcode1 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode1 Config" CV="51" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Opcode1 Config, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode1 Value2" CV="53" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Opcode1 Value2, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode1 Type" tooltip="Port 1 Opcode1 Config and Value2">
+        <compositeVal>
+        <!--Opcode1 Output types, limited set of options-->
+          <compositeChoice choice="Opcode1 Off" exclude="135,139,140,141,142,144,145,146,148">
+            <choice>Off</choice>
+            <choice xml:lang="de">inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Direct">
+            <choice>Contact1 Direct</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Indirect">
+            <choice>Contact2 Indirect</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Opcode1:</label>
+      </variable>
+
+      <!--Port1 Opcode2-->
+      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV">
+        <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 Opcode2 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode2 Config" CV="125" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Opcode2 Config, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Opcode2 Value2, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2">
+        <compositeVal>
+          <!--Opcode2 Output types, limited set of options-->
+          <compositeChoice choice="Opcode2 Off" exclude="135,139,140,141,142,144,145,146,148">
+            <choice>Off</choice>
+            <choice xml:lang="de">inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Direct">
+            <choice>Contact1 Direct</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Indirect">
+            <choice>Contact2 Indirect</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Opcode2:</label>
+      </variable>
+
       <!-- Port 2 -->
       <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
         <!-- CV4 ignores bit 8 in port address -->
@@ -693,8 +790,10 @@
         <label>Mode:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
-      
-      <!-- Port 3 -->
+
+      <!-- TODO copy and adjust Port2 Opcode1-2 from Port1-->
+
+      <!--Port 3 -->
       <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
         <!-- CV4 ignores bit 8 in port address -->
         <splitVal highCV="11" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
@@ -1603,15 +1702,8 @@
       <variable item="Dummy 50" CV="50">
         <decVal/>
       </variable>
-      <variable item="Dummy 51" CV="51">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 52" CV="52">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 53" CV="53">
-        <decVal/>
-      </variable>
+
+      <!--Opcode1 SV51-SV98-->
       <variable item="Dummy 54" CV="54">
         <decVal/>
       </variable>
@@ -1815,16 +1907,7 @@
         <decVal/>
       </variable>
 
-      <!--OpCode2-->
-      <variable item="Dummy 125" CV="125">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 126" CV="126">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 127" CV="127">
-        <decVal/>
-      </variable>
+      <!--Opcode2 SV125-SV175-->
       <variable item="Dummy 128" CV="128">
         <decVal/>
       </variable>
@@ -2036,9 +2119,16 @@
           </column>
           <column>
             <!--Opcode 1 2 option-->
-            <label>
-              <text>OpCode1/2: To Do</text>
-            </label>
+            <display item="Port1 Opcode1 Type"/>
+            <display item="Port1 Opcode1 Address"/>
+            <display item="Port1 Opcode1 Config"/>
+            <display item="Port1 Opcode1 Value2"/>
+          </column>
+          <column>
+            <display item="Port1 Opcode2 Type"/>
+            <display item="Port1 Opcode2 Address"/>
+            <display item="Port1 Opcode2 Config"/>
+            <display item="Port1 Opcode2 Value2"/>
           </column>
         </row>
         <separator/>
@@ -2064,7 +2154,7 @@
           <column>
             <!--Opcode 1 2 option-->
             <label>
-              <text>OpCode1/2: To Do</text>
+              <text>Opcode1/2: To Do</text>
             </label>
           </column>
         </row>
@@ -2091,7 +2181,7 @@
           <column>
             <!--Opcode 1 2 option-->
             <label>
-              <text>OpCode1/2: To Do</text>
+              <text>Opcode1/2: To Do</text>
             </label>
           </column>
         </row>
@@ -2118,7 +2208,7 @@
           <column>
             <!--Opcode 1 2 option-->
             <label>
-              <text>OpCode1/2: To Do</text>
+              <text>Opcode1/2: To Do</text>
             </label>
           </column>
         </row>
@@ -2157,7 +2247,7 @@
             </row>
             <!--Opcode 1 2 option-->
             <label>
-              <text>OpCode1/2: To Do</text>
+              <text>Opcode1/2: To Do</text>
             </label>
           </column>
         </row>
