@@ -80,7 +80,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
      */
     public void terminateThread() {
         threadStopRequest = true;
-        if (socket != null) socket.close();
         if (sourceThread != null) {
             sourceThread.interrupt();
             try {
@@ -89,6 +88,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // interrupted during cleanup.
             }
         }
+        if (socket != null) socket.close();
     }
 
     volatile boolean threadStopRequest;
