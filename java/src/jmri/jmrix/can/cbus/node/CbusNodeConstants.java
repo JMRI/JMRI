@@ -48,9 +48,11 @@ public class CbusNodeConstants {
         
         if ( node.getParameter(1) == 165 ) { // MERG MODULE
             if ( node.getParameter(3) == 29 ) { // CANPAN
-            
                 node.setsendsWRACKonNVSET(false);
-                
+            }
+            if ( node.getParameter(3) == 10 ) { // CANCMD
+                if ( node.getParameter(7) == 4 ) // v4 Firmware
+                node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
             }
         }
     }
@@ -86,7 +88,8 @@ public class CbusNodeConstants {
                 };
                 
                 thisNode.setParameters(_params);
-                thisNode.setNVs( new int[]{ 1 , 0 } );
+                thisNode.setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
+                thisNode.setNodeNameFromName("PAN");
             }
             else {
             
@@ -96,7 +99,7 @@ public class CbusNodeConstants {
             }
         }
         else {
-            thisNode.setParameters( new int[]{ 7,165,0,0,0,0,0,0 } );
+            thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
             thisNode.setNVs( new int[]{ 0 } );
         }
         
@@ -110,10 +113,13 @@ public class CbusNodeConstants {
      * @return decoded CBUS message
      */
     public static String getManu(int man) {
-        // look for the opcode
+        if (man < 1 ) {
+            return ("");
+        }
+        // look for the manufacturer
         String format = manMap.get(man);
         if (format == null) {
-            return "Manufacturer Unknown";
+            return "Manufacturer " + man;
         } else {
             return format; 
         }
@@ -192,7 +198,13 @@ public class CbusNodeConstants {
         else if (man == 80) {
             format = type80Map.get(type);
         }
-        return format;
+        
+        if ( format == null ){
+            return ("");
+        }
+        else {
+            return format;
+        }
     }
     
     /**

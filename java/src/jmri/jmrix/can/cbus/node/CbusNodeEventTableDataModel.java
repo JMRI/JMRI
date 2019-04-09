@@ -31,7 +31,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     static public final int NODE_NAME_COLUMN = 3;
     static public final int EVENT_NAME_COLUMN = 4;
     static public final int EV_VARS_COLUMN = 5;
-    static public final int MAX_COLUMN = 6;
+    static public final int EV_INDEX_COLUMN = 6;
+    static public final int MAX_COLUMN = 7;
     
     CanSystemConnectionMemo _memo;
 
@@ -102,6 +103,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
                 return ("Event Name");
             case EV_VARS_COLUMN:
                 return ("Event Variables");
+            case EV_INDEX_COLUMN:
+                return ("Index");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -116,6 +119,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
             case EVENT_NUMBER_COLUMN:
             case NODE_NUMBER_COLUMN:
+            case EV_INDEX_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case NODE_NAME_COLUMN:
             case EVENT_NAME_COLUMN:
@@ -135,6 +139,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
             case EVENT_NUMBER_COLUMN:
             case NODE_NUMBER_COLUMN:
+            case EV_INDEX_COLUMN:
                 return Integer.class;
             case NODE_NAME_COLUMN:
             case EVENT_NAME_COLUMN:
@@ -182,11 +187,23 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
                 return "Edit";
             case NODE_NAME_COLUMN:
-                return nameService.getNodeName( nnc );
+                if ( !nodeOfInterest.getNodeEventByArrayID(row).getTempFcuNodeName().isEmpty() ) {
+                    return nodeOfInterest.getNodeEventByArrayID(row).getTempFcuNodeName();
+                }
+                else {
+                    return nameService.getNodeName( nnc );
+                }
             case EVENT_NAME_COLUMN:
-                return nameService.getEventName( nnc, enc  );
+                if ( !nodeOfInterest.getNodeEventByArrayID(row).getName().isEmpty() ) {
+                    return nodeOfInterest.getNodeEventByArrayID(row).getName();
+                }
+                else {
+                    return nameService.getEventName( nnc, enc  );
+                }
             case EV_VARS_COLUMN:
                 return nodeOfInterest.getNodeEventByArrayID(row).getEvVarString();
+            case EV_INDEX_COLUMN:
+                return nodeOfInterest.getNodeEventByArrayID(row).getIndex();
             default:
                 return null;
         }
@@ -206,6 +223,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
                     nodeOfInterest.getNodeEventByArrayID(row));
                     
                 editEvFrame.initComponents(_memo);
+                editEvFrame.setVisible(true);
+                editEvFrame.toFront();
                 
             });
             

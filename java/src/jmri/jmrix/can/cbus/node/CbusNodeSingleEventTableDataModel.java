@@ -215,7 +215,6 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                     return "";
                 }
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }

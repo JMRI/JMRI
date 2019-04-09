@@ -8,22 +8,16 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.ResourceBundle;
-import java.util.regex.PatternSyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,8 +39,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
@@ -56,10 +48,6 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.ThreadingUtil;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -185,8 +173,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         tabbedPane = new JTabbedPane();
         
-        tabbedScroll = new JScrollPane( tabbedPane );
-        
         tabbedPane.addTab(("Node Info"), nodeinfoPane);
         // node comments
         tabbedPane.addTab(("Node Variables"), nodevarPane);
@@ -201,15 +187,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         tabbedPane.setEnabledAt(3,false);
       //  tabbedPane.setEnabledAt(4,false);
         
-        tabbedScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainNodePane, tabbedScroll);
+        split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainNodePane, tabbedPane);
         split.setDividerLocation(0.5);
         split.setContinuousLayout(true);
         
         pane1.add(split, BorderLayout.CENTER);
         
-        setPreferredSize(new Dimension(650, 500));
+        setPreferredSize(new Dimension(700, 400));
         
         add(pane1);
         pane1.setVisible(true);
@@ -389,10 +374,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         
-        JMenuItem mnItemOpenFile = new JMenuItem(("Import Node Names from FCU XML")); //  FCU
-        teachNodeFromFcuFile = new JMenuItem(("Restore Node from FCU XML")); //  FCU
-        
-        fileMenu.add(mnItemOpenFile);        
+        teachNodeFromFcuFile = new JMenuItem(("Restore Node / Import Data from FCU XML")); //  FCU
+               
         fileMenu.add(teachNodeFromFcuFile);
         
         JMenu optionsMenu = new JMenu("Options");
@@ -409,7 +392,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         addCommandStationMenuItem = new JCheckBoxMenuItem(("Add Command Stations when found"));
         addNodesMenuItem = new JCheckBoxMenuItem(("Add Nodes when found"));
         
-        JMenu backgroundFetchMenu = new JMenu("Background Fetch");
+        JMenu backgroundFetchMenu = new JMenu("Node Info Fetch Speed");
         ButtonGroup backgroundFetchGroup = new ButtonGroup();
 
         backgroundDisabled = new JRadioButtonMenuItem(Bundle.getMessage("HighlightDisabled"));
@@ -443,11 +426,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         menuList.add(fileMenu);
         menuList.add(optionsMenu);
-        
-        ActionListener importFcuNodeNames = ae -> {
-            selectInputFile();
-        };
-        mnItemOpenFile.addActionListener(importFcuNodeNames);
         
         ActionListener teachNodeFcu = ae -> {
             fcuFrame = new CbusNodeRestoreFcuFrame(this);
@@ -527,66 +505,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         setMenuOptions();
         
         return menuList;
-    }
-    
-    private JFileChooser chooser;  // 
-
-    private void selectInputFile() {
-        if (chooser == null) {
-            chooser = jmri.jmrit.XmlFile.userFileChooser("XML Files","xml","XML");
-        }
-        chooser.rescanCurrentDirectory();
-        int retVal = chooser.showOpenDialog(this);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return;  // give up if no file selected
-        }
-        
-        File testForXml = chooser.getSelectedFile();
-        
-        if (!testForXml.getPath().toUpperCase().endsWith("XML")) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ImportNotXml"),
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // success, open the file
-        addFile(testForXml);
-    }
-    
-    private void addFile(File inputFile) {
-
-        // log.debug("addfile {}",inputFile);
-        
-        try {
-
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-            
-            NodeList nodeList = doc.getElementsByTagName("userNodes");
-            for ( int temp = 0; temp < nodeList.getLength(); temp++) {
-                Node nNode = nodeList.item(temp);
-                Element eElement = (Element) nNode;
-                String nodeNum = eElement.getElementsByTagName("nodeNum").item(0).getTextContent();
-                String nodeName = eElement.getElementsByTagName("nodeName").item(0).getTextContent();
-                int nodenum = Integer.parseInt(nodeNum);
-                if ( nodenum>0 ) {
-                    CbusNode actualnode = nodeModel.provideNodeByNodeNum( nodenum );
-                    actualnode.setNameIfNoName( nodeName );
-                }
-            }
-        }
-        catch (RuntimeException e) {
-            log.warn("Error importing xml file: {} ", e);
-            JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError")),
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-        } 
-        catch (Exception e) {
-            log.warn("Error importing xml file. Valid xml? {} ", e);
-            JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError") + " Valid XML?"),
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-        }
     }
     
     protected void setRestoreFcuActive( boolean isActive ){
@@ -700,7 +618,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
-        public Default() {
+    public Default() {
             super(Bundle.getMessage("MenuItemNodeConfig"),
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             NodeConfigToolPane.class.getName(),

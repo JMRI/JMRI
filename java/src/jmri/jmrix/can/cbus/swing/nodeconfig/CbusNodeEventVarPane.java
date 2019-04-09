@@ -84,6 +84,8 @@ public class CbusNodeEventVarPane extends JPanel {
         infoPane.add(evMenuPane, BorderLayout.PAGE_START);
         infoPane.add(genericEvTable, BorderLayout.CENTER);
         
+        setLayout(new BorderLayout() );
+        
         this.add(infoPane);
         
         validate();

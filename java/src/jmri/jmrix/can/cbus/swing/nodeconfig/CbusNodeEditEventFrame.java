@@ -15,7 +15,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -179,6 +178,8 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         
         this.add(infoPane);
         
+        this.setPreferredSize(new Dimension(500, 300));
+        
         pack();
         this.setResizable(true);
         
@@ -188,9 +189,6 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         setVisible(true);
         
         updateButtons();
-        
-        // Dimension editevframeminimumSize = new Dimension(150, 200);
-        //  setMinimumSize(editevframeminimumSize);
         
         frameResetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

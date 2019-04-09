@@ -78,6 +78,8 @@ public class CbusNodeVarPane extends JPanel implements TableModelListener {
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
         infoPane.add(genericNVTable, BorderLayout.CENTER);
         
+        setLayout(new BorderLayout() );
+        
         this.add(infoPane);
         
         validate();

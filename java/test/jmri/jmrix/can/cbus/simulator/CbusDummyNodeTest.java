@@ -281,6 +281,30 @@ public class CbusDummyNodeTest {
         Assert.assertEquals("node 1234 responds nv index 1 val 2", "[5f8] 97 04 D2 01 02",
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
         
+        // set NV1 to 255 ( invalid )
+        m = new CanMessage( tcis.getCanid() );
+        m.setNumDataElements(5);
+        m.setElement(0, CbusConstants.CBUS_NVSET); 
+        m.setElement(1, 0x04); // node 1234
+        m.setElement(2, 0xd2); // node 1234
+        m.setElement(3, 0x77); // NV index on node
+        m.setElement(4, 0xff); // new NV value
+        t.message(m); 
+        
+        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>3); }, " inbound 4 didn't arrive");
+        Assert.assertEquals(" 4 inbound increase", 4,(tcis.inbound.size() ) );
+        Assert.assertEquals("node 1234 nv index 77 val ff error 10 Invalid NV Index", "[5f8] 6F 04 D2 0A",
+            tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
+        
+        m.setElement(3, 0x00); // NV index on node
+        m.setElement(4, 0x01); // new NV value
+        t.message(m); 
+        
+        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>4); }, " inbound 5 didn't arrive");
+        Assert.assertEquals(" 5 inbound increase", 5,(tcis.inbound.size() ) );
+        Assert.assertEquals("node 1234 nv index 0 val 01 error 10 Invalid NV Index", "[5f8] 6F 04 D2 0A",
+            tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
+        
         m = null;
         t.dispose();
         t = null;
@@ -605,6 +629,37 @@ public class CbusDummyNodeTest {
         tcis=null;
         memo = null;
     
+    }
+    
+    @Test
+    public void testResponseToNameRequest() {
+    
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
+        t.setDelay(0);
+        t.setNodeInFLiMMode(true);
+        t.setNodeInSetupMode(true);
+        
+        CanMessage m = new CanMessage( tcis.getCanid() );
+        m.setNumDataElements(1);
+        m.setElement(0, CbusConstants.CBUS_RQMN);
+        t.message(m);
+        
+        
+        JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>0); }, " inbound 1 didn't arrive");
+        Assert.assertEquals(" 1 inbound increased", 1,(tcis.inbound.size() ) );
+        Assert.assertEquals("node responds to RQMN 0", "[5f8] E2 50 41 4E 20 20 20 20",
+            tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
+        
+        m = null;
+        t.dispose();
+        t = null;
+        tcis=null;
+        memo = null;
+        
     }
     
     // The minimal setup for log4J

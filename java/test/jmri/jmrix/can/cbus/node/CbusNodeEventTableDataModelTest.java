@@ -37,6 +37,10 @@ public class CbusNodeEventTableDataModelTest {
         CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
+        Assert.assertTrue("default rowcount", t.getRowCount() == 0 );
+        Assert.assertTrue("getValueAt no node null", t.getValueAt(0,1) == null ); 
+        
+        
         CbusNode myNode = new CbusNode(memo,12345);
         
         t.setNode(myNode);
@@ -44,7 +48,7 @@ public class CbusNodeEventTableDataModelTest {
       //  Assert.assertEquals("starting 0 rowcount",0,t.getRowCount() );
         
         Assert.assertTrue( t.getRowCount()== 0 );
-        Assert.assertTrue( t.getColumnCount()== 6 );
+        Assert.assertTrue( t.getColumnCount()== 7 );
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
@@ -53,6 +57,7 @@ public class CbusNodeEventTableDataModelTest {
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
         Assert.assertTrue("column has NO width", CbusNodeEventTableDataModel.getPreferredWidth(999) > 0 );
+        
         
         myNode.dispose();
         myNode = null;
@@ -113,7 +118,10 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (String)t.getValueAt(
             0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN) == "" );
             
-        Assert.assertEquals("starting ev vars","[1, 2, 3, 4]",t.getValueAt( 
+        Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (Integer)t.getValueAt(
+            0,CbusNodeEventTableDataModel.EV_INDEX_COLUMN) == -1 );
+            
+        Assert.assertEquals("starting ev vars","1, 2, 3, 4",t.getValueAt( 
             0,CbusNodeEventTableDataModel.EV_VARS_COLUMN) );
             
         Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );            
@@ -139,6 +147,10 @@ public class CbusNodeEventTableDataModelTest {
         } catch (Exception e) {
             Assert.assertTrue("no event frame was created so caused a null exception",true);
         }
+        
+        Assert.assertTrue( t.getRowCount()== 1 );
+        t.removeRow(0);
+        Assert.assertTrue( "Node manages the events, not the table",t.getRowCount()== 1 );
         
         nodeModel.dispose();
         nodeModel = null;

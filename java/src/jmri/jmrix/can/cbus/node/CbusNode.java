@@ -30,7 +30,8 @@ public class CbusNode implements CanListener {
     
     private int _nodeNumber;
     private String _nodeUserName;
-    private ArrayList<CbusNodeEvent> _nodeEvents;//  _ndEv;
+    private String _nodeNameFromName;
+    protected ArrayList<CbusNodeEvent> _nodeEvents;//  _ndEv;
     private int _canId;
     private int[] _nvArray;
     private int[] _parameters;
@@ -40,11 +41,12 @@ public class CbusNode implements CanListener {
     private int _fwBuild;
     private int _manu;
     private int _type;
+    private boolean nodeTraitsSet;
     private boolean _inSetupMode;
     private boolean _inlearnMode;
     private boolean _inFLiMMode;
-    private boolean _startupDataNeeded;
     private boolean _sendsWRACKonNVSET;
+    private boolean _eventIndexValid;
     public CbusSend send;
     private CbusNodeTableDataModel tableModel;
     private CbusNodeEventTableDataModel nodeEventTableModel;
@@ -55,7 +57,6 @@ public class CbusNode implements CanListener {
     // private CsType _csIdentified;
     private boolean _StatResponseFlagsAccurate;
     private boolean _commandStationIdentified;
-    private int _identifyRunaway;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 800;
     
     public CbusNode ( CanSystemConnectionMemo connmemo, int nodenumber ){
@@ -67,6 +68,7 @@ public class CbusNode implements CanListener {
         send = new CbusSend(memo);
         _nodeNumber = nodenumber;
         _nodeUserName = "";
+        _nodeNameFromName = "";
         setFW( -1, -1, -1);
         _parameters = null;
         _canId = -1;
@@ -74,14 +76,15 @@ public class CbusNode implements CanListener {
         _inSetupMode = false;
         _inlearnMode = false;
         _inFLiMMode = true;
-        _startupDataNeeded = false;
         _sendsWRACKonNVSET = true;
         _csNum = -1;
         _StatResponseFlagsAccurate=false;
         _commandStationIdentified = false;
-        _identifyRunaway=0;
+        nodeTraitsSet = false;
         _manu = -1;
         _type = -1;
+        _eventIndexValid = false;
+        _flags = -1;
         
     }
     
@@ -107,14 +110,16 @@ public class CbusNode implements CanListener {
     
     /**
      * Node Type Name, if available. 
-     * @return If Node Parameters 1 and 3 are set eg. "CANPAN", else empty string.
+     * @return If Node Parameters 1 and 3 are set eg. "CANPAN", else potentially a NAME OPC return, else empty string.
      *
      */
     public String getNodeTypeName() {
-        try {
+        
+        if (!CbusNodeConstants.getModuleType(getParameter(1),getParameter(3)).isEmpty() ){
             return CbusNodeConstants.getModuleType(getParameter(1),getParameter(3));
-        } catch (NullPointerException e) {
-            return("");
+        }
+        else {
+            return getNodeNameFromName();
         }
     }
 
@@ -159,14 +164,23 @@ public class CbusNode implements CanListener {
         }
     }
     
-    public int getManufacturer() {
-        return getParameter(1);
+    public String getNodeNameFromName(){
+        return _nodeNameFromName;
+    }
+    
+    public void setNodeNameFromName( String newName ){
+        _nodeNameFromName = newName;
+        notifyModelIfExists(CbusNodeTableDataModel.NODE_TYPE_NAME_COLUMN);   
     }
     
     public void setNodeNumber ( int newnumber ) {
         _nodeNumber = newnumber;
     }
 
+    /**
+     * Set Node CAN ID
+     * @param newcanid CAN ID of the node
+     */
     public void setCanId ( int newcanid ) {
         _canId = newcanid;
         notifyModelIfExists(CbusNodeTableDataModel.CANID_COLUMN);
@@ -174,7 +188,7 @@ public class CbusNode implements CanListener {
     
     /**
      * Node CAN ID, min 1 , ( max 128? )
-     * @return CAN ID of the node
+     * @return CAN ID of the node, -1 if unset
      */
     public int getNodeCanId() {
         return _canId;
@@ -184,6 +198,12 @@ public class CbusNode implements CanListener {
         _flags = flags;
     }
     
+    /**
+     * Get Node Flags
+     * <p>
+     * Captured from a PNN node response
+     * @return flags in int form, will need decoding to bit, -1 if unset
+     */
     public int getNodeFlags() {
         return _flags;
     }
@@ -232,7 +252,7 @@ public class CbusNode implements CanListener {
             setParameter(i,newparams[i]);
         }
         
-        if ( getParameter(6) > 0 ) {
+        if ( getParameter(6) > -1 ) {
             int [] myarray = new int[(getParameter(6)+1)]; // +1 to account for index 0 being the NV count
             java.util.Arrays.fill(myarray, -1);
             myarray[0] = getParameter(6);
@@ -242,7 +262,7 @@ public class CbusNode implements CanListener {
     }
     
     /**
-     * Send messages to get the minimum basic node details
+     * 
      *
      */
     public void setParameter( int index, int newval ) {
@@ -253,16 +273,20 @@ public class CbusNode implements CanListener {
             //      log.info("set ok to {}",newval);
       
             notifyModelIfExists(CbusNodeTableDataModel.NODE_TYPE_NAME_COLUMN);
-          //  notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
+            notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
             notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
             
         }
     }
 
+    /**
+     * 
+     *
+     */
     public int getOutstandingParams(){
         
         if (_parameters == null){
-            return 1;
+            return 8; // CBUS Spec minimum 8 parameters, likely value 20
         }
         
         int count = 0;
@@ -275,14 +299,76 @@ public class CbusNode implements CanListener {
     }
     
     protected void sendRequestNextParam(){
-        if ( _parameters != null ) {
-            for (int i = 1; i < _parameters.length; i++) {
-                if ( _parameters[i] == -1 ) {
-                    requestParam(i);
-                    return;
-                }
+        
+        if ( _parameters == null ) {
+            requestParam(0);
+            return;
+        }
+        if ( getParameter(1) < 0 ) {
+          //  log.info("requesting param 1");
+            requestParam(1);
+            return;
+        }
+        if ( getParameter(3) < 0 ) {
+        //      log.info("requesting param 3");
+            requestParam(3);
+            return;
+        }
+        
+        if ( ( getCsNum() > -1 ) && ( _commandStationIdentified == false ) ) {
+            // notify command station located
+            log.info("{}",getNodeTypeString() );
+            _commandStationIdentified = true;
+        }
+        // initialise NV's
+        if ( getParameter(6) < 0 ) {
+        //     log.info("requesting param 6");
+            requestParam(6);
+            return;
+        }
+        
+        // get number event variables per event
+        if ( getParameter(5) < 0 ) {
+        //     log.info("requesting param 5");
+            requestParam(5);
+            return;
+        }        
+        
+        // get firmware pt1
+        if ( getParameter(7) < 0 ) {
+        //     log.info("requesting param 7");
+            requestParam(7);
+            return;
+        }
+        
+        // get firmware pt2
+        if ( getParameter(2) < 0 ) {
+        //     log.info("requesting param 2");
+            requestParam(2);
+            return;
+        }
+
+        // set node traits, eg CANPAN v1 send wrack on nv set, CANCMD v4 numevents 0
+        // only do this once
+        if (!nodeTraitsSet) {
+            CbusNodeConstants.setTraits(this);
+            nodeTraitsSet = true;
+        }
+        
+        // now traits are known request num. of events
+        if ( getTotalNodeEvents()<0 ){
+            setNumEvTimeout();
+            send.rQEVN( getNodeNumber() );
+            return;
+        }
+        
+        for (int i = 1; i < _parameters.length; i++) {
+            if ( _parameters[i] == -1 ) {
+                requestParam(i);
+                return;
             }
         }
+        
     }
 
     // total bytes to transfer all data currently on module
@@ -299,7 +385,7 @@ public class CbusNode implements CanListener {
         return getParameter(0) + /* Total Parameters */
             getParameter(6) + /* Total NV's */
             ( getParameter(5) * getTotalNodeEvents() ) + /* Ev Variables for All Events */
-            ( getTotalNodeEvents() * 5 ); /* Events from index return */
+            ( getTotalNodeEvents()  ); /* Events from index return */
 
     }
     
@@ -314,7 +400,7 @@ public class CbusNode implements CanListener {
         return getOutstandingParams() + /* Total Parameters */
         getOutstandingNvCount() + /* Total NV's */
         getOutstandingEvVars() + 
-        ( getOutstandingIndexNodeEvents() * 5 ); /* Events from index return */
+        ( getOutstandingIndexNodeEvents() ); /* Events from index return */
         
     }
     
@@ -397,11 +483,15 @@ public class CbusNode implements CanListener {
         for (int i = 0; i < newnvs.length; i++) {
             setNV(i,newnvs[i]);
         }
-        
+        notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
         notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
     }
     
     public void setNV( int index, int newnv ) {
+        
+        if ( _nvArray == null ){
+            return;
+        }
         _nvArray[index]=newnv;
         notifyNodeNvTable(( index -1),CbusNodeNVTableDataModel.NV_CURRENT_VAL_COLUMN);
         notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
@@ -516,7 +606,7 @@ public class CbusNode implements CanListener {
             }
         }
         
-        log.info("Completed NV Write with {} error(s), node {}.", sendNVErrorCount , getNodeNumberName() );
+        log.info( Bundle.getMessage("NdCompleteNVar", String.valueOf(sendNVErrorCount) , getNodeNumberName() ) );
         TEACH_OUTSTANDING_NVS = false;
         
         if ( nvEditFrame != null ){
@@ -542,6 +632,21 @@ public class CbusNode implements CanListener {
         }
     }
 
+    
+    protected boolean isEventIndexValid(){
+        return _eventIndexValid;
+    }
+    
+    private void setEvIndexValid( boolean newval ) {
+        _eventIndexValid = newval;
+        if (!newval){ // event index no longer valid so clear values in individual events
+            for (int i = 0; i < _nodeEvents.size(); i++) {
+                _nodeEvents.get(i).setIndex(-1);
+            }
+        }
+        notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENT_INDEX_VALID_COLUMN);
+        notifyNodeEventTable(-1,CbusNodeEventTableDataModel.EV_INDEX_COLUMN);
+    }
     
     private CbusNodeEditEventFrame evEditFrame;
     private CbusNodeRestoreFcuFrame evEditFcuFrame;
@@ -610,6 +715,7 @@ public class CbusNode implements CanListener {
         // no response expected but we add a mini delay for other traffic
         ThreadingUtil.runOnLayoutDelayed( () -> {
             send.nodeUnlearnEvent( nn, en );
+            setEvIndexValid(false);
         }, 50 );
         ThreadingUtil.runOnGUIDelayed( () -> {
             send.nodeExitLearnEvMode( getNodeNumber() );
@@ -676,10 +782,32 @@ public class CbusNode implements CanListener {
         
     }
     
+    /**
+     * Resets Node Events with blank array
+     *
+     */
     public void resetNodeEvents() {
         _nodeEvents = null;
         _nodeEvents = new ArrayList<CbusNodeEvent>();
         notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
+    }
+    
+    /**
+     * Resets NV's, Events and Parameters
+     *
+     */
+    protected void resetNodeAll() {
+        _nvArray = null;
+        _nodeEvents = null;
+        _parameters = null;
+        numEvTimeoutCount = 0;
+        paramRequestTimeoutCount = 0;
+        nodeTraitsSet = false;
+        notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
+        notifyModelIfExists(CbusNodeTableDataModel.NODE_TYPE_NAME_COLUMN);
+        notifyModelIfExists(CbusNodeTableDataModel.CANID_COLUMN);
+        notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
+        notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
     }
     
     public int getTotalNodeEvents(){
@@ -726,6 +854,7 @@ public class CbusNode implements CanListener {
         }
         _nodeEvents.add(newEvent);
         notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
+        setEvIndexValid(false);
     }
 
     /**
@@ -733,13 +862,13 @@ public class CbusNode implements CanListener {
      *
      * @param nn the event Node Number
      * @param en the event Event Number
-     */    
+     */
     public void removeEvent(int nn, int en){
         _nodeEvents.remove(getNodeEvent(nn, en));
         notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
         notifyNodeEventTable(-1,CbusNodeEventTableDataModel.EV_VARS_COLUMN);
         notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
-        
+        setEvIndexValid(false);
     }
 
     // returns null if node / event combination not found on node
@@ -752,7 +881,13 @@ public class CbusNode implements CanListener {
         return null;
     }
     
+    // provides a CbusNodeEvent
+    // New one will be created if not existing
+    // adds to node event array, which will also be created if doesn't exist
     public CbusNodeEvent provideNodeEvent(int nn, int en) {
+        if (_nodeEvents == null) {
+            resetNodeEvents();
+        }
         for (int i = 0; i < _nodeEvents.size(); i++) {
             if ( ( _nodeEvents.get(i).getNn() == nn ) && ( _nodeEvents.get(i).getEn() == en )) {
                 return _nodeEvents.get(i);
@@ -764,8 +899,6 @@ public class CbusNode implements CanListener {
     }    
     
     private void updateNodeFromLearn(int nn, int en, int evvarindex, int evvarval ){
-        
-      //  log.info("updating node table from learn");
         
         CbusNodeEvent nodeEv = provideNodeEvent( nn , en );
         
@@ -780,9 +913,19 @@ public class CbusNode implements CanListener {
         
     }
     
-
-    // do not use in module table?? , only for use by node simulator
+    /**
+     * Get a Node event from its Index Field
+     * <p>
+     * This is NOT the node array index.
+     *
+     * @param index the Node event index, as set by a node from a NERD request
+     * @return the node event, else null if the index is not located
+     */
     public CbusNodeEvent getNodeEventByIndex(int index) {
+        
+        if ( _nodeEvents == null ){
+            return null;
+        }
         for (int i = 0; i < _nodeEvents.size(); i++) {
             if ( _nodeEvents.get(i).getIndex() == index ) {
                 return _nodeEvents.get(i);
@@ -791,7 +934,13 @@ public class CbusNode implements CanListener {
         return null;
     }
     
-    public int getRowFromIndex(int index ){
+    /**
+     * Get the Node event Array index from its Index Field
+     *
+     * @param index the Node event index, as set by a node from a NERD request
+     * @return the array index, else -1 if event index number not found in array
+     */
+    protected int getEventRowFromIndex(int index ){
         for (int i = 0; i < _nodeEvents.size(); i++) {
             if ( _nodeEvents.get(i).getIndex() == index ) {
                 return i;
@@ -808,10 +957,11 @@ public class CbusNode implements CanListener {
         return _nodeEvents;
     }
     
+    // returns -1 if main node events array null
     public int getOutstandingEvVars(){
         int count = 0;
         if ( _nodeEvents == null ){
-            return 0;
+            return -1;
         }
         for (int i = 0; i < _nodeEvents.size(); i++) {
             count = count + _nodeEvents.get(i).getOutstandingVars();
@@ -862,6 +1012,39 @@ public class CbusNode implements CanListener {
     }
 
 
+    private int numEvTimeoutCount = 0;
+    private TimerTask numEvTimerTask;
+    
+    private void clearNumEvTimeout(){
+        if (numEvTimerTask != null ) {
+            numEvTimerTask.cancel();
+            numEvTimerTask = null;
+        }
+    }
+    
+    private void setNumEvTimeout() {
+        numEvTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                clearNumEvTimeout();
+                if ( getTotalNodeEvents() < 0 ) {
+                    
+                    numEvTimeoutCount++;
+                    // the process will be re-attempted by the background fetch routine,
+                    // we don't start it here to give a little bit more time for network / node to recover.
+                    if ( numEvTimeoutCount == 1 ) {
+                        log.info("No reponse to RQEVN ( Get Total Events ) from node {}", getNodeNumberName() );
+                    }
+                    if ( numEvTimeoutCount == 10 ) {
+                        log.info("Aborting requests for Total Events from node {}", getNodeNumberName() );
+                        resetNodeEvents();
+                    }
+                }
+            }
+        };
+        TimerUtil.schedule(numEvTimerTask, ( 5000 ) );
+    }
+
     private TimerTask allEvTimerTask;
     
     private void clearAllEvTimeout(){
@@ -875,12 +1058,12 @@ public class CbusNode implements CanListener {
         allEvTimerTask = new TimerTask() {
             @Override
             public void run() {
-                // allEvTimerTask = null;
                 clearAllEvTimeout();
                 if ( getOutstandingIndexNodeEvents() > 0 ) {
-                    log.info("Re-attempting whole event / node / index fetch from node {}", getNodeNumber() );
+                    // this has one of the highest chances of failing as 
+                    // we could be expecting up to 255 CAN Frames in response.
+                    log.warn("Re-attempting whole event / node / index fetch from node {}", getNodeNumberName() );
                     
-                    // send NERD
                     send.nERD( getNodeNumber() );
                     // starts timeout 
                     setAllEvTimeout();
@@ -899,18 +1082,22 @@ public class CbusNode implements CanListener {
         }
     }
     
+    private int paramRequestTimeoutCount = 0;
+    
     private void setAllParamTimeout( int index) {
         clearAllParamTimeout(); // resets if timer already running
         allParamTask = new TimerTask() {
             @Override
             public void run() {
                 allParamTask = null;
-                
-              //  int outstanding = getOutstandingParams();
-              //  log.info("in timeout, waiting for {} events from node {}",outstanding,getNodeNumber() );
-
-                log.info("no response to parameter {} request from node {}", index ,getNodeNumber() );
-                
+                if ( paramRequestTimeoutCount == 0 ) {
+                    log.info("No response to parameter {} request from node {}", index ,getNodeNumberName() );
+                }
+                paramRequestTimeoutCount++;
+                if ( paramRequestTimeoutCount == 10 ) {
+                    log.info("Aborting parameter requests for {}",getNodeNumberName() );
+                    setParameters( new int[]{ 8,0,0,0,0,0,0,0,0 } );
+                }
             }
         };
         TimerUtil.schedule(allParamTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
@@ -941,7 +1128,6 @@ public class CbusNode implements CanListener {
         TimerUtil.schedule(sendEditNvTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
     
-    
     private TimerTask sendEditEvTask;
     
     private void clearsendEditEvTimeout(){
@@ -963,7 +1149,6 @@ public class CbusNode implements CanListener {
         };
         TimerUtil.schedule(sendEditEvTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
-    
     
     private TimerTask sendEnumTask;
     
@@ -994,6 +1179,23 @@ public class CbusNode implements CanListener {
             return;
         }
         
+        if (allEvTimerTask != null ){
+            return;
+        }
+        
+        if (nextEvTimerTask != null) {
+            return;
+        }
+        
+        // if events on module, get their event, node and node index
+        // *** This could produce up to 255 responses per node ***
+        if ( ( getTotalNodeEvents() > 0 ) && getOutstandingIndexNodeEvents()>0 ) {
+            send.nERD( getNodeNumber() );
+            // starts timeout 
+            setAllEvTimeout();
+            return;
+        }
+        
         for (int i = 0; i < _nodeEvents.size(); i++) {
             if ( _nodeEvents.get(i).getOutstandingVars() > 0 ) {
                 int index = _nodeEvents.get(i).getIndex();
@@ -1001,25 +1203,23 @@ public class CbusNode implements CanListener {
                 
                 // start timer
                 setNextEvVarTimeout();
-                
                 send.rEVAL( getNodeNumber(), index, nextevvar );
-                
                 return;
             }
         }
     }
     
     private void setEvVarByIndex(int eventIndex, int eventVarIndex, int newVal) {
-        
-        getNodeEventByIndex(eventIndex).setEvVar(eventVarIndex,newVal);
-        
-        int tableRow = getRowFromIndex(eventIndex);
-        
-        notifyNodeEventTable(tableRow,CbusNodeEventTableDataModel.EV_VARS_COLUMN);
-        notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
-        notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
+        if ( getNodeEventByIndex(eventIndex) != null ) {
+            getNodeEventByIndex(eventIndex).setEvVar(eventVarIndex,newVal);
+            
+            int tableRow = getEventRowFromIndex(eventIndex);
+            
+            notifyNodeEventTable(tableRow,CbusNodeEventTableDataModel.EV_VARS_COLUMN);
+            notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
+            notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
+        }
     }
-    
     
     private void setNextEmptyNodeEvent(int nn, int en, int index){
         
@@ -1069,7 +1269,7 @@ public class CbusNode implements CanListener {
         send.nodeExitLearnEvMode( getNodeNumber() );
     }
     
-    public void setNodeInLearnMode( Boolean inlearnmode) {
+    public void setNodeInLearnMode( boolean inlearnmode) {
         _inlearnMode = inlearnmode;
         notifyModelIfExists(CbusNodeTableDataModel.NODE_IN_LEARN_MODE_COLUMN);
     }
@@ -1078,7 +1278,7 @@ public class CbusNode implements CanListener {
         return _inlearnMode;
     }
 
-    public void setNodeInFLiMMode( Boolean inflimmode ) {
+    public void setNodeInFLiMMode( boolean inflimmode ) {
         _inFLiMMode = inflimmode;
     }    
     
@@ -1124,107 +1324,6 @@ public class CbusNode implements CanListener {
         _StatResponseFlagsAccurate = StatResponseFlagsAccurate;
     }
     
-    Boolean nodeTraitsSet=false;
-    
-    /**
-     * Send messages to get the minimum basic node details
-     *
-     */
-    public void startParamsLookup() {
-        
-        if ( allParamTask != null ) { // already requested a parameter
-            return;
-        }
-        
-        _startupDataNeeded=true;
-        _identifyRunaway++;
-        
-        if ( _identifyRunaway > 40 ) {
-            log.warn("Unable to Fully Capture Config Details for Node {}", getNodeNumber() );
-            _startupDataNeeded = false;
-            return;
-        }
-        
-        if ( _parameters == null ) {
-          //  log.info("requesting param 0");
-            requestParam(0);
-            return;
-        }
-        
-        if ( getParameter(1) < 0 ) {
-          //  log.info("requesting param 1");
-            requestParam(1);
-            return;
-        }
-        if ( getParameter(3) < 0 ) {
-        //      log.info("requesting param 3");
-            requestParam(3);
-            return;
-        }
-        
-        if ( ( getCsNum() > -1 ) && ( _commandStationIdentified == false ) ) {
-            // notify command station located
-            log.info("{}",getNodeTypeString() );
-            _commandStationIdentified = true;
-        }
-        
-        // initialise NV's
-        if ( getParameter(6) < 0 ) {
-        //     log.info("requesting param 6");
-            requestParam(6);
-            return;
-        }
-        
-        // get number event variables per event
-        if ( getParameter(5) < 0 ) {
-        //     log.info("requesting param 5");
-            requestParam(5);
-            return;
-        }        
-        
-        // get firmware pt1
-        if ( getParameter(7) < 0 ) {
-        //     log.info("requesting param 7");
-            requestParam(7);
-            return;
-        }
-        
-        // get firmware pt2
-        if ( getParameter(2) < 0 ) {
-        //     log.info("requesting param 2");
-            requestParam(2);
-            return;
-        }
-
-        // set node traits, eg CANPAN v1 send wrack on nv set, CANCMD v4 numevents 0
-        // only do this once
-        if (!nodeTraitsSet) {
-            CbusNodeConstants.setTraits(this);
-            nodeTraitsSet = true;
-        }
-
-        // get number current events ( not the max events )
-        if ( getTotalNodeEvents() < 0 ) {
-        //     log.info("requesting param 6");
-            send.rQEVN( getNodeNumber() );
-            return;
-        }
-        
-        _startupDataNeeded=false;
-        
-        // if events on module, get their event, node and node index
-        // This could produce up to 255 responses per node
-        if ( getTotalNodeEvents() > 0 ) {
-            send.nERD( getNodeNumber() );
-            
-            // starts timeout 
-            setAllEvTimeout();
-            return;
-        }
-        
-        //  log.info ("param0:{} param1:{} param3:{} ",getParameter(0),getParameter(1),getParameter(3));
-
-    }
     
     /**
      * returns eg. MERG Command Station CANCMD Firmware 4d Node 65534
@@ -1291,12 +1390,11 @@ public class CbusNode implements CanListener {
             
             //   log.info("reply learn mode");
             if ( opc == CbusConstants.CBUS_NNCLR ) { // instruction to delete all node events
-                resetNodeEvents();
+                if ( nn == getNodeNumber() ) {
+                    resetNodeEvents();
+                }
             }
-            
-            if ( opc == CbusConstants.CBUS_EVLRN ) {
-                
-                //   log.info("reply CBUS_EVLRN");
+            else if ( opc == CbusConstants.CBUS_EVLRN ) {
                 // update node database with event
                 updateNodeFromLearn(
                     nn, 
@@ -1304,14 +1402,31 @@ public class CbusNode implements CanListener {
                     m.getElement(5), 
                     m.getElement(6) );
             }
-            
-            if ( opc == CbusConstants.CBUS_EVULN ) {
-                
+            else if ( opc == CbusConstants.CBUS_EVULN ) {
                 log.debug("node hears evuln");
                 removeEvent( ( m.getElement(1) * 256 ) + m.getElement(2), ( m.getElement(3) * 256 ) + m.getElement(4) );
-
             }
-            
+            else if ( opc == CbusConstants.CBUS_EVLRNI ) {
+                // check if current index is valid
+                if ( !isEventIndexValid() ){
+                    log.warn("EVRLNI OPC heard while Event Index Invalid for Node {}",toString() );
+                }
+                else {
+                    // find existing event , m.getElement(5) is event index number being edited
+                    CbusNodeEvent toEdit = getNodeEventByIndex( m.getElement(5) );
+                    if (toEdit == null) {
+                        log.warn("No event with index {} found on node {}",m.getElement(5),toString() );
+                        return;
+                    }
+                    else {
+                        // event found with correct index number
+                        toEdit.setNn( ( m.getElement(1) * 256 ) + m.getElement(2) );
+                        toEdit.setEn( ( m.getElement(3) * 256 ) + m.getElement(4) );
+                        toEdit.setEvVar( ( m.getElement(6) * 256 ), m.getElement(7) );
+                    }
+                }
+            }
+           
             if ( TEACH_OUTSTANDING_EVS ) {
                 if ( opc == CbusConstants.CBUS_WRACK ) {
                     // cancel timer
@@ -1335,13 +1450,20 @@ public class CbusNode implements CanListener {
 
         if ( opc == CbusConstants.CBUS_CMDERR ) { // response from node with an error message
             setCanId(CbusMessage.getId(m));
-            log.warn("Node Reporting Error");
             
-            // TODO error codes + stop timers
+            // if in middle of a learn process we do not re-kick the node here,
+            // as it may be another software sending the learn.
+            // If it is JMRI doing the learn, the timer for the learn will
+            // sort out any abort / resume logic.
             
+            if ((m.getElement(3) > 0 ) && (m.getElement(3) < 13 )) {
+                log.error("Node {}Reporting {}",toString(),Bundle.getMessage("CMDERR"+m.getElement(3)) );
+            } else {
+                log.error("Node {}Reporting Error Code {} (decimal)",toString(),m.getElement(3) );
+            }
         }
         
-        if ( opc == CbusConstants.CBUS_NNACK ) { // response from node acknowledging something
+        else if ( opc == CbusConstants.CBUS_NNACK ) { // response from node acknowledging something
             
             setCanId(CbusMessage.getId(m));
             
@@ -1350,7 +1472,7 @@ public class CbusNode implements CanListener {
             }
         }        
         
-        if ( opc == CbusConstants.CBUS_PARAN) { // response from node
+        else if ( opc == CbusConstants.CBUS_PARAN) { // response from node
             clearAllParamTimeout();
             setCanId(CbusMessage.getId(m));
             if (m.getElement(3)==0) { // reset parameters
@@ -1405,35 +1527,40 @@ public class CbusNode implements CanListener {
                 }
             }
         }
-        if ( opc == CbusConstants.CBUS_NUMEV) { // response from node
+        else if ( opc == CbusConstants.CBUS_NUMEV) { // response from node
+            
             setCanId(CbusMessage.getId(m));
             int newEventsOnNode = m.getElement(3);
-         //   if  ( newEventsOnNode !=getTotalNodeEvents() ) {
-                
-             //   log.info("resetting node events to {}",newEventsOnNode);
-                resetNodeEvents();
-                for (int i = 0; i < newEventsOnNode; i++) {
-                    CbusNodeEvent newev = new CbusNodeEvent(-1, -1, getNodeNumber(), -1, getParameter(5) );
-                    // (int nn, int en, int thisnode, int index, int maxEvVar);
-                    addNewEvent(newev);
-                }
-        //    }
+            resetNodeEvents();
+            clearNumEvTimeout();
+            for (int i = 0; i < newEventsOnNode; i++) {
+                CbusNodeEvent newev = new CbusNodeEvent(-1, -1, getNodeNumber(), -1, getParameter(5) );
+                // (int nn, int en, int thisnode, int index, int maxEvVar);
+                addNewEvent(newev);
+            }
+            
             notifyModelIfExists(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN);
             notifyModelIfExists(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN);
             notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
         }
         
-        if ( opc == CbusConstants.CBUS_ENRSP ) { // response from node with a stored event, node + index
+        else if ( opc == CbusConstants.CBUS_ENRSP ) { // response from node with a stored event, node + index
             setCanId(CbusMessage.getId(m));
             int evnode = ( m.getElement(3) * 256 ) + m.getElement(4);
             int evev = ( m.getElement(5) * 256 ) + m.getElement(6);
-            int index = m.getElement(7);
             
             // get next node event which is empty
-            setNextEmptyNodeEvent(evnode,evev,index);
+            setNextEmptyNodeEvent(evnode,evev,m.getElement(7));
+            
+            if ( ( allEvTimerTask !=null ) && ( getOutstandingIndexNodeEvents() == 0 ) ) {
+                // all events returned ok, this is the only 
+                // point ANYWHERE that the event index is set valid
+                clearAllEvTimeout();
+                setEvIndexValid(true);
+            }
         }
         
-        if ( opc == CbusConstants.CBUS_NEVAL ) { // response from node with event variable
+        else if ( opc == CbusConstants.CBUS_NEVAL ) { // response from node with event variable
         
             clearNextEvVarTimeout();
             setCanId(CbusMessage.getId(m));
@@ -1446,7 +1573,7 @@ public class CbusNode implements CanListener {
             
         }
         
-        if ( opc == CbusConstants.CBUS_NVANS ) { // response from node with node variable
+        else if ( opc == CbusConstants.CBUS_NVANS ) { // response from node with node variable
             
             // stop timer
             clearNextNvVarTimeout();
@@ -1455,28 +1582,31 @@ public class CbusNode implements CanListener {
             setNV(m.getElement(3),m.getElement(4));
         }
         
-        if ( opc == CbusConstants.CBUS_NVSET ) { // sent from software
+        else if ( opc == CbusConstants.CBUS_NVSET ) { // sent from software
             setNV(m.getElement(3),m.getElement(4));
         }
         
-        if ( opc == CbusConstants.CBUS_NNLRN ) { // sent from software
+        else if ( opc == CbusConstants.CBUS_NNLRN ) { // sent from software
             setNodeInLearnMode(true);
         }
         
-        if ( opc == CbusConstants.CBUS_NNULN ) { // sent from software
+        else if ( opc == CbusConstants.CBUS_NNULN ) { // sent from software
             setNodeInLearnMode(false);
         }
         
-        if ( opc == CbusConstants.CBUS_ENUM ) { // sent from software
+        else if ( opc == CbusConstants.CBUS_ENUM ) { // sent from software
             setCanId(-1);
             // now waiting for a NNACK confirmation or error message 7
             // start a timer waiting for the response
             setsendEnumTimeout();
         }
         
-        if ( opc == CbusConstants.CBUS_CANID ) { // sent from software
+        else if ( opc == CbusConstants.CBUS_CANID ) { // sent from software
             setCanId(-1);
             // no response expected from node ( ? )
+        }
+        else {
+            // ignoring OPC
         }
         
         if ( TEACH_OUTSTANDING_NVS ) {
@@ -1494,12 +1624,8 @@ public class CbusNode implements CanListener {
             }
         }
         
-        if ( _startupDataNeeded ) { // still need node type, manufacturer, num. nvs, num ev vars per event, events index
-                startParamsLookup();
-        } else {
-            if ( tableModel != null ) {
-                tableModel.triggerUrgentFetch(); // outstanding params, nv's, event vars 
-            }
+        if ( tableModel != null ) {
+            tableModel.triggerUrgentFetch(); // 
         }
         
     }
@@ -1559,6 +1685,25 @@ public class CbusNode implements CanListener {
         
     }
     
+    protected boolean hasActiveTimers(){
+        
+        if ( 
+            allParamTask != null
+            || allEvTimerTask != null
+            || nextEvTimerTask != null
+            || nextNvTimerTask != null
+            || sendEnumTask != null
+            || sendEditEvTask != null
+            || sendEditNvTask != null
+            || numEvTimerTask != null
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     /**
      * Stops any timers and disconnects from network
      *
@@ -1573,6 +1718,7 @@ public class CbusNode implements CanListener {
         clearAllEvTimeout();
         clearNextEvVarTimeout();
         clearNextNvVarTimeout();
+        clearNumEvTimeout();
         
         tc.removeCanListener(this);
     }

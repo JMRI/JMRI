@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
+import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,10 +8,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.BorderFactory;
+import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 
@@ -23,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeInfoPane extends JPanel {
     
-    private JPanel infoPane = new JPanel();
+    private JScrollPane infoPane;
     private JButton nodesupportlinkbutton;
     private URI supportlink;
 
@@ -32,8 +35,6 @@ public class CbusNodeInfoPane extends JPanel {
      */
     public CbusNodeInfoPane() {
         super();
-        
-        this.add(infoPane);
         
         nodesupportlinkbutton = new JButton();
         nodesupportlinkbutton.addActionListener(new ActionListener() {
@@ -47,12 +48,6 @@ public class CbusNodeInfoPane extends JPanel {
 
     public void initComponents(CbusNode node) {
         
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
-        }
-        
-        infoPane = new JPanel();
-
         // Pane to hold Node
         JPanel evPane = new JPanel();
         evPane.setLayout(new BoxLayout(evPane, BoxLayout.Y_AXIS));
@@ -66,11 +61,12 @@ public class CbusNodeInfoPane extends JPanel {
         CbusNode nodeOfInterest = node;
         
         try {
-            
-            String manufacturer = CbusNodeConstants.getManu(nodeOfInterest.getParameter(1));
-            String nodeTypeName = CbusNodeConstants.getModuleType(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3));
-            
-            JLabel header = new JLabel("<html><h2>" + manufacturer + " " + nodeTypeName + "</h2></html>");
+
+            JLabel header = new JLabel("<html><h2>" 
+                + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
+                + " " 
+                + nodeOfInterest.getNodeTypeName()
+                + "</h2></html>");
         
             nodepropbuilder = new StringBuilder();
             nodepropbuilder.append("<html>" );
@@ -148,6 +144,12 @@ public class CbusNodeInfoPane extends JPanel {
                 nodePartTwobuilder.append ("</p><p></p>");
             }
             
+            
+            if ( !nodeOfInterest.getsendsWRACKonNVSET() ) {
+                nodePartTwobuilder.append ("<p>Sends WRACK Following NV Set : ");             
+                nodePartTwobuilder.append ( nodeOfInterest.getsendsWRACKonNVSET() );
+                nodePartTwobuilder.append ("</p><p></p>");
+            }
             //   nodePartTwobuilder.append ("<p> Is Bootable Y / N</p>");
             //   nodePartTwobuilder.append ("<p> Processor : </p>");
             
@@ -182,6 +184,8 @@ public class CbusNodeInfoPane extends JPanel {
             evPane.add(content);
             evPane.add(contentTwo);
             evPane.add(nodesupportlinkbutton);
+            
+            evPane.setBorder(new EmptyBorder(0, 100, 20, 100));
         
         }
         catch( NullPointerException e ) { 
@@ -191,7 +195,14 @@ public class CbusNodeInfoPane extends JPanel {
 
         }
         
-        infoPane.add(evPane);
+        if (infoPane != null ){ 
+            infoPane.setVisible(false);
+        }
+        infoPane = null;
+        infoPane = new JScrollPane(evPane);
+        
+        setLayout(new BorderLayout() );
+        
         
         this.add(infoPane);
         

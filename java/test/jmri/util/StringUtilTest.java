@@ -1,5 +1,6 @@
 package jmri.util;
 
+import java.util.Arrays;
 import org.junit.*;
 
 /**
@@ -326,6 +327,76 @@ public class StringUtilTest {
         Assert.assertEquals("xxAA77YYYzz", "xxAA77YYYzz", StringUtil.replaceLast("xxAAxxYYYzz","xx","77"));
         Assert.assertEquals("122", "122", StringUtil.replaceLast("121","1","2"));
         Assert.assertEquals("122 Z", "121", StringUtil.replaceLast("121","Z","2"));
+    }
+    
+    @Test
+    public void testFullTextToHexArray() {
+        
+        byte[] b = StringUtil.fullTextToHexArray("PAN",7);
+        Assert.assertEquals("array length", 7, b.length);
+        Assert.assertEquals("0th byte", 0x50, b[0] & 0xFF);
+        Assert.assertEquals("1st byte", 0x41, b[1] & 0xFF);
+        Assert.assertEquals("2nd byte", 0x4E, b[2] & 0xFF);
+        Assert.assertEquals("3rd byte", 0x20, b[3] & 0xFF);
+        Assert.assertEquals("4th byte", 0x20, b[4] & 0xFF);
+        Assert.assertEquals("5th byte", 0x20, b[5] & 0xFF);
+        Assert.assertEquals("6th byte", 0x20, b[6] & 0xFF);
+        
+        b = StringUtil.fullTextToHexArray("CATjhgkjhg jkhg kjhg kjhg jhg ",2);
+        Assert.assertEquals("array length", 2, b.length);
+        Assert.assertEquals("0th byte", 0x43, b[0] & 0xFF);
+        Assert.assertEquals("1st byte", 0x41, b[1] & 0xFF);
+        
+        b = StringUtil.fullTextToHexArray("My FroG",8);
+        Assert.assertEquals("array length", 8, b.length);
+        Assert.assertEquals("0th byte", 0x4d, b[0] & 0xFF);
+        Assert.assertEquals("1st byte", 0x79, b[1] & 0xFF);
+        Assert.assertEquals("2st byte", 0x20, b[2] & 0xFF);
+        Assert.assertEquals("3st byte", 0x46, b[3] & 0xFF);
+        Assert.assertEquals("4st byte", 0x72, b[4] & 0xFF);
+        Assert.assertEquals("5st byte", 0x6f, b[5] & 0xFF);
+        Assert.assertEquals("6st byte", 0x47, b[6] & 0xFF);
+        Assert.assertEquals("7th byte", 0x20, b[7] & 0xFF);
+     
+    }
+    
+    @Test
+    public void testintBytesWithTotalFromNonSpacedHexString(){
+        
+        int[] b = StringUtil.intBytesWithTotalFromNonSpacedHexString("01020AB121",true);
+        Assert.assertEquals("array length", 6, b.length);
+        Assert.assertEquals("01020AB121 true","[5, 1, 2, 10, 177, 33]",Arrays.toString(b) );
+        
+        b = StringUtil.intBytesWithTotalFromNonSpacedHexString("01020ab121",true);
+        Assert.assertEquals("01020ab121 true","[5, 1, 2, 10, 177, 33]",Arrays.toString(b) );
+        
+        b = StringUtil.intBytesWithTotalFromNonSpacedHexString("01020ab121",false);
+        Assert.assertEquals("01020ab121 false","[1, 2, 10, 177, 33]",Arrays.toString(b) );
+        
+        b = StringUtil.intBytesWithTotalFromNonSpacedHexString("010",true);
+        Assert.assertEquals("010 true","[0]",Arrays.toString(b) );
+        
+    }
+    
+    @Test
+    public void testGetByte(){
+        
+        Assert.assertEquals("010203 2", 3, StringUtil.getByte(2,"010203") );
+        Assert.assertEquals("010203 -1", 0, StringUtil.getByte(-1,"010203") );
+        Assert.assertEquals("AbCdEf 1", 205, StringUtil.getByte(1,"AbCdEf") );
+    }
+    
+    @Test
+    public void testGetHexDigit(){
+        
+        Assert.assertEquals("010203 0", 0, StringUtil.getHexDigit(0,"010203") );
+        Assert.assertEquals("010203 1", 1, StringUtil.getHexDigit(1,"010203") );
+        Assert.assertEquals("010203 2", 0, StringUtil.getHexDigit(2,"010203") );
+        Assert.assertEquals("010203 3", 2, StringUtil.getHexDigit(3,"010203") );
+        Assert.assertEquals("010203 4", 0, StringUtil.getHexDigit(4,"010203") );
+        Assert.assertEquals("010203 5", 3, StringUtil.getHexDigit(5,"010203") );
+        Assert.assertEquals("010F03 3", 15, StringUtil.getHexDigit(3,"010F03") );
+        
     }
     
 }
