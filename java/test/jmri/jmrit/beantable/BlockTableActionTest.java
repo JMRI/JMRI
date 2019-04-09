@@ -188,6 +188,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	    //Enter 1 in the text field labeled "System Name:"
@@ -261,6 +262,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         jf.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JTableOperator tbl = new JTableOperator(jfo, 0);
 	// find the "Edit" button and press it.  This is in the table body.
 	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
