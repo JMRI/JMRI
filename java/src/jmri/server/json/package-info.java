@@ -1,13 +1,25 @@
 /**
- * The JMRI JSON Services provide access to JMRI via JSON messages via a RESTful
- * interface over HTTP or a socket interface over TCP or WebSockets.
+ * The JMRI JSON Services provide access to JMRI via JSON data objects via a
+ * RESTful interface over HTTP or via JSON messages via a socket interface over
+ * TCP or WebSockets.
  * 
  * <h2>Schema</h2>
  * 
- * The JMRI JSON protocol has two sets of schema, one for messages from clients to a JMRI
- * server, and one for messages from a JMRI server to clients. The core schema for socket interfaces are
- * the <a href="">client schema</a> and <a href="">server schema</a>. These schema define
- * the current 
+ * The JMRI JSON protocol has two sets of schema, one for messages from clients
+ * to a JMRI server, and one for messages from a JMRI server to clients. The
+ * core schema for socket interfaces are the <a href=
+ * "https://raw.githubusercontent.com/JMRI/JMRI/master/java/src/jmri/server/json/schema/json-client.json">client
+ * schema</a> and <a href=
+ * "https://raw.githubusercontent.com/JMRI/JMRI/master/java/src/jmri/server/json/schema/json-server.json">server
+ * schema</a>. These schema define the structure of JSON messages in this
+ * protocol. Messages generally contain {@code type}, {@code data}, and
+ * {@code method} properties.
+ * <p>
+ * The data object types supported in a running JMRI instance for both RESTful
+ * and socket interfaces can be listed at <a href=
+ * "http://localhost:12080/json/types">http://my-jmri-server:12080/json/types</a>
+ * and individual schema for each data object type at <a href=
+ * "http://localhost:12080/json/schema/">http://my-jmri-server:12080/json/schema/<em>type</em></a>
  * 
  * <h2>Methods</h2>
  * 
@@ -44,92 +56,64 @@
  * <p>
  * Fundamentally, the JSON server passes messages as JSON Objects between a JMRI
  * server and one or more clients. In the TCP Socket and WebSocket interfaces, a
- * message from the client has three properties:</p>
+ * message from the client generally has three properties (full details are in
+ * the schema):
+ * </p>
  * <dl>
  * <dt><code>type</code></dt>
- * <dd></dd>
+ * <dd>The type of object in the <em>data</em> property.</dd>
  * <dt><code>method</code></dt>
- * <dd></dd>
+ * <dd>The RESTful method to be used, defaults to <em>get</em> if not
+ * present.</dd>
  * <dt><code>data</code></dt>
- * <dd></dd>
+ * <dd>The data object; see the schema for the properties of this object.</dd>
  * </dl>
  * <p>
  * A message from the server is either a single JSON Object
- * <code>{"type":"<em>type</em>","method":"<em>method</em>","data":{...}}</code>
- * except as noted below. In the RESTful interface, messages from the client in
+ * <code>{"type":"<em>type</em>","data":{...}}</code> except as noted below or a
+ * JSON Array of objects. In the RESTful interface, messages from the client in
  * <em>POST</em> and <em>PUT</em> requests may contain a JSON object that
  * cooresponds to the <code>data</code> object in the socket interfaces.
  * </p>
- * <p>
- * Messages from the JSON server to a client will be in the form
- * <code>{"type":"<em>type</em>","data":{...}}</code> or in the form
- * <code>[<em>message</em>,<em>message</em>,...]</code> except as noted below.
  * 
  * <h3>Exceptions</h3>
  * <p>
  * Exceptions to the above form for the socket interfaces are:
  * </p>
  * <dl>
- * <dt>Gets</dt>
+ * <dt>Get Requests</dt>
  * <dd>When using a get method, specifying the method is optional.</dd>
- * <dt>Lists</dt>
- * <dd>list requests are in the form:
+ * <dt>List Requests</dt>
+ * <dd>List requests are in the form:
  * <code>{"type":"<em>type</em>","method":"list","data":{...}}</code>
  * (recommended) or <code>{"type":"list","list":"<em>type</em>"}</code> or
- * <code>{"list":"<em>type</em>"}</code> and will either cause an error to be
- * thrown if <em>type</em> is not listable, or cause an array of items to be
- * sent to the client. The <code>data</code> object is not required; some list
- * requests can have additional parameters in the <code>data</code>; however
- * some services ignore that with lists.</dd>
+ * <code>{"list":"<em>type</em>"}</code> in the socket interfaces and will
+ * either cause an error to be thrown if <em>type</em> is not listable, or cause
+ * an array of items to be sent to the client. The <code>data</code> object is
+ * not required; some list requests can have additional parameters in the
+ * <code>data</code> object; however some services ignore that with lists.</dd>
+ * <dt>List Responses</dt>
+ * <dd>List responses are in the form:
+ * <code>[<em>message</em>,<em>message</em>]</code>, an array of object message
+ * types with {@code type} and {@code data} properties. There is no guarantee
+ * that an array contains all objects of a single type, or that an array
+ * contains all of the objects of a single type, since it is, by design,
+ * possible for multiple services, including third-party services to respond to
+ * a single request, and the JSON server neither makes nor enforces any
+ * guarantees concerning how those services respond. Multiple responses are
+ * joined together when using JSON via the RESTful interface, and may or may not
+ * be joined together when using JSON in other interfaces.</dd>
  * <dt>Heartbeats</dt>
- * <dd>Heartbeats messages are sent by the client to assure the JMRI server that
+ * <dd>Heartbeat messages are sent by the client to assure the JMRI server that
  * a socket connection is still up. A heartbeat from the client is in the form
  * <code>{"type":"ping"}</code> and is answered with a
  * <code>{"type":"pong"}</code> from the JMRI server.</dd>
  * <dt>Closing Sockets</dt>
- * <dd>When a socket is being closed, in a non-erroneous way, the system
- * initiating the close sends a message <code>{"type":"goodbye"}</code> and
- * closes its connection. The receiving system should not respond and close its
- * connection.</dd>
+ * <dd>When a socket is being closed in a non-erroneous way, the system
+ * initiating the close (either a client or server) sends a message
+ * <code>{"type":"goodbye"}</code> and closes its connection. The receiving
+ * system should not respond and close its connection.</dd>
  * </dl>
- * 
- * <h2>Requests</h2>
- * <p>
- * JSON messages in four different forms from the client are handled by the JSON
- * services:
- * <dl>
- * <dt>
- * <dt>list</dt>
- * <dd>list requests are in the form:
- * <code>{"type":"<em>type</em>","method":"list","data":{...}}</code>
- * (recommended) or <code>{"type":"list","list":"<em>type</em>"}</code> or
- * <code>{"list":"<em>type</em>"}</code> and will either cause an error to be
- * thrown if <em>type</em> is not listable, or cause an array of items to be
- * sent to the client. The <code>data</code> object is not required; some list
- * requests can have additional parameters in the <code>data</code>; however
- * some services ignore that with lists.</dd>
- * <dt>
- * <li>messages concerning individual items in the form:
- * <code>{"type":"<em>type</em>","data":{"name":"<em>name</em>"},"method":"<em>method</em>"}</code>.
- * In addition to the initial response, most requests will initiate listeners,
- * which will send updated responses every time the item changes.
- * <ul>
- * <li>an item may be updated if object attributes are included in the message:
- * <code>{"type":"<em>type</em>","data":{"name":"<em>name</em>",...}, "method": "post"}</code>.
- * For historical reasons, the <em>method</em> node may be included in the
- * <em>data</em> node:
- * <code>{"type":"<em>type</em>","data":{"name":"<em>name</em>","method":"post",...}}</code>
- * Note that this is discouraged and not all types support this.</li>
- * <li>individual types can be created if a <strong>method</strong> node with
- * the value <em>put</em> is included in message:
- * <code>{"type":"<em>type</em>","method":"put","data":{"name":"<em>name</em>"}}</code>.</li>
- * </ul>
- * </li>
- * <li>a heartbeat in the form <code>{"type":"ping"}</code>. The heartbeat gets
- * a <code>{"type":"pong"}</code> response.</li>
- * <li>a sign off in the form: <code>{"type":"goodbye"}</code> to which an
- * identical response is sent before the connection gets closed.</li>
- * </ul>
  * <p>
  * <strong>Note</strong> The <em>name</em> property of a data object
  * <strong>must</strong> be the system name, not the user name, of the requested
@@ -139,28 +123,6 @@
  * generally safer to always use system names.
  * </p>
  *
- * <h2>Responses</h2>
- * <p>
- * JSON messages sent to the client will be in the form:
- * <ul>
- * <li><code>{"type":"<em>type</em>","data":{"name":"<em>name</em>",...}}</code>
- * an object, either in response to a request or sent because an object
- * requested earlier was updated within JMRI (updates are not available using
- * the HTTP transport)</li>
- * <li><code>{"type":"pong"}</code> in response to a
- * <code>{"type":"ping"}</code> message.</li>
- * <li>a sign off in the form: <code>{"type":"goodbye"}</code> before the
- * connection gets closed.</li>
- * <li><code>[<em>message</em>,<em>message</em>]</code>, an array of object
- * message types. There is no guarantee that an array contains all objects of a
- * single type, or that an array contains all of the objects of a single type,
- * since it is, by design, possible for multiple services, including third-party
- * services to respond to a single request, and the JSON server neither makes
- * nor enforces any guarantees concerning how those services respond. Multiple
- * responses are joined together when using JSON via HTTP protocol, and may or
- * may not be joined together when using JSON in other protocols.</li>
- * </ul>
- *
  * <h2>Version History</h2>
  * <p>
  * Changes to the major number represent a backwards incompatible change in the
@@ -168,7 +130,7 @@
  * protocol.
  * </p>
  * <dl>
- * <dt>5.0 (JMRI 4.15.3)</dt>
+ * <dt>5.0 (JMRI 4.15.4)</dt>
  * <dd>Introduces a backwards-incompatible changes of:
  * <ul>
  * <li>Respecting the requirement that a JSON message object from the client
@@ -176,16 +138,16 @@
  * {@value jmri.server.json.JSON#GET} introduced in version 4.1.</li>
  * <li>Removes code that creates listeners for objects not requested by the
  * client</li>
- * <li>Removes support for plural tokens for listing types, using the singular
- * token syntax introduced in version 3.0.</li>
+ * <li>Deprecates, but does not remove, support for plural tokens for listing
+ * types, using the singular token syntax introduced in version 3.0.</li>
  * </ul>
  * </dd>
  * <dt>4.1 (JMRI 4.11.4)</dt>
  * <dd>The RESTful method associated with a JSON message from the client absent
- * a {@code method} name with a value of "{@value jmri.server.json.JSON#GET}",
- * "{@value jmri.server.json.JSON#POST}", "{@value jmri.server.json.JSON#PUT}",
- * or "{@value jmri.server.json.JSON#DELETE}" is assumed to be
- * "{@value jmri.server.json.JSON#GET}".</dd>
+ * a {@code method} name with a value of {@value jmri.server.json.JSON#GET},
+ * {@value jmri.server.json.JSON#POST}, {@value jmri.server.json.JSON#PUT},
+ * or {@value jmri.server.json.JSON#DELETE} is assumed to be
+ * {@value jmri.server.json.JSON#GET}.</dd>
  * <dt>4.0 (JMRI 4.3.4)</dt>
  * <dd>Prior to version 4.0, the JSON servers had a single definition for all
  * tokens used in JSON communications. As of version 4.0, the JSON servers use a

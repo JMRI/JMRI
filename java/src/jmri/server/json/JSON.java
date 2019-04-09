@@ -173,7 +173,7 @@ public final class JSON {
      */
     public static final String CONFIG_PROFILES = "configProfiles"; // NOI18N
     /**
-     * {@value #UNIQUE_ID}
+     * {@value #CONFIG_PROFILE}
      */
     public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
     /**
