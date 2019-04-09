@@ -3,6 +3,7 @@ package jmri.jmrix.roco.z21.simulator;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import jmri.jmrix.roco.z21.Z21Reply;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.*;
 import org.junit.*;
@@ -63,7 +64,7 @@ public class Z21SimulatorAdapterTest {
               Assert.fail("IOException writing to network port");
             }
 
-          /*  try {
+            try {
                byte buffer[] = new byte[100];
                DatagramPacket p = new DatagramPacket(buffer,100,host,port);
                // set the timeout on the socket.
@@ -79,7 +80,7 @@ public class Z21SimulatorAdapterTest {
               Assert.fail("Socket Timeout Exception reading from network port");
             } catch(java.io.IOException ioe) {
               Assert.fail("IOException reading from network port");
-            }*/
+            }
         } catch(java.net.SocketException se) {
             Assert.fail("Failure Creating Socket");
         }
@@ -87,28 +88,52 @@ public class Z21SimulatorAdapterTest {
 
     @Test
     public void RailComDataChangedReply(){
+	cannedMessageCheck("getZ21RailComDataChangedReply","04 00 88 00");
+    }
+
+    @Test
+    public void HardwareVersionReply(){
+	cannedMessageCheck("getHardwareVersionReply","0C 00 1A 00 00 02 00 00 20 01 00 00");
+    }
+
+    @Test
+    public void XPressNetUnknownCommandReply(){
+	cannedMessageCheck("getXPressNetUnknownCommandReply","07 00 40 00 61 82 E3");
+    }
+
+    @Test
+    public void Z21SerialNumberReply(){
+	cannedMessageCheck("getZ21SerialNumberReply","08 00 10 00 00 00 00 00");
+    }
+
+    @Ignore("test gives different results depending on test ordering, due to static simulator object")
+    @Test
+    public void Z21BroadCastFlagsReply(){
+	cannedMessageCheck("getZ21BroadCastFlagsReply","08 00 51 00 01 00 01 0F");
+    }
+
+    private void cannedMessageCheck(String methodName,String expectedReply){
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getZ21RailComDataChangedReplyMethod = null;
+        java.lang.reflect.Method method = null;
         try {
-            getZ21RailComDataChangedReplyMethod = a.getClass().getDeclaredMethod("getZ21RailComDataChangedReply");
+            method = a.getClass().getDeclaredMethod(methodName);
         } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getZ21RailComDataChagnedReply in Z21SimulatorAdapter class: ");
+            Assert.fail("Could not find method " + methodName + "in Z21SimulatorAdapter class");
         }
 
         // override the default permissions.
-        Assert.assertNotNull(getZ21RailComDataChangedReplyMethod);
-        getZ21RailComDataChangedReplyMethod.setAccessible(true);
+        Assert.assertNotNull(method);
+        method.setAccessible(true);
 
         try {
-            Z21Reply z = (Z21Reply) getZ21RailComDataChangedReplyMethod.invoke(a);
-            Assert.assertEquals("Empty Railcom Report", "04 00 88 00",z.toString());
+            Z21Reply z = (Z21Reply) method.invoke(a);
+            Assert.assertEquals(methodName + " return value", expectedReply,z.toString());
         } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method getZ21RailComDataChangedReply in Z21SimulatorAdapter class");
+            Assert.fail("Could not access method " + methodName + " in Z21SimulatorAdapter class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
             Throwable cause = ite.getCause();
-            Assert.fail("getZ21RailComDataChangedReply  executon failed reason: " + cause.getMessage());
+            Assert.fail(methodName + " executon failed reason: " + cause.getMessage());
         }
-
     }
 
     // verify there is a railComm manager
@@ -143,6 +168,9 @@ public class Z21SimulatorAdapterTest {
     static public void tearDown() {
         a.getSystemConnectionMemo().getTrafficController().terminateThreads();
         a.terminateThread();
+        // suppress two timeout messages that occur
+	JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN,"Timeout on reply to message:");
+	JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN,"Timeout on reply to message:");
         a.dispose();
         JUnitUtil.tearDown();
     }

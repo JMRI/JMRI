@@ -54,16 +54,23 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	    //Enter 1 in the text field labeled "System Name:"
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         (new JTextFieldOperator((JTextField)jlo.getLabelFor())).enterText("1");
-	    //and press OK 
-	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonOK"));
+	//and press OK 
+	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonOK"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
+
+    @Test
+    @Ignore("IdTag table has no Edit button")
+    public void testEditButton() {
+    }
+
 
     // The minimal setup for log4J
     @Before

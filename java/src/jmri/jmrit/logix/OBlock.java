@@ -127,7 +127,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return _statusNameMap.get(str);
     }
-    ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
+    private ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
@@ -428,7 +428,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (warrant == null) {
             return false;
         }
-        return (warrant == _warrant);
+        return warrant.equals(_warrant);
     }
 
     public String getAllocatedPathName() {
@@ -711,6 +711,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                 portal.getName(), path.getName(), getDisplayName());
                     }
                 }
+            }
+            iter = getPaths().iterator();
+            while (iter.hasNext()) {
+                OPath path = (OPath) iter.next();
                 if (path.getFromPortal() == null && path.getToPortal() == null) {
                     removePath(path);
                     if (log.isDebugEnabled()) {
@@ -747,7 +751,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     public List<Portal> getPortals() {
-        return _portals;
+        ArrayList<Portal> clone = new ArrayList<Portal>();
+        Iterator<Portal> iter = _portals.iterator();
+        while (iter.hasNext()) {
+            clone.add(iter.next());
+        }
+        return clone;
     }
 
     @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
@@ -956,16 +965,18 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void dispose() {
-        List<Portal> list = getPortals();
-        for (int i = 0; i < list.size(); i++) {
-            Portal portal = list.get(i);
+        Iterator<Portal> iter = getPortals().iterator();
+        while (iter.hasNext()) {
+            Portal portal = iter.next();
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
             opBlock.removePortal(portal);
+            portal.dispose();
         }
-        List<Path> pathList = getPaths();
-        for (int i = 0; i < pathList.size(); i++) {
-            removePath(pathList.get(i));
+        _portals.clear();
+        Iterator<Path> it = getPaths().iterator();
+        while (it.hasNext()) {
+            removePath(it.next());
         }
         jmri.InstanceManager.getDefault(OBlockManager.class).deregister(this);
         super.dispose();

@@ -47,6 +47,12 @@ public class SignalMastTableActionTest extends AbstractTableActionBase {
     public void testAddThroughDialog() {
     }
 
+    @Test
+    @Ignore("Signal Mast create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testEditButton() {
+    }
+
     // The minimal setup for log4J
     @Override
     @Before

@@ -1183,7 +1183,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return msg;
     }
 
-    private String pathIsValid(OBlock block, String pathName) {
+    static public String pathIsValid(OBlock block, String pathName) {
+        if (block == null) {
+            return Bundle.getMessage("PathInvalid", pathName, "null");
+        }
         List<Path> list = block.getPaths();
         if (list.isEmpty()) {
             return Bundle.getMessage("WarningTitle");
@@ -1281,6 +1284,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             }
             switch (col) {
                 case BLOCK_COLUMN:
+                    OBlock b = bo.getBlock();
+                    if (b == null) {
+                        return "null";
+                    }
                     return bo.getBlock().getDisplayName();
                 case ENTER_PORTAL_COL:
                     return bo.getEntryName();

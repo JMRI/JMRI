@@ -53,6 +53,49 @@ public class CbusSlotMonitorSessionTest {
         Assert.assertEquals("speed 211",83,t.getCommandedSpeed() );
         t.setDccSpeed(129);
         Assert.assertEquals("speed 0 fwd estop",0,t.getCommandedSpeed() );
+        
+        t.setSpeedSteps("28");
+        Assert.assertEquals("28 speed steps","28",t.getSpeedSteps() );
+        t = null;
+        
+    }
+    
+    @Test
+    public void testDirections() {
+        CbusSlotMonitorSession t = new CbusSlotMonitorSession( new DccLocoAddress (4,false) );
+        
+        Assert.assertTrue("0 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(1);
+        Assert.assertTrue("1 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(77);
+        Assert.assertTrue("77 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(127);
+        Assert.assertTrue("127 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(128);
+        Assert.assertTrue("128 fwd",t.getDirection().contains("For"));
+        t.setDccSpeed(129);
+        Assert.assertTrue("129 fwd",t.getDirection().contains("For"));
+        t.setDccSpeed(211);
+        Assert.assertTrue("211 fwd",t.getDirection().contains("For"));
+        
+        t.setSpeedSteps("28");
+        t.setDccSpeed(1);
+        Assert.assertTrue("28 1 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(28);
+        Assert.assertTrue("28 28 fwd",t.getDirection().contains("For"));
+
+        t.setSpeedSteps("28I");
+        t.setDccSpeed(1);
+        Assert.assertTrue("28i 1 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(28);
+        Assert.assertTrue("28i 28 fwd",t.getDirection().contains("For"));
+
+        t.setSpeedSteps("14");
+        t.setDccSpeed(1);
+        Assert.assertTrue("14 1 rev",t.getDirection().contains("Rev"));
+        t.setDccSpeed(14);
+        Assert.assertTrue("14 14 fwd",t.getDirection().contains("For"));
+        
         t = null;
     }
     
@@ -94,7 +137,7 @@ public class CbusSlotMonitorSessionTest {
         Assert.assertTrue( t.getFlagString().isEmpty() );
 
         t.setFlags(0b0000_0001);
-        Assert.assertEquals("speed steps by flag 28 I","28 Interleave",t.getSpeedSteps() );
+        Assert.assertEquals("speed steps by flag 28 I","28I",t.getSpeedSteps() );
         
         t.setFlags(0b0000_0010);
         Assert.assertEquals("speed steps by flag 14","14",t.getSpeedSteps() );
@@ -104,8 +147,51 @@ public class CbusSlotMonitorSessionTest {
         
         t.setFlags(0b0000_0000);
         Assert.assertEquals("speed steps by flag 128","128",t.getSpeedSteps() );
+        t = null;
         
     }
+    
+    @Test
+    public void testConsist() {
+        
+        CbusSlotMonitorSession t = new CbusSlotMonitorSession( new DccLocoAddress (1234,true) );
+        Assert.assertTrue( t.getConsistId() == 0 );
+        t.setConsistId(77);
+        Assert.assertTrue( t.getConsistId() == 77 );
+        t = null;
+        
+    }
+    
+    @Test
+    public void testgetFlagString() {
+        
+        CbusSlotMonitorSession t = new CbusSlotMonitorSession( new DccLocoAddress (1234,true) );
+        Assert.assertTrue("flags unset -1",t.getFlagString().isEmpty() );
+        
+        t.setFlags(0b0000_0000);
+        Assert.assertTrue("flags 0",t.getFlagString().contains("Engine State:Active"));
+        
+        t.setFlags(0b0001_0000);
+        Assert.assertTrue("flags 4",t.getFlagString().contains("State:Consist Master"));
+        
+        t.setFlags(0b0010_0000);
+        Assert.assertTrue("flags 5",t.getFlagString().contains("State:Consisted"));
+        
+        t.setFlags(0b0011_0000);
+        Assert.assertTrue("flags 4 5",t.getFlagString().contains("State:Inactive"));
+        Assert.assertTrue("flags 2 0",t.getFlagString().contains("Lights:0"));
+        Assert.assertTrue("flags 3 0",t.getFlagString().contains("Direction:0"));
+        
+        t.setFlags(0b0000_0100);
+        Assert.assertTrue("flags 2 1",t.getFlagString().contains("Lights:1"));
+        
+        t.setFlags(0b0000_1000);
+        Assert.assertTrue("flags 3",t.getFlagString().contains("Direction:1"));
+        
+        t = null;
+        
+    }
+    
     
     @Before
     public void setUp() {

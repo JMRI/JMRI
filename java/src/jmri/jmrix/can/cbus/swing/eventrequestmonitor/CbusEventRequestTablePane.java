@@ -268,7 +268,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
             
             int existingRow = eventModel.eventRow(nd,ev);
             if ( existingRow < 0 ) {
-                eventModel.addEvent(nd,ev,CbusEventRequestMonitorEvent.EvState.UNKNOWN,"",null);
+                eventModel.addEvent(nd,ev,CbusEventRequestMonitorEvent.EvState.UNKNOWN,null);
             }
         };
         
@@ -291,7 +291,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         pane1.setVisible(true);
     }
     
-    public void checkNewevent() {
+    private void checkNewevent() {
         int newno = (Integer) newnodenumberSpinner.getValue();
         int newev = (Integer) newevnumberSpinner.getValue();
         

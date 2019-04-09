@@ -127,6 +127,17 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Test
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
+
+
     /**
      * Number of turnout to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
