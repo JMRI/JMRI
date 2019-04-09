@@ -82,7 +82,8 @@ public class JsonTimeSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        Assert.assertEquals("Time is current", formatter.format(current), message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
+        Assert.assertEquals("Time is current", formatter.format(current),
+                message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         // POST unreasonable rate
         data.put(JSON.RATE, 123456.789); // double so that both integers and doubles are tested
         try {
@@ -156,7 +157,8 @@ public class JsonTimeSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Message is error", JsonException.ERROR, message.path(JSON.TYPE).asText());
         Assert.assertEquals("Error code is HTTP 499", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
-        Assert.assertEquals("Error message is mocked", "Mock Exception", message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
+        Assert.assertEquals("Error message is mocked", "Mock Exception",
+                message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
         // Thrown IOException on next message
         connection.setThrowIOException(true);
         manager.setRate(10);
