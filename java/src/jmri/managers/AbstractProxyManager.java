@@ -35,6 +35,17 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener<E> {
 
+    public AbstractProxyManager() {
+        mgrs = new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
+            @Override
+            public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
+        });
+    }
+
+    public AbstractProxyManager(IndexedTreeSet<Manager<E>> m) {
+        mgrs = m;
+    }
+
     /**
      * Number of managers available through getManager(i) and getManagerList(),
      * including the Internal manager
@@ -146,10 +157,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         return internalManager;
     }
 
-    private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
-        @Override
-        public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
-    });
+    private final IndexedTreeSet<Manager<E>> mgrs;
     private Manager<E> internalManager = null;
     private Manager<E> defaultManager = null;
 
