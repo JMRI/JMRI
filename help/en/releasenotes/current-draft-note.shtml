@@ -466,7 +466,25 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>New generic types of NamedBeans have been added.
+				<ul>
+					<li>DigitalIO - A NamedBean that can have an ON or OFF state.
+					Parent interface for Turnout, Sensor and Light. For turnouts,
+					the ON state is CLOSED, and the OFF state is THROWN. All
+					NamedBeans that extends DigitalIO can be fetched from the
+					DigitalIOManager.</li>
+
+					<li>AnalogIO - A NamedBean that can have an analog value, for
+					example a variable light or a meter. It's at the moment parent
+					interface for Light. All NamedBeans that extends AnalogIO can
+					be fetched from the AnalogIOManager.</li>
+
+					<li>StringIO - A NamedBean that can have a string value. At this
+					point, there is nothing in JMRI that implements this, but it's
+					added for future use. All NamedBeans that extends StringIO can
+					be fetched from the StringIOManager.</li>
+				</ul>
+			</li>
         </ul>
 
     <h3>Signals</h3>
