@@ -30,7 +30,7 @@ import org.openide.util.lookup.ServiceProvider;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @author Daniel Bergqvist 2019
- * @since 3.15.5
+ * @since 4.15.5
  */
 @ServiceProvider(service = InstanceInitializer.class)
 public class DigitalIOManagerInstanceInitializer extends AbstractInstanceInitializer {
