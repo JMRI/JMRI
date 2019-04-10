@@ -25,9 +25,9 @@ public class Z21SimulatorAdapterTest {
     @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
     
-    private static java.net.InetAddress host;
-    private static int port = 21105; // default port for Z21 connections.
-    private static Z21SimulatorAdapter a  = null;
+    private java.net.InetAddress host;
+    private int port = 21105; // default port for Z21 connections.
+    private Z21SimulatorAdapter a  = null;
 
     @Test
     public void testCtor() {
@@ -84,6 +84,7 @@ public class Z21SimulatorAdapterTest {
         } catch(java.net.SocketException se) {
             Assert.fail("Failure Creating Socket");
         }
+        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
     }
 
     @Test
@@ -139,7 +140,18 @@ public class Z21SimulatorAdapterTest {
     // verify there is a railComm manager
     @Test
     public void testAddressedProgrammerManager() {
+        // connect the port
+        try {
+           a.connect();
+        } catch(java.net.BindException be) {
+            Assert.fail("Exception binding to Socket");
+        } catch (java.lang.Exception e) {
+           Assert.fail("Exception configuring server port");
+        }
+        // and configure/start the simulator.
+        a.configure();
         Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
+        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
     }
 
     // verify there is a Reporter manager
@@ -149,8 +161,8 @@ public class Z21SimulatorAdapterTest {
     }
 
     // The minimal setup for log4J
-    @BeforeClass
-    static public void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
@@ -164,9 +176,8 @@ public class Z21SimulatorAdapterTest {
         a = new Z21SimulatorAdapter();
     }
 
-    @AfterClass
-    static public void tearDown() {
-        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
+    @After
+    public void tearDown() {
         a.terminateThread();
         // suppress two timeout messages that occur
 	JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN,"Timeout on reply to message:");
