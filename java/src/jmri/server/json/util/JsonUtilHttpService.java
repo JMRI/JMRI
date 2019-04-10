@@ -116,7 +116,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     @Override
     // Use @Nullable to override non-null requirement of superclass
     public JsonNode doPost(String type, @Nullable String name,
-            @Nullable JsonNode data, Locale locale) throws JsonException {
+            JsonNode data, Locale locale) throws JsonException {
         return this.doGet(type, name, data, locale);
     }
 
