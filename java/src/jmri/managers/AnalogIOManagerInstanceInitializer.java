@@ -94,15 +94,15 @@ public class AnalogIOManagerInstanceInitializer extends AbstractInstanceInitiali
 
         // Add turnout manager
 //        Manager<jmri.Turnout> mt = InstanceManager.getDefault(TurnoutManager.class);
-//        m.addManager(new AdapterManager<>(mt));
+//        m.addManager(new IOManagerProxy<>(mt));
 
         // Add sensor manager
 //        Manager<jmri.Sensor> ms = InstanceManager.getDefault(SensorManager.class);
-//        m.addManager(new AdapterManager<>(ms));
+//        m.addManager(new IOManagerProxy<>(ms));
 
         // Add light manager
         Manager<jmri.Light> ml = InstanceManager.getDefault(LightManager.class);
-        m.addManager(new AdapterManager<>(ml));
+        m.addManager(new IOManagerProxy<>(ml));
 
         return m;
     }

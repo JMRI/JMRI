@@ -9,15 +9,15 @@ import jmri.Manager;
 import jmri.NamedBean;
 
 /**
- * An adaptor for managers.
+ * A proxy for managers.
  * 
  * @author Daniel Bergqvist 2019
  */
-public class AdapterManager<A extends NamedBean, B extends A, C extends Manager<B>> implements Manager<A> {
+public class IOManagerProxy<A extends NamedBean, B extends A, C extends Manager<B>> implements Manager<A> {
 
     private final C _manager;
     
-    public AdapterManager(C manager) {
+    public IOManagerProxy(C manager) {
         this._manager = manager;
     }
     
