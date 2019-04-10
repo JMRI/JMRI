@@ -88,28 +88,28 @@ public class Z21SimulatorAdapterTest {
 
     @Test
     public void RailComDataChangedReply(){
-	cannedMessageCheck("getZ21RailComDataChangedReply","04 00 88 00");
+	    cannedMessageCheck("getZ21RailComDataChangedReply","04 00 88 00");
     }
 
     @Test
     public void HardwareVersionReply(){
-	cannedMessageCheck("getHardwareVersionReply","0C 00 1A 00 00 02 00 00 20 01 00 00");
+	    cannedMessageCheck("getHardwareVersionReply","0C 00 1A 00 00 02 00 00 20 01 00 00");
     }
 
     @Test
     public void XPressNetUnknownCommandReply(){
-	cannedMessageCheck("getXPressNetUnknownCommandReply","07 00 40 00 61 82 E3");
+	    cannedMessageCheck("getXPressNetUnknownCommandReply","07 00 40 00 61 82 E3");
     }
 
     @Test
     public void Z21SerialNumberReply(){
-	cannedMessageCheck("getZ21SerialNumberReply","08 00 10 00 00 00 00 00");
+	    cannedMessageCheck("getZ21SerialNumberReply","08 00 10 00 00 00 00 00");
     }
 
     @Ignore("test gives different results depending on test ordering, due to static simulator object")
     @Test
     public void Z21BroadCastFlagsReply(){
-	cannedMessageCheck("getZ21BroadCastFlagsReply","08 00 51 00 01 00 01 0F");
+	    cannedMessageCheck("getZ21BroadCastFlagsReply","08 00 51 00 01 00 01 0F");
     }
 
     private void cannedMessageCheck(String methodName,String expectedReply){
