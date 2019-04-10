@@ -105,7 +105,7 @@
       <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139">
           <decVal min="0" max="15"/>
           <label>Blink Rate:</label>
-          <label xml:lang="de"> Blinkgeschw.:</label>
+          <label xml:lang="de">Blinkgeschw.:</label>
           <label xml:lang="nl">Knippertempo:</label>
           <tooltip>Choose from 0=none to 15=fast</tooltip>
       </variable>
@@ -486,29 +486,29 @@
       </variable>
 
       <!--Port1 Opcode2-->
-      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV">
+      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
         <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
         <label>Address:</label>
         <label xml:lang="nl">Adres:</label>
         <tooltip>Port 1 Opcode2 DCC Address (0-2047)</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Config" CV="125" default="0">
+      <variable item="Port1 Opcode2 Config" CV="125" default="0" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
         <decVal/>
         <label>Config:</label>
         <tooltip>Port 1 Opcode2 Config, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0">
+      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
         <decVal/>
         <label>Value 2:</label>
         <tooltip>Port 1 Opcode2 Value2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2">
+      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
         <compositeVal>
           <!--Opcode2 Output types, limited set of options-->
-          <compositeChoice choice="Opcode2 Off" exclude="135,139,140,141,142,144,145,146,148">
+          <compositeChoice choice="Opcode2 Off">
             <choice>Off</choice>
             <choice xml:lang="de">inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
