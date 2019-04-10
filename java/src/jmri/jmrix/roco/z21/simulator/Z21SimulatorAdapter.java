@@ -162,18 +162,19 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                    log.debug("Client Disconnect");
                }
            } catch (BindException bex ) {
-	       if(retryCount >= 2 ) { 
-                  log.error("Exception binding to port {}",COMMUNICATION_UDP_PORT,bex);
-	          return;
-	       } else {
-                  log.info("Attempt {}: Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT);
 	          retryCount++;
-		  try {
-		     Thread.sleep((long)(retryCount * 1000)); // wait a few seconds before attempting to bind again.
-		  } catch(InterruptedException ie){ 
-
-   		  }
-	       }
+	          if(retryCount > 2 ) { 
+                 log.error("Giving up after {} attempts.  Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT,bex);
+	             return;
+	           } else {
+                  log.info("Attempt {}: Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT);
+		          try {
+		             Thread.sleep(retryCount * 1000L); // wait a few seconds before attempting to bind again.
+		          } catch(InterruptedException ie){ 
+                      // the sleep is just to give time for another process
+                      // to exit, so it is ok if it finishes early.
+                  }
+               }
            } catch (SocketException ex0 ) {
                log.error("Exception opening socket", ex0);
                return; // can't continue from this
