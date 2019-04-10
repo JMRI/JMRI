@@ -55,7 +55,7 @@ public class AnalogIOManagerInstanceInitializer extends AbstractInstanceInitiali
         
         String beanNameAnalogIO = Bundle.getMessage("BeanNameAnalogIO");
         DefaultAnalogIOManager m =
-                new DefaultAnalogIOManager(beanNameAnalogIO, Manager.DIGITALIO);
+                new DefaultAnalogIOManager(beanNameAnalogIO, Manager.ANALOGIO);
 
         ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
         for (ConnectionConfig connection : ccm.getConnections()) {
