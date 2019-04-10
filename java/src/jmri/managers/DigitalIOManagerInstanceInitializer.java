@@ -104,5 +104,5 @@ public class DigitalIOManagerInstanceInitializer extends AbstractInstanceInitial
 
         return m;
     }
-
+    
 }
