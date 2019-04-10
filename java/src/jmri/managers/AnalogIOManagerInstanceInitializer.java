@@ -6,6 +6,7 @@ import jmri.AnalogIO;
 import jmri.AnalogIOManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
+import jmri.LightManager;
 import jmri.Manager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrix.ConnectionConfig;
@@ -100,8 +101,8 @@ public class AnalogIOManagerInstanceInitializer extends AbstractInstanceInitiali
 //        m.addManager(new AdapterManager<>(ms));
 
         // Add light manager
-//        Manager<jmri.Light> ml = InstanceManager.getDefault(LightManager.class);
-//        m.addManager(new AdapterManager<>(ml));
+        Manager<jmri.Light> ml = InstanceManager.getDefault(LightManager.class);
+        m.addManager(new AdapterManager<>(ml));
 
         return m;
     }

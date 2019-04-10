@@ -90,6 +90,16 @@ public class GeneralManagerTest {
     public void testAnalogIO() {
         AnalogIO d;
         
+        d = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean("IL1");
+        Assert.assertNotNull("light exists", d);
+        Assert.assertTrue("bean is a light", d instanceof Light);
+        Assert.assertTrue("bean is the expected bean", d == l1);
+        
+        d = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean("IL2");
+        Assert.assertNotNull("light exists", d);
+        Assert.assertTrue("bean is a light", d instanceof Light);
+        Assert.assertTrue("bean is the expected bean", d == l2);
+        
         AnalogIO analogIO = new MyAnalogIO("IV1");
         InstanceManager.getDefault(AnalogIOManager.class).register(analogIO);
         
