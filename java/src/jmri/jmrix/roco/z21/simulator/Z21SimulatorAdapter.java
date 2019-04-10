@@ -106,10 +106,11 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
         // try connecting to the port up to three times
 	int retryCount = 0;
-	   while(retryCount<3) {
+	   while(retryCount<3 && !threadStopRequest) {
            try (DatagramSocket s = new DatagramSocket(COMMUNICATION_UDP_PORT)) {
    
                socket = s; // save for later close()
+               s.setSoTimeout(100); // timeout periodically
                log.debug("socket created, starting loop");
                while(!threadStopRequest){
                    log.debug("simulation loop");
@@ -151,7 +152,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                           // and send it back using our socket
                           s.send(sendPacket);
                        }
-   
+                    } catch (java.net.SocketTimeoutException ste){
+                       // not an error, recheck the condition on the while.
+                       continue;
                     } catch (java.io.IOException ex3) {
                        if (!threadStopRequest) {
                           log.error("IO Exception", ex3);
