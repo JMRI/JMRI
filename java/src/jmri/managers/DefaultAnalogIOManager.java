@@ -8,7 +8,7 @@ import jmri.AnalogIOManager;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class DefaultAnalogIOManager extends GenericManager<AnalogIO> implements AnalogIOManager {
+public class DefaultAnalogIOManager extends GenericIOManager<AnalogIO> implements AnalogIOManager {
 
     public DefaultAnalogIOManager(String beanTypeHandled, int xmlOrder) {
         super(beanTypeHandled, xmlOrder);

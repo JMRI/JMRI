@@ -8,7 +8,7 @@ import jmri.DigitalIOManager;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class DefaultDigitalIOManager extends GenericManager<DigitalIO> implements DigitalIOManager {
+public class DefaultDigitalIOManager extends GenericIOManager<DigitalIO> implements DigitalIOManager {
 
     public DefaultDigitalIOManager(String beanTypeHandled, int xmlOrder) {
         super(beanTypeHandled, xmlOrder);

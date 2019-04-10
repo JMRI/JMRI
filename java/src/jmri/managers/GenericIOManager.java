@@ -1,10 +1,5 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.util.List;
-import java.util.SortedSet;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.com.dictiography.collections.IndexedTreeSet;
@@ -16,12 +11,12 @@ import jmri.util.com.dictiography.collections.IndexedTreeSet;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class GenericManager<E extends NamedBean> extends AbstractProxyManager<E> {
+public class GenericIOManager<E extends NamedBean> extends AbstractProxyManager<E> {
 
     private final String _beanTypeHandled;
     private final int _xmlOrder;
     
-    public GenericManager(String beanTypeHandled, int xmlOrder) {
+    public GenericIOManager(String beanTypeHandled, int xmlOrder) {
         super(new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
             @Override
             public int compare(Manager<E> e1, Manager<E> e2) {

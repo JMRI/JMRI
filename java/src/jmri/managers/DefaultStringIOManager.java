@@ -8,7 +8,7 @@ import jmri.StringIOManager;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class DefaultStringIOManager extends GenericManager<StringIO> implements StringIOManager {
+public class DefaultStringIOManager extends GenericIOManager<StringIO> implements StringIOManager {
 
     public DefaultStringIOManager(String beanTypeHandled, int xmlOrder) {
         super(beanTypeHandled, xmlOrder);
