@@ -54,7 +54,7 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
                         try {
-                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, null, this.connection.getLocale()));
+                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale()));
                         } catch (JsonException ex) {
                             this.connection.sendMessage(ex.getJsonMessage());
                         }
