@@ -36,7 +36,7 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @Nullable to override @Nonnull in super class
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
         return doGet(type, timebase, timebase.getTime(), locale);
     }
@@ -75,7 +75,7 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode result = this.mapper.createArrayNode();
         result.add(this.doGet(type, null, locale));
         return result;

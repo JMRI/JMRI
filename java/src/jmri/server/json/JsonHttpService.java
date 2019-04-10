@@ -46,12 +46,9 @@ public abstract class JsonHttpService {
      *                           occurs
      */
     @Nonnull
-    public JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale)
-            throws JsonException {
-        // although doGet(type, name, locale) is overridden, the default implementation
-        // calls that until all subclasses can be updated
-        return doGet(type, name, locale);
-    }
+    public abstract JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
+            @Nonnull Locale locale)
+            throws JsonException;
 
     /**
      * Respond to an HTTP GET request for the requested name.
@@ -73,8 +70,10 @@ public abstract class JsonHttpService {
      */
     @Nonnull
     @Deprecated
-    public abstract JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale)
-            throws JsonException;
+    public JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale)
+            throws JsonException {
+        return doGet(type, name, mapper.createObjectNode(), locale);
+    }
 
     /**
      * Respond to an HTTP POST request for the requested name.
@@ -146,18 +145,14 @@ public abstract class JsonHttpService {
      * JsonException in this case.
      *
      * @param type   the type of the requested list
-     * @param data   JSON data set of attributes of the requested object
+     * @param data   JSON data set of attributes of the requested objects
      * @param locale the requesting client's Locale
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    public ArrayNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale)
-            throws JsonException {
-        // although doGetList(type locale) is overridden, the default implementation
-        // calls that until all subclasses can be updated
-        return doGetList(type, locale);
-    }
+    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale)
+            throws JsonException;
 
     /**
      * Respond to an HTTP GET request for a list of items of type.
@@ -173,11 +168,14 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
-     * @deprecated since 4.15.5; use {@link #doGetList(String, JsonNode, Locale)} instead
+     * @deprecated since 4.15.5; use
+     *             {@link #doGetList(String, JsonNode, Locale)} instead
      */
     @Nonnull
     @Deprecated
-    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException;
+    public ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException {
+        return doGetList(type, mapper.createObjectNode(), locale);
+    }
 
     /**
      * Get the JSON Schema for the {@code data} property of the requested type

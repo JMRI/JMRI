@@ -34,7 +34,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Override
     @Nonnull
-    public final JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
+    public final JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale) throws JsonException {
         if (!type.equals(getType())) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "LoggedError"));
         }
@@ -65,8 +65,8 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Nonnull
     @Override
-    public final ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        return doGetList(getManager(), type, locale);
+    public final ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
+        return doGetList(getManager(), type, data, locale);
     }
 
     /**

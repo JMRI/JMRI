@@ -39,7 +39,7 @@ public class JsonPowerHttpService extends JsonHttpService {
 
     @Override
     // Nullable to override inherited NonNull requirement
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode parameters, Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
@@ -115,7 +115,7 @@ public class JsonPowerHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (PowerManager manager : InstanceManager.getList(PowerManager.class)) {
             root.add(this.doGet(type, manager.getUserName(), locale));

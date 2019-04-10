@@ -60,7 +60,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     @Override
     // use @Nullable to override @Nonnull specified in superclass
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.HELLO:
                 return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval());
@@ -91,7 +91,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale);

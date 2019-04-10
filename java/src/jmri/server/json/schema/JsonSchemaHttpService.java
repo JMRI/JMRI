@@ -111,17 +111,12 @@ public class JsonSchemaHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        return this.doPost(type, name, this.mapper.createObjectNode(), locale);
-    }
-
-    @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         return this.doGet(type, name, data, locale);
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode parameters, Locale locale) throws JsonException {
         switch (type) {
             case JSON.TYPE:
                 ArrayNode root = this.mapper.createArrayNode();

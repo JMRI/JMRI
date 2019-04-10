@@ -281,12 +281,12 @@ public class JsonUtilSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
             if (throwException) {
                 throwException = false;
                 throw new JsonException(499, "Mock Exception");
             }
-            return super.doGet(type, name, locale);
+            return super.doGet(type, name, data, locale);
         }
 
         public void setThrowException(boolean throwException) {
