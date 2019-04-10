@@ -106,10 +106,11 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
         // try connecting to the port up to three times
 	int retryCount = 0;
-	   while(retryCount<3) {
+	   while(retryCount<3 && !threadStopRequest) {
            try (DatagramSocket s = new DatagramSocket(COMMUNICATION_UDP_PORT)) {
    
                socket = s; // save for later close()
+               s.setSoTimeout(100); // timeout periodically
                log.debug("socket created, starting loop");
                while(!threadStopRequest){
                    log.debug("simulation loop");
@@ -151,7 +152,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                           // and send it back using our socket
                           s.send(sendPacket);
                        }
-   
+                    } catch (java.net.SocketTimeoutException ste){
+                       // not an error, recheck the condition on the while.
+                       continue;
                     } catch (java.io.IOException ex3) {
                        if (!threadStopRequest) {
                           log.error("IO Exception", ex3);
@@ -162,18 +165,19 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                    log.debug("Client Disconnect");
                }
            } catch (BindException bex ) {
-	       if(retryCount >= 2 ) { 
-                  log.error("Exception binding to port {}",COMMUNICATION_UDP_PORT,bex);
-	          return;
-	       } else {
-                  log.info("Attempt {}: Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT);
 	          retryCount++;
-		  try {
-		     Thread.sleep((long)(retryCount * 1000)); // wait a few seconds before attempting to bind again.
-		  } catch(InterruptedException ie){ 
-
-   		  }
-	       }
+	          if(retryCount > 2 ) { 
+                 log.error("Giving up after {} attempts.  Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT,bex);
+	             return;
+	           } else {
+                  log.info("Attempt {}: Exception binding to port {}",retryCount,COMMUNICATION_UDP_PORT);
+		          try {
+		             Thread.sleep(retryCount * 1000L); // wait a few seconds before attempting to bind again.
+		          } catch(InterruptedException ie){ 
+                      // the sleep is just to give time for another process
+                      // to exit, so it is ok if it finishes early.
+                  }
+               }
            } catch (SocketException ex0 ) {
                log.error("Exception opening socket", ex0);
                return; // can't continue from this
