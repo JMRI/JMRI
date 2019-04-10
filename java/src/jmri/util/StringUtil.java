@@ -23,6 +23,9 @@ import javax.annotation.Nonnull;
  */
 public class StringUtil {
 
+    public static final String HTML_CLOSE_TAG = "</html>";
+    public static final String HTML_OPEN_TAG = "<html>";
+
     /**
      * Starting with two arrays, one of names and one of corresponding numeric
      * state values, find the state value that matches a given name string
@@ -672,6 +675,43 @@ public class StringUtil {
         }
         String tail = string.substring(lastIndex).replaceFirst(from, to);
         return string.substring(0, lastIndex) + tail;
+    }
+
+    /**
+     * Concatenates text Strings where either could possibly be in HTML format
+     * (as used in many Swing components).
+     * <p>
+     * Ensures any appended text is added within the {@code <html>...</html>}
+     * element, if there is any.
+     *
+     * @param baseText  original text
+     * @param extraText text to be appended to original text
+     * @return Combined text, with a single enclosing {@code <html>...</html>}
+     * element (only if needed).
+     */
+    public static String concatTextHtmlAware(String baseText, String extraText) {
+        if (baseText == null && extraText == null) {
+            return null;
+        }
+        if (baseText == null) {
+            return extraText;
+        }
+        if (extraText == null) {
+            return baseText;
+        }
+        boolean hasHtml = false;
+        String result = baseText + extraText;
+        result = result.replaceAll("(?i)" + HTML_OPEN_TAG, "");
+        result = result.replaceAll("(?i)" + HTML_CLOSE_TAG, "");
+        if (!result.equals(baseText + extraText)) {
+            hasHtml = true;
+            log.debug("\n\nbaseText:\n\"{}\"\nextraText:\n\"{}\"\n", baseText, extraText);
+        }
+        if (hasHtml) {
+            result = HTML_OPEN_TAG + result + HTML_CLOSE_TAG;
+            log.debug("\nCombined String:\n\"{}\"\n", result);
+        }
+        return result;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
