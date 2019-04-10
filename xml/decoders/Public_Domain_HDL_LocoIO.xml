@@ -47,17 +47,17 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-04-09</date>
+        <date>2019-04-10</date>
         <authorinitials>EB</authorinitials>
         <revremark>Use compositeVal type values (ports 1-5 for now), updated decoder schema, add LocoServo,
             add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7),
-            Opcode (only for Port1)
+            Opcode (only for port 1 for now)
         </revremark>
       </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
-  <version author="Egbert Broerse" version="3" lastUpdated="20190409"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -475,6 +475,18 @@
             <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
           </compositeChoice>
 
+          <compositeChoice choice="Contact1 Indirect">
+            <choice>Contact1 Indirect</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Direct">
+            <choice>Contact2 Direct</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
+
           <compositeChoice choice="Contact2 Indirect">
             <choice>Contact2 Indirect</choice>
             <compositeSetting label="Port1 Opcode1 Config" value="177"/>
@@ -520,6 +532,18 @@
             <choice>Contact1 Direct</choice>
             <compositeSetting label="Port1 Opcode2 Config" value="176"/>
             <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Indirect">
+            <choice>Contact1 Indirect</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Direct">
+            <choice>Contact2 Direct</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
           </compositeChoice>
 
           <compositeChoice choice="Contact2 Indirect">
