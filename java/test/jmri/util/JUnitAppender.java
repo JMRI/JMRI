@@ -68,9 +68,13 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     // package-level access for testing
     static boolean unexpectedFatalSeen = false;
+    static String  unexpectedFatalContent = null;  
     static boolean unexpectedErrorSeen = false;
+    static String  unexpectedErrorContent = null;  
     static boolean unexpectedWarnSeen = false;
+    static String  unexpectedWarnContent = null;  
     static boolean unexpectedInfoSeen = false;
+    static String  unexpectedInfoContent = null;  
 
     public static boolean unexpectedMessageSeen(Level l) {
         if (l == Level.FATAL) {
@@ -88,20 +92,46 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
+    public static String unexpectedMessageContent(Level l) {
+        if (l == Level.FATAL) {
+            return unexpectedFatalContent;
+        }
+        if (l == Level.ERROR) {
+            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            return unexpectedErrorContent;
+        }
+        if (l == Level.WARN) {
+            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            if (unexpectedErrorContent != null ) return unexpectedErrorContent;
+            return unexpectedWarnContent;
+        }
+        if (l == Level.INFO) {
+            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            if (unexpectedErrorContent != null ) return unexpectedErrorContent;
+            if (unexpectedWarnContent != null ) return unexpectedWarnContent;
+            return unexpectedInfoContent;
+        }
+        throw new java.lang.IllegalArgumentException("Did not expect " + l);
+    }
+
     public static void resetUnexpectedMessageFlags(Level severity) {
         // cases statements are organized to flow 
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 unexpectedInfoSeen = false;
+                unexpectedInfoContent = null;
                 //$FALL-THROUGH$
             case Level.WARN_INT:
                 unexpectedWarnSeen = false;
+                unexpectedWarnContent = null;
                 //$FALL-THROUGH$
             case Level.ERROR_INT:
                 unexpectedErrorSeen = false;
+                unexpectedErrorContent = null;
                 //$FALL-THROUGH$
             case Level.FATAL_INT:
                 unexpectedFatalSeen = false;
+                unexpectedFatalContent = null;
                 break;
             default:
                 Log.warn("Unhandled serverity code: {}", severity.toInt());
@@ -140,19 +170,23 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     void superappend(LoggingEvent l) {
         if (l.getLevel() == Level.FATAL) {
             unexpectedFatalSeen = true;
+            unexpectedFatalContent = l.getMessage().toString();
         }
         if (l.getLevel() == Level.ERROR) {
             if (compare(l, "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
                 // still an error, just suppressed
             } else {
                 unexpectedErrorSeen = true;
+                unexpectedErrorContent = l.getMessage().toString();
             }
         }
         if (l.getLevel() == Level.WARN) {
             unexpectedWarnSeen = true;
+            unexpectedWarnContent = l.getMessage().toString();
         }
         if (l.getLevel() == Level.INFO) {
             unexpectedInfoSeen = true;
+            unexpectedInfoContent = l.getMessage().toString();
         }
 
         super.append(l);
@@ -340,6 +374,55 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
+     * If there's a next matching message of specific severity, just ignore it.
+     * Not an error if not present; mismatch is an error. Skips messages of
+     * lower severity while looking for the specific one. White space is
+     * ignored.
+     * 
+     * @param level the level at which to suppress the message
+     * @param msg   the message to suppress
+     */
+    public static void suppressMessageStartsWith(Level level, String msg) {
+        if (list.isEmpty()) {
+            return;
+        }
+
+        LoggingEvent evt = list.remove(0);
+
+        while (((level.equals(Level.WARN)) &&
+                (evt.getLevel() == Level.TRACE ||
+                        evt.getLevel() == Level.DEBUG ||
+                        evt.getLevel() == Level.INFO ||
+                        evt.getLevel() == Level.WARN)) ||
+                ((level.equals(Level.ERROR)) &&
+                        (evt.getLevel() == Level.TRACE ||
+                                evt.getLevel() == Level.DEBUG ||
+                                evt.getLevel() == Level.INFO ||
+                                evt.getLevel() == Level.WARN ||
+                                evt.getLevel() == Level.ERROR))) { // this is much better with Log4J 2's compareTo method
+            if (list.isEmpty()) {
+                return;
+            }
+            evt = list.remove(0);
+        }
+
+        // check the remaining message, if any
+        if (evt.getLevel() != level) {
+            Assert.fail("Level mismatch when looking for " +
+                    level +
+                    " message: \"" +
+                    msg +
+                    "\" found \"" +
+                    (String) evt.getMessage() +
+                    "\"");
+        }
+
+        if (!compareStartsWith(evt, msg)) {
+            Assert.fail("Looking for " + level + " message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+        }
+    }
+
+    /**
      * If there's a next matching message of Error severity, just ignore it. Not
      * an error if not present; mismatch is an error. White space is ignored.
      *
@@ -347,6 +430,16 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     public static void suppressErrorMessage(String msg) {
         suppressMessage(Level.ERROR, msg);
+    }
+
+    /**
+     * If there's a next matching message of Error severity, just ignore it. Not
+     * an error if not present; mismatch is an error. White space is ignored.
+     *
+     * @param msg the message to suppress
+     */
+    public static void suppressErrorMessageStartsWith(String msg) {
+        suppressMessageStartsWith(Level.ERROR, msg);
     }
 
     /**

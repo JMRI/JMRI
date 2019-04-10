@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>15</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+      <userName>Sensor 1</userName>
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>Sensor 3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS305</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS35</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+      <userName>Turnout 2</userName>
+      <comment>Manual</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT321</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT322</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT323</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT324</systemName>
+    </turnout>
+  </turnouts>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.SE8cSignalHeadXml">
+      <systemName>LH321</systemName>
+      <userName>Sig2 T&amp;DR Up Distant</userName>
+      <turnoutname defines="low">321</turnoutname>
+      <turnoutname defines="high">322</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SE8cSignalHeadXml">
+      <systemName>LH323</systemName>
+      <turnoutname defines="low">323</turnoutname>
+      <turnoutname defines="high">324</turnoutname>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="Sig2 T&amp;DR Up Distant" mode="2" watchedturnout="IT1" watchedsignal1="LH323" watchedsignal2="LH323" watchedsensor2="IS305" watchedsensor2alt="IS35" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>IS305</sensorname>
+      <sensorname>IS35</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="LH323" mode="3" watchedturnout="IT2" watchedsignal1="LH323" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>IS35</sensorname>
+      <comment />
+    </signalelement>
+  </signalelements>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Mar 29 18:57:04 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Mar 29 18:57:04 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Mar 29 18:57:04 PDT 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.15.5ish+jake+20190330T0156Z+Re3bf93e813 on Fri Mar 29 18:57:04 PDT 2019-->
+</layout-config>

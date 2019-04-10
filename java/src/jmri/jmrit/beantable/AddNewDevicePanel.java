@@ -35,8 +35,10 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
         p.add(sysNameLabel, c);
+        sysNameLabel.setLabelFor(sysName);
         c.gridy = 1;
         p.add(userNameLabel, c);
+        userNameLabel.setLabelFor(userName);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;

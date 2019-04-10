@@ -72,7 +72,7 @@ public class NamedBeanComparatorTest {
 
         // this just checks that the local sort is called
         Turnout it1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
-        Turnout it2 = new jmri.implementation.AbstractTurnout("it2") {
+        Turnout it2 = new jmri.implementation.AbstractTurnout("IT2") {
 
             @Override
             protected void forwardCommandChangeToLayout(int s) {

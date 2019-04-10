@@ -47,6 +47,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         tm=null;
         _cs.dispose();
         _cs = null;
+        if (cbtm != null) { 
+            cbtm.dispose();
+        }
         cbtm = null;
     }
 

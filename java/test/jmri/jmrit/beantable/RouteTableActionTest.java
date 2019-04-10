@@ -4,11 +4,8 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.Route;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
@@ -80,6 +77,23 @@ public class RouteTableActionTest extends AbstractTableActionBase {
 
         addFrame.dispose();
         JUnitUtil.dispose(f);
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddRoute");
+    }
+
+    @Test
+    @Ignore("Route create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    public void testAddThroughDialog() {
+    }
+
+    @Test
+    @Ignore("Route create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name, or add without dialog")
+    public void testEditButton() {
     }
 
 

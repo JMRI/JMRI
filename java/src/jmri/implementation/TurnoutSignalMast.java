@@ -77,31 +77,41 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             log.warn("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
             throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
         }
-        if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
+        
+        
+        if (getLit()) { // If the signalmast is lit, then send the commands to change the aspect.
+            
+            // reset all states before setting this one, including this one
             if (resetPreviousStates) {
-                //Clear all the current states, this will result in the signalmast going blank for a very short time.
+                // Clear all the current states, this will result in the signalmast going blank for a very short time.
                 for (Map.Entry<String, TurnoutAspect> entry : turnouts.entrySet()) {
-                    String appearances = entry.getKey();
+                    String appearance = entry.getKey();
                     TurnoutAspect aspt = entry.getValue();
-                    if (!isAspectDisabled(appearances)) {
+                    if (!isAspectDisabled(appearance)) {
                         int setState = Turnout.CLOSED;
                         if (aspt.getTurnoutState() == Turnout.CLOSED) {
                             setState = Turnout.THROWN;
                         }
-                        if (aspt.getTurnout().getKnownState() != setState) {
-                            aspt.getTurnout().setCommandedState(setState);
+                        if (aspt.getTurnout() != null ) {
+                            if (aspt.getTurnout().getKnownState() != setState) {
+                                aspt.getTurnout().setCommandedState(setState);
+                            }
+                        } else {
+                            log.error("Trying to reset \"" + appearance + "\" on signal mast \"" + getDisplayName() + "\" which has not been configured");
                         }
                     }
                 }
             }
-            Turnout turnToSet = turnouts.get(aspect).getTurnout();
-            int stateToSet = turnouts.get(aspect).getTurnoutState();
-            //Set the new signal mast state
-            if (turnToSet != null) {
+
+            // set the finel state if possible
+            if (turnouts.get(aspect) != null && turnouts.get(aspect).getTurnout() != null) {
+                Turnout turnToSet = turnouts.get(aspect).getTurnout();
+                int stateToSet = turnouts.get(aspect).getTurnoutState();
                 turnToSet.setCommandedState(stateToSet);
             } else {
-                log.error("Trying to set a state " + aspect + " on signal mast " + getDisplayName() + " which has not been configured");
+                log.error("Trying to set \"" + aspect + "\" on signal mast \"" + getDisplayName() + "\" which has not been configured");
             }
+            
         } else if (log.isDebugEnabled()) {
             log.debug("Mast set to unlit, will not send aspect change to hardware");
         }
@@ -141,16 +151,17 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             return;
         }
         if (newLit) {
-            //This will force the signalmast to send out the commands to set the aspect again.
+            // This will force the signalmast to send out the commands to set the aspect again.
             setAspect(getAspect());
         } else {
             if (unLit != null) {
+                // there is a specific unlit output defined
                 Turnout t = unLit.getTurnout();
                 if (t != null && t.getKnownState() != getUnLitTurnoutState()) {
                     t.setCommandedState(getUnLitTurnoutState());
                 }
-                // set all Heads to state
             } else {
+                // turn everything off
                 for (TurnoutAspect aspect : turnouts.values()) {
                     int setState = Turnout.CLOSED;
                     if (aspect.getTurnoutState() == Turnout.CLOSED) {
