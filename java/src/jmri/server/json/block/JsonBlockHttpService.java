@@ -115,7 +115,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 }
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

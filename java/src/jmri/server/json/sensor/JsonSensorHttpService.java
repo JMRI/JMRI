@@ -79,7 +79,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

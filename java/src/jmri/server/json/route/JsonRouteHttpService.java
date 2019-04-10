@@ -93,7 +93,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
             default:
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", ROUTE, state)); // NOI18N
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

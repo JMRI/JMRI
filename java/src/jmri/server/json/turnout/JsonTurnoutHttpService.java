@@ -77,7 +77,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
             default:
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", TURNOUT, state));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

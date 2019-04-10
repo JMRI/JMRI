@@ -71,13 +71,13 @@ public class JsonTimeHttpService extends JsonHttpService {
         } catch (TimebaseRateException e) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorRateFactor"));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
     public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode result = this.mapper.createArrayNode();
-        result.add(this.doGet(type, null, locale));
+        result.add(this.doGet(type, null, data, locale));
         return result;
     }
 

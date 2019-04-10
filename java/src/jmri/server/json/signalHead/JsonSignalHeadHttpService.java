@@ -81,7 +81,7 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
                 }
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
         ArrayNode root = this.mapper.createArrayNode();
         for (SignalHead head : InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet()) {
             String name = head.getSystemName();
-            root.add(this.doGet(SIGNAL_HEAD, name, locale));
+            root.add(this.doGet(SIGNAL_HEAD, name, data, locale));
         }
         return root;
     }

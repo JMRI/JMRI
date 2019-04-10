@@ -111,14 +111,14 @@ public class JsonPowerHttpService extends JsonHttpService {
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex);
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
     public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (PowerManager manager : InstanceManager.getList(PowerManager.class)) {
-            root.add(this.doGet(type, manager.getUserName(), locale));
+            root.add(this.doGet(type, manager.getUserName(), data, locale));
         }
         return root;
     }

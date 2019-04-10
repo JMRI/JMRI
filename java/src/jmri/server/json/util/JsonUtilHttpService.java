@@ -103,7 +103,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getConfigProfiles(locale);
             default:
                 ArrayNode array = this.mapper.createArrayNode();
-                JsonNode node = this.doGet(type, null, locale);
+                JsonNode node = this.doGet(type, null, data, locale);
                 if (node.isArray()) {
                     array.addAll((ArrayNode) node);
                 } else {
@@ -117,7 +117,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     // Use @Nullable to override non-null requirement of superclass
     public JsonNode doPost(String type, @Nullable String name,
             @Nullable JsonNode data, Locale locale) throws JsonException {
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     /**

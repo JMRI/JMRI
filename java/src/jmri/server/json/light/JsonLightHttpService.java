@@ -72,7 +72,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
             default:
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

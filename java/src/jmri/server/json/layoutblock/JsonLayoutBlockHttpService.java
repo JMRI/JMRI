@@ -64,7 +64,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         if (!data.path(STATE).isMissingNode()) {
             layoutBlock.setState(data.path(STATE).asInt());
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

@@ -59,7 +59,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale));
         log.debug("adding LayoutBlocksListener");
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(layoutBlocksListener); //add parent listener
     }
@@ -95,7 +95,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
                         e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), getLocale()));
+                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), connection.getObjectMapper().createObjectNode(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
@@ -116,7 +116,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(LAYOUTBLOCKS, getLocale()));
+                    connection.sendMessage(service.doGetList(LAYOUTBLOCKS, service.getObjectMapper().createObjectNode(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         removeListenersFromRemovedBeans();

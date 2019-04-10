@@ -74,7 +74,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect));
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override

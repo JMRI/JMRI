@@ -51,7 +51,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                 memory.setValue(data.path(VALUE).asText());
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
