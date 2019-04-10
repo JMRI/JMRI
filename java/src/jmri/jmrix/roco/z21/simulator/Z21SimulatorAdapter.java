@@ -112,6 +112,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                socket = s; // save for later close()
                s.setSoTimeout(100); // timeout periodically
                log.debug("socket created, starting loop");
+               log.error("socket created, starting loop",(new Exception()));
                while(!threadStopRequest){
                    log.debug("simulation loop");
                    // the server waits for a client to connect, then echos the data sent back.
