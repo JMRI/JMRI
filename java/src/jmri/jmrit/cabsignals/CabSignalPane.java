@@ -158,19 +158,27 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         JPanel toppanelcontainer = new JPanel();
         // toppanelcontainer.setLayout(new BoxLayout(toppanelcontainer, BoxLayout.X_AXIS));
         
-        masterSendCabDataButton= new JToggleButton();
+        masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
         masterSendCabDataButton.setSelected(false);
-        setViewOnMasterCabSigButton( masterSendCabDataButton.isSelected() );
-        
+        masterSendCabDataButton.setIcon(
+                        new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green.GIF",
+                        "resources/icons/panels/CSD/AZD/button/button-green.GIF"));
         masterSendCabDataButton.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setViewOnMasterCabSigButton( masterSendCabDataButton.isSelected() );
                 if (masterSendCabDataButton.isSelected()) {
+                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOff"));
+                    masterSendCabDataButton.setIcon(
+                        new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green-off.GIF", 
+                        "resources/icons/panels/CSD/AZD/button/button-green-off.GIF"));
                     slotModel.masterSendCabData = false;
                     slotModel.masterSendCabDataButton(false);
                 }
                 else {
+                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOn"));
+                    masterSendCabDataButton.setIcon(
+                        new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green.GIF",
+                        "resources/icons/panels/CSD/AZD/button/button-green.GIF"));
                     slotModel.masterSendCabData = true;
                     slotModel.masterSendCabDataButton(true);
                 }
@@ -244,22 +252,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         
         p1.setVisible(true);
         log.debug("class name {} ",CabSignalPane.class.getName());
-    }
-    
-    private void setViewOnMasterCabSigButton( boolean buttonSelected){
-        
-        if (masterSendCabDataButton.isSelected()) {
-            masterSendCabDataButton.setText(Bundle.getMessage("SigDataOff"));
-            masterSendCabDataButton.setIcon(
-                new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green-off.GIF", 
-                "resources/icons/panels/CSD/AZD/button/button-green-off.GIF"));
-        }
-        else {
-            masterSendCabDataButton.setText(Bundle.getMessage("SigDataOn"));
-            masterSendCabDataButton.setIcon(
-                new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green.GIF",
-                "resources/icons/panels/CSD/AZD/button/button-green.GIF"));
-        }
     }
     
     @Override
