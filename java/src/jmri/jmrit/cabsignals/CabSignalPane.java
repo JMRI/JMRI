@@ -1,13 +1,10 @@
 package jmri.jmrit.cabsignals;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -16,22 +13,17 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.UIManager;
 import jmri.LocoAddress;
 import jmri.CabSignalListListener;
 import jmri.CabSignalManager;
@@ -47,10 +39,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Pane for monitoring and configuring a MERG CBUS Command Station
- * Created with Notepad++
+ * Pane for sending Cab Signal data via block lookup
  * @author Steve Young Copyright (C) 2018
- * @since 4.13.4
+ * @author Paul Bender Copyright (C) 2019
+ * @see CabSignalTableModel
+ * @since 4.15.4
  */
 public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSignalListListener {
 
@@ -141,18 +134,20 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         slotTable.setAutoCreateRowSorter(true);
         
         final TableRowSorter<CabSignalTableModel> sorter = new TableRowSorter<CabSignalTableModel>(slotModel);
-        slotTable.setRowSorter(sorter);        
+        slotTable.setRowSorter(sorter);
+        
+        slotTable.setRowHeight(26);
         
         // configure items for GUI
         slotModel.configureTable(slotTable);
         
-        slotTable.addMouseListener(new CabSignalButtonMouseListener(slotTable));
-        
-        TableCellRenderer chngBlockDirRenderer = new ChngBlockDirRenderer();
-        TableColumn ChngBlockDirColumn = tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN);                
+        TableColumn ChngBlockDirColumn = tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN); 
+        ChngBlockDirColumn.setCellRenderer( new ButtonRenderer() );
+        ChngBlockDirColumn.setCellEditor( new ButtonEditor( new JButton() ) );   
         ChngBlockDirColumn.setMinWidth(80);
-        //  ChngBlockDirColumn.setMaxWidth(80);        
-        ChngBlockDirColumn.setCellRenderer(chngBlockDirRenderer);        
+        //  ChngBlockDirColumn.setMaxWidth(80);
+        
+        
         
         slotScroll = new JScrollPane(slotTable);
         slotScroll.setPreferredSize(new Dimension(400, 200));
@@ -258,40 +253,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         log.debug("class name {} ",CabSignalPane.class.getName());
     }
     
-	private static class ChngBlockDirRenderer implements TableCellRenderer {		
-		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton button = (JButton)value;
-			if (isSelected){
-                    button.setForeground(table.getSelectionForeground());
-                    button.setBackground(table.getSelectionBackground());
-                }
-                else {
-                    button.setForeground(table.getForeground());
-                    button.setBackground(UIManager.getColor("Button.background"));
-                }
-			return button;	
-		}
-	}    
-    
-    private static class CabSignalButtonMouseListener extends MouseAdapter {
-		private final JTable table;
-		public CabSignalButtonMouseListener(JTable table) {
-			this.table = table;
-		}
-        @Override
-		public void mouseClicked(MouseEvent e) {
-			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
-			int row    = e.getY()/table.getRowHeight(); 
-
-			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
-			    Object value = table.getValueAt(row, column);
-			    if (value instanceof JButton) {
-			    	((JButton)value).doClick();
-			    }
-			}
-		}
-	}
-    
     @Override
     public String getTitle() {
         return Bundle.getMessage("MenuItemCabSignalPane");
@@ -306,7 +267,9 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
            jmri.InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
            cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class); 
         }
-        cabSignalManager.addCabSignalListListener(this);
+        if (cabSignalManager != null) {
+            cabSignalManager.addCabSignalListListener(this);
+        }
     }
     
     /**

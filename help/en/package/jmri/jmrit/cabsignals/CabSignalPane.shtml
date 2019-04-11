@@ -36,6 +36,13 @@
         </ul>
 
     <h2>Signal Data Table Columns</h2>
+    
+        <img src="cabsig-pane-754x179.png" 
+            height="179" width="754" 
+            title="JMRI CabSignal Data Send Layout Window"
+            alt="JMRI Cab Signal Data Send Window"
+            >
+    
         <ul>
         <li>Loco ID</li>
         <li>Block - Current Block Username</li>

@@ -1,37 +1,19 @@
 package jmri.jmrit.cabsignals;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.CabSignalManager;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.Path;
-
-
-import jmri.CabSignalManager;
 import jmri.SignalMast;
+import jmri.jmrit.roster.RosterEntry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,13 +59,13 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     // order needs to match column list top of dtabledatamodel
     static protected final String[] columnToolTips = {
         null, // loco id
-        ("Block Username"),
-        ("North / South / East / West, 8 point block direction"),
+        Bundle.getMessage("BlockUserName"),
+        Bundle.getMessage("BlockDirectionTip"),
         null, // block button
-        ("Next block in direction from current block"),
-        ("Next signal found"),
-        ("Aspect of next signal"),
-        ("Chceckbox overridden by master send CabData button switched off")
+        Bundle.getMessage("NextBlockTip"),
+        Bundle.getMessage("NextSignalTip"),
+        Bundle.getMessage("NextAspectTip"),
+        Bundle.getMessage("CabsigCheckboxTip")
 
     }; // Length = number of items in array should (at least) match number of columns
     
@@ -110,21 +92,21 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     public String getColumnName(int col) { // not in any order
         switch (col) {
             case LOCO_ID_COLUMN:
-                return ("Loco ID");
+                return Bundle.getMessage("LocoID");
             case CURRENT_BLOCK:
-                return("Block");
+                return Bundle.getMessage("Block");
             case BLOCK_DIR:
-                return("Direction of Block");
+                return Bundle.getMessage("BlockDirection");
             case REVERSE_BLOCK_DIR_BUTTON_COLUMN:
-                return("Block Button");
+                return Bundle.getMessage("BlockButton");
             case NEXT_BLOCK:
-                return("Next Block");
+                return Bundle.getMessage("NextBlock");
             case NEXT_SIGNAL:
-                return("Next Signal");
+                return Bundle.getMessage("NextSignal");
             case NEXT_ASPECT:
-                return("Next Aspect");
+                return Bundle.getMessage("NextAspect");
             case SEND_CABSIG_COLUMN:
-                return(Bundle.getMessage("SigDataOn"));
+                return Bundle.getMessage("SigDataOn");
             default:
                 return "unknown"; // NOI18N
         }
@@ -154,8 +136,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             case SEND_CABSIG_COLUMN:
                 return new JTextField(3).getPreferredSize().width;
             default:
-                log.warn("no width found row {}",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                log.warn("no width found col {}",col);
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
@@ -173,7 +155,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             case BLOCK_DIR:
                 return String.class;
             case REVERSE_BLOCK_DIR_BUTTON_COLUMN:
-                return JButton.class;
+                return javax.swing.JButton.class;
             case NEXT_BLOCK:
                 return String.class;
             case NEXT_SIGNAL:
@@ -196,6 +178,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case SEND_CABSIG_COLUMN:
+            case REVERSE_BLOCK_DIR_BUTTON_COLUMN:
                 return true;
             default:
                 return false;
@@ -256,18 +239,11 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                     return "";
                 }
             case REVERSE_BLOCK_DIR_BUTTON_COLUMN:
-                final JButton chngblockbutton = new JButton("Chng Direction");
-                chngblockbutton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                        cabSignalManager.getCabSignalArray()[row].setBlock();
-                        chngblockdir(row);
-                    }
-                });
                 if (cabSignalManager.getCabSignalArray()[row].getBlock()==null){
-                    // log.warn("block dir button null block");
-                    chngblockbutton.setText("Block Lookup");
+                    return Bundle.getMessage("BlockLookup");
+                } else {
+                    return Bundle.getMessage("ChngDirection");
                 }
-                return chngblockbutton;
             case NEXT_BLOCK:
                 Block nextBl = cabSignalManager.getCabSignalArray()[row].getNextBlock();
                 if ( nextBl != null){
@@ -309,8 +285,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         else if (col == BLOCK_DIR) {
         }
         else if (col == REVERSE_BLOCK_DIR_BUTTON_COLUMN) {
-            log.warn("rev dir button row {}",row);
-            // handled by listener on button
+            cabSignalManager.getCabSignalArray()[row].setBlock();
+            chngblockdir(row);
         }
         else if (col == NEXT_BLOCK) {
             BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
@@ -338,7 +314,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
      */
     private void chngblockdir(int row){
         log.debug("changing block direction for row {}",row);
-        StringBuilder buf = new StringBuilder();
         int olddirection = 0;
         Block b = cabSignalManager.getCabSignalArray()[row].getBlock();
         if (b == null){
@@ -353,19 +328,18 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         }
         else {
             olddirection=b.getDirection();
-            buf.append("Block set to {} direction {} " + b.getUserName() + " " + (String.valueOf(olddirection)) );
+            log.debug("Block {} set to direction {} ", b.getUserName(), (String.valueOf(olddirection)) );
         }
         
-        buf.append(" Direction to reverse : " + Path.decodeDirection(olddirection) );
+        log.debug(" Direction to reverse :{}", Path.decodeDirection(olddirection) );
         
         if (olddirection==0){
-            buf.append("No direction found, setting North East.");
+            log.debug("No direction found, setting North East.");
             b.setDirection(80);
         } else {
-            buf.append(" direction found, setting reverse.");
+            log.debug(" direction found, setting reverse.");
             b.setDirection(Path.reverseDirection(olddirection));
         }
-        log.debug("{}",buf);
     }
     
     protected void masterSendCabDataButton(Boolean but){
