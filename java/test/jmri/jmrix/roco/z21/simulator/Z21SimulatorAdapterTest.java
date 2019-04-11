@@ -38,6 +38,7 @@ public class Z21SimulatorAdapterTest {
      * Test that the Z21 simulator correctly sets up the network connection.
      */
     @Test
+    @Ignore("test is currently too unreliable in CI environments.  The class under test frequently fails to bind to the port")
     public void testConnection() {
         // connect the port
         try {
