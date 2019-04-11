@@ -137,10 +137,10 @@
             <dd>request the object of <em>type</em> with name <em>name</em></dd>
 
             <dt>POST</dt>
-            <dd>modify the object of <em>type</em>with name <em>name</em></dd>
+            <dd>modify the object of <em>type</em> with name <em>name</em></dd>
 
             <dt>DELETE</dt>
-            <dd>remove the object of <em>type</em>with name <em>name</em></dd>
+            <dd>remove the object of <em>type</em> with name <em>name</em></dd>
           </dl>
         </dd>
       </dl>
