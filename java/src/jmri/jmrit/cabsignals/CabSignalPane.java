@@ -141,13 +141,10 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         // configure items for GUI
         slotModel.configureTable(slotTable);
         
-        TableColumn ChngBlockDirColumn = tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN); 
-        ChngBlockDirColumn.setCellRenderer( new ButtonRenderer() );
-        ChngBlockDirColumn.setCellEditor( new ButtonEditor( new JButton() ) );   
-        ChngBlockDirColumn.setMinWidth(80);
-        //  ChngBlockDirColumn.setMaxWidth(80);
-        
-        
+        tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN).setCellRenderer( 
+            new ButtonRenderer() );
+        tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN).setCellEditor(
+            new ButtonEditor( new JButton() ) );   
         
         slotScroll = new JScrollPane(slotTable);
         slotScroll.setPreferredSize(new Dimension(400, 200));
@@ -156,28 +153,24 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
 
         // add event displays
         JPanel p1 = new JPanel();
-        // p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
         p1.setLayout(new BorderLayout());
-        // p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutEvents")));
         
         JPanel toppanelcontainer = new JPanel();
-        toppanelcontainer.setLayout(new BoxLayout(toppanelcontainer, BoxLayout.X_AXIS));
+        // toppanelcontainer.setLayout(new BoxLayout(toppanelcontainer, BoxLayout.X_AXIS));
         
-        masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
-        masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
+        masterSendCabDataButton= new JToggleButton();
+        masterSendCabDataButton.setSelected(false);
+        setViewOnMasterCabSigButton( masterSendCabDataButton.isSelected() );
         
         masterSendCabDataButton.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setViewOnMasterCabSigButton( masterSendCabDataButton.isSelected() );
                 if (masterSendCabDataButton.isSelected()) {
-                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOff"));
-                    masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png"));                    
                     slotModel.masterSendCabData = false;
                     slotModel.masterSendCabDataButton(false);
                 }
                 else {
-                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOn"));
-                    masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
                     slotModel.masterSendCabData = true;
                     slotModel.masterSendCabDataButton(true);
                 }
@@ -251,6 +244,22 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         
         p1.setVisible(true);
         log.debug("class name {} ",CabSignalPane.class.getName());
+    }
+    
+    private void setViewOnMasterCabSigButton( boolean buttonSelected){
+        
+        if (masterSendCabDataButton.isSelected()) {
+            masterSendCabDataButton.setText(Bundle.getMessage("SigDataOff"));
+            masterSendCabDataButton.setIcon(
+                new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green-off.GIF", 
+                "resources/icons/panels/CSD/AZD/button/button-green-off.GIF"));
+        }
+        else {
+            masterSendCabDataButton.setText(Bundle.getMessage("SigDataOn"));
+            masterSendCabDataButton.setIcon(
+                new NamedIcon("resources/icons/panels/CSD/AZD/button/button-green.GIF",
+                "resources/icons/panels/CSD/AZD/button/button-green.GIF"));
+        }
     }
     
     @Override

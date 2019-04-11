@@ -126,7 +126,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             case BLOCK_DIR:
                 return new JTextField(6).getPreferredSize().width;
             case REVERSE_BLOCK_DIR_BUTTON_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
+                return new JTextField(10).getPreferredSize().width;
             case NEXT_BLOCK:
                 return new JTextField(8).getPreferredSize().width;
             case NEXT_SIGNAL:
@@ -289,9 +289,11 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             chngblockdir(row);
         }
         else if (col == NEXT_BLOCK) {
-            BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
-            Block b = bmgr.getBlock((String)value);
-            cabSignalManager.getCabSignalArray()[row].setBlock(b);
+            jmri.util.ThreadingUtil.runOnLayout( ()->{
+                BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
+                Block b = bmgr.getBlock((String)value);
+                cabSignalManager.getCabSignalArray()[row].setBlock(b);
+            });
         }
         else if (col == NEXT_SIGNAL) {          
         }
@@ -340,6 +342,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             log.debug(" direction found, setting reverse.");
             b.setDirection(Path.reverseDirection(olddirection));
         }
+        jmri.util.ThreadingUtil.runOnGUI( ()->{
+            fireTableDataChanged();
+        });
+        log.debug("block b now has direction {}",b.getDirection());
     }
     
     protected void masterSendCabDataButton(Boolean but){
