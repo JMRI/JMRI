@@ -17,9 +17,9 @@
  * <p>
  * The data object types supported in a running JMRI instance for both RESTful
  * and socket interfaces can be listed at <a href=
- * "http://localhost:12080/json/types">http://my-jmri-server:12080/json/types</a>
+ * "http://localhost:12080/json/type">http://my-jmri-server:12080/json/type</a>
  * and individual schema for each data object type at <a href=
- * "http://localhost:12080/json/schema/">http://my-jmri-server:12080/json/schema/<em>type</em></a>
+ * "http://localhost:12080/json/schema/type">http://my-jmri-server:12080/json/schema/<em>type</em></a>
  * 
  * <h2>Methods</h2>
  * 
@@ -127,7 +127,8 @@
  * <p>
  * Changes to the major number represent a backwards incompatible change in the
  * protocol, while changes to the minor number represent an addition to the
- * protocol.
+ * protocol. The JSON protocol version is available to clients in the {@code hello}
+ * message.
  * </p>
  * <dl>
  * <dt>5.0 (JMRI 4.15.4)</dt>

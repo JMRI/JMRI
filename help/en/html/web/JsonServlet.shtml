@@ -99,136 +99,80 @@
         </li>
       </ol>
 
-      <h2>Using HTTP JSON</h2>
+      <h2>Paths</h2>
 
-      <p>The <b>HTTP</b> feature of the servlet responds to the
-        following URL patterns:</p>
+      <p>The servlet responds to the following paths:</p>
 
-      <ul>
-        <li>/json/<i>&lt;type&gt;</i> -- used with HTTP GET to
-          retrieve a list from JMRI, or with PUT to add an item to a
-          list</li>
-
-        <li>/json/<i>&lt;type&gt;</i>/<i>&lt;systemName&gt;</i>
-          -- used with HTTP GET to retrieve a single item from a
-          list, or with POST to update an existing item</li>
-      </ul>
-
-      <p>To get a list of the JSON types that your installation of
-        JMRI supports, query your JMRI application with
-        <code>myjmri:12080/json/type</code> This will return a JSON
-        array with a number of objects in the form:</p>
-
-      <code>{"type":"type","data":{"name":"metadata","server":true,"client":true}}</code>
-
-      <p>where <code>type</code> is the type of response, and data contains:</p>
       <dl>
-        <dt>name</dt>
-        <dd>The type that can be queried; in this example, metadata about the
-          JMRI application itself.
-        <dt>server</dt>
-        <dd><code>true</code> if the type is used in a response or message from the JMRI
-          server; <code>false</code> if the type is only used in a query or message from the client.</dd>
-        <dt>client</dt>
-        <dd><code>true</code> if the type is used in a query or message from the client;
-          <code>false</code> if the type is only used in a response or message from the JMRI server.</dd>
+        <dt>/json</dt>
+        <dd>Depending on protocol:
+          <dl>
+            <dt>HTTP</dt>
+            <dd>Open a JSON WebSocket console that allows experimentation with JSON sockets.</dd>
+
+            <dt>WS</dt>
+            <dd>Open a JSON WebSocekt.</dd>
+          </dl>
+        </dd>
+
+        <dt>/json/<em>type</em></dt>
+        <dd>Using the HTTP protocol:
+          <dl>
+            <dt>GET</dt>
+            <dd>request a list of objects of <em>type</em></dd>
+
+            <dt>PUT</dt>
+            <dd>add an object of <em>type</em></dd>
+          </dl>
+          A JSON array of valid types for your JMRI installation is available by using the <em>type</em>
+          "<code><a href="http://localhost:12080/json/type">type</a></code>". See the <a
+            href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol documentation</a> for more
+          details.
+        </dd>
+
+        <dt>/json/<em>type</em>/<em>name</em></dt>
+        <dd>Using the HTTP protocol:
+          <dl>
+            <dt>GET</dt>
+            <dd>request the object of <em>type</em> with name <em>name</em></dd>
+
+            <dt>POST</dt>
+            <dd>modify the object of <em>type</em>with name <em>name</em></dd>
+
+            <dt>DELETE</dt>
+            <dd>remove the object of <em>type</em>with name <em>name</em></dd>
+          </dl>
+        </dd>
       </dl>
 
-      <p>The details of what a valid JSON query, response, or message is are in
-        <a href="http://json-schema.org">JSON schema</a>.
-        To get the JSON schema for a JMRI type, query your JMRI application with
-        <code>myjmri:12080/json/schema/<i>&lt;type&gt;</i></code> This will return a JSON
-        array with two objects; the schema for a request or message from the client, and
-        the schema for a response or message from the JMRI server. A schema object contains:
-        <dl>
-          <dt>name</dt>
-          <dd>The type the schema is for.</dd>
-          <dt>server</dt>
-          <dd><code>true</code> if the schema is for a response or message from the
-            JMRI server; <code>false</code> if the schema is for a query or message from the client.</dd>
-          <dt>schema</dt>
-          <dd>The schema as a <a href="http://json-schema.org">JSON schema</a> object.</dd>
-        </dl>
+      <h2><a name="jmri_json_server">JMRI JSON Server</a></h2>
 
-        <h2>WebSocket</h2>
+      <p>The JMRI JSON server is functionally identical to the JSON
+        WebSocket interface, but running over a standard network socket.</p>
 
-        <p>The <b>WebSocket</b> feature of this servlet currently
-          handles JSON strings in four different forms:</p>
+      <h2><a name="jquery_jmri">jquery.jmri.js</a></h2>
 
-        <ul>
-          <li>individual item state requests in the form:
-            <code>{"type":"turnout","data":{"name":"LT14"}}</code> that
-            are passed to type-specific handlers. These requests will
-            initiate "listeners", which will send updated responses
-            every time the item's state changes.
+      <p><a href="https://github.com/JMRI/JMRI/blob/master/web/js/jquery.jmri.js"><em>jquery.jmri.js</em></a>
+        is a <a href="https://jquery.com">jQuery</a> library that ships with JMRI and
+        makes the JSON protocol support "just work" on most current browsers.</p>
 
-            <ul>
-              <li>an item's state can be set by adding a
-                <strong>state</strong> node to the <em>data</em> node
-                in an HTTP POST request:
-                <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code></li>
+      <p>Examples of use of the jquery.jmri.js JavaScript library that
+        ships with JMRI include:</p>
 
-              <li>individual types can be created if the request is
-                an HTTP PUT request. Note that not all types support
-                this.</li>
-            </ul>
-          </li>
+      <dl>
+        <dt><a href="/operations">Operations Conductor</a></dt>
+        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a></dd>
 
-          <li>list requests in the form:
-            <code>{"list":"trains"}</code> or
-            <code>{"type":"list","list":"trains"}</code> that return an
-            array of items, or an empty array (<code>[]</code>). This request
-            initiates a "listener" which will resend
-            the entire list when items are added or removed, as well as
-            set individual listeners for each item (see above).</li>
+        <dt><a href="/panel">Panel</a></dt>
+        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a></dd>
 
-          <li>a heartbeat in the form <code>*</code> or
-            <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
-            gets no response, while the JSON heartbeat causes a
-            <code>{"type":"pong"}</code> response.</li>
+        <dt><a href="/json">JSON Console</a></dt>
+        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a></dd>
 
-          <li>a signoff in the form: <code>{"type":"goodbye"}</code>
-            to which an identical response is sent before the
-            connection gets closed.</li>
-        </ul>
-
-        <p>The <b>WebSocket</b> feature of the servlet can be seen by
-          browsing to the <b>/json/</b> url, where a <b>JSON
-            console</b> is providing for testing.<br>
-          Example commands and responses:</p>
-
-        <h2><a name="jmri_json_server">JMRI JSON Server</a></h2>
-
-        <p>The JMRI JSON server is functionally identical to the JSON
-          WebSocket, but running over a standard network socket.</p>
-
-        <h2><a name="jquery_jmri">jquery.jmri</a></h2>
-
-        <p><em>jquery.jmri</em> is a JavaScript library that ships
-          with JMRI and makes the JSON protocol support just work on
-          most current browsers.<br />
-          Note: The support for non-WebSocket browsers is limited by the number
-          of open connections allowed. Maybe 5-10 active objects.</p>
-
-        <p>Examples of use of the jquery.jmri JavaScript library that
-          ships with JMRI include (example links assume you are reading
-          this on your JMRI web server):</p>
-
-        <ul>
-          <li><a href="/operations">Operations Conductor</a>
-            (implemented in <a
-              href="https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a></li>
-
-          <li><a href="/panel">Panel</a> (implemented in <a
-              href="https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a></li>
-
-          <li><a href="/json">JSON Console</a> (implemented in
-            <a href="https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a></li>
-
-          <li><a href="/web/power.html">
-              Power Demonstration</a> (view the page source for the implementation)</li>
-        </ul>
-        <!--#include virtual="/Footer" -->
+        <dt><a href="/web/power.html">Power Demonstration</a></dt>
+        <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/power.html">/web/power.html</a></dd>
+      </dl>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
