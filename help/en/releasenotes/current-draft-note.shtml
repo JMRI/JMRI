@@ -532,7 +532,29 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Down ramps used by NXWarrants and are also used when speed changes required by signals, occupancy 
+            	conditions or user interventions occur. The throttle settings generated for down ramps have been modified. 
+            	The throttle setting is increased by 10% at each time interval. Also, the last throttle interval now is always the throttle
+            	interval as specified in Warrant Preferences. Accuracy of the position where the train stops should be improved.
+            </li>
+            <li>A bug where looped routes ending at an adjacent block could be missed by the Find Route algorithm has been fixed.
+            </li>
+            <li>A stop button to halt execution of the Find Route Operation has been added.
+            </li>
+            <li>The dynamic recording of speeds during sessions has been extended. A weighted average of the speed over a block is recorded to
+            	the session speed profile.  These speeds may be edited and merger into the Roster SpeedProfile according to the settings
+            	selected in WarrantPreferences. 
+            </li>
+            <li>A bug where a Halt at zero speed would not restart has been fixed. Scripts now resume at any command where the user does a Halt.
+            </li>
+            <li>The "Run Warrant" command linking warrants now executes for all cases.
+            </li>
+            <li>A bug when dragging an unnamed Portal icon in CircuitBuilder might cause a freeze has been fixed.
+            </li>
+            <li>Deleting an OBlock will also delete all other elements (Portals and Paths using the block). Previously when saved after such editing, 
+			    any warrants referencing the deleted block would re-register the OBlock when the panel was re-loaded. Now such warrants are loaded, but 
+		        will indicate that editing is needed to establish a correct route for them.  
+            </li>
         </ul>
 
    <h3>Web Access</h3>
