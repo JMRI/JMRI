@@ -110,28 +110,28 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      * @param col int col number
      */
     @Override
-    public String getColumnName(int col) { // not in any order
+    public String getColumnName(int col) {
         switch (col) {
             case SESSION_ID_COLUMN:
-                return ("Session");
+                return Bundle.getMessage("OPC_SN"); // Session
             case LOCO_ID_COLUMN:
-                return ("Loco ID");
+                return Bundle.getMessage("LocoID"); // Loco ID
             case LOCO_ID_LONG_COLUMN:
-                return ("Long");
+                return Bundle.getMessage("Long"); // Long
             case LOCO_CONSIST_COLUMN:
-                return ("Consist ID");
+                return Bundle.getMessage("OPC_CA"); // Consist ID
             case LOCO_DIRECTION_COLUMN:
-                return ("Direction");
+                return Bundle.getMessage("TrafficDirection"); // Direction
             case LOCO_COMMANDED_SPEED_COLUMN:
-                return ("Speed - Commanded");
+                return Bundle.getMessage("Speed");
             case ESTOP_COLUMN:
-                return ("E-Stop");
+                return Bundle.getMessage("EStop");
             case SPEED_STEP_COLUMN:
-                return ("Steps");
+                return Bundle.getMessage("Steps");
             case FLAGS_COLUMN:
-                return ("Flags");
+                return Bundle.getMessage("OPC_FL"); // Flags
             case FUNCTION_LIST:
-                return("Functions");
+                return Bundle.getMessage("Functions");
             default:
                 return "unknown"; // NOI18N
         }
@@ -159,7 +159,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case LOCO_DIRECTION_COLUMN:
                 return new JTextField(8).getPreferredSize().width;
             default:
-                log.warn("no width found row {}",col);
                 return new JTextField(8).getPreferredSize().width;
         }
     }
@@ -185,7 +184,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case ESTOP_COLUMN:
                 return JButton.class;
             default:
-                log.error("no column class located");
                 return null;
         }
     }
@@ -622,7 +620,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 speedstep="14";
             }        
             else if ((sm0) && (!sm1)){
-                speedstep="28 Interleave";
+                speedstep="28I";
             }        
             else if ((sm0) && (sm1)){
                 speedstep="28";
@@ -724,8 +722,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     private void processerr(boolean messagein, int one, int two, int errnum) {
         // log.warn("processing err");
         int rcvdIntAddr = (one & 0x3f) * 256 + two;
-        boolean rcvdIsLong = (one & 0xc0) != 0;
-        DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+        // boolean rcvdIsLong = (one & 0xc0) != 0;
+        // DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
         
         StringBuilder buf = new StringBuilder();
         if (messagein){ // external throttle
@@ -766,7 +764,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));
                 buf.append(one);
                 // cancel session number in table
-                int row = provideTableRow(addr);
+                int row = getrowfromsession(one);
                 if ( row > -1 ) {
                     setValueAt(0, row, SESSION_ID_COLUMN);
                 }
@@ -899,9 +897,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         clearPowerTask();
         
         tablefeedback.dispose();
-        if (tc != null) {
-            tc.removeCanListener(this);
-        }
+        tc.removeCanListener(this);
+
     }
     private final static Logger log = LoggerFactory.getLogger(CbusSlotMonitorDataModel.class);
 }

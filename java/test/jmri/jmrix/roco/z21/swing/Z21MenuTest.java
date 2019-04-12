@@ -42,6 +42,7 @@ public class Z21MenuTest {
    @After
    public void tearDown(){
         memo=null;
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
    }

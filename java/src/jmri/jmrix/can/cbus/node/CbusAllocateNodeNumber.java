@@ -24,9 +24,6 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusSend;
-import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeConstants;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
 
@@ -35,26 +32,23 @@ import org.slf4j.LoggerFactory;
 
 public class CbusAllocateNodeNumber implements CanListener {
     
-    public CbusNodeTableDataModel nodeModel=null;    
+    private CbusNodeTableDataModel nodeModel=null;    
     private TrafficController tc;
-    CbusSend send;
+    private CbusSend send;
     
-    JLabel rqNNtext;
-    int baseNodeNum;
-    Boolean WAITINGRESPONSE_RQNN_PARAMS = false;
-    Boolean NODE_NUM_DIALOGUE_OPEN = false;
-    int[] _paramsArr;
+    private JLabel rqNNtext;
+    private int baseNodeNum;
+    private boolean WAITINGRESPONSE_RQNN_PARAMS = false;
+    private boolean NODE_NUM_DIALOGUE_OPEN = false;
+    private int[] _paramsArr;
     
     public CbusAllocateNodeNumber(CanSystemConnectionMemo memo, CbusNodeTableDataModel model) {
         
         nodeModel = model;
-        
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        if (tc != null ) {
-            tc.addCanListener(this);
-        }
         
+        tc.addCanListener(this);
         send = new CbusSend(memo);
         
         baseNodeNum = 256;
@@ -254,9 +248,7 @@ public class CbusAllocateNodeNumber implements CanListener {
     }
 
     public void dispose(){
-        if (tc != null ) {
-            tc.removeCanListener(this);
-        }
+        tc.removeCanListener(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusAllocateNodeNumber.class);

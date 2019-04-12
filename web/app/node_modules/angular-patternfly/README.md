@@ -248,17 +248,17 @@ plugins: [
 
 The API documentation can be built with:
 ```shell
-$ npm run ngdocs
+$ npm run uidocs
 ```
 
 If you're interested in reading the docs right away, you can use special target, which will start a web server:
 ```shell
-$ npm run ngdocs:view
+$ npm run uidocs:view
 ```
 
 After executing this tasks you'll be able to access the documentation at [http://localhost:8000/](http://localhost:8000/). If a different port is desired, it may be specified on as an option:
 ```shell
-$ npm run ngdocs:view -- --port=8002
+$ npm run uidocs:view -- --port=8002
 ```
 
 ## Git Commit Guidelines

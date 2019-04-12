@@ -243,10 +243,11 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
     templateUrl: 'canvas-view/canvas-editor/canvas-editor.html',
     controller: ["$timeout", function ($timeout) {
       var ctrl = this;
-      var newNodeCount = 0;
-      var prevClickedOnChart, prevInConnectingMode;
 
       ctrl.$onInit = function () {
+        ctrl.newNodeCount = 0;
+        ctrl.prevClickedOnChart = undefined;
+        ctrl.prevInConnectingMode = undefined;
         ctrl.toolboxVisible = false;
         ctrl.hideConnectors = false;
         ctrl.draggedItem = null;
@@ -254,25 +255,25 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
 
       // need to get these in next digest cycle, after pfCanvas sets chartViewModel
       $timeout(function () {
-        prevClickedOnChart = ctrl.chartViewModel.clickedOnChart;
-        prevInConnectingMode = ctrl.chartViewModel.inConnectingMode;
+        ctrl.prevClickedOnChart = ctrl.chartViewModel.clickedOnChart;
+        ctrl.prevInConnectingMode = ctrl.chartViewModel.inConnectingMode;
       });
 
       ctrl.$doCheck = function () {
-        if (angular.isDefined(prevClickedOnChart) && angular.isDefined(prevInConnectingMode)) {
-          if (!angular.equals(ctrl.chartViewModel.clickedOnChart, prevClickedOnChart)) {
+        if (angular.isDefined(ctrl.prevClickedOnChart) && angular.isDefined(ctrl.prevInConnectingMode)) {
+          if (!angular.equals(ctrl.chartViewModel.clickedOnChart, ctrl.prevClickedOnChart)) {
             if (ctrl.chartViewModel.clickedOnChart) {
               ctrl.chartViewModel.clickedOnChart = false;
               ctrl.hideToolbox();
             }
-            prevClickedOnChart = ctrl.chartViewModel.clickedOnChart;
+            ctrl.prevClickedOnChart = ctrl.chartViewModel.clickedOnChart;
           }
-          if (!angular.equals(ctrl.chartViewModel.inConnectingMode, prevInConnectingMode)) {
+          if (!angular.equals(ctrl.chartViewModel.inConnectingMode, ctrl.prevInConnectingMode)) {
             if (ctrl.chartViewModel.inConnectingMode) {
               ctrl.hideConnectors = false;
               ctrl.hideToolbox();
             }
-            prevInConnectingMode = ctrl.chartViewModel.inConnectingMode;
+            ctrl.prevInConnectingMode = ctrl.chartViewModel.inConnectingMode;
           }
         }
       };
@@ -320,7 +321,7 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
 
       ctrl.dropCallback = function (event, ui) {
         var newNode = angular.copy(ctrl.draggedItem);
-        newNodeCount++;
+        ctrl.newNodeCount++;
         newNode.x = event.clientX - 600;
         newNode.y = event.clientY - 200;
         newNode.backgroundColor = newNode.backgroundColor ? newNode.backgroundColor : '#fff';
@@ -330,9 +331,9 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
 
       ctrl.addNodeByClick = function (item) {
         var newNode = angular.copy(item);
-        newNodeCount++;
-        newNode.x = 250 + (newNodeCount * 4 + 160);
-        newNode.y = 200 + (newNodeCount * 4 + 160);
+        ctrl.newNodeCount++;
+        newNode.x = 250 + (ctrl.newNodeCount * 4 + 160);
+        newNode.y = 200 + (ctrl.newNodeCount * 4 + 160);
         newNode.backgroundColor = newNode.backgroundColor ? newNode.backgroundColor : '#fff';
 
         ctrl.chartViewModel.addNode(newNode);
@@ -355,6 +356,7 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
             return subtab.active;
           })[0];
         }
+        return false;
       };
 
       ctrl.activeSubSubTab = function () {
@@ -364,6 +366,7 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
             return subsubtab.active;
           })[0];
         }
+        return false;
       };
 
       /*** Zoom ***/
@@ -446,24 +449,6 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
       },
       controller: ["$scope", "dragging", "$element", "$document", function CanvasController ($scope, dragging, $element, $document) {
         var ctrl = this;
-
-        ctrl.chart = new pfCanvas.ChartViewModel(ctrl.chartDataModel);
-        ctrl.chartViewModel = ctrl.chart;
-
-        //
-        // Init data-model variables.
-        //
-        ctrl.draggingConnection = false;
-        ctrl.connectorSize = 6;
-        ctrl.dragSelecting = false;
-
-        //
-        // Reference to the connection, connector or node that the mouse is currently over.
-        //
-        ctrl.mouseOverConnector = null;
-        ctrl.mouseOverConnection = null;
-        ctrl.mouseOverNode = null;
-
 
         //
         // Translate the coordinates so they are relative to the svg element.
@@ -790,6 +775,23 @@ angular.module('patternfly.autofocus', []).directive('pfFocused', ["$timeout", f
           var aKeyCode = 65;
           var escKeyCode = 27;
 
+          ctrl.chart = new pfCanvas.ChartViewModel(ctrl.chartDataModel);
+          ctrl.chartViewModel = ctrl.chart;
+
+          //
+          // Init data-model variables.
+          //
+          ctrl.draggingConnection = false;
+          ctrl.connectorSize = 6;
+          ctrl.dragSelecting = false;
+
+          //
+          // Reference to the connection, connector or node that the mouse is currently over.
+          //
+          ctrl.mouseOverConnector = null;
+          ctrl.mouseOverConnection = null;
+          ctrl.mouseOverNode = null;
+
           $document.find('body').keydown(function (evt) {
 
             if (evt.keyCode === aKeyCode && evt.ctrlKey === true) {
@@ -1032,14 +1034,14 @@ var pfCanvas = {};
     // X coordinate of the node.
     //
     this.x = function() {
-      return this.data.x;
+      return this.data.x || 0;
     };
 
     //
     // Y coordinate of the node.
     //
     this.y = function() {
-      return this.data.y;
+      return this.data.y || 0;
     };
 
     //
@@ -2212,7 +2214,7 @@ var pfCanvas = {};
 })();
 ;/**
  * @ngdoc directive
- * @name patternfly.canvas.component:pfCanvas
+ * @name patternfly.canvas.directive:pfCanvas
  * @restrict E
  *
  * @description
@@ -2546,7 +2548,7 @@ var pfCanvas = {};
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.canvas.component:pfCanvasEditor
+ * @name patternfly.canvas.directive:pfCanvasEditor
  * @restrict E
  *
  * @description
@@ -2554,7 +2556,7 @@ var pfCanvas = {};
  * operations such as: Zoom In, Zoom Out, Hide Connections, Remove Node, and Duplicate Node.  Does not work in IE 11 or lower because they do not support
  * latest svg specification's 'foreignObject' api.  Tested in FireFox, Chrome, and MS-Edge.
  *
- * @param {object} chartDataModel Chart data object which defines the nodes and connections on the canvas. See {@link patternfly.canvas.component:pfCanvas} for detailed information.
+ * @param {object} chartDataModel Chart data object which defines the nodes and connections on the canvas. See {@link patternfly.canvas.directive:pfCanvas} for detailed information.
  * @param {object} chartViewModel (Optional) The chartViewModel is initialized from the chartDataModel and contains additional helper methods such as <code>chartViewModel.isOnlyOneNodeSelected()</code> and
  * <code>chartViewModel.getSelectedNodes()</code>.
  * @param {boolean} toolboxTabs An array of Tab objects used in the Toolbox.  Each Tab object many contain 'subtabs' and/or 'items'.  Items may be dragged onto the canvas.
@@ -2889,7 +2891,7 @@ var pfCanvas = {};
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.card.component:pfAggregateStatusCard
+ * @name patternfly.card.directive:pfAggregateStatusCard
  * @restrict E
  *
  * @param {object} status Status configuration information<br/>
@@ -3120,7 +3122,7 @@ angular.module( 'patternfly.card' ).component('pfAggregateStatusCard', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.card.component:pfCard - Utilization
+ * @name patternfly.card.directive:pfCard - Utilization
  * @restrict E
  *
  * @param {string} headTitle Title for the card
@@ -3228,13 +3230,7 @@ angular.module('patternfly.card').component('pfCard', {
   controller: function () {
     'use strict';
     var ctrl = this;
-    if (ctrl.filter && !ctrl.currentFilter) {
-      if (ctrl.filter.defaultFilter) {
-        ctrl.currentFilter = ctrl.filter.filters[ctrl.filter.defaultFilter];
-      } else {
-        ctrl.currentFilter = ctrl.filter.filters[0];
-      }
-    }
+
     ctrl.footerCallBackFn = function () {
       ctrl.footerCallBackResult = ctrl.footer.callBackFn();
     };
@@ -3258,6 +3254,13 @@ angular.module('patternfly.card').component('pfCard', {
     };
 
     ctrl.$onInit = function () {
+      if (ctrl.filter && !ctrl.currentFilter) {
+        if (ctrl.filter.defaultFilter) {
+          ctrl.currentFilter = ctrl.filter.filters[ctrl.filter.defaultFilter];
+        } else {
+          ctrl.currentFilter = ctrl.filter.filters[0];
+        }
+      }
       ctrl.shouldShowTitlesSeparator = (!ctrl.showTitlesSeparator || ctrl.showTitlesSeparator === 'true');
       ctrl.showSpinner = ctrl.showSpinner === true;
     };
@@ -3265,7 +3268,7 @@ angular.module('patternfly.card').component('pfCard', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.card.component:pfCard - Timeframe Filters
+ * @name patternfly.card.directive:pfCard - Timeframe Filters
  * @restrict E
  *
  * @param {string} headTitle Title for the card
@@ -3360,7 +3363,7 @@ angular.module('patternfly.card').component('pfCard', {
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.card.component:pfCard - Trends
+ * @name patternfly.card.directive:pfCard - Trends
  * @restrict E
  *
  * @param {string} headTitle Title for the card
@@ -3526,7 +3529,7 @@ angular.module('patternfly.card').component('pfCard', {
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.card.component:pfInfoStatusCard
+ * @name patternfly.card.directive:pfInfoStatusCard
  * @restrict E
  *
  * @param {object} status Status configuration information<br/>
@@ -3692,7 +3695,7 @@ angular.module( 'patternfly.card' ).component('pfInfoStatusCard', {
 })();
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfC3Chart
+ * @name patternfly.charts.directive:pfC3Chart
  * @restrict E
  *
  * @description
@@ -3870,8 +3873,9 @@ angular.module( 'patternfly.card' ).component('pfInfoStatusCard', {
       var centerLabelText;
 
       // default
-      centerLabelText = { bigText: ctrl.getTotal(),
-                          smText:  ctrl.config.donut.title};
+      centerLabelText = {
+        bigText: ctrl.getTotal(),
+        smText:  ctrl.config.donut.title };
 
       if (ctrl.config.centerLabelFn) {
         centerLabelText.bigText = ctrl.config.centerLabelFn();
@@ -4049,8 +4053,9 @@ angular.module( 'patternfly.card' ).component('pfInfoStatusCard', {
       var centerLabelText;
 
       // default to 'used' info.
-      centerLabelText = { bigText: ctrl.data.used,
-                          smText:  ctrl.config.units + ' Used' };
+      centerLabelText = {
+        bigText: ctrl.data.used,
+        smText:  ctrl.config.units + ' Used' };
 
       if (ctrl.config.centerLabelFn) {
         centerLabelText.bigText = ctrl.config.centerLabelFn();
@@ -4133,7 +4138,7 @@ angular.module( 'patternfly.card' ).component('pfInfoStatusCard', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfDonutChart
+ * @name patternfly.charts.directive:pfDonutChart
  * @restrict E
  *
  * @description
@@ -4226,7 +4231,7 @@ angular.module( 'patternfly.card' ).component('pfInfoStatusCard', {
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfDonutPctChart
+ * @name patternfly.charts.directive:pfDonutPctChart
  * @restrict E
  *
  * @description
@@ -5158,7 +5163,7 @@ angular.module('patternfly.charts').component('pfHeatmap', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfLineChart
+ * @name patternfly.charts.directive:pfLineChart
  * @restrict E
  *
  * @description
@@ -5397,7 +5402,7 @@ angular.module('patternfly.charts').component('pfLineChart', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfSparklineChart
+ * @name patternfly.charts.directive:pfSparklineChart
  * @restrict E
  *
  * @description
@@ -5710,6 +5715,11 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
             };
           } catch (e) {
           }
+
+          return {
+            top: 0,
+            left: 0
+          };
         }
       };
     };
@@ -5728,7 +5738,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfTopologyMap
+ * @name patternfly.charts.directive:pfTopologyMap
  * @restrict E
  *
  * @param {array} nodes array containing objects representing graph nodes. Each node has these attributes. Only node id is mandatory parameter.
@@ -6973,8 +6983,8 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
         _.find(ctrl.nodeMultiSelect, function(n) {
           return n.id === node.id;
         }) ? _.remove(ctrl.nodeMultiSelect, function (n) {
-          return n.id === node.id;
-        }) : ctrl.nodeMultiSelect.push(node);
+            return n.id === node.id;
+          }) : ctrl.nodeMultiSelect.push(node);
       }
       if (ctrl.nodeMultiSelect.length === 0 || !addKey) {
         ctrl.nodeMultiSelect = [node];
@@ -7008,8 +7018,8 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
               _.find(ctrl.edgeMultiSelect, function(e) {
                 return _.isEqual(e, edge);
               }) ? _.remove(ctrl.edgeMultiSelect, function (e) {
-                return _.isEqual(e, edge);
-              }) : ctrl.edgeMultiSelect.push(edge);
+                  return _.isEqual(e, edge);
+                }) : ctrl.edgeMultiSelect.push(edge);
             }
             if (ctrl.edgeMultiSelect.length === 0 || !addKey) {
               ctrl.edgeMultiSelect = [edge];
@@ -7463,6 +7473,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
           index = sheet.href.lastIndexOf('/');
           return href.substring(index) === '/patternfly.css';
         }
+        return false;
       });
       return styleSheet ? styleSheet.rules : undefined;
     };
@@ -7475,6 +7486,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
           if (rule && rule.selectorText) {
             return rule.selectorText.indexOf(className + '::before') !== -1;
           }
+          return false;
         });
       }
       return rule ? rule.style.content : undefined;
@@ -7483,7 +7495,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.charts.component:pfTopology
+ * @name patternfly.charts.directive:pfTopology
  * @restrict E
  *
  * @description
@@ -8226,7 +8238,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
             switch (iconInfo.type) {
             case 'image':
               return iconInfo.icon;
-            case "glyph":
+            default:
               return null;
             }
           })
@@ -8356,7 +8368,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
 
     function buildContextMenuOptions (popup, data) {
       if (data.item.kind === 'Tag') {
-        return false;
+        return;
       }
       addContextMenuOption(popup, 'Go to summary page', data, dblclick);
     }
@@ -8414,7 +8426,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
       case 'pending':
         return "warning";
       case 'unknown':
-      case 'terminated':
+      default:
         return "unknown";
       }
     }
@@ -8430,7 +8442,7 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
  *   pfSparklineChart.
  *   <br><br>
  *   See http://c3js.org/reference.html for a full list of C3 chart options.<br>
- *   See also: {@link patternfly.charts.component:pfSparklineChart}
+ *   See also: {@link patternfly.charts.directive:pfSparklineChart}
  *
  * @param {object} config configuration settings for the trends chart:<br/>
  * <ul style='list-style-type: none'>
@@ -9297,7 +9309,7 @@ angular.module('patternfly.charts').component('pfUtilizationTrendChart', {
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.filters.component:pfFilterPanel
+ * @name patternfly.filters.directive:pfFilterPanel
  * @restrict E
  *
  * @description
@@ -9672,7 +9684,7 @@ angular.module('patternfly.charts').component('pfUtilizationTrendChart', {
 */
 ;/**
  * @ngdoc directive
- * @name patternfly.filters.component:pfFilter
+ * @name patternfly.filters.directive:pfFilter
  * @restrict E
  *
  * @description
@@ -9935,7 +9947,7 @@ angular.module('patternfly.charts').component('pfUtilizationTrendChart', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.filters.component:pfFilterPanelResults
+ * @name patternfly.filters.directive:pfFilterPanelResults
  * @restrict E
  *
  * @description
@@ -10078,7 +10090,7 @@ angular.module('patternfly.filters').component('pfFilterPanelResults', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.filters.component:pfFilterFields
+ * @name patternfly.filters.directive:pfFilterFields
  * @restrict E
  *
  * @description
@@ -10203,7 +10215,7 @@ angular.module('patternfly.filters').component('pfFilterFields', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.filters.component:pfFilterResults
+ * @name patternfly.filters.directive:pfFilterResults
  * @restrict E
  *
  * @description
@@ -10303,7 +10315,7 @@ angular.module('patternfly.filters').component('pfFilterResults', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.form.component:pfFormButtons
+ * @name patternfly.form.directive:pfFormButtons
  * @restrict E
  *
  * @description
@@ -10701,38 +10713,37 @@ angular.module('patternfly.filters').component('pfFilterResults', {
   };
 }]);
 ;angular.module('patternfly.modals')
-
-.directive("pfAboutModalTransclude", ["$parse", function ($parse) {
-  'use strict';
-  return {
-    link: function (scope, element, attrs) {
-      element.append($parse(attrs.pfAboutModalTransclude)(scope));
-    }
-  };
-}])
-.component('pfModalContent', {
-  templateUrl: 'about-modal-template.html',
-  bindings: {
-    resolve: '<',
-    close: '&',
-    dismiss: '&'
-  },
-  controller: function () {
+  .directive("pfAboutModalTransclude", ["$parse", function ($parse) {
     'use strict';
-    var $ctrl = this;
-
-    $ctrl.$onInit = function () {
-      $ctrl.additionalInfo = $ctrl.resolve.additionalInfo;
-      $ctrl.copyright = $ctrl.resolve.copyright;
-      $ctrl.imgAlt = $ctrl.resolve.imgAlt;
-      $ctrl.imgSrc = $ctrl.resolve.imgSrc;
-      $ctrl.isOpen = $ctrl.resolve.isOpen;
-      $ctrl.productInfo = $ctrl.resolve.productInfo;
-      $ctrl.title = $ctrl.resolve.title;
-      $ctrl.template = $ctrl.resolve.content;
+    return {
+      link: function (scope, element, attrs) {
+        element.append($parse(attrs.pfAboutModalTransclude)(scope));
+      }
     };
-  }
-})
+  }])
+  .component('pfModalContent', {
+    templateUrl: 'about-modal-template.html',
+    bindings: {
+      resolve: '<',
+      close: '&',
+      dismiss: '&'
+    },
+    controller: function () {
+      'use strict';
+      var $ctrl = this;
+
+      $ctrl.$onInit = function () {
+        $ctrl.additionalInfo = $ctrl.resolve.additionalInfo;
+        $ctrl.copyright = $ctrl.resolve.copyright;
+        $ctrl.imgAlt = $ctrl.resolve.imgAlt;
+        $ctrl.imgSrc = $ctrl.resolve.imgSrc;
+        $ctrl.isOpen = $ctrl.resolve.isOpen;
+        $ctrl.productInfo = $ctrl.resolve.productInfo;
+        $ctrl.title = $ctrl.resolve.title;
+        $ctrl.template = $ctrl.resolve.content;
+      };
+    }
+  })
   .component('pfAboutModal', {
     bindings: {
       additionalInfo: '=?',
@@ -10794,14 +10805,14 @@ angular.module('patternfly.filters').component('pfFilterResults', {
             }
           }
         })
-        .result.then(
-          function () {
-            ctrl.close(); // closed
-          },
-          function () {
-            ctrl.close(); // dismissed
-          }
-        );
+          .result.then(
+            function () {
+              ctrl.close(); // closed
+            },
+            function () {
+              ctrl.close(); // dismissed
+            }
+          );
       };
       ctrl.$onInit = function () {
         if (ctrl.isOpen === undefined) {
@@ -10818,7 +10829,7 @@ angular.module('patternfly.filters').component('pfFilterResults', {
   });
 ;/**
  * @ngdoc directive
- * @name patternfly.modals.component:pfAboutModal
+ * @name patternfly.modals.directive:pfAboutModal
  * @restrict E
  *
  * @description
@@ -11259,7 +11270,7 @@ angular.module('patternfly.modals').component('pfModalOverlayContent', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.navigation.component:pfApplicationLauncher
+ * @name patternfly.navigation.directive:pfApplicationLauncher
  * @restrict E
  *
  * @description
@@ -11392,7 +11403,7 @@ angular.module('patternfly.navigation').component('pfApplicationLauncher', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.navigation.component:pfVerticalNavigation - Basic
+ * @name patternfly.navigation.directive:pfVerticalNavigation - Basic
  * @restrict E
  *
  * @description
@@ -12049,7 +12060,7 @@ angular.module('patternfly.navigation').component('pfApplicationLauncher', {
 */
 ;/**
  * @ngdoc directive
- * @name patternfly.navigation.component:pfVerticalNavigation - Router
+ * @name patternfly.navigation.directive:pfVerticalNavigation - Router
  * @restrict E
  *
  * @description
@@ -12827,7 +12838,7 @@ angular.module('patternfly.navigation').component('pfApplicationLauncher', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.notification.component:pfNotificationDrawer
+ * @name patternfly.notification.directive:pfNotificationDrawer
  * @restrict E
  *
  * @description
@@ -13312,7 +13323,7 @@ angular.module('patternfly.navigation').component('pfApplicationLauncher', {
 */
 ;/**
  * @ngdoc directive
- * @name patternfly.notification.component:pfInlineNotification
+ * @name patternfly.notification.directive:pfInlineNotification
  * @restrict E
  * @scope
  *
@@ -13766,7 +13777,7 @@ angular.module('patternfly.notification').provider('Notifications', function () 
 
 /**
  * @ngdoc directive
- * @name patternfly.notification.component:pfNotificationList
+ * @name patternfly.notification.directive:pfNotificationList
  * @restrict E
  *
  * @description
@@ -13853,7 +13864,7 @@ angular.module('patternfly.notification').component('pfNotificationList', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.notification.component:pfToastNotificationList
+ * @name patternfly.notification.directive:pfToastNotificationList
  * @restrict E
  * @scope
  *
@@ -14088,7 +14099,7 @@ angular.module('patternfly.notification').component('pfToastNotificationList', {
 
 ;/**
  * @ngdoc directive
- * @name patternfly.notification.component:pfToastNotification
+ * @name patternfly.notification.directive:pfToastNotification
  * @restrict E
  * @scope
  *
@@ -14353,7 +14364,7 @@ angular.module( 'patternfly.notification' ).component('pfToastNotification', {
 
 ;/**
  * @ngdoc directive
- * @name patternfly.pagination.component:pfPagination
+ * @name patternfly.pagination.directive:pfPagination
  * @restrict E
  *
  * @param {number} pageNumber The current page number
@@ -14640,7 +14651,7 @@ angular.module('patternfly.pagination').component('pfPagination', {
  */
 ;/**
  * @ngdoc directive
- * @name patternfly.select.component:pfSelect
+ * @name patternfly.select.directive:pfSelect
  * @restrict E
  *
  * @param {object} selected Curently selected value
@@ -14753,7 +14764,7 @@ angular.module('patternfly.pagination').component('pfPagination', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.sort.component:pfSort
+ * @name patternfly.sort.directive:pfSort
  * @restrict E
  *
  * @description
@@ -15000,18 +15011,18 @@ angular.module('patternfly.pagination').component('pfPagination', {
 });
 ;/**
   * @ngdoc directive
-  * @name patternfly.table.component:pfTableView-Basic
+  * @name patternfly.table.directive:pfTableView-Basic
   *
   * @description
   * Component for rendering a simple table view.<br><br>
-  * See {@link patternfly.table.component:pfTableView-with-Toolbar pfTableView - with Toolbar} for use with a Toolbar<br>
-  * See {@link patternfly.toolbars.component:pfToolbar pfToolbar} for use in Toolbar View Switcher
+  * See {@link patternfly.table.directive:pfTableView-with-Toolbar pfTableView - with Toolbar} for use with a Toolbar<br>
+  * See {@link patternfly.toolbars.directive:pfToolbar pfToolbar} for use in Toolbar View Switcher
   *
   * @param {object} config Optional configuration object
   * <ul style='list-style-type: none'>
   *   <li>.selectionMatchProp  - (string) Property of the items to use for determining matching, default is 'uuid'
   *   <li>.onCheckBoxChange    - ( function(item) ) Called to notify when a checkbox selection changes, default is none
-  *   <li>.itemsAvailable      - (boolean) If 'false', displays the {@link patternfly.views.component:pfEmptyState Empty State} component.
+  *   <li>.itemsAvailable      - (boolean) If 'false', displays the {@link patternfly.views.directive:pfEmptyState Empty State} component.
   *   <li>.showCheckboxes      - (boolean) Show checkboxes for row selection, default is true
   * </ul>
   * @param {object} dtOptions Optional angular-datatables DTOptionsBuilder configuration object.  See {@link http://l-lin.github.io/angular-datatables/archives/#/api angular-datatables: DTOptionsBuilder}
@@ -15045,8 +15056,8 @@ angular.module('patternfly.pagination').component('pfPagination', {
   *     <li>.title - (String) Optional title, used for the tooltip
   *     <li>.actionFn - (function(action)) Function to invoke when the action selected
   *   </ul>
-  * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
-  * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph in the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
+  * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
+  * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph in the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
   * @example
   <example module="patternfly.tableview.demo">
   <file name="index.html">
@@ -15138,7 +15149,7 @@ angular.module('patternfly.pagination').component('pfPagination', {
             helpLink: {
               label: 'For more information please see',
               urlLabel: 'pfExample',
-              url : '#/api/patternfly.views.component:pfEmptyState'
+              url : '#/api/patternfly.views.directive:pfEmptyState'
             }
           };
 
@@ -15342,17 +15353,17 @@ angular.module('patternfly.pagination').component('pfPagination', {
 */
 ;/**
  * @ngdoc directive
- * @name patternfly.table.component:pfTableView-with-Toolbar
+ * @name patternfly.table.directive:pfTableView-with-Toolbar
  *
  * @description
  * Example configuring a table view with a toolbar.<br><br>
- * Please see {@link patternfly.toolbars.component:pfToolbar pfToolbar} for use in Toolbar View Switcher
+ * Please see {@link patternfly.toolbars.directive:pfToolbar pfToolbar} for use in Toolbar View Switcher
  *
  * @param {object} config Optional configuration object
  * <ul style='list-style-type: none'>
  *   <li>.selectionMatchProp  - (string) Property of the items to use for determining matching, default is 'uuid'
  *   <li>.onCheckBoxChange    - ( function(item) ) Called to notify when a checkbox selection changes, default is none
- *   <li>.itemsAvailable      - (boolean) If 'false', displays the {@link patternfly.views.component:pfEmptyState Empty State} component.
+ *   <li>.itemsAvailable      - (boolean) If 'false', displays the {@link patternfly.views.directive:pfEmptyState Empty State} component.
  *   <li>.showCheckboxes      - (boolean) Show checkboxes for row selection, default is true
  * </ul>
  * @param {object} dtOptions Optional angular-datatables DTOptionsBuilder configuration object. Note: paginationType, displayLength, and dom:"p" are no longer being used for pagination, but are allowed for backward compatibility.
@@ -15395,8 +15406,8 @@ angular.module('patternfly.pagination').component('pfPagination', {
  *     <li>.title - (String) Optional title, used for the tooltip
  *     <li>.actionFn - (function(action)) Function to invoke when the action selected
  *   </ul>
- * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
- * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
+ * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
+ * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
  * @example
 <example module="patternfly.tableview.demo">
   <file name="index.html">
@@ -15864,7 +15875,7 @@ angular.module('patternfly.pagination').component('pfPagination', {
         helpLink: {
            label: 'For more information please see',
            urlLabel: 'pfExample',
-           url : '#/api/patternfly.views.component:pfEmptyState'
+           url : '#/api/patternfly.views.directive:pfEmptyState'
         }
       };
 
@@ -16430,7 +16441,7 @@ angular.module('patternfly.pagination').component('pfPagination', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.toolbars.component:pfToolbar
+ * @name patternfly.toolbars.directive:pfToolbar
  * @restrict E
  *
  * @description
@@ -16919,7 +16930,7 @@ angular.module('patternfly.pagination').component('pfPagination', {
         helpLink: {
            label: 'For more information please see',
            urlLabel: 'pfExample',
-           url : '#/api/patternfly.views.component:pfEmptyState'
+           url : '#/api/patternfly.views.directive:pfEmptyState'
         }
       };
 
@@ -17670,7 +17681,7 @@ angular.module('patternfly.validation', []).directive('pfValidation', ["$timeout
 }]);
 ;/**
  * @ngdoc directive
- * @name patternfly.views.component:pfCardView
+ * @name patternfly.views.directive:pfCardView
  * @restrict E
  *
  * @description
@@ -17691,7 +17702,7 @@ angular.module('patternfly.validation', []).directive('pfValidation', ["$timeout
  * <li>.onSelectionChange      - ( function(items) ) Called to notify when item selections change, default is none
  * <li>.onClick                - ( function(item, event) ) Called to notify when an item is clicked, default is none
  * <li>.onDblClick             - ( function(item, event) ) Called to notify when an item is double clicked, default is none
- * <li>.itemsAvailable         - (boolean) If 'false', displays the {@link patternfly.views.component:pfEmptyState Empty State} component.
+ * <li>.itemsAvailable         - (boolean) If 'false', displays the {@link patternfly.views.directive:pfEmptyState Empty State} component.
  * </ul>
  * @param {object} pageConfig Optional pagination configuration object.  Since all properties are optional it is ok to specify: 'pageConfig = {}' to indicate that you want to
  * use pagination with the default parameters.
@@ -17700,8 +17711,8 @@ angular.module('patternfly.validation', []).directive('pfValidation', ["$timeout
  *   <li>.pageSize    - (number) Optional Initial page size/display length to use. Ie. Number of "Items per Page".  Default is 10 items per page
  *   <li>.pageSizeIncrements - (Array[Number]) Optional Page size increments for the 'per page' dropdown.  If not specified, the default values are: [5, 10, 20, 40, 80, 100]
  * </ul>
- * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
- * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph in the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
+ * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
+ * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph in the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
  * @param {Array} items the data to be shown in the cards<br/>
  *
  * @example
@@ -17948,7 +17959,7 @@ angular.module('patternfly.validation', []).directive('pfValidation', ["$timeout
           helpLink: {
             label: 'For more information please see',
             urlLabel: 'pfExample',
-            url : '#/api/patternfly.views.component:pfEmptyState'
+            url : '#/api/patternfly.views.directive:pfEmptyState'
           }
         };
 
@@ -18158,7 +18169,7 @@ angular.module('patternfly.views').component('pfCardView', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.views.component:pfEmptyState
+ * @name patternfly.views.directive:pfEmptyState
  * @restrict E
  *
  * @description
@@ -18220,7 +18231,7 @@ angular.module('patternfly.views').component('pfCardView', {
        helpLink: {
          label: 'For more information please see',
          urlLabel: 'pfExample',
-         url: '#/api/patternfly.views.component:pfEmptyState',
+         url: '#/api/patternfly.views.directive:pfEmptyState',
          urlAction: performEmptyStateAction
        }
      };
@@ -18335,7 +18346,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.views.component:pfListView
+ * @name patternfly.views.directive:pfListView
  * @restrict E
  *
  * @description
@@ -18361,7 +18372,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
  * <li>.compoundExpansionOnly  - (boolean) Use compound row expansion only. Hides the row expander and pointer cursor on the row while allowing the row to expand via transcluded items functionality, only valid if useExpandRows is true.
  * <li>.selectionMatchProp     - (string) Property of the items to use for determining matching, default is 'uuid'
  * <li>.selectedItems          - (array) Current set of selected items
- * <li>.itemsAvailable         - (boolean) If 'false', displays the {@link patternfly.views.component:pfEmptyState Empty State} component.
+ * <li>.itemsAvailable         - (boolean) If 'false', displays the {@link patternfly.views.directive:pfEmptyState Empty State} component.
  * <li>.checkDisabled          - ( function(item) ) Function to call to determine if an item is disabled, default is none
  * <li>.onCheckBoxChange       - ( function(item) ) Called to notify when a checkbox selection changes, default is none
  * <li>.onSelect               - ( function(item, event) ) Called to notify of item selection, default is none
@@ -18399,8 +18410,8 @@ angular.module('patternfly.views').component('pfEmptyState', {
  * @param {function (item))} menuClassForItemFn function(item) Used to specify a class for an item's dropdown kebab
  * @param {function (action, item))} updateMenuActionForItemFn function(action, item) Used to update a menu action based on the current item
  * @param {object} customScope Object containing any variables/functions used by the transcluded html, access via $ctrl.customScope.<xxx>
- * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
- * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph in the empty state component.  See the {@link patternfly.views.component:pfEmptyState Empty State} component
+ * @param {object} emptyStateConfig Optional configuration settings for the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
+ * @param {array} emptyStateActionButtons Optional buttons to display under the icon, title, and informational paragraph in the empty state component.  See the {@link patternfly.views.directive:pfEmptyState Empty State} component
  * @example
 <example module="patternfly.views" deps="patternfly.utils">
   <file name="index.html">
@@ -18664,7 +18675,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
           helpLink: {
              label: 'For more information please see',
              urlLabel: 'pfExample',
-             url : '#/api/patternfly.views.component:pfEmptyState'
+             url : '#/api/patternfly.views.directive:pfEmptyState'
           }
         };
 
@@ -19528,6 +19539,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
       if (ctrl.config.onDblClick) {
         ctrl.config.onDblClick(item, e);
       }
+      return true;
     };
 
     ctrl.checkBoxChange = function (item) {
@@ -19665,7 +19677,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
    *    <li>.title - (String) Optional title, uses as a tooltip for the view selector
    *    <li>.iconClass - (String) Icon class to use for the view selector
    * </ul>
-   * Please see {@link patternfly.toolbars.component:pfToolbar pfToolbar} for use in Toolbar View Switcher
+   * Please see {@link patternfly.toolbars.directive:pfToolbar pfToolbar} for use in Toolbar View Switcher
    */
   angular.module('patternfly.views').constant('pfViewUtils', {
     getDashboardView: function (title) {
@@ -19707,7 +19719,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
 })();
 ;/**
   * @ngdoc directive
-  * @name patternfly.wizard.component:pfWizard
+  * @name patternfly.wizard.directive:pfWizard
   * @restrict E
   *
   * @description
@@ -20159,7 +20171,7 @@ angular.module('patternfly.views').component('pfEmptyState', {
 })();
 ;/**
  * @ngdoc directive
- * @name patternfly.wizard.component:pfWizardReviewPage
+ * @name patternfly.wizard.directive:pfWizardReviewPage
  * @restrict E
  *
  * @description
@@ -20228,7 +20240,7 @@ angular.module('patternfly.wizard').component('pfWizardReviewPage', {
 });
 ;/**
  * @ngdoc directive
- * @name patternfly.wizard.component:pfWizardStep
+ * @name patternfly.wizard.directive:pfWizardStep
  * @restrict E
  *
  * @description
@@ -20577,7 +20589,7 @@ angular.module('patternfly.wizard').component('pfWizardStep', {
   }]
 });
 ;/** @ngdoc directive
-* @name patternfly.wizard.component:pfWizardSubstep
+* @name patternfly.wizard.directive:pfWizardSubstep
 * @restrict E
 *
 * @description
@@ -21098,17 +21110,17 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
   'use strict';
 
   $templateCache.put('canvas-view/canvas-editor/canvas-editor.html',
-    "<div class=canvas-editor-container><div class=canvas-editor-toolbar><button id=toggleToolbox class=\"btn btn-primary\" ng-class=\"{'disabled': $ctrl.chartViewModel.inConnectingMode || $ctrl.readOnly}\" type=button ng-click=$ctrl.toggleToolbox() tooltip-placement=bottom-left uib-tooltip=\"{{'Add Item To Canvas'}}\">Add Item <span class=fa ng-class=\"{'fa-angle-double-up': $ctrl.toolboxVisible, 'fa-angle-double-down': !$ctrl.toolboxVisible}\"></span></button><!-- user defined more actions --> <span ng-transclude></span> <span class=right-aligned-controls><input ng-class=\"{'disabled': $ctrl.chartViewModel.inConnectingMode}\" ng-model=$ctrl.hideConnectors ng-change=$ctrl.toggleshowHideConnectors() type=checkbox ng-checked=\"$ctrl.hideConnectors\"> <span class=show-hide-connectors-label>Hide Connectors</span> <a id=zoomOut ng-click=$ctrl.zoomOut() ng-class=\"{'disabled': $ctrl.minZoom()}\"><span class=\"pficon fa fa-minus\" tooltip-append-to-body=true tooltip-placement=bottom uib-tooltip=\"{{'Zoom Out'}}\"></span></a> <a id=zoomIn ng-click=$ctrl.zoomIn() ng-class=\"{'disabled': $ctrl.maxZoom()}\"><span class=\"pficon fa fa-plus\" tooltip-append-to-body=true tooltip-placement=bottom-right uib-tooltip=\"{{'Zoom In'}}\"></span></a></span></div><div class=canvas-editor-toolbox-container><div class=canvas-editor-toolbox id=toolbox ng-if=$ctrl.toolboxVisible><a ng-click=\"$ctrl.toolboxVisible = false\" class=close-toolbox><span class=\"pficon pficon-close\"></span></a><div class=toolbox-filter><input ng-model=$ctrl.searchText id=filterFld class=search-text placeholder=\"{{'Filter by name'}}\"> <a ng-click=\"$ctrl.searchText = ''\"><span class=\"pficon pficon-close clear-search-text\"></span></a></div><uib-tabset><uib-tab ng-repeat=\"tab in $ctrl.toolboxTabs\" heading=\"\" active=tab.active><uib-tab-heading ng-click=$ctrl.tabClicked()><div class=tab-pre-title>{{tab.preTitle}}</div><div class=tab-title ng-class=\"{'tab-single-line':tab.preTitle == null}\">{{tab.title}}</div></uib-tab-heading><uib-tabset class=subtabs ng-if=tab.subtabs><uib-tab ng-repeat=\"subtab in tab.subtabs\" heading={{subtab.title}} active=subtab.active ng-click=$ctrl.tabClicked()><uib-tabset class=subtabs ng-if=subtab.subtabs><uib-tab ng-repeat=\"subsubtab in subtab.subtabs\" heading={{subsubtab.title}} active=subsubtab.active ng-click=$ctrl.tabClicked()><toolbox-items items=subsubtab.items start-drag-callback=$ctrl.startCallback click-callback=$ctrl.addNodeByClick search-text=\"$ctrl.searchText\"></uib-tab></uib-tabset><!-- SubTabs without Sub-Sub Tabs --><toolbox-items ng-if=!subtab.subtabs items=subtab.items start-drag-callback=$ctrl.startCallback click-callback=$ctrl.addNodeByClick search-text=\"$ctrl.searchText\"></uib-tab></uib-tabset><!-- Primary Tabs without SubTabs --><toolbox-items ng-if=!tab.subtabs items=tab.items start-drag-callback=$ctrl.startCallback click-callback=$ctrl.addNodeByClick search-text=\"$ctrl.searchText\"></uib-tab></uib-tabset></div><div class=canvas-container data-drop=true data-jqyoui-options jqyoui-droppable=\"{onDrop:'$ctrl.dropCallback'}\"><pf-canvas chart-data-model=$ctrl.chartDataModel chart-view-model=$ctrl.chartViewModel read-only=$ctrl.readOnly hide-connectors=$ctrl.hideConnectors></pf-canvas></div></div></div>"
+    "<div class=canvas-editor-container><div class=canvas-editor-toolbar><button id=toggleToolbox class=\"btn btn-primary\" ng-class=\"{'disabled': $ctrl.chartViewModel.inConnectingMode || $ctrl.readOnly}\" type=button ng-click=$ctrl.toggleToolbox() tooltip-placement=bottom-left uib-tooltip=\"{{'Add Item To Canvas'}}\">Add Item <span class=fa ng-class=\"{'fa-angle-double-up': $ctrl.toolboxVisible, 'fa-angle-double-down': !$ctrl.toolboxVisible}\"></span></button><!-- user defined more actions --> <span ng-transclude></span> <span class=right-aligned-controls><input ng-class=\"{'disabled': $ctrl.chartViewModel.inConnectingMode}\" ng-model=$ctrl.hideConnectors ng-change=$ctrl.toggleshowHideConnectors() type=checkbox ng-checked=$ctrl.hideConnectors> <span class=show-hide-connectors-label>Hide Connectors</span> <a id=zoomOut ng-click=$ctrl.zoomOut() ng-class=\"{'disabled': $ctrl.minZoom()}\"><span class=\"pficon fa fa-minus\" tooltip-append-to-body=true tooltip-placement=bottom uib-tooltip=\"{{'Zoom Out'}}\"></span> </a><a id=zoomIn ng-click=$ctrl.zoomIn() ng-class=\"{'disabled': $ctrl.maxZoom()}\"><span class=\"pficon fa fa-plus\" tooltip-append-to-body=true tooltip-placement=bottom-right uib-tooltip=\"{{'Zoom In'}}\"></span></a></span></div><div class=canvas-editor-toolbox-container><div class=canvas-editor-toolbox id=toolbox ng-if=$ctrl.toolboxVisible><a ng-click=\"$ctrl.toolboxVisible = false\" class=close-toolbox><span class=\"pficon pficon-close\"></span></a><div class=toolbox-filter><input ng-model=$ctrl.searchText id=filterFld class=search-text placeholder=\"{{'Filter by name'}}\"> <a ng-click=\"$ctrl.searchText = ''\"><span class=\"pficon pficon-close clear-search-text\"></span></a></div><uib-tabset><uib-tab ng-repeat=\"tab in $ctrl.toolboxTabs\" heading=\"\" active=tab.active><uib-tab-heading ng-click=$ctrl.tabClicked()><div class=tab-pre-title>{{tab.preTitle}}</div><div class=tab-title ng-class=\"{'tab-single-line':tab.preTitle == null}\">{{tab.title}}</div></uib-tab-heading><uib-tabset class=subtabs ng-if=tab.subtabs><uib-tab ng-repeat=\"subtab in tab.subtabs\" heading={{subtab.title}} active=subtab.active ng-click=$ctrl.tabClicked()><uib-tabset class=subtabs ng-if=subtab.subtabs><uib-tab ng-repeat=\"subsubtab in subtab.subtabs\" heading={{subsubtab.title}} active=subsubtab.active ng-click=$ctrl.tabClicked()><toolbox-items items=subsubtab.items start-drag-callback=$ctrl.startCallback click-callback=$ctrl.addNodeByClick search-text=$ctrl.searchText></uib-tab></uib-tabset><!-- SubTabs without Sub-Sub Tabs --><toolbox-items ng-if=!subtab.subtabs items=subtab.items start-drag-callback=$ctrl.startCallback click-callback=$ctrl.addNodeByClick search-text=$ctrl.searchText></uib-tab></uib-tabset><!-- Primary Tabs without SubTabs --><toolbox-items ng-if=!tab.subtabs items=tab.items start-drag-callback=$ctrl.startCallback click-callback=$ctrl.addNodeByClick search-text=$ctrl.searchText></uib-tab></uib-tabset></div><div class=canvas-container data-drop=true data-jqyoui-options jqyoui-droppable=\"{onDrop:'$ctrl.dropCallback'}\"><pf-canvas chart-data-model=$ctrl.chartDataModel chart-view-model=$ctrl.chartViewModel read-only=$ctrl.readOnly hide-connectors=$ctrl.hideConnectors></pf-canvas></div></div></div>"
   );
 
 
   $templateCache.put('canvas-view/canvas-editor/toolbox-items.html',
-    "<ul class=toolbox-items-list><li class=toolbox-item ng-repeat=\"item in $ctrl.items | filter:$ctrl.searchText\" data-drag={{!item.disableInToolbox}} jqyoui-draggable=\"{onStart:'$ctrl.startItemDrag(item)'}\" ng-class=\"{'not-draggable': item.disableInToolbox}\" data-jqyoui-options=\"{revert: 'invalid', helper: 'clone'}\" ng-click=$ctrl.itemClicked(item) uib-tooltip=\"{{(item.disableInToolbox ? 'Items cannot be added to the canvas more than once.' : '')}}\"><img ng-if=item.image src={{item.image}} alt=\"{{item.name}}\"> <i ng-if=\"item.icon && !item.image\" class=\"draggable-item-icon {{item.icon}}\"></i> <span>{{ item.name }}</span></li></ul>"
+    "<ul class=toolbox-items-list><li class=toolbox-item ng-repeat=\"item in $ctrl.items | filter:$ctrl.searchText\" data-drag={{!item.disableInToolbox}} jqyoui-draggable=\"{onStart:'$ctrl.startItemDrag(item)'}\" ng-class=\"{'not-draggable': item.disableInToolbox}\" data-jqyoui-options=\"{revert: 'invalid', helper: 'clone'}\" ng-click=$ctrl.itemClicked(item) uib-tooltip=\"{{(item.disableInToolbox ? 'Items cannot be added to the canvas more than once.' : '')}}\"><img ng-if=item.image src={{item.image}} alt={{item.name}}> <i ng-if=\"item.icon && !item.image\" class=\"draggable-item-icon {{item.icon}}\"></i> <span>{{ item.name }}</span></li></ul>"
   );
 
 
   $templateCache.put('canvas-view/canvas/canvas.html',
-    "<svg class=\"canvas draggable-container\" xmlns=http://www.w3.org/2000/svg ng-mousedown=$ctrl.mouseDown($event) ng-mousemove=mouseMove($event) ng-class=\"{'read-only': $ctrl.readOnly, 'canvas-in-connection-mode': $ctrl.chart.inConnectingMode}\" ng-style=\"{'height': $ctrl.chart.zoom.getChartHeight() + 'px', 'width': $ctrl.chart.zoom.getChartWidth() + 'px', 'background-size': $ctrl.chart.zoom.getBackgroundSize() + 'px '+  chart.zoom.getBackgroundSize() + 'px'}\" mouse-capture><!-- Zoom --><g ng-attr-transform=scale({{$ctrl.zoomLevel()}})><!-- Connection Mode Notification --><g ng-if=$ctrl.chart.inConnectingMode><rect class=connecting-mode-rec ry=1 rx=1 x=0 y=0 width=640 height=32></rect><text class=connecting-mode-label x=12 y=22 ng-if=$ctrl.availableConnections()>Select a second item to complete the connection or click on the canvas to cancel</text><text class=connecting-mode-label-warning x=12 y=22 ng-if=!$ctrl.availableConnections()>No available connections! Click on the canvas to cancel</text></g><!-- Main Node Loop --><g ng-repeat=\"node in $ctrl.chart.nodes\" ng-mousedown=\"$ctrl.nodeMouseDown($event, node)\" ng-mouseover=\"$ctrl.nodeMouseOver($event, node)\" ng-mouseleave=\"$ctrl.nodeMouseLeave($event, node)\" ng-attr-transform=\"translate({{node.x()}}, {{node.y()}})\"><!-- Node --><rect ng-class=\"{'invalid-node-rect': node.invalid(), 'selected-node-rect': node.selected(), 'mouseover-node-rect': node == $ctrl.mouseOverNode, 'node-rect': node != $ctrl.mouseOverNode}\" ry=0 rx=0 x=0 y=0 ng-attr-width={{node.width()}} ng-attr-height={{node.height()}} fill={{node.backgroundColor()}} fill-opacity=1.0></rect><!-- Node Title: no-wrap --><text ng-if=!$ctrl.foreignObjectSupported() class=node-header ng-class=\"{'invalid-node-header': node.invalid()}\" ng-attr-x={{node.width()/2}} ng-attr-y=\"{{node.height() - 24}}\" text-anchor=middle alignment-baseline=middle>{{node.name()}}</text><!-- Node Title: text wrap --><foreignobject ng-if=$ctrl.foreignObjectSupported() x=0 ng-attr-y=\"{{node.height() - 42}}\" ng-attr-width={{node.width()}} ng-attr-height=\"{{node.height() - 42}}\"><body><div class=node-header ng-attr-width={{node.width()}} ng-attr-height=\"{{node.height() - 42}}\"><p ng-class=\"{'invalid-node-header': node.invalid()}\" ng-style=\"{width: node.width()}\">{{node.name()}}</p></div></body></foreignobject><!-- Node Image --><image ng-if=node.image() class=node-center-img ng-class=\"{'invalid-node-img': node.invalid()}\" ng-href=\"{{node.image() | trustAsResourceUrl}}\" xlink:href=\"\" ng-attr-x=\"{{(node.width()/2) - 40}}\" ng-attr-y={{20}} height=80px width=80px></image><!-- Node Icon: icon class --><foreignobject ng-if=\"node.icon() && !node.image() && $ctrl.foreignObjectSupported()\" ng-attr-x=\"{{(node.width()/2) - 44}}\" ng-attr-y=\"{{(node.height()/2) - 54}}\" ng-attr-height={{node.height()}}px ng-attr-width={{node.width()}}px class=node-center-img-icon ng-class=\"{'invalid-node-header': node.invalid()}\"><body><i class={{node.icon()}} ng-style=\"{'font-size': node.fontSize() ? node.fontSize() : '76px'}\"></i></body></foreignobject><!-- Node Icon: fontContent --><text ng-if=\"node.fontFamily() && !node.image()\" class=node-center-icon ng-class=\"{'invalid-node-header': node.invalid()}\" font-family={{node.fontFamily()}} ng-attr-x=\"{{(node.width()/2) - 34 + ((node.bundle()) ? 4 : 0) }}\" ng-attr-y={{90}}>{{node.fontContent()}}</text><!-- Sm. Top Left Bundle Icon --><text ng-if=node.bundle() class=bundle-icon x=6 y=22 font-family=PatternFlyIcons-webfont font-size=20>{{'\\ue918'}}</text><!-- Bottom Node Toolbar --><g id=nodeToolBar ng-if=\"node == $ctrl.mouseOverNode && !$ctrl.chart.inConnectingMode\"><g class=svg-triangle><polyline points=\"4,152 14,140 24,152\"></polyline></g><foreignobject ng-attr-x={{node.x}} ng-attr-y={{node.height()+1}} ng-mousedown=$event.stopPropagation() height=100% width=100%><body><node-toolbar node=node node-actions=$ctrl.chart.nodeActions node-click-handler=$ctrl.nodeClickHandler node-close-handler=$ctrl.nodeCloseHandler></node-toolbar></body></foreignobject></g><!-- Connected Input Connectors --><g ng-if=!$ctrl.hideConnectors ng-repeat=\"connector in node.inputConnectors | filter: $ctrl.isConnectorConnected\" ng-mousedown=\"$ctrl.connectorMouseDown($event, node, connector, $index, true)\" ng-mouseover=\"$ctrl.connectorMouseOver($event, node, connector, $index, true)\" ng-mouseleave=\"$ctrl.connectorMouseLeave($event, node, connector, $index, true)\" class=\"connector input-connector\"><circle ng-if=\"!$ctrl.chart.inConnectingMode || $ctrl.isConnectedTo(connector, connectingModeSourceNode)\" ng-class=\"{'mouseover-connector-circle': connector == $ctrl.mouseOverConnector,\n" +
+    "<svg class=\"canvas draggable-container\" xmlns=http://www.w3.org/2000/svg ng-mousedown=$ctrl.mouseDown($event) ng-mousemove=mouseMove($event) ng-class=\"{'read-only': $ctrl.readOnly, 'canvas-in-connection-mode': $ctrl.chart.inConnectingMode}\" ng-style=\"{'height': $ctrl.chart.zoom.getChartHeight() + 'px', 'width': $ctrl.chart.zoom.getChartWidth() + 'px', 'background-size': $ctrl.chart.zoom.getBackgroundSize() + 'px '+  chart.zoom.getBackgroundSize() + 'px'}\" mouse-capture><!-- Zoom --><g ng-attr-transform=scale({{$ctrl.zoomLevel()}})><!-- Connection Mode Notification --><g ng-if=$ctrl.chart.inConnectingMode><rect class=connecting-mode-rec ry=1 rx=1 x=0 y=0 width=640 height=32></rect><text class=connecting-mode-label x=12 y=22 ng-if=$ctrl.availableConnections()>Select a second item to complete the connection or click on the canvas to cancel</text><text class=connecting-mode-label-warning x=12 y=22 ng-if=!$ctrl.availableConnections()>No available connections! Click on the canvas to cancel</text></g><!-- Main Node Loop --><g ng-repeat=\"node in $ctrl.chart.nodes\" ng-mousedown=\"$ctrl.nodeMouseDown($event, node)\" ng-mouseover=\"$ctrl.nodeMouseOver($event, node)\" ng-mouseleave=\"$ctrl.nodeMouseLeave($event, node)\" ng-attr-transform=\"translate({{node.x()}}, {{node.y()}})\"><!-- Node --><rect ng-class=\"{'invalid-node-rect': node.invalid(), 'selected-node-rect': node.selected(), 'mouseover-node-rect': node == $ctrl.mouseOverNode, 'node-rect': node != $ctrl.mouseOverNode}\" ry=0 rx=0 x=0 y=0 ng-attr-width={{node.width()}} ng-attr-height={{node.height()}} fill={{node.backgroundColor()}} fill-opacity=1.0></rect><!-- Node Title: no-wrap --><text ng-if=!$ctrl.foreignObjectSupported() class=node-header ng-class=\"{'invalid-node-header': node.invalid()}\" ng-attr-x={{node.width()/2}} ng-attr-y=\"{{node.height() - 24}}\" text-anchor=middle alignment-baseline=middle>{{node.name()}}</text><!-- Node Title: text wrap --><foreignobject ng-if=$ctrl.foreignObjectSupported() x=0 ng-attr-y=\"{{node.height() - 42}}\" ng-attr-width={{node.width()}} ng-attr-height=\"{{node.height() - 42}}\"><body><div class=node-header ng-attr-width={{node.width()}} ng-attr-height=\"{{node.height() - 42}}\"><p ng-class=\"{'invalid-node-header': node.invalid()}\" ng-style=\"{width: node.width()}\">{{node.name()}}</p></div></body></foreignobject><!-- Node Image --><image ng-if=node.image() class=node-center-img ng-class=\"{'invalid-node-img': node.invalid()}\" ng-href=\"{{node.image() | trustAsResourceUrl}}\" xlink:href=\"\" ng-attr-x=\"{{(node.width()/2) - 40}}\" ng-attr-y={{20}} height=80px width=80px></image><!-- Node Icon: icon class --><foreignobject ng-if=\"node.icon() && !node.image() && $ctrl.foreignObjectSupported()\" ng-attr-x=\"{{(node.width()/2) - 44}}\" ng-attr-y=\"{{(node.height()/2) - 54}}\" ng-attr-height={{node.height()}}px ng-attr-width={{node.width()}}px class=node-center-img-icon ng-class=\"{'invalid-node-header': node.invalid()}\"><body><i class={{node.icon()}} ng-style=\"{'font-size': node.fontSize() ? node.fontSize() : '76px'}\"></i></body></foreignobject><!-- Node Icon: fontContent --><text ng-if=\"node.fontFamily() && !node.image()\" class=node-center-icon ng-class=\"{'invalid-node-header': node.invalid()}\" font-family={{node.fontFamily()}} ng-attr-x=\"{{(node.width()/2) - 34 + ((node.bundle()) ? 4 : 0) }}\" ng-attr-y={{90}}>{{node.fontContent()}}</text><!-- Sm. Top Left Bundle Icon --><text ng-if=node.bundle() class=bundle-icon x=6 y=22 font-family=PatternFlyIcons-webfont font-size=20>{{'\\ue918'}}</text><!-- Bottom Node Toolbar --><g id=nodeToolBar ng-if=\"node == $ctrl.mouseOverNode && !$ctrl.chart.inConnectingMode\"><g class=svg-triangle><polyline points=\"4,152 14,140 24,152\"></polyline></g><foreignobject x=0 ng-attr-y={{node.height()+1}} ng-mousedown=$event.stopPropagation() height=100% width=100%><body><node-toolbar node=node node-actions=$ctrl.chart.nodeActions node-click-handler=$ctrl.nodeClickHandler node-close-handler=$ctrl.nodeCloseHandler></node-toolbar></body></foreignobject></g><!-- Connected Input Connectors --><g ng-if=!$ctrl.hideConnectors ng-repeat=\"connector in node.inputConnectors | filter: $ctrl.isConnectorConnected\" ng-mousedown=\"$ctrl.connectorMouseDown($event, node, connector, $index, true)\" ng-mouseover=\"$ctrl.connectorMouseOver($event, node, connector, $index, true)\" ng-mouseleave=\"$ctrl.connectorMouseLeave($event, node, connector, $index, true)\" class=\"connector input-connector\"><circle ng-if=\"!$ctrl.chart.inConnectingMode || $ctrl.isConnectedTo(connector, connectingModeSourceNode)\" ng-class=\"{'mouseover-connector-circle': connector == $ctrl.mouseOverConnector,\n" +
     "                   'connector-circle': connector != $ctrl.mouseOverConnector}\" ng-attr-r={{$ctrl.connectorSize}} ng-attr-cx={{connector.x()}} ng-attr-cy={{connector.y()}}></circle></g><!-- Unconnected Input Connectors --><g ng-if=$ctrl.chart.inConnectingMode ng-repeat=\"connector in node.inputConnectors | filter: $ctrl.isConnectorUnconnectedAndValid\" ng-mousedown=\"$ctrl.connectorMouseDown($event, node, connector, $index, true)\" ng-mouseover=\"$ctrl.connectorMouseOver($event, node, connector, $index, true)\" ng-mouseleave=\"$ctrl.connectorMouseLeave($event, node, connector, $index, true)\" class=\"connector input-connector\"><text ng-if=connector.fontFamily() class=connector-icons font-family={{connector.fontFamily()}} ng-attr-x=\"{{connector.x() - 28}}\" ng-attr-y=\"{{connector.y() + 7}}\">{{connector.fontContent()}}</text><circle ng-class=\"{'unconnected-circle': connector != $ctrl.mouseOverConnector,\n" +
     "                         'mouseover-unconnected-circle': connector == $ctrl.mouseOverConnector}\" ng-attr-r={{$ctrl.connectorSize}} ng-attr-cx={{connector.x()}} ng-attr-cy={{connector.y()}}></circle><g ng-if=\"connector == $ctrl.mouseOverConnector\"><rect class=connector-tooltip ry=1 rx=1 ng-attr-x=\"{{connector.x() - 4}}\" ng-attr-y=\"{{connector.y() + 12}}\" ng-attr-width={{80}} height=20></rect><text class=connector-tooltip-text ng-attr-x=\"{{connector.x() + 2}}\" ng-attr-y=\"{{connector.y() + 26}}\" text-anchor=start alignment-baseline=top>{{connector.name()}}</text></g></g><!-- Output Connector --><g ng-if=!$ctrl.hideConnectors ng-repeat=\"connector in node.outputConnectors\" ng-mousedown=\"$ctrl.connectorMouseDown($event, node, connector, $index, false)\" ng-mouseover=\"$ctrl.connectorMouseOver($event, node, connector, $index, false)\" ng-mouseleave=\"$ctrl.connectorMouseLeave($event, node, connector, $index, false)\" class=\"connector output-connector\"><circle ng-if=\"!$ctrl.chart.inConnectingMode || ($ctrl.connectingModeSourceNode === connector.parentNode())\" ng-class=\"{'connector-circle': connector != $ctrl.mouseOverConnector,\n" +
     "                   'mouseover-connector-circle': connector == $ctrl.mouseOverConnector}\" ng-attr-r={{$ctrl.connectorSize}} ng-attr-r={{$ctrl.connectorSize}} ng-attr-cx={{connector.x()}} ng-attr-cy={{connector.y()}}></circle></g></g><!--  End Nodes Loop --><!-- Connections --><g ng-if=!$ctrl.hideConnectors ng-repeat=\"connection in $ctrl.chart.connections\" class=connection ng-mousedown=\"$ctrl.connectionMouseDown($event, connection)\" ng-mouseover=\"$ctrl.connectionMouseOver($event, connection)\" ng-mouseleave=\"$ctrl.connectionMouseLeave($event, connection)\"><g ng-if=\"!$ctrl.chart.inConnectingMode || connectingModeSourceNode === connection.source.parentNode()\"><path ng-class=\"{'selected-connection-line': connection.selected(),\n" +
@@ -21135,7 +21147,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
   'use strict';
 
   $templateCache.put('card/aggregate-status/aggregate-status-card.html',
-    "<div ng-if=!$ctrl.isMiniLayout class=\"card-pf card-pf-aggregate-status\" ng-class=\"{'card-pf-accented': $ctrl.shouldShowTopBorder, 'card-pf-aggregate-status-alt': $ctrl.isAltLayout}\" ng-style=\"$ctrl.showSpinner ? $ctrl.spinnerHeight : {}\"><h2 class=card-pf-title><a href={{$ctrl.status.href}} ng-if=$ctrl.status.href><image ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{$ctrl.status.iconClass}}></span> <span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> <span class=card-pf-aggregate-status-title>{{$ctrl.status.title}}</span></a> <span ng-if=!$ctrl.status.href><image ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{$ctrl.status.iconClass}}></span> <span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> <span class=card-pf-aggregate-status-title>{{$ctrl.status.title}}</span></span></h2><div class=card-pf-body ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><div ng-if=$ctrl.showSpinner class=spinner-container><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div><p class=card-pf-aggregate-status-notifications ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\"><span class=card-pf-aggregate-status-notification ng-repeat=\"notification in $ctrl.status.notifications\"><a href={{notification.href}} ng-if=notification.href><image ng-if=notification.iconImage ng-src={{notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{notification.iconClass}}></span>{{ notification.count }}</a> <span ng-if=!notification.href><image ng-if=notification.iconImage ng-src={{notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{notification.iconClass}}></span>{{ notification.count }}</span></span></p></div></div><div ng-if=$ctrl.isMiniLayout class=\"card-pf card-pf-aggregate-status card-pf-aggregate-status-mini\" ng-class=\"{'card-pf-accented': $ctrl.shouldShowTopBorder}\" ng-style=\"$ctrl.showSpinner ? $ctrl.spinnerHeight : {}\"><h2 class=card-pf-title><a ng-if=$ctrl.status.href href={{$ctrl.status.href}}><image ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=card-pf-icon-image></image><span ng-if=$ctrl.status.iconClass class={{$ctrl.status.iconClass}}></span> <span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> {{$ctrl.status.title}}</a> <span ng-if=!$ctrl.status.href><span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> {{$ctrl.status.title}}</span></h2><div class=card-pf-body ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><div ng-if=$ctrl.showSpinner class=spinner-container><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div><p ng-if=\"$ctrl.status.notification.iconImage || $ctrl.status.notification.iconClass || $ctrl.status.notification.count\" class=card-pf-aggregate-status-notifications><span class=card-pf-aggregate-status-notification><a ng-if=$ctrl.status.notification.href href={{$ctrl.status.notification.href}}><image ng-if=$ctrl.status.notification.iconImage ng-src={{$ctrl.status.notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span ng-if=$ctrl.status.notification.iconClass class={{$ctrl.status.notification.iconClass}}></span><span ng-if=$ctrl.status.notification.count>{{$ctrl.status.notification.count}}</span></a> <span ng-if=!$ctrl.status.notification.href><image ng-if=$ctrl.status.notification.iconImage ng-src={{$ctrl.status.notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span ng-if=$ctrl.status.notification.iconClass class={{$ctrl.status.notification.iconClass}}></span><span ng-if=$ctrl.status.notification.count>{{$ctrl.status.notification.count}}</span></span></span></p></div></div>"
+    "<div ng-if=!$ctrl.isMiniLayout class=\"card-pf card-pf-aggregate-status\" ng-class=\"{'card-pf-accented': $ctrl.shouldShowTopBorder, 'card-pf-aggregate-status-alt': $ctrl.isAltLayout}\" ng-style=\"$ctrl.showSpinner ? $ctrl.spinnerHeight : {}\"><h2 class=card-pf-title><a href={{$ctrl.status.href}} ng-if=$ctrl.status.href><image ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{$ctrl.status.iconClass}}></span> <span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> <span class=card-pf-aggregate-status-title>{{$ctrl.status.title}}</span> </a><span ng-if=!$ctrl.status.href><image ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{$ctrl.status.iconClass}}></span> <span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> <span class=card-pf-aggregate-status-title>{{$ctrl.status.title}}</span></span></h2><div class=card-pf-body ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><div ng-if=$ctrl.showSpinner class=spinner-container><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div><p class=card-pf-aggregate-status-notifications ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\"><span class=card-pf-aggregate-status-notification ng-repeat=\"notification in $ctrl.status.notifications\"><a href={{notification.href}} ng-if=notification.href><image ng-if=notification.iconImage ng-src={{notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{notification.iconClass}}></span>{{ notification.count }} </a><span ng-if=!notification.href><image ng-if=notification.iconImage ng-src={{notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span class={{notification.iconClass}}></span>{{ notification.count }}</span></span></p></div></div><div ng-if=$ctrl.isMiniLayout class=\"card-pf card-pf-aggregate-status card-pf-aggregate-status-mini\" ng-class=\"{'card-pf-accented': $ctrl.shouldShowTopBorder}\" ng-style=\"$ctrl.showSpinner ? $ctrl.spinnerHeight : {}\"><h2 class=card-pf-title><a ng-if=$ctrl.status.href href={{$ctrl.status.href}}><image ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=card-pf-icon-image></image><span ng-if=$ctrl.status.iconClass class={{$ctrl.status.iconClass}}></span> <span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> {{$ctrl.status.title}} </a><span ng-if=!$ctrl.status.href><span class=card-pf-aggregate-status-count>{{$ctrl.status.count}}</span> {{$ctrl.status.title}}</span></h2><div class=card-pf-body ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><div ng-if=$ctrl.showSpinner class=spinner-container><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div><p ng-if=\"$ctrl.status.notification.iconImage || $ctrl.status.notification.iconClass || $ctrl.status.notification.count\" class=card-pf-aggregate-status-notifications><span class=card-pf-aggregate-status-notification><a ng-if=$ctrl.status.notification.href href={{$ctrl.status.notification.href}}><image ng-if=$ctrl.status.notification.iconImage ng-src={{$ctrl.status.notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span ng-if=$ctrl.status.notification.iconClass class={{$ctrl.status.notification.iconClass}}></span><span ng-if=$ctrl.status.notification.count>{{$ctrl.status.notification.count}}</span> </a><span ng-if=!$ctrl.status.notification.href><image ng-if=$ctrl.status.notification.iconImage ng-src={{$ctrl.status.notification.iconImage}} alt=\"\" class=card-pf-icon-image></image><span ng-if=$ctrl.status.notification.iconClass class={{$ctrl.status.notification.iconClass}}></span><span ng-if=$ctrl.status.notification.count>{{$ctrl.status.notification.count}}</span></span></span></p></div></div>"
   );
 
 
@@ -21145,12 +21157,12 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('card/basic/card.html',
-    "<div class=card-pf ng-class=\"{'card-pf-accented': $ctrl.showTopBorder === 'true'}\"><div ng-if=$ctrl.showHeader() ng-class=\"$ctrl.shouldShowTitlesSeparator ? 'card-pf-heading' : 'card-pf-heading-no-bottom'\"><div ng-if=$ctrl.showFilterInHeader() class=card-pf-footer-in-header ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\" ng-include=\"'card/basic/card-filter.html'\"></div><h2 class=card-pf-title>{{$ctrl.headTitle}}</h2></div><span ng-if=$ctrl.subTitle class=card-pf-subtitle>{{$ctrl.subTitle}}</span><div class=card-pf-body ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><div ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\" ng-transclude></div><div ng-if=$ctrl.showSpinner class=spinner-container><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div></div><div ng-if=$ctrl.footer class=card-pf-footer ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\"><div ng-if=$ctrl.showFilterInFooter() ng-include=\"'card/basic/card-filter.html'\"></div><p><a ng-if=$ctrl.footer.href href={{$ctrl.footer.href}} ng-class=\"{'card-pf-link-with-icon':$ctrl.footer.iconClass,'card-pf-link':!$ctrl.footer.iconClass}\"><span ng-if=$ctrl.footer.iconClass class=\"{{$ctrl.footer.iconClass}} card-pf-footer-text\"></span> <span ng-if=$ctrl.footer.text class=card-pf-footer-text>{{$ctrl.footer.text}}</span></a> <a ng-if=\"$ctrl.footer.callBackFn && !$ctrl.footer.href\" ng-click=$ctrl.footerCallBackFn() ng-class=\"{'card-pf-link-with-icon':$ctrl.footer.iconClass,'card-pf-link':!$ctrl.footer.iconClass}\"><span class=\"{{$ctrl.footer.iconClass}} card-pf-footer-text\" ng-if=$ctrl.footer.iconClass></span> <span class=card-pf-footer-text ng-if=$ctrl.footer.text>{{$ctrl.footer.text}}</span></a> <span ng-if=\"!$ctrl.footer.href && !$ctrl.footer.callBackFn\"><span ng-if=$ctrl.footer.iconClass class=\"{{$ctrl.footer.iconClass}} card-pf-footer-text\" ng-class=\"{'card-pf-link-with-icon':$ctrl.footer.iconClass,'card-pf-link':!$ctrl.footer.iconClass}\"></span> <span ng-if=$ctrl.footer.text class=card-pf-footer-text>{{$ctrl.footer.text}}</span></span></p></div></div>"
+    "<div class=card-pf ng-class=\"{'card-pf-accented': $ctrl.showTopBorder === 'true'}\"><div ng-if=$ctrl.showHeader() ng-class=\"$ctrl.shouldShowTitlesSeparator ? 'card-pf-heading' : 'card-pf-heading-no-bottom'\"><div ng-if=$ctrl.showFilterInHeader() class=card-pf-footer-in-header ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\" ng-include=\"'card/basic/card-filter.html'\"></div><h2 class=card-pf-title>{{$ctrl.headTitle}}</h2></div><span ng-if=$ctrl.subTitle class=card-pf-subtitle>{{$ctrl.subTitle}}</span><div class=card-pf-body ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><div ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\" ng-transclude></div><div ng-if=$ctrl.showSpinner class=spinner-container><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div></div><div ng-if=$ctrl.footer class=card-pf-footer ng-class=\"{'hide-for-spinner': $ctrl.showSpinner}\"><div ng-if=$ctrl.showFilterInFooter() ng-include=\"'card/basic/card-filter.html'\"></div><p><a ng-if=$ctrl.footer.href href={{$ctrl.footer.href}} ng-class=\"{'card-pf-link-with-icon':$ctrl.footer.iconClass,'card-pf-link':!$ctrl.footer.iconClass}\"><span ng-if=$ctrl.footer.iconClass class=\"{{$ctrl.footer.iconClass}} card-pf-footer-text\"></span> <span ng-if=$ctrl.footer.text class=card-pf-footer-text>{{$ctrl.footer.text}}</span> </a><a ng-if=\"$ctrl.footer.callBackFn && !$ctrl.footer.href\" ng-click=$ctrl.footerCallBackFn() ng-class=\"{'card-pf-link-with-icon':$ctrl.footer.iconClass,'card-pf-link':!$ctrl.footer.iconClass}\"><span class=\"{{$ctrl.footer.iconClass}} card-pf-footer-text\" ng-if=$ctrl.footer.iconClass></span> <span class=card-pf-footer-text ng-if=$ctrl.footer.text>{{$ctrl.footer.text}}</span> </a><span ng-if=\"!$ctrl.footer.href && !$ctrl.footer.callBackFn\"><span ng-if=$ctrl.footer.iconClass class=\"{{$ctrl.footer.iconClass}} card-pf-footer-text\" ng-class=\"{'card-pf-link-with-icon':$ctrl.footer.iconClass,'card-pf-link':!$ctrl.footer.iconClass}\"></span> <span ng-if=$ctrl.footer.text class=card-pf-footer-text>{{$ctrl.footer.text}}</span></span></p></div></div>"
   );
 
 
   $templateCache.put('card/info-status/info-status-card.html',
-    "<div class=\"card-pf card-pf-info-status\" ng-class=\"{'card-pf-accented': $ctrl.shouldShowTopBorder}\" ng-style=\"$ctrl.showSpinner ? $ctrl.spinnerHeight : {}\"><div class=card-pf-info-image ng-if=\"$ctrl.status.iconImage || $ctrl.status.iconClass\"><img ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=\"info-img\"> <span class=\"info-icon {{$ctrl.status.iconClass}}\"></span></div><div class=\"card-pf-info-content card-pf-body\" ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><h2 class=card-pf-title ng-if=$ctrl.status.title><a href={{$ctrl.status.href}} ng-if=$ctrl.status.href><span>{{$ctrl.status.title}}</span></a> <span ng-if=!$ctrl.status.href><span>{{$ctrl.status.title}}</span></span></h2><div ng-if=$ctrl.showSpinner class=spinner-container ng-class=\"{'with-title' : $ctrl.status.title}\"><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div><span ng-if=!$ctrl.showSpinner><div ng-if=$ctrl.shouldShowHtmlContent class=card-pf-info-item ng-bind-html=$ctrl.trustAsHtml(item) ng-repeat=\"item in $ctrl.status.info track by $index\"></div><div ng-if=!$ctrl.shouldShowHtmlContent class=card-pf-info-item ng-bind=item ng-repeat=\"item in $ctrl.status.info track by $index\"></div></span></div></div>"
+    "<div class=\"card-pf card-pf-info-status\" ng-class=\"{'card-pf-accented': $ctrl.shouldShowTopBorder}\" ng-style=\"$ctrl.showSpinner ? $ctrl.spinnerHeight : {}\"><div class=card-pf-info-image ng-if=\"$ctrl.status.iconImage || $ctrl.status.iconClass\"><img ng-if=$ctrl.status.iconImage ng-src={{$ctrl.status.iconImage}} alt=\"\" class=info-img> <span class=\"info-icon {{$ctrl.status.iconClass}}\"></span></div><div class=\"card-pf-info-content card-pf-body\" ng-class=\"{'show-spinner': $ctrl.showSpinner}\"><h2 class=card-pf-title ng-if=$ctrl.status.title><a href={{$ctrl.status.href}} ng-if=$ctrl.status.href><span>{{$ctrl.status.title}}</span> </a><span ng-if=!$ctrl.status.href><span>{{$ctrl.status.title}}</span></span></h2><div ng-if=$ctrl.showSpinner class=spinner-container ng-class=\"{'with-title' : $ctrl.status.title}\"><div class=loading-indicator><span class=\"spinner spinner-lg\" aria-hidden=true></span> <span ng-if=$ctrl.spinnerText class=loading-text>{{$ctrl.spinnerText}}</span><label ng-if=!$ctrl.spinnerText class=sr-only>Loading</label></div></div><span ng-if=!$ctrl.showSpinner><div ng-if=$ctrl.shouldShowHtmlContent class=card-pf-info-item ng-bind-html=$ctrl.trustAsHtml(item) ng-repeat=\"item in $ctrl.status.info track by $index\"></div><div ng-if=!$ctrl.shouldShowHtmlContent class=card-pf-info-item ng-bind=item ng-repeat=\"item in $ctrl.status.info track by $index\"></div></span></div></div>"
   );
 
 }]);
@@ -21163,7 +21175,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('charts/donut/donut-pct-chart.html',
-    "<span class=pct-donut-chart-pf><span ng-class=\"{'pct-donut-chart-pf-left': $ctrl.config.labelConfig.orientation === 'left', 'pct-donut-chart-pf-right': $ctrl.config.labelConfig.orientation === 'right'}\"><span class=pct-donut-chart-pf-chart><pf-c3-chart ng-if=\"$ctrl.data.dataAvailable !== false\" id={{$ctrl.donutChartId}} config=$ctrl.config get-chart-callback=$ctrl.setChart></pf-c3-chart><pf-empty-chart ng-if=\"$ctrl.data.dataAvailable === false\" chart-height=$ctrl.chartHeight></pf-empty-chart></span> <span ng-if=\"$ctrl.data.dataAvailable !== false && $ctrl.config.labelConfig && !$ctrl.config.labelConfig.labelFn()\" class=pct-donut-chart-pf-label>{{$ctrl.config.labelConfig.title}} <span ng-if=$ctrl.data ng-switch=$ctrl.config.labelConfig.label><span ng-switch-when=none></span> <span ng-switch-when=available>{{$ctrl.data.available}} {{$ctrl.config.labelConfig.units}} available</span> <span ng-switch-when=percent>{{$ctrl.data.percent}}&#37; used</span> <span ng-switch-default=\"\">{{$ctrl.data.used}} {{$ctrl.config.labelConfig.units}} of {{$ctrl.data.total}} {{$ctrl.config.labelConfig.units}} used</span></span></span> <span ng-if=\"$ctrl.data.dataAvailable !== false && $ctrl.config.labelConfig && $ctrl.config.labelConfig.labelFn()\" class=pct-donut-chart-pf-label ng-bind-html=$ctrl.config.labelConfig.labelFn()></span></span></span>"
+    "<span class=pct-donut-chart-pf><span ng-class=\"{'pct-donut-chart-pf-left': $ctrl.config.labelConfig.orientation === 'left', 'pct-donut-chart-pf-right': $ctrl.config.labelConfig.orientation === 'right'}\"><span class=pct-donut-chart-pf-chart><pf-c3-chart ng-if=\"$ctrl.data.dataAvailable !== false\" id={{$ctrl.donutChartId}} config=$ctrl.config get-chart-callback=$ctrl.setChart></pf-c3-chart><pf-empty-chart ng-if=\"$ctrl.data.dataAvailable === false\" chart-height=$ctrl.chartHeight></pf-empty-chart></span><span ng-if=\"$ctrl.data.dataAvailable !== false && $ctrl.config.labelConfig && !$ctrl.config.labelConfig.labelFn()\" class=pct-donut-chart-pf-label>{{$ctrl.config.labelConfig.title}} <span ng-if=$ctrl.data ng-switch=$ctrl.config.labelConfig.label><span ng-switch-when=none></span> <span ng-switch-when=available>{{$ctrl.data.available}} {{$ctrl.config.labelConfig.units}} available</span> <span ng-switch-when=percent>{{$ctrl.data.percent}}&#37; used</span> <span ng-switch-default=\"\">{{$ctrl.data.used}} {{$ctrl.config.labelConfig.units}} of {{$ctrl.data.total}} {{$ctrl.config.labelConfig.units}} used</span> </span></span><span ng-if=\"$ctrl.data.dataAvailable !== false && $ctrl.config.labelConfig && $ctrl.config.labelConfig.labelFn()\" class=pct-donut-chart-pf-label ng-bind-html=$ctrl.config.labelConfig.labelFn()></span></span></span>"
   );
 
 
@@ -21198,13 +21210,13 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('charts/trends/trends-chart.html',
-    "<span ng-switch on=$ctrl.config.layout ng-class=\"{'data-unavailable-pf': $ctrl.chartData.dataAvailable === false}\"><div ng-switch-default ng-class=\"{'trend-card-large-pf': $ctrl.showLargeCardLayout,'trend-card-small-pf': $ctrl.showSmallCardLayout}\"><span class=trend-header-pf ng-if=$ctrl.config.title>{{$ctrl.config.title}}</span> <span ng-if=$ctrl.showActualValue><span class=trend-title-big-pf>{{$ctrl.getLatestValue()}}</span> <span class=trend-title-small-pf>{{$ctrl.config.units}}</span></span> <span ng-if=$ctrl.showPercentageValue><span class=trend-title-big-pf>{{$ctrl.getPercentageValue() + '%'}}</span> <span class=trend-title-small-pf>of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}</span></span><pf-sparkline-chart ng-if=\"$ctrl.chartData.dataAvailable !== false\" config=$ctrl.config chart-data=$ctrl.chartData chart-height=$ctrl.getChartHeight() show-x-axis=$ctrl.showXAxis show-y-axis=$ctrl.showYAxis></pf-sparkline-chart><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=$ctrl.getChartHeight()></pf-empty-chart><span class=trend-footer-pf ng-if=$ctrl.config.timeFrame>{{$ctrl.config.timeFrame}}</span></div><div ng-switch-when=compact class=trend-card-compact-pf><div class=\"row trend-row\"><div class=col-sm-2 ng-class=\"{'col-sm-push-10': $ctrl.config.compactLabelPosition === 'right'}\"><div class=trend-compact-details><span ng-if=$ctrl.showActualValue><span class=trend-title-compact-big-pf>{{$ctrl.getLatestValue()}}</span> <span class=trend-title-compact-small-pf>{{$ctrl.config.units}}</span></span> <span ng-if=$ctrl.showPercentageValue><span class=trend-title-compact-big-pf>{{$ctrl.getPercentageValue() + '%'}}</span> <span class=trend-title-compact-small-pf>of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}</span></span> <span class=trend-header-compact-pf ng-if=$ctrl.config.title>{{$ctrl.config.title}}</span></div></div><div class=col-sm-10 ng-class=\"{'col-sm-pull-2': $ctrl.config.compactLabelPosition === 'right'}\"><pf-sparkline-chart ng-if=\"$ctrl.chartData.dataAvailable !== false\" config=$ctrl.config chart-data=$ctrl.chartData chart-height=$ctrl.getChartHeight() show-x-axis=$ctrl.showXAxis show-y-axis=$ctrl.showYAxis></pf-sparkline-chart><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=$ctrl.getChartHeight()></pf-empty-chart></div></div></div><div ng-switch-when=inline class=trend-card-inline-pf><div class=\"row trend-row\"><div class=\"col-sm-8 trend-flat-col\"><pf-sparkline-chart ng-if=\"$ctrl.chartData.dataAvailable !== false\" config=$ctrl.config chart-data=$ctrl.chartData chart-height=$ctrl.getChartHeight() show-x-axis=$ctrl.showXAxis show-y-axis=$ctrl.showYAxis></pf-sparkline-chart><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=$ctrl.getChartHeight()></pf-empty-chart></div><div class=\"col-sm-4 trend-flat-col\"><div class=trend-flat-details><div class=trend-flat-details-cell><span class=trend-title-flat-big-pf>{{$ctrl.getPercentageValue() + '%'}}</span></div><div class=trend-flat-details-cell><span class=trend-label-flat-strong-pf>{{$ctrl.config.trendLabel}}</span> <span class=trend-label-flat-pf>{{$ctrl.getLatestValue()}} of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}</span></div></div></div></div></div></span>"
+    "<span ng-switch on=$ctrl.config.layout ng-class=\"{'data-unavailable-pf': $ctrl.chartData.dataAvailable === false}\"><div ng-switch-default ng-class=\"{'trend-card-large-pf': $ctrl.showLargeCardLayout,'trend-card-small-pf': $ctrl.showSmallCardLayout}\"><span class=trend-header-pf ng-if=$ctrl.config.title>{{$ctrl.config.title}}</span> <span ng-if=$ctrl.showActualValue><span class=trend-title-big-pf>{{$ctrl.getLatestValue()}}</span> <span class=trend-title-small-pf>{{$ctrl.config.units}}</span> </span><span ng-if=$ctrl.showPercentageValue><span class=trend-title-big-pf>{{$ctrl.getPercentageValue() + '%'}}</span> <span class=trend-title-small-pf>of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}</span></span><pf-sparkline-chart ng-if=\"$ctrl.chartData.dataAvailable !== false\" config=$ctrl.config chart-data=$ctrl.chartData chart-height=$ctrl.getChartHeight() show-x-axis=$ctrl.showXAxis show-y-axis=$ctrl.showYAxis></pf-sparkline-chart><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=$ctrl.getChartHeight()></pf-empty-chart><span class=trend-footer-pf ng-if=$ctrl.config.timeFrame>{{$ctrl.config.timeFrame}}</span></div><div ng-switch-when=compact class=trend-card-compact-pf><div class=\"row trend-row\"><div class=col-sm-2 ng-class=\"{'col-sm-push-10': $ctrl.config.compactLabelPosition === 'right'}\"><div class=trend-compact-details><span ng-if=$ctrl.showActualValue><span class=trend-title-compact-big-pf>{{$ctrl.getLatestValue()}}</span> <span class=trend-title-compact-small-pf>{{$ctrl.config.units}}</span> </span><span ng-if=$ctrl.showPercentageValue><span class=trend-title-compact-big-pf>{{$ctrl.getPercentageValue() + '%'}}</span> <span class=trend-title-compact-small-pf>of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}</span> </span><span class=trend-header-compact-pf ng-if=$ctrl.config.title>{{$ctrl.config.title}}</span></div></div><div class=col-sm-10 ng-class=\"{'col-sm-pull-2': $ctrl.config.compactLabelPosition === 'right'}\"><pf-sparkline-chart ng-if=\"$ctrl.chartData.dataAvailable !== false\" config=$ctrl.config chart-data=$ctrl.chartData chart-height=$ctrl.getChartHeight() show-x-axis=$ctrl.showXAxis show-y-axis=$ctrl.showYAxis></pf-sparkline-chart><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=$ctrl.getChartHeight()></pf-empty-chart></div></div></div><div ng-switch-when=inline class=trend-card-inline-pf><div class=\"row trend-row\"><div class=\"col-sm-8 trend-flat-col\"><pf-sparkline-chart ng-if=\"$ctrl.chartData.dataAvailable !== false\" config=$ctrl.config chart-data=$ctrl.chartData chart-height=$ctrl.getChartHeight() show-x-axis=$ctrl.showXAxis show-y-axis=$ctrl.showYAxis></pf-sparkline-chart><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=$ctrl.getChartHeight()></pf-empty-chart></div><div class=\"col-sm-4 trend-flat-col\"><div class=trend-flat-details><div class=trend-flat-details-cell><span class=trend-title-flat-big-pf>{{$ctrl.getPercentageValue() + '%'}}</span></div><div class=trend-flat-details-cell><span class=trend-label-flat-strong-pf>{{$ctrl.config.trendLabel}}</span> <span class=trend-label-flat-pf>{{$ctrl.getLatestValue()}} of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}</span></div></div></div></div></div></span>"
   );
 
 
   $templateCache.put('charts/utilization-bar/utilization-bar-chart.html',
     "<div class=utilization-bar-chart-pf ng-class=\"{'data-unavailable-pf': $ctrl.chartData.dataAvailable === false}\"><span ng-if=\"!$ctrl.layout || $ctrl.layout.type === 'regular'\"><div ng-if=$ctrl.chartTitle class=progress-description>{{$ctrl.chartTitle}}</div><div class=\"progress progress-label-top-right\" ng-if=\"$ctrl.chartData.dataAvailable !== false\"><div class=progress-bar aria-valuenow={{$ctrl.chartData.percentageUsed}} aria-valuemin=0 aria-valuemax=100 ng-class=\"{'animate': animate,\n" +
-    "           'progress-bar-success': $ctrl.isOk, 'progress-bar-danger': $ctrl.isError, 'progress-bar-warning': $ctrl.isWarn}\" ng-style=\"{width:$ctrl.chartData.percentageUsed + '%'}\" uib-tooltip-html=\"'{{$ctrl.usedTooltipMessage()}}'\"><span ng-if=$ctrl.chartFooter ng-bind-html=$ctrl.chartFooter></span> <span ng-if=\"!$ctrl.chartFooter && (!$ctrl.footerLabelFormat || $ctrl.footerLabelFormat === 'actual')\"><strong>{{$ctrl.chartData.used}} of {{$ctrl.chartData.total}} {{$ctrl.units}}</strong> Used</span> <span ng-if=\"!$ctrl.chartFooter && $ctrl.footerLabelFormat === 'percent'\"><strong>{{$ctrl.chartData.percentageUsed}}%</strong> Used</span></div><div class=\"progress-bar progress-bar-remaining\" ng-style=\"{width:(100 - $ctrl.chartData.percentageUsed) + '%'}\" uib-tooltip-html=\"'{{$ctrl.availableTooltipMessage()}}'\"></div></div></span> <span ng-if=\"$ctrl.layout && $ctrl.layout.type === 'inline'\"><div class=\"progress-container progress-description-left progress-label-right\" ng-style=\"{'padding-left':$ctrl.layout.titleLabelWidth, 'padding-right':$ctrl.layout.footerLabelWidth}\"><div ng-if=$ctrl.chartTitle class=progress-description ng-style=\"{'max-width':$ctrl.layout.titleLabelWidth}\">{{$ctrl.chartTitle}}</div><div class=progress ng-if=\"$ctrl.chartData.dataAvailable !== false\"><div class=progress-bar aria-valuenow={{$ctrl.chartData.percentageUsed}} aria-valuemin=0 aria-valuemax=100 ng-class=\"{'animate': $ctrl.animate, 'progress-bar-success': $ctrl.isOk, 'progress-bar-danger': $ctrl.isError, 'progress-bar-warning': $ctrl.isWarn}\" ng-style=\"{width:$ctrl.chartData.percentageUsed + '%'}\" uib-tooltip-html=\"'{{$ctrl.usedTooltipMessage()}}'\"><span ng-if=$ctrl.chartFooter ng-bind-html=$ctrl.chartFooter></span> <span ng-if=\"(!$ctrl.chartFooter) && (!$ctrl.footerLabelFormat || $ctrl.footerLabelFormat === 'actual')\" ng-style=\"{'max-width':$ctrl.layout.footerLabelWidth}\"><strong>{{$ctrl.chartData.used}} {{$ctrl.units}}</strong> Used</span> <span ng-if=\"(!$ctrl.chartFooter) && $ctrl.footerLabelFormat === 'percent'\" ng-style=\"{'max-width':$ctrl.layout.footerLabelWidth}\"><strong>{{$ctrl.chartData.percentageUsed}}%</strong> Used</span></div><div class=\"progress-bar progress-bar-remaining\" ng-style=\"{width:(100 - $ctrl.chartData.percentageUsed) + '%'}\" uib-tooltip-html=\"'{{$ctrl.availableTooltipMessage()}}'\"></div></div></div></span><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=45></pf-empty-chart></div>"
+    "           'progress-bar-success': $ctrl.isOk, 'progress-bar-danger': $ctrl.isError, 'progress-bar-warning': $ctrl.isWarn}\" ng-style=\"{width:$ctrl.chartData.percentageUsed + '%'}\" uib-tooltip-html=\"'{{$ctrl.usedTooltipMessage()}}'\"><span ng-if=$ctrl.chartFooter ng-bind-html=$ctrl.chartFooter></span> <span ng-if=\"!$ctrl.chartFooter && (!$ctrl.footerLabelFormat || $ctrl.footerLabelFormat === 'actual')\"><strong>{{$ctrl.chartData.used}} of {{$ctrl.chartData.total}} {{$ctrl.units}}</strong> Used</span> <span ng-if=\"!$ctrl.chartFooter && $ctrl.footerLabelFormat === 'percent'\"><strong>{{$ctrl.chartData.percentageUsed}}%</strong> Used</span></div><div class=\"progress-bar progress-bar-remaining\" ng-style=\"{width:(100 - $ctrl.chartData.percentageUsed) + '%'}\" uib-tooltip-html=\"'{{$ctrl.availableTooltipMessage()}}'\"></div></div></span><span ng-if=\"$ctrl.layout && $ctrl.layout.type === 'inline'\"><div class=\"progress-container progress-description-left progress-label-right\" ng-style=\"{'padding-left':$ctrl.layout.titleLabelWidth, 'padding-right':$ctrl.layout.footerLabelWidth}\"><div ng-if=$ctrl.chartTitle class=progress-description ng-style=\"{'max-width':$ctrl.layout.titleLabelWidth}\">{{$ctrl.chartTitle}}</div><div class=progress ng-if=\"$ctrl.chartData.dataAvailable !== false\"><div class=progress-bar aria-valuenow={{$ctrl.chartData.percentageUsed}} aria-valuemin=0 aria-valuemax=100 ng-class=\"{'animate': $ctrl.animate, 'progress-bar-success': $ctrl.isOk, 'progress-bar-danger': $ctrl.isError, 'progress-bar-warning': $ctrl.isWarn}\" ng-style=\"{width:$ctrl.chartData.percentageUsed + '%'}\" uib-tooltip-html=\"'{{$ctrl.usedTooltipMessage()}}'\"><span ng-if=$ctrl.chartFooter ng-bind-html=$ctrl.chartFooter></span> <span ng-if=\"(!$ctrl.chartFooter) && (!$ctrl.footerLabelFormat || $ctrl.footerLabelFormat === 'actual')\" ng-style=\"{'max-width':$ctrl.layout.footerLabelWidth}\"><strong>{{$ctrl.chartData.used}} {{$ctrl.units}}</strong> Used</span> <span ng-if=\"(!$ctrl.chartFooter) && $ctrl.footerLabelFormat === 'percent'\" ng-style=\"{'max-width':$ctrl.layout.footerLabelWidth}\"><strong>{{$ctrl.chartData.percentageUsed}}%</strong> Used</span></div><div class=\"progress-bar progress-bar-remaining\" ng-style=\"{width:(100 - $ctrl.chartData.percentageUsed) + '%'}\" uib-tooltip-html=\"'{{$ctrl.availableTooltipMessage()}}'\"></div></div></div></span><pf-empty-chart ng-if=\"$ctrl.chartData.dataAvailable === false\" chart-height=45></pf-empty-chart></div>"
   );
 
 
@@ -21217,7 +21229,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
   'use strict';
 
   $templateCache.put('datepicker/datepicker.html',
-    "<p class=input-group><input class=\"form-control datepicker\" ng-model=$ctrl.date uib-datepicker-popup={{$ctrl.format}} datepicker-options=$ctrl.dateOptions is-open=$ctrl.isOpen ng-required=true close-text=Close show-button-bar=$ctrl.showButtonBar popup-placement=\"{{$ctrl.popupPlacement}}\"> <span class=input-group-btn><button type=button class=\"btn btn-default datepicker\" ng-click=\"$ctrl.isOpen = !$ctrl.isOpen\"><i class=\"glyphicon glyphicon-calendar\"></i></button></span></p>"
+    "<p class=input-group><input class=\"form-control datepicker\" ng-model=$ctrl.date uib-datepicker-popup={{$ctrl.format}} datepicker-options=$ctrl.dateOptions is-open=$ctrl.isOpen ng-required=true close-text=Close show-button-bar=$ctrl.showButtonBar popup-placement={{$ctrl.popupPlacement}}> <span class=input-group-btn><button type=button class=\"btn btn-default datepicker\" ng-click=\"$ctrl.isOpen = !$ctrl.isOpen\"><i class=\"glyphicon glyphicon-calendar\"></i></button></span></p>"
   );
 
 }]);
@@ -21235,12 +21247,12 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('filters/simple-filter/filter-fields.html',
-    "<div class=\"filter-pf filter-fields\"><div class=\"input-group form-group\"><div uib-dropdown class=input-group-btn><button ng-if=\"$ctrl.config.fields.length > 1\" uib-dropdown-toggle type=button class=\"btn btn-default filter-fields\" uib-tooltip=\"Filter by\" tooltip-placement=top tooltip-append-to-body=true>{{$ctrl.currentField.title}} <span class=caret></span></button><ul uib-dropdown-menu><li ng-repeat=\"item in $ctrl.config.fields\" ng-class=\"{'selected': item === $ctrl.currentField}\"><a class=filter-field role=menuitem tabindex=-1 ng-click=$ctrl.selectField(item)>{{item.title}}</a></li></ul></div><div ng-if=\"$ctrl.currentField.filterType !== 'select' && $ctrl.currentField.filterType !== 'complex-select'\"><input class=form-control type={{$ctrl.currentField.filterType}} ng-model=$ctrl.currentValue placeholder={{$ctrl.currentField.placeholder}} ng-keypress=\"$ctrl.onValueKeyPress($event)\"></div><div ng-if=\"$ctrl.currentField.filterType === 'select'\"><div class=\"btn-group bootstrap-select form-control filter-select\" uib-dropdown><button type=button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle\"><span class=\"filter-option pull-left\">{{$ctrl.currentValue.title || $ctrl.currentValue || $ctrl.currentField.placeholder}}</span> <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu-right role=menu><li ng-if=$ctrl.currentField.placeholder><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue()>{{$ctrl.currentField.placeholder}}</a></li><li ng-repeat=\"filterValue in $ctrl.currentField.filterValues\" ng-class=\"{'selected': (filterValue === $ctrl.currentValue)}\"><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue(filterValue)>{{filterValue.title || filterValue}}</a></li></ul></div></div><div ng-if=\"$ctrl.currentField.filterType === 'complex-select'\" class=category-select><div class=\"btn-group bootstrap-select form-control filter-select\" uib-dropdown><button type=button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle\"><span class=\"filter-option pull-left\">{{$ctrl.filterCategory.title || $ctrl.filterCategory || $ctrl.currentField.placeholder}}</span> <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu-right role=menu><li ng-if=$ctrl.currentField.placeholder><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue()>{{$ctrl.currentField.placeholder}}</a></li><li ng-repeat=\"filterCategory in $ctrl.currentField.filterValues\" ng-class=\"{'selected': (filterCategory == $ctrl.filterCategory)}\"><a role=menuitem tabindex=-1 ng-click=\"$ctrl.selectValue(filterCategory, 'filter-category')\">{{filterCategory.title ||filterCategory}}</a></li></ul></div><div class=\"btn-group bootstrap-select form-control filter-select\" uib-dropdown><button type=button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle category-select-value\"><span class=\"filter-option pull-left\">{{$ctrl.filterValue.title || $ctrl.filterValue || $ctrl.currentField.filterCategoriesPlaceholder}}</span> <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu-right role=menu><li ng-if=$ctrl.currentField.placeholder><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue()>{{$ctrl.currentField.filterCategoriesPlaceholder}}</a></li><li ng-repeat=\"filterValue in $ctrl.currentField.filterCategories[$ctrl.filterCategory.id.toLowerCase() || $ctrl.filterCategory.toLowerCase() ].filterValues\" ng-class=\"{'selected': filterValue === $ctrl.filterValue}\"><a role=menuitem tabindex=-1 ng-click=\"$ctrl.selectValue(filterValue, 'filter-value')\">{{filterValue.title || filterValue}}</a></li></ul></div></div></div></div>"
+    "<div class=\"filter-pf filter-fields\"><div class=\"input-group form-group\"><div uib-dropdown class=input-group-btn><button ng-if=\"$ctrl.config.fields.length > 1\" uib-dropdown-toggle type=button class=\"btn btn-default filter-fields\" uib-tooltip=\"Filter by\" tooltip-placement=top tooltip-append-to-body=true>{{$ctrl.currentField.title}} <span class=caret></span></button><ul uib-dropdown-menu><li ng-repeat=\"item in $ctrl.config.fields\" ng-class=\"{'selected': item === $ctrl.currentField}\"><a class=filter-field role=menuitem tabindex=-1 ng-click=$ctrl.selectField(item)>{{item.title}}</a></li></ul></div><div ng-if=\"$ctrl.currentField.filterType !== 'select' && $ctrl.currentField.filterType !== 'complex-select'\"><input class=form-control type={{$ctrl.currentField.filterType}} ng-model=$ctrl.currentValue placeholder={{$ctrl.currentField.placeholder}} ng-keypress=$ctrl.onValueKeyPress($event)></div><div ng-if=\"$ctrl.currentField.filterType === 'select'\"><div class=\"btn-group bootstrap-select form-control filter-select\" uib-dropdown><button type=button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle\"><span class=\"filter-option pull-left\">{{$ctrl.currentValue.title || $ctrl.currentValue || $ctrl.currentField.placeholder}}</span> <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu-right role=menu><li ng-if=$ctrl.currentField.placeholder><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue()>{{$ctrl.currentField.placeholder}}</a></li><li ng-repeat=\"filterValue in $ctrl.currentField.filterValues\" ng-class=\"{'selected': (filterValue === $ctrl.currentValue)}\"><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue(filterValue)>{{filterValue.title || filterValue}}</a></li></ul></div></div><div ng-if=\"$ctrl.currentField.filterType === 'complex-select'\" class=category-select><div class=\"btn-group bootstrap-select form-control filter-select\" uib-dropdown><button type=button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle\"><span class=\"filter-option pull-left\">{{$ctrl.filterCategory.title || $ctrl.filterCategory || $ctrl.currentField.placeholder}}</span> <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu-right role=menu><li ng-if=$ctrl.currentField.placeholder><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue()>{{$ctrl.currentField.placeholder}}</a></li><li ng-repeat=\"filterCategory in $ctrl.currentField.filterValues\" ng-class=\"{'selected': (filterCategory == $ctrl.filterCategory)}\"><a role=menuitem tabindex=-1 ng-click=\"$ctrl.selectValue(filterCategory, 'filter-category')\">{{filterCategory.title ||filterCategory}}</a></li></ul></div><div class=\"btn-group bootstrap-select form-control filter-select\" uib-dropdown><button type=button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle category-select-value\"><span class=\"filter-option pull-left\">{{$ctrl.filterValue.title || $ctrl.filterValue || $ctrl.currentField.filterCategoriesPlaceholder}}</span> <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu-right role=menu><li ng-if=$ctrl.currentField.placeholder><a role=menuitem tabindex=-1 ng-click=$ctrl.selectValue()>{{$ctrl.currentField.filterCategoriesPlaceholder}}</a></li><li ng-repeat=\"filterValue in $ctrl.currentField.filterCategories[$ctrl.filterCategory.id.toLowerCase() || $ctrl.filterCategory.toLowerCase() ].filterValues\" ng-class=\"{'selected': filterValue === $ctrl.filterValue}\"><a role=menuitem tabindex=-1 ng-click=\"$ctrl.selectValue(filterValue, 'filter-value')\">{{filterValue.title || filterValue}}</a></li></ul></div></div></div></div>"
   );
 
 
   $templateCache.put('filters/simple-filter/filter-results.html',
-    "<div class=filter-pf><div class=toolbar-pf-results><span ng-if=\"$ctrl.config.showTotalCountResults !== true || $ctrl.config.totalCount === undefined || $ctrl.config.appliedFilters.length === 0\"><h5 ng-if=\"$ctrl.config.resultsCount === 1\">{{$ctrl.config.resultsCount}} {{$ctrl.config.itemsLabel}}</h5><h5 ng-if=\"$ctrl.config.resultsCount !== 1\">{{$ctrl.config.resultsCount}} {{$ctrl.config.itemsLabelPlural}}</h5></span> <span ng-if=\"$ctrl.config.showTotalCountResults === true && $ctrl.config.totalCount !== undefined && $ctrl.config.appliedFilters.length > 0\"><h5 ng-if=\"$ctrl.config.totalCount === 1\">{{$ctrl.config.resultsCount}} of {{$ctrl.config.totalCount}} {{$ctrl.config.itemsLabel}}</h5><h5 ng-if=\"$ctrl.config.totalCount !== 1\">{{$ctrl.config.resultsCount}} of {{$ctrl.config.totalCount}} {{$ctrl.config.itemsLabelPlural}}</h5></span><p class=filter-pf-active-label ng-if=\"$ctrl.config.appliedFilters.length > 0\">Active Filters:</p><ul class=list-inline ng-if=\"$ctrl.config.appliedFilters.length > 0\"><li ng-repeat=\"filter in $ctrl.config.appliedFilters\"><span class=\"active-filter label label-info\">{{filter.title}}: {{((filter.value.filterCategory.title || filter.value.filterCategory) + filter.value.filterDelimiter + (filter.value.filterValue.title || filter.value.filterValue)) || filter.value.title || filter.value}} <a href=#><span class=\"pficon pficon-close\" ng-click=\"$ctrl.clearFilter($event, filter)\"></span></a></span></li></ul><p><a href=# class=clear-filters ng-click=$ctrl.clearAllFilters($event) ng-if=\"$ctrl.config.appliedFilters.length > 0\">Clear All Filters</a></p><div ng-if=\"$ctrl.config.selectedCount !== undefined && $ctrl.config.totalCount !== undefined\" class=pf-table-view-selected-label><strong>{{$ctrl.config.selectedCount}}</strong> of <strong>{{$ctrl.config.totalCount}}</strong> selected</div></div></div>"
+    "<div class=filter-pf><div class=toolbar-pf-results><span ng-if=\"$ctrl.config.showTotalCountResults !== true || $ctrl.config.totalCount === undefined || $ctrl.config.appliedFilters.length === 0\"><h5 ng-if=\"$ctrl.config.resultsCount === 1\">{{$ctrl.config.resultsCount}} {{$ctrl.config.itemsLabel}}</h5><h5 ng-if=\"$ctrl.config.resultsCount !== 1\">{{$ctrl.config.resultsCount}} {{$ctrl.config.itemsLabelPlural}}</h5></span><span ng-if=\"$ctrl.config.showTotalCountResults === true && $ctrl.config.totalCount !== undefined && $ctrl.config.appliedFilters.length > 0\"><h5 ng-if=\"$ctrl.config.totalCount === 1\">{{$ctrl.config.resultsCount}} of {{$ctrl.config.totalCount}} {{$ctrl.config.itemsLabel}}</h5><h5 ng-if=\"$ctrl.config.totalCount !== 1\">{{$ctrl.config.resultsCount}} of {{$ctrl.config.totalCount}} {{$ctrl.config.itemsLabelPlural}}</h5></span><p class=filter-pf-active-label ng-if=\"$ctrl.config.appliedFilters.length > 0\">Active Filters:</p><ul class=list-inline ng-if=\"$ctrl.config.appliedFilters.length > 0\"><li ng-repeat=\"filter in $ctrl.config.appliedFilters\"><span class=\"active-filter label label-info\">{{filter.title}}: {{((filter.value.filterCategory.title || filter.value.filterCategory) + filter.value.filterDelimiter + (filter.value.filterValue.title || filter.value.filterValue)) || filter.value.title || filter.value}} <a href=#><span class=\"pficon pficon-close\" ng-click=\"$ctrl.clearFilter($event, filter)\"></span></a></span></li></ul><p><a href=# class=clear-filters ng-click=$ctrl.clearAllFilters($event) ng-if=\"$ctrl.config.appliedFilters.length > 0\">Clear All Filters</a></p><div ng-if=\"$ctrl.config.selectedCount !== undefined && $ctrl.config.totalCount !== undefined\" class=pf-table-view-selected-label><strong>{{$ctrl.config.selectedCount}}</strong> of <strong>{{$ctrl.config.totalCount}}</strong> selected</div></div></div>"
   );
 
 
@@ -21323,7 +21335,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('navigation/vertical-navigation.html',
-    "<div><nav class=\"navbar navbar-pf-vertical\"><div class=navbar-header ng-class=\"{'ignore-mobile': $ctrl.ignoreMobile}\"><button type=button class=navbar-toggle ng-click=$ctrl.handleNavBarToggleClick()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <span class=navbar-brand><img class=navbar-brand-icon ng-if=$ctrl.brandSrc ng-src={{$ctrl.brandSrc}} alt=\"{{$ctrl.brandAlt}}\"> <span class=navbar-brand-txt ng-if=!$ctrl.brandSrc>{{$ctrl.brandAlt}}</span></span></div><nav class=\"collapse navbar-collapse\" ng-class=\"{'ignore-mobile': $ctrl.ignoreMobile}\" ng-transclude></nav><div class=nav-pf-vertical ng-class=\"{'nav-pf-persistent-secondary': $ctrl.persistentSecondary,\n" +
+    "<div><nav class=\"navbar navbar-pf-vertical\"><div class=navbar-header ng-class=\"{'ignore-mobile': $ctrl.ignoreMobile}\"><button type=button class=navbar-toggle ng-click=$ctrl.handleNavBarToggleClick()><span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span></button> <span class=navbar-brand><img class=navbar-brand-icon ng-if=$ctrl.brandSrc ng-src={{$ctrl.brandSrc}} alt={{$ctrl.brandAlt}}> <span class=navbar-brand-txt ng-if=!$ctrl.brandSrc>{{$ctrl.brandAlt}}</span></span></div><nav class=\"collapse navbar-collapse\" ng-class=\"{'ignore-mobile': $ctrl.ignoreMobile}\" ng-transclude></nav><div class=nav-pf-vertical ng-class=\"{'nav-pf-persistent-secondary': $ctrl.persistentSecondary,\n" +
     "                    'nav-pf-vertical-collapsible-menus': $ctrl.pinnableMenus,\n" +
     "                    'hidden-icons-pf': $ctrl.hiddenIcons,\n" +
     "                    'nav-pf-vertical-with-badges': $ctrl.showBadges,\n" +
@@ -21359,7 +21371,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('notification/notification-drawer.html',
-    "<div class=drawer-pf ng-class=\"{'hide': $ctrl.drawerHidden, 'drawer-pf-expanded': $ctrl.drawerExpanded}\"><div ng-if=$ctrl.drawerTitle class=drawer-pf-title><a href=\"\" ng-if=$ctrl.allowExpand class=\"drawer-pf-toggle-expand fa fa-angle-double-left hidden-xs\" ng-click=$ctrl.toggleExpandDrawer()></a> <a href=\"\" ng-if=$ctrl.onClose class=\"drawer-pf-close pficon pficon-close\" ng-click=$ctrl.onClose()></a><h3 class=text-center>{{$ctrl.drawerTitle}}</h3></div><div ng-if=$ctrl.titleInclude class=drawer-pf-title ng-include src=$ctrl.titleInclude></div><div ng-if=!$ctrl.notificationGroups class=apf-blank-notification-groups><pf-empty-state config=$ctrl.emptyStateConfig></pf-empty-state></div><div ng-if=$ctrl.notificationGroups pf-fixed-accordion scroll-selector=.panel-body><div class=panel-group><div class=\"panel panel-default\" ng-repeat=\"notificationGroup in $ctrl.notificationGroups track by $index\"><div class=panel-heading><h4 class=panel-title><a ng-if=!$ctrl.singleGroup ng-click=$ctrl.toggleCollapse(notificationGroup) ng-class=\"{collapsed: !notificationGroup.open}\" ng-include src=$ctrl.headingInclude></a> <span ng-if=$ctrl.singleGroup ng-include src=$ctrl.headingInclude></span></h4><span class=panel-counter ng-include src=$ctrl.subheadingInclude></span></div><div class=\"panel-collapse collapse\" ng-class=\"{in: notificationGroup.open || $ctrl.notificationGroups.length === 1}\"><div ng-if=$ctrl.hasNotifications(notificationGroup) class=panel-body><div class=drawer-pf-notification ng-class=\"{unread: notification.unread, 'expanded-notification': $ctrl.drawerExpanded}\" ng-repeat=\"notification in notificationGroup.notifications track by $ctrl.notificationTrackField ? notification[$ctrl.notificationTrackField] || $index : $index\" ng-include src=$ctrl.notificationBodyInclude></div><div ng-if=notificationGroup.isLoading class=\"drawer-pf-loading text-center\"><span class=\"spinner spinner-xs spinner-inline\"></span> Loading More</div></div><div ng-if=\"($ctrl.showClearAll || $ctrl.showMarkAllRead) && $ctrl.hasNotifications(notificationGroup)\" class=drawer-pf-action><span class=drawer-pf-action-link ng-if=\"$ctrl.showMarkAllRead && $ctrl.hasUnread(notificationGroup)\"><button class=\"btn btn-link\" ng-click=$ctrl.onMarkAllRead(notificationGroup)>Mark All Read</button></span> <span class=drawer-pf-action-link><button class=\"btn btn-link\" ng-if=$ctrl.showClearAll ng-click=$ctrl.onClearAll(notificationGroup)><span class=\"pficon pficon-close\"></span> Clear All</button></span></div><div ng-if=\"$ctrl.actionButtonTitle && $ctrl.hasNotifications(notificationGroup)\" class=drawer-pf-action><a class=\"btn btn-link btn-block\" ng-click=$ctrl.actionButtonCallback(notificationGroup)>{{$ctrl.actionButtonTitle}}</a></div><div ng-if=!$ctrl.hasNotifications(notificationGroup)><div class=panel-body><pf-empty-state config=notificationGroup.emptyStateConfig></pf-empty-state></div></div><div ng-if=$ctrl.notificationFooterInclude ng-include src=$ctrl.notificationFooterInclude></div></div></div></div></div></div>"
+    "<div class=drawer-pf ng-class=\"{'hide': $ctrl.drawerHidden, 'drawer-pf-expanded': $ctrl.drawerExpanded}\"><div ng-if=$ctrl.drawerTitle class=drawer-pf-title><a href=\"\" ng-if=$ctrl.allowExpand class=\"drawer-pf-toggle-expand fa fa-angle-double-left hidden-xs\" ng-click=$ctrl.toggleExpandDrawer()></a> <a href=\"\" ng-if=$ctrl.onClose class=\"drawer-pf-close pficon pficon-close\" ng-click=$ctrl.onClose()></a><h3 class=text-center>{{$ctrl.drawerTitle}}</h3></div><div ng-if=$ctrl.titleInclude class=drawer-pf-title ng-include src=$ctrl.titleInclude></div><div ng-if=!$ctrl.notificationGroups class=apf-blank-notification-groups><pf-empty-state config=$ctrl.emptyStateConfig></pf-empty-state></div><div ng-if=$ctrl.notificationGroups pf-fixed-accordion scroll-selector=.panel-body><div class=panel-group><div class=\"panel panel-default\" ng-repeat=\"notificationGroup in $ctrl.notificationGroups track by $index\"><div class=panel-heading><h4 class=panel-title><a ng-if=!$ctrl.singleGroup ng-click=$ctrl.toggleCollapse(notificationGroup) ng-class=\"{collapsed: !notificationGroup.open}\" ng-include src=$ctrl.headingInclude></a> <span ng-if=$ctrl.singleGroup ng-include src=$ctrl.headingInclude></span></h4><span class=panel-counter ng-include src=$ctrl.subheadingInclude></span></div><div class=\"panel-collapse collapse\" ng-class=\"{in: notificationGroup.open || $ctrl.notificationGroups.length === 1}\"><div ng-if=$ctrl.hasNotifications(notificationGroup) class=panel-body><div class=drawer-pf-notification ng-class=\"{unread: notification.unread, 'expanded-notification': $ctrl.drawerExpanded}\" ng-repeat=\"notification in notificationGroup.notifications track by $ctrl.notificationTrackField ? notification[$ctrl.notificationTrackField] || $index : $index\" ng-include src=$ctrl.notificationBodyInclude></div><div ng-if=notificationGroup.isLoading class=\"drawer-pf-loading text-center\"><span class=\"spinner spinner-xs spinner-inline\"></span> Loading More</div></div><div ng-if=\"($ctrl.showClearAll || $ctrl.showMarkAllRead) && $ctrl.hasNotifications(notificationGroup)\" class=drawer-pf-action><span class=drawer-pf-action-link ng-if=\"$ctrl.showMarkAllRead && $ctrl.hasUnread(notificationGroup)\"><button class=\"btn btn-link\" ng-click=$ctrl.onMarkAllRead(notificationGroup)>Mark All Read</button> </span><span class=drawer-pf-action-link><button class=\"btn btn-link\" ng-if=$ctrl.showClearAll ng-click=$ctrl.onClearAll(notificationGroup)><span class=\"pficon pficon-close\"></span> Clear All</button></span></div><div ng-if=\"$ctrl.actionButtonTitle && $ctrl.hasNotifications(notificationGroup)\" class=drawer-pf-action><a class=\"btn btn-link btn-block\" ng-click=$ctrl.actionButtonCallback(notificationGroup)>{{$ctrl.actionButtonTitle}}</a></div><div ng-if=!$ctrl.hasNotifications(notificationGroup)><div class=panel-body><pf-empty-state config=notificationGroup.emptyStateConfig></pf-empty-state></div></div><div ng-if=$ctrl.notificationFooterInclude ng-include src=$ctrl.notificationFooterInclude></div></div></div></div></div></div>"
   );
 
 
@@ -21374,7 +21386,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('notification/toast-notification.html',
-    "<div class=\"toast-pf alert alert-{{$ctrl.notificationType}}\" ng-class=\"{'alert-dismissable': $ctrl.showCloseButton}\" ng-mouseenter=$ctrl.handleEnter() ng-mouseleave=$ctrl.handleLeave()><div uib-dropdown class=\"pull-right dropdown-kebab-pf\" ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\"><button uib-dropdown-toggle class=\"btn btn-link\" type=button id=dropdownKebabRight><span class=\"fa fa-ellipsis-v\"></span></button><ul uib-dropdown-menu class=dropdown-menu-right aria-labelledby=dropdownKebabRight><li ng-repeat=\"menuAction in $ctrl.menuActions\" role=\"{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}\" ng-class=\"{'divider': menuAction.isSeparator === true, 'disabled': menuAction.isDisabled === true}\"><a ng-if=\"menuAction.isSeparator !== true\" class=secondary-action title={{menuAction.title}} ng-click=$ctrl.handleMenuAction(menuAction)>{{menuAction.name}}</a></li></ul></div><button ng-if=$ctrl.showCloseButton type=button class=close aria-hidden=true ng-click=$ctrl.handleClose()><span class=\"pficon pficon-close\"></span></button><div class=\"pull-right toast-pf-action\" ng-if=$ctrl.actionTitle><a ng-click=$ctrl.handleAction()>{{$ctrl.actionTitle}}</a></div><span class=\"pficon pficon-ok\" ng-if=\"$ctrl.notificationType === 'success'\"></span> <span class=\"pficon pficon-info\" ng-if=\"$ctrl.notificationType === 'info'\"></span> <span class=\"pficon pficon-error-circle-o\" ng-if=\"$ctrl.notificationType === 'danger'\"></span> <span class=\"pficon pficon-warning-triangle-o\" ng-if=\"$ctrl.notificationType === 'warning'\"></span> <span ng-if=!$ctrl.htmlContent><strong ng-if=$ctrl.header ng-bind=$ctrl.header></strong> <span ng-bind=$ctrl.message></span></span> <span ng-if=$ctrl.htmlContent><strong ng-if=$ctrl.header ng-bind-html=$ctrl.trustAsHtml($ctrl.header)></strong> <span ng-bind-html=$ctrl.trustAsHtml($ctrl.message)></span></span></div>"
+    "<div class=\"toast-pf alert alert-{{$ctrl.notificationType}}\" ng-class=\"{'alert-dismissable': $ctrl.showCloseButton}\" ng-mouseenter=$ctrl.handleEnter() ng-mouseleave=$ctrl.handleLeave()><div uib-dropdown class=\"pull-right dropdown-kebab-pf\" ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\"><button uib-dropdown-toggle class=\"btn btn-link\" type=button id=dropdownKebabRight><span class=\"fa fa-ellipsis-v\"></span></button><ul uib-dropdown-menu class=dropdown-menu-right aria-labelledby=dropdownKebabRight><li ng-repeat=\"menuAction in $ctrl.menuActions\" role=\"{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}\" ng-class=\"{'divider': menuAction.isSeparator === true, 'disabled': menuAction.isDisabled === true}\"><a ng-if=\"menuAction.isSeparator !== true\" class=secondary-action title={{menuAction.title}} ng-click=$ctrl.handleMenuAction(menuAction)>{{menuAction.name}}</a></li></ul></div><button ng-if=$ctrl.showCloseButton type=button class=close aria-hidden=true ng-click=$ctrl.handleClose()><span class=\"pficon pficon-close\"></span></button><div class=\"pull-right toast-pf-action\" ng-if=$ctrl.actionTitle><a ng-click=$ctrl.handleAction()>{{$ctrl.actionTitle}}</a></div><span class=\"pficon pficon-ok\" ng-if=\"$ctrl.notificationType === 'success'\"></span> <span class=\"pficon pficon-info\" ng-if=\"$ctrl.notificationType === 'info'\"></span> <span class=\"pficon pficon-error-circle-o\" ng-if=\"$ctrl.notificationType === 'danger'\"></span> <span class=\"pficon pficon-warning-triangle-o\" ng-if=\"$ctrl.notificationType === 'warning'\"></span> <span ng-if=!$ctrl.htmlContent><strong ng-if=$ctrl.header ng-bind=$ctrl.header></strong> <span ng-bind=$ctrl.message></span> </span><span ng-if=$ctrl.htmlContent><strong ng-if=$ctrl.header ng-bind-html=$ctrl.trustAsHtml($ctrl.header)></strong> <span ng-bind-html=$ctrl.trustAsHtml($ctrl.message)></span></span></div>"
   );
 
 }]);
@@ -21382,7 +21394,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
   'use strict';
 
   $templateCache.put('pagination/pagination.html',
-    "<form class=\"content-view-pf-pagination table-view-pf-pagination list-view-pf-pagination clearfix\" id=form1><div class=form-group><div uib-dropdown class=btn-group><button uib-dropdown-toggle type=button class=\"btn btn-default\">{{$ctrl.pageSize}} <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu><li ng-repeat=\"increment in $ctrl.pageSizeIncrements track by $index\" ng-class=\"{'selected': increment === $ctrl.pageSize}\" class=display-length-increment><a role=menuitem ng-click=$ctrl.onPageSizeChange(increment)>{{increment}}</a></li></ul></div><span class=per-page-label>per page</span></div><div class=form-group><span><span class=pagination-pf-items-current>{{$ctrl.getStartIndex()}}-{{$ctrl.getEndIndex()}}</span> of <span class=pagination-pf-items-total>{{$ctrl.numTotalItems}}</span></span><ul class=\"pagination pagination-pf-back\"><li ng-class=\"{'disabled': $ctrl.pageNumber === 1}\"><a title=\"First Page\" ng-click=$ctrl.gotoFirstPage() class=goto-first-page><span class=\"i fa fa-angle-double-left\"></span></a></li><li ng-class=\"{'disabled': $ctrl.pageNumber === 1}\"><a title=\"Previous Page\" ng-click=$ctrl.gotoPreviousPage() class=goto-prev-page><span class=\"i fa fa-angle-left\"></span></a></li></ul><input class=pagination-pf-page ng-model=$ctrl.pageNumber ng-model-options=\"{ updateOn: 'blur' }\" ng-change=\"$ctrl.onPageNumberChange()\"> <span>of <span class=pagination-pf-pages>{{$ctrl.lastPageNumber}}</span></span><ul class=\"pagination pagination-pf-forward\"><li ng-class=\"{'disabled': $ctrl.pageNumber === $ctrl.lastPageNumber}\"><a title=\"Next Page\" ng-click=$ctrl.gotoNextPage() class=goto-next-page><span class=\"i fa fa-angle-right\"></span></a></li><li ng-class=\"{'disabled': $ctrl.pageNumber === $ctrl.lastPageNumber}\"><a title=\"Last Page\" ng-click=$ctrl.gotoLastPage() class=goto-last-page><span class=\"i fa fa-angle-double-right\"></span></a></li></ul></div></form>"
+    "<form class=\"content-view-pf-pagination table-view-pf-pagination list-view-pf-pagination clearfix\" id=form1><div class=form-group><div uib-dropdown class=btn-group><button uib-dropdown-toggle type=button class=\"btn btn-default\">{{$ctrl.pageSize}} <span class=caret></span></button><ul uib-dropdown-menu class=dropdown-menu><li ng-repeat=\"increment in $ctrl.pageSizeIncrements track by $index\" ng-class=\"{'selected': increment === $ctrl.pageSize}\" class=display-length-increment><a role=menuitem ng-click=$ctrl.onPageSizeChange(increment)>{{increment}}</a></li></ul></div><span class=per-page-label>per page</span></div><div class=form-group><span><span class=pagination-pf-items-current>{{$ctrl.getStartIndex()}}-{{$ctrl.getEndIndex()}}</span> of <span class=pagination-pf-items-total>{{$ctrl.numTotalItems}}</span></span><ul class=\"pagination pagination-pf-back\"><li ng-class=\"{'disabled': $ctrl.pageNumber === 1}\"><a title=\"First Page\" ng-click=$ctrl.gotoFirstPage() class=goto-first-page><span class=\"i fa fa-angle-double-left\"></span></a></li><li ng-class=\"{'disabled': $ctrl.pageNumber === 1}\"><a title=\"Previous Page\" ng-click=$ctrl.gotoPreviousPage() class=goto-prev-page><span class=\"i fa fa-angle-left\"></span></a></li></ul><input class=pagination-pf-page ng-model=$ctrl.pageNumber ng-model-options=\"{ updateOn: 'blur' }\" ng-change=$ctrl.onPageNumberChange()> <span>of <span class=pagination-pf-pages>{{$ctrl.lastPageNumber}}</span></span><ul class=\"pagination pagination-pf-forward\"><li ng-class=\"{'disabled': $ctrl.pageNumber === $ctrl.lastPageNumber}\"><a title=\"Next Page\" ng-click=$ctrl.gotoNextPage() class=goto-next-page><span class=\"i fa fa-angle-right\"></span></a></li><li ng-class=\"{'disabled': $ctrl.pageNumber === $ctrl.lastPageNumber}\"><a title=\"Last Page\" ng-click=$ctrl.gotoLastPage() class=goto-last-page><span class=\"i fa fa-angle-double-right\"></span></a></li></ul></div></form>"
   );
 
 }]);
@@ -21406,7 +21418,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
   'use strict';
 
   $templateCache.put('table/tableview/table-view.html',
-    "<div class=container-fluid><table ng-if=\"$ctrl.config.itemsAvailable !== false\" datatable=ng dt-options=$ctrl.dtOptions dt-column-defs=$ctrl.dtColumnDefs dt-instance=$ctrl.dtInstanceCallback class=\"table-view-container table table-striped table-bordered table-hover dataTable\"><thead><tr role=row><th class=table-view-pf-select ng-if=$ctrl.config.showCheckboxes><input type=checkbox value=$ctrl.selectAll ng-model=$ctrl.selectAll ng-change=\"$ctrl.toggleAll()\"></th><th ng-repeat=\"col in $ctrl.columns\">{{col.header}}</th><th ng-if=$ctrl.areActions() colspan={{$ctrl.calcActionsColspan()}}>Actions</th></tr></thead><tbody><tr role=row ng-repeat=\"item in $ctrl.items track by $index\"><td class=table-view-pf-select ng-if=$ctrl.config.showCheckboxes><input type=checkbox value=item.selected ng-model=item.selected ng-change=\"$ctrl.toggleOne(item)\"></td><td ng-repeat=\"col in $ctrl.columns\" ng-init=\"key = col.itemField; value = item[key]\"><span ng-if=\"!col.htmlTemplate && !col.templateFn\">{{value}}</span> <span ng-if=col.htmlTemplate ng-include=col.htmlTemplate></span> <span ng-if=col.templateFn ng-bind-html=\"$ctrl.trustAsHtml(col.templateFn(value, item))\"></span></td><td ng-if=\"$ctrl.actionButtons && $ctrl.actionButtons.length > 0\" class=table-view-pf-actions ng-repeat=\"actionButton in $ctrl.actionButtons\"><div class=table-view-pf-btn><button class=\"btn btn-default\" title={{actionButton.title}} ng-click=\"$ctrl.handleButtonAction(actionButton, item)\"><span ng-if=!actionButton.include>{{actionButton.name}}</span></button></div></td><td ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\" class=\"table-view-pf-actions list-group-item-header\"><div uib-dropdown class=\"{{$ctrl.dropdownClass}} dropdown-kebab-pf\" id=kebab_{{$index}} ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\"><button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle\" type=button id=dropdownKebabRight_{{$index}} ng-click=\"$ctrl.setupActions(item, $event)\"><span class=\"fa fa-ellipsis-v\"></span></button><ul uib-dropdown-menu class=\"dropdown-menu dropdown-menu-right {{$index}}\" aria-labelledby=dropdownKebabRight_{{$index}}><li ng-repeat=\"menuAction in $ctrl.menuActions\" ng-if=\"menuAction.isVisible !== false\" role=\"{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}\" ng-class=\"{'divider': (menuAction.isSeparator === true), 'disabled': (menuAction.isDisabled === true)}\"><a ng-if=\"menuAction.isSeparator !== true\" title={{menuAction.title}} ng-click=\"$ctrl.handleMenuAction(menuAction, item)\">{{menuAction.name}}</a></li></ul></div></td></tr></tbody></table><pf-pagination ng-if=\"$ctrl.dtOptions.paging && $ctrl.config.itemsAvailable === true\" page-size=$ctrl.pageConfig.pageSize page-number=$ctrl.pageConfig.pageNumber num-total-items=$ctrl.pageConfig.numTotalItems page-size-increments=$ctrl.pageConfig.pageSizeIncrements update-page-size=$ctrl.updatePageSize($event) update-page-number=$ctrl.updatePageNumber($event)></pf-pagination><pf-empty-state ng-if=\"$ctrl.config.itemsAvailable === false\" config=$ctrl.emptyStateConfig action-buttons=$ctrl.emptyStateActionButtons></pf-empty-state></div>"
+    "<div class=container-fluid><table ng-if=\"$ctrl.config.itemsAvailable !== false\" datatable=ng dt-options=$ctrl.dtOptions dt-column-defs=$ctrl.dtColumnDefs dt-instance=$ctrl.dtInstanceCallback class=\"table-view-container table table-striped table-bordered table-hover dataTable\"><thead><tr role=row><th class=table-view-pf-select ng-if=$ctrl.config.showCheckboxes><input type=checkbox value=$ctrl.selectAll ng-model=$ctrl.selectAll ng-change=$ctrl.toggleAll()></th><th ng-repeat=\"col in $ctrl.columns\">{{col.header}}</th><th ng-if=$ctrl.areActions() colspan={{$ctrl.calcActionsColspan()}}>Actions</th></tr></thead><tbody><tr role=row ng-repeat=\"item in $ctrl.items track by $index\"><td class=table-view-pf-select ng-if=$ctrl.config.showCheckboxes><input type=checkbox value=item.selected ng-model=item.selected ng-change=$ctrl.toggleOne(item)></td><td ng-repeat=\"col in $ctrl.columns\" ng-init=\"key = col.itemField; value = item[key]\"><span ng-if=\"!col.htmlTemplate && !col.templateFn\">{{value}}</span> <span ng-if=col.htmlTemplate ng-include=col.htmlTemplate></span> <span ng-if=col.templateFn ng-bind-html=\"$ctrl.trustAsHtml(col.templateFn(value, item))\"></span></td><td ng-if=\"$ctrl.actionButtons && $ctrl.actionButtons.length > 0\" class=table-view-pf-actions ng-repeat=\"actionButton in $ctrl.actionButtons\"><div class=table-view-pf-btn><button class=\"btn btn-default\" title={{actionButton.title}} ng-click=\"$ctrl.handleButtonAction(actionButton, item)\"><span ng-if=!actionButton.include>{{actionButton.name}}</span></button></div></td><td ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\" class=\"table-view-pf-actions list-group-item-header\"><div uib-dropdown class=\"{{$ctrl.dropdownClass}} dropdown-kebab-pf\" id=kebab_{{$index}} ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\"><button uib-dropdown-toggle class=\"btn btn-default dropdown-toggle\" type=button id=dropdownKebabRight_{{$index}} ng-click=\"$ctrl.setupActions(item, $event)\"><span class=\"fa fa-ellipsis-v\"></span></button><ul uib-dropdown-menu class=\"dropdown-menu dropdown-menu-right {{$index}}\" aria-labelledby=dropdownKebabRight_{{$index}}><li ng-repeat=\"menuAction in $ctrl.menuActions\" ng-if=\"menuAction.isVisible !== false\" role=\"{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}\" ng-class=\"{'divider': (menuAction.isSeparator === true), 'disabled': (menuAction.isDisabled === true)}\"><a ng-if=\"menuAction.isSeparator !== true\" title={{menuAction.title}} ng-click=\"$ctrl.handleMenuAction(menuAction, item)\">{{menuAction.name}}</a></li></ul></div></td></tr></tbody></table><pf-pagination ng-if=\"$ctrl.dtOptions.paging && $ctrl.config.itemsAvailable === true\" page-size=$ctrl.pageConfig.pageSize page-number=$ctrl.pageConfig.pageNumber num-total-items=$ctrl.pageConfig.numTotalItems page-size-increments=$ctrl.pageConfig.pageSizeIncrements update-page-size=$ctrl.updatePageSize($event) update-page-number=$ctrl.updatePageNumber($event)></pf-pagination><pf-empty-state ng-if=\"$ctrl.config.itemsAvailable === false\" config=$ctrl.emptyStateConfig action-buttons=$ctrl.emptyStateActionButtons></pf-empty-state></div>"
   );
 
 }]);
@@ -21425,7 +21437,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
   'use strict';
 
   $templateCache.put('views/cardview/card-view.html',
-    "<span><div ng-if=\"$ctrl.config.itemsAvailable !== false\" class=card-view-pf><div class=card ng-repeat=\"item in $ctrl.items | startFrom:($ctrl.pageConfig.pageNumber - 1)*$ctrl.pageConfig.pageSize | limitTo:$ctrl.pageConfig.pageSize\" ng-class=\"{'pf-selectable': $ctrl.selectItems, 'active': $ctrl.isSelected(item), 'disabled': $ctrl.checkDisabled(item)}\"><div class=card-content ng-click=\"$ctrl.itemClick($event, item)\" ng-dblclick=\"$ctrl.dblClick($event, item)\"><div pf-transclude=parent></div></div><div class=card-check-box ng-if=$ctrl.config.showSelectBox><input type=checkbox value=item.selected ng-model=item.selected ng-disabled=$ctrl.checkDisabled(item) ng-change=\"$ctrl.checkBoxChange(item)\"></div></div></div><pf-pagination ng-if=\"$ctrl.pageConfig.showPaginationControls && $ctrl.config.itemsAvailable === true\" page-size=$ctrl.pageConfig.pageSize page-size-increments=$ctrl.pageConfig.pageSizeIncrements page-number=$ctrl.pageConfig.pageNumber num-total-items=$ctrl.pageConfig.numTotalItems></pf-pagination><pf-empty-state ng-if=\"$ctrl.config.itemsAvailable === false\" config=$ctrl.emptyStateConfig action-buttons=$ctrl.emptyStateActionButtons></pf-empty-state></span>"
+    "<span><div ng-if=\"$ctrl.config.itemsAvailable !== false\" class=card-view-pf><div class=card ng-repeat=\"item in $ctrl.items | startFrom:($ctrl.pageConfig.pageNumber - 1)*$ctrl.pageConfig.pageSize | limitTo:$ctrl.pageConfig.pageSize\" ng-class=\"{'pf-selectable': $ctrl.selectItems, 'active': $ctrl.isSelected(item), 'disabled': $ctrl.checkDisabled(item)}\"><div class=card-content ng-click=\"$ctrl.itemClick($event, item)\" ng-dblclick=\"$ctrl.dblClick($event, item)\"><div pf-transclude=parent></div></div><div class=card-check-box ng-if=$ctrl.config.showSelectBox><input type=checkbox value=item.selected ng-model=item.selected ng-disabled=$ctrl.checkDisabled(item) ng-change=$ctrl.checkBoxChange(item)></div></div></div><pf-pagination ng-if=\"$ctrl.pageConfig.showPaginationControls && $ctrl.config.itemsAvailable === true\" page-size=$ctrl.pageConfig.pageSize page-size-increments=$ctrl.pageConfig.pageSizeIncrements page-number=$ctrl.pageConfig.pageNumber num-total-items=$ctrl.pageConfig.numTotalItems></pf-pagination><pf-empty-state ng-if=\"$ctrl.config.itemsAvailable === false\" config=$ctrl.emptyStateConfig action-buttons=$ctrl.emptyStateActionButtons></pf-empty-state></span>"
   );
 
 
@@ -21455,7 +21467,7 @@ angular.module('patternfly.wizard').component('pfWizardSubstep', {
 
 
   $templateCache.put('views/listview/list-view.html',
-    "<span><div class=\"list-group list-view-pf list-view-pf-view\" dnd-list=$ctrl.items ng-class=\"{'list-view-pf-dnd': $ctrl.config.dragEnabled === true}\" ng-if=\"$ctrl.config.itemsAvailable !== false\"><div class=dndPlaceholder></div><div class=\"list-group-item {{item.rowClass}}\" ng-repeat=\"item in $ctrl.items | startFrom:($ctrl.pageConfig.pageNumber - 1)*$ctrl.pageConfig.pageSize | limitTo:$ctrl.pageConfig.pageSize track by $index\" dnd-draggable=item dnd-effect-allowed=move dnd-disable-if=\"$ctrl.config.dragEnabled !== true\" dnd-dragstart=$ctrl.dragStart(item) dnd-moved=$ctrl.dragMoved() dnd-dragend=$ctrl.dragEnd() ng-class=\"{'drag-original': $ctrl.isDragOriginal(item), 'pf-selectable': $ctrl.selectItems, 'active': $ctrl.isSelected(item), 'disabled': $ctrl.checkDisabled(item), 'list-view-pf-expand-active': item.isExpanded}\"><div class=list-group-item-header ng-class=\"{'list-group-item-not-selectable' : !$ctrl.config.selectItems && (!$ctrl.config.useExpandingRows || $ctrl.config.compoundExpansionOnly)}\"><div class=list-view-pf-dnd-drag-items ng-if=\"$ctrl.config.dragEnabled === true\"><div pf-transclude=parent class=list-view-pf-main-info></div></div><div ng-class=\"{'list-view-pf-dnd-original-items': $ctrl.config.dragEnabled === true}\"><div class=list-view-pf-expand ng-if=\"$ctrl.config.useExpandingRows && !$ctrl.config.compoundExpansionOnly\"><span class=\"fa fa-angle-right\" ng-show=!item.disableRowExpansion ng-click=$ctrl.toggleItemExpansion(item) ng-class=\"{'fa-angle-down': item.isExpanded}\"></span> <span class=pf-expand-placeholder ng-show=item.disableRowExpansion></span></div><div class=list-view-pf-checkbox ng-if=$ctrl.config.showSelectBox><input type=checkbox value=item.selected ng-model=item.selected ng-disabled=$ctrl.checkDisabled(item) ng-change=\"$ctrl.checkBoxChange(item)\"></div><div class=list-view-pf-actions ng-if=\"($ctrl.actionButtons && $ctrl.actionButtons.length > 0) || ($ctrl.menuActions && $ctrl.menuActions.length > 0)\"><button class=\"btn {{actionButton.class || 'btn-default'}}\" ng-repeat=\"actionButton in $ctrl.actionButtons\" title={{actionButton.title}} ng-class=\"{'disabled' : $ctrl.checkDisabled(item) || !$ctrl.enableButtonForItem(actionButton, item)}\" ng-click=\"$ctrl.handleButtonAction(actionButton, item)\"><div ng-if=actionButton.include class=actionButton.includeClass ng-include src=actionButton.include></div><span ng-if=!actionButton.include>{{actionButton.name}}</span></button><div uib-dropdown class=\"{{$ctrl.dropdownClass}} pull-right dropdown-kebab-pf {{$ctrl.getMenuClassForItem(item)}} {{$ctrl.hideMenuForItem(item) ? 'invisible' : ''}}\" id=kebab_{{$index}} ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\"><button uib-dropdown-toggle class=\"btn btn-link\" type=button id=dropdownKebabRight_{{$index}} ng-class=\"{'disabled': $ctrl.checkDisabled(item)}\" ng-click=\"$ctrl.setupActions(item, $event)\"><span class=\"fa fa-ellipsis-v\"></span></button><ul uib-dropdown-menu class=\"dropdown-menu dropdown-menu-right {{$index}}\" ng-class=\"{'invisible': !$ctrl.kebabMenuReady}\" aria-labelledby=dropdownKebabRight_{{$index}}><li ng-repeat=\"menuAction in $ctrl.menuActions\" ng-if=\"menuAction.isVisible !== false\" role=\"{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}\" ng-class=\"{'divider': (menuAction.isSeparator === true), 'disabled': (menuAction.isDisabled === true)}\"><a ng-if=\"menuAction.isSeparator !== true\" title={{menuAction.title}} ng-click=\"$ctrl.handleMenuAction(menuAction, item)\">{{menuAction.name}}</a></li></ul></div></div><div pf-transclude=parent class=list-view-pf-main-info ng-click=\"$ctrl.itemClick($event, item)\" ng-dblclick=\"$ctrl.dblClick($event, item)\"></div></div></div><div class=\"list-group-item-container container-fluid\" ng-transclude=expandedContent ng-if=\"$ctrl.config.useExpandingRows && item.isExpanded\"></div></div><pf-pagination ng-if=\"$ctrl.pageConfig.showPaginationControls && $ctrl.config.itemsAvailable === true\" page-size=$ctrl.pageConfig.pageSize page-size-increments=$ctrl.pageConfig.pageSizeIncrements page-number=$ctrl.pageConfig.pageNumber num-total-items=$ctrl.pageConfig.numTotalItems></pf-pagination></div><pf-empty-state ng-if=\"$ctrl.config.itemsAvailable === false\" config=$ctrl.emptyStateConfig action-buttons=$ctrl.emptyStateActionButtons></pf-empty-state></span>"
+    "<span><div class=\"list-group list-view-pf list-view-pf-view\" dnd-list=$ctrl.items ng-class=\"{'list-view-pf-dnd': $ctrl.config.dragEnabled === true}\" ng-if=\"$ctrl.config.itemsAvailable !== false\"><div class=dndPlaceholder></div><div class=\"list-group-item {{item.rowClass}}\" ng-repeat=\"item in $ctrl.items | startFrom:($ctrl.pageConfig.pageNumber - 1)*$ctrl.pageConfig.pageSize | limitTo:$ctrl.pageConfig.pageSize track by $index\" dnd-draggable=item dnd-effect-allowed=move dnd-disable-if=\"$ctrl.config.dragEnabled !== true\" dnd-dragstart=$ctrl.dragStart(item) dnd-moved=$ctrl.dragMoved() dnd-dragend=$ctrl.dragEnd() ng-class=\"{'drag-original': $ctrl.isDragOriginal(item), 'pf-selectable': $ctrl.selectItems, 'active': $ctrl.isSelected(item), 'disabled': $ctrl.checkDisabled(item), 'list-view-pf-expand-active': item.isExpanded}\"><div class=list-group-item-header ng-class=\"{'list-group-item-not-selectable' : !$ctrl.config.selectItems && (!$ctrl.config.useExpandingRows || $ctrl.config.compoundExpansionOnly)}\"><div class=list-view-pf-dnd-drag-items ng-if=\"$ctrl.config.dragEnabled === true\"><div pf-transclude=parent class=list-view-pf-main-info></div></div><div ng-class=\"{'list-view-pf-dnd-original-items': $ctrl.config.dragEnabled === true}\"><div class=list-view-pf-expand ng-if=\"$ctrl.config.useExpandingRows && !$ctrl.config.compoundExpansionOnly\"><span class=\"fa fa-angle-right\" ng-show=!item.disableRowExpansion ng-click=$ctrl.toggleItemExpansion(item) ng-class=\"{'fa-angle-down': item.isExpanded}\"></span> <span class=pf-expand-placeholder ng-show=item.disableRowExpansion></span></div><div class=list-view-pf-checkbox ng-if=$ctrl.config.showSelectBox><input type=checkbox value=item.selected ng-model=item.selected ng-disabled=$ctrl.checkDisabled(item) ng-change=$ctrl.checkBoxChange(item)></div><div class=list-view-pf-actions ng-if=\"($ctrl.actionButtons && $ctrl.actionButtons.length > 0) || ($ctrl.menuActions && $ctrl.menuActions.length > 0)\"><button class=\"btn {{actionButton.class || 'btn-default'}}\" ng-repeat=\"actionButton in $ctrl.actionButtons\" title={{actionButton.title}} ng-class=\"{'disabled' : $ctrl.checkDisabled(item) || !$ctrl.enableButtonForItem(actionButton, item)}\" ng-click=\"$ctrl.handleButtonAction(actionButton, item)\"><div ng-if=actionButton.include class=actionButton.includeClass ng-include src=actionButton.include></div><span ng-if=!actionButton.include>{{actionButton.name}}</span></button><div uib-dropdown class=\"{{$ctrl.dropdownClass}} pull-right dropdown-kebab-pf {{$ctrl.getMenuClassForItem(item)}} {{$ctrl.hideMenuForItem(item) ? 'invisible' : ''}}\" id=kebab_{{$index}} ng-if=\"$ctrl.menuActions && $ctrl.menuActions.length > 0\"><button uib-dropdown-toggle class=\"btn btn-link\" type=button id=dropdownKebabRight_{{$index}} ng-class=\"{'disabled': $ctrl.checkDisabled(item)}\" ng-click=\"$ctrl.setupActions(item, $event)\"><span class=\"fa fa-ellipsis-v\"></span></button><ul uib-dropdown-menu class=\"dropdown-menu dropdown-menu-right {{$index}}\" ng-class=\"{'invisible': !$ctrl.kebabMenuReady}\" aria-labelledby=dropdownKebabRight_{{$index}}><li ng-repeat=\"menuAction in $ctrl.menuActions\" ng-if=\"menuAction.isVisible !== false\" role=\"{{menuAction.isSeparator === true ? 'separator' : 'menuitem'}}\" ng-class=\"{'divider': (menuAction.isSeparator === true), 'disabled': (menuAction.isDisabled === true)}\"><a ng-if=\"menuAction.isSeparator !== true\" title={{menuAction.title}} ng-click=\"$ctrl.handleMenuAction(menuAction, item)\">{{menuAction.name}}</a></li></ul></div></div><div pf-transclude=parent class=list-view-pf-main-info ng-click=\"$ctrl.itemClick($event, item)\" ng-dblclick=\"$ctrl.dblClick($event, item)\"></div></div></div><div class=\"list-group-item-container container-fluid\" ng-transclude=expandedContent ng-if=\"$ctrl.config.useExpandingRows && item.isExpanded\"></div></div><pf-pagination ng-if=\"$ctrl.pageConfig.showPaginationControls && $ctrl.config.itemsAvailable === true\" page-size=$ctrl.pageConfig.pageSize page-size-increments=$ctrl.pageConfig.pageSizeIncrements page-number=$ctrl.pageConfig.pageNumber num-total-items=$ctrl.pageConfig.numTotalItems></pf-pagination></div><pf-empty-state ng-if=\"$ctrl.config.itemsAvailable === false\" config=$ctrl.emptyStateConfig action-buttons=$ctrl.emptyStateActionButtons></pf-empty-state></span>"
   );
 
 }]);

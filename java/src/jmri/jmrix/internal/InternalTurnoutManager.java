@@ -2,6 +2,11 @@ package jmri.jmrix.internal;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.implementation.AbstractTurnout;
@@ -52,6 +57,22 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
+    /** 
+     * {@inheritDoc} 
+     * No changes to what was given; we can take it all
+     */
+    @CheckReturnValue
+    @Override
+    @Nonnull
+    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        return inputName;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return always 'VALID' because we can take anything
+     */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return NameValidity.VALID;

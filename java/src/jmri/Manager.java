@@ -307,6 +307,8 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * The non-system-specific SignalHeadManagers use this method extensively.
      *
      * @param n the bean
+     * @throws IllegalArgumentException if a different bean with the same
+     * system name is already registered in the manager
      */
     public void register(@Nonnull E n);
 
@@ -347,6 +349,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public static final int TIMEBASE = AUDIO + 10;
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
+    public static final int ANALOGIO = ENTRYEXIT + 10;
+    public static final int DIGITALIO = ANALOGIO + 10;
+    public static final int STRINGIO = DIGITALIO + 10;
 
     /**
      * Determine the order that types should be written when storing panel

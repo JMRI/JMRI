@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
 import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
 import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
 import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
@@ -21,6 +22,7 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
         _type = Track.YARD;
         super.initComponents(location, track);
 
+        _toolMenu.add(new IgnoreUsedTrackAction(this));
         _toolMenu.add(new ChangeTrackTypeAction(this));
         _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
         _toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), _trackName));
