@@ -42,6 +42,8 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
 
+    boolean activeBackgroundRefresh = true;
+
     public SerialDCCppPacketizer(final jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
@@ -70,11 +72,13 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
         @Override
         public void run() {
             try {
-                final DCCppMessage message = resendFunctions.poll();
+                if (activeBackgroundRefresh) {
+                    final DCCppMessage message = resendFunctions.poll();
 
-                if (message != null) {
-                    message.setRetries(0);
-                    sendDCCppMessage(message, null);
+                    if (message != null) {
+                        message.setRetries(0);
+                        sendDCCppMessage(message, null);
+                    }
                 }
             } finally {
                 ThreadingUtil.runOnLayoutDelayed(this, 250);
@@ -114,6 +118,47 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 
         if (isFunction)
             enqueueFunction(m);
+    }
+
+    /**
+     * Clear the background refresh queue. The state is still kept in JMRI.
+     */
+    public void clearRefreshQueue() {
+        resendFunctions.clear();
+    }
+
+    /**
+     * Check how many entries are in the background refresh queue
+     *
+     * @return number of queued function groups
+     */
+    public int getQueueLength() {
+        return resendFunctions.size();
+    }
+
+    /**
+     * Enable or disable the background refresh thread
+     *
+     * @param activeState <code>true</code> to keep refreshing the functions,
+     *            <code>false</code> to disable this functionality.
+     * @return the previous active state of the background refresh thread
+     */
+    public boolean setActiveRefresh(final boolean activeState) {
+        final boolean oldActiveState = activeBackgroundRefresh;
+
+        activeBackgroundRefresh = activeState;
+
+        return oldActiveState;
+    }
+
+    /**
+     * Check if the background function refresh thread is active or not
+     *
+     * @return the background refresh status, <code>true</code> for active,
+     *         <code>false</code> if disabled.
+     */
+    public boolean isActiveRefresh() {
+        return activeBackgroundRefresh;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class);

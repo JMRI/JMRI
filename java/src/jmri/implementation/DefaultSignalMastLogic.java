@@ -972,7 +972,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         getSourceMast().setAspect(aspectSet);
                     });
                 } catch (Exception ex) {
-                    log.error("Exception while setting Signal Logic {}", ex.getMessage());
+                    log.error("Exception while setting Signal Logic: {}", ex);
                 }
                 return;
             }

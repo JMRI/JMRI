@@ -397,9 +397,6 @@ public class CbusAddress {
                     }
                     int firsta =  StringUtil.getFirstIntFromString(part);
                     log.debug("first string {}",firsta);
-                    if ( firsta == 0 ){
-                        throw new IllegalArgumentException("Node cannot be 0 in address: " + part);
-                    }
                     if ( firsta > 65535 ){
                         throw new IllegalArgumentException("Node Too Large in address: " + part);
                     }

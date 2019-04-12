@@ -10,6 +10,7 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 /**
  * Class to lookup CBUS event names via the event table
  * <P>
+ * Node names from the Node Manager
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNameService {

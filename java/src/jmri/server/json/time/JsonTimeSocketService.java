@@ -24,7 +24,12 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     private boolean listening = false;
 
     public JsonTimeSocketService(JsonConnection connection) {
-        super(connection, new JsonTimeHttpService(connection.getObjectMapper()));
+        this(connection, new JsonTimeHttpService(connection.getObjectMapper()));
+    }
+
+    // package protected
+    JsonTimeSocketService(JsonConnection connection, JsonTimeHttpService service) {
+        super(connection, service);
     }
 
     @Override

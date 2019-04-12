@@ -498,6 +498,20 @@ public class LnPacketizer extends LnTrafficController {
         threadStop = true;  // tell threads to stop
         super.dispose();
     }
+
+    /**
+     * Terminate the receive and transmit threads.
+     * <p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThreads() {
+        threadStop = true;
+    }
+    
+    /**
+     * Flag that threads should terminate as soon as they can.
+     */
+    
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 
 }

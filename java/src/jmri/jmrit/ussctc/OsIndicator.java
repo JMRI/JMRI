@@ -68,7 +68,7 @@ public class OsIndicator implements Constants {
         variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                 Conditional.Type.SENSOR_INACTIVE,
                 osSensor, true));
-        if (!lock.equals("")) {
+        if (!lock.isEmpty()) {
             variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                     Conditional.Type.SENSOR_INACTIVE,
                     lock, true));

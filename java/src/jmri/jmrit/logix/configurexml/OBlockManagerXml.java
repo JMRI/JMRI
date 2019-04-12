@@ -205,7 +205,7 @@ public class OBlockManagerXml // extends XmlFile
     OBlockManager _manager;
     PortalManager _portalMgr;
 
-    OBlock getBlock(String sysName) {
+    private OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
         if (block == null) {
             try {
@@ -220,7 +220,7 @@ public class OBlockManagerXml // extends XmlFile
         return block;
     }
 
-    Portal getPortal(String name) {
+    private Portal getPortal(String name) {
         Portal portal = _portalMgr.providePortal(name);
         if (portal == null) {
             portal = _portalMgr.createNewPortal(null, name);

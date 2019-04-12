@@ -156,8 +156,7 @@ public class MergePrompt extends JDialog {
         _viewFrame.setLayout(new BoxLayout(_viewFrame, BoxLayout.PAGE_AXIS));
         _viewFrame.add(Box.createGlue());
         JPanel panel = new JPanel();
-        panel.add(new JLabel(Bundle.getMessage("viewTitle", id)));
-        panel.add(MergePrompt.makeEditInfoPanel());
+        panel.add(MergePrompt.makeEditInfoPanel(id));
         _viewFrame.add(panel);
 
         HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
@@ -188,10 +187,13 @@ public class MergePrompt extends JDialog {
         pack();
     }
 
-    static JPanel makeEditInfoPanel() {
+    static JPanel makeEditInfoPanel(String id) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        JLabel label = new JLabel(Bundle.getMessage("deletePrompt1"));
+        JLabel label = new JLabel(Bundle.getMessage("viewTitle", id));
+        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        panel.add(label);
+        label = new JLabel(Bundle.getMessage("deletePrompt1"));
         label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
         label.setForeground(java.awt.Color.RED);
         label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
