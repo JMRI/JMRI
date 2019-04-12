@@ -46,7 +46,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        Assert.assertNotNull("Senor IS12 not found", sensor1);
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -282,7 +282,7 @@ public class LinkedWarrantTest {
             panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance
+    // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
     public void testLinkedMidScript() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -294,7 +294,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
 
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
-        Assert.assertNotNull("Senor IS12 not found", sensor0);
+        Assert.assertNotNull("Senor IS0 not found", sensor0);
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -385,6 +385,84 @@ public class LinkedWarrantTest {
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+    }
+
+    // Tests set Sensor and Wait Sensor commands
+    @Test
+    public void testTrainMeetScript() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load and display
+        File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
+
+        final Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
+        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        final Sensor sensor8 = _sensorMgr.getBySystemName("IS8");
+        Assert.assertNotNull("Senor IS8 not found", sensor8);
+
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                sensor1.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) {
+                Assert.fail("Set "+sensor1.getDisplayName()+" ACTIVE Exception: " + e);
+            }
+        });
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                sensor8.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) {
+                Assert.fail("Set "+sensor8.getDisplayName()+" ACTIVE Exception: " + e);
+            }
+        });
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+
+        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+        Assert.assertNotNull("tableFrame", tableFrame);
+
+        Warrant westWarrant = _warrantMgr.getWarrant("WestBoundStart");
+        Assert.assertNotNull("warrant", westWarrant);
+        Warrant eastWarrant = _warrantMgr.getWarrant("EastBoundStart");
+        Assert.assertNotNull("warrant", eastWarrant);
+       
+        tableFrame.runTrain(eastWarrant, Warrant.MODE_RUN);
+        tableFrame.runTrain(westWarrant, Warrant.MODE_RUN);
+
+        Warrant w = westWarrant;
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  w.getRunningMessage();
+            return m.endsWith("Cmd #5.");
+        }, "WestBoundStart starts to move at 5th command");
+        Warrant ew = eastWarrant;
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  ew.getRunningMessage();
+            return m.endsWith("Cmd #5.");
+        }, "EastBoundStart starts to move at 5th command");
+
+       // OBlock of route
+        String[] eastRouteStart = {"OB1", "OB2", "OB3", "OB4"};
+        String[] eastRouteFinish = {"OB4", "OB6", "OB7", "OB8"};
+        String[] westRouteStart = {"OB8", "OB7", "OB6", "OB5"};
+        String[] westRouteFinish = {"OB5", "OB3", "OB2", "OB1"};
+
+        // Run the train, then checks end location
+        Assert.assertEquals("EastBoundStart after first leg",
+                _OBlockMgr.getOBlock("OB4").getSensor().getDisplayName(),
+                NXFrameTest.runtimes(eastRouteStart, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("WestBoundStart after first leg",
+                _OBlockMgr.getOBlock("OB5").getSensor().getDisplayName(),
+                NXFrameTest.runtimes(westRouteStart, _OBlockMgr).getDisplayName());
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let things settle
+        
+        // passed test - cleanup.  Do it here so failure leaves traces.
+        JFrameOperator jfo = new JFrameOperator(tableFrame);
+        jfo.requestClose();
+        // we may want to use jemmy to close the panel as well.
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("TrainMeetTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
