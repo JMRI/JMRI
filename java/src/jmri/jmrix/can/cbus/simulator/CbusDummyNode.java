@@ -62,6 +62,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
         ndTypes = new ArrayList<Integer>();
         ndTypes.add(0); // 0 SlIM
         ndTypes.add(29); // 29 CANPAN
+        ndTypes.add(255); // 255 CANTSTMAX
     }
     
     /**
@@ -119,6 +120,15 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     }
 
     private void evLearn(int nn, int en, int index, int val){
+        
+        if ( val < 0 || val > 255 ) {
+            sendCMDERR(11);
+            return;
+        }
+        if ( index < 0 || index > 255 ) {
+            sendCMDERR(6);
+            return;
+        }
         provideNodeEvent(nn,en).setEvVar(index,val);
         if ( provideNodeEvent(nn,en).getIndex()< 0 ) {
             provideNodeEvent(nn,en).setIndex( getNextFreeIndex() );
@@ -138,7 +148,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
         return newIndex;
     }
     
-        /**
+    /**
      * Add an event to the node, will not overwrite an existing event.
      *
      * @param newEvent the new event to be added
@@ -154,6 +164,11 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     private void sendENRSP(){
         int extraDelay = 5;
         for (int i = 0; i < getTotalNodeEvents(); i++) {
+            
+            if ( getNodeEventByArrayID(i).getIndex()<0 ) {
+                getNodeEventByArrayID(i).setIndex( getNextFreeIndex() );
+            }
+            
             CanReply r = new CanReply(8);
             r.setElement(0, CbusConstants.CBUS_ENRSP);
             r.setElement(1, getNodeNumber() >> 8);
@@ -398,7 +413,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
                     m.getElement(5),
                     m.getElement(6) );
                 }
-                if ( opc == CbusConstants.CBUS_EVULN ) { // Teach node event
+                if ( opc == CbusConstants.CBUS_EVULN ) { // Node Unlearn event
                     removeEvent( ( m.getElement(1) * 256 ) + m.getElement(2) ,
                         ( ( m.getElement(3) * 256 ) + m.getElement(4) ) );
                 }

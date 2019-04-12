@@ -37,20 +37,20 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
     public CbusNodeNVTablePane( CbusNodeNVTableDataModel nVModel ) {
         super();
         nodeNVModel = nVModel;
-        nodeNvTable = new JTable(nodeNVModel);
     }
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        
     }
     
     protected void setNode( CbusNode node) {
-        nodeNvTable = new JTable(nodeNVModel);
         
         nodeNVModel.setNode( node );
-        
+        if ( node == null ) {
+            return;
+        }
+        nodeNvTable = new JTable(nodeNVModel);
         nodeNVModel.setViewFrame();
         init();
     }
@@ -61,7 +61,6 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         if (pane1 != null ){ 
             pane1.setVisible(false);
         }
-        
         pane1 = null;
         
         TableColumnModel tableModel = nodeNvTable.getColumnModel();

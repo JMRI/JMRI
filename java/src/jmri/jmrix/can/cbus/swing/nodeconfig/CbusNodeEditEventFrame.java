@@ -65,15 +65,16 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
     /**
      * Create a new instance of CbusNodeEditEventFrame.
      */
-    public CbusNodeEditEventFrame(NodeConfigToolPane tp, CbusNodeEvent ndEv) {
+    public CbusNodeEditEventFrame(NodeConfigToolPane tp) {
         super();
-        _ndEv = ndEv;
+        
         mainpane = tp;
         infoPane = new JPanel();
     }
 
-    public void initComponents(CanSystemConnectionMemo memo) {
+    public void initComponents(CanSystemConnectionMemo memo, CbusNodeEvent ndEv) {
         
+        _ndEv = ndEv;
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
             
@@ -180,13 +181,14 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         
         this.setPreferredSize(new Dimension(500, 300));
         
-        pack();
+        this.pack();
         this.setResizable(true);
         
-        validate();
-        repaint();
+        this.validate();
+        this.repaint();
         
-        setVisible(true);
+        this.setVisible(true);
+        this.toFront();
         
         updateButtons();
         
@@ -414,6 +416,10 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
      */
     @Override
     public void dispose() {
+        
+        if ( mainpane != null ){
+            mainpane.clearEditEventFrame();
+        }
         super.dispose();
     }
 

@@ -75,6 +75,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     private CbusNodeVarPane nodevarPane = null;
     private CbusNodeSetupPane setupPane;
     private CbusNodeRestoreFcuFrame fcuFrame;
+    private CbusNodeEditEventFrame _editEventFrame;
     
     public JScrollPane eventScroll;
     public JScrollPane tabbedScroll;
@@ -84,7 +85,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     // protected JPanel buttoncontainer = new JPanel();
     private JTabbedPane tabbedPane;
     
-    private int selectedNode;
+    private int _selectedNode;
     private Boolean editNvWindowActive;
     private jmri.util.swing.BusyDialog busy_dialog;
     
@@ -112,7 +113,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         }
         
         _memo = memo;
-        selectedNode = -1;
+        _selectedNode = -1;
         
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
         init();
@@ -218,7 +219,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         revalidate();
         // major resize, repack
        // ((JFrame) getTopLevelAncestor()).pack();
-        
+       
     }
     
     private JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -247,9 +248,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         if ( sel > -1 ) {
             
             sel = nodeTable.convertRowIndexToModel(sel);
-            int nodenum = (int) nodeTable.getModel().getValueAt(sel, CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
-            
-            selectedNode = nodenum;
+            _selectedNode = (int) nodeTable.getModel().getValueAt(sel, CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
             
             int tabindex = tabbedPane.getSelectedIndex();
             
@@ -266,10 +265,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                 nodeAfter = (int) nodeTable.getModel().getValueAt(rowAfter, CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
             }
             
-            log.debug("node {} selected tab index {} , node before {} node after {}", nodenum , tabindex, nodeBefore,nodeAfter );                
+            log.debug("node {} selected tab index {} , node before {} node after {}", _selectedNode , tabindex, nodeBefore,nodeAfter );                
 
             // this also starts urgent fetch loop if not currently looping
-            nodeModel.setUrgentFetch(tabindex,nodenum,nodeBefore,nodeAfter);
+            nodeModel.setUrgentFetch(tabindex,_selectedNode,nodeBefore,nodeAfter);
             
             tabbedPane.setEnabledAt(1,true);
             tabbedPane.setEnabledAt(2,true);
@@ -279,9 +278,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             
             if ( tabindex == 0 ){ // parameters
             
-                nodeinfoPane.initComponents( nodeModel.getNodeByNodeNum(nodenum) );
+                nodeEventPane.setNode( null );
+                nodevarPane.setNode( null );
+                nodeinfoPane.initComponents( nodeModel.getNodeByNodeNum(_selectedNode) );
                 
-                if ( nodeModel.getNodeByNodeNum(nodenum).getOutstandingParams() > 0 ){
+                if ( nodeModel.getNodeByNodeNum(_selectedNode).getOutstandingParams() > 0 ){
     
                     // fetch from node already happening in model
                     // so we refresh the screen after 1000ms
@@ -304,7 +305,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             }
             
             if ( tabindex == 1 ){ // NV's
-                nodevarPane.setNode( nodeModel.getNodeByNodeNum(selectedNode) );
+                nodevarPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
+                nodeEventPane.setNode( null );
                 ThreadingUtil.runOnGUIDelayed( () -> {
                     // refetch node number in case has changed
                     nodevarPane.refreshEditButton();
@@ -312,15 +314,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             }
             
             if ( tabindex == 2 ){ // events
-                nodeEventPane.setNode( nodeModel.getNodeByNodeNum(selectedNode) );
+                nodeEventPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
+                nodevarPane.setNode( null );
             }
 
-            if ( tabindex == 3 ) {
-                setupPane.initComponents(nodenum);
+            if ( tabindex == 3 ) { // Network setup
+                setupPane.initComponents(_selectedNode);
+                nodeEventPane.setNode( null );
+                nodevarPane.setNode( null );
             }
             
          //   if ( tabindex == 4 ) {
-         //       commentsPane.initComponents(nodenum);
+         //       commentsPane.initComponents(_selectedNode);
          //   }
             
         }
@@ -548,7 +553,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
 
             // prevent draggable on startup when a node has not yet been selected
             // the draggable must still be able to select a table row
-            if ( (c instanceof JTabbedPane ) && ( selectedNode < 1 )){
+            if ( (c instanceof JTabbedPane ) && ( _selectedNode < 1 )){
                 return false;
             }
             
@@ -573,14 +578,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                     return false;
                 }
                 
-                return openNewOrEditEventFrame(eventInJmriFormat,selectedNode);
+                return openNewOrEditEventFrame(eventInJmriFormat);
             }
             return false;
         }
     }
     
     // lower case boolean does not have a null
-    boolean openNewOrEditEventFrame( String eventInJmriFormat, int selectedNode ){
+    boolean openNewOrEditEventFrame( String eventInJmriFormat ){
         
         // do some validation on the input string
         // processed in the same way as a sensor, turnout or light so less chance of breaking in future
@@ -597,19 +602,38 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         CbusNodeEvent newev = new CbusNodeEvent(
             CbusMessage.getNodeNumber(m), 
             CbusMessage.getEvent(m), 
-            selectedNode, 
+            _selectedNode, 
             -1, 
-            nodeModel.getNodeByNodeNum( selectedNode ).getParameter(5)
+            nodeModel.getNodeByNodeNum( _selectedNode ).getParameter(5)
             );
         java.util.Arrays.fill(newev._evVarArr,0);
         
         log.debug("dragged nodeevent {} ",newev);
+        ThreadingUtil.runOnGUI( () -> {
+            getEditEvFrame().initComponents(_memo,newev);
+        });
         
-        CbusNodeEditEventFrame dragEvFrame = new CbusNodeEditEventFrame(this,newev);
-        dragEvFrame.initComponents(_memo);
         
         return true;
         
+    }
+    
+    // this could be requested from
+    // CbusNodeEventDataModel button click to edit event
+    // this class when it receives an event via drag n drop
+    // creating new event from CbusNodeEventVarPane
+    public CbusNodeEditEventFrame getEditEvFrame(){
+        
+        if (_editEventFrame == null ){
+            _editEventFrame = new CbusNodeEditEventFrame(this);
+        }
+        
+        return _editEventFrame;
+    }
+    
+    // notification from the frame that it has disposed
+    protected void clearEditEventFrame() {
+        _editEventFrame = null;
     }
 
     /**

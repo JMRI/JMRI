@@ -126,6 +126,11 @@ public class CbusNodeTablePane extends JPanel {
         eventScroll.setVisible(true);
         setPreferredSize(new Dimension(300, 80));
         add(eventScroll);
+        
+        validate();
+        repaint();
+        
+        nodeModel.fireTableDataChanged();
 
     }
     
@@ -206,7 +211,9 @@ public class CbusNodeTablePane extends JPanel {
             setBorderPainted(false);
             setStringPainted(true);
             setValue(fullValprogress);
-            setMaximum(1000);
+            if ( progress < 99 ) {
+                setMaximum(1000);
+            }
             setString(progress + "%");
             return this;
         }

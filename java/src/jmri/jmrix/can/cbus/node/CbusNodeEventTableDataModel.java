@@ -6,7 +6,7 @@ import javax.swing.JTextField;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusNameService;
-import jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeEditEventFrame;
+import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
 
     private CbusNameService nameService;
     private CbusNode nodeOfInterest;
-    private CbusNodeEditEventFrame editEvFrame;
+    private NodeConfigToolPane _mainpane;
     
     // column order needs to match list in column tooltips
     static public final int NODE_NUMBER_COLUMN = 0;
@@ -36,10 +36,10 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     
     CanSystemConnectionMemo _memo;
 
-    public CbusNodeEventTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
+    public CbusNodeEventTableDataModel( NodeConfigToolPane mainpane, CanSystemConnectionMemo memo, int row, int column) {
         
         log.debug("Starting MERG CBUS Node Event Table");
-        
+        _mainpane = mainpane;
         _memo = memo;
         nameService = new CbusNameService();
     }
@@ -217,25 +217,23 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     public void setValueAt(Object value, int row, int col) {
         if (col == NODE_EDIT_BUTTON_COLUMN) {
             
-            ThreadingUtil.runOnGUI( ()->{
+            ThreadingUtil.runOnGUIDelayed( ()->{
+                _mainpane.getEditEvFrame().initComponents(_memo, nodeOfInterest.getNodeEventByArrayID(row) );
                 
-                editEvFrame = new CbusNodeEditEventFrame(null,
-                    nodeOfInterest.getNodeEventByArrayID(row));
-                    
-                editEvFrame.initComponents(_memo);
-                editEvFrame.setVisible(true);
-                editEvFrame.toFront();
-                
-            });
+            },10);
             
         }
     }
     
     public void setNode( CbusNode node){
         
+        if ( nodeOfInterest != null ){
+            nodeOfInterest.setNodeEventTable(null);
+        }
         nodeOfInterest = node;
-        
-        node.setNodeEventTable(this);
+        if ( nodeOfInterest != null ){
+            nodeOfInterest.setNodeEventTable(this);
+        }
        // fireTableDataChanged();
         
     }
@@ -244,10 +242,9 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
      * To close window after testing
      */  
     protected void disposeEvFrame(){
-        // if ( editEvFrame != null ) {
-            editEvFrame.dispose();
-            editEvFrame = null;
-        // }
+        if ( _mainpane.getEditEvFrame() != null ) {
+            _mainpane.getEditEvFrame().dispose();
+        }
     }
     
     public void updateFromNode( int arrayid, int col){
@@ -256,6 +253,10 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             // fireTableCellUpdated(arrayid, col);
             fireTableDataChanged();
         });
+    }
+    
+    public void dispose(){
+        setNode( null);
     }
     
     /**

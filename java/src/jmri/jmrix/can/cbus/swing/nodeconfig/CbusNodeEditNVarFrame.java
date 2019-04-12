@@ -229,6 +229,15 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
     }
     
+    @Override
+    public void dispose(){
+        
+        nodeNVModel.removeTableModelListener(this);
+        nodeNVModel.dispose();
+        
+        super.dispose();
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrame.class);
     
 }

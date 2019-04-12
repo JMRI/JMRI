@@ -50,6 +50,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                 _ndEv._evVarArr.length);
             log.debug(" set ev var arr length {} data {}",newEVs.length, newEVs);
         }
+        _ndEv.setEditTableModel(this);
     }
     
     /**
@@ -178,6 +179,9 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
             case EV_NUMBER_COLUMN:
                 return (row +1);
             case EV_CURRENT_VAL_COLUMN:
+                if ( ( newEVs[(row)] < 0 ) && ( currEvVal > -1 )){
+                    newEVs[(row)] = currEvVal;
+                }
                 return currEvVal;
             case EV_CURRENT_HEX_COLUMN:
                 if ( currEvVal > -1 ) {
@@ -351,6 +355,10 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
             passNewEvToNode(frame);
             
         }
+    }
+    
+    public void dispose(){
+        _ndEv.setEditTableModel(null);
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeSingleEventTableDataModel.class);

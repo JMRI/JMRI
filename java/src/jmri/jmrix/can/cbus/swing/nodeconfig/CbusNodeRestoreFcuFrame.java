@@ -205,7 +205,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         nodevarPane = new CbusNodeNVTablePane(nodeNVModel);
         
-        CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel(_memo, 10,
+        CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, _memo, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
         
         nodeEventPane = new CbusNodeEventTablePane(nodeEvModel);

@@ -17,6 +17,7 @@ public class CbusNodeEvent extends CbusEvent {
     private int _index;
     public int[] _evVarArr;
     private String _fcuNodeName;
+    private CbusNodeSingleEventTableDataModel eventDataModel;
     
     /**
      * Set the value of the event variable array by index
@@ -35,6 +36,18 @@ public class CbusNodeEvent extends CbusEvent {
         java.util.Arrays.fill(_evVarArr,-1);
         _fcuNodeName = "";
     }
+    
+    protected void setEditTableModel( CbusNodeSingleEventTableDataModel model ) {
+        eventDataModel = model;
+    }
+    
+    private void notifyModel(){
+        if ( eventDataModel != null ) {
+            jmri.util.ThreadingUtil.runOnGUI( ()->{
+                eventDataModel.fireTableDataChanged();
+        });
+        }
+    }
 
     /**
      * Set the value of the event variable array by index
@@ -47,6 +60,7 @@ public class CbusNodeEvent extends CbusEvent {
             log.error("Event Index needs to be > 0");
         } else {
             _evVarArr[(index-1)]=value;
+            notifyModel();
         }
     }
     
@@ -57,6 +71,7 @@ public class CbusNodeEvent extends CbusEvent {
      */    
     public void setEvArr( int[] newArray ){
         _evVarArr = newArray;
+        notifyModel();
     }
     
     /**
