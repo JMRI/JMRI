@@ -285,7 +285,7 @@ public class StringUtilTest {
         Assert.assertEquals("F 0", 0, StringUtil.getFirstIntFromString("0"));
         Assert.assertEquals("F +2", 2, StringUtil.getFirstIntFromString("+2"));
         Assert.assertEquals("F -5", 5, StringUtil.getFirstIntFromString("-5"));
-        Assert.assertEquals("F ABC123DEF", 123,StringUtil.getFirstIntFromString("ABC123DEF"));
+        Assert.assertEquals("F ABC123DEF", 123, StringUtil.getFirstIntFromString("ABC123DEF"));
         Assert.assertEquals("F ABC123", 123, StringUtil.getFirstIntFromString("ABC123"));
         Assert.assertEquals("F 123", 123, StringUtil.getFirstIntFromString("123"));
         Assert.assertEquals("F 123ABC", 123, StringUtil.getFirstIntFromString("123ABC"));
@@ -296,7 +296,7 @@ public class StringUtilTest {
         Assert.assertEquals("F XD+123ABC-456", 123, StringUtil.getFirstIntFromString("XD+123ABC-456"));
         Assert.assertEquals("F A c456fg123ABC789jh", 456, StringUtil.getFirstIntFromString("A c456fg123ABC789jh"));
     }
-    
+
     @Test
     public void testGetLastIntFromString() {
         Assert.assertEquals("aABC123DEFb", 123, StringUtil.getLastIntFromString("aABC123DEFb"));
@@ -304,7 +304,7 @@ public class StringUtilTest {
         Assert.assertEquals("0", 0, StringUtil.getLastIntFromString("0"));
         Assert.assertEquals("+2", 2, StringUtil.getLastIntFromString("+2"));
         Assert.assertEquals("-5", 5, StringUtil.getLastIntFromString("-5"));
-        Assert.assertEquals("ABC123DEF", 123,StringUtil.getLastIntFromString("ABC123DEF"));
+        Assert.assertEquals("ABC123DEF", 123, StringUtil.getLastIntFromString("ABC123DEF"));
         Assert.assertEquals("ABC123", 123, StringUtil.getLastIntFromString("ABC123"));
         Assert.assertEquals("123", 123, StringUtil.getLastIntFromString("123"));
         Assert.assertEquals("123ABC", 123, StringUtil.getLastIntFromString("123ABC"));
@@ -315,17 +315,71 @@ public class StringUtilTest {
         Assert.assertEquals("XD+123ABC-456", 456, StringUtil.getLastIntFromString("XD+123ABC-456"));
         Assert.assertEquals("Ac456fg123ABC789jh", 789, StringUtil.getLastIntFromString("Ac456fg123ABC789jh"));
     }
-    
+
     @Test
     public void testReplaceLast() {
-        Assert.assertEquals("no vals", "", StringUtil.replaceLast("","",""));
-        Assert.assertEquals("D4F5gaz", "D4F5gaz", StringUtil.replaceLast("D4F5gaz","",""));
-        Assert.assertEquals("D4F5gaz F5 S1", "D4S1gaz", StringUtil.replaceLast("D4F5gaz","F5","S1"));
-        Assert.assertEquals("D4F5g1234", "D4F5g1234", StringUtil.replaceLast("D4F5g123","123","1234"));
-        Assert.assertEquals("77YYYzz", "77YYYzz", StringUtil.replaceLast("xxYYYzz","xx","77"));
-        Assert.assertEquals("xxAA77YYYzz", "xxAA77YYYzz", StringUtil.replaceLast("xxAAxxYYYzz","xx","77"));
-        Assert.assertEquals("122", "122", StringUtil.replaceLast("121","1","2"));
-        Assert.assertEquals("122 Z", "121", StringUtil.replaceLast("121","Z","2"));
+        Assert.assertEquals("no vals", "", StringUtil.replaceLast("", "", ""));
+        Assert.assertEquals("D4F5gaz", "D4F5gaz", StringUtil.replaceLast("D4F5gaz", "", ""));
+        Assert.assertEquals("D4F5gaz F5 S1", "D4S1gaz", StringUtil.replaceLast("D4F5gaz", "F5", "S1"));
+        Assert.assertEquals("D4F5g1234", "D4F5g1234", StringUtil.replaceLast("D4F5g123", "123", "1234"));
+        Assert.assertEquals("77YYYzz", "77YYYzz", StringUtil.replaceLast("xxYYYzz", "xx", "77"));
+        Assert.assertEquals("xxAA77YYYzz", "xxAA77YYYzz", StringUtil.replaceLast("xxAAxxYYYzz", "xx", "77"));
+        Assert.assertEquals("122", "122", StringUtil.replaceLast("121", "1", "2"));
+        Assert.assertEquals("122 Z", "121", StringUtil.replaceLast("121", "Z", "2"));
     }
-    
+
+    /**
+     * Test of concatTextHtmlAware method, of class StringUtil.
+     */
+    @Test
+    public void testConcatTextHtmlAware() {
+        String baseText = "Some text";
+        String extraText = " and extra stuff";
+
+        String baseTextHtml = "<html>" + baseText + "</html>";
+        String extraTextHtml = "<html>" + extraText + "</html>";
+
+        String baseTextHtmlUpper = "<HTML>" + baseText + "</HTML>";
+        String extraTextHtmlUpper = "<HTML>" + extraText + "</HTML>";
+
+        String expResultNoHtml = baseText + extraText;
+        String expResultHtml = "<html>" + expResultNoHtml + "</html>";
+
+        String result;
+
+        // test null cases
+        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, null), null);
+        Assert.assertEquals(StringUtil.concatTextHtmlAware(baseText, null), baseText);
+        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, extraText), extraText);
+        Assert.assertEquals(StringUtil.concatTextHtmlAware(baseTextHtml, null), baseTextHtml);
+        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, extraTextHtml), extraTextHtml);
+
+        // test with no HTML
+        result = StringUtil.concatTextHtmlAware(baseText, extraText);
+        Assert.assertEquals(expResultNoHtml, result);
+
+        // test with baseText HTML
+        result = StringUtil.concatTextHtmlAware(baseTextHtml, extraText);
+        Assert.assertEquals(expResultHtml, result);
+
+        // test with extraText HTML
+        result = StringUtil.concatTextHtmlAware(baseText, extraTextHtml);
+        Assert.assertEquals(expResultHtml, result);
+
+        // test with both HTML
+        result = StringUtil.concatTextHtmlAware(baseTextHtml, extraTextHtml);
+        Assert.assertEquals(expResultHtml, result);
+
+        // test with baseText uppercase HTML
+        result = StringUtil.concatTextHtmlAware(baseTextHtmlUpper, extraTextHtml);
+        Assert.assertEquals(expResultHtml, result);
+
+        // test with extraText uppercase HTML
+        result = StringUtil.concatTextHtmlAware(baseTextHtml, extraTextHtmlUpper);
+        Assert.assertEquals(expResultHtml, result);
+
+        // test with both uppercase HTML
+        result = StringUtil.concatTextHtmlAware(baseTextHtmlUpper, extraTextHtmlUpper);
+        Assert.assertEquals(expResultHtml, result);
+    }
 }
