@@ -1,28 +1,14 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.netbeans.jemmy.operators.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TurnoutTableTabActionTest extends AbstractTableActionBase {
+public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
 
     @Test
     public void testCTor() {
@@ -32,12 +18,6 @@ public class TurnoutTableTabActionTest extends AbstractTableActionBase {
     @Override
     public String getTableFrameName() {
         return Bundle.getMessage("TitleTurnoutTable");
-    }
-
-    @Override
-    @Test
-    public void testGetClassDescription() {
-        Assert.assertEquals("Turnout Table Action class description", "Turnout Table", a.getClassDescription());
     }
 
     /**
@@ -51,66 +31,6 @@ public class TurnoutTableTabActionTest extends AbstractTableActionBase {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
-    @Override
-    public String getAddFrameName(){
-        return Bundle.getMessage("TitleAddTurnout");
-    }
-
-    @Test
-    @Override
-    public void testAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
-
-        // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
-        JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
-    }
-
-    @Test
-    @Override
-    public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
-
-        // find the "Add... " button and press it.
-        JFrameOperator jfo = new JFrameOperator(f);
-        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        //Enter 1 in the text field labeled "Hardware address:"
-        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
-
-        // set to "1"
-        new JTextFieldOperator(hwAddressField).typeText("1");
-
-        //and press create 
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
-
-        JTableOperator tbl = new JTableOperator(jfo, 0);
-        // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0,TurnoutTableAction.EDITCOL);
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
-        JUnitUtil.dispose(f2);
-        JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
-    }
-
-    @Override
-    public String getEditFrameName(){
-        return "Edit Turnout IT1";
-    }
-
     // The minimal setup for log4J
     @Before
     @Override
@@ -120,7 +40,7 @@ public class TurnoutTableTabActionTest extends AbstractTableActionBase {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.TurnoutTable"; 
-        a = new TurnoutTableAction();
+        a = new TurnoutTableTabAction();
     }
 
     @After
