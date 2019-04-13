@@ -10,22 +10,24 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class BeanTablePaneTest {
-
-    @Test
-    public void testCTor() {
-        BeanTablePane t = new BeanTablePane();
-        Assert.assertNotNull("exists",t);
-    }
+public class BeanTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        panel = new BeanTablePane();
+        helpTarget="package.jmri.jmrit.beantable.BeanTablePane";
     }
 
     @After
     public void tearDown() {
+        panel = null;
+        title = null;
+        helpTarget = null;
         JUnitUtil.tearDown();
     }
 

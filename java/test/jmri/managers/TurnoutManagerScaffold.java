@@ -1,5 +1,8 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeListener;
+import java.beans.VetoableChangeListener;
+
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Turnout;
@@ -133,11 +136,47 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return new PropertyChangeListener[0];
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return new PropertyChangeListener[0];
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    }
+
+    @Override
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
     }
 
     @Override
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+    }
+
+    @Override
+    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+    }
+
+    @Override
+    public VetoableChangeListener[] getVetoableChangeListeners() {
+        return new VetoableChangeListener[0];
+    }
+
+    @Override
+    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
+        return new VetoableChangeListener[0];
+    }
+
+    @Override
+    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
     }
 
     @Override

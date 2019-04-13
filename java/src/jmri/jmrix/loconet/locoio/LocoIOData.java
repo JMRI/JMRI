@@ -111,11 +111,11 @@ public class LocoIOData
      * <br>
      * Low byte Address must be in the range of 0x01 .. 0x4F, 0x51 .. 0x7F
      * <br>
-     * 0x50 is reserved for the LocoBuffer
+     * (0x50 is reserved for the LocoBuffer)
      * <br>
      * The subAddress is in the range of 0x01 .. 0x7E
      * <br>
-     * 0x7f is reserved
+     * (0x7F is reserved)
      */
     public synchronized void setUnitAddress(int unit, int unitSub) {
         setUnitAddress(unit);
@@ -504,9 +504,7 @@ public class LocoIOData
                 }
                 return;
             default:    // we ignore all other LocoNet messages
-            // if (log.isDebugEnabled()) {
-            //     log.debug(LnConstants.OPC_NAME(opCode) + " received (ignored)");
-            // }
+            log.debug("{} received (ignored)", LnConstants.OPC_NAME(opCode));
         }
     }
 
@@ -714,7 +712,7 @@ public class LocoIOData
     }
 
     /**
-     * Read a SV from a given LocoIO device.
+     * Read an SV from a given LocoIO device.
      *
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {

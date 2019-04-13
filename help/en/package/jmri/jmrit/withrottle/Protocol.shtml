@@ -8,7 +8,7 @@
   <!-- Copyright ($Author$) 2009 -->
   <!-- $Id$ -->
 
-  <title>JMRI: WiFi Throttle Communications Protocol</title>
+  <title>JMRI: WiThrottle Protocol</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -39,7 +39,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: WiFi Throttle Communications Protocol</h1>
+      <h1>JMRI: WiThrottle Protocol</h1>
 
       <p>This page describes the protocol provided by the <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
@@ -59,13 +59,15 @@
       number of lines of text that provide information about the
       JMRI instance to which you've connected. Your application
       then sends commands to JMRI. Each of these commands is plain
-      text, with a newline character at the end (0A hex). Similarly,
-      lines sent back from JMRI are terminated by a newline.  Other
-      implementations of the WiThrottle protocol will terminate the command
-      with a carriage return (0D hex) followed by a newline.</p>
+      text, with a system-specific newline character at the end (typically 0A hex). Similarly,
+      lines sent back from JMRI are terminated by a system-specific newline.
+      A newline can be a linefeed (0A hex), carriage return (0D hex),
+      or a carriage return followed by a newline. (0D 0A hex)
+      Clients and servers should accept any newline sequence as a command termination.</p>
 
       <p>You can see these messages by enabling DEBUG
-      for WiThrottle. Add the line "<b>log4j.category.jmri.jmrit.withrottle=DEBUG</b>"
+      for the JMRI package jmri.jmrit.withrottle.
+      Add the line "<b>log4j.category.jmri.jmrit.withrottle=DEBUG</b>"
       to your default.lcf file and restart JMRI. All messages (both directions)
       will be added to your JMRI System Console and the session.log file.
       </p>
@@ -109,10 +111,6 @@ PW12080
 *10
 </pre>
 
-      <p class="note">Each line is actually followed by two end-of-line
-      characters (newline/newline or carriage return/newline). For brevity,
-	the extra blank line is not shown.</p>
-
       <p class="note">Some implementations will not send these initial
       lines until a command has been sent by the client.  The Digitrax LnWI
       will send <code>VN2.0</code> in response to an <code>N</code>
@@ -123,7 +121,7 @@ PW12080
       described below, so your application can show things like
       engines, turnouts, etc.</p>
 
-      <h3>WiThrottle Version</h3>
+      <h3>WiThrottle Protocol Version</h3>
 
       <p>The first string, <code>VN2.0</code>, provides the version
       number of the WiThrottle protocol. In this case the version
@@ -414,7 +412,7 @@ PW12080
       <p>There are cases where property changes in JMRI cause a
       message to be sent. These messages are not a response to a
       command, but rather are sent at any time (from the perspective
-      of your WiThrottle client). For example, if you have a Throttle
+      of your WiThrottle protocol client). For example, if you have a Throttle
       window open in JMRI and you turn on the light, a property
       change message will be sent with the function information:</p>
 
@@ -471,12 +469,16 @@ MTAL341&lt;;&gt;F10
         window.</li>
       </ul>
 
-      <h3>'H' Device ID</h3>
+      <h3>'H' Hardware Information</h3>
 
       <p>Sets the device ID for the client. This could, for example,
-      be the MAC address of the caller, as a string. Engine Driver
-      uses sends device name (see 'N'), so it may or may not be
-      unique.</p>
+      be the MAC address of the caller, as a string.
+      The syntax is <code>HU<i>identifier</i></code>, where <i>identifier</i>
+      is different for each connected device.
+      This needs to be unique for each device connected to the server, it is
+      used to prevent duplicate connections from the same client.
+      Engine Driver sends device name (see 'N'), so it may or may not be
+      unique. WiThrottle app uses a generated unique identifier.</p>
 
       <h3>'N' Device Name</h3>
 
@@ -805,7 +807,7 @@ MT-L341&lt;;&gt;d
 MT-*&lt;;&gt;r
 </pre>
 
-      <p>After sending this command, the WiThrottle server will
+      <p>After sending this command, the WiThrottle Server will
       typically reply with a removed message</p>
 
       <pre class="code">
@@ -865,28 +867,26 @@ MTA*&lt;;&gt;F012
 MTA*&lt;;&gt;V30
 </pre>
 
-      <p>If the value received from the WiThrottle server is negative (e.g., during the
+      <p>If the value received from the WiThrottle Server is negative (e.g., during the
          initialization information when an address is selected), that indicates the
          address is in Emergency Stop mode.</p>
 
     <h3>'S' Steal Locomotive</h3>
 
     <p>Requests stealing a locomotive. This is a feature that is of most
-        interest when working with Digitrax command stations and allows WiThrottle
+        interest when working with Digitrax command stations and allows the WiThrottle protocol
         to support the same steal scenario supported by Digitrax throttles.
         </p>
 
         <p>Stealing a loco takes a few steps. Here is the sequence</p>
 
     <ul>
-      <li>Send a normal MT+ command to acquire a locomotive</li>
+      <li>Send a normal (MT+) command to acquire a locomotive</li>
       <li>
-        WiThrottle sends back an MTS reply, indicating that a steal request
-        is required
+        WiThrottle Server sends back a steal (MTS) reply, indicating that a
+        steal request is required
       </li>
-      <li>Send a steal request for the locomotive</li>
-      <li>Send a release for the locomotive you're stealing</li>
-      <li>Send an add locomotive request </li>
+      <li>Send a steal request (MTS) for the locomotive</li>
     </ul>
 
     <p>Here is an example</p>
@@ -898,20 +898,16 @@ MTA*&lt;;&gt;V30
       </tr>
       <tr>
         <td></td>
-        <td>MT+L41&lt;;&gt;L41</td>
+        <td>MT+L341&lt;;&gt;L341</td>
       </tr>
       <tr>
-        <td>MTSL41&lt;;&gt;L41</td>
+        <td>MTSL341&lt;;&gt;L341</td>
         <td></td>
       </tr>
       <tr>
         <td></td>
-        <td>MT-L41&lt;;&gt;r</td>
+        <td>MTSL341&lt;;&gt;L341</td>
       </tr>
-      <tr>
-          <td></td>
-          <td>MT+L41&lt;;&gt;L41</td>
-        </tr>
       </table>
 
     <p><b>Note:</b> Steal requires JMRI 4.10 or later</p>
@@ -937,20 +933,20 @@ MTA*&lt;;&gt;V30
     <h3>'+' Add to Consist</h3>
 
     <p>Either creates a consist or adds a locomotive to an existing
-    consist. As an example, let's say that consist S123 does <b>not</b>
+    consist. As an example, let's say that consist S74 does <b>not</b>
     exist. The following commands will create a consist with named
     "My consist" with two locos:</p>
 
     <pre class="code">
-RC+&lt;;&gt;S123&lt;;&gt;My consist&lt;:&gt;L40&lt;;&gt;true
-RC+&lt;;&gt;S123&lt;;&gt;My consist&lt;:&gt;L41&lt;;&gt;true
+RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L341&lt;;&gt;true
+RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L342&lt;;&gt;true
 </pre>
 
     <p>The parts of this command are as follows:</p>
 
     <table class="data">
       <tr>
-        <td>S123</td>
+        <td>S74</td>
         <td>The DCC address of the consist</td>
       </tr>
       <tr>
@@ -958,7 +954,7 @@ RC+&lt;;&gt;S123&lt;;&gt;My consist&lt;:&gt;L41&lt;;&gt;true
         <td>The JMRI id (name) of the consist</td>
       </tr>
       <tr>
-        <td>L40</td>
+        <td>L341</td>
         <td>DCC address of the loco to add to the consist</td>
       </tr>
       <tr>
@@ -972,10 +968,10 @@ RC+&lt;;&gt;S123&lt;;&gt;My consist&lt;:&gt;L41&lt;;&gt;true
     <p>Removes a single locomotive from the consist. For example:</p>
 
     <pre class="code">
-RC-&lt;;&gt;S74&lt;:&gt;L40
+RC-&lt;;&gt;S74&lt;:&gt;L341
 </pre>
 
-    <p>Removes DCC address L40 from the consist with the DCC address
+    <p>Removes DCC address L341 from the consist with the DCC address
     of S74.</p>
 
     <h3>'P' Change Position in Consist</h3>
@@ -1001,10 +997,10 @@ RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
     <h3>'R' Remove Consist</h3>
 
     <p>Deletes a consist. For example, the following command deletes
-    the consist with DCC address S122.</p>
+    the consist with DCC address S74.</p>
 
     <pre class="code">
-RCR&lt;;&gt;S122
+RCR&lt;;&gt;S74
     </pre>
 
     <h3>Fast Clock Commands</h3>

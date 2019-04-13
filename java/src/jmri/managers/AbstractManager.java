@@ -179,6 +179,16 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public void register(E s) {
         String systemName = s.getSystemName();
 
+        E existingBean = getBeanBySystemName(systemName);
+        if (existingBean != null) {
+            if (s == existingBean) {
+                log.debug("the named bean is registered twice: {}", systemName);
+            } else {
+                log.error("systemName is already registered: {}", systemName);
+                throw new IllegalArgumentException("systemName is already registered: " + systemName);
+            }
+        }
+
         // clear caches
         cachedSystemNameArray = null;
         cachedSystemNameList = null;
@@ -401,6 +411,34 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         pcs.removePropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
@@ -422,8 +460,36 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         vcs.removeVetoableChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+        vcs.addVetoableChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public VetoableChangeListener[] getVetoableChangeListeners() {
+        return vcs.getVetoableChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
+        return vcs.getVetoableChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+        vcs.removeVetoableChangeListener(propertyName, listener);
+    }
+
     /**
-     * Method to inform all registered listerners of a vetoable change. If the
+     * Method to inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a

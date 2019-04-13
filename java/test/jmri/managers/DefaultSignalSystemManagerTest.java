@@ -1,5 +1,9 @@
 package jmri.managers;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.util.JUnitUtil;
 
@@ -48,6 +52,13 @@ public class DefaultSignalSystemManagerTest {
     @Test
     public void testLoad() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+
+        // Remove all beans in the manager
+        Set<SignalSystem> set = new HashSet<>(d.getNamedBeanSet());
+        set.forEach((b) -> {
+            d.deregister(b);
+        });
+
         d.load();
         Assert.assertTrue(d.getSystemNameList().size() >= 2);
     }

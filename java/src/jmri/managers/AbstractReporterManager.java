@@ -121,8 +121,13 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         // doesn't exist, make a new one
         r = createNewReporter(systemName, userName);
 
-        // save in the maps
-        register(r);
+        // Some implementations of createNewReporter() registers the bean, some
+        // don't. Check if the bean is registered and register it if it isn't
+        // registered.
+        if (getBeanBySystemName(systemName) == null) {
+            // save in the maps
+            register(r);
+        }
 
         return r;
     }

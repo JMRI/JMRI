@@ -49,6 +49,7 @@ public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     public void tearDown() {
         memo=null;
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
     }
