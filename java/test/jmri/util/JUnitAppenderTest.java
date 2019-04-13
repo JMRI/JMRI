@@ -138,7 +138,8 @@ public class JUnitAppenderTest {
         log.warn(msg);
         JUnitAppender.assertWarnMessage(msg);
 
-        log.info("This INFO message was emitted to test the entire logging chain, please don't remove");
+        msg = "This INFO message was emitted to test the entire logging chain, please don't remove";
+        log.info(msg);
     }
 
     @Test
@@ -299,7 +300,8 @@ public class JUnitAppenderTest {
             Assert.assertFalse("post WARN",  JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
             Assert.assertTrue("post INFO",  JUnitAppender.unexpectedMessageSeen(Level.INFO));
-
+            Assert.assertEquals("This INFO message was emitted to test the entire logging chain, please don't remove", JUnitAppender.unexpectedMessageContent(Level.INFO));
+            
             JUnitAppender.unexpectedFatalSeen = cacheFatal;
             JUnitAppender.unexpectedErrorSeen = cacheError;
             JUnitAppender.unexpectedWarnSeen  = cacheWarn; 

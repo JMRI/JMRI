@@ -140,7 +140,7 @@
       <tr> <th>Train Types</th> <td>2</td>     <td>Add Train Type</td></tr>
       <tr> <th>Train Type</th>  <td>3</td>     <td>Delete Train Type</td></tr>
       <tr> <th>Segments</th>    <td>2</td>     <td>Add Segment</td></tr>
-      <tr> <th>Segment</th>     <td>3</td>     <td>Add Station</td><td>Delete Segment</td><td>Graph</td></tr>
+      <tr> <th>Segment</th>     <td>3</td>     <td>Add Station</td><td>Delete Segment</td><td>Graph: Display | Print</td></tr>
       <tr> <th>Station</th>     <td>4</td>     <td>Delete Station</td></tr>
       <tr> <th>Schedules</th>   <td>2</td>     <td>Add Schedule</td></tr>
       <tr> <th>Schedule</th>    <td>3</td>     <td>Add Train</td><td>Delete Schedule</td></tr>
@@ -193,6 +193,8 @@
       <dl>
         <dt><strong>Display train times</strong></dt>
         <dd>When enabled, the minutes portion of the train time is included in the graph.</dd>
+        <dt><strong>Print train graph using two pages</strong></dt>
+        <dd>When enabled, the graph will use two pages instead of one.</dd>
         <dt><strong>Import SGN file</strong></dt>
         <dd>Import a legacy SGN (SchedGen) file.</dd>
         <dt><strong>Import CSV file</strong></dt>
@@ -237,8 +239,9 @@
         <h3>Segment</h3>
         <p>Each layout requires at least one segment.  Large layouts may have
         sub-divisions with each sub-division using its own segment.</p>
-        <p>When a segment is selected, the <strong>Graph</strong> acton button
-        is added.  Select this button to display the train <a href="#graph">graph</a>.
+        <p>When a segment is selected, the Graph <strong>Display</strong> and
+        <strong>Print</strong> action buttons are added.  Select the Display or
+        Print button to display the train <a href="#graph">graph</a>.
         If more than one schedule is defined, a dialog will request the schedule name.</p>
 
         <a name="station" id="station"></a>
@@ -331,7 +334,7 @@
       <a name="graph" id="graph"></a>
       <h2>Timetable Graph</h2>
       <p>The graph provides a graphical view of the data for a Timetable segment and schedule.</p>
-      <p>Select which <a href="#segment">Segment</a> you want to graph from the Segments directory.</p>
+      <p>Select which <a href="#segment">Segment</a> you want to graph from the Segments list.</p>
       <div style="margin-left: 2em">
       <a href="images/TimeTableGraph.png">
       <img src="images/TimeTableGraph.png"

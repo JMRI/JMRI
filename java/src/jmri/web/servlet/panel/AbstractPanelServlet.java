@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-abstract class AbstractPanelServlet extends HttpServlet {
+public abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
     private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class);

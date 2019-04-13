@@ -45,6 +45,7 @@ public class Z21ConfigFrameTest {
     @After
     public void tearDown() {
         memo = null;
+        tc.terminateThreads();
         tc = null;
         JUnitUtil.tearDown();
     }

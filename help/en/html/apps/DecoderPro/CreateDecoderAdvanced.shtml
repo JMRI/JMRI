@@ -851,7 +851,7 @@ selects the different algorithm needed here.
       <a name="splitval" id="splitval"></a>
       <h3>Split Variables - spread over multiple CVs</h3>
 
-      <span class="since">Since <a href="jmri4.15.3.shtml">JMRI 4.15.4</a></span>
+      <span class="since">Since <a href="jmri4.15.5.shtml">JMRI 4.15.5</a></span>
 
       <p>Some decoders use variables that are spread over multiple CVs, contiguous or not.</p>
 

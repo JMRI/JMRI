@@ -2,18 +2,17 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
@@ -80,6 +79,78 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     @Test
     public void testIncludeAddButton(){
          Assert.assertTrue("Default include add button",a.includeAddButton());
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSignalHead");
+    }
+
+    @Test
+    public void testAddThroughDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+
+        // change the combo box to the "Virtual" entry.
+        (new JComboBoxOperator(jf)).selectItem("Virtual");
+
+        //Enter IH1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("IH1");
+        //and press create
+        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        JFrameOperator jfo = new JFrameOperator(f);
+
+        // find the "Add... " button and press it.
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+
+        // change the combo box to the "Virtual" entry.
+        (new JComboBoxOperator(jf)).selectItem("Virtual");
+
+        //Enter IH1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("IH1");
+        //and press create
+        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+
+        // close the add frame
+        jf.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0,tbl.getColumnCount() -1); // edit column is last in light table.
+
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.dispose(f2);
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Override
+    public String getEditFrameName(){
+        return "Edit Signal Head";
     }
 
     // The minimal setup for log4J

@@ -28,6 +28,11 @@ public class RailComTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("RailCom Table Action class description", "RailCom Locos", a.getClassDescription());
     }
 
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddIdTag");
+    }
+
     // The minimal setup for log4J
     @Override
     @Before

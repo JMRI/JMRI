@@ -1313,8 +1313,7 @@ public class WarrantFrame extends WarrantRoute {
         msg = checkLocoAddress();
         if (msg==null && !_isSCWarrant.isSelected()) {
             List<BlockOrder> orders = getOrders();  // valid orders
-            if (_throttleCommands.size() <= orders.size() ||
-                    !_throttleCommands.get(_throttleCommands.size()-1).getBeanDisplayName().equals(orders.get(orders.size()-1).getBlock().getDisplayName())) {
+            if (_throttleCommands.size() <= orders.size() + 1) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             } else {
                 for (int i=0; i<_throttleCommands.size(); i++) {

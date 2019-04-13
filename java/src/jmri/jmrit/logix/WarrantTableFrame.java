@@ -33,6 +33,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -451,7 +453,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
     }
 
-
     /**
      * Return error message if warrant cannot be run.
      *
@@ -460,12 +461,16 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
+        w.deAllocate();
         String msg = null;
         if (w.getRunMode() != Warrant.MODE_NONE) {
             msg = w.getRunModeMessage();
         }
         if (msg == null) {
-            w.deAllocate();
+            msg = _model.checkAddressInUse(w);
+        }
+
+        if (msg == null) {
             msg = w.setRoute(false, null);
             if (msg == null) {
                 msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
@@ -529,8 +534,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 _statusHistory.remove(0);
             }
         }
-
     }
+
+    protected String getStatus() {
+        return _status.getText();
+    }
+
     static String BLANK = "                                                                                                 ";
 
     private final static Logger log = LoggerFactory.getLogger(WarrantTableFrame.class);

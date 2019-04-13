@@ -483,6 +483,12 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- that might not be consistent with this new version
     RMDir /R "$OUTDIR\classes"
 
+	; -- Delete OBE JSON processing files as of JMRI 4.15.5
+    Delete "$OUTDIR\lib\jackson-annotations-2.8.11.jar"
+    Delete "$OUTDIR\lib\jackson-core-2.8.11.jar"
+    Delete "$OUTDIR\lib\jackson-databind-2.8.11.jar"
+    Delete "$OUTDIR\lib\json-schema-validator-0.1.19.jar"
+	
     ; -- Delete insecure jackson jar files as of JMRI 4.11.3
     Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
     Delete "$OUTDIR\lib\jackson-core-2.8.5.jar"
