@@ -64,14 +64,14 @@
       <model model="HDL LocoIO v1.54" productID="154"/>
       <!--filtering model specific options relies on new exclude/include support in compositeValType-->
       <model model="HDL LocoIO v1.53" productID="153"/>
-        <!--Docs: 1.50-1.52 should update to 1.53, same options-->
+        <!--Docs: 1.50-1.52 users should update to 1.53, same options-->
       <model model="HDL LocoIO v1.49" productID="149"/>
       <model model="HDL LocoIO v1.48" productID="148"/>
-        <!--Docs: 1.47 should update to 1.48, same options-->
+        <!--Docs: 1.47 users should update to 1.48, same options-->
       <model model="HDL LocoIO v1.46" productID="146"/>
       <model model="HDL LocoIO v1.45" productID="145"/>
       <model model="HDL LocoIO v1.44" productID="144"/>
-        <!--Docs: 1.43 should update to 1.44, same options-->
+        <!--Docs: 1.43 users should update to 1.44, same options-->
       <model model="HDL LocoIO v1.42" productID="142"/>
       <model model="HDL LocoIO v1.41" productID="141"/>
       <model model="HDL LocoIO v1.40" productID="140"/>
@@ -83,9 +83,15 @@
       <model model="HDL LocoServo v1.03" productID="103"/>
       <model model="HDL LocoServo v1.02" productID="102"/>
       <model model="HDL LocoServo v1.01" productID="101">
-          <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
+        <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
       </model>
 
+      <model model="HDL LocoBooster v3" productID="003">
+        <!--LocoBooster only allows config of ports 1-4 (and special ports 5-6)-->
+      </model>
+      <model model="HDL LocoBooster v4" productID="004">
+        <!--LocoBooster v4 and up support Opcode2 on ports 1-6 -->
+      </model>
       <model model="Original LocoIO" productID="135"/>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
@@ -146,7 +152,7 @@
       <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0" exclude="135,139">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Alternate code:</label>
-        <tooltip>Button sends alternating code, default unselected = fixed code</tooltip>
+        <tooltip>Button sends alternating code, default: unselected = fixed code</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
@@ -427,7 +433,7 @@
 
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
-            <choice xml:lang="de">Ausgang nicht genutzt</choice>
+            <choice xml:lang="de">Pforte nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
             <compositeSetting label="Port1 Config" value="0"/>
             <compositeSetting label="Port1 Value2" value="0"/>
@@ -498,26 +504,26 @@
       </variable>
 
       <!--Port1 Opcode2-->
-      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
         <label>Address:</label>
         <label xml:lang="nl">Adres:</label>
         <tooltip>Port 1 Opcode2 DCC Address (0-2047)</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Config" CV="125" default="0" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Config" CV="125" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <decVal/>
         <label>Config:</label>
         <tooltip>Port 1 Opcode2 Config, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <decVal/>
         <label>Value 2:</label>
         <tooltip>Port 1 Opcode2 Value2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2" exclude="101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <compositeVal>
           <!--Opcode2 Output types, limited set of options-->
           <compositeChoice choice="Opcode2 Off">
@@ -804,7 +810,7 @@
 
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
               <choice>Port Not In Use</choice>
-              <choice xml:lang="de">Ausgang nicht genutzt</choice>
+              <choice xml:lang="de">Pforte nicht benutzt</choice>
               <choice xml:lang="nl">Poort niet in gebruik</choice>
               <compositeSetting label="Port2 Config" value="0"/>
               <compositeSetting label="Port2 Value2" value="0"/>
@@ -1065,7 +1071,7 @@
 
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
               <choice>Port Not In Use</choice>
-              <choice xml:lang="de">Ausgang nicht genutzt</choice>
+              <choice xml:lang="de">Pforte nicht benutzt</choice>
               <choice xml:lang="nl">Poort niet in gebruik</choice>
               <compositeSetting label="Port3 Config" value="0"/>
               <compositeSetting label="Port3 Value2" value="0"/>
@@ -1324,7 +1330,7 @@
 
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
               <choice>Port Not In Use</choice>
-              <choice xml:lang="de">Ausgang nicht genutzt</choice>
+              <choice xml:lang="de">Pforte nicht benutzt</choice>
               <choice xml:lang="nl">Poort niet in gebruik</choice>
               <compositeSetting label="Port4 Config" value="0"/>
               <compositeSetting label="Port4 Value2" value="0"/>
@@ -1375,8 +1381,8 @@
 
       <variable item="Port5 Type" tooltip="Port 5 Config and Value2">
         <compositeVal>
-          <compositeChoiceGroup exclude="101,102,103,104,105,106">
-            <!--inputs and most output types not available on LocoServo boards port 5-->
+          <compositeChoiceGroup exclude="003,004,101,102,103,104,105,106">
+            <!--inputs and most output types not available on LocoServo boards ports 5-12 and LocoBooster ports 5-6-->
             <!--Input types-->
             <compositeChoice choice="Input Toggle switch">
               <choice>Input: Toggle switch</choice>
@@ -1587,16 +1593,25 @@
 
           <!--next output type only available in ports 5-8 on LocoServo-->
           <compositeChoice choice="Output Servo" include="101,102,103,104,105,106">
-            <!-- Servo values are identical to Output Fixed 1 Off, differentiated on tab LocoIO -->
+            <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
             <choice>Output: Servo 1 (2/4 pos on tab LocoIO)</choice>
             <choice xml:lang="nl">Output: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port5 Config" value="128"/>
             <compositeSetting label="Port5 Value2" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
+          <!--next output type fixed for ports 5-6 on LocoBooster-->
+          <compositeChoice choice="Output Servo" include="003,004">
+            <!-- Booster values are identical to Input Occu Active Low, differentiated by PIC version -->
+            <choice>Feedback of Booster Input</choice>
+            <choice xml:lang="nl">Feedback van Booster Ingang</choice>
+            <compositeSetting label="Port5 Config" value="31"/>
+            <compositeSetting label="Port5 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Port Not In Use" exclude="003,004,135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
-            <choice xml:lang="de">Ausgang nicht genutzt</choice>
+            <choice xml:lang="de">Pforte nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
             <compositeSetting label="Port5 Config" value="0"/>
             <compositeSetting label="Port5 Value2" value="0"/>
