@@ -120,7 +120,7 @@ public class TransitTableActionTest extends AbstractTableActionBase {
         Section  s = InstanceManager.getDefault(SectionManager.class).createNewSection("TS1");
         s.addBlock(b1);
         Section  s2 = InstanceManager.getDefault(SectionManager.class).createNewSection("TS2");
-        s.addBlock(b2);
+        s2.addBlock(b2);
         jmri.util.JUnitAppender.assertWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
         jmri.util.JUnitAppender.assertWarnMessage("Block IB13 does not have a user name,may not work correctly in Section IY:AUTO:0001");
     }
