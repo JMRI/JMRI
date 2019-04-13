@@ -98,6 +98,7 @@ public class TransitTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f);
     }
+
     @Override
     public String getEditFrameName(){
         return "Edit Transit";
