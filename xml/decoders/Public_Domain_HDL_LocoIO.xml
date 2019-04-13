@@ -467,91 +467,136 @@
               <compositeSetting label="Port1 Value2" value="0"/>
             </compositeChoice>
 
-            <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
-              <choice>Port Not In Use</choice>
-              <choice xml:lang="de">Pforte nicht benutzt</choice>
-              <choice xml:lang="nl">Poort niet in gebruik</choice>
-              <compositeSetting label="Port1 Config" value="0"/>
-              <compositeSetting label="Port1 Value2" value="0"/>
-            </compositeChoice>
+          <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Pforte nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port1 Config" value="0"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
 
-          </compositeVal>
-          <label>Mode:</label>
-          <label xml:lang="nl">Type:</label>
-        </variable>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
 
-        <!--Port1 Opcode1-->
-        <variable item="Port1 Opcode1 Address" CV="52" mask="XVVVVVVV">
-          <splitVal highCV="53" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
-          <label>Address:</label>
-          <label xml:lang="nl">Adres:</label>
-          <tooltip>Port 1 Opcode1 DCC Address (0-2047)</tooltip>
-        </variable>
+      <!--Port1 Opcode1-->
+      <variable item="Port1 Opcode1 Address" CV="52" mask="XVVVVVVV">
+        <splitVal highCV="53" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 Opcode1 DCC Address (0-2047)</tooltip>
+      </variable>
 
-        <variable item="Port1 Opcode1 Config" CV="51" default="0">
-          <decVal/>
-          <label>Config:</label>
-          <tooltip>Port 1 Opcode1 Config, filled by ComboBox</tooltip>
-        </variable>
+      <variable item="Port1 Opcode1 Config" CV="51" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Opcode1 Config, filled by ComboBox</tooltip>
+      </variable>
 
-        <variable item="Port1 Opcode1 Value2" CV="53" mask="VVVVXXXX" default="0">
-          <decVal/>
-          <label>Value 2:</label>
-          <tooltip>Port 1 Opcode1 Value2, filled by ComboBox</tooltip>
-        </variable>
+      <variable item="Port1 Opcode1 Value2" CV="53" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Opcode1 Value2, filled by ComboBox</tooltip>
+      </variable>
 
-        <variable item="Port1 Opcode1 Type" tooltip="Port 1 Opcode1 Config and Value2">
-          <compositeVal>
-          <!--Opcode1 Output types, limited set of options-->
-            <compositeChoice choice="Opcode1 Off" exclude="135,139,140,141,142,144,145,146,148">
-              <choice>Off</choice>
-              <choice xml:lang="de">inaktiv</choice>
-              <choice xml:lang="nl">Uit</choice>
-              <compositeSetting label="Port1 Opcode1 Config" value="0"/>
-              <compositeSetting label="Port1 Opcode1 Value2" value="0"/>
-            </compositeChoice>
+      <variable item="Port1 Opcode1 Type" tooltip="Port 1 Opcode1 Config and Value2">
+        <compositeVal>
+        <!--Opcode1 Output types, limited set of options-->
+          <compositeChoice choice="Opcode1 Off" exclude="135,139,140,141,142,144,145,146,148">
+            <choice>Off</choice>
+            <choice xml:lang="de">inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="0"/>
+          </compositeChoice>
 
-            <compositeChoice choice="Contact1 Direct">
-              <choice>Contact1 Direct</choice>
-              <compositeSetting label="Port1 Opcode1 Config" value="176"/>
-              <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
-            </compositeChoice>
+          <compositeChoice choice="Contact1 Direct">
+            <choice>Contact1 Direct</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
+          </compositeChoice>
 
-            <compositeChoice choice="Contact1 Indirect">
-              <choice>Contact1 Indirect</choice>
-              <compositeSetting label="Port1 Opcode1 Config" value="177"/>
-              <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
-            </compositeChoice>
+          <compositeChoice choice="Contact1 Indirect">
+            <choice>Contact1 Indirect</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
+          </compositeChoice>
 
-            <compositeChoice choice="Contact2 Direct">
-              <choice>Contact2 Direct</choice>
-              <compositeSetting label="Port1 Opcode1 Config" value="176"/>
-              <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
-            </compositeChoice>
+          <compositeChoice choice="Contact2 Direct">
+            <choice>Contact2 Direct</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
 
-            <compositeChoice choice="Contact2 Indirect">
-              <choice>Contact2 Indirect</choice>
-              <compositeSetting label="Port1 Opcode1 Config" value="177"/>
-              <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
-            </compositeChoice>
+          <compositeChoice choice="Contact2 Indirect">
+            <choice>Contact2 Indirect</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
 
-          </compositeVal>
-          <label>Opcode1:</label>
-        </variable>
+        </compositeVal>
+        <label>Opcode1:</label>
+      </variable>
 
-        <!--Port1 Opcode2-->
-        <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
-          <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
-          <label>Address:</label>
-          <label xml:lang="nl">Adres:</label>
-          <tooltip>Port 1 Opcode2 DCC Address (0-2047)</tooltip>
-        </variable>
+      <!--Port1 Opcode2-->
+      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+        <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 Opcode2 DCC Address (0-2047)</tooltip>
+      </variable>
 
-        <variable item="Port1 Opcode2 Config" CV="125" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
-          <decVal/>
-          <label>Config:</label>
-          <tooltip>Port 1 Opcode2 Config, filled by ComboBox</tooltip>
-        </variable>
+      <variable item="Port1 Opcode2 Config" CV="125" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Opcode2 Config, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Opcode2 Value2, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+        <compositeVal>
+          <!--Opcode2 Output types, limited set of options-->
+          <compositeChoice choice="Opcode2 Off">
+            <choice>Off</choice>
+            <choice xml:lang="de">inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Direct">
+            <choice>Contact1 Direct</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Indirect">
+            <choice>Contact1 Indirect</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Direct">
+            <choice>Contact2 Direct</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Indirect">
+            <choice>Contact2 Indirect</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Opcode2:</label>
+      </variable>
 
         <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
           <decVal/>
