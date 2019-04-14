@@ -23,29 +23,29 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young (c) 2018
  * @author Paul Bender (c) 2018
- * @see CabSignalPane 
+ * @see CabSignalPane
+ * @since 4.13.4
  * 
  */
 public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     private CabSignalManager cabSignalManager;
-
-    public Boolean masterSendCabData = true;
     
     // column order needs to match list in column tooltips
 
     static public final int LOCO_ID_COLUMN = 0;
-    static public final int CURRENT_BLOCK = 1;
-    static public final int BLOCK_DIR = 2;
-    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 3;
-    static public final int NEXT_BLOCK = 4;
-    static public final int NEXT_SIGNAL = 5;
-    static public final int NEXT_ASPECT = 6;
-    static public final int SEND_CABSIG_COLUMN = 7;
+    static public final int SEND_CABSIG_COLUMN = 1;
+    static public final int CURRENT_BLOCK = 2;
+    static public final int BLOCK_DIR = 3;
+    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 4;
+    static public final int NEXT_BLOCK = 5;
+    static public final int NEXT_SIGNAL = 6;
+    static public final int NEXT_ASPECT = 7;
+    static public final int NEXT_ASPECT_ICON = 8;
     
-    static public final int MAX_COLUMN = 8;
+    static public final int MAX_COLUMN = 9;
    
-    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7};
+    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7,8};
  
     CabSignalTableModel(int row, int column) {
         cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
@@ -59,13 +59,14 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     // order needs to match column list top of dtabledatamodel
     static protected final String[] columnToolTips = {
         null, // loco id
+        Bundle.getMessage("CabsigCheckboxTip"),
         Bundle.getMessage("BlockUserName"),
         Bundle.getMessage("BlockDirectionTip"),
         null, // block button
         Bundle.getMessage("NextBlockTip"),
         Bundle.getMessage("NextSignalTip"),
         Bundle.getMessage("NextAspectTip"),
-        Bundle.getMessage("CabsigCheckboxTip")
+        Bundle.getMessage("NextAspectTip"), // aspect icon
 
     }; // Length = number of items in array should (at least) match number of columns
     
@@ -107,6 +108,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 return Bundle.getMessage("NextAspect");
             case SEND_CABSIG_COLUMN:
                 return Bundle.getMessage("SigDataOn");
+            case NEXT_ASPECT_ICON:
+                return Bundle.getMessage("NextAspect");
             default:
                 return "unknown"; // NOI18N
         }
@@ -134,6 +137,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             case NEXT_ASPECT:
                 return new JTextField(10).getPreferredSize().width;
             case SEND_CABSIG_COLUMN:
+                return new JTextField(3).getPreferredSize().width;
+            case NEXT_ASPECT_ICON:
                 return new JTextField(3).getPreferredSize().width;
             default:
                 log.warn("no width found col {}",col);
@@ -164,6 +169,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 return String.class;
             case SEND_CABSIG_COLUMN:
                 return Boolean.class;
+            case NEXT_ASPECT_ICON:
+                return String.class;
             default:
                 log.error("no column class located");
                 return null;
@@ -263,6 +270,21 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                     return mast.getAspect();
                 }
                 return "";
+            case NEXT_ASPECT_ICON:
+                mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
+                if (mast!=null) {
+                    String imageLink = mast.getAppearanceMap().getProperty(mast.getAspect(),"imagelink");
+                    log.debug("imagelink is {}",imageLink);
+                    if ( imageLink != null ) {
+                        String newlink = imageLink.replace("../", "");  // replace is ummutatable
+                        // should start at the resources directory
+                        return newlink;
+                    }
+                    else {
+                        return "";
+                    }
+                }
+                return "";
             case SEND_CABSIG_COLUMN:
                 return cabSignalManager.getCabSignalArray()[row].isCabSignalActive();
             default:
@@ -300,12 +322,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         else if (col == NEXT_ASPECT) {          
         }
         else if (col == SEND_CABSIG_COLUMN) {
-            if ((Boolean)value==true){
-                cabSignalManager.getCabSignalArray()[row].setCabSignalActive((Boolean) value);
-            }
-            else {
-                cabSignalManager.getCabSignalArray()[row].disableCabSignal();
-            }
+            cabSignalManager.getCabSignalArray()[row].setCabSignalActive((Boolean) value);
         }
     }
 
@@ -345,16 +362,12 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         jmri.util.ThreadingUtil.runOnGUI( ()->{
             fireTableDataChanged();
         });
-        log.debug("block b now has direction {}",b.getDirection());
+        log.debug("block {} now has direction {}",b.getUserName(),b.getDirection());
     }
     
-    protected void masterSendCabDataButton(Boolean but){
+    protected void setPanelPauseButton(boolean isPaused){
         for (int i = 0; i < getRowCount(); i++) {
-            if (but){
-                cabSignalManager.getCabSignalArray()[i].getNextMast();
-            } else {
-                cabSignalManager.getCabSignalArray()[i].disableCabSignal();
-            }
+            cabSignalManager.getCabSignalArray()[i].setMasterCabSigPauseActive(isPaused);
         }
     }
 

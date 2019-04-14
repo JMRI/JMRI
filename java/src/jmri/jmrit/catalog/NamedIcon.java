@@ -303,6 +303,7 @@ public class NamedIcon extends ImageIcon {
     /**
      * The following was based on a text-rotating applet from David Risner,
      * available at http://www.risner.org/java/rotate_text.html
+     * Page unavailable as at April 2019
      *
      * @param pImage     Image to transform
      * @param pComponent Component containing the image, needed to obtain a
