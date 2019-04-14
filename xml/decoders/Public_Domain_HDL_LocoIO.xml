@@ -47,7 +47,7 @@
       </revision>
       <revision>
         <revnumber>3</revnumber>
-        <date>2019-04-13</date>
+        <date>2019-04-14</date>
         <authorinitials>EB</authorinitials>
         <revremark>Use compositeVal type values (ports 1-5 for now), updated decoder schema, add LocoServo,
             add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7),
@@ -57,7 +57,7 @@
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
-  <version author="Egbert Broerse" version="3" lastUpdated="20190413"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190414"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -124,7 +124,7 @@
 
       <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0" exclude="101,102,103,104,105,106">
         <enumVal>
-          <enumChoice choice="0" value="0" exclude="101,102,103,104,105,106">
+          <enumChoice choice="0" value="0">
               <choice>Normal Ports</choice>
               <choice xml:lang="de">Normal</choice>
               <choice xml:lang="nl">Normaal</choice>
@@ -161,10 +161,10 @@
         <tooltip>Refresh Ports, default: unselected = off</tooltip>
       </variable>
 
-      <variable CV="0" mask="VXXXXXXX" item="Special Ports" default="0"> <!--exclude="003,101,102,103,135,139,140,141,142,144,145,146,148,149">-->
+      <variable CV="177" item="Special Ports" default="0"> <!-- not used for, but can't exclude for "003,101,102,103,135,139,140,141,142,144,145,146,148,149"-->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Special Ports:</label>
-        <label xml:lang="nl">Speciale Poorten:</label>
+        <label>Special Ports 1-4:</label>
+        <label xml:lang="nl">Speciale Poorten 1-4:</label>
         <tooltip>Use ports 1-4 for Booster status. default: unselected = normal ports</tooltip>
       </variable>
 
@@ -452,7 +452,7 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
-      <!-- displayed while "special ports" = 1: Port1 Config=44. TODO Add for Port2 Config=45, Port3 Config=46, Port4 Config=194 + Value2=0 on ports 1-4-->
+      <!-- displayed while "special ports" = 1: Port1 Config=44, Value2=0 on ports 1-4-->
       <variable item="Port1 Special" tooltip="Port 1-4 set as Special Type - Booster Status">
         <compositeVal>
           <!--Input types-->
@@ -461,12 +461,14 @@
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
             <compositeSetting label="Port1 Config" value="44"/>
+            <compositeSetting label="Port1 Address" value="1"/>
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Special Idle">
             <choice>Special Input: Idle</choice>
             <choice xml:lang="nl">Speciale Ingang: Vrijloop</choice>
             <compositeSetting label="Port1 Config" value="44"/>
+            <compositeSetting label="Port1 Address" value="1"/>
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
         </compositeVal>
@@ -851,6 +853,30 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+        <!-- displayed while "special ports" = 1: Port2 Config=45, Value2=0 on ports 1-4-->
+        <variable item="Port2 Special" tooltip="Port 1-4 set as Special Type - Booster Status">
+            <compositeVal>
+                <!--Input types-->
+                <compositeChoice choice="Special Go2">
+                    <choice>Select...</choice>
+                    <choice xml:lang="de">Auswählen...</choice>
+                    <choice xml:lang="nl">Selecteer...</choice>
+                    <compositeSetting label="Port2 Config" value="45"/>
+                    <compositeSetting label="Port2 Address" value="1"/>
+                    <compositeSetting label="Port2 Value2" value="0"/>
+                </compositeChoice>
+                <compositeChoice choice="Special Go">
+                    <choice>Special Input: Go</choice>
+                    <choice xml:lang="nl">Speciale Ingang: Rijden</choice>
+                    <compositeSetting label="Port2 Config" value="45"/>
+                    <compositeSetting label="Port2 Address" value="1"/>
+                    <compositeSetting label="Port2 Value2" value="0"/>
+                </compositeChoice>
+            </compositeVal>
+            <label>Mode:</label>
+            <label xml:lang="nl">Type:</label>
+        </variable>
+
       <!-- TODO copy and adjust Port2 Opcode1-2 from Port1-->
 
       <!--Port 3 -->
@@ -1111,7 +1137,31 @@
         <label>Mode:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
-      
+
+      <!-- displayed while "special ports" = 1: Port3 Config=46, Value2=0 on ports 1-4-->
+      <variable item="Port3 Special" tooltip="Port 1-4 set as Special Type - Booster Status">
+        <compositeVal>
+            <!--Input types-->
+            <compositeChoice choice="Special Stop2">
+                <choice>Select...</choice>
+                <choice xml:lang="de">Auswählen...</choice>
+                <choice xml:lang="nl">Selecteer...</choice>
+                <compositeSetting label="Port3 Config" value="46"/>
+                <compositeSetting label="Port3 Address" value="1"/>
+                <compositeSetting label="Port3 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Special Stop">
+                <choice>Special Input: Stop</choice>
+                <choice xml:lang="nl">Speciale Ingang: Rijden</choice>
+                <compositeSetting label="Port3 Config" value="46"/>
+                <compositeSetting label="Port3 Address" value="1"/>
+                <compositeSetting label="Port3 Value2" value="0"/>
+            </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+
       <!-- Port 4 -->
       <variable item="Port4 Address" CV="13" mask="XVVVVVVV">
         <!-- CV4 ignores bit 8 in port address -->
@@ -1366,6 +1416,30 @@
               <compositeSetting label="Port4 Value2" value="0"/>
           </compositeChoice>
 
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+
+      <!-- displayed while "special ports" = 1: Port4 Config=194, Value2=0 on ports 1-4-->
+      <variable item="Port4 Special" tooltip="Port 1-4 set as Special Type - Booster Status">
+        <compositeVal>
+            <!--Input types-->
+            <compositeChoice choice="Special Status2">
+                <choice>Select...</choice>
+                <choice xml:lang="de">Auswählen...</choice>
+                <choice xml:lang="nl">Selecteer...</choice>
+                <compositeSetting label="Port4 Config" value="194"/>
+                <compositeSetting label="Port4 Address" value="1"/>
+                <compositeSetting label="Port4 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Special Status">
+                <choice>Special Output: Booster Status</choice>
+                <choice xml:lang="nl">Speciale Uitgang: Booster Status</choice>
+                <compositeSetting label="Port4 Config" value="194"/>
+                <compositeSetting label="Port4 Address" value="1"/>
+                <compositeSetting label="Port4 Value2" value="0"/>
+            </compositeChoice>
         </compositeVal>
         <label>Mode:</label>
         <label xml:lang="nl">Type:</label>
@@ -2152,13 +2226,18 @@
             <display item="Blink Rate"/>
             <display item="Blink Rate" format="hslider" label=""/>
         </row>
-        <display item="Action Mode"/>
-
+        <row>
+          <display item="Action Mode"/>
+        </row>
         <display item="Alternate Mode" format="checkbox"/>
         <display item="Port Refresh" format="checkbox"/>
         <display item="Board Active High" format="checkbox"/>
         <!-- next item must exist as qualifier variable, but not shown/supported in older versions-->
-        <display item="Special Ports" format="checkbox" exclude="003,101,102,103,135,139,140,141,142,144,145,146,148,149"/>
+        <group exclude="003,101,102,103,135,139,140,141,142,144,145,146,148,149">
+          <row>
+            <display item="Special Ports" format="checkbox"/>
+          </row>
+        </group>
       </column>
     </pane>
 
@@ -2247,12 +2326,34 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 2&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 2&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <row>
-              <display item="Port2 Address"/>
-              <display item="Port2 HiAddress"/>
-              <display item="Port2 LowAddress"/>
-            </row>
-            <display item="Port2 Type"/>
+              <group>
+                <qualifier>
+                  <variableref>Special Ports</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+                </qualifier>
+                <row>
+                  <display item="Port2 Address"/>
+                  <display item="Port2 HiAddress"/>
+                  <display item="Port2 LowAddress"/>
+                </row>
+                <display item="Port2 Type"/>
+              </group>
+
+            <group>
+              <qualifier>
+                  <variableref>Special Ports</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+              </qualifier>
+              <label>
+                  <text>Address N/A                           Opcode N/A</text>
+              </label>
+              <row>
+                  <display item="Port2 Special"/>
+              </row>
+            </group>
+
             <row>
               <display item="Port2 Config"/>
               <display item="Port2 Value2"/>
@@ -2274,12 +2375,34 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 3&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 3&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <row>
-              <display item="Port3 Address"/>
-              <display item="Port3 HiAddress"/>
-              <display item="Port3 LowAddress"/>
-            </row>
-            <display item="Port3 Type"/>
+            <group>
+              <qualifier>
+                  <variableref>Special Ports</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+              </qualifier>
+              <row>
+                  <display item="Port3 Address"/>
+                  <display item="Port3 HiAddress"/>
+                  <display item="Port3 LowAddress"/>
+              </row>
+              <display item="Port3 Type"/>
+            </group>
+
+            <group>
+              <qualifier>
+                  <variableref>Special Ports</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+              </qualifier>
+              <label>
+                  <text>Address N/A                           Opcode N/A</text>
+              </label>
+              <row>
+                  <display item="Port3 Special"/>
+              </row>
+            </group>
+
             <row>
               <display item="Port3 Config"/>
               <display item="Port3 Value2"/>
@@ -2301,12 +2424,33 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 4&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 4&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <row>
-              <display item="Port4 Address"/>
-              <display item="Port4 HiAddress"/>
-              <display item="Port4 LowAddress"/>
-            </row>
+            <group>
+              <qualifier>
+                  <variableref>Special Ports</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+              </qualifier>
+              <row>
+                  <display item="Port4 Address"/>
+                  <display item="Port4 HiAddress"/>
+                  <display item="Port4 LowAddress"/>
+              </row>
             <display item="Port4 Type"/>
+            </group>
+            <group>
+              <qualifier>
+                  <variableref>Special Ports</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+              </qualifier>
+              <label>
+                  <text>Address N/A                           Opcode N/A</text>
+              </label>
+              <row>
+                  <display item="Port4 Special"/>
+              </row>
+            </group>
+
             <row>
               <display item="Port4 Config"/>
               <display item="Port4 Value2"/>
@@ -2640,10 +2784,10 @@
           </label>
           <separator/>
         <label>
-          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.11 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
-          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.11 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
-          <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.11 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
-          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.11 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.15.5 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.15.5 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.15.5 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.15.5 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <separator/>
           <label>
