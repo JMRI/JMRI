@@ -66,8 +66,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Block block = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Block block, String name, String type, JsonNode data, Locale locale) throws JsonException {
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 block.setValue(null);
@@ -115,7 +114,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 }
             }
         }
-        return this.doGet(type, name, data, locale);
+        return this.doGet(block, name, type, locale);
     }
 
     @Override

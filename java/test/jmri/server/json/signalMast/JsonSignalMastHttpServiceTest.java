@@ -44,13 +44,11 @@ public class JsonSignalMastHttpServiceTest {
         Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
         // verify initial aspect/state is "Unknown"
         Assert.assertEquals(JSON.ASPECT_UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asText());
-        // retrieve by username, should fail
-        try {
-            result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
-            Assert.fail("Excepted exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Username not found as not system name", 404, ex.getCode());
-        }
+        // retrieve by username
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
+        Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
         // change to Clear, then verify change
         s.setAspect("Clear");
         result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
