@@ -132,11 +132,17 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0,tbl.getColumnCount() -1); // edit column is last in light table.
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
+    }
+
+    @Override
+    public String getEditFrameName(){
+        return Bundle.getMessage("TitleEditLight");
     }
 
     // The minimal setup for log4J
