@@ -20,7 +20,7 @@ public class CbusNodeEventTableDataModelTest {
     @Test
     public void testCTor() {
         
-        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
+        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             new CanSystemConnectionMemo(), 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
         
@@ -34,7 +34,7 @@ public class CbusNodeEventTableDataModelTest {
         TrafficControllerScaffold tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         
-        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
+        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
         Assert.assertTrue("default rowcount", t.getRowCount() == 0 );
@@ -78,7 +78,10 @@ public class CbusNodeEventTableDataModelTest {
         TrafficControllerScaffold tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         
-        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
+        jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane mainpane = new 
+            jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane();
+        
+        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( mainpane,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
         CbusNode myNode = new CbusNode(memo,12345);        
@@ -152,6 +155,8 @@ public class CbusNodeEventTableDataModelTest {
         t.removeRow(0);
         Assert.assertTrue( "Node manages the events, not the table",t.getRowCount()== 1 );
         
+        mainpane.dispose();
+        mainpane = null;
         nodeModel.dispose();
         nodeModel = null;
         myNode.dispose();
