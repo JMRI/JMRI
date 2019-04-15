@@ -281,7 +281,7 @@ public class SwitchboardEditor extends Editor {
         checkboxPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         // autoItemRange checkbox on panel
         autoItemRange.setSelected(autoItemRange());
-        log.debug("hideUnconectedBox set to {}", autoItemRange.isSelected());
+        log.debug("hideUnconnectedBox set to {}", autoItemRange.isSelected());
         autoItemRange.addActionListener((ActionEvent event) -> {
             setAutoItemRange(autoItemRange.isSelected());
             autoItemRangeBox.setSelected(autoItemRange()); // also (un)check the box on the menu
@@ -291,7 +291,7 @@ public class SwitchboardEditor extends Editor {
         autoItemRange.setToolTipText(Bundle.getMessage("AutoItemRangeTooltip"));
         // hideUnconnected checkbox on panel
         hideUnconnected.setSelected(hideUnconnected());
-        log.debug("hideUnconectedBox set to {}", hideUnconnected.isSelected());
+        log.debug("hideUnconnectedBox set to {}", hideUnconnected.isSelected());
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(hideUnconnected()); // also (un)check the box on the menu
