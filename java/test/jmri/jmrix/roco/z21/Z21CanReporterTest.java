@@ -12,6 +12,9 @@ import org.junit.*;
 
 public class Z21CanReporterTest extends jmri.implementation.AbstractRailComReporterTest {
 
+   private Z21SystemConnectionMemo memo = null;
+   private Z21InterfaceScaffold tc = null; 
+
    @Test
    public void testRailComReply(){
        Z21CanReporter zr = (Z21CanReporter) r;
@@ -134,8 +137,8 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
+        memo = new Z21SystemConnectionMemo();
+        tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         r = new Z21CanReporter("ZRabcd:1","hello world",memo);
 
@@ -144,7 +147,10 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
    @Override
    @After
    public void tearDown(){
-	r = null;
+	    r = null;
+        tc.terminateThreads();
+        memo = null;
+        tc = null;
         JUnitUtil.tearDown();
    }
 
