@@ -538,7 +538,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -556,6 +556,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>JSON protocol documentation updated. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
+            <li>JSON services no longer automatically listen for changes to objects provided to a client unless the client explicitly requests the object. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
+            <li>NamedBeans now allow property change listeners to listen only to specified properties. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
         </ul>
 
