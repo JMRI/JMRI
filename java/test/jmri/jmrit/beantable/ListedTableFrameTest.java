@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -19,6 +20,19 @@ public class ListedTableFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ListedTableFrame t = new ListedTableFrame();
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testShowAndClose() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ListedTableFrame t = new ListedTableFrame();
+        t.initComponents();
+        t.setVisible(true);
+        JFrameOperator fo = new JFrameOperator(t);
+
+        // It's up at this point, and can be manipulated
+        // Ask to close window
+        fo.requestClose();
     }
 
     // The minimal setup for log4J
