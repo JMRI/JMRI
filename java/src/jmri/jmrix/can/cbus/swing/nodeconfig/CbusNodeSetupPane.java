@@ -242,9 +242,6 @@ public class CbusNodeSetupPane extends JPanel {
         catch( NullPointerException e ) {
             // on startup no node selected which will cause this
         }
-        
-        
-        
     }
     
     private boolean CANID_DIALOGUE_OPEN = false;

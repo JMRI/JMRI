@@ -181,7 +181,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         nodeToBeTaughtButtonPane.add(nodeToBeTaughtPane);
         
-        nodeToBeTaughtButton = new JButton(("Update Node"));
+        nodeToBeTaughtButton = new JButton(Bundle.getMessage("UpdateNodeButton"));
         
         teachNvsCheckBox = new JCheckBox("Teach NV's");
         teachEventsCheckBox = new JCheckBox("Teach Events");
@@ -239,7 +239,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         validate();
         repaint();
         
-        setTitle(title());
+        setTitle(getTitle());
         setVisible(true);
         
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -644,9 +644,9 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         }
     }
     
-    private String title() {
-        String title = "MERG CBUS Restore Node from FCU File";
-        return title;
+    @Override
+    public String getTitle() {
+        return Bundle.getMessage("FcuImportTitle");
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeRestoreFcuFrame.class);

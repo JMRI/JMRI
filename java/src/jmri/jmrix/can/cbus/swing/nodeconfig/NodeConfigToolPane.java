@@ -522,7 +522,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
 
     protected void setEditNvActive( Boolean state ) {
         editNvWindowActive = state;
-        nodevarPane.editButton.setEnabled(!state);
+        if ( nodevarPane.editButton != null ) {
+            nodevarPane.editButton.setEnabled(!state);
+        }
     }
 
     /**
@@ -534,6 +536,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNodeConfig"));
         }
         return Bundle.getMessage("MenuItemNodeConfig");
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane";
     }
 
     /**

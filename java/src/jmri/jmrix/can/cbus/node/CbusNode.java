@@ -549,7 +549,7 @@ public class CbusNode implements CanListener {
     // expected response NVANS
     protected void sendNextNVToFetch(){
         
-        if ( nextNvTimerTask != null ) {
+        if ( hasActiveTimers() ) {
             return;
         }
         
@@ -738,14 +738,17 @@ public class CbusNode implements CanListener {
             nextEvInArray++;
         }
         
-        if ( nextEvInArray == eventsToTeachArray.size() ) {
+        if ( nextEvInArray >= eventsToTeachArray.size() ) {
             log.debug("all done");
             
             TEACH_OUTSTANDING_EVS = false;
             send.nodeExitLearnEvMode( getNodeNumber() );
-            
-            log.info("Completed Event Write with {} error(s), node {}.", sendEvErrorCount , getNodeNumberName() );
-            
+            if ( sendEvErrorCount==0 ) {
+                log.info("Completed Event Write with No errors, node {}.", getNodeNumberName() );
+            }
+            else {
+                log.warn("Aborted Event Write with errors, node {}.", getNodeNumberName() );
+            }
             // notify ui's
             if ( evEditFrame != null ) {
                 ThreadingUtil.runOnGUIDelayed( () -> {
@@ -755,7 +758,6 @@ public class CbusNode implements CanListener {
             }
             if ( evEditFcuFrame != null ) {
                 ThreadingUtil.runOnGUIDelayed( () -> {
-                    // nvEditFcuFrame.notifyLearnEvoutcome(1,"Node completes teaching events with " + sendEvErrorCount + " errors" );
                     evEditFcuFrame.teachEventsComplete(sendEvErrorCount);
                     evEditFcuFrame = null;
                 },50 );
@@ -972,12 +974,14 @@ public class CbusNode implements CanListener {
         return count;
     }
 
+    private int fetchNvTimeoutCount = 0;
     private TimerTask nextNvTimerTask;
     
     private void clearNextNvVarTimeout(){
         if (nextNvTimerTask != null ) {
             nextNvTimerTask.cancel();
             nextNvTimerTask = null;
+            fetchNvTimeoutCount = 0;
         }
     }
     
@@ -986,19 +990,31 @@ public class CbusNode implements CanListener {
             @Override
             public void run() {
                 nextNvTimerTask = null;
-                log.info("NV Fetch from node {} timeout",getNodeNumber() ); // 
+                fetchNvTimeoutCount++;
+                if ( fetchNvTimeoutCount == 1 ) {
+                    log.info("NV Fetch from node {} timed out",getNodeNumber() ); // 
+                }
+                if ( fetchNvTimeoutCount == 10 ) {
+                    log.info("Aborting NV Fetch from node {}",getNodeNumber() ); //
+                    _nvArray=null;
+                    setParameter(5,-1); // reset number of NV's to unknown and force refresh
+                }
+                
                 tableModel.triggerUrgentFetch();
+                
             }
         };
         TimerUtil.schedule(nextNvTimerTask, SINGLE_MESSAGE_TIMEOUT_TIME);
     }
 
+    private int fetchEvVarTimeoutCount = 0;
     private TimerTask nextEvTimerTask;
     
     private void clearNextEvVarTimeout(){
         if (nextEvTimerTask != null ) {
             nextEvTimerTask.cancel();
             nextEvTimerTask = null;
+            fetchEvVarTimeoutCount = 0;
         }
     }
     
@@ -1007,7 +1023,16 @@ public class CbusNode implements CanListener {
             @Override
             public void run() {
                 nextEvTimerTask = null;
-                log.debug("resuming event variable fetch from node {}",getNodeNumber() );
+                fetchEvVarTimeoutCount++;
+                if ( fetchEvVarTimeoutCount == 1 ) {
+                    log.info("Event variable fetch from node {} timeout",getNodeNumberName() );
+                }
+                if ( fetchEvVarTimeoutCount == 10 ) {
+                    log.info("Aborting Event variable fetch from node {} timeout",getNodeNumberName() );
+                    resetNodeEvents();
+                    fetchEvVarTimeoutCount = 0;
+                }
+                
                 tableModel.triggerUrgentFetch();
             }
         };
@@ -1023,13 +1048,14 @@ public class CbusNode implements CanListener {
             numEvTimerTask.cancel();
             numEvTimerTask = null;
         }
+        numEvTimeoutCount = 0;
     }
     
     private void setNumEvTimeout() {
         numEvTimerTask = new TimerTask() {
             @Override
             public void run() {
-                clearNumEvTimeout();
+                numEvTimerTask = null;
                 if ( getTotalNodeEvents() < 0 ) {
                     
                     numEvTimeoutCount++;
@@ -1041,6 +1067,7 @@ public class CbusNode implements CanListener {
                     if ( numEvTimeoutCount == 10 ) {
                         log.info("Aborting requests for Total Events from node {}", getNodeNumberName() );
                         resetNodeEvents();
+                        numEvTimeoutCount = 0;
                     }
                 }
             }
@@ -1105,7 +1132,7 @@ public class CbusNode implements CanListener {
                 }
                 paramRequestTimeoutCount++;
                 if ( paramRequestTimeoutCount == 10 ) {
-                    log.info("Aborting parameter requests for {}",getNodeNumberName() );
+                    log.info("Aborting parameter requests for node {}",getNodeNumberName() );
                     setParameters( new int[]{ 8,0,0,0,0,0,0,0,0 } );
                 }
             }
@@ -1151,10 +1178,13 @@ public class CbusNode implements CanListener {
         sendEditEvTask = new TimerTask() {
             @Override
             public void run() {
-                log.info("Late response from node while teaching event");
+                log.info("Late / no response from node while teaching event");
                 sendEditEvTask = null;
                 sendEvErrorCount++;
-               // teachNewEvLoop();
+                
+                // stop loop and take node out of learn mode
+                nextEvInArray=999;
+                teachNewEvLoop();
             }
         };
         TimerUtil.schedule(sendEditEvTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
@@ -1175,8 +1205,10 @@ public class CbusNode implements CanListener {
             public void run() {
                 log.warn("Late response from node while request CAN ID Self Enumeration");
                 sendEnumTask = null;
+                // popup dialogue?
+                
                
-               // popup dialogue?
+               
             }
         };
         TimerUtil.schedule(sendEnumTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
@@ -1189,11 +1221,7 @@ public class CbusNode implements CanListener {
             return;
         }
         
-        if (allEvTimerTask != null ){
-            return;
-        }
-        
-        if (nextEvTimerTask != null) {
+        if ( hasActiveTimers() ){
             return;
         }
         
@@ -1211,10 +1239,19 @@ public class CbusNode implements CanListener {
                 int index = _nodeEvents.get(i).getIndex();
                 int nextevvar = _nodeEvents.get(i).getNextOutstanding();
                 
-                // start timer
-                setNextEvVarTimeout();
-                send.rEVAL( getNodeNumber(), index, nextevvar );
-                return;
+                if ( index > 0 ) {
+                
+                    // start timer
+                    setNextEvVarTimeout();
+                    send.rEVAL( getNodeNumber(), index, nextevvar );
+                    return;
+                }
+                else { // if index < 0 event index is invalid so attempt refetch.
+                    // reset events
+                    log.info("Invalid index, resetting events for node {}", getNodeNumberName() );
+                    _nodeEvents = null;
+                    return;
+                }
             }
         }
     }
@@ -1309,7 +1346,7 @@ public class CbusNode implements CanListener {
     
     public void requestParam(int param){
         
-        if ( allParamTask != null ){
+        if ( hasActiveTimers() ){
             return;
         }
         
