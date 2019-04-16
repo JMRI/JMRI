@@ -119,8 +119,9 @@ public class SwitchboardEditor extends Editor {
         Bundle.getMessage("Symbols")
     };
     private JComboBox<String> switchShapeList;
-    private final List<String> beanManuPrefixes = new ArrayList<>();
+    private List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
+    private int choice;
     private TitledBorder border;
     private final String interact = Bundle.getMessage("SwitchboardInteractHint");
     private final String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
@@ -243,10 +244,10 @@ public class SwitchboardEditor extends Editor {
             List<jmri.Manager<?>> managerList = proxy.getManagerList(); // picks up all managers to fetch
             for (int x = 0; x < managerList.size(); x++) {
                 String manuPrefix = managerList.get(x).getSystemPrefix();
-                log.debug("Prefix = [{}]", manuPrefix);
+                log.debug("Prefix{} = [{}]", x, manuPrefix);
                 String manuName = ConnectionNameFromSystemName.getConnectionName(manuPrefix);
-                log.debug("Connection name = [{}]", manuName);
-                beanManuNames.addItem(manuName); // add to comboBox
+                log.debug("Connection name {} = [{}]", x, manuName);
+                beanManuNames.addItem(manuName);  // add to comboBox
                 beanManuPrefixes.add(manuPrefix); // add to list
             }
         } else {
@@ -255,7 +256,7 @@ public class SwitchboardEditor extends Editor {
             beanManuNames.addItem(manuName);
             beanManuPrefixes.add(manuPrefix); // add to list (as only item)
         }
-        beanManuNames.setSelectedIndex(0);
+        beanManuNames.setSelectedIndex(0); // defaults to Internal on init()
         beanManuNames.setActionCommand(MANU_COMMAND);
         beanManuNames.addActionListener(this);
         beanSetupPane.add(beanManuNames);
@@ -267,7 +268,7 @@ public class SwitchboardEditor extends Editor {
         JLabel switchShapeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SwitchShape")));
         switchShapePane.add(switchShapeTitle);
         switchShapeList = new JComboBox<>(switchShapeStrings);
-        switchShapeList.setSelectedIndex(0); // select Button in comboBox
+        switchShapeList.setSelectedIndex(0); // select Button choice in comboBox
         switchShapeList.setActionCommand(SWITCHTYPE_COMMAND);
         switchShapeList.addActionListener(this);
         switchShapePane.add(switchShapeList);
@@ -281,7 +282,7 @@ public class SwitchboardEditor extends Editor {
         checkboxPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         // autoItemRange checkbox on panel
         autoItemRange.setSelected(autoItemRange());
-        log.debug("hideUnconnectedBox set to {}", autoItemRange.isSelected());
+        log.debug("autoItemRangeBox set to {}", autoItemRange.isSelected());
         autoItemRange.addActionListener((ActionEvent event) -> {
             setAutoItemRange(autoItemRange.isSelected());
             autoItemRangeBox.setSelected(autoItemRange()); // also (un)check the box on the menu
@@ -302,11 +303,7 @@ public class SwitchboardEditor extends Editor {
 
         switchboardLayeredPane.setLayout(new GridLayout(3, 8)); // initial layout params
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
-        // Add at least 1 switch to pane to create switchList:
-        addSwitchRange(1, initialMax,
-                beanTypeList.getSelectedIndex(),
-                beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
-                switchShapeList.getSelectedIndex());
+        // Add at least 1 switch to pane to create switchList: done later, would be deleted soon
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
@@ -404,6 +401,7 @@ public class SwitchboardEditor extends Editor {
 
         switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) columns.getValue() % range, 1),
                 (Integer) columns.getValue())); // vertical, horizontal
+        log.debug("adding range for manu index {}", beanManuNames.getSelectedIndex());
         addSwitchRange((Integer) minSpinner.getValue(),
                 (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
@@ -442,6 +440,7 @@ public class SwitchboardEditor extends Editor {
         BeanSwitch _switch;
         NamedBean nb;
         String _manu = manuPrefix; // cannot use All group as in Tables
+        log.debug("_manu = {}", _manu);
         String _insert = "";
         if (_manu.startsWith("M")) {
             _insert = "+"; // for CANbus.MERG On event
@@ -1011,7 +1010,7 @@ public class SwitchboardEditor extends Editor {
      * @param manuPrefix connection prefix
      */
     public void setSwitchManu(String manuPrefix) {
-        int choice = 0;
+        choice = 0;
         for (int i = 0; i < beanManuPrefixes.size(); i++) {
             if (beanManuPrefixes.get(i).equals(manuPrefix)) {
                 choice = i;
@@ -1020,6 +1019,7 @@ public class SwitchboardEditor extends Editor {
         }
         try {
             beanManuNames.setSelectedItem(beanManuPrefixes.get(choice));
+            log.debug("beanManuNames combo set to {} for {}", choice, manuPrefix);
         } catch (IllegalArgumentException e) {
             log.error("invalid connection [{}] in Switchboard", manuPrefix);
         }
