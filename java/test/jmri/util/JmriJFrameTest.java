@@ -19,7 +19,9 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        frame = new JmriJFrame("JmriJFrame ConstructorTest");
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new JmriJFrame("JmriJFrame ConstructorTest");
+        }
     }
 
     @After
