@@ -121,7 +121,6 @@ public class SwitchboardEditor extends Editor {
     private JComboBox<String> switchShapeList;
     private List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
-    private int choice;
     private TitledBorder border;
     private final String interact = Bundle.getMessage("SwitchboardInteractHint");
     private final String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
@@ -1010,7 +1009,7 @@ public class SwitchboardEditor extends Editor {
      * @param manuPrefix connection prefix
      */
     public void setSwitchManu(String manuPrefix) {
-        choice = 0;
+        int choice = 0;
         for (int i = 0; i < beanManuPrefixes.size(); i++) {
             if (beanManuPrefixes.get(i).equals(manuPrefix)) {
                 choice = i;
@@ -1018,7 +1017,7 @@ public class SwitchboardEditor extends Editor {
             }
         }
         try {
-            beanManuNames.setSelectedItem(beanManuPrefixes.get(choice));
+            beanManuNames.setSelectedIndex(choice);
             log.debug("beanManuNames combo set to {} for {}", choice, manuPrefix);
         } catch (IllegalArgumentException e) {
             log.error("invalid connection [{}] in Switchboard", manuPrefix);
