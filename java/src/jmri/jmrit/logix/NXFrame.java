@@ -62,7 +62,7 @@ public class NXFrame extends WarrantRoute {
     private JButton _originUnits;
     private final JTextField _destDist = new JTextField(6);
     private JButton _destUnits;
-    private JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));;
+    private JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));
     private JTextField _rampIncre = new JTextField(6);
     private final JRadioButton _forward = new JRadioButton();
     private final JRadioButton _reverse = new JRadioButton();
