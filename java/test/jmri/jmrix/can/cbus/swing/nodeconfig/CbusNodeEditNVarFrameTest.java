@@ -8,8 +8,6 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -18,18 +16,10 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Test simple functioning of CbusNodeEditNVarFrame
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016 2019
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeEditNVarFrameTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeEditNVarFrame t = new CbusNodeEditNVarFrame(null);
-        Assert.assertNotNull("exists",t);
-        t = null;
-    }
+public class CbusNodeEditNVarFrameTest extends jmri.util.JmriJFrameTestBase {
     
     @Test
     public void testCtorWithMain() {
@@ -90,17 +80,24 @@ public class CbusNodeEditNVarFrameTest {
     TrafficControllerScaffold tcis;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new CbusNodeEditNVarFrame(null);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
+
         memo = null;
         tcis = null;
+        super.tearDown();
         JUnitUtil.tearDown();
     }
 

@@ -56,7 +56,9 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     @After
     public void tearDown() {
         memo.dispose();
+        lnp.terminateThreads();
         lnp = null;
+        apc.dispose();
         apc = null;
         memo = null;
         istream = null;

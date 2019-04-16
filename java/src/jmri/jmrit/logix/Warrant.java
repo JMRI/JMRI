@@ -1646,6 +1646,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 _waitForBlock = true;                    
             } else {
                 _waitForBlock = false;
+                _waitForWarrant = false;
             }
             if (!_waitForSignal && !_waitForBlock && !_waitForWarrant) {
                 getBlockOrderAt(_idxCurrentOrder).setPath(this);

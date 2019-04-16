@@ -9,8 +9,6 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -22,18 +20,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeEditEventFrameTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeEditEventFrame t = new CbusNodeEditEventFrame(null);
-        Assert.assertNotNull("exists",t);
-        
-        t.dispose();
-        t = null;
-    }
-    
+public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
+ 
     @Test
     public void testCtorWithMainPane() {
         
@@ -107,20 +95,26 @@ public class CbusNodeEditEventFrameTest {
     TrafficControllerScaffold tcis;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new CbusNodeEditEventFrame(null,null);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
         
         memo = null;
         tcis = null;
-        
+        super.tearDown(); 
         JUnitUtil.tearDown();
+       
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);

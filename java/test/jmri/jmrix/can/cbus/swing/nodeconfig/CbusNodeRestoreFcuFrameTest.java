@@ -7,27 +7,18 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * Test simple functioning of CbusNodeEditEventFrame
+ * Test simple functioning of CbusNodeRestoreFcuFrame
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016, 2019
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeRestoreFcuFrameTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeRestoreFcuFrame t = new CbusNodeRestoreFcuFrame(null);
-        Assert.assertNotNull("exists",t);
-    }
+public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
     
     @Test
     public void testInit() {
@@ -72,13 +63,21 @@ public class CbusNodeRestoreFcuFrameTest {
     
     CanSystemConnectionMemo memo;
 
+
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+
         memo = new CanSystemConnectionMemo();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new CbusNodeRestoreFcuFrame(null);
+        }
+
     }
 
     @After
+    @Override
     public void tearDown() {
         
         memo = null;
