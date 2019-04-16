@@ -858,6 +858,7 @@ public class CircuitBuilder {
         PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
 
         Iterator<Positionable> it = _editor.getContents().iterator();
+        ArrayList<PortalIcon> removeList = new ArrayList<>();
         while (it.hasNext()) {
             Positionable pos = it.next();
             // if (log.isDebugEnabled()) log.debug("class: "+pos.getClass().getName());
@@ -875,16 +876,20 @@ public class CircuitBuilder {
                 Portal portal = portalMgr.getByUserName(name);
                 if (portal == null) {
                     log.error("No Portal for PortalIcon called \"" + name + "\". Discarding icon.");
-                    pIcon.remove();
+                    removeList.add(pIcon);
                 } else {
                     PortalIcon pi = _portalIconMap.get(name);
                     if (pi != null) {
                         log.error("Removing duplicate PortalIcon for Portal \"" + name + "\".");
-                        pi.remove();
+                        removeList.add(pi);
                     }
                     _portalIconMap.put(name, pIcon);
                 }
             }
+        }
+        Iterator<PortalIcon> its = removeList.iterator();
+        while (its.hasNext()) {
+            its.next().remove();
         }
         Iterator<Entry<OBlock, ArrayList<Positionable>>> iters = _circuitMap.entrySet().iterator();
         while (iters.hasNext()) {

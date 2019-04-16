@@ -370,9 +370,9 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS0;7",NameValidity.INVALID,l.validSystemNameFormat("MS0;7"));
         Assert.assertEquals("MS+N17E0",NameValidity.INVALID,l.validSystemNameFormat("MS+N17E0"));
         Assert.assertEquals("MS+N17E00",NameValidity.INVALID,l.validSystemNameFormat("MS+N17E00"));
-        Assert.assertEquals("MS+N0E17",NameValidity.INVALID,l.validSystemNameFormat("MS+N0E17"));
-        Assert.assertEquals("MS+N00E17",NameValidity.INVALID,l.validSystemNameFormat("MS+N00E17"));
-        Assert.assertEquals("MS+0E17",NameValidity.INVALID,l.validSystemNameFormat("MS+0E17"));
+        Assert.assertEquals("MS+N0E17",NameValidity.VALID,l.validSystemNameFormat("MS+N0E17"));
+        Assert.assertEquals("MS+N00E17",NameValidity.VALID,l.validSystemNameFormat("MS+N00E17"));
+        Assert.assertEquals("MS+0E17",NameValidity.VALID,l.validSystemNameFormat("MS+0E17"));
         Assert.assertEquals("MS0E17",NameValidity.INVALID,l.validSystemNameFormat("MS0E17"));
         Assert.assertEquals("MS+N65535e65536",NameValidity.INVALID,l.validSystemNameFormat("MS+N65535e65536"));
         Assert.assertEquals("MS+N65536e65535",NameValidity.INVALID,l.validSystemNameFormat("MS+N65536e65535"));

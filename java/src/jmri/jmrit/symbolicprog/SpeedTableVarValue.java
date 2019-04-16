@@ -21,7 +21,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -420,7 +420,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             Component v = decVal.getCommonRep();
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                     + " " + (i + 1);
-            ((JTextField) v).setToolTipText(PaneProgPane.addCvDescription(start, "CV " + cvList[i], null));
+            ((JTextField) v).setToolTipText(CvUtil.addCvDescription(start, "CV " + cvList[i], null));
             ((JComponent) v).setBorder(null);  // pack tighter
 
             if (mfx && (i == 0 || i == (nValues - 1))) {
@@ -902,7 +902,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // tooltip label
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                     + " " + step;
-            setToolTipText(PaneProgPane.addCvDescription(start, "CV " + var.number(), null));
+            setToolTipText(CvUtil.addCvDescription(start, "CV " + var.number(), null));
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                 @Override

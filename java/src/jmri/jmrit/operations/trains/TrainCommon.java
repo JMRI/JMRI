@@ -1,6 +1,6 @@
 package jmri.jmrit.operations.trains;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -1909,7 +1909,7 @@ public class TrainCommon {
                 return Setup.getYearModeled();
             }
         }
-        return (new ISO8601DateFormat()).format(calendar.getTime());
+        return (new StdDateFormat()).format(calendar.getTime());
     }
 
     public static String getDate(Date date) {

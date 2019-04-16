@@ -60,24 +60,6 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //TamsMessages are ignored
     }
 
-    // to hear of changes - copied from PowerManager
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     @Override
     public void reply(TamsReply r) {//To listen for Turnout status changes
         //TamsMessage tm = TamsMessage.getXEvtTrn();

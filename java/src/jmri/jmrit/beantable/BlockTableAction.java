@@ -936,7 +936,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
     JComboBox<String> speeds = new JComboBox<String>();
 
-    JPanel additionalAddOption() {
+/*    JPanel additionalAddOption() {
 
         GridLayout additionLayout = new GridLayout(0, 2);
         JPanel mainPanel = new JPanel();
@@ -980,7 +980,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         });
 
         return mainPanel;
-    }
+    }*/
 
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 

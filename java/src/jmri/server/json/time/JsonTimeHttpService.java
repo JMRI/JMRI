@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import javax.annotation.Nullable;
@@ -40,7 +40,7 @@ public class JsonTimeHttpService extends JsonHttpService {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(timebase.getTime()));
+        data.put(TIME, new StdDateFormat().format(timebase.getTime()));
         data.put(RATE, timebase.getRate());
         data.put(STATE, timebase.getRun() ? ON : OFF);
         return root;
@@ -52,7 +52,7 @@ public class JsonTimeHttpService extends JsonHttpService {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
         try {
             if (data.path(TIME).isTextual()) {
-                timebase.setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                timebase.setTime(new StdDateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble() || data.path(RATE).isInt()) {
                 timebase.userSetRate(data.path(RATE).asDouble());

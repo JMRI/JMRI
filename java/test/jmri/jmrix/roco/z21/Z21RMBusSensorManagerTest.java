@@ -13,6 +13,7 @@ import org.junit.*;
 public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private Z21InterfaceScaffold znis;
+    private Z21SystemConnectionMemo memo;
 
     @Override
     public String getSystemName(int i) {
@@ -93,7 +94,7 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         JUnitUtil.setUp();
         // prepare an interface
         znis = new Z21InterfaceScaffold();
-        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        memo = new Z21SystemConnectionMemo();
         memo.setTrafficController(znis);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         // create and register the manager object
@@ -103,6 +104,9 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @After
     public void tearDown() {
         l.dispose();
+        memo.getTrafficController().terminateThreads();
+        memo = null;
+        znis = null;
         JUnitUtil.tearDown();
     }
 

@@ -44,8 +44,10 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         c.gridx = 0;
         c.gridy = 1;
         p.add(sysNameLabel, c);
+        sysNameLabel.setLabelFor(sys);
         c.gridy = 2;
         p.add(userNameLabel, c);
+        userNameLabel.setLabelFor(userName);
         c.gridx = 2;
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;

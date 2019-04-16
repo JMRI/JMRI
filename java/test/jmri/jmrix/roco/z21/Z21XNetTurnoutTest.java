@@ -141,6 +141,8 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
     @After
     @Override
     public void tearDown() {
+        lnis.terminateThreads();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

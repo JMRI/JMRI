@@ -46,7 +46,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout t = l.provide("ATNode 1:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ATNODE 1:2"));
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ATNode 1:2"));
     }
 
     @Test
