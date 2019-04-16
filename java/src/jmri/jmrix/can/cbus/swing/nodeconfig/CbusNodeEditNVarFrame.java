@@ -236,9 +236,10 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
     
     @Override
     public void dispose(){
-        
-        nodeNVModel.removeTableModelListener(this);
-        nodeNVModel.dispose();
+        if ( nodeNVModel !=null ) {
+            nodeNVModel.removeTableModelListener(this);
+            nodeNVModel.dispose();
+        }
         
         super.dispose();
     }

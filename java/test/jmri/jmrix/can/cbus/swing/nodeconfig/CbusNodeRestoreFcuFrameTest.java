@@ -7,6 +7,8 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -81,8 +83,7 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         
         memo = null;
-        
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeRestoreFcuFrameTest.class);

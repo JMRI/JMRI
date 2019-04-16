@@ -9,6 +9,8 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -102,7 +104,7 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         if(!GraphicsEnvironment.isHeadless()){
-           frame = new CbusNodeEditEventFrame(null,null);
+           frame = new CbusNodeEditEventFrame(null);
         }
     }
 
@@ -112,8 +114,7 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         
         memo = null;
         tcis = null;
-        super.tearDown(); 
-        JUnitUtil.tearDown();
+        super.tearDown();
        
     }
 
