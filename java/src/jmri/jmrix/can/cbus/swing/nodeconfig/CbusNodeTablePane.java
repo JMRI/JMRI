@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -16,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -23,6 +25,8 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,8 +113,11 @@ public class CbusNodeTablePane extends JPanel {
         tcm.getColumn(CbusNodeTableDataModel.COMMAND_STAT_NUMBER_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusNodeTableDataModel.CANID_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN).setCellRenderer(getRenderer());
-        
         tcm.getColumn(CbusNodeTableDataModel.BYTES_REMAINING_COLUMN).setCellRenderer(new ProgressCellRender());
+        
+        TableColumn delBColumn = tcm.getColumn(CbusNodeTableDataModel.NODE_RESYNC_BUTTON_COLUMN);
+        delBColumn.setCellEditor(new ButtonEditor(new JButton()));
+        delBColumn.setCellRenderer(new ButtonRenderer());
         
         nodeTable.setRowHeight(22);
         
@@ -119,6 +126,11 @@ public class CbusNodeTablePane extends JPanel {
         eventScroll.setVisible(true);
         setPreferredSize(new Dimension(300, 80));
         add(eventScroll);
+        
+        validate();
+        repaint();
+        
+        nodeModel.fireTableDataChanged();
 
     }
     
@@ -182,10 +194,15 @@ public class CbusNodeTablePane extends JPanel {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             int progress = 0;
-            float fp = 0.0f;
+            int fullValprogress = 0;
+            float fp = 0.00f;
             if (value instanceof Float) {
                 fp = (Float) value;
                 progress = Math.round( fp * 100f);
+                fullValprogress = Math.round( fp * 1000f);
+                if ( progress==100 && fullValprogress<1000 ){
+                    progress = 99;
+                }
             }
             
             // progress value from 0 to 100
@@ -193,7 +210,11 @@ public class CbusNodeTablePane extends JPanel {
             setForeground(new Color(Math.min(0.8f, 2.0f * (1 - fp)),Math.min(0.8f, 2.0f * fp ),0));
             setBorderPainted(false);
             setStringPainted(true);
-            setValue(progress);
+            setValue(fullValprogress);
+            if ( progress < 99 ) {
+                setMaximum(1000);
+            }
+            setString(progress + "%");
             return this;
         }
     }

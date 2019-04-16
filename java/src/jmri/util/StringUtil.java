@@ -215,7 +215,119 @@ public class StringUtil {
         }
         return b;
     }
-
+    
+    /**
+     * Create an int[] from a String containing paired hexadecimal values.
+     * <p>
+     * Option to include array length as leading array value
+     * <p>
+     * eg. #("01020AB121",true) returns int[5, 1, 2, 10, 177, 33]
+     * <p>
+     * eg. ("01020AB121",false) returns int[1, 2, 10, 177, 33]
+     *
+     * @param s String of hex value pairs, eg "01020AB121".
+     * @param headerTotal if true, adds index [0] with total of pairs found 
+     * @return int array, with one field for each pair.
+     *
+     */
+    @Nonnull
+    static public int[] intBytesWithTotalFromNonSpacedHexString(@Nonnull String s, boolean headerTotal) {
+        if (s.length() % 2 == 0) {
+            int numBytes = ( s.length() / 2 );
+            if ( headerTotal ) {
+                int[] arr = new int[(numBytes+1)];
+                arr[0]=numBytes;
+                for (int i = 0; i < numBytes; i++) {
+                    arr[(i+1)] = getByte(i,s);
+                }
+                return arr;
+            }
+            else {
+                int[] arr = new int[(numBytes)];
+                for (int i = 0; i < numBytes; i++) {
+                    arr[(i)] = getByte(i,s);
+                }
+                return arr;
+            }
+        } else {
+            return new int[]{0};
+        }
+    }
+    
+    /**
+     * Get a single hex digit from a String.
+     * <p>
+     * eg. getHexDigit(0,"ABCDEF") returns 10
+     * eg. getHexDigit(3,"ABCDEF") returns 14
+     *
+     * @param index digit offset, 0 is very first digit on left.
+     * @param byteString String of hex values, eg "01020AB121".
+     * @return hex value of single digit
+     */
+    @Nonnull
+    static public int getHexDigit(int index, @Nonnull String byteString) {
+        int b = 0;
+        b = byteString.charAt(index);
+        if ((b >= '0') && (b <= '9')) {
+            b = b - '0';
+        } else if ((b >= 'A') && (b <= 'F')) {
+            b = b - 'A' + 10;
+        } else if ((b >= 'a') && (b <= 'f')) {
+            b = b - 'a' + 10;
+        } else {
+            b = 0;
+        }
+        return (byte) b;
+    }
+    
+    /**
+     * Get a single hex data byte from a string
+     * <p>
+     * eg. getByte(2,"0102030405") returns 3
+     * 
+     * @param b The byte offset, 0 is byte 1
+     * @param byteString the whole string, eg "01AB2CD9"
+     * @return The value, else 0
+     */
+    @Nonnull
+    static public int getByte(int b, @Nonnull String byteString) {
+        if ((b >= 0)) {
+            int index = b * 2;
+            int hi = getHexDigit(index++, byteString);
+            int lo = getHexDigit(index, byteString);
+            if ((hi < 16) && (lo < 16)) {
+                return (hi * 16 + lo);
+            }
+        }
+        return 0;
+    }
+    
+    /**
+     * Create a hex byte[] of Unicode character values from a String containing full text (non hex) values.
+     * <p>
+     * eg fullTextToHexArray("My FroG",8) would return byte[0x4d,0x79,0x20,0x46,0x72,0x6f,0x47,0x20]
+     *
+     * @param s String, eg "Test", value is trimmed to max byte length
+     * @param numBytes Number of bytes expected in return ( eg. to match max. message size )
+     * @return hex byte array, with one byte for each character. Right padded with empty spaces (0x20)
+     *
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
+        byte[] b = new byte[numBytes];
+        java.util.Arrays.fill(b, (byte) 0x20);
+        s = s.substring(0, Math.min(s.length(), numBytes));
+        String convrtedNoSpaces = String.format( "%x", 
+            new java.math.BigInteger(1, s.getBytes(/*YOUR_CHARSET?*/) ) );
+        int byteNum=0;
+        for (int i = 0; i < convrtedNoSpaces.length(); i+=2) {
+            b[byteNum] = (byte) Integer.parseInt(convrtedNoSpaces.substring(i, i + 2), 16);
+            byteNum++;
+        }
+        return b;
+    }
+    
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
