@@ -205,7 +205,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         for (TabbedTableItem<E> tti : tabbedTableArray) {
             tti.dispose();
         }
-        if (list.getListSelectionListeners().length > 0) {
+        if (list != null && list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
         super.dispose();

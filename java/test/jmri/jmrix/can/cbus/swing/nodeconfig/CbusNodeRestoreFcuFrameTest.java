@@ -3,32 +3,26 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CbusNodeEditEventFrame
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Paul Bender Copyright (C) 2019
+ * @author	Paul Bender Copyright (C) 2016,2019
  */
-public class CbusNodeRestoreFcuFrameTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeRestoreFcuFrame t = new CbusNodeRestoreFcuFrame(null);
-        Assert.assertNotNull("exists",t);
-    }
+public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new CbusNodeRestoreFcuFrame(null);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
