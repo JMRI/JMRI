@@ -1297,7 +1297,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/logix/WarrantTable.shtml">The Warrant List </a>
+<a href="package/jmri/jmrit/logix/Warrant.shtml">Warrants Introduction </a>
 <ul></ul>
 </li>
 
@@ -1310,6 +1310,18 @@
    
 <li>
 <a href="package/jmri/jmrit/logix/NXWarrant.shtml">NXWarrants </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/SCWarrant.html">SCWarrants </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/WarrantTable.shtml">The Warrant List </a>
 <ul></ul>
 </li>
 
@@ -1328,6 +1340,12 @@
    
 <li>
 <a href="package/jmri/jmrit/logix/OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/display/CircuitBuilder.shtml">Circuit Builder </a>
 <ul></ul>
 </li>
 

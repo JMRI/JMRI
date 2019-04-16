@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
 import jmri.JmriException;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
@@ -60,7 +62,7 @@ public class NXFrame extends WarrantRoute {
     private JButton _originUnits;
     private final JTextField _destDist = new JTextField(6);
     private JButton _destUnits;
-    private JSpinner _timeIncre;
+    private JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));;
     private JTextField _rampIncre = new JTextField(6);
     private final JRadioButton _forward = new JRadioButton();
     private final JRadioButton _reverse = new JRadioButton();
@@ -589,7 +591,25 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("badSpeed", maxSpeed);
         }
         _maxThrottle = maxSpeed;
+
         setAddress();
+
+        int time = (Integer)_timeIncre.getValue();
+        _speedUtil.setRampTimeIncrement(time);
+
+        try {
+            text = _rampIncre.getText();
+            float incre = NumberFormat.getNumberInstance().parse(text).floatValue();
+            if (incre < 0.5f || incre > 25f) {
+                return Bundle.getMessage("rampIncrWarning", text);                
+            } else {
+                _speedUtil.setRampThrottleIncrement(incre/100);
+            }
+        } catch (java.text.ParseException pe) {
+            return Bundle.getMessage("MustBeFloat", text);
+        }
+        
+        _speedUtil.resetSpeedProfile();
         return null;
     }
 

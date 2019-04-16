@@ -71,6 +71,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
         leftPanel.add(layoutScalePanel());
         leftPanel.add(searchDepthPanel(true));
+        _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 10000, 1));
         leftPanel.add(timeIncrementPanel(true, _timeIncre));
         _rampIncre = new JTextField(6);
         leftPanel.add(throttleIncrementPanel(true, _rampIncre));
@@ -246,7 +247,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
 
     static protected JPanel timeIncrementPanel(boolean vertical, JSpinner timeIncre) {
-        timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 10000, 1));
         int timeIncrePrefs = WarrantPreferences.getDefault().getTimeIncrement();
         if (timeIncrePrefs >= 200 && timeIncrePrefs <= 10000) {
             timeIncre.setValue(timeIncrePrefs);
