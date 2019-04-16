@@ -1,27 +1,39 @@
 package jmri.server.json.operations;
 
+import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
+import static jmri.server.json.JSON.FORCE;
+import static jmri.server.json.JSON.LENGTH;
+import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NULL;
+import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CARS;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
+import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
 import static jmri.server.json.operations.JsonOperations.TRACK;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
+import static jmri.server.json.operations.JsonOperations.WEIGHT;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.util.Locale;
-import javax.servlet.http.HttpServletResponse;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -30,7 +42,7 @@ import jmri.server.json.JsonHttpService;
 
 /**
  *
- * @author Randall Wood (C) 2016, 2018
+ * @author Randall Wood (C) 2016, 2018, 2019
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 
@@ -49,13 +61,21 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 return this.utilities.getCar(locale, name);
             case ENGINE:
                 return this.utilities.getEngine(locale, name);
+            case KERNEL:
+                Kernel kernel = InstanceManager.getDefault(CarManager.class).getKernelByName(name);
+                if (kernel == null) {
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(locale, "ErrorNotFound", type, name));
+                }
+                return getKernel(kernel, locale);
             case LOCATION:
                 return this.utilities.getLocation(locale, name);
             case TRAIN:
             case TRAINS:
                 return this.utilities.getTrain(locale, name);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
         }
     }
 
@@ -73,26 +93,89 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case TRAINS:
                 return this.doGet(type, name, locale);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                        Bundle.getMessage(locale, "PostNotAllowed", type)); // NOI18N
+        }
+    }
+
+    @Override
+    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        switch (type) {
+            case KERNEL:
+                Kernel kernel = getCarManager().newKernel(name);
+                return getKernel(kernel, locale);
+            default:
+                return super.doPut(type, name, data, locale);
         }
     }
 
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         switch (type) {
+            case CAR:
             case CARS:
                 return this.getCars(locale);
+            case ENGINE:
             case ENGINES:
                 return this.getEngines(locale);
+            case KERNEL:
+                return this.getKernels(locale);
+            case LOCATION:
             case LOCATIONS:
                 return this.getLocations(locale);
+            case TRAIN:
             case TRAINS:
                 return this.utilities.getTrains(locale);
-            case TRAIN:
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type)); // NOI18N
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
         }
+    }
+
+    @Override
+    public void doDelete(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        switch (type) {
+            case KERNEL:
+                Kernel kernel = InstanceManager.getDefault(CarManager.class).getKernelByName(name);
+                if (kernel == null) {
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(locale, "ErrorNotFound", type, name));
+                }
+                if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, data.path(FORCE).asText())) {
+                    throwDeleteConflictException(type, name, getKernelCars(kernel, locale), locale);
+                }
+                InstanceManager.getDefault(CarManager.class).deleteKernel(name);
+                break;
+            default:
+                super.doDelete(type, name, data, locale);
+        }
+    }
+
+    private ObjectNode getKernel(Kernel kernel, Locale locale) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, KERNEL);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, kernel.getName());
+        data.put(WEIGHT, kernel.getAdjustedWeightTons());
+        data.put(LENGTH, kernel.getTotalLength());
+        data.put(CARS, getKernelCars(kernel, locale));
+        return root;
+    }
+
+    private ArrayNode getKernelCars(Kernel kernel, Locale locale) {
+        ArrayNode root = mapper.createArrayNode();
+        kernel.getCars().forEach((car) -> {
+            root.add(utilities.getCar(car));
+        });
+        return root;
+    }
+
+    private ArrayNode getKernels(Locale locale) {
+        ArrayNode root = mapper.createArrayNode();
+        getCarManager().getKernelNameList().forEach((kernel) -> {
+            root.add(getKernel(getCarManager().getKernelByName(kernel), locale));
+        });
+        return root;
     }
 
     public ArrayNode getCars(Locale locale) {
@@ -130,7 +213,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * @param id     The id of the train.
      * @param data   Train data to change.
      * @throws jmri.server.json.JsonException if the train cannot move to the
-     *                                        location in data.
+     *                                            location in data.
      */
     public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
@@ -153,7 +236,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * @param id     id of the car
      * @param data   car data to change
      * @throws jmri.server.json.JsonException if the car cannot be set to the
-     *                                        location in data
+     *                                            location in data
      */
     public void setCar(Locale locale, String id, JsonNode data) throws JsonException {
         Car car = InstanceManager.getDefault(CarManager.class).getById(id);
@@ -166,6 +249,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", id, locationId, trackId));
             }
         }
+    }
+
+    private CarManager getCarManager() {
+        return InstanceManager.getDefault(CarManager.class);
     }
 
     @Override
@@ -196,7 +283,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         "jmri/server/json/operations/train-server.json",
                         "jmri/server/json/operations/train-client.json");
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 

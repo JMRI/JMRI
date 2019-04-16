@@ -29,20 +29,36 @@ public class JsonException extends Exception {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final int code;
+    private final ObjectNode additionalData;
 
     public JsonException(int i, String s, Throwable t) {
+        this(i, s, t, null);
+    }
+
+    public JsonException(int i, String s, Throwable t, ObjectNode additionalData) {
         super(s, t);
         this.code = i;
+        this.additionalData = additionalData;
     }
 
     public JsonException(int i, Throwable t) {
+        this(i, t, null);
+    }
+
+    public JsonException(int i, Throwable t, ObjectNode additionalData) {
         super(t);
         this.code = i;
+        this.additionalData = additionalData;
     }
 
     public JsonException(int i, String s) {
+        this(i, s, (ObjectNode) null);
+    }
+
+    public JsonException(int i, String s, ObjectNode additionalData) {
         super(s);
         this.code = i;
+        this.additionalData = additionalData;
     }
 
     /**
@@ -52,12 +68,19 @@ public class JsonException extends Exception {
         return this.code;
     }
 
+    public ObjectNode getAdditionalData() {
+        return this.additionalData.deepCopy();
+    }
+
     public JsonNode getJsonMessage() {
         ObjectNode root = MAPPER.createObjectNode();
         root.put(TYPE, ERROR);
         ObjectNode data = root.putObject(DATA);
         data.put(CODE, this.getCode());
         data.put(MESSAGE, this.getMessage());
+        if (additionalData != null) {
+            data.setAll(additionalData);
+        }
         return root;
     }
 }

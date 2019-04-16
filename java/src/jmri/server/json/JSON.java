@@ -779,6 +779,18 @@ public final class JSON {
      * @since 4.1
      */
     public static final String CLIENT = "client"; // NOI18N
+    /**
+     * {@value #FORCE}
+     * 
+     * @since 5.1
+     */
+    public static final String FORCE = "force"; // NOI18N
+    /**
+     * {@value #USERS}
+     * 
+     * @since 5.1
+     */
+    public static final String USERS = "users"; // NOI18N
 
     /* ZeroConf support */
     /**

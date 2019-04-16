@@ -441,11 +441,18 @@ public class JsonServlet extends WebSocketServlet {
                 if (name == null) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified"); // need to I18N
                 }
+                JsonNode data = mapper.createObjectNode();
+                if (request.getContentType().contains(APPLICATION_JSON)) {
+                    data = this.mapper.readTree(request.getReader());
+                    if (!data.path(DATA).isMissingNode()) {
+                        data = data.path(DATA);
+                    }
+                }
                 for (JsonHttpService service : this.services.get(type)) {
-                    service.doDelete(type, name, request.getLocale());
+                    service.doDelete(type, name, data, request.getLocale());
                 }
             } else {
-                log.warn("Type not specified.");
+                log.debug("Type not specified.");
                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {

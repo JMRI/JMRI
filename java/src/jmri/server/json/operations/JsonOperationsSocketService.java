@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood (C) 2016, 2019
  */
 public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 
@@ -100,21 +100,25 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
         switch (type) {
+            case TRAIN:
             case TRAINS:
                 log.debug("adding TrainsListener");
                 InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(trainsListener); //add parent listener
                 addListenersToTrains();
                 break;
+            case CAR:
             case CARS:
                 log.debug("adding CarsListener");
                 InstanceManager.getDefault(CarManager.class).addPropertyChangeListener(carsListener); //add parent listener
                 addListenersToCars();
                 break;
+            case LOCATION:
             case LOCATIONS:
                 log.debug("adding LocationsListener");
                 InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(locationsListener); //add parent listener
                 addListenersToLocations();
                 break;
+            case ENGINE:
             case ENGINES:
                 log.debug("adding EnginesListener");
                 InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(enginesListener); //add parent listener

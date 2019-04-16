@@ -91,6 +91,10 @@ public class JsonOperations {
      * {@value #LOCATION_TRACK}
      */
     public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
+    /**
+     * {@value #KERNEL}
+     */
+    public static final String KERNEL = "kernel"; // NOI18N
 
     /**
      * Prevent instantiation, since this class only contains static values

@@ -1,12 +1,22 @@
 package jmri.server.json;
 
+import static jmri.server.json.JSON.FORCE;
+import static jmri.server.json.JSON.USERS;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class JsonHttpService {
 
     protected final ObjectMapper mapper;
+    private final Map<String, UUID> pendingDeletions = new HashMap<>();
+    private static final Logger log = LoggerFactory.getLogger(JsonHttpService.class);
 
     protected JsonHttpService(@Nonnull ObjectMapper mapper) {
         this.mapper = mapper;
@@ -95,11 +107,34 @@ public abstract class JsonHttpService {
      *
      * @param type   the type of the deleted object
      * @param name   the system name of the deleted object
+     * @param data   additional data
      * @param locale the requesting client's Locale
      * @throws JsonException if this method is not allowed or other error occurs
      */
+    public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale)
+            throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                Bundle.getMessage(locale, "DeleteNotAllowed", type));
+    }
+
+    /**
+     * Respond to an HTTP DELETE request for the requested name.
+     * <p>
+     * Throw an HTTP 405 Method Not Allowed exception if the object is not
+     * intended to be removable.
+     * <p>
+     * Do not throw an error if the requested object does not exist.
+     *
+     * @param type   the type of the deleted object
+     * @param name   the system name of the deleted object
+     * @param locale the requesting client's Locale
+     * @throws JsonException if this method is not allowed or other error occurs
+     * @deprecated since 4.15.6; use
+     *             {@link #doDelete(String, String, JsonNode, Locale)} instead
+     */
+    @Deprecated
     public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
+        doDelete(type, name, mapper.createObjectNode(), locale);
     }
 
     /**
@@ -209,4 +244,53 @@ public abstract class JsonHttpService {
     public final ObjectMapper getObjectMapper() {
         return this.mapper;
     }
+
+    /**
+     * Verify a deletion token. If the token is not valid any pending deletion
+     * tokens for the type and name are also deleted.
+     * 
+     * @param type  the type of object pending deletion
+     * @param name  the name of object pending deletion
+     * @param token the token previously provided to client
+     * @return true if token was provided to client and no other delete attempt
+     *         was made by client with a different or missing token since token
+     *         was issued to client; false otherwise
+     */
+    public final boolean acceptForceDeleteToken(@Nonnull String type, @Nonnull String name, @Nonnull String token) {
+        String key = type + name;
+        UUID value = this.pendingDeletions.getOrDefault(key, UUID.randomUUID());
+        this.pendingDeletions.remove(key);
+        try {
+            return value.equals(UUID.fromString(token));
+        } catch (IllegalArgumentException ex) {
+            log.warn("Unable to parse force deletion token string: {}", token);
+            return false;
+        }
+    }
+
+    /**
+     * Throw an HTTP CONFLICT (409) exception when an object is requested to be
+     * deleted and it is in use. This exception will include a token that can be
+     * used to force deletion by the client and may include a JSON list of the
+     * objects using the object for which deletion was requested.
+     * 
+     * @param type   the type of object in conflicting state
+     * @param name   the name of the object in conflicting state
+     * @param users  the using objects of this object; may be empty
+     * @param locale the client locale
+     * @throws JsonException the exception
+     */
+    public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name, @Nonnull ArrayNode users,
+            @Nonnull Locale locale) throws JsonException {
+        String key = type + name;
+        pendingDeletions.put(key, UUID.randomUUID());
+        ObjectNode data = mapper.createObjectNode();
+        data.put(FORCE, pendingDeletions.get(key).toString());
+        if (users.size() != 0) {
+            data.put(USERS, users);
+        }
+        throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data);
+    }
+
 }
