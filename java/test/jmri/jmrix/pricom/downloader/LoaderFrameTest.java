@@ -2,37 +2,29 @@ package jmri.jmrix.pricom.downloader;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class LoaderFrameTest {
+public class LoaderFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LoaderFrame t = new LoaderFrame();
-        Assert.assertNotNull("exists",t);
-        t.dispose();
-    }
-
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        if(!GraphicsEnvironment.isHeadless()){
+          frame = new LoaderFrame();
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LoaderFrameTest.class);
