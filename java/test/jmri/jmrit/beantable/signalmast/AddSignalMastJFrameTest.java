@@ -18,7 +18,7 @@ public class AddSignalMastJFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         if(!GraphicsEnvironment.isHeadless()){
-           AddSignalMastJFrame t = new AddSignalMastJFrame();
+           frame = new AddSignalMastJFrame();
         }
     }
 
