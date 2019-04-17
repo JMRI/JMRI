@@ -98,7 +98,7 @@ public class JsonUtil {
         node.put(JSON.HAZARDOUS, car.isHazardous());
         node.put(JSON.REMOVE_COMMENT, car.getDropComment());
         node.put(JSON.ADD_COMMENT, car.getPickupComment());
-        node.put(JSON.KERNEL, car.getKernelName());
+        node.put(JSON.KERNEL, car.getKernel() != null ? car.getKernelName() : null);
         node.put(JSON.UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
             node.set(JSON.FINAL_DESTINATION, this.getLocationAndTrack(car.getFinalDestinationTrack(), null));

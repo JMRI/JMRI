@@ -20,9 +20,32 @@
             "type": "string",
             "description": "The car type"
         },
+        "kernel": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The name of the kernel this car is associated with"
+        },
         "length": {
-            "type": "int",
+            "type": "integer",
             "description": "Current car length for available siding calculations"
+        },
+        "load": {
+            "type": "string",
+            "description": "The load in the car (may also be the localized E (Empty) or L (Load)"
+        },
+        "hazardous": {
+            "type": "boolean",
+            "description": "True if the load is considered hazardous; false otherwise"
+        },
+        "removeComment": {
+            "type": "string",
+            "description": "Additional drop instructions or an empty string if none"
+        },
+        "addComment": {
+            "type": "string",
+            "description": "Additional pickup instructions or an empty string if none"
         },
         "color": {
             "type": "string",
@@ -37,20 +60,36 @@
             "description": "Freeform comment concerning car"
         },
         "location": {
-            "type": "string",
+            "type": [
+                "object",
+                "null"
+            ],
             "description": "The current location of the car"
         },
+        "utility": {
+            "type": "boolean",
+            "description": "True if the car is shown as a utility car on manifests; false otherwise"
+        },
         "destination": {
-            "type": "string",
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "the current destination of the car"
         },
-        "model": {
-            "type": "string",
-            "description": "The model of car"
+        "finalDestination": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "the final destination of the car"
         },
-        "consist": {
-            "type": "string",
-            "description": "The name of the consist the car is in"
+        "returnWhenEmpty": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The location to return the car to when empty or null"
         },
         "status": {
             "type": "string",
@@ -58,5 +97,22 @@
         }
     },
     "additionalProperties": false,
-    "required": ["id", "number", "road", "type", "length", "owner", "comment", "model", "consist"]
+    "required": [
+        "id",
+        "number",
+        "road",
+        "type",
+        "length",
+        "load",
+        "hazardous",
+        "removeComment",
+        "addComment",
+        "owner",
+        "comment",
+        "kernel",
+        "utility",
+        "destination",
+        "finalDestination",
+        "returnWhenEmpty"
+    ]
 }

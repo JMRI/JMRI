@@ -1,6 +1,5 @@
 package jmri.server.json.operations;
 
-import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CARS;
@@ -13,12 +12,17 @@ import static jmri.server.json.operations.JsonOperations.LOCATION_NAME;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.operations.locations.Location;
@@ -33,8 +37,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -54,11 +56,16 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
 
     public JsonOperationsSocketService(JsonConnection connection) {
-        super(connection, new JsonOperationsHttpService(connection.getObjectMapper()));
+        this(connection, new JsonOperationsHttpService(connection.getObjectMapper()));
+    }
+
+    protected JsonOperationsSocketService(JsonConnection connection, JsonOperationsHttpService service) {
+        super(connection, service);
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale)
+            throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         String id = data.path(JSON.ID).asText(); // Operations uses ID attribute instead of name attribute
         // add listener to id if not already listening
@@ -66,33 +73,49 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             case TRAIN:
                 if (!this.trainListeners.containsKey(id)) {
                     this.trainListeners.put(id, new TrainListener(id));
-                    InstanceManager.getDefault(TrainManager.class).getTrainById(id).addPropertyChangeListener(this.trainListeners.get(id));
+                    InstanceManager.getDefault(TrainManager.class).getTrainById(id)
+                            .addPropertyChangeListener(this.trainListeners.get(id));
                 }
                 break;
             case CAR:
                 if (!this.carListeners.containsKey(id)) {
                     this.carListeners.put(id, new CarListener(id));
-                    InstanceManager.getDefault(CarManager.class).getById(id).addPropertyChangeListener(this.carListeners.get(id));
+                    InstanceManager.getDefault(CarManager.class).getById(id)
+                            .addPropertyChangeListener(this.carListeners.get(id));
                 }
                 break;
             case LOCATION:
                 if (!this.locationListeners.containsKey(id)) {
                     this.locationListeners.put(id, new LocationListener(id));
-                    InstanceManager.getDefault(LocationManager.class).getLocationById(id).addPropertyChangeListener(this.locationListeners.get(id));
+                    InstanceManager.getDefault(LocationManager.class).getLocationById(id)
+                            .addPropertyChangeListener(this.locationListeners.get(id));
                 }
                 break;
             case ENGINE:
                 if (!this.engineListeners.containsKey(id)) {
                     this.engineListeners.put(id, new EngineListener(id));
-                    InstanceManager.getDefault(EngineManager.class).getById(id).addPropertyChangeListener(this.engineListeners.get(id));
+                    InstanceManager.getDefault(EngineManager.class).getById(id)
+                            .addPropertyChangeListener(this.engineListeners.get(id));
                 }
                 break;
             default:
                 // other types ignored
                 break;
         }
-        //post the message as it may contain incoming changes
-        this.connection.sendMessage(this.service.doPost(type, id, data, locale));
+        switch (method) {
+            case JSON.GET:
+                connection.sendMessage(service.doGet(type, id, locale));
+                break;
+            case JSON.DELETE:
+                service.doDelete(type, id, data, locale);
+                break;
+            case JSON.PUT:
+                connection.sendMessage(service.doPut(type, id, data, locale));
+                break;
+            case JSON.POST:
+            default:
+                this.connection.sendMessage(this.service.doPost(type, id, data, locale));
+        }
     }
 
     @Override
@@ -188,7 +211,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in TrainListener for '{}' '{}' ('{}'=>'{}')", this.train.getId(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in TrainListener for '{}' '{}' ('{}'=>'{}')", this.train.getId(), evt.getPropertyName(),
+                    evt.getOldValue(), evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGet(TRAIN, this.train.getId(), getLocale()));
@@ -209,7 +233,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in TrainsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in TrainsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+                    evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGetList(TRAINS, getLocale()));
@@ -239,7 +264,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in CarListener for '{}' '{}' ('{}'=>'{}')", this.car.getId(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in CarListener for '{}' '{}' ('{}'=>'{}')", this.car.getId(), evt.getPropertyName(),
+                    evt.getOldValue(), evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGet(CAR, this.car.getId(), getLocale()));
@@ -260,7 +286,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in CarsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in CarsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+                    evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGetList(CARS, getLocale()));
@@ -290,10 +317,13 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in LocationListener for '{}' '{}' ('{}'=>'{}')", this.location.getId(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in LocationListener for '{}' '{}' ('{}'=>'{}')", this.location.getId(), evt.getPropertyName(),
+                    evt.getOldValue(), evt.getNewValue());
             //only send changes to properties that are included in object
-            if (evt.getPropertyName().equals(ID) || evt.getPropertyName().equals(LOCATION_NAME) ||
-                    evt.getPropertyName().equals(LENGTH) || evt.getPropertyName().equals(LOCATION_COMMENT)) {
+            if (evt.getPropertyName().equals(JSON.ID) ||
+                    evt.getPropertyName().equals(LOCATION_NAME) ||
+                    evt.getPropertyName().equals(LENGTH) ||
+                    evt.getPropertyName().equals(LOCATION_COMMENT)) {
                 try {
                     try {
                         connection.sendMessage(service.doGet(LOCATION, this.location.getId(), getLocale()));
@@ -316,7 +346,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in LocationsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in LocationsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+                    evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGetList(LOCATIONS, getLocale()));
@@ -346,7 +377,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in EngineListener for '{}' '{}' ('{}'=>'{}')", this.engine.getId(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in EngineListener for '{}' '{}' ('{}'=>'{}')", this.engine.getId(), evt.getPropertyName(),
+                    evt.getOldValue(), evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGet(ENGINE, this.engine.getId(), getLocale()));
@@ -367,7 +399,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in EnginesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in EnginesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+                    evt.getNewValue());
             try {
                 try {
                     connection.sendMessage(service.doGetList(ENGINES, getLocale()));
