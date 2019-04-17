@@ -445,15 +445,15 @@
         <ul>
             <li>The handling of Turnout system names has been updated
                 to be (more, hopefully completely) consistent with the
-                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.  
+                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.
                 Specifically, case now (generally) matters in system names:
                 <ul>
                     <li>You can now have an internal turnout named "ITsome lower case name".
                     <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
                         "ITSome LoWeR cAse Name" and get the same one.
                 </ul>
-                This should not require any migration for stored configurations or 
-                panel files, as they have been automatically been being kept consistent 
+                This should not require any migration for stored configurations or
+                panel files, as they have been automatically been being kept consistent
                 since JMRI 4.8.  But you might have case errors in i.e. scripts which
                 will fixing inconsistent references in your scripts.
                 </li>
@@ -550,6 +550,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>A new CTC tool has been added to JMRI.  An Editor component uses
+            a set of screens to define the CTC system.  The resulting data can
+            be used to create a USS CTC Panel (Panel Editor) with all of the
+            levers, indicators, and a minimal track plan with turnouts and
+            signals.  A run time component uses the configuration to implement
+            prototype CTC logic with no scripting or Logix.</li>
         </ul>
 
