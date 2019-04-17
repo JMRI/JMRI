@@ -16,7 +16,7 @@ public class SignalMastRepeaterJFrameTest extends jmri.util.JmriJFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(GraphicsEnvironment.isHeadless()){
+        if(!GraphicsEnvironment.isHeadless()){
            frame = new SignalMastRepeaterJFrame();
         }
     }
