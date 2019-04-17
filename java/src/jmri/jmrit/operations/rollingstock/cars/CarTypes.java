@@ -100,20 +100,17 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
     @Override
     public void addName(String type) {
         super.addName(type);
-        maxNameLengthSubType = 0; // reset
         setDirtyAndFirePropertyChange(CARTYPES_CHANGED_PROPERTY, null, type);
     }
 
     @Override
     public void deleteName(String type) {
         super.deleteName(type);
-        maxNameLengthSubType = 0; // reset
         setDirtyAndFirePropertyChange(CARTYPES_CHANGED_PROPERTY, type, null);
     }
 
     public void replaceName(String oldName, String newName) {
         super.addName(newName);
-        maxNameLengthSubType = 0; // reset
         setDirtyAndFirePropertyChange(CARTYPES_NAME_CHANGED_PROPERTY, oldName, newName);
         // need to keep old name so location manager can replace properly
         super.deleteName(oldName);
@@ -128,22 +125,20 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
      */
     @Override
     public int getMaxNameLength() {
-        if (maxNameLengthSubType == 0) {
+        if (maxNameLength == 0) {
             String maxName = "";
-            maxNameLengthSubType = MIN_NAME_LENGTH;
+            maxNameLength = MIN_NAME_LENGTH;
             for (String name : getNames()) {
                 String[] subString = name.split("-");
-                if (subString[0].length() > maxNameLengthSubType) {
+                if (subString[0].length() > maxNameLength) {
                     maxName = name;
-                    maxNameLengthSubType = subString[0].length();
+                    maxNameLength = subString[0].length();
                 }
             }
-            log.info("Max car type name ({}) length {}", maxName, maxNameLengthSubType);
+            log.info("Max car type name ({}) length {}", maxName, maxNameLength);
         }
-        return maxNameLengthSubType;
+        return maxNameLength;
     }
-
-    private int maxNameLengthSubType = 0;
 
     /**
      * Get the maximum character length of a car type including the sub type

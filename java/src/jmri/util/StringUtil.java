@@ -264,7 +264,6 @@ public class StringUtil {
      * @param byteString String of hex values, eg "01020AB121".
      * @return hex value of single digit
      */
-    @Nonnull
     static public int getHexDigit(int index, @Nonnull String byteString) {
         int b = 0;
         b = byteString.charAt(index);
@@ -289,7 +288,6 @@ public class StringUtil {
      * @param byteString the whole string, eg "01AB2CD9"
      * @return The value, else 0
      */
-    @Nonnull
     static public int getByte(int b, @Nonnull String byteString) {
         if ((b >= 0)) {
             int index = b * 2;
@@ -342,6 +340,7 @@ public class StringUtil {
      * Sort String[] representing numbers, in ascending order.
      *
      * @param values the Strings to sort
+     * @throws NumberFormatException if string[] doesn't only contain numbers
      */
     static public void numberSort(@Nonnull String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
