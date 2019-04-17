@@ -22,7 +22,9 @@ public class PollTableFrame extends JmriJFrame {
 
     @Override
     public void dispose() {
-        pane.dispose(); // drop table
+        if(pane!=null){
+           pane.dispose(); // drop table
+        }
         super.dispose();
     }
 
