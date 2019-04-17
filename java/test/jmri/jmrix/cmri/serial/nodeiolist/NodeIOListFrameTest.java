@@ -3,11 +3,7 @@ package jmri.jmrix.cmri.serial.nodeiolist;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of NodeIOListFrame
@@ -15,20 +11,20 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  * @author	Bob Jacobsen Copyright (C) 2016
  */
-public class NodeIOListFrameTest {
-
-    @Test
-    public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeIOListFrame action = new NodeIOListFrame(new CMRISystemConnectionMemo()); 
-        Assert.assertNotNull("exists", action);
-    }
+public class NodeIOListFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new NodeIOListFrame(new CMRISystemConnectionMemo()); 
+	}
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {
+    	    super.tearDown();
+    }
 }
