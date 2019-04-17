@@ -786,11 +786,11 @@ public final class JSON {
      */
     public static final String FORCE_DELETE = "forceDelete"; // NOI18N
     /**
-     * {@value #USERS}
+     * {@value #CONFLICT}
      * 
      * @since 5.1
      */
-    public static final String USERS = "users"; // NOI18N
+    public static final String CONFLICT = "conflict"; // NOI18N
 
     /* ZeroConf support */
     /**

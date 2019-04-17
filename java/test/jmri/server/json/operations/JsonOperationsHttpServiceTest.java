@@ -77,10 +77,10 @@ public class JsonOperationsHttpServiceTest {
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
             deleteToken = ex.getAdditionalData().path(JSON.FORCE_DELETE).asText();
-            assertTrue(ex.getJsonMessage().path(JSON.DATA).path(JSON.USERS).isArray());
-            assertEquals(1, ex.getJsonMessage().path(JSON.DATA).path(JSON.USERS).size());
+            assertTrue(ex.getJsonMessage().path(JSON.DATA).path(JSON.CONFLICT).isArray());
+            assertEquals(1, ex.getJsonMessage().path(JSON.DATA).path(JSON.CONFLICT).size());
             assertEquals(JsonOperations.CAR,
-                    ex.getJsonMessage().path(JSON.DATA).path(JSON.USERS).path(0).path(JSON.TYPE).asText());
+                    ex.getJsonMessage().path(JSON.DATA).path(JSON.CONFLICT).path(0).path(JSON.TYPE).asText());
         }
         assertNotNull(deleteToken);
         ObjectNode data = service.getObjectMapper().createObjectNode().put(JSON.FORCE_DELETE, deleteToken);

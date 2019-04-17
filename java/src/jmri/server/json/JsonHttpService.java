@@ -1,7 +1,7 @@
 package jmri.server.json;
 
 import static jmri.server.json.JSON.FORCE_DELETE;
-import static jmri.server.json.JSON.USERS;
+import static jmri.server.json.JSON.CONFLICT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -270,7 +270,7 @@ public abstract class JsonHttpService {
         ObjectNode data = mapper.createObjectNode();
         data.put(FORCE_DELETE, JsonDeleteTokenManager.getDefault().getToken(type, name));
         if (users.size() != 0) {
-            data.put(USERS, users);
+            data.put(CONFLICT, users);
         }
         throw new JsonException(HttpServletResponse.SC_CONFLICT,
                 Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data);
