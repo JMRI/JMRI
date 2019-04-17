@@ -13,6 +13,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeSetupPane extends JPanel {
     
-    private JPanel infoPane = new JPanel();
+    private JScrollPane eventScroll;
     private CbusNodeTableDataModel nodeModel = null;
     private int _nodeNum;
     private CbusNode nodeOfInterest;
@@ -48,16 +49,18 @@ public class CbusNodeSetupPane extends JPanel {
     protected CbusNodeSetupPane( NodeConfigToolPane main ) {
         super();
 
-        this.add(infoPane);
+        
       //  mainpane = main;
     }
 
     public void initComponents(int node) {
         
-        _nodeNum = node;
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
+        if (eventScroll != null ){ 
+            eventScroll.setVisible(false);
         }
+        eventScroll = null;
+        
+        _nodeNum = node;
 
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
@@ -65,22 +68,20 @@ public class CbusNodeSetupPane extends JPanel {
             log.error("Unable to get Node Table from Instance Manager");
         }
         
-        infoPane = new JPanel();
         
         try {
 
             // Pane to hold Event
             JPanel evPane = new JPanel();
             evPane.setLayout(new BoxLayout(evPane, BoxLayout.Y_AXIS));
-       
             JLabel header;
-        
             nodeOfInterest = nodeModel.getNodeByNodeNum(_nodeNum);
             
-            String manufacturer = CbusNodeConstants.getManu(nodeOfInterest.getParameter(1));
-            String nodeTypeName = CbusNodeConstants.getModuleType(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3));
-            
-            header = new JLabel("<html><h2>" + manufacturer + " " + nodeTypeName + "</h2><p>" +
+            header = new JLabel("<html><h2>" 
+                + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
+                + " " 
+                + nodeOfInterest.getNodeTypeName()
+                + "<p>" +
                 CbusNodeConstants.getModuleTypeExtra(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3))
                 + "</p></html>");
 
@@ -136,8 +137,16 @@ public class CbusNodeSetupPane extends JPanel {
             evPane.add(canIdPanel);
             evPane.add(nodeEventsPanel);
             evPane.add(removePanel);
-    
-            infoPane.add(evPane);
+            
+            setLayout(new BorderLayout() );
+            
+            eventScroll = new JScrollPane(evPane);
+            
+            this.add(eventScroll);
+            
+            
+            validate();
+            repaint();
             
             setNameListener = ae -> {
                 nodeModel.setValueAt( textFieldName.getText() , 
@@ -233,11 +242,6 @@ public class CbusNodeSetupPane extends JPanel {
         catch( NullPointerException e ) {
             // on startup no node selected which will cause this
         }
-        
-        this.add(infoPane);
-        validate();
-        repaint();
-        
     }
     
     private boolean CANID_DIALOGUE_OPEN = false;

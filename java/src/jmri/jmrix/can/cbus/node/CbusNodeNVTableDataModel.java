@@ -238,7 +238,16 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     public void setNode( CbusNode node){
         log.debug("setting array for node {}",node);
         
+        if ( nodeOfInterest != null ) {
+            nodeOfInterest.setNodeNVTable(null);
+            nodeOfInterest.setEditNodeNVTable(null);
+        }
+        
         nodeOfInterest = node;
+        
+        if ( nodeOfInterest == null ) {
+            return;
+        }
         
         // setup a new fixed length array to hold new nv values
         if ( nodeOfInterest.getNvArray() == null ) {
@@ -320,6 +329,13 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         // log.info(" pass changes arr length {} ",newNVs.length);
         nodeOfInterest.sendNvsToNode( newNVs, frame, null);
         
+    }
+    
+    public void dispose(){
+        if ( nodeOfInterest != null ) {
+            nodeOfInterest.setNodeNVTable(null);
+            nodeOfInterest.setEditNodeNVTable(null);
+        }
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModel.class);

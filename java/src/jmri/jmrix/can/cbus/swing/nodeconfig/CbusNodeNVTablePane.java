@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -36,21 +37,20 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
     public CbusNodeNVTablePane( CbusNodeNVTableDataModel nVModel ) {
         super();
         nodeNVModel = nVModel;
-        nodeNvTable = new JTable(nodeNVModel);
     }
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-
-        
     }
     
     protected void setNode( CbusNode node) {
-        nodeNvTable = new JTable(nodeNVModel);
         
         nodeNVModel.setNode( node );
-        
+        if ( node == null ) {
+            return;
+        }
+        nodeNvTable = new JTable(nodeNVModel);
         nodeNVModel.setViewFrame();
         init();
     }
@@ -61,14 +61,13 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         if (pane1 != null ){ 
             pane1.setVisible(false);
         }
-        
         pane1 = null;
         
         TableColumnModel tableModel = nodeNvTable.getColumnModel();
         
 
         // configure items for GUI
-     //   nodeNVModel.configureTable(nodeNvTable);  
+        nodeNVModel.configureTable(nodeNvTable);  
 
         nodeNvTable.setRowSelectionAllowed(true);
         nodeNvTable.setColumnSelectionAllowed(false);
@@ -106,9 +105,12 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         pane1 = new JPanel();
         
+        setLayout(new BorderLayout() );
+        
+        pane1.setLayout(new BorderLayout());
+        
         // scroller for main table
         eventScroll = new JScrollPane(nodeNvTable);
-        eventScroll.setPreferredSize(new Dimension(600, 220));
 
         pane1.add(eventScroll);
         
@@ -148,7 +150,11 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
                         string = "";
                     }
                     
-                    f.setText(string);
+                    if (string.equals("-1")) {
+                        string = "";
+                    }
+                    
+                    f.setText(string.toUpperCase() );
                     
                 } else {
                     f.setText("");

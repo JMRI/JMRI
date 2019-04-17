@@ -386,8 +386,33 @@ public class CbusEventTableDataModelTest {
         t.dispose();
         t = null;
         
-
+    }
+    
+    @Test
+    public void testProvidesEvent() {
+    
+        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
         
+        
+        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        
+        CbusTableEvent event1 = t.provideEvent(123,456);
+        Assert.assertTrue(t.getRowCount()==1);
+        CbusTableEvent event2 = t.provideEvent(123,456);
+        Assert.assertTrue(t.getRowCount()==1);
+        CbusTableEvent event3 = t.provideEvent(111,222);
+        Assert.assertTrue(t.getRowCount()==2);
+        
+        Assert.assertTrue("equals",event1.equals(event2));
+        Assert.assertFalse("not equal",event1.equals(event3));
+        
+        event1 = null;
+        event2 = null;
+        event3 = null;
+        t.dispose();
+        t = null;
+    
     }
     
     // The minimal setup for log4J

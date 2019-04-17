@@ -120,10 +120,14 @@
         Node Manager</a> - Node Table and node configuration tools.
         
         <ul>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#variables">Node Variables</a></li>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#events">Node Events</a></li>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodenumber">Node Numbers</a></li>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#fcuimport">Restore node from MERG FCU xml file</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#variables"
+            >Node Variables</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#events"
+            >Node Events</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodenumber"
+            >Node Numbers</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#fcuimport"
+            >Import MERG FCU xml file - Restore NV's and Events, Import CBUS event names</a></li>
         </ul>
         </li>
         
