@@ -780,11 +780,11 @@ public final class JSON {
      */
     public static final String CLIENT = "client"; // NOI18N
     /**
-     * {@value #FORCE}
+     * {@value #FORCE_DELETE}
      * 
      * @since 5.1
      */
-    public static final String FORCE = "force"; // NOI18N
+    public static final String FORCE_DELETE = "forceDelete"; // NOI18N
     /**
      * {@value #USERS}
      * 

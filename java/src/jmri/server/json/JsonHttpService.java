@@ -1,6 +1,6 @@
 package jmri.server.json;
 
-import static jmri.server.json.JSON.FORCE;
+import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.USERS;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,15 +9,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -32,8 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class JsonHttpService {
 
     protected final ObjectMapper mapper;
-    private final Map<String, UUID> pendingDeletions = new HashMap<>();
-    private static final Logger log = LoggerFactory.getLogger(JsonHttpService.class);
 
     protected JsonHttpService(@Nonnull ObjectMapper mapper) {
         this.mapper = mapper;
@@ -256,16 +249,8 @@ public abstract class JsonHttpService {
      *         was made by client with a different or missing token since token
      *         was issued to client; false otherwise
      */
-    public final boolean acceptForceDeleteToken(@Nonnull String type, @Nonnull String name, @Nonnull String token) {
-        String key = type + name;
-        UUID value = this.pendingDeletions.getOrDefault(key, UUID.randomUUID());
-        this.pendingDeletions.remove(key);
-        try {
-            return value.equals(UUID.fromString(token));
-        } catch (IllegalArgumentException ex) {
-            log.warn("Unable to parse force deletion token string: {}", token);
-            return false;
-        }
+    public final boolean acceptForceDeleteToken(@Nonnull String type, @Nonnull String name, @Nullable String token) {
+        return JsonDeleteTokenManager.getDefault().acceptToken(type, name, token);
     }
 
     /**
@@ -282,10 +267,8 @@ public abstract class JsonHttpService {
      */
     public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name, @Nonnull ArrayNode users,
             @Nonnull Locale locale) throws JsonException {
-        String key = type + name;
-        pendingDeletions.put(key, UUID.randomUUID());
         ObjectNode data = mapper.createObjectNode();
-        data.put(FORCE, pendingDeletions.get(key).toString());
+        data.put(FORCE_DELETE, JsonDeleteTokenManager.getDefault().getToken(type, name));
         if (users.size() != 0) {
             data.put(USERS, users);
         }

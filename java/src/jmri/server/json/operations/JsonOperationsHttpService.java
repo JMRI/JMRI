@@ -2,7 +2,7 @@ package jmri.server.json.operations;
 
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORCE;
+import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NULL;
@@ -141,7 +141,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", type, name));
                 }
-                if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, data.path(FORCE).asText())) {
+                if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, data.path(FORCE_DELETE).asText())) {
                     throwDeleteConflictException(type, name, getKernelCars(kernel, locale), locale);
                 }
                 InstanceManager.getDefault(CarManager.class).deleteKernel(name);
@@ -163,11 +163,13 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     private ArrayNode getKernelCars(Kernel kernel, Locale locale) {
-        ArrayNode root = mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         kernel.getCars().forEach((car) -> {
-            root.add(utilities.getCar(car));
+            ObjectNode root = array.addObject();
+            root.put(TYPE, CAR);
+            root.put(DATA, utilities.getCar(car));
         });
-        return root;
+        return array;
     }
 
     private ArrayNode getKernels(Locale locale) {
