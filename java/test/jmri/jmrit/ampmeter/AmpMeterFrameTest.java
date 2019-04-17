@@ -3,80 +3,65 @@ package jmri.jmrit.ampmeter;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AmpMeterFrameTest {
-
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AmpMeterFrame t = new AmpMeterFrame();
-        Assert.assertNotNull("exists",t);
-    }
+public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testCurrentChange1Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
-             t.initComponents();
+             frame.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(2.1f);
     	});
-        t.dispose();
     }
 
     @Test
     public void testCurrentChange2Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
-             t.initComponents();
+             frame.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(32.1f);
     	});
-        t.dispose();
     }
 
     @Test
     public void testCurrentChange3Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
-             t.initComponents();
+             frame.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(432.1f);
     	});
-        t.dispose();
     }
 
     @Test
     public void testCurrentChange4Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
-             t.initComponents();
+             frame.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(5432.1f);
     	});
-        t.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.InstanceManager.setDefault(jmri.MultiMeter.class,new TestMeter());
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new AmpMeterFrame();
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     private class TestMeter extends jmri.implementation.AbstractMultiMeter {

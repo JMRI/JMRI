@@ -146,7 +146,7 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                     if (string.equals("0000 0000")) {
                         string = "";
                     }
-                    f.setText(string);
+                    f.setText(string.toUpperCase());
                 } else {
                     f.setText("");
                 }
