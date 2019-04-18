@@ -348,6 +348,19 @@ public class CbusSend {
         tc.sendCanMessage(m, null);  
     }
     
+    /**
+     * Sends RQMN OPC , Request name from node
+     * <p>
+     * Node must be in Setup Mode to take effect
+     *
+     */
+    public void rQmn(){
+        CanMessage m = new CanMessage(tc.getCanid());
+        m.setNumDataElements(1);
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        m.setElement(0, CbusConstants.CBUS_RQMN);
+        tc.sendCanMessage(m, null);  
+    }
     
     // private final static Logger log = LoggerFactory.getLogger(CbusSend.class);
 }

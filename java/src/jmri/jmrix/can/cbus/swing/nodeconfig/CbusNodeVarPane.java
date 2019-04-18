@@ -45,6 +45,11 @@ public class CbusNodeVarPane extends JPanel implements TableModelListener {
     
     public void setNode( CbusNode node ) {
         
+        if ( nodeNVModel !=null ) {
+            nodeNVModel.removeTableModelListener(this);
+            nodeNVModel.dispose();
+        }
+        
         nodeNVModel = new CbusNodeNVTableDataModel(_memo, 10,
             CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
             nodeNVModel.addTableModelListener(this);
@@ -77,6 +82,8 @@ public class CbusNodeVarPane extends JPanel implements TableModelListener {
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
         infoPane.add(genericNVTable, BorderLayout.CENTER);
+        
+        setLayout(new BorderLayout() );
         
         this.add(infoPane);
         

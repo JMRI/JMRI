@@ -29,7 +29,7 @@ public class CbusNodeConstantsTest {
     @Test
     public void testGetManu() {
         Assert.assertEquals("getManu","MERG",CbusNodeConstants.getManu(165));
-        Assert.assertEquals("getManu unknown","Manufacturer Unknown",CbusNodeConstants.getManu(999));
+        Assert.assertEquals("getManu 999","Manufacturer 999",CbusNodeConstants.getManu(999));
     }
 
     @Test
