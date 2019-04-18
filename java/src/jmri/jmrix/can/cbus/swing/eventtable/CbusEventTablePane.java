@@ -14,7 +14,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.GridLayout;
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -74,7 +72,6 @@ import javax.swing.text.Highlighter;
 import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.FileUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -126,10 +123,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
 
     protected Highlighter tableFeedbackHighlighter;
     protected Highlighter h;
-    
-    public static JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-    public static javax.swing.filechooser.FileNameExtensionFilter fcuxmlfilter = 
-        new javax.swing.filechooser.FileNameExtensionFilter( "FCU xml", "xml");
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -140,8 +133,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             eventModel = new CbusEventTableDataModel(memo, 10,
                 CbusEventTableDataModel.MAX_COLUMN); // controller, row, column
         }
-        
-        
         
         init();
     }
@@ -501,19 +492,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             }
         });
 
-        
-        JMenuItem mnItemOpenFile = new JMenuItem(Bundle.getMessage("ImportMenuMergFcu147")); //  FCU 
-        mnItemOpenFile.setToolTipText("Tested FCU v 1.4.7.42 - v 1.4.7.44"); // NOT I18N
-        mnItemOpenFile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String myFile = fileChooser();
-                if (myFile!=null) {
-                    eventModel.ta.readTheFCU14742File(myFile);
-                }
-            }
-        });
-
         // add print menu items
         JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
         printItem.addActionListener(new ActionListener() {
@@ -588,8 +566,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
 
         fileMenu.add(saveItem);        
         fileMenu.add(saveAsItem);
-        fileMenu.add(new JSeparator()); // SEPARATOR
-        fileMenu.add(mnItemOpenFile); // FCU Import
         
         displayMenu.add(showfilterpanel);        
         displayMenu.add(shownewevent);
@@ -605,24 +581,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         menuList.add(evJmMenu);
         menuList.add(displayMenu);
         return menuList;
-    }
-
-    /**
-     * Get file to read from
-     */    
-    static public String fileChooser(){
-        // Get file to read from
-        fc.setFileFilter(fcuxmlfilter);
-        int retVal = fc.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return ""; // Canceled
-        }
-        if (fc.getSelectedFile() == null) {
-            return ""; // Canceled
-        }
-        File f = fc.getSelectedFile();
-        String fileName = f.getAbsolutePath();
-        return fileName;
     }
 
     /**

@@ -1172,7 +1172,7 @@
 	<label xml:lang="it">Impulso Momentaneo</label>
 	<tooltip xml:lang="it">1 secondo = 60 a 4 secondi = 255</tooltip>
   </variable>
-  <variable CV="63" default="100" item="Function 2 effect generated" tooltip="1 second = about 12" exclude="220">
+  <variable CV="63" default="63" item="Function 2 effect generated" tooltip="1 second = about 12" exclude="220">
 	<decVal/>
 	<label>Ditch Light Blink Holdover Time</label>
 	<label xml:lang="it">Tempo strascico lampeggio Luce Ditch </label>

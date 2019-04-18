@@ -258,10 +258,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     @Override
     public void dispose() {
-        prefs.setComboBoxLastSelection(selectedScalePref, (String)scaleList.getSelectedItem());
-        prefs.setProperty(customScalePref, "customScale", customScale);
-        prefs.setSimplePreferenceState(speedUnitsKphPref, kphButton.isSelected());
-        prefs.setSimplePreferenceState(dialTypePref, dialButton.isSelected());
+        if(prefs!=null) {
+           prefs.setComboBoxLastSelection(selectedScalePref, (String)scaleList.getSelectedItem());
+           prefs.setProperty(customScalePref, "customScale", customScale);
+           prefs.setSimplePreferenceState(speedUnitsKphPref, kphButton.isSelected());
+           prefs.setSimplePreferenceState(dialTypePref, dialButton.isSelected());
+        }
         _memo.getTrafficController().removeSpeedoListener(this);
         super.dispose();
     }
