@@ -50,11 +50,11 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGet() throws JsonException {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", locale).size());
-        Assert.assertEquals(2, instance.doGet(JsonRoster.ROSTER, "", locale).size());
+        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", instance.getObjectMapper().createObjectNode(), locale).size());
+        Assert.assertEquals(2, instance.doGet(JsonRoster.ROSTER, "", instance.getObjectMapper().createObjectNode(), locale).size());
         // call with invalid first argument
         try {
-            instance.doGet(TEST_GROUP1, TEST_GROUP1, locale);
+            instance.doGet(TEST_GROUP1, TEST_GROUP1, instance.getObjectMapper().createObjectNode(), locale);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
@@ -97,10 +97,10 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGetList() throws JsonException {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", locale).size());
+        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", instance.getObjectMapper().createObjectNode(), locale).size());
         // call with invalid first argument
         try {
-            instance.doGet(TEST_GROUP1, TEST_GROUP1, locale);
+            instance.doGet(TEST_GROUP1, TEST_GROUP1, instance.getObjectMapper().createObjectNode(), locale);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());

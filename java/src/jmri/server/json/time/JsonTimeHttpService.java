@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
@@ -35,12 +36,16 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @Nullable to override @Nonnull in super class
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
+        return doGet(type, timebase, timebase.getTime(), locale);
+    }
+
+    public JsonNode doGet(String type, Timebase timebase, Date date, Locale locale) throws JsonException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new StdDateFormat().format(timebase.getTime()));
+        data.put(TIME, new StdDateFormat().format(date));
         data.put(RATE, timebase.getRate());
         data.put(STATE, timebase.getRun() ? ON : OFF);
         return root;
@@ -66,13 +71,13 @@ public class JsonTimeHttpService extends JsonHttpService {
         } catch (TimebaseRateException e) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorRateFactor"));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode result = this.mapper.createArrayNode();
-        result.add(this.doGet(type, null, locale));
+        result.add(this.doGet(type, null, data, locale));
         return result;
     }
 

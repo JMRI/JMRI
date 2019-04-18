@@ -50,7 +50,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         String type = "non-existant";
         JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         try {
-            instance.doGet(type, name, locale);
+            instance.doGet(type, name, instance.getObjectMapper().createObjectNode(), locale);
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());

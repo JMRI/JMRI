@@ -296,4 +296,30 @@ public class NBHSignalHead extends NBHAbstractSignalCommon implements SignalHead
         if (_mNamedBeanHandleSignalHead == null) return DEFAULT_INT_RV;
         return _mNamedBeanHandleSignalHead.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
     }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name,
+            String listenerRef) {
+        _mNamedBeanHandleSignalHead.getBean().addPropertyChangeListener(propertyName, listener, name, listenerRef);
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleSignalHead.getBean().addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return _mNamedBeanHandleSignalHead.getBean().getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return _mNamedBeanHandleSignalHead.getBean().getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleSignalHead.getBean().removePropertyChangeListener(propertyName, listener);
+    }
 }
