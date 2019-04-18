@@ -62,6 +62,68 @@
 
  <indexitem text="Consisting Tool " target="html.tools.consisttool.ConsistTool"/>
 
+ <indexitem text="System Console " target="package.apps.SystemConsole"/>
+
+ <indexitem text="CTC " target="package.jmri.jmrit.ctc.CTC">
+  <indexitem text="CTCEditor " target="package.jmri.jmrit.ctc.CTC_editor">
+   <indexitem text="Menus " target="package.jmri.jmrit.ctc.CTC_menuFile">
+    <indexitem text="File menu " target="package.jmri.jmrit.ctc.CTC_menuFile">
+     <indexitem text="New " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+     <indexitem text="Save " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+     <indexitem text="Exit without saving " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+    </indexitem>
+    <indexitem text="Edit menu " target="package.jmri.jmrit.ctc.CTC_menuEditFind">
+     <indexitem text="Find and Replace... " target="package.jmri.jmrit.ctc.CTC_menuEditFind"/>
+
+     <indexitem text="Fix Error(s)... " target="package.jmri.jmrit.ctc.CTC_menuEditFix"/>
+
+    </indexitem>
+    <indexitem text="Configure menu " target="package.jmri.jmrit.ctc.CTC_menuCfgDeb">
+     <indexitem text="Debugging " target="package.jmri.jmrit.ctc.CTC_menuCfgDeb"/>
+
+     <indexitem text="Defaults " target="package.jmri.jmrit.ctc.CTC_menuCfgDef"/>
+
+     <indexitem text="Fleeting " target="package.jmri.jmrit.ctc.CTC_menuCfgFlt"/>
+
+     <indexitem text="Patterns " target="package.jmri.jmrit.ctc.CTC_menuCfgPat"/>
+
+     <indexitem text="GUI Design " target="package.jmri.jmrit.ctc.CTC_menuCfgGui"/>
+
+    </indexitem>
+   </indexitem>
+   <indexitem text="O.S. Sections List " target="package.jmri.jmrit.ctc.CTC_osList"/>
+
+   <indexitem text="Edit Buttons " target="package.jmri.jmrit.ctc.CTC_frmCB">
+    <indexitem text="Code button " target="package.jmri.jmrit.ctc.CTC_frmCB"/>
+
+    <indexitem text="Signal direction indicators " target="package.jmri.jmrit.ctc.CTC_frmSIDI"/>
+
+    <indexitem text="Signal direction lever " target="package.jmri.jmrit.ctc.CTC_frmSIDL"/>
+
+    <indexitem text="Switch direction indicators " target="package.jmri.jmrit.ctc.CTC_frmSWDI"/>
+
+    <indexitem text="Switch direction lever " target="package.jmri.jmrit.ctc.CTC_frmSWDL"/>
+
+    <indexitem text="Call On " target="package.jmri.jmrit.ctc.CTC_frmCO"/>
+
+    <indexitem text="Traffic locking " target="package.jmri.jmrit.ctc.CTC_frmTRL"/>
+
+    <indexitem text="Turnout locking " target="package.jmri.jmrit.ctc.CTC_frmTUL"/>
+
+    <indexitem text="Indication locking " target="package.jmri.jmrit.ctc.CTC_frmIL"/>
+
+   </indexitem>
+  </indexitem>
+  <indexitem text="Files " target="package.jmri.jmrit.ctc.CTC_ctcFiles"/>
+
+  <indexitem text="CTCMain " target="package.jmri.jmrit.ctc.CTC_ctcMain"/>
+
+  <indexitem text="Definitions " target="package.jmri.jmrit.ctc.CTC_ctcDefinitions"/>
+
+ </indexitem>
  <indexitem text="Debug Menu " target="package.jmri.jmrit.DebugMenu"/>
 
  <indexitem text="DecoderPro " target="html.apps.DecoderPro.index">

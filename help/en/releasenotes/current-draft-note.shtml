@@ -86,12 +86,14 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Fixed issue with Roster speed-profiling</li>
                 <li><a
                 href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS
                 Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
+                <li>CBUS Event Table name import from MERG FCU file has moved to the Node Manager,
+                where a file preview and further import tools are now available.</li>
                 <li>Track Current meter avaiable for supported Command Stations via
                 PanelPro > Tools > Track Current Meter</li>
+                <li>Fixed issue with Roster speed-profiling</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -302,7 +304,10 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>Add Trim CV to Basic Speed Control pane</li>
+                <li>
+		   Add Trim CV to Basic Speed Control pane
+		   Add WOW Ver 4 Prime decoder (Michael Mosher)
+		</li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -449,15 +454,15 @@
         <ul>
             <li>The handling of Turnout system names has been updated
                 to be (more, hopefully completely) consistent with the
-                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.  
+                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.
                 Specifically, case now (generally) matters in system names:
                 <ul>
                     <li>You can now have an internal turnout named "ITsome lower case name".
                     <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
                         "ITSome LoWeR cAse Name" and get the same one.
                 </ul>
-                This should not require any migration for stored configurations or 
-                panel files, as they have been automatically been being kept consistent 
+                This should not require any migration for stored configurations or
+                panel files, as they have been automatically been being kept consistent
                 since JMRI 4.8.  But you might have case errors in i.e. scripts which
                 will fixing inconsistent references in your scripts.
                 </li>
@@ -532,7 +537,35 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Down ramps used by NXWarrants and are also used when speed changes required by signals, occupancy 
+            	conditions or user interventions occur. The throttle settings generated for down ramps have been modified. 
+            	The throttle setting is increased by 10% at each time interval. Also, the last throttle interval now is always the throttle
+            	interval as specified in Warrant Preferences. Accuracy of the position where the train stops should be improved.
+            </li>
+            <li>A bug where looped routes ending at an adjacent block could be missed by the Find Route algorithm has been fixed.
+            </li>
+            <li>A stop button to halt execution of the Find Route Operation has been added.
+            </li>
+            <li>The dynamic recording of speeds during sessions has been extended. A weighted average of the speed over a block is recorded to
+            	the session speed profile.  These speeds may be edited and merger into the Roster SpeedProfile according to the settings
+            	selected in WarrantPreferences. 
+            </li>
+            <li>A bug where a Halt at zero speed would not restart has been fixed. Scripts now resume at any command where the user does a Halt.
+            </li>
+            <li>The "Run Warrant" command linking warrants now executes for all cases.
+            </li>
+            <li>A bug when dragging an unnamed Portal icon in CircuitBuilder might cause a freeze has been fixed.
+            </li>
+            <li>Deleting an OBlock will also delete all other elements (Portals and Paths using the block). Previously when saved after such editing, 
+			    any warrants referencing the deleted block would re-register the OBlock when the panel was re-loaded. Now such warrants are loaded, but 
+		        will indicate that editing is needed to establish a correct route for them.  
+            </li>
+            <li>A checkBox to suppress the generation of sound commands has been added to the create NXWarrant window.
+            </li>
+            <li>TextFields have been added to the create NXWarrant window so ramp parameters can be modified.
+            </li>
+            <li>Missing help pages have been added to the sidebar index.
+            </li>
         </ul>
 
    <h3>Web Access</h3>
@@ -556,6 +589,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>A new CTC tool has been added to JMRI.  An Editor component uses
+            a set of screens to define the CTC system.  The resulting data can
+            be used to create a USS CTC Panel (Panel Editor) with all of the
+            levers, indicators, and a minimal track plan with turnouts and
+            signals.  A run time component uses the configuration to implement
+            prototype CTC logic with no scripting or Logix.</li>
         </ul>
 

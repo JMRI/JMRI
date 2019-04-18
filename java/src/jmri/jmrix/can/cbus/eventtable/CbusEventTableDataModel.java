@@ -620,6 +620,24 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         addToLog(1,newtabev.toString() + Bundle.getMessage("AddedToTable"));
     }
     
+    public CbusTableEvent provideEvent(int nn, int en){
+        for (int i = 0; i < getRowCount(); i++) {
+            if (_mainArray.get(i).matches(nn, en)) {
+                return _mainArray.get(i);
+            }
+        }
+        // not existing so creating new
+        
+        CbusTableEvent newtabev = new CbusTableEvent(nn,en,CbusTableEvent.EvState.UNKNOWN, -1, "", "", 0, 0, 0, 0, null );
+        _mainArray.add(newtabev);
+        // notify the JTable object that a row has changed; do that in the Swing thread!
+        ThreadingUtil.runOnGUI( ()->{ fireTableRowsInserted((getRowCount()-1), (getRowCount()-1)); });
+        addToLog(1,newtabev.toString() + Bundle.getMessage("AddedToTable"));
+        
+        return newtabev;
+        
+    }
+    
     /**
      * Remove Row from table
      * @param row int row number

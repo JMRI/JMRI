@@ -149,15 +149,9 @@
       
         <p>It is not currently possible to load previous session data into the table from file.</p>
 
-        <p>You can import event and node numbers, names and their node names from a FCU config file.</p>
-      
-        <p>Click on File > Import FCU events, then select an FCU congiguration xml file.</p>
-      
-        <p>The FCU config file may well contain multiple copies of the event,
-        ( for teaching to different nodes ), so only the 1st unique event and node number 
-        found in the file is added.</p>
-      
-        <p>An event name within the file will be added to an existing table entry if it has no event name.</p>
+        <p>You can import event names and node names from a MERG FCU config file.
+        This is accessed from the <a href="../nodeconfig/NodeConfigToolPane.shtml#fcuimport">JMRI CBUS Node Manager</a>,
+        where the FCU file can be previewed before import.</p>
       
       
     <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>

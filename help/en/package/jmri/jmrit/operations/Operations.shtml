@@ -3236,8 +3236,8 @@
 
    <p>When the utility checkbox is selected, it instructions the program when printing Manifests
     and switch lists to not show the individual car's road and number, but rather the quantity of
-    cars needed of that type. For example, prototype trains when shipping coal don't normally list
-    the cars in the train by the car's road number but instead shows the number of cars, the type of
+    cars needed of that type. For example, prototype unit trains when shipping coal don't normally list
+    the cars in the train by the car's road number but instead it shows the number of cars, the type of
     car, and the car's load on the train's Manifest.</p>
 
    <p>If you use the utility feature, it is strongly recommended that you select the utility
