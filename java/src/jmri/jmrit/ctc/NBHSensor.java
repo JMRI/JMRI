@@ -66,7 +66,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 // Prefix NBH = Named Bean Handler....
 
-public class NBHSensor implements Sensor {
+public class NBHSensor {
 //  Special case sane return values:
     public static final int DEFAULT_SENSOR_STATE_RV = Sensor.INACTIVE;
 //  Standard sane return values for the types indicated:
@@ -131,302 +131,24 @@ public class NBHSensor implements Sensor {
         } else { return null; }
     }
 
-    @Override
     public int getKnownState() {
         if (_mNamedBeanHandleSensor == null) return DEFAULT_SENSOR_STATE_RV;
         return _mNamedBeanHandleSensor.getBean().getKnownState();
     }
 
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
-    @Override
     public void setKnownState(int newState) {
         if (_mNamedBeanHandleSensor == null) return;
         try { _mNamedBeanHandleSensor.getBean().setKnownState(newState); } catch (JmriException ex) {}
     }
 
-    @Override
-    public void requestUpdateFromLayout() {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().requestUpdateFromLayout();
-    }
 
-    @Override
-    public void setInverted(boolean inverted) {
-        if (_mNamedBeanHandleSensor == null) return;   // Do nothing.
-        _mNamedBeanHandleSensor.getBean().setInverted(inverted);
-    }
-
-    @Override
-    public boolean getInverted() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_BOOLEAN_RV;
-        return _mNamedBeanHandleSensor.getBean().getInverted();
-    }
-
-    @Override
-    public boolean canInvert() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_BOOLEAN_RV;
-        return _mNamedBeanHandleSensor.getBean().canInvert();
-    }
-
-    @Override
-    public void dispose() {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().dispose();
-    }
-
-    @Override
-    public int getRawState() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_SENSOR_STATE_RV;
-        return _mNamedBeanHandleSensor.getBean().getRawState();
-    }
-
-    @Override
-    public void setSensorDebounceGoingActiveTimer(long timer) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setSensorDebounceGoingActiveTimer(timer);
-    }
-
-    @Override
-    public long getSensorDebounceGoingActiveTimer() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_LONG_RV;
-        return _mNamedBeanHandleSensor.getBean().getSensorDebounceGoingActiveTimer();
-    }
-
-    @Override
-    public void setSensorDebounceGoingInActiveTimer(long timer) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setSensorDebounceGoingInActiveTimer(timer);
-    }
-
-    @Override
-    public long getSensorDebounceGoingInActiveTimer() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_LONG_RV;
-        return _mNamedBeanHandleSensor.getBean().getSensorDebounceGoingInActiveTimer();
-    }
-
-    @Override
-    public void setUseDefaultTimerSettings(boolean flag) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setUseDefaultTimerSettings(flag);
-    }
-
-    @Override
-    public boolean getUseDefaultTimerSettings() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_BOOLEAN_RV;
-        return _mNamedBeanHandleSensor.getBean().getUseDefaultTimerSettings();
-    }
-
-    @Override
-    @Deprecated // 4.9.2
-    public void useDefaultTimerSettings(boolean flag) {
-        throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2"); // NOI18N
-    }
-
-    @Override
-    @Deprecated // 4.9.2
-    public boolean useDefaultTimerSettings() {
-        throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2"); // NOI18N
-    }
-
-    @Override
-    public void setReporter(Reporter re) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setReporter(re);
-    }
-
-    @Override
-    public Reporter getReporter() {
-        if (_mNamedBeanHandleSensor == null) return (Reporter)DEFAULT_OBJECT_RV;
-        return _mNamedBeanHandleSensor.getBean().getReporter();
-    }
-
-    @Override
-    public void setPullResistance(PullResistance r) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setPullResistance(r);
-    }
-
-    @Override
-    public PullResistance getPullResistance() {
-        if (_mNamedBeanHandleSensor == null) return (PullResistance)DEFAULT_OBJECT_RV;
-        return _mNamedBeanHandleSensor.getBean().getPullResistance();
-    }
-
-    @Override
-    public String getUserName() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getUserName();
-    }
-
-    @Override
-    public void setUserName(String s) {
-        if (_mNamedBeanHandleSensor == null) return;
-        try { _mNamedBeanHandleSensor.getBean().setUserName(s); } catch (BadUserNameException e) {}
-    }
-
-    @Override
-    public String getSystemName() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getSystemName();
-    }
-
-    @Override
-    public String getDisplayName() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getDisplayName();
-    }
-
-    @Override
-    public String getFullyFormattedDisplayName() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getFullyFormattedDisplayName();
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(l, name, listenerRef);
-    }
-
-    @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if (_mNamedBeanHandleSensor == null) return;
         _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(l);
     }
 
-    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         if (_mNamedBeanHandleSensor == null) return;
         _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(l);
-    }
-
-    @Override
-    public void updateListenerRef(PropertyChangeListener l, String newName) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().updateListenerRef(l, newName);
-    }
-
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "I don't use this function, let it not do anything if it fails.")
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) {
-        if (_mNamedBeanHandleSensor == null) return;
-        try { _mNamedBeanHandleSensor.getBean().vetoableChange(evt); } catch (PropertyVetoException e) {}
-    }
-
-    @Override
-    public String getListenerRef(PropertyChangeListener l) {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getListenerRef(l);
-    }
-
-    @Override
-    public ArrayList<String> getListenerRefs() {
-        if (_mNamedBeanHandleSensor == null) return new ArrayList<>();
-        return _mNamedBeanHandleSensor.getBean().getListenerRefs();
-    }
-
-    @Override
-    public int getNumPropertyChangeListeners() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_INT_RV;
-        return _mNamedBeanHandleSensor.getBean().getNumPropertyChangeListeners();
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-        if (_mNamedBeanHandleSensor == null) return new PropertyChangeListener[0];
-        return _mNamedBeanHandleSensor.getBean().getPropertyChangeListenersByReference(name);
-    }
-
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
-    @Override
-    public void setState(int s) {
-        if (_mNamedBeanHandleSensor == null) return;
-        try { _mNamedBeanHandleSensor.getBean().setState(s); } catch (JmriException e) {}
-    }
-
-    @Override
-    public int getState() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_SENSOR_STATE_RV;
-        return _mNamedBeanHandleSensor.getBean().getState();
-    }
-
-    @Override
-    public String describeState(int state) {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().describeState(state);
-    }
-
-    @Override
-    public String getComment() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getComment();
-    }
-
-    @Override
-    public void setComment(String comment) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setComment(comment);
-    }
-
-    @Override
-    public void setProperty(String key, Object value) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().setProperty(key, value);
-    }
-
-    @Override
-    public Object getProperty(String key) {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_OBJECT_RV;
-        return _mNamedBeanHandleSensor.getBean().getProperty(key);
-    }
-
-    @Override
-    public void removeProperty(String key) {
-        if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().removeProperty(key);
-    }
-
-    @Override
-    public Set<String> getPropertyKeys() {
-        if (_mNamedBeanHandleSensor == null) return Collections.emptySet();
-        return _mNamedBeanHandleSensor.getBean().getPropertyKeys();
-    }
-
-    @Override
-    public String getBeanType() {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSensor.getBean().getBeanType();
-    }
-
-    @Override
-    public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        if (_mNamedBeanHandleSensor == null) return DEFAULT_INT_RV; // What should I return?
-        return _mNamedBeanHandleSensor.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name,
-            String listenerRef) {
-        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyName, listener, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return _mNamedBeanHandleSensor.getBean().getPropertyChangeListeners();
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return _mNamedBeanHandleSensor.getBean().getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyName, listener);
     }
 }
