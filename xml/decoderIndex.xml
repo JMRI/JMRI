@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.15.4ish+jake+20190310T1917Z+R04ef7c5046 on Sun Mar 10 12:17:48 PDT 2019-->
-  <decoderIndex version="946">
+  <!--Written by JMRI version 4.15.5ish+jake+20190418T1549Z+Rc5909f1b7d on Thu Apr 18 09:49:14 MDT 2019-->
+  <decoderIndex version="950">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -8299,7 +8299,7 @@
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
         <model model="Hornby TTS Class 60" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="163">
-          <versionCV lowVersionID="2" highVersionID="132" />
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
@@ -8335,7 +8335,7 @@
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
         <model model="Hornby TTS Class A1 and A3 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
-          <versionCV lowVersionID="2" highVersionID="120" />
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
@@ -8353,7 +8353,7 @@
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
         <model model="Hornby TTS 9F 2-10-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="655">
-          <versionCV lowVersionID="2" highVersionID="120" />
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
@@ -8377,7 +8377,7 @@
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
         <model model="Hornby TTS 5MT Black 5 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="171">
-          <versionCV lowVersionID="2" highVersionID="132" />
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
@@ -8425,6 +8425,12 @@
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
         <model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="183">
+          <versionCV lowVersionID="10" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS J36 Class 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="185">
           <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
@@ -8717,204 +8723,424 @@
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06" file="LaisDcc.xml">
         <!--           old models not showing anymore  -->
         <model show="no" model="860010/LaisDcc-Z2" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
-          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 5</label>
+          </output>
+          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 5</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="13.3" width="7.3" height="3.8" units="mm" />
         </model>
         <model show="no" model="860012" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
-          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 5</label>
+          </output>
+          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 5</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="14.5" width="8.2" height="3" units="mm" />
         </model>
         <model show="no" model="860013" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
-          <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 5</label>
+          </output>
+          <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 5</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="14.5" width="8.2" height="3" units="mm" />
         </model>
         <model show="no" model="860014" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
-          <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Drát</label>
+          </output>
+          <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Drát</label>
+          </output>
+          <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Drát</label>
+          </output>
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Drát</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="15" width="7" height="2.7" units="mm" />
         </model>
         <model show="no" model="860015" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
-          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Brown|Pin 13" connection="plug" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 17</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 12</label>
+          </output>
+          <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 4</label>
+          </output>
+          <output name="6" label="Brown|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 13</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="15" width="9.5" height="2.9" units="mm" />
         </model>
         <model show="no" model="860016" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="PluX22" comment="HO-scale, with Plux22 harness">
-          <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Pin 18" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Pink|Pin 2" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Brown|Pin 19" connection="plug" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 7</label>
+          </output>
+          <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 13</label>
+          </output>
+          <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 16</label>
+          </output>
+          <output name="4" label="Purple|Pin 18" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 18</label>
+          </output>
+          <output name="5" label="Pink|Pin 2" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 2</label>
+          </output>
+          <output name="6" label="Brown|Pin 19" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 19</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="16" width="17.5" height="3" units="mm" />
         </model>
         <!-- Model 860018 replaced by 860020 -->
         <model show="no" model="860018" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
-          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 6</label>
+          </output>
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 2</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Drát</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="14.2" width="12.5" height="3.5" units="mm" />
         </model>
         <model show="no" model="860019" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
-          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 7</label>
+          </output>
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 15</label>
+          </output>
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 14</label>
+          </output>
+          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 13</label>
+          </output>
+          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 4</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="17" width="16" height="3.5" units="mm" />
         </model>
         <model show="no" model="860020" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
-          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 6</label>
+          </output>
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 2</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Drát</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="15" width="15" height="3.5" units="mm" />
         </model>
         <model show="no" model="860021" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
-          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 6</label>
+          </output>
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 2</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Drát</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
           <size length="15" width="7" height="2.7" units="mm" />
         </model>
         <!--      new models based on available outputs defined, without form factor   -->
         <model model="8x00nn - 2 outputs" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
-          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="|" />
-          <output name="4" label="|" />
-          <output name="5" label="|" />
-          <output name="6" label="|" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 5</label>
+          </output>
+          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 6</label>
+          </output>
+          <output name="3" label="|">
+            <label xml:lang="cs">|</label>
+          </output>
+          <output name="4" label="|">
+            <label xml:lang="cs">|</label>
+          </output>
+          <output name="5" label="|">
+            <label xml:lang="cs">|</label>
+          </output>
+          <output name="6" label="|">
+            <label xml:lang="cs">|</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
         </model>
         <model model="8x00nn - 4 outputs" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
-          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="5" label="|" />
-          <output name="6" label="|" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 6</label>
+          </output>
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 2</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Drát</label>
+          </output>
+          <output name="5" label="|">
+            <label xml:lang="cs">|</label>
+          </output>
+          <output name="6" label="|">
+            <label xml:lang="cs">|</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
         </model>
         <model model="8x00nn - 6 outputs" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
-          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" />
-          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA" />
-          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA" />
-          <output name="7" label="Rule 17|Dimming" />
-          <!-- virtual "output" -->
-          <output name="8" label="Ditch|Blink" />
-          <!-- virtual "output" -->
-          <output name="9" label="Motor|Control" />
-          <!-- virtual "output" -->
-          <output name="10" label="BEMF|Control" />
-          <!-- virtual "output" -->
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 7</label>
+          </output>
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 15</label>
+          </output>
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 14</label>
+          </output>
+          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 13</label>
+          </output>
+          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 4</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
         </model>
       </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" file="Lenz_51.xml">
@@ -11847,7 +12073,7 @@
           <output name="6" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.08" width="0.63" height="0.275" units="inches" />
         </model>
-        <model model="D16MTC" numOuts="6" numFns="8" connector="21MTC" formFactor="HO">
+        <model model="D16MTC" numOuts="8" numFns="8" connector="21MTC" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
           <output name="1" label="Pin" />
           <output name="2" label="Pin" />
           <output name="3" label="Pin" />
@@ -12179,9 +12405,36 @@
         <model model="FREDi using LNSV2" productID="11" developerID="1" />
       </family>
       <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
-        <model model="Basic LocoIO" productID="142">
-          <versionCV lowVersionID="134" highVersionID="142" />
+        <model model="HDL LocoIO v1.54" productID="154" />
+        <!--filtering model specific options relies on new exclude/include support in compositeValType-->
+        <model model="HDL LocoIO v1.53" productID="153" />
+        <!--Docs: 1.50-1.52 users should update to 1.53, same options-->
+        <model model="HDL LocoIO v1.49" productID="149" />
+        <model model="HDL LocoIO v1.48" productID="148" />
+        <!--Docs: 1.47 users should update to 1.48, same options-->
+        <model model="HDL LocoIO v1.46" productID="146" />
+        <model model="HDL LocoIO v1.45" productID="145" />
+        <model model="HDL LocoIO v1.44" productID="144" />
+        <!--Docs: 1.43 users should update to 1.44, same options-->
+        <model model="HDL LocoIO v1.42" productID="142" />
+        <model model="HDL LocoIO v1.41" productID="141" />
+        <model model="HDL LocoIO v1.40" productID="140" />
+        <model model="HDL LocoIO v1.39" productID="139" />
+        <model model="HDL LocoServo v1.06" productID="106" />
+        <model model="HDL LocoServo v1.05" productID="105" />
+        <model model="HDL LocoServo v1.04" productID="104" />
+        <model model="HDL LocoServo v1.03" productID="103" />
+        <model model="HDL LocoServo v1.02" productID="102" />
+        <model model="HDL LocoServo v1.01" productID="101">
+          <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
         </model>
+        <model model="HDL LocoBooster v3" productID="003">
+          <!--LocoBooster only allows config of ports 1-4 (and special ports 5-6)-->
+        </model>
+        <model model="HDL LocoBooster v4" productID="004">
+          <!--LocoBooster v4 and up support Opcode2 on ports 1-6 -->
+        </model>
+        <model model="Original LocoIO" productID="135" />
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
         <model model="Basic definition" />
@@ -14735,418 +14988,56 @@
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
         </functionlabels>
       </family>
-      <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Diesel_OEM_Athearn.xml">
-        <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="825" comment="Model E5000.001BR">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
+      <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" file="SoundTraxx_Eco_Diesel_OEM_Athearn.xml">
+        <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="825" comment="Model E5000.001BR" />
         <model model="ECO-200 SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="774" comment="Model E9900.001B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
-        <model model="ECO-RTR SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="774" comment="Model E0101.001B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
+        <model model="ECO-RTR SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="774" comment="Model E0101.001B" />
         <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="775" comment="Model E9900.002B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
-        <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="780" comment="Model E0101.004B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="851" comment="Model E0101.002B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E????.???">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
+        <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="780" comment="Model E0101.004B" />
+        <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="851" comment="Model E0101.002B" />
+        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E????.???" />
+        <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B" />
+        <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???" />
+        <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B" />
         <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="773" comment="Model E9901.001B">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
-        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="846" comment="Model E???">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="10" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
+        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="846" comment="Model E???" />
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Airhorn| ">
+          <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="10" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -17234,1833 +17125,96 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Genesis.xml">
-        <model model="TSU-GN2200 F3/7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="782" comment="Model T0102.006B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 F3/7 w/DB/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="783" comment="Model T0102.008B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 F3/7 w/DB/gyra2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="806" comment="Model T0102.015B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="770" comment="Model T0102.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="771" comment="Model T0102.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="871" comment="Model 8T0103.005">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="870" comment="Model 8T0103.004">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="793" comment="Model T0102.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="824" comment="Model T0102.017B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="788" comment="Model T0102.016B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="858" comment="Model T0102.004">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="795" comment="Model T0102.010B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="796" comment="Model T0102.011B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/beacon3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="838" comment="Model T0102.019B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 GP9 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="857" comment="Model 8T0102.018">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="772" comment="Model T0102.004B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/DB,beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="837" comment="Model T0102.004B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/DB,gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="794" comment="Model T0102.009B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="787" comment="Model T0102.014B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="861" comment="Model 8T0102.021">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="798" comment="Model T0201.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="799" comment="Model T0201.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="800" comment="Model T0201.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="797" comment="Model T0200.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="776" comment="Model T0203.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="844" comment="Model T0203.007B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="777" comment="Model T0203.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="840" comment="Model T0203.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="842" comment="Model T0203.005B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/DB/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="841" comment="Model T0203.004B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="843" comment="Model T0203.006B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="845" comment="Model T0203.009B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="852" comment="Model T0203.010B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="828" comment="Model T0202.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="829" comment="Model T0202.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="830" comment="Model T0205.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="831" comment="Model T0205.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="832" comment="Model T0205.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="849" comment="Model T0204.006B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="848" comment="Model T0204.005B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="847" comment="Model T0204.005B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="785" comment="Model T0204.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="786" comment="Model T0204.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="784" comment="Model T0204.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="804" comment="Model T0302.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD60I w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="803" comment="Model T0302.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD60M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="802" comment="Model T0302.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD60M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="805" comment="Model T0302.004B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="791" comment="Model T0303.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="836" comment="Model T0303.001">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="815" comment="Model T1004.001B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
-        <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="817" comment="Model T1004.003B">
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-        </model>
+        <model model="TSU-GN2200 F3/7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="782" comment="Model T0102.006B" />
+        <model model="TSU-GN2200 F3/7 w/DB/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="783" comment="Model T0102.008B" />
+        <model model="TSU-GN2200 F3/7 w/DB/gyra2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="806" comment="Model T0102.015B" />
+        <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="770" comment="Model T0102.001B" />
+        <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="771" comment="Model T0102.002B" />
+        <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="871" comment="Model 8T0103.005" />
+        <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="870" comment="Model 8T0103.004" />
+        <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="793" comment="Model T0102.003B" />
+        <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="824" comment="Model T0102.017B" />
+        <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="788" comment="Model T0102.016B" />
+        <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="858" comment="Model T0102.004" />
+        <model model="TSU-GN2200 GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="795" comment="Model T0102.010B" />
+        <model model="TSU-GN2200 GP9 w/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="796" comment="Model T0102.011B" />
+        <model model="TSU-GN2200 GP9 w/beacon3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="838" comment="Model T0102.019B" />
+        <model model="TSU-GN2208 GP9 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="857" comment="Model 8T0102.018" />
+        <model model="TSU-GN2200 GP9 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="772" comment="Model T0102.004B" />
+        <model model="TSU-GN2200 GP9 w/DB,beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="837" comment="Model T0102.004B" />
+        <model model="TSU-GN2200 GP9 w/DB,gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="794" comment="Model T0102.009B" />
+        <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="787" comment="Model T0102.014B" />
+        <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="861" comment="Model 8T0102.021" />
+        <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="798" comment="Model T0201.001B" />
+        <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="799" comment="Model T0201.002B" />
+        <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="800" comment="Model T0201.003B" />
+        <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="797" comment="Model T0200.001B" />
+        <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="776" comment="Model T0203.001B" />
+        <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="844" comment="Model T0203.007B" />
+        <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="777" comment="Model T0203.003B" />
+        <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="840" comment="Model T0203.002B" />
+        <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="842" comment="Model T0203.005B" />
+        <model model="TSU-GN2200 GP38-2 w/DB/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="841" comment="Model T0203.004B" />
+        <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="843" comment="Model T0203.006B" />
+        <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="845" comment="Model T0203.009B" />
+        <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="852" comment="Model T0203.010B" />
+        <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="828" comment="Model T0202.001B" />
+        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="829" comment="Model T0202.002B" />
+        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="830" comment="Model T0205.001B" />
+        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="831" comment="Model T0205.002B" />
+        <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="832" comment="Model T0205.003B" />
+        <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="849" comment="Model T0204.006B" />
+        <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="848" comment="Model T0204.005B" />
+        <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="847" comment="Model T0204.005B" />
+        <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="785" comment="Model T0204.002B" />
+        <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="786" comment="Model T0204.003B" />
+        <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="784" comment="Model T0204.001B" />
+        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001B" />
+        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002B" />
+        <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B" />
+        <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005" />
+        <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?" />
+        <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="804" comment="Model T0302.003B" />
+        <model model="TSU-GN2200 SD60I w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="803" comment="Model T0302.002B" />
+        <model model="TSU-GN2200 SD60M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="802" comment="Model T0302.001B" />
+        <model model="TSU-GN2200 SD60M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="805" comment="Model T0302.004B" />
+        <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="791" comment="Model T0303.001B" />
+        <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="836" comment="Model T0303.001" />
+        <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
+        <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
+        <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />
+        <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B" />
+        <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001" />
+        <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004" />
+        <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="815" comment="Model T1004.001B" />
+        <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="817" comment="Model T1004.003B" />
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Airhorn| ">
+          <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8" />
+        <output name="10" label="General|Service" />
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode" />
+        <output name="14" label="Ind/Train|Brake" />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -28118,6 +26272,72 @@
           <size length="1.28" width="0.69" height="0.22" units="inches" />
         </model>
         <model model="WOW Diesel 501 SS4" numOuts="8" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="4" highVersionID="4" productID="172">
+          <output name="1" label="White" connection="other" />
+          <output name="2" label="Yellow" connection="other" />
+          <output name="3" label="Green" connection="other" />
+          <output name="4" label="Purple" connection="other" />
+          <output name="5" label="Brown" connection="other" />
+          <output name="6" label="Pink" connection="other" />
+          <output name="7" label="Pnk/Pur" connection="other" />
+          <output name="8" label="Grn/Brn" connection="other" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="3.00" width="1.45" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long</functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short</functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="6" lockable="true">Brake Release</functionlabel>
+          <functionlabel num="7" lockable="true">Train Brake</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Rotate Horn/Bell</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up</functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover</functionlabel>
+          <functionlabel num="13" lockable="true">Coupling</functionlabel>
+          <functionlabel num="14" lockable="true">Uncoupling</functionlabel>
+          <functionlabel num="15" lockable="true">Mainline/Switching Momentum</functionlabel>
+          <functionlabel num="16" lockable="true">Crew Alert</functionlabel>
+          <functionlabel num="17" lockable="true">Windshield Wipers</functionlabel>
+          <functionlabel num="18" lockable="true">Air Spitter</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="WOW Diesel Sound Set 4 Prime" mfg="Train Control Systems" file="TCS_WOW_Diesel04prime.xml">
+        <model model="WOW Diesel 101 SS4 Prime" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin" lowVersionID="4" highVersionID="4" productID="170">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.35" width="0.66" height="0.22" units="inches" />
+        </model>
+        <model model="WOW Diesel 121 SS4 Prime" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="4" highVersionID="4" productID="171">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.28" width="0.69" height="0.22" units="inches" />
+        </model>
+        <model model="WOW Diesel 501 SS4 Prime" numOuts="8" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="4" highVersionID="4" productID="172">
           <output name="1" label="White" connection="other" />
           <output name="2" label="Yellow" connection="other" />
           <output name="3" label="Green" connection="other" />
