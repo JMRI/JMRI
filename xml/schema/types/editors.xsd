@@ -1406,6 +1406,7 @@
       <xs:attribute name="blockcontents" type="xs:string"></xs:attribute>
       <xs:attribute name="selectable" type="xs:string"></xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
      </xs:complexType>
 
 
