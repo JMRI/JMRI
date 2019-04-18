@@ -217,6 +217,9 @@ public class SpeedUtil {
     // for now use global values set in WarrantPreferences
     // user's ramp speed increase amount
     protected float getRampThrottleIncrement() {
+        if (_rampThrottleIncrement <= 0) {
+            _rampThrottleIncrement = WarrantPreferences.getDefault().getThrottleIncrement();
+        }
         return _rampThrottleIncrement;
     }
     protected void setRampThrottleIncrement(float incr) {
@@ -224,6 +227,9 @@ public class SpeedUtil {
     }
 
     protected int getRampTimeIncrement() {
+        if (_rampTimeIncrement <= 0) {
+            _rampTimeIncrement = WarrantPreferences.getDefault().getTimeIncrement();
+        }
         return _rampTimeIncrement;
     }
     protected void setRampTimeIncrement(int incr) {
@@ -270,6 +276,9 @@ public class SpeedUtil {
     protected RosterSpeedProfile getSessionProfile() {
         return _sessionProfile;
     }
+    protected void resetSpeedProfile() {
+        _mergeProfile = null;
+    }
 
     private void makeSpeedTree() {
         if (_rosterId == null) {
@@ -302,9 +311,8 @@ public class SpeedUtil {
     }
     
     private void makeRampParameters() {
-        WarrantPreferences preferences = WarrantPreferences.getDefault();
-        _rampTimeIncrement = preferences.getTimeIncrement();
-        _rampThrottleIncrement = preferences.getThrottleIncrement();
+        _rampTimeIncrement = getRampTimeIncrement();    // get a value if not already set
+        _rampThrottleIncrement = getRampThrottleIncrement();
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
@@ -374,8 +382,8 @@ public class SpeedUtil {
                 _rampTimeIncrement = (int)_md;
             }
         }
-        if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms/step, _md= {}ms/step. throttleIncr= {} ()timeIncr= {}",
-                _rosterId, _ma, _md, _rampThrottleIncrement, _rampTimeIncrement);
+        if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampStepIncr= {} timeIncr= {} throttleStep= {}",
+                _rosterId, getAddress(), _ma, _md, _rampThrottleIncrement, _rampTimeIncrement, getThrottleSpeedStepIncrement());
     }
 
     // return milliseconds per one speed step
@@ -446,7 +454,7 @@ public class SpeedUtil {
         getSpeedProfile();
         // adjust user's setting to be throttle speed step settings
         float stepIncrement = _throttle.getSpeedIncrement();
-        _rampThrottleIncrement = stepIncrement * Math.round(_rampThrottleIncrement/stepIncrement);
+        _rampThrottleIncrement = stepIncrement * Math.round(getRampThrottleIncrement()/stepIncrement);
         if (log.isTraceEnabled()) log.debug("User's Ramp increment modified to {} ({} speed steps)",
                 _rampThrottleIncrement, Math.round(_rampThrottleIncrement/stepIncrement));
     }
@@ -619,7 +627,7 @@ public class SpeedUtil {
      * @return distance in millimeters
      */
     protected RampData getRampForSpeedChange(float fromSpeed, float toSpeed) {
-        RampData ramp = new RampData(_rampThrottleIncrement, _rampTimeIncrement);
+        RampData ramp = new RampData(getRampThrottleIncrement(), getRampTimeIncrement());
         ramp.makeThrottleSettings(fromSpeed, toSpeed);
         if (ramp.isUpRamp()) {
             makeUpRamp(ramp);

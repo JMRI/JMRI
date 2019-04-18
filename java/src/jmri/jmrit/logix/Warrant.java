@@ -1614,6 +1614,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     log.warn("Warrant \"{}\" InterruptedException message= \"{}\" time= {}", getDisplayName(), ie.toString(), time);
                     Thread.currentThread().interrupt();
                 }
+                if (log.isDebugEnabled())
+                    log.debug("Warrant \"{}\" waited {}ms for clearStoppingBlock to allocateFrom {}",
+                           getDisplayName(), time, getBlockAt(_idxCurrentOrder + 1).getDisplayName());
             }
         };
          
@@ -1639,8 +1642,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_engineer != null) {
             runState = _engineer.getRunState();
             if (log.isDebugEnabled()) {
-                log.debug("restoreRunning(): rampSpeedTo to \"{}\". runState= {}",
-                        _curSpeedType, RUN_STATE[runState]);
+                log.debug("restoreRunning(): rampSpeedTo to \"{}\". runState= {}. warrant= {}",
+                        _curSpeedType, RUN_STATE[runState], getDisplayName());
             }
             if (runState == HALT || runState == RAMP_HALT) {
                 _waitForBlock = true;                    

@@ -557,6 +557,12 @@
 			    any warrants referencing the deleted block would re-register the OBlock when the panel was re-loaded. Now such warrants are loaded, but 
 		        will indicate that editing is needed to establish a correct route for them.  
             </li>
+            <li>A checkBox to suppress the generation of sound commands has been added to the create NXWarrant window.
+            </li>
+            <li>TextFields have been added to the create NXWarrant window so ramp parameters can be modified.
+            </li>
+            <li>Missing help pages have been added to the sidebar index.
+            </li>
         </ul>
 
    <h3>Web Access</h3>

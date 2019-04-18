@@ -420,17 +420,23 @@
 
   </tocitem>
   <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant">
-   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+   <tocitem text="Warrants Introduction " target="package.jmri.jmrit.logix.Warrant"/>
 
    <tocitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
 
    <tocitem text="NXWarrants " target="package.jmri.jmrit.logix.NXWarrant"/>
+
+   <tocitem text="SCWarrants " target="package.jmri.jmrit.logix.SCWarrant"/>
+
+   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
 
    <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 
    <tocitem text="Creating and Editing OBlocks, Portals and OPaths " target="package.jmri.jmrit.logix.OBlockEdit"/>
+
+   <tocitem text="Circuit Builder " target="package.jmri.jmrit.display.CircuitBuilder"/>
 
   </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
