@@ -89,7 +89,7 @@ public class Sprogv4UpdateFrame
             // We remain in this state until program button is pushed
         } else {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("StatusBadBootloaderReply"),
-                    Bundle.getMessage("SprogBootloaderXTitle", " v4"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("SprogBootloaderv4Title"), JOptionPane.ERROR_MESSAGE);
             log.error("Bad reply to SETBOOT request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
