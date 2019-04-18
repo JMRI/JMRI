@@ -403,4 +403,30 @@ public class NBHSensor implements Sensor {
         if (_mNamedBeanHandleSensor == null) return DEFAULT_INT_RV; // What should I return?
         return _mNamedBeanHandleSensor.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
     }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name,
+            String listenerRef) {
+        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyName, listener, name, listenerRef);
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return _mNamedBeanHandleSensor.getBean().getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return _mNamedBeanHandleSensor.getBean().getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyName, listener);
+    }
 }
