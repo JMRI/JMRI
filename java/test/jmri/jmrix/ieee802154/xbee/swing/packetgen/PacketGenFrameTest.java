@@ -16,7 +16,7 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        PacketGenFrame t = new PacketGenFrame();
+        frame = new PacketGenFrame();
     }
 
     @After

@@ -34,7 +34,7 @@ public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
         if(!GraphicsEnvironment.isHeadless()){
-           XBeeNodeConfigFrame action = new XBeeNodeConfigFrame(tc);
+           frame = new XBeeNodeConfigFrame(tc);
         }
     }
 
