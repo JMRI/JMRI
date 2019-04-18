@@ -49,7 +49,7 @@ public class EditNodeFrameTest extends jmri.util.JmriJFrameTestBase {
                 };
             }
         };
-        if(GraphicsEnvironment.isHeadless()){
+        if(!GraphicsEnvironment.isHeadless()){
            frame = new EditNodeFrame(tc,tc.newNode());
         }
     }

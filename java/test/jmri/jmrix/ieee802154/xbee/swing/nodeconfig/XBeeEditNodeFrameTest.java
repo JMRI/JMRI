@@ -38,7 +38,9 @@ public class XBeeEditNodeFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         tc = null;
         m = null;
-        JUnitUtil.dispose(parent);
+        if(parent!=null){
+           JUnitUtil.dispose(parent);
+        }
         parent = null;
         super.tearDown();
     }

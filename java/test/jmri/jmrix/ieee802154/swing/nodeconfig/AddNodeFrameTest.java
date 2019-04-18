@@ -49,7 +49,7 @@ public class AddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
                 };
             }
         };
-        if(GraphicsEnvironment.isHeadless()){
+        if(!GraphicsEnvironment.isHeadless()){
            frame = new AddNodeFrame(tc);
         }
     }
