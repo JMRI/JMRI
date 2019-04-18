@@ -304,7 +304,10 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>Add Trim CV to Basic Speed Control pane</li>
+                <li>
+		   Add Trim CV to Basic Speed Control pane
+		   Add WOW Ver 4 Prime decoder (Michael Mosher)
+		</li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -451,15 +454,15 @@
         <ul>
             <li>The handling of Turnout system names has been updated
                 to be (more, hopefully completely) consistent with the
-                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.  
+                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.
                 Specifically, case now (generally) matters in system names:
                 <ul>
                     <li>You can now have an internal turnout named "ITsome lower case name".
                     <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
                         "ITSome LoWeR cAse Name" and get the same one.
                 </ul>
-                This should not require any migration for stored configurations or 
-                panel files, as they have been automatically been being kept consistent 
+                This should not require any migration for stored configurations or
+                panel files, as they have been automatically been being kept consistent
                 since JMRI 4.8.  But you might have case errors in i.e. scripts which
                 will fixing inconsistent references in your scripts.
                 </li>
@@ -557,12 +560,18 @@
 			    any warrants referencing the deleted block would re-register the OBlock when the panel was re-loaded. Now such warrants are loaded, but 
 		        will indicate that editing is needed to establish a correct route for them.  
             </li>
+            <li>A checkBox to suppress the generation of sound commands has been added to the create NXWarrant window.
+            </li>
+            <li>TextFields have been added to the create NXWarrant window so ramp parameters can be modified.
+            </li>
+            <li>Missing help pages have been added to the sidebar index.
+            </li>
         </ul>
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -580,6 +589,14 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>JSON protocol documentation updated. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
+            <li>JSON services no longer automatically listen for changes to objects provided to a client unless the client explicitly requests the object. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
+            <li>NamedBeans now allow property change listeners to listen only to specified properties. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
+            <li>A new CTC tool has been added to JMRI.  An Editor component uses
+            a set of screens to define the CTC system.  The resulting data can
+            be used to create a USS CTC Panel (Panel Editor) with all of the
+            levers, indicators, and a minimal track plan with turnouts and
+            signals.  A run time component uses the configuration to implement
+            prototype CTC logic with no scripting or Logix.</li>
         </ul>
 

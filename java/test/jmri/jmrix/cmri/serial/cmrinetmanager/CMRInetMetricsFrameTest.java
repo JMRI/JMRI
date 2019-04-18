@@ -2,11 +2,7 @@ package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import jmri.util.JUnitUtil;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import java.awt.GraphicsEnvironment;
 
 /**
@@ -14,23 +10,21 @@ import java.awt.GraphicsEnvironment;
  *
  * @author	Chuck Catania Copyright (C) 2017, 2018
  */
-public class CMRInetMetricsFrameTest {
-
-    @Test
-    public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsFrame action = new CMRInetMetricsFrame(new CMRISystemConnectionMemo()); 
-        Assert.assertNotNull("exists", action);
-    }
+public class CMRInetMetricsFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new CMRInetMetricsFrame(new CMRISystemConnectionMemo());
+	} 
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

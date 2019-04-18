@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
+import jmri.beans.Beans;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -137,17 +138,45 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, l);
+        if (beanRef != null) {
+            register.put(l, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(l, listenerRef);
+        }
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-        if (l != null) {
-            register.remove(l);
-            listenerRefs.remove(l);
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
+        }
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
         }
     }
 
@@ -196,8 +225,14 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners().length;
     }
 
+    @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /** {@inheritDoc} */

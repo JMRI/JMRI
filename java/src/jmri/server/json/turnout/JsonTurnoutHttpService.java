@@ -58,8 +58,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Turnout turnout = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, Locale locale) throws JsonException {
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
         }
@@ -77,7 +76,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
             default:
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", TURNOUT, state));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(turnout, name, type, locale);
     }
 
     @Override

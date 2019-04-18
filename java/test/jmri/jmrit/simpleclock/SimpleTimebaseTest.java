@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.TimebaseRateException;
+import jmri.util.JUnitUtil;
 
 /**
  * Tests for the SimpleTimebase class
@@ -149,7 +150,28 @@ public class SimpleTimebaseTest {
         Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
     }
     
-    
+    @Test
+    public void testTimeListener() throws TimebaseRateException {
+        SimpleTimebase instance = new SimpleTimebase();
+        TestTimebaseTimeListener l1 = new TestTimebaseTimeListener();
+        TestTimebaseTimeListener l2 = new TestTimebaseTimeListener();
+        Assert.assertNull(l1.getTime());
+        Assert.assertNull(l2.getTime());
+        instance.addPropertyChangeListener("time", l1);
+        instance.addPropertyChangeListener("time", l2);
+        instance.setRate(60); // one minute a second
+        Date start = new Date();
+        instance.setTime(start);
+        instance.setRun(true);
+        JUnitUtil.waitFor(() -> {
+            return instance.getTime().getMinutes() != start.getMinutes();
+        });
+        instance.setRun(false);
+        Assert.assertNotNull(l1.getTime());
+        Assert.assertNotNull(l2.getTime());
+        Assert.assertEquals(l1.getTime(), l2.getTime());
+    }
+
     @Test
     @Ignore("Disabled in JUnit 3")
     public void testShortDelay() throws TimebaseRateException {
@@ -172,5 +194,20 @@ public class SimpleTimebaseTest {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
+    }
+
+    private static class TestTimebaseTimeListener implements PropertyChangeListener {
+
+        private Date time = null;
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            time = (Date) evt.getNewValue();
+        }
+
+        public Date getTime() {
+            return time;
+        }
+        
     }
 }

@@ -48,7 +48,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
                 connection.sendMessage(service.doPut(type, name, data, locale));
                 break;
             case GET:
-                connection.sendMessage(service.doGet(type, name, locale));
+                connection.sendMessage(service.doGet(type, name, data, locale));
                 break;
             case POST:
             default:
@@ -62,8 +62,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         setLocale(locale);
-        connection.sendMessage(service.doGetList(type, locale));
-        addListenersToBeans();
+        connection.sendMessage(service.doGetList(type, data, locale));
     }
 
 
@@ -88,12 +87,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         }
     }
 
-    protected void addListenersToBeans() {
-        for (T bean : service.getManager().getNamedBeanSet()) {
-            if (!beanListeners.containsKey(bean.getSystemName())) {
-                addListenerToBean(bean, bean.getSystemName());
-            }
-        }
+    protected void removeListenersFromRemovedBeans() {
         for (String name : new HashSet<>(beanListeners.keySet())) {
             if (service.getManager().getBeanBySystemName(name) == null) {
                 beanListeners.remove(name);
@@ -128,10 +122,10 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(service.getType(), getLocale()));
+                    connection.sendMessage(service.doGetList(service.getType(), service.getObjectMapper().createObjectNode(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToBeans();
+                        removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());
