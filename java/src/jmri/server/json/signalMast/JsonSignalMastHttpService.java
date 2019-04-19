@@ -57,8 +57,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        SignalMast signalMast = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(SignalMast signalMast, String name, String type, JsonNode data, Locale locale) throws JsonException {
         if (data.path(STATE).isTextual()) {
             String aspect = data.path(STATE).asText();
             if (aspect.equals(ASPECT_HELD)) {
@@ -74,7 +73,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect));
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(signalMast, name, type, locale);
     }
 
     @Override

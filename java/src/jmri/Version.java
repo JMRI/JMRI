@@ -92,7 +92,7 @@ public class Version {
      * Descriptor for non-official build. Included in {@link #name()}, but not
      * in {@link #getCanonicalVersion()}.
      */
-    static final private String NON_OFFICIAL = "ish"; // NOI18N
+    static final public String NON_OFFICIAL = "ish"; // NOI18N
 
     /**
      * The user who built this versionBundle, as determined by the build

@@ -334,6 +334,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml"/>
 
+<mapID target="html.web.JsonServlet_jquery_jmri" url="html/web/JsonServlet.shtml#jquery_jmri"/>
+
 <mapID target="package.jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane_stats" url="package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml#stats"/>
 
 <mapID target="html.doc.Technical.getsvncode" url="html/doc/Technical/getsvncode.shtml"/>
@@ -1751,6 +1753,8 @@
 <mapID target="package.jmri.jmrix.rps.swing.polling.PollTableFrame" url="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml"/>
 
 <mapID target="package.apps.TabbedPreferences" url="package/apps/TabbedPreferences.shtml"/>
+
+<mapID target="html.web.JsonServlet_jmri_json_servlet" url="html/web/JsonServlet.shtml#jmri_json_servlet"/>
 
 <mapID target="html.hardware.loconet.LocoIO_current" url="html/hardware/loconet/LocoIO.shtml#current"/>
 
@@ -4241,6 +4245,8 @@
 <mapID target="package.jmri.jmrit.withrottle.Protocol" url="package/jmri/jmrit/withrottle/Protocol.shtml"/>
 
 <mapID target="html.doc.Technical.CI-status" url="html/doc/Technical/CI-status.shtml"/>
+
+<mapID target="html.web.JsonServlet_jmri_json_server" url="html/web/JsonServlet.shtml#jmri_json_server"/>
 
 <mapID target="html.hardware.XBee.XBeeNodeConfigurationTool_documentation" url="html/hardware/XBee/XBeeNodeConfigurationTool.shtml#documentation"/>
 

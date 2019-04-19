@@ -26,7 +26,7 @@ public class JsonTestSocketService extends JsonSocketService<JsonTestHttpService
         }
         switch (method) {
             case JSON.GET:
-                connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(), locale));
+                connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(), data, locale));
                 break;
             case JSON.POST:
                 connection.sendMessage(service.doPost(type, data.path(JSON.NAME).asText(), data, locale));
@@ -43,7 +43,7 @@ public class JsonTestSocketService extends JsonSocketService<JsonTestHttpService
      */
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        connection.sendMessage(service.doGetList(type, locale));
+        connection.sendMessage(service.doGetList(type, data, locale));
     }
 
     @Override

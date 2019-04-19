@@ -1421,7 +1421,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.45"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1616,7 +1616,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1645,7 +1645,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1674,7 +1674,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1805,7 +1805,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2300"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -1876,7 +1876,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2300"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             

@@ -81,9 +81,9 @@ public class StartupActionModelUtil extends Bean {
     }
 
     @CheckForNull
-    public String getClassName(@Nonnull String name) {
-        this.prepareActionsHashMap();
-        if (!name.isEmpty()) {
+    public String getClassName(@CheckForNull String name) {
+        if (name != null && !name.isEmpty()) {
+            this.prepareActionsHashMap();
             for (Entry<Class<?>, ActionAttributes> entry : this.actions.entrySet()) {
                 if (entry.getValue().name.equals(name)) {
                     return entry.getKey().getName();
