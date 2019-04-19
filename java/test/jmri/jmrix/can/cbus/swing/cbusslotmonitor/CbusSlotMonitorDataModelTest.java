@@ -24,7 +24,7 @@ public class CbusSlotMonitorDataModelTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", model);
+        Assert.assertNotNull("exists", t);
     }
     
     @Test
