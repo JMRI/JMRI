@@ -35,13 +35,13 @@ public class JsonSignalHeadHttpServiceTest {
         JsonSignalHeadHttpService service = new JsonSignalHeadHttpService(new ObjectMapper());
         try {
             //retrieve by systemname
-            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, sysName, Locale.ENGLISH);
+            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, sysName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonSignalHead.SIGNAL_HEAD, result.path(JSON.TYPE).asText());
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
             //retrieve by username, should get systemname back
-            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, Locale.ENGLISH);
+            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
@@ -49,15 +49,15 @@ public class JsonSignalHeadHttpServiceTest {
             Assert.assertEquals(SignalHead.DARK, result.path(JSON.DATA).path(JSON.STATE).asInt());
             //change to Green, then verify change
             s.setAppearance(SignalHead.GREEN);
-            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, Locale.ENGLISH);
+            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertEquals(SignalHead.GREEN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             //set Held, then verify change
             s.setHeld(true);
-            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, Locale.ENGLISH);
+            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertEquals(true, result.path(JSON.DATA).path(JSON.TOKEN_HELD).asBoolean());
             //set to Not Held, then verify change
             s.setHeld(false);
-            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, Locale.ENGLISH);
+            result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertEquals(false, result.path(JSON.DATA).path(JSON.TOKEN_HELD).asBoolean());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -131,12 +131,12 @@ public class JsonSignalHeadHttpServiceTest {
             ObjectMapper mapper = new ObjectMapper();
             JsonSignalHeadHttpService service = new JsonSignalHeadHttpService(mapper);
             JsonNode result;
-            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, Locale.ENGLISH);
+            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
             jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH2","Head 2"));
-            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, Locale.ENGLISH);
+            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

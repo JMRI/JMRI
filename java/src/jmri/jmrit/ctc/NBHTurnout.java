@@ -517,4 +517,30 @@ public class NBHTurnout implements Turnout {
         if (_mNamedBeanHandleTurnout == null) return DEFAULT_INT_RV;
         return _mNamedBeanHandleTurnout.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
     }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name,
+            String listenerRef) {
+        _mNamedBeanHandleTurnout.getBean().addPropertyChangeListener(propertyName, listener, name, listenerRef);
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleTurnout.getBean().addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return _mNamedBeanHandleTurnout.getBean().getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return _mNamedBeanHandleTurnout.getBean().getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleTurnout.getBean().removePropertyChangeListener(propertyName, listener);
+    }
 }

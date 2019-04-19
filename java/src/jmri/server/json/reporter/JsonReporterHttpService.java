@@ -28,8 +28,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Reporter reporter = this.postNamedBean(InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Reporter reporter, String name, String type, JsonNode data, Locale locale) throws JsonException {
         if (data.path(JSON.USERNAME).isTextual()) {
             reporter.setUserName(data.path(JSON.USERNAME).asText());
         }

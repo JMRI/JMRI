@@ -325,4 +325,30 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         return _mNamedBeanHandleSignalMast.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSignalMast.class);
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name,
+            String listenerRef) {
+        _mNamedBeanHandleSignalMast.getBean().addPropertyChangeListener(propertyName, listener, name, listenerRef);
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleSignalMast.getBean().addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return _mNamedBeanHandleSignalMast.getBean().getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return _mNamedBeanHandleSignalMast.getBean().getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        _mNamedBeanHandleSignalMast.getBean().removePropertyChangeListener(propertyName, listener);
+    }
 }

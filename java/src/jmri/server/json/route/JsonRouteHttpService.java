@@ -78,8 +78,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
      *         prior to this call, the target state, or an intermediate state.
      */
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Route route = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Route route, String name, String type, JsonNode data, Locale locale) throws JsonException {
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         switch (state) {
             case JSON.ACTIVE:
@@ -93,7 +92,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
             default:
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", ROUTE, state)); // NOI18N
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(route, name, type, locale);
     }
 
     @Override

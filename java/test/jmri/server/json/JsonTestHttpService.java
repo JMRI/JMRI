@@ -19,7 +19,7 @@ public class JsonTestHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode parameters, Locale locale) throws JsonException {
         if (name.equals("JsonException")) {
             throw new JsonException(499, "Thrown for test"); // not a standard code
         }
@@ -39,7 +39,7 @@ public class JsonTestHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
         array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
         array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
