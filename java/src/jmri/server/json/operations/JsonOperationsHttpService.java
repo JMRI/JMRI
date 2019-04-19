@@ -55,7 +55,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case CAR:
                 return this.utilities.getCar(locale, name);
@@ -91,7 +91,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case ENGINE:
             case LOCATION:
             case TRAINS:
-                return this.doGet(type, name, locale);
+                return this.doGet(type, name, data, locale);
             default:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
                         Bundle.getMessage(locale, "PostNotAllowed", type)); // NOI18N
@@ -110,7 +110,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case CAR:
             case CARS:

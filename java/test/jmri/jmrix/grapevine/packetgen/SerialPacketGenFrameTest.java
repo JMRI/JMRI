@@ -1,12 +1,8 @@
 package jmri.jmrix.grapevine.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.After;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
@@ -15,29 +11,28 @@ import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SerialPacketGenFrameTest {
+public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
 
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenFrame t = new SerialPacketGenFrame(memo);
-        Assert.assertNotNull("exists",t);
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new GrapevineSystemConnectionMemo();
         SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new SerialPacketGenFrame(memo);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        memo = null;
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SerialPacketGenFrameTest.class);

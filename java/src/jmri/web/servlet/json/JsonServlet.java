@@ -11,6 +11,7 @@ import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -43,38 +44,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide JSON formatted responses for requests to requests for information
+ * Provide JSON formatted responses to requests for information
  * from the JMRI Web Server.
  * <p>
- * This server supports long polling in some GET requests, but also provides a
- * WebSocket to provide a more extensive control and monitoring capability.
- * <p>
- * This server responds to HTTP requests for objects in following manner:
- * <table>
- * <caption>HTTP methods handled by this servlet.</caption>
- * <tr>
- * <th>Method</th>
- * <th>List</th>
- * <th>Object</th>
- * </tr>
- * <tr>
- * <th>GET</th>
- * <td>Returns the list</td>
- * <td>Returns the object <em>if it already exists</em></td>
- * </tr>
- * <tr>
- * <th>POST</th>
- * <td>Invalid</td>
- * <td>Modifies the object <em>if it already exists</em></td>
- * </tr>
- * <tr>
- * <th>PUT</th>
- * <td>Invalid</td>
- * <td>Modifies the object, creating it if required</td>
- * </tr>
- * </table>
+ * See {@link jmri.server.json} for details on how this Servlet handles
+ * JSON requests.
  *
- * @author Randall Wood Copyright (C) 2012, 2013, 2016
+ * @author Randall Wood Copyright (C) 2012, 2013, 2016, 2019
  */
 @WebServlet(name = "JsonServlet",
         urlPatterns = {"/json"})
@@ -173,7 +149,13 @@ public class JsonServlet extends WebSocketServlet {
             final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-                parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], UTF8));
+                String value = URLDecoder.decode(entry.getValue()[0], UTF8);
+                log.debug("Setting parameter {} to {}", entry.getKey(), value);
+                try {
+                    parameters.setAll((ObjectNode) mapper.readTree(String.format("{\"%s\":%s}", entry.getKey(), value)));
+                } catch (JsonParseException ex) {
+                    log.error("Unable to parse JSON {\"{}\":{}}", entry.getKey(), value);
+                }
             }
             JsonNode reply = null;
             try {
@@ -184,7 +166,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                lists.add(service.doGetList(type, request.getLocale()));
+                                lists.add(service.doGetList(type, parameters, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -218,7 +200,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doGet(type, name, request.getLocale()));
+                                array.add(service.doGet(type, name, parameters, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;

@@ -38,33 +38,31 @@ public class JsonSignalMastHttpServiceTest {
         JsonNode result;
         JsonSignalMastHttpService service = new JsonSignalMastHttpService(new ObjectMapper());
         // retrieve by systemname
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, Locale.ENGLISH);
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
         Assert.assertNotNull(result);
         Assert.assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
         Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
         // verify initial aspect/state is "Unknown"
         Assert.assertEquals(JSON.ASPECT_UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asText());
-        // retrieve by username, should fail
-        try {
-            result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, Locale.ENGLISH);
-            Assert.fail("Excepted exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Username not found as not system name", 404, ex.getCode());
-        }
+        // retrieve by username
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
+        Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
         // change to Clear, then verify change
         s.setAspect("Clear");
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, Locale.ENGLISH);
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
         Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.STATE).asText());
         Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
         // change to Held, then verify change
         s.setHeld(true);
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, Locale.ENGLISH);
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
         Assert.assertEquals(JSON.ASPECT_HELD, result.path(JSON.DATA).path(JSON.STATE).asText());
         Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
         // change to Dark, then verify change
         s.setHeld(false);
         s.setLit(false);
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, Locale.ENGLISH);
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
         Assert.assertEquals(JSON.ASPECT_DARK, result.path(JSON.DATA).path(JSON.STATE).asText());
         Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
     }
@@ -128,14 +126,14 @@ public class JsonSignalMastHttpServiceTest {
             SignalHeadManager headManager = InstanceManager.getDefault(SignalHeadManager.class);
             SignalMastManager mastManager = InstanceManager.getDefault(SignalMastManager.class);
             JsonNode result;
-            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, Locale.ENGLISH);
+            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             headManager.register(new VirtualSignalHead("IH1"));
             mastManager.provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
             headManager.register(new VirtualSignalHead("IH2"));
             mastManager.provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
-            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, Locale.ENGLISH);
+            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

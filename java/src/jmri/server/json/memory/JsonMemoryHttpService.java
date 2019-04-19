@@ -42,8 +42,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Memory memory = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, Locale locale) throws JsonException {
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -51,7 +50,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                 memory.setValue(data.path(VALUE).asText());
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(memory, name, type, locale);
     }
 
     @Override

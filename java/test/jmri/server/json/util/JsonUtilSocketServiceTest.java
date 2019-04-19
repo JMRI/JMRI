@@ -15,18 +15,19 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;
+import jmri.profile.Profile;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,12 +37,15 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilSocketServiceTest {
 
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetWindows(true, false); // list open windows when running tests
         JUnitUtil.resetNodeIdentity();
-        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", folder.newFolder(Profile.PROFILE)));
         JUnitUtil.initConfigureManager();
     }
 
@@ -52,10 +56,10 @@ public class JsonUtilSocketServiceTest {
 
     /**
      * Test of onMessage method, of class JsonUtilSocketService. Tests only
-     * responses that are expected to be consistent between a 
+     * responses that are expected to be consistent between a
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     *                                 these tests occurs
      */
     @Test
     public void testOnMessage() throws Exception {
@@ -100,7 +104,8 @@ public class JsonUtilSocketServiceTest {
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Not Found", 404, ex.getCode());
-            Assert.assertEquals("Error Message", "Unable to access networkService _jmri-json._tcp.local..", ex.getMessage());
+            Assert.assertEquals("Error Message", "Unable to access networkService _jmri-json._tcp.local..",
+                    ex.getMessage());
         }
         // JSON.GOODBYE
         instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
@@ -114,11 +119,11 @@ public class JsonUtilSocketServiceTest {
     }
 
     /**
-     * Test of onMessage method, of class JsonUtilSocketService. Tests PANEL JSON type
-     * if not running headless.
+     * Test of onMessage method, of class JsonUtilSocketService. Tests PANEL
+     * JSON type if not running headless.
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     *                                 these tests occurs
      */
     @Test
     public void testOnMessagePanels() throws Exception {
@@ -135,14 +140,15 @@ public class JsonUtilSocketServiceTest {
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
     }
-    
+
     /**
-     * Test of onList method, of class JsonUtilSocketService. Does not test CONFIG_PROFILE
-     * JSON type, see {@link #testOnListConfigProfile()} for that. Does not test PANEL
-     * JSON type, see {@link #testOnListPanels()} for that.
+     * Test of onList method, of class JsonUtilSocketService. Does not test
+     * CONFIG_PROFILE JSON type, see {@link #testOnListConfigProfile()} for
+     * that. Does not test PANEL JSON type, see {@link #testOnListPanels()} for
+     * that.
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     *                                 these tests occurs
      */
     @Test
     public void testOnList() throws Exception {
@@ -162,13 +168,13 @@ public class JsonUtilSocketServiceTest {
     }
 
     /**
-     * Test of onList method for CONFIG_PROFILE JSON type, of class JsonUtilSocketService.
+     * Test of onList method for CONFIG_PROFILE JSON type, of class
+     * JsonUtilSocketService.
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     *                                 these tests occurs
      */
     @Test
-    @Ignore("See Issue #5642")
     public void testOnListConfigProfile() throws Exception {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
@@ -182,11 +188,11 @@ public class JsonUtilSocketServiceTest {
     }
 
     /**
-     * Test of onList method, of class JsonUtilSocketService. Tests PANEL JSON type
-     * if not running headless.
+     * Test of onList method, of class JsonUtilSocketService. Tests PANEL JSON
+     * type if not running headless.
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     *                                 these tests occurs
      */
     @Test
     public void testOnListPanels() throws Exception {
@@ -230,12 +236,14 @@ public class JsonUtilSocketServiceTest {
         instance.onMessage(JSON.RAILROAD, empty, JSON.GET, Locale.ENGLISH);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
-        Assert.assertEquals("Message has RR Name", preferences.getRailroadName(), message.path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertEquals("Message has RR Name", preferences.getRailroadName(),
+                message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertEquals("There is a preferences listener", 1, preferences.getPropertyChangeListeners().length);
         preferences.setRailroadName("New Name");
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
-        Assert.assertEquals("Message has RR Name", preferences.getRailroadName(), message.path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertEquals("Message has RR Name", preferences.getRailroadName(),
+                message.path(JSON.DATA).path(JSON.NAME).asText());
         // force JsonException
         httpService.setThrowException(true);
         preferences.setRailroadName("Another New Name");
@@ -247,7 +255,8 @@ public class JsonUtilSocketServiceTest {
         Assert.assertEquals("There is a preferences listener", 1, preferences.getPropertyChangeListeners().length);
         connection.setThrowIOException(true);
         preferences.setRailroadName("Yet Another New Name");
-        Assert.assertEquals("There is no longer a preferences listener", 0, preferences.getPropertyChangeListeners().length);
+        Assert.assertEquals("There is no longer a preferences listener", 0,
+                preferences.getPropertyChangeListeners().length);
     }
 
     /**
@@ -272,19 +281,19 @@ public class JsonUtilSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
             if (throwException) {
                 throwException = false;
                 throw new JsonException(499, "Mock Exception");
             }
-            return super.doGet(type, name, locale);
+            return super.doGet(type, name, data, locale);
         }
-        
+
         public void setThrowException(boolean throwException) {
             this.throwException = throwException;
         }
-        
+
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
 }

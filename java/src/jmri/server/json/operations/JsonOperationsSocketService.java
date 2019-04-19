@@ -121,7 +121,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale));
         switch (type) {
             case TRAIN:
             case TRAINS:
@@ -215,7 +215,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(TRAIN, this.train.getId(), getLocale()));
+                    connection.sendMessage(service.doGet(TRAIN, this.train.getId(),
+                            connection.getObjectMapper().createObjectNode(), getLocale()));
                 } catch (JsonException ex) {
                     log.warn("json error sending Train: {}", ex.getJsonMessage());
                     connection.sendMessage(ex.getJsonMessage());
@@ -237,7 +238,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(TRAINS, getLocale()));
+                    connection.sendMessage(service.doGetList(TRAINS, service.getObjectMapper().createObjectNode(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToTrains();
@@ -268,7 +269,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(CAR, this.car.getId(), getLocale()));
+                    connection.sendMessage(service.doGet(CAR, this.car.getId(),
+                            connection.getObjectMapper().createObjectNode(), getLocale()));
                 } catch (JsonException ex) {
                     log.warn("json error sending Car: {}", ex.getJsonMessage());
                     connection.sendMessage(ex.getJsonMessage());
@@ -290,7 +292,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(CARS, getLocale()));
+                    connection.sendMessage(service.doGetList(CARS, service.getObjectMapper().createObjectNode(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("RollingStockListLength")) { // NOI18N
                         addListenersToCars();
@@ -326,7 +328,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getPropertyName().equals(LOCATION_COMMENT)) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LOCATION, this.location.getId(), getLocale()));
+                        connection.sendMessage(service.doGet(LOCATION, this.location.getId(),
+                                connection.getObjectMapper().createObjectNode(), getLocale()));
                         log.debug(" sent Location '{}'", this.location.getId());
                     } catch (JsonException ex) {
                         log.warn("json error sending Location: {}", ex.getJsonMessage());
@@ -350,7 +353,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(LOCATIONS, getLocale()));
+                    connection.sendMessage(service.doGetList(LOCATIONS, service.getObjectMapper().createObjectNode(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToLocations();
@@ -381,7 +384,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(ENGINE, this.engine.getId(), getLocale()));
+                    connection.sendMessage(service.doGet(ENGINE, this.engine.getId(),
+                            connection.getObjectMapper().createObjectNode(), getLocale()));
                 } catch (JsonException ex) {
                     log.warn("json error sending Engine: {}", ex.getJsonMessage());
                     connection.sendMessage(ex.getJsonMessage());
@@ -403,7 +407,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(ENGINES, getLocale()));
+                    connection.sendMessage(service.doGetList(ENGINES, service.getObjectMapper().createObjectNode(), getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("RollingStockListLength")) { // NOI18N
                         addListenersToEngines();

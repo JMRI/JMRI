@@ -1,32 +1,17 @@
 package jmri.server.json;
 
 /**
- * Common and utility constants used in the JMRI JSON protocol starting with
- * protocol version 4.1.
- *
- * @author Randall Wood (C) 2013, 2014, 2016, 2018
+ * Common and utility constants used in the JMRI JSON protocol.
+ * 
+ * @author Randall Wood (C) 2013, 2014, 2016, 2018, 2019
  */
 public final class JSON {
 
     /**
-     * JMRI JSON protocol version.
-     * <p>
-     * Changes to the major number represent a backwards incompatible change in
-     * the protocol, while changes to the minor number represent an addition to
-     * the protocol.
-     * <p>
-     * Protocol version 4.1 was first introduced in JMRI 4.11.4.
-     * <p>
-     * Protocol version 4.0 was first introduced in JMRI 4.3.4.
-     * <p>
-     * Prior to version 4.0, the JSON servers had a single definition for all
-     * tokens used in JSON communications. As of version 4.0, the JSON servers
-     * use a modular protocol, fixing as constants only the tokens used for the
-     * basic protocol structure as well as some tokens used by multiple modules.
-     * <p>
-     * {@value #JSON_PROTOCOL_VERSION}
+     * JMRI JSON protocol version. See {@link jmri.server.json} for the version
+     * history.
      */
-    public static final String JSON_PROTOCOL_VERSION = "4.1"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "5.0"; // NOI18N
 
     /* JSON structure */
     /**
@@ -188,7 +173,7 @@ public final class JSON {
      */
     public static final String CONFIG_PROFILES = "configProfiles"; // NOI18N
     /**
-     * {@value #UNIQUE_ID}
+     * {@value #CONFIG_PROFILE}
      */
     public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
     /**

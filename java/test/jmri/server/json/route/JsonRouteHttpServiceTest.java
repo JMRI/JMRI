@@ -40,17 +40,17 @@ public class JsonRouteHttpServiceTest {
         route1.setTurnoutsAlignedSensor(sensor1.getSystemName());
         JsonNode result;
         try {
-            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
+            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonRouteServiceFactory.ROUTE, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             sensor1.setKnownState(Sensor.ACTIVE);
-            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
+            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
             sensor1.setKnownState(Sensor.INACTIVE);
-            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
+            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
@@ -65,16 +65,16 @@ public class JsonRouteHttpServiceTest {
         Route route1 = manager.provideRoute("IR1", "Route1");
         JsonNode result;
         try {
-            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
+            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             route1.setState(Sensor.ACTIVE);
-            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
+            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             route1.setState(Sensor.INACTIVE);
-            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
+            result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
@@ -235,12 +235,12 @@ public class JsonRouteHttpServiceTest {
             JsonRouteHttpService service = new JsonRouteHttpService(mapper);
             RouteManager manager = InstanceManager.getDefault(RouteManager.class);
             JsonNode result;
-            result = service.doGetList(JsonRouteServiceFactory.ROUTE, Locale.ENGLISH);
+            result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideRoute("IR1", "Route1");
             manager.provideRoute("IR2", "Route2");
-            result = service.doGetList(JsonRouteServiceFactory.ROUTE, Locale.ENGLISH);
+            result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

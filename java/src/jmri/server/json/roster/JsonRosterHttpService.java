@@ -55,7 +55,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
                 ObjectNode node = this.mapper.createObjectNode();
@@ -92,7 +92,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
             case JsonRoster.ROSTER_ENTRY:

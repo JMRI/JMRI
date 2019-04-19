@@ -16,6 +16,8 @@ public class CbusNodeEvent extends CbusEvent {
     private int _thisnode;
     private int _index;
     public int[] _evVarArr;
+    private String _fcuNodeName;
+    private CbusNodeSingleEventTableDataModel eventDataModel;
     
     /**
      * Set the value of the event variable array by index
@@ -32,6 +34,19 @@ public class CbusNodeEvent extends CbusEvent {
         _index = index;
         _evVarArr = new int[maxEvVar];
         java.util.Arrays.fill(_evVarArr,-1);
+        _fcuNodeName = "";
+    }
+    
+    protected void setEditTableModel( CbusNodeSingleEventTableDataModel model ) {
+        eventDataModel = model;
+    }
+    
+    private void notifyModel(){
+        if ( eventDataModel != null ) {
+            jmri.util.ThreadingUtil.runOnGUI( ()->{
+                eventDataModel.fireTableDataChanged();
+        });
+        }
     }
 
     /**
@@ -45,6 +60,7 @@ public class CbusNodeEvent extends CbusEvent {
             log.error("Event Index needs to be > 0");
         } else {
             _evVarArr[(index-1)]=value;
+            notifyModel();
         }
     }
     
@@ -55,6 +71,7 @@ public class CbusNodeEvent extends CbusEvent {
      */    
     public void setEvArr( int[] newArray ){
         _evVarArr = newArray;
+        notifyModel();
     }
     
     /**
@@ -70,11 +87,24 @@ public class CbusNodeEvent extends CbusEvent {
     /**
      * Returns all event variables as a single string
      *
-     * @return the decimal string for of the array
+     * @return the decimal string for of the array, unknown values are blanked
      */    
     public String getEvVarString(){
-        return Arrays.toString(_evVarArr);
-        
+        StringBuilder n = new StringBuilder();
+        // n.append("[ ");
+        for(int i = 0; i< _evVarArr.length; i++){
+            if ( _evVarArr[i] > -1 ) {
+                n.append( _evVarArr[i] );
+            }
+            else {
+                n.append( " " );
+            }
+            if ( i != ( _evVarArr.length-1 ) ) {
+                n.append( ", " );
+            }
+        }
+        // n.append(" ]");
+        return n.toString();
     }
 
     /**
@@ -143,6 +173,22 @@ public class CbusNodeEvent extends CbusEvent {
      */      
     public int getNumEvVars() {
         return _evVarArr.length;
+    }
+    
+    /**
+     * Set a temporary node name
+     * 
+     */
+    public void setTempFcuNodeName( String tempName){
+        _fcuNodeName = tempName;
+    }
+    
+    /**
+     * Get a temporary node name
+     * 
+     */
+    public String getTempFcuNodeName(){
+        return _fcuNodeName;
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusNodeEvent.class);
