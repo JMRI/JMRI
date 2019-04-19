@@ -12,8 +12,7 @@ import org.junit.*;
 */
 public class NBHSignalMastTest {
 
-    private PropertyChangeListener _testListener1 = null;
-    private PropertyChangeListener _testListener2 = null;
+    private PropertyChangeListener _testListener = null;
 
     @Test
     public void testGetsAndSets() {
@@ -45,8 +44,8 @@ public class NBHSignalMastTest {
         String displayName = mast.getDisplayName();
         Assert.assertEquals("UNKNOWN", displayName);
 
-        mast.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        mast.removePropertyChangeListener(_testListener2);
+        mast.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        mast.removePropertyChangeListener(_testListener);
     }
 
     public void realBean(NBHSignalMast mast) {
@@ -80,8 +79,8 @@ public class NBHSignalMastTest {
         String displayName = mast.getDisplayName();
         Assert.assertEquals("Good Mast", displayName);
 
-        mast.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        mast.removePropertyChangeListener(_testListener2);
+        mast.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        mast.removePropertyChangeListener(_testListener);
     }
 
     @Before

@@ -12,8 +12,7 @@ import org.junit.*;
 */
 public class NBHSignalHeadTest {
 
-    private PropertyChangeListener _testListener1 = null;
-    private PropertyChangeListener _testListener2 = null;
+    private PropertyChangeListener _testListener = null;
 
     @Test
     public void testGetsAndSets() {
@@ -52,8 +51,8 @@ public class NBHSignalHeadTest {
         String[] stateNames = head.getValidStateNames();
         Assert.assertEquals(0, stateNames.length);
 
-        head.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        head.removePropertyChangeListener(_testListener2);
+        head.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        head.removePropertyChangeListener(_testListener);
     }
 
     public void realBean(NBHSignalHead head) {
@@ -78,8 +77,8 @@ public class NBHSignalHeadTest {
         String[] stateNames = head.getValidStateNames();
         Assert.assertEquals(7, stateNames.length);
 
-        head.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        head.removePropertyChangeListener(_testListener2);
+        head.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        head.removePropertyChangeListener(_testListener);
     }
 
     @Before

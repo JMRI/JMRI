@@ -18,8 +18,7 @@ import org.junit.*;
 */
 public class NBHTurnoutTest {
 
-    private PropertyChangeListener _testListener1 = null;
-    private PropertyChangeListener _testListener2 = null;
+    private PropertyChangeListener _testListener = null;
 
     @Test
     public void testGetsAndSets() {
@@ -56,8 +55,8 @@ public class NBHTurnoutTest {
         int feedback = turnout.getFeedbackMode();
         Assert.assertEquals(0, feedback);
 
-        turnout.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        turnout.removePropertyChangeListener(_testListener2);
+        turnout.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        turnout.removePropertyChangeListener(_testListener);
     }
 
     public void realBean(NBHTurnout turnout) {
@@ -72,8 +71,8 @@ public class NBHTurnoutTest {
         int feedback = turnout.getFeedbackMode();
         Assert.assertEquals(1, feedback);
 
-        turnout.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        turnout.removePropertyChangeListener(_testListener2);
+        turnout.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        turnout.removePropertyChangeListener(_testListener);
     }
 
     @Before

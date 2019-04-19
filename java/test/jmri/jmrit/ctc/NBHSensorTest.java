@@ -18,8 +18,7 @@ import org.junit.*;
 */
 public class NBHSensorTest {
 
-    private PropertyChangeListener _testListener1 = null;
-    private PropertyChangeListener _testListener2 = null;
+    private PropertyChangeListener _testListener = null;
 
     @Test
     public void testGetsAndSets() {
@@ -62,8 +61,8 @@ public class NBHSensorTest {
         int known = sensor.getKnownState();
         Assert.assertEquals(Sensor.INACTIVE, known);
 
-        sensor.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        sensor.removePropertyChangeListener(_testListener2);
+        sensor.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        sensor.removePropertyChangeListener(_testListener);
     }
 
     public void realBean(NBHSensor sensor) {
@@ -76,8 +75,8 @@ public class NBHSensorTest {
         int known = sensor.getKnownState();
         Assert.assertEquals(Sensor.ACTIVE, known);
 
-        sensor.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        sensor.removePropertyChangeListener(_testListener2);
+        sensor.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        sensor.removePropertyChangeListener(_testListener);
     }
 
     @Before
