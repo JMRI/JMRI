@@ -228,7 +228,7 @@ public class LnPacketizer extends LnTrafficController {
         public void run() {
 
             int opCode;
-            while (!threadStop) {   // loop permanently, program close will exit
+            while (!threadStopRequest) {   // loop until asked to stop
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
@@ -365,8 +365,6 @@ public class LnPacketizer extends LnTrafficController {
         }
     }
 
-    protected volatile boolean threadStop = false;
-
     /**
      * Captive class to handle transmission.
      */
@@ -378,7 +376,7 @@ public class LnPacketizer extends LnTrafficController {
         @Override
         public void run() {
 
-            while (!threadStop) {   // loop permanently
+            while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -461,26 +459,24 @@ public class LnPacketizer extends LnTrafficController {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
-        threadStop = false;
+        threadStopRequest = false;
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
         rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY - 1);
+        rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
 
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
         // make sure that the xmt priority is no lower than the current priority
-        //int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
         xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
-        //log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
-        xmtThread.setPriority(Thread.MAX_PRIORITY - 2);
+        xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();
 
         log.info("lnPacketizer Started");
@@ -495,7 +491,21 @@ public class LnPacketizer extends LnTrafficController {
     @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
     @Override
     public void dispose() {
-        threadStop = true;  // tell threads to stop
+        threadStopRequest = true;  // tell threads to stop
+        if (xmtThread != null) {
+            try {
+                xmtThread.join();
+            } catch (InterruptedException e) {
+                log.warn("unexpected InterruptedException", e);
+            }
+        }
+        if (rcvThread != null) {
+            try {
+                rcvThread.join();
+            } catch (InterruptedException e) {
+                log.warn("unexpected InterruptedException", e);
+            }
+        }
         super.dispose();
     }
 
@@ -505,12 +515,27 @@ public class LnPacketizer extends LnTrafficController {
      * This is intended to be used only by testing subclasses.
      */
     public void terminateThreads() {
-        threadStop = true;
+        threadStopRequest = true;
+        if (xmtThread != null) {
+            try {
+                xmtThread.join();
+            } catch (InterruptedException e) {
+                log.warn("unexpected InterruptedException", e);
+            }
+        }
+        if (rcvThread != null) {
+            try {
+                rcvThread.join();
+            } catch (InterruptedException e) {
+                log.warn("unexpected InterruptedException", e);
+            }
+        }
     }
     
     /**
      * Flag that threads should terminate as soon as they can.
      */
+    protected volatile boolean threadStopRequest = false;
     
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 

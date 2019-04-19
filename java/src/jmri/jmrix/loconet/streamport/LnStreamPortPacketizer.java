@@ -90,7 +90,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         @Override
         public void run() {
 
-            while (!threadStop) {   // loop until asked to stop
+            while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
