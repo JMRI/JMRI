@@ -20,7 +20,7 @@ public class CbusSlotMonitorDataModelTest {
  
     private jmri.jmrix.can.TrafficControllerScaffold tcis = null;
     private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
-    private CbusSlotMonitorDataModel model = null;
+    private CbusSlotMonitorDataModel t = null;
 
     @Test
     public void testCtor() {
