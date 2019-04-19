@@ -13,9 +13,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import jmri.util.junit.rules.*;
+import org.junit.*;
+import org.junit.rules.*;
 
 /**
  * Tests for the Operations Cars GUI class
@@ -23,7 +23,13 @@ import org.junit.Test;
  * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarEditFrameTest extends OperationsTestCase {
+    
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+    
     @Test
     public void testClearRoadNumber() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
