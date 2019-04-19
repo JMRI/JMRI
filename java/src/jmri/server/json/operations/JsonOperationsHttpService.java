@@ -158,7 +158,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         data.put(NAME, kernel.getName());
         data.put(WEIGHT, kernel.getAdjustedWeightTons());
         data.put(LENGTH, kernel.getTotalLength());
-        data.put(CARS, getKernelCars(kernel, locale));
+        data.set(CARS, getKernelCars(kernel, locale));
         return root;
     }
 
@@ -167,7 +167,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         kernel.getCars().forEach((car) -> {
             ObjectNode root = array.addObject();
             root.put(TYPE, CAR);
-            root.put(DATA, utilities.getCar(car));
+            root.set(DATA, utilities.getCar(car));
         });
         return array;
     }

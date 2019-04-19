@@ -333,7 +333,7 @@ public abstract class JsonHttpService {
         ObjectNode data = mapper.createObjectNode();
         data.put(FORCE_DELETE, JsonDeleteTokenManager.getDefault().getToken(type, name));
         if (users.size() != 0) {
-            data.put(CONFLICT, users);
+            data.set(CONFLICT, users);
         }
         throw new JsonException(HttpServletResponse.SC_CONFLICT,
                 Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data);

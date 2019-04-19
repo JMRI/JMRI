@@ -104,7 +104,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
         switch (method) {
             case JSON.GET:
-                connection.sendMessage(service.doGet(type, id, locale));
+                connection.sendMessage(service.doGet(type, id, data, locale));
                 break;
             case JSON.DELETE:
                 service.doDelete(type, id, data, locale);
@@ -114,7 +114,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                 break;
             case JSON.POST:
             default:
-                this.connection.sendMessage(this.service.doPost(type, id, data, locale));
+                connection.sendMessage(service.doPost(type, id, data, locale));
         }
     }
 
