@@ -9,6 +9,13 @@
   <name xml:lang="it">Suoni</name>
   <name xml:lang="nl">Geluid</name>
 
+  <group include="PIKO56400,PIKO56401">
+    <label>
+      <text>Sound not available in this Piko SmartDecoder 4.1</text>
+    </label>
+  </group>
+
+  <group exclude="PIKO56400,PIKO56401">
   <column>
     <row>
       <display item="Bank_Switch"/>
@@ -636,5 +643,8 @@
         <display item="Bank F F28 activated sound"/>
       </column>
     </group>
+
+  <!--    end of SmartDecoder Sound vars group-->
+  </group>
 
 </pane>

@@ -105,6 +105,36 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
+            <model model="Piko 56400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="PIKO56400" comment="Piko Smartdecoder 4.1 and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="38" width="22" height="15" units="mm"/>
+            </model>
+            <model model="Piko 56401" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="PIKO56401" comment="Piko Smartdecoder 4.1, Mfx and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="38" width="22" height="15" units="mm"/>
+            </model>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
@@ -125,7 +155,7 @@
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400,PIKO41BR82"><!-- Uhlenbrock -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400,PIKO41BR82,PIKO56400,PIKO56401"><!-- Uhlenbrock -->
                 <decVal/>
                 <!--<defaultItem default="162" include="PIKO41RH2400,PIKO41BR82"/> somehow not validating -->
                 <label>Manufacturer ID: </label>
@@ -134,7 +164,7 @@
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400,PIKO41BR82"><!-- Piko -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400,PIKO41BR82,PIKO56400,PIKO56401"><!-- Piko -->
                 <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
@@ -149,7 +179,7 @@
                 <label xml:lang="de">Selectrix Datenformat</label>
                 <label xml:lang="nl">Selectrix modus</label>
             </variable>
-            <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400,PIKO41BR82">
+            <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400,PIKO41BR82,PIKO56400">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>Mfx Mode</label>
                 <label xml:lang="de">Mfx Datenformat</label>
@@ -1290,10 +1320,11 @@
                 <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
                 <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
             </variable>
-            <!--extended function mapping on IntelliDrive2 and Piko 4.1, includes cv 31-32 bank switches-->
+            <!--extended function mapping on IntelliDrive2 and Piko Smartdecoder (Sound) 4.1, includes cv 31-32 bank switches-->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
 
-            <!--Sound, only basic -->
+<!--            <group exclude="PIKO56400,PIKO56401">-->
+            <!--Sound CVs -->
             <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
             <variable item="Bank_Switch" CV="1021" default="0">
                 <enumVal>
@@ -1985,6 +2016,7 @@
                 </variable>
                 <!--end RH2400-->
             <!--</group>-->
+<!--            </group>-->
 
         </variables>
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
