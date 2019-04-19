@@ -291,7 +291,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     /**
      * Get internalMaster field
      *
-     * @returns true if fast clock time is derived from internal computer clock, false if derived from hardware clock
+     * @return true if fast clock time is derived from internal computer clock, false if derived from hardware clock
      */
     @Override
     public boolean getInternalMaster() {
