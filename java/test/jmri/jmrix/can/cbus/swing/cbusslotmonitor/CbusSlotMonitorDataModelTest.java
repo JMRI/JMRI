@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
@@ -29,6 +30,8 @@ public class CbusSlotMonitorDataModelTest {
     
     @Test
     public void testAddToTable() {
+        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertEquals("column count",CbusSlotMonitorDataModel.MAX_COLUMN,t.getColumnCount());
         
@@ -172,6 +175,8 @@ public class CbusSlotMonitorDataModelTest {
     
     @Test
     public void testGetValueAtSetValueAtFunctions() {
+        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         // table hears session 1 already in progress
         CanReply r = new CanReply();
@@ -377,6 +382,9 @@ public class CbusSlotMonitorDataModelTest {
     
     @Test
     public void testErrors() {
+        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         // table hears session 1 already in progress
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
