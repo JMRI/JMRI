@@ -136,6 +136,7 @@ public class NBHSensor {
         return _mNamedBeanHandleSensor.getBean().getKnownState();
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
     public void setKnownState(int newState) {
         if (_mNamedBeanHandleSensor == null) return;
         try { _mNamedBeanHandleSensor.getBean().setKnownState(newState); } catch (JmriException ex) {}
