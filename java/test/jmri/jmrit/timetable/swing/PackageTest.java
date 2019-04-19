@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
     BundleTest.class,
     TimeTableActionTest.class,
     TimeTableFrameTest.class,
-    TimeTableGraphTest.class,
+    TimeTableDisplayGraphTest.class,
+    TimeTablePrintGraphTest.class,
     TimeTableStartupTest.class
 })
 public class PackageTest{

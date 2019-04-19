@@ -60,7 +60,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     @Override
     // use @Nullable to override @Nonnull specified in superclass
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.HELLO:
                 return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval());
@@ -91,7 +91,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale);
@@ -103,7 +103,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getConfigProfiles(locale);
             default:
                 ArrayNode array = this.mapper.createArrayNode();
-                JsonNode node = this.doGet(type, null, locale);
+                JsonNode node = this.doGet(type, null, data, locale);
                 if (node.isArray()) {
                     array.addAll((ArrayNode) node);
                 } else {
@@ -116,8 +116,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     @Override
     // Use @Nullable to override non-null requirement of superclass
     public JsonNode doPost(String type, @Nullable String name,
-            @Nullable JsonNode data, Locale locale) throws JsonException {
-        return this.doGet(type, name, locale);
+            JsonNode data, Locale locale) throws JsonException {
+        return this.doGet(type, name, data, locale);
     }
 
     /**

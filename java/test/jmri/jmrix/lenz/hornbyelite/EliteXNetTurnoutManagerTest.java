@@ -89,6 +89,18 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
 
     }
 
+    @Test
+    @Override
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    @Override
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

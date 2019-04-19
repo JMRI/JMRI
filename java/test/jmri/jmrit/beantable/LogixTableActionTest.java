@@ -155,6 +155,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
 
         lgxTable.addPressed(null);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogix"));  // NOI18N
         Assert.assertNotNull("Found Add Logix Frame", addFrame);  // NOI18N
 

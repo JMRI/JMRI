@@ -40,7 +40,7 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale));
     }
 
     @Override

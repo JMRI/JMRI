@@ -131,8 +131,8 @@ public class JsonLayoutBlockSocketServiceTest {
         Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
         instance.onList(JsonLayoutBlock.LAYOUTBLOCK, null, Locale.ENGLISH);
-        // onList adds a listener to all LayoutBlocks
-        Assert.assertEquals("LayoutBlock1 has 2 listeners", 2, lb1.getPropertyChangeListeners().length);
+        // onList should not add a listener to all LayoutBlocks
+        Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertTrue("Message is an array", message.isArray());

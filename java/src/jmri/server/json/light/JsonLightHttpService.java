@@ -56,8 +56,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Light light = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Light light, String name, String type, JsonNode data, Locale locale) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
@@ -72,7 +71,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
             default:
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(light, name, type, locale);
     }
 
     @Override

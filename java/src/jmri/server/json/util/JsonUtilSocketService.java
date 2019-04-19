@@ -50,11 +50,11 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                 this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
                 break;
             case JSON.RAILROAD:
-                this.connection.sendMessage(this.service.doGet(type, name, locale));
+                this.connection.sendMessage(this.service.doGet(type, name, data, locale));
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
                         try {
-                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, null, this.connection.getLocale()));
+                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale()));
                         } catch (JsonException ex) {
                             this.connection.sendMessage(ex.getJsonMessage());
                         }
@@ -74,7 +74,7 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale));
     }
 
     @Override

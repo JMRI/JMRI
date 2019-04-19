@@ -1,35 +1,28 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ItemDialogTest {
-
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ItemDialog t = new ItemDialog("Sensors", "Icons", null);
-        Assert.assertNotNull("exists",t);
-        jmri.util.JUnitUtil.dispose(t);
-    }
+public class ItemDialogTest extends jmri.util.JmriJFrameTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new ItemDialog("Sensors", "Icons", null);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ItemDialogTest.class);

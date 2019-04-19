@@ -95,6 +95,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 
@@ -134,6 +135,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
 
         // close the add frame
         jf.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
