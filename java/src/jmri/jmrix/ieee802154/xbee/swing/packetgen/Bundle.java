@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.ieee802154.xbee.Bundle {
+public class Bundle extends jmri.jmrix.ieee802154.xbee.swing.Bundle {
 
     @Nullable
     private static final String name = null; // NOI18N
