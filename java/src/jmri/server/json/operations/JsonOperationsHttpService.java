@@ -272,6 +272,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         server,
                         "jmri/server/json/operations/engine-server.json",
                         "jmri/server/json/operations/engine-client.json");
+            case KERNEL:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/operations/kernel-server.json",
+                        "jmri/server/json/operations/kernel-client.json");
             case LOCATION:
             case LOCATIONS:
                 return doSchema(type,
