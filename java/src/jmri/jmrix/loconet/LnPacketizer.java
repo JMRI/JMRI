@@ -485,41 +485,7 @@ public class LnPacketizer extends LnTrafficController {
     Thread rcvThread;
     Thread xmtThread;
     
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
-    @Override
-    public void dispose() {
-        terminateThreads();
-        super.dispose();
-    }
-
-    /**
-     * Terminate the receive and transmit threads.
-     * <p>
-     * This is intended to be used only by testing subclasses.
-     */
-    public void terminateThreads() {
-        threadStopRequest = true;
-        if (xmtThread != null) {
-            xmtThread.interrupt(); // it maybe waiting on output queue.
-            try {
-                xmtThread.join();
-            } catch (InterruptedException e) {
-                log.warn("unexpected InterruptedException", e);
-            }
-        }
-        if (rcvThread != null) {
-            rcvThread.interrupt(); // it maybe waiting on output queue.
-            try {
-                rcvThread.join();
-            } catch (InterruptedException e) {
-                log.warn("unexpected InterruptedException", e);
-            }
-        }
-    }
-    
+  
     /**
      * Flag that threads should terminate as soon as they can.
      */

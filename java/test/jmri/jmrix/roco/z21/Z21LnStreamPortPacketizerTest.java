@@ -57,7 +57,7 @@ public class Z21LnStreamPortPacketizerTest extends jmri.jmrix.loconet.streamport
     public void tearDown() {
         memo.dispose();
         memo = null;
-        lnp.terminateThreads();
+//        lnp.terminateThreads();
         lnp = null;
         apc.dispose();
         apc = null;
