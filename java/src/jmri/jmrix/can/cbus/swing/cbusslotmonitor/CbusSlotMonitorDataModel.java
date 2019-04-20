@@ -308,14 +308,13 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     private void updateGui(int row,int col) {
-        
-        ThreadingUtil.runOnGUI( ()->{ 
+        ThreadingUtil.runOnGUI( ()->{
             fireTableCellUpdated(row, col); 
         });
         
     }
 
-    private synchronized int createnewrow(int locoid, Boolean islong){
+    private int createnewrow(int locoid, Boolean islong){
         
         DccLocoAddress addr = new DccLocoAddress(locoid,islong );
         CbusSlotMonitorSession newSession = new CbusSlotMonitorSession(addr);
@@ -325,7 +324,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         ThreadingUtil.runOnGUI( ()->{
             fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
         });
-        
         return getRowCount()-1;
     }
     
@@ -520,7 +518,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     // ploc sent from a command station to a throttle
-    private synchronized void processploc(boolean messagein, int session, DccLocoAddress addr,
+    private void processploc(boolean messagein, int session, DccLocoAddress addr,
         int speeddir, int fa, int fb, int fc) {
         // log.debug( Bundle.getMessage("CBUS_CMND_BR") + Bundle.getMessage("CNFO_PLOC",session,locoid));
         
