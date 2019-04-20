@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.CheckForNull;
@@ -101,7 +102,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     /**
      * Initialize the Clock config window.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("SimpleClockWindowTitle"));
@@ -270,12 +270,13 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
             }
         });
         panel62.add(startSetTimeCheckBox);
-        Date tem = clock.getStartTime();
-        startHoursField.setText("" + tem.getHours());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(clock.getStartTime());
+        startHoursField.setText("" + cal.get(Calendar.HOUR_OF_DAY));
         startHoursField.setToolTipText(Bundle.getMessage("TipStartHours"));
         panel62.add(startHoursField);
         panel62.add(new JLabel(":"));
-        startMinutesField.setText("" + tem.getMinutes());
+        startMinutesField.setText("" + cal.get(Calendar.MINUTE));
         startMinutesField.setToolTipText(Bundle.getMessage("TipStartMinutes"));
         panel62.add(startMinutesField);
         setStartTimeButton.setToolTipText(Bundle.getMessage("TipSetStartTimeButton"));
@@ -587,7 +588,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     /**
      * Handle Set Time button
      */
-    @SuppressWarnings("deprecation")
     public void setTimeButtonActionPerformed() {
         int hours = 0;
         int minutes = 0;
@@ -622,9 +622,10 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         // set time of the fast clock
         long mSecPerHour = 3600000;
         long mSecPerMinute = 60000;
-        Date tem = clock.getTime();
-        int cHours = tem.getHours();
-        long cNumMSec = tem.getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(clock.getTime());
+        int cHours = cal.get(Calendar.HOUR_OF_DAY);
+        long cNumMSec = cal.getTime().getTime();
         long nNumMSec = ((cNumMSec / mSecPerHour) * mSecPerHour) - (cHours * mSecPerHour)
                 + (hours * mSecPerHour) + (minutes * mSecPerMinute);
         clock.userSetTime(new Date(nNumMSec));
@@ -697,9 +698,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         // set time of the fast clock
         long mSecPerHour = 3600000;
         long mSecPerMinute = 60000;
-        Date tem = clock.getTime();
-        int cHours = tem.getHours();
-        long cNumMSec = tem.getTime();
+        Calendar cal = Calendar.getInstance();
+        int cHours = cal.get(Calendar.HOUR_OF_DAY);
+        long cNumMSec = cal.getTime().getTime();
         long nNumMSec = ((cNumMSec / mSecPerHour) * mSecPerHour) - (cHours * mSecPerHour)
                 + (hours * mSecPerHour) + (minutes * mSecPerMinute);
         clock.setStartSetTime(startSetTimeCheckBox.isSelected(), new Date(nNumMSec));
@@ -750,12 +751,12 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     /**
      * Set the current Timebase time into timeLabel
      */
-    @SuppressWarnings("deprecation")
     void setTimeLabel() {
         // Get time
-        Date now = clock.getTime();
-        int hours = now.getHours();
-        int minutes = now.getMinutes();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(clock.getTime());
+        int hours = cal.get(Calendar.HOUR_OF_DAY);
+        int minutes = cal.get(Calendar.MINUTE);
         // Format and display the time
         timeLabel.setText(" " + (hours / 10) + (hours - (hours / 10) * 10) + ":"
                 + (minutes / 10) + (minutes - (minutes / 10) * 10));
