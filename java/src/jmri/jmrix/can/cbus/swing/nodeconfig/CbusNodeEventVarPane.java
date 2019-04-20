@@ -51,8 +51,16 @@ public class CbusNodeEventVarPane extends JPanel {
     
     public void setNode( CbusNode node ) {
         
-        nodeEvModel = new CbusNodeEventTableDataModel(_memo, 10,
-            CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
+        if ( nodeEvModel != null ){
+            nodeEvModel.dispose();
+        }
+        
+        if ( node == null ){
+            return;
+        }
+        
+        nodeEvModel = new CbusNodeEventTableDataModel(  mainpane, _memo, 10,
+            CbusNodeEventTableDataModel.MAX_COLUMN); // mainpane, controller, row, column
         
         CbusNode nodeOfInterest= node;
 
@@ -84,6 +92,8 @@ public class CbusNodeEventVarPane extends JPanel {
         infoPane.add(evMenuPane, BorderLayout.PAGE_START);
         infoPane.add(genericEvTable, BorderLayout.CENTER);
         
+        setLayout(new BorderLayout() );
+        
         this.add(infoPane);
         
         validate();
@@ -93,11 +103,9 @@ public class CbusNodeEventVarPane extends JPanel {
 
             CbusNodeEvent newevent = new CbusNodeEvent(
                 -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getParameter(5));
-                
-                java.util.Arrays.fill(newevent._evVarArr,0);
-                
-            CbusNodeEditEventFrame editEvFrame = new CbusNodeEditEventFrame(mainpane,newevent);
-            editEvFrame.initComponents(_memo);
+            java.util.Arrays.fill(newevent._evVarArr,0);
+            
+            mainpane.getEditEvFrame().initComponents(_memo,newevent);
 
         };
         newEvButton.addActionListener(newEvButtonClicked);

@@ -38,11 +38,15 @@ public class CbusNodeEventTest {
         int[] newArr = new int[]{1,2,3,4};
         t.setEvArr(newArr);
         
-        Assert.assertEquals("new Arr string","[1, 2, 3, 4]",t.getEvVarString() );
+        Assert.assertEquals("new Arr string","1, 2, 3, 4",t.getEvVarString() );
         
         Assert.assertTrue("EvVars 2 -1",t.getEvVar(2)== 2 );
         t.setEvVar(2,255);
         Assert.assertTrue("EvVars 2 255",t.getEvVar(2)== 255 );
+        
+        Assert.assertTrue("defalt no temp name set",t.getTempFcuNodeName().isEmpty() );
+        t.setTempFcuNodeName("Alonso");
+        Assert.assertTrue("temp name set",t.getTempFcuNodeName()=="Alonso" );
         
     }    
     

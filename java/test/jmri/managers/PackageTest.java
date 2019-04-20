@@ -29,8 +29,7 @@ import org.junit.runners.Suite;
     DefaultSignalGroupManagerTest.class,
     DefaultSignalMastLogicManagerTest.class,
     DefaultSignalMastManagerTest.class,
-    DeferringProgrammerManagerTest.class,
-    GeneralManagerTest.class,
+    DeferringProgrammerManagerTest.class
 })
 
 /**

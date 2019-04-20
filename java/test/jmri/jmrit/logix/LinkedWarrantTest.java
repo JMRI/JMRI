@@ -46,7 +46,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        Assert.assertNotNull("Senor IS12 not found", sensor1);
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -282,7 +282,7 @@ public class LinkedWarrantTest {
             panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance
+    // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
     public void testLinkedMidScript() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -294,7 +294,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
 
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
-        Assert.assertNotNull("Senor IS12 not found", sensor0);
+        Assert.assertNotNull("Senor IS0 not found", sensor0);
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
