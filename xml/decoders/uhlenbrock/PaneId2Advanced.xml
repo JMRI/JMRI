@@ -19,7 +19,7 @@
             <authorinitials>EB</authorinitials>
             <revremark>Initial version, adapted from Uhlenbrock/soundPane7outputs.xml</revremark>
         </revision>
-        <!-- Valid only for certain Uhlenbrock decoders with IntelliDrive2, Piko Sound 4.1 (non exhaustive list) -->
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliDrive2, Piko Smart 4.1/Sound 4.1 (non exhaustive list) -->
     </revhistory>
 
     <name>IntelliDrive2</name>

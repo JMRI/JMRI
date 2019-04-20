@@ -26,7 +26,8 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * and sent to a client.
      * <p>
      * Types should be single words, in camelCase if needed, unless supporting a
-     * plural noun exposed in the JSON 3.0 or newer protocol.
+     * plural noun introduced in the JSON 1.x or 2.x protocols and exposed in the
+     * JSON 3.0 or newer protocol.
      * <p>
      * If a service returns no types, it will never be used.
      *
@@ -41,7 +42,8 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * for messages sent to a client.
      * <p>
      * Types should be single words, in camelCase if needed, unless supporting a
-     * plural noun exposed in the JSON 3.0 or newer protocol.
+     * plural noun introduced in the JSON 1.x or 2.x protocols and exposed in
+     * the JSON 3.0 or newer protocol.
      *
      * @return An array of types this service sends, but does not respond to.
      */
@@ -56,7 +58,8 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * for messages received from a client.
      * <p>
      * Types should be single words, in camelCase if needed, unless supporting a
-     * plural noun exposed in the JSON 3.0 or newer protocol.
+     * plural noun introduced in the JSON 1.x or 2.x protocols and exposed in
+     * the JSON 3.0 or newer protocol.
      *
      * @return An array of types this service sends, but does not respond to.
      */

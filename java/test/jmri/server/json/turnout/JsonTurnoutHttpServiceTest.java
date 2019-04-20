@@ -31,21 +31,25 @@ public class JsonTurnoutHttpServiceTest {
         JsonNode result;
         try {
             turnout1.setState(Turnout.UNKNOWN);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonTurnoutServiceFactory.TURNOUT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.CLOSED);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.CLOSED, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.THROWN);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.INCONSISTENT);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
@@ -130,15 +134,15 @@ public class JsonTurnoutHttpServiceTest {
             JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
             TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
             JsonNode result;
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideTurnout("IT1");
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(1, result.size());
             manager.provideTurnout("IT2");
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

@@ -13,9 +13,9 @@ import jmri.NamedBean;
  * Abstract implementation of JsonHttpService with specific support for
  * {@link jmri.NamedBean} objects.
  * <p>
- * <strong>Note:</strong> if the extending class meets the requirements
- * of {@link jmri.server.json.JsonNamedBeanHttpService}, it is recommended
- * to extend that class instead.
+ * <strong>Note:</strong> if the extending class meets the requirements of
+ * {@link jmri.server.json.JsonNamedBeanHttpService}, it is recommended to
+ * extend that class instead.
  *
  * @author Randall Wood (C) 2016, 2019
  * @param <T> the type supported by this service
@@ -37,13 +37,16 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * JsonException in this case.
      * 
      * @param manager the manager for the requested type
-     * @param type   the type of the requested list
-     * @param locale the requesting client's Locale
+     * @param type    the type of the requested list
+     * @param data    JSON object possibly containing filters to limit the list
+     *                    to
+     * @param locale  the requesting client's Locale
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    protected final ArrayNode doGetList(Manager<T> manager, String type, Locale locale) throws JsonException {
+    protected final ArrayNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale)
+            throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (T bean : manager.getNamedBeanSet()) {
             root.add(this.doGet(bean, bean.getSystemName(), type, locale));
@@ -66,10 +69,11 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param locale the requesting client's Locale
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
-     *                       occurs
+     *                           occurs
      */
     @Nonnull
-    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException;
+    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale)
+            throws JsonException;
 
     /**
      * Create the JsonNode for a {@link jmri.NamedBean} object.
@@ -82,7 +86,8 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
+    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale)
+            throws JsonException {
         if (bean == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
         }
@@ -120,7 +125,8 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
+    protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type,
+            @Nonnull Locale locale) throws JsonException {
         if (bean == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
         }

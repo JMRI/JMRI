@@ -37,7 +37,7 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         if (JsonConsist.CONSISTS.equals(type)) {
-            this.connection.sendMessage(this.service.doGetList(type, locale));
+            this.connection.sendMessage(this.service.doGetList(type, data, locale));
         } else {
             DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
             String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
@@ -56,7 +56,7 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale));
     }
 
     @Override
@@ -98,7 +98,8 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
         public void notifyConsistListChanged() {
             try {
                 try {
-                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS, getLocale()));
+                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS,
+                            service.getObjectMapper().createObjectNode(), getLocale()));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }
