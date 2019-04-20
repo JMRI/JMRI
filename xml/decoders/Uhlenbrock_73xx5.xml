@@ -105,6 +105,36 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
+            <model model="Piko 56400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="PIKO56400" comment="Piko Smartdecoder 4.1 and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="38" width="22" height="15" units="mm"/>
+            </model>
+            <model model="Piko 56401" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="PIKO56401" comment="Piko Smartdecoder 4.1, Mfx and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="38" width="22" height="15" units="mm"/>
+            </model>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
@@ -125,7 +155,7 @@
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400,PIKO41BR82"><!-- Uhlenbrock -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400,PIKO41BR82,PIKO56400,PIKO56401"><!-- Uhlenbrock -->
                 <decVal/>
                 <!--<defaultItem default="162" include="PIKO41RH2400,PIKO41BR82"/> somehow not validating -->
                 <label>Manufacturer ID: </label>
@@ -134,7 +164,7 @@
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400,PIKO41BR82"><!-- Piko -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400,PIKO41BR82,PIKO56400,PIKO56401"><!-- Piko -->
                 <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
@@ -149,7 +179,7 @@
                 <label xml:lang="de">Selectrix Datenformat</label>
                 <label xml:lang="nl">Selectrix modus</label>
             </variable>
-            <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400,PIKO41BR82">
+            <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400,PIKO41BR82,PIKO56400">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>Mfx Mode</label>
                 <label xml:lang="de">Mfx Datenformat</label>
@@ -1290,10 +1320,11 @@
                 <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
                 <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
             </variable>
-            <!--extended function mapping on IntelliDrive2 and Piko 4.1, includes cv 31-32 bank switches-->
+            <!--extended function mapping on IntelliDrive2 and Piko Smartdecoder (Sound) 4.1, includes cv 31-32 bank switches-->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
 
-            <!--Sound, only basic -->
+<!--            <group exclude="PIKO56400,PIKO56401">-->
+            <!--Sound CVs -->
             <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
             <variable item="Bank_Switch" CV="1021" default="0">
                 <enumVal>
@@ -1386,12 +1417,16 @@
                 <label>Minimum Random Period</label>
                 <label xml:lang="de">Minimale Zufallszeit</label>
                 <label xml:lang="nl">Min. toevalstijd</label>
+                <tooltip>From what time (minimum) should a random sound be played?</tooltip>
+                <tooltip xml:lang="de">ab welcher Mindestzeit soll ein Zufallsgeräusch abgespielt werden?</tooltip>
             </variable>
             <variable item="Bank C Sound Setting 3" CV="906.1021=2">
                 <decVal/>
                 <label>Maximum Random Period</label>
                 <label xml:lang="de">Maximale Zufallszeit</label>
                 <label xml:lang="nl">Max. toevalstijd</label>
+                <tooltip>Until what time (maximum) should a random sound be played? (how often = combination with Min. Rand.Per)</tooltip>
+                <tooltip xml:lang="de">bis zu welcher Zeit soll ein Zufallsgeräusch abgespielt werden? (wie häufig - Kombination mit Mind. Zufallszeit)</tooltip>
             </variable>
             <variable item="Bank C Sound Setting 4" CV="907.1021=2">
                 <decVal/>
@@ -1410,22 +1445,217 @@
                 <label>Soundfader Function</label>
                 <label xml:lang="de">Funktionstaste für Soundfader</label>
                 <label xml:lang="nl">Functieknop voor Soundfader</label>
+                <tooltip>Function mapping for Soundfader</tooltip>
             </variable>
             <variable item="Bank C Sound Setting 7" CV="911.1021=2">
                 <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
                 <label>Volume Control Function</label>
                 <label xml:lang="de">Funktion für Soundfader</label>
                 <label xml:lang="nl">Functieknop voor Volumeregelaar</label>
+                <tooltip>Function mapping for Volume Control</tooltip>
             </variable>
-            <!--TODO CV 900.3-939.3-->
+            <!-- CV 900.3-939.3-->
+            <!-- Piko Info: Fahrstufenschwellen 0-255 für Schaltgeräusche, z.B. das Getriebeschalten eines -->
+            <!-- Schienenbusses o. die Schützschaltung für eine Altbau E-Lok/speed steps for sound effects in the model-->
             <variable item="Bank D Sound Setting 1" CV="900.1021=3">
                 <decVal/>
+                <tooltip>At which Speed Step should Switch Sound #1 be activated?</tooltip>
+                <tooltip xml:lang="de">Bei welchen Fahrstufe soll Schaltgeräusch #1 abgespielt werden?</tooltip>
             </variable>
-            <!--TODO CV 900.4-939.4-->
-            <variable item="Bank E Sound Setting 1" CV="900.1021=4">
+            <variable item="Bank D Sound Setting 2" CV="901.1021=3">
                 <decVal/>
             </variable>
-            <!--CVs 900.8-939.8-->
+            <variable item="Bank D Sound Setting 3" CV="902.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 4" CV="903.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 5" CV="904.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 6" CV="905.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 7" CV="906.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 8" CV="907.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 9" CV="908.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 10" CV="909.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 11" CV="910.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 12" CV="911.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 13" CV="912.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 14" CV="913.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 15" CV="914.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 16" CV="915.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 17" CV="916.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 18" CV="917.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 19" CV="918.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 20" CV="919.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 21" CV="920.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 22" CV="921.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 23" CV="922.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 24" CV="923.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 25" CV="924.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 26" CV="925.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 27" CV="926.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 28" CV="927.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 29" CV="928.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 30" CV="929.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 31" CV="930.1021=3">
+                <decVal/>
+            </variable>
+            <variable item="Bank D Sound Setting 32" CV="931.1021=3">
+                <decVal/>
+            </variable>
+            <!-- CV 900.4-931.4-->
+            <!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
+            <variable item="Bank E Sound Setting 1" CV="900.1021=4">
+                <decVal/>
+                <tooltip>Sound Slot #1 Volume</tooltip>
+                <tooltip xml:lang="de">Sound Slot #1 Lautstärke</tooltip>
+            </variable>
+            <variable item="Bank E Sound Setting 2" CV="901.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 3" CV="902.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 4" CV="903.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 5" CV="904.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 6" CV="905.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 7" CV="906.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 8" CV="907.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 9" CV="908.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 10" CV="909.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 11" CV="910.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 12" CV="911.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 13" CV="912.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 14" CV="913.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 15" CV="914.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 16" CV="915.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 17" CV="916.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 18" CV="917.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 19" CV="918.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 20" CV="919.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 21" CV="920.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 22" CV="921.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 23" CV="922.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 24" CV="923.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 25" CV="924.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 26" CV="925.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 27" CV="926.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 28" CV="927.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 29" CV="928.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 30" CV="929.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 31" CV="930.1021=4">
+                <decVal/>
+            </variable>
+            <variable item="Bank E Sound Setting 32" CV="931.1021=4">
+                <decVal/>
+            </variable>
+        <!--CVs 900.8-939.8-->
             <!--<group>-->
                 <!--<qualifier>-->
                     <!--<variableref>Bank_Switch</variableref>-->
@@ -1786,6 +2016,7 @@
                 </variable>
                 <!--end RH2400-->
             <!--</group>-->
+<!--            </group>-->
 
         </variables>
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
