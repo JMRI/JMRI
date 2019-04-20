@@ -491,23 +491,7 @@ public class LnPacketizer extends LnTrafficController {
     @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
     @Override
     public void dispose() {
-        threadStopRequest = true;  // tell threads to stop
-        if (xmtThread != null) {
-            xmtThread.interrupt(); // it maybe waiting on output queue.
-            try {
-                xmtThread.join();
-            } catch (InterruptedException e) {
-                log.warn("unexpected InterruptedException", e);
-            }
-        }
-        if (rcvThread != null) {
-            rcvThread.interrupt(); // it may be waiting on input queue.
-            try {
-                rcvThread.join();
-            } catch (InterruptedException e) {
-                log.warn("unexpected InterruptedException", e);
-            }
-        }
+        terminateThreads();
         super.dispose();
     }
 
