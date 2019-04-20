@@ -493,6 +493,7 @@ public class LnPacketizer extends LnTrafficController {
     public void dispose() {
         threadStopRequest = true;  // tell threads to stop
         if (xmtThread != null) {
+            xmtThread.interrupt(); // it maybe waiting on output queue.
             try {
                 xmtThread.join();
             } catch (InterruptedException e) {
@@ -500,6 +501,7 @@ public class LnPacketizer extends LnTrafficController {
             }
         }
         if (rcvThread != null) {
+            rcvThread.interrupt(); // it may be waiting on input queue.
             try {
                 rcvThread.join();
             } catch (InterruptedException e) {
@@ -517,6 +519,7 @@ public class LnPacketizer extends LnTrafficController {
     public void terminateThreads() {
         threadStopRequest = true;
         if (xmtThread != null) {
+            xmtThread.interrupt(); // it maybe waiting on output queue.
             try {
                 xmtThread.join();
             } catch (InterruptedException e) {
@@ -524,6 +527,7 @@ public class LnPacketizer extends LnTrafficController {
             }
         }
         if (rcvThread != null) {
+            rcvThread.interrupt(); // it maybe waiting on output queue.
             try {
                 rcvThread.join();
             } catch (InterruptedException e) {
