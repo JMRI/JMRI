@@ -90,6 +90,4 @@ public class NBHSensorTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensorTest.class);
 }

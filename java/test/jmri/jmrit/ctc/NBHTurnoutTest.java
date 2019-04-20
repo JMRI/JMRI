@@ -34,9 +34,9 @@ public class NBHTurnoutTest {
         Assert.assertNotNull(turnout94);
         nullBean(turnout94);
 
-        JUnitAppender.suppressErrorMessage("Module, UserIdParameter, Sensor does not exist: IT94");
-        JUnitAppender.suppressErrorMessage("expected Sensor 1 not defined - IT93");
-        JUnitAppender.suppressErrorMessage("expected Sensor 2 not defined - IT93");
+        JUnitAppender.suppressErrorMessage("Module, UserIdParameter, Turnout does not exist: IT94");
+//         JUnitAppender.suppressErrorMessage("expected Sensor 1 not defined - IT93");
+//         JUnitAppender.suppressErrorMessage("expected Sensor 2 not defined - IT93");
     }
 
 // WARN  - expected Sensor 1 not defined - IT93 [main] jmri.implementation.AbstractTurnout.setInitialKnownStateFromFeedback()
@@ -86,6 +86,4 @@ public class NBHTurnoutTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHTurnoutTest.class);
 }
