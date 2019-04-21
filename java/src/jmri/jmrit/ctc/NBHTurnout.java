@@ -19,15 +19,13 @@ import jmri.TurnoutOperation;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
- *
- * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- *
- * Prefix NBH = Named Bean Handler....
- *
  * This object additionally supports "inverted feedback", so that when someone
  * calls "getKnownState", (typically my own code in this CTC project) we return
  * the "adjusted" value based upon "inverted feedback".
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+
+// Prefix NBH = Named Bean Handler....
 
 public class NBHTurnout {
 

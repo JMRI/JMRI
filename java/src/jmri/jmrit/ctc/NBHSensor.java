@@ -18,35 +18,34 @@ import jmri.SensorManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
- * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- *
  * This object attempts to "extend" (implements) Sensor functionality that
  * is needed by the CTC system.
- *
+ * <p>
  * Goals:
- * 1.) Catches and thereby prevents exceptions from propagating upward.  No need
+ * <ol>
+ * <li> Catches and thereby prevents exceptions from propagating upward.  No need
  *     for this everywhere in your code:
  *     try { sensor.getBean().setKnownState(Sensor.ACTIVE); } catch (JmriException ex) {}
  *     We ASSUME here that you are ALWAYS passing a valid "newState".  If not,
  *     then this call is effectively a no-op (do nothing).
- * 2.) Use ONLY named beans internally for proper JMRI support of renaming objects.
- * 3.) Support renaming of this object fully (if possible via normal JMRI methods). (FUTURE CODE)
- * 4.) Prevents "null" access to improperly constructed internal objects.  For example:
+ * <li> Use ONLY named beans internally for proper JMRI support of renaming objects.
+ * <li> Support renaming of this object fully (if possible via normal JMRI methods). (FUTURE CODE)
+ * <li> Prevents "null" access to improperly constructed internal objects.  For example:
  *     If the caller passes invalid parameter(s) to the constructor(s), then this object's
  *     internal Sensor will be set to null by the constructor(s).  If the USER then
  *     attempts to use the CTC panel and the underlying code winds up calling method(s)
  *     in here that reference that null sensor, the JMRI system would crash.
- * 5.) If the internal Sensor is null and you call a function that returns a value,
+ * <li> If the internal Sensor is null and you call a function that returns a value,
  *     that function will return a "sane" value.  See the constants below for
  *     general return values in this situation and individual functions for specific info.
- * 6.) Support for required sensors.  If the sensor name doesn't exist or is invalid in ANY way,
+ * <li> Support for required sensors.  If the sensor name doesn't exist or is invalid in ANY way,
  *     then it is considered an error, and this object logs it as such.  We do
  *     NOT create the JMRI object automatically in this situation.
- * 7.) Support for optional sensors.  In my system, a sensor may be optional.
+ * <li> Support for optional sensors.  In my system, a sensor may be optional.
  *     If specified, it MUST be valid and exist in the system already.
- * 8.) In each of the two above situations, ANY error situation will leave
+ * <li> In each of the two above situations, ANY error situation will leave
  *     this object properly protected.
- * 9.) My CTC system that uses this object can "mindlessly" call methods on this
+ * <li> My CTC system that uses this object can "mindlessly" call methods on this
  *     object at any time, and return "sane" values in ANY error situation and
  *     rely on these values being consistent.  This prevents the need of calling
  *     routines to CONSTANTLY check the internal status of this object, and can
@@ -62,6 +61,8 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *     the internal state of this object is valid or not, and act on
  *     it differently than the default sane values.  There is a function "valid()"
  *     for that situation.
+ * </ol>
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 
 // Prefix NBH = Named Bean Handler....
