@@ -1421,7 +1421,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.45"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1551,7 +1551,7 @@
 
     </target>
 
-    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
+    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite with jacaco output">
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
 
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
@@ -1580,7 +1580,17 @@
     </target>
 
 
-    <target name="alltest-coveragereport" depends="logalltest" description="Generate Test Coverage Report from logalltest">
+    <target name="alltest-coveragereport" depends="logalltest, coveragereport" description="Generate Test Coverage Report from logalltest" />
+
+    <target name="alltest-coveragecheck" depends="logalltest, coveragecheck" description="Test Coverage check from logalltest" />
+
+    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis, coveragecheck" description="Test Coverage check from logalltest for Appveyor" />
+
+    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor, coveragecheck" description="Test Coverage check from logalltest for Travis" />
+
+    <!-- end of test execution targets -->
+
+    <target name="coveragereport" description="Generate Test Coverage Report from existing jacoco.exe file">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1600,7 +1610,7 @@
        </jacoco:report>
     </target>
 
-    <target name="alltest-coveragecheck" depends="logalltest" description="Test Coverage check from logalltest">
+    <target name="coveragecheck" description="Check test results in existing jacoco.exe file">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1616,7 +1626,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1628,66 +1638,6 @@
           </check>
        </jacoco:report>
     </target>
-
-    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis" description="Test Coverage check from logalltest">
-    <!-- Generate Code Coverage report
-    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
-       <jacoco:report>
-          <executiondata>
-              <file file="${jacocoexec}" />
-          </executiondata>
-
-          <structure name="AntTestReporting">
-              <classfiles>
-                 <fileset refid="jacocofileset"/>
-              </classfiles>
-          </structure>
-
-          <check>
-              <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
-              </rule>
-              <rule element="PACKAGE">
-                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-              <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-          </check>
-       </jacoco:report>
-    </target>
-
-    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor" description="Test Coverage check from logalltest">
-    <!-- Generate Code Coverage report
-    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
-       <jacoco:report>
-          <executiondata>
-              <file file="${jacocoexec}" />
-          </executiondata>
-
-          <structure name="AntTestReporting">
-              <classfiles>
-                 <fileset refid="jacocofileset"/>
-              </classfiles>
-          </structure>
-
-          <check>
-              <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
-              </rule>
-              <rule element="PACKAGE">
-                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-              <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-          </check>
-       </jacoco:report>
-    </target>
-
-    <!-- end of test execution targets -->
 
     <!-- ============================================================================= -->
     <!-- Distribution build targets                                                    -->
