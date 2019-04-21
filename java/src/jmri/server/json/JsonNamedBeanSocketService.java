@@ -16,6 +16,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.ReporterManager;
+import jmri.Manager.NameValidity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,13 +47,13 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         setLocale(locale);
         String name = data.path(NAME).asText();
         // protect against a request made with a user name instead of a system name
-        if (method != PUT) {
+        if (method != PUT && service.getManager().validSystemNameFormat(name) != NameValidity.VALID) {
             T bean = service.getManager().getBeanBySystemName(name);
             if (bean == null) {
-                // set to warn so users can provide specific feedback to developers of JSON clients 
-                log.warn("{} request for {} made with user name \"{}\"; should use system name", method, type, name);
                 bean = service.getManager().getBeanByUserName(name);
                 if (bean != null) {
+                    // set to warn so users can provide specific feedback to developers of JSON clients
+                    log.warn("{} request for {} made with user name \"{}\"; should use system name", method, type, name);
                     name = bean.getSystemName();
                 } // service will throw appropriate error to client later if bean is still null
             }
