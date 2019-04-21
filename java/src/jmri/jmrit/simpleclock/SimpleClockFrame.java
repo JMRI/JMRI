@@ -768,12 +768,17 @@ public class SimpleClockFrame extends JmriJFrame
     }
 
     /**
-     * Handle a change to clock properties
+     * Handle a change to clock properties "rate" and "run"
+     *
+     * Time changes are handled by the minuteChangeListener
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        updateRunningButton();
-        updateRate();
+	if (e.getPropertyName().contentEquals("rate")) {
+	    updateRate();
+	} else if (e.getPropertyName().contentEquals("run")) {
+	    updateRunningButton();
+	}
     }
 
     @Override
