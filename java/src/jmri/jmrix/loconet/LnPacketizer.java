@@ -488,7 +488,7 @@ public class LnPacketizer extends LnTrafficController {
     Thread xmtThread;
     
     /**
-     * Testing Only - request the rec & xmit threads to be terminated
+     * Testing Only - request the rec and xmit threads to be terminated
      * if set before start, one loop only is performed.
      */
     protected void setthreadStopRequestOn() {
