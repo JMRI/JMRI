@@ -47,7 +47,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         setLocale(locale);
         String name = data.path(NAME).asText();
         // protect against a request made with a user name instead of a system name
-        if (method != PUT && service.getManager().validSystemNameFormat(name) != NameValidity.VALID) {
+        if (!method.equals(PUT) && service.getManager().validSystemNameFormat(name) != NameValidity.VALID) {
             T bean = service.getManager().getBeanBySystemName(name);
             if (bean == null) {
                 bean = service.getManager().getBeanByUserName(name);
