@@ -228,7 +228,7 @@ public class LnPacketizer extends LnTrafficController {
         public void run() {
 
             int opCode;
-            while (!threadStopRequest) {   // loop until asked to stop
+            do {   // loop until asked to stop
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
@@ -340,7 +340,8 @@ public class LnPacketizer extends LnTrafficController {
                 catch (RuntimeException e) {
                     log.warn("run: unexpected Exception: {}", e); // NOI18N
                 }
-            } // end of permanent loop
+            } while (!threadStopRequest); // end of permanent loop
+            threadStopRequestRecDone = true;
         }
     }
 
@@ -376,7 +377,7 @@ public class LnPacketizer extends LnTrafficController {
         @Override
         public void run() {
 
-            while (!threadStopRequest) {   // loop until asked to stop
+            do {
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -414,7 +415,8 @@ public class LnPacketizer extends LnTrafficController {
 
                     log.trace("end wait"); // NOI18N
                 }
-            }
+            } while (!threadStopRequest);   // loop until asked to stop
+            threadStopRequestXmitDone = true;
         }
     }
 
@@ -485,11 +487,41 @@ public class LnPacketizer extends LnTrafficController {
     Thread rcvThread;
     Thread xmtThread;
     
-  
     /**
-     * Flag that threads should terminate as soon as they can.
+     * Testing Only - request the rec & xmit threads to be terminated
+     * if set before start, one loop only is performed.
+     */
+    protected void setthreadStopRequestOn() {
+        threadStopRequest = true;
+    }
+
+    /**
+     * Testing Only - Spins its wheels for 100ms or threads terminated
+     * @return true threads were terminated
+     */
+     protected boolean waitForThreadsToStop() {
+        for (int i = 1; i < 10; i++) {
+            if (!threadStopRequestXmitDone || !threadStopRequestRecDone) {
+                return true;
+            }
+            try {
+                Thread.sleep(10);
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Testing Only - Flag that threads should terminate as soon as they can.
      */
     protected volatile boolean threadStopRequest = false;
+    /**
+     * Testing Only - Flag that indicates threads have been terminated
+     */
+    protected volatile boolean threadStopRequestXmitDone = false;
+    protected volatile boolean threadStopRequestRecDone  = false;
     
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 
