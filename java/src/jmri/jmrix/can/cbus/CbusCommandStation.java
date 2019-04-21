@@ -1,9 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.CommandStation;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 
@@ -11,15 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement CommandStation for CBUS communications.
+ * CommandStation for CBUS communications.
  *
- * The intention is that, unlike some other systems, we will hold no or minimal
- * command station state in the software model. The actual command station state
+ * Unlike some other systems, we will hold minimal command station state 
+ * in the software model. The actual command station state
  * should always be referred to.
  *
  * @author Andrew Crosland Copyright (C) 2009
  */
-public class CbusCommandStation implements CommandStation, CanListener {
+public class CbusCommandStation implements CommandStation {
 
     public CbusCommandStation(CanSystemConnectionMemo memo) {
         tc = memo.getTrafficController();
@@ -124,7 +122,7 @@ public class CbusCommandStation implements CommandStation, CanListener {
         msg.setElement(1, handle);
         msg.setElement(2, group);
         msg.setElement(3, functions);
-        tc.sendCanMessage(msg, this);
+        tc.sendCanMessage(msg, null);
     }
 
     /**
@@ -138,15 +136,7 @@ public class CbusCommandStation implements CommandStation, CanListener {
         msg.setOpCode(CbusConstants.CBUS_STMOD);
         msg.setElement(1, handle);
         msg.setElement(2, mode);
-        tc.sendCanMessage(msg, this);
-    }
-
-    @Override
-    public void message(CanMessage m) {
-    }
-
-    @Override
-    synchronized public void reply(CanReply m) {
+        tc.sendCanMessage(msg, null);
     }
 
     @Override
@@ -157,6 +147,9 @@ public class CbusCommandStation implements CommandStation, CanListener {
     @Override
     public String getSystemPrefix() {
         return adapterMemo.getSystemPrefix();
+    }
+    
+    public void dispose() {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class);

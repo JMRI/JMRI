@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
-import jmri.util.JUnitUtil;
 import jmri.jmrit.catalog.NamedIcon;
 import org.junit.*;
 
@@ -14,7 +13,7 @@ import org.junit.*;
  * <p>
  * Description:
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class LinkingLabelTest extends PositionableTestBase {
 
@@ -60,33 +59,31 @@ public class LinkingLabelTest extends PositionableTestBase {
     }
 
     @Test
-    public void testGetAndSetURL(){
+    public void testGetAndSetURL() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LinkingLabel l = (LinkingLabel) p;
-        Assert.assertEquals("URL before set","http://jmri.org",l.getURL());
+        Assert.assertEquals("URL before set", "http://jmri.org", l.getURL());
         l.setULRL("bar");
-        Assert.assertEquals("URL after set","bar",l.getURL());
+        Assert.assertEquals("URL after set", "bar", l.getURL());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
-           p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");
-           NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
-           to.setIcon(icon);
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+            p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");
+            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+            to.setIcon(icon);
         }
     }
-    
+
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         to = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

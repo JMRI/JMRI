@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -24,14 +25,18 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     private boolean listening = false;
 
     public JsonTimeSocketService(JsonConnection connection) {
-        super(connection, new JsonTimeHttpService(connection.getObjectMapper()));
+        this(connection, new JsonTimeHttpService(connection.getObjectMapper()));
+    }
+
+    // package protected
+    JsonTimeSocketService(JsonConnection connection, JsonTimeHttpService service) {
+        super(connection, service);
     }
 
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         if (!this.listening) {
             Timebase manager = InstanceManager.getDefault(Timebase.class);
-            manager.addMinuteChangeListener(this);
             manager.addPropertyChangeListener(this);
             this.listening = true;
         }
@@ -47,7 +52,6 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     public void onClose() {
         if (this.listening) {
             Timebase manager = InstanceManager.getDefault(Timebase.class);
-            manager.removeMinuteChangeListener(this);
             manager.removePropertyChangeListener(this);
         }
     }
@@ -56,7 +60,12 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             try {
-                this.connection.sendMessage(this.service.doGet(TIME, null, this.connection.getLocale()));
+                Timebase manager = InstanceManager.getDefault(Timebase.class);
+                Date time = manager.getTime();
+                if (evt.getPropertyName().equals("time")) {
+                    time = (Date) evt.getNewValue();
+                }
+                this.connection.sendMessage(this.service.doGet(TIME, manager, time, this.connection.getLocale()));
             } catch (JsonException ex) {
                 this.connection.sendMessage(ex.getJsonMessage());
             }

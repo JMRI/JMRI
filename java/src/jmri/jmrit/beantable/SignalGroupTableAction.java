@@ -484,6 +484,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             namesGrid.setLayout(layout);
             // row 1: add system name label + field/label
             namesGrid.add(nameLabel);
+            nameLabel.setLabelFor(_systemName);
             JPanel ps = new JPanel();
             ps.setLayout(new BoxLayout(ps, BoxLayout.X_AXIS));
             ps.add(_systemName);
@@ -500,6 +501,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             namesGrid.add(ps);
             // row 2: add user name label + field
             namesGrid.add(userLabel);
+            userLabel.setLabelFor(_userName);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(_userName);
@@ -1750,7 +1752,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          * Store On setting for Signal Head in Signal Group. Should match
          * entries in getOnState()
          *
-         * @param localized name for the Signal Head Appearance when this head
+         * @param state Localized name for the Signal Head Appearance when this head
          *                  is On
          */
         void setSetOnState(String state) {
@@ -1779,7 +1781,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          * Store Off setting for Signal Head in Signal Group. Should match
          * entries in getOffState()
          *
-         * @param localized name for the Signal Head Appearance when this head
+         * @param state Localized name for the Signal Head Appearance when this head
          *                  is Off
          */
         void setSetOffState(String state) {

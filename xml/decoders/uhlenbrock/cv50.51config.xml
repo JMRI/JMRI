@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved                            -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2019-01-28</date>
+      <authorinitials>EBR</authorinitials>
+      <revremark>Initial version as separate file from Piko_Smartx.xml</revremark>
+    </revision>
+  </revhistory>
+
+  <!-- IntelliDrive2 Decoder Configuration CV 50-51 -->
+  <variable item="Use Motorola 2" CV="50" default="0" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Use Motorola 2nd Address</label>
+    <label xml:lang="de">Motorola 2. Adresse nutzen</label>
+  </variable>
+  <variable item="Use Motorola 3" CV="50" default="0" mask="XXXXXXVX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Use Motorola 3nd Address</label>
+    <label xml:lang="de">Motorola 3. Adresse nutzen</label>
+  </variable>
+  <variable item="Flip Light Outputs" CV="50" default="0" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Flip Light Outputs</label>
+    <label xml:lang="de">Lichtausgänge tauschen</label>
+  </variable>
+  <variable item="Light Frequency" CV="50" default="0" mask="XXXXVXXX">
+    <enumVal>
+      <enumChoice>
+        <choice>156 Hz</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>24 Hz</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  <variable item="SUSI1 Task" CV="50" default="0" mask="XXXVXXXX">
+    <enumVal>
+      <enumChoice>
+        <choice>As SUSI</choice>
+        <choice xml:lang="de">Als SUSI</choice>
+        <choice xml:lang="nl">Als SUSI</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>A3/A4 Output Function Mapping Table</choice>
+        <choice xml:lang="de">A3/A4 Ausgabe Function Mapping-Tabelle</choice>
+        <choice xml:lang="nl">A3/A4 Uitgangen Functie-mappingtabel</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  <variable item="SUSI2 Task" CV="50" default="0" mask="XXVXXXXX" include="PIKO41RH2400">
+    <enumVal>
+      <enumChoice>
+        <choice>As SUSI</choice>
+        <choice xml:lang="de">Als SUSI</choice>
+        <choice xml:lang="nl">Als SUSI</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>SUSI DATA = Input 1, CLK = Input 2</choice>
+        <choice xml:lang="de">SUSI DATA = Eingang 1, CLK = Eingang 2</choice>
+        <choice xml:lang="nl">SUSI DATA = Ingang 1, CLK = Ingang 2</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  <variable item="A8 Function" CV="50" default="0" mask="XVXXXXXX" include="PIKO41RH2400">
+    <enumVal>
+      <enumChoice>
+        <choice>Output with Logic Level</choice>
+        <choice xml:lang="de">Ausgang mit Logikpegel</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>Input 3</choice>
+        <choice xml:lang="de">Eingang 3</choice>
+        <choice xml:lang="nl">Ingang 3</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  <variable item="Intellimatic" CV="50" default="0" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Intellimatic active</label>
+    <label xml:lang="de">Intellimatic aktiviert</label>
+    <label xml:lang="nl">Intellimatic ingeschakeld</label>
+  </variable>
+
+  <variable item="Motor Control" CV="51" default="1" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Motor Control active</label>
+    <label xml:lang="de">Motorregelung aktiv</label>
+    <label xml:lang="nl">Motorregeling ingeschakeld</label>
+  </variable>
+  <variable item="Motor Control PIDSX" CV="51" default="1" mask="XXXXXXVX">
+    <enumVal>
+      <enumChoice choice="PID">
+        <choice>PID Controller</choice>
+        <choice xml:lang="de">PID Regler</choice>
+        <choice xml:lang="nl">PID Regelaar</choice>
+      </enumChoice>
+      <enumChoice choice="SX">
+        <choice>SX Controller</choice>
+        <choice xml:lang="de">SX Regler</choice>
+        <choice xml:lang="nl">SX Regelaar</choice>
+      </enumChoice>
+    </enumVal>
+    <label>In Analog Mode use</label>
+    <label xml:lang="de">Analogfahren mit</label>
+    <label xml:lang="nl">Analoog rijden met</label>
+  </variable>
+  <variable item="Dynamic Pulse Duration" CV="51" default="1" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dynamic Pulse Duration</label>
+    <label xml:lang="de">Dynamische Periodendauer</label>
+  </variable>
+
+</variables>

@@ -206,7 +206,7 @@ public class DrawPolygon extends DrawFrame {
 
     /**
      *  Add a vertex to polygon relative to selected vertex
-     * @param up - if true, add after selected vertex. otherwise before selected vertex
+     * @param up  if true, add after selected vertex. otherwise before selected vertex
      */
     protected void addVertex(boolean up) {
         if (_editing) {

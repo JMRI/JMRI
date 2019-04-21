@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.can.cbus.CbusEvent;
-import jmri.jmrix.can.cbus.CbusNameService;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -36,12 +34,11 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     private Timer _timer;
     
     public CbusEventRequestMonitorEvent( int nn, int en, 
-        EvState state, String name, Date timestamp, int feedbackTimeout, int feedbackTotReqd,
+        EvState state, Date timestamp, int feedbackTimeout, int feedbackTotReqd,
         CbusEventRequestDataModel model ){
         
         super(nn,en);
         _state = state;
-        _name = name;
         _model = model;
         _timestamp = timestamp;
         _feedbackTimeout = feedbackTimeout;
@@ -116,19 +113,7 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
         _lfb = newval;
     }
     
-    // adds event + node name
-    protected void getNameFromTable(){
-        if (_name.equals("")) {
-            _name = new CbusNameService().getEventName(getNn(),getEn());
-            if (!_name.equals("")) {
-                _model.setValueAt(_name, _model.eventRow(getNn(),getEn()), 
-                    CbusEventRequestDataModel.NAME_COLUMN);
-            }
-        }
-    }
-    
     protected void setRequestReceived(){
-        getNameFromTable();
         _feedbackOutstanding = _feedbackTotReqd;
         
        // getFeedbackOutstanding
@@ -171,7 +156,6 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     }
     
     protected void setResponseReceived(){
-        getNameFromTable();
         if ( _feedbackOutstanding < 0 ) {
             return;
         }

@@ -246,7 +246,7 @@ public class CbusAddress {
 
         for (int i = 0; i < pStrings.length; i++) {
             // check validity of each
-            if (pStrings[i].equals("")) {
+            if (pStrings[i].isEmpty()) {
                 return new CbusAddress[0];
             }
             if (!hCode.reset(pStrings[i]).matches()) {
@@ -397,9 +397,6 @@ public class CbusAddress {
                     }
                     int firsta =  StringUtil.getFirstIntFromString(part);
                     log.debug("first string {}",firsta);
-                    if ( firsta == 0 ){
-                        throw new IllegalArgumentException("Node cannot be 0 in address: " + part);
-                    }
                     if ( firsta > 65535 ){
                         throw new IllegalArgumentException("Node Too Large in address: " + part);
                     }

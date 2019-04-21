@@ -11,8 +11,6 @@ import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -24,12 +22,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
-import jmri.profile.ProfileManager;
-import jmri.profile.ProfileUtils;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
-import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfPreferences;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -60,16 +57,11 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JRadioButton dccRB;
 
     WiThrottlePreferences localPrefs;
-    
-    Preferences zeroConfPrefs;
-    
+
     public WiThrottlePrefsPanel() {
         if (InstanceManager.getNullableDefault(WiThrottlePreferences.class) == null) {
             InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
-        zeroConfPrefs = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-                ZeroConfService.class,
-                false);
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
         initGUI();
         setGUI();
@@ -145,12 +137,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setDisplayFastClock(fastClockDisplayCB.isSelected());
         localPrefs.setAllowConsist(consistCB.isSelected());
         localPrefs.setUseWiFiConsist(wifiRB.isSelected());
-        zeroConfPrefs.putBoolean(ZeroConfService.IPv4, useIPv4CB.isSelected());
-        zeroConfPrefs.putBoolean(ZeroConfService.IPv6, useIPv6CB.isSelected());
-        try {
-            zeroConfPrefs.sync();
-        } catch (BackingStoreException ignore) {
-        }
+        ZeroConfPreferences zeroConfPrefs = InstanceManager.getDefault(ZeroConfServiceManager.class).getPreferences();
+        zeroConfPrefs.setUseIPv4(useIPv4CB.isSelected());
+        zeroConfPrefs.setUseIPv6(useIPv6CB.isSelected());
 
         return didSet;
     }
@@ -182,7 +171,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         JPanel nPanelRow1 = new JPanel();
         JPanel nPanelRow2 = new JPanel();
         JPanel nPanelRow3 = new JPanel();
-        JPanel nPanel = new JPanel(new GridLayout(3,1));
+        JPanel nPanel = new JPanel(new GridLayout(3, 1));
 
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
@@ -192,7 +181,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         nPanelRow1.add(port);
         nPanelRow1.add(label);
         nPanel.add(nPanelRow1);
-        
+
         startupCB = new JCheckBox(Bundle.getMessage("LabelStartup"), isStartUpAction());
         startupItemListener = (ItemEvent e) -> {
             this.startupCB.removeItemListener(this.startupItemListener);
@@ -224,7 +213,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         useIPv6CB.setToolTipText(Bundle.getMessage("ToolTipUseIPv6"));
         nPanelRow3.add(useIPv6CB);
         nPanel.add(nPanelRow3);
-        
+
         return nPanel;
     }
 
@@ -248,7 +237,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         consistCB = new JCheckBox(Bundle.getMessage("LabelConsist"));
         consistCB.setToolTipText(Bundle.getMessage("ToolTipConsist"));
-        
+
         wifiRB = new JRadioButton(Bundle.getMessage("LabelWiFiConsist"));
         wifiRB.setToolTipText(Bundle.getMessage("ToolTipWiFiConsist"));
         dccRB = new JRadioButton(Bundle.getMessage("LabelDCCConsist"));
@@ -257,23 +246,23 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         ButtonGroup group = new ButtonGroup();
         group.add(wifiRB);
         group.add(dccRB);
-        
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 2));
         JPanel conPanel = new JPanel();
-        
+
         gridPanel.add(powerCB);
         gridPanel.add(fastClockDisplayCB);
         gridPanel.add(turnoutCB);
         gridPanel.add(turnoutCreationCB);
         gridPanel.add(routeCB);
-        
+
         conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));
         wifiRB.setMargin(new Insets(0, 20, 0, 0));
         dccRB.setMargin(new Insets(0, 20, 0, 0));
         conPanel.add(consistCB);
         conPanel.add(wifiRB);
         conPanel.add(dccRB);
-        
+
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         panel.add(gridPanel);
         panel.add(conPanel);
@@ -346,9 +335,10 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     }
 
     private boolean isUseIPv4() {
-        return zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).getPreferences().isUseIPv4();
     }
+
     private boolean isUseIPv6() {
-        return zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).getPreferences().isUseIPv6();
     }
 }

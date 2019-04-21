@@ -1,6 +1,5 @@
 package jmri.server.json.schema;
 
-import jmri.server.json.message.*;
 import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;

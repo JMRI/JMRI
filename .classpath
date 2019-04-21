@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="**/*.java" kind="src" path="java/src">
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="java/src">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
@@ -8,12 +8,13 @@
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="java/test">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
-	<classpathentry excluding="**" kind="src" path="java/maven-template">
+	<classpathentry excluding="**" kind="src" output="target/classes" path="java/maven-template">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -30,6 +31,7 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="java/acceptancetest/step_definitions">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -42,13 +44,11 @@
 	<classpathentry kind="lib" path="lib/commons-lang3-3.7.jar"/>
 	<classpathentry kind="lib" path="lib/ecj.jar"/>
 	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
 	<classpathentry kind="lib" path="lib/javacc.jar"/>
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-core-2.8.11.jar"/>
-	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.9.8.jar"/>
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
@@ -72,8 +72,8 @@
 	<classpathentry kind="lib" path="lib/jna-platform-4.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-databind-2.8.11.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-annotations-2.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.9.8.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.9.8.jar"/>
 	<classpathentry kind="lib" path="lib/i18nchecker.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/bluecove-2.1.1-SNAPSHOT.jar"/>
@@ -136,5 +136,33 @@
 	<classpathentry kind="lib" path="lib/mqtt-client-0.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jsplitbutton-1.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/thumbnailator-0.4.8.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path=".apt_generated_tests">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="target/generated-sources/annotations">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

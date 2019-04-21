@@ -39,6 +39,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     
     public void dispose() {
         tc.removeCanListener(this);
+        if (throttleRequestTimer != null ) {
+            throttleRequestTimer.stop();
+            throttleRequestTimer = null;
+        }
     }
 
     TrafficController tc;

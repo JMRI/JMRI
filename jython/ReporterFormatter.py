@@ -21,7 +21,14 @@ class ReporterFormatter(java.beans.PropertyChangeListener):
     if (event.propertyName == "currentReport") :
       # new report, format and store
       self.report = event.newValue
-      self.value = self.format(self.report)
+      if (isinstance(self.report,jmri.Reportable)) :
+         # use the IdTag information from 4.15.3+
+         self.value = self.format(self.report.toReportString())
+      elif (self.report != None ) :
+         # use the text format from pre 4.15.3
+         self.value = self.format(self.report)
+      else :
+         self.value = ""
       self.memory.setValue(self.value)
     return 
 

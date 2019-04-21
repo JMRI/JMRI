@@ -3,6 +3,8 @@ package apps.tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import jmri.util.junit.TestClassMainMethod;
+
 /**
  * Invoke all the JMRI project JUnit tests via a GUI interface.
  *
@@ -17,9 +19,8 @@ import org.junit.runners.Suite;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
- 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         jmri.PackageTest.class,
@@ -34,9 +35,8 @@ public class AllTest {
     public static void initLogging() {
     }
 
-   static public void main(String[] args) {
-        // launch this class via JUnit4
-       org.junit.runner.JUnitCore.main("apps.tests.AllTest");
-   }
+    static public void main(String[] args) {
+        TestClassMainMethod.run(AllTest.class);
+    }
 
 }

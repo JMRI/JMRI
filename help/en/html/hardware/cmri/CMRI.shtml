@@ -936,10 +936,11 @@
   and formatting for the messages.</p>
 
   <p>If the <strong>Show Timestamps</strong> check box option is checked, each
-  message is prefixed with the system time in the form of hh:mm:ss:mss. The
+  message is prefixed with the system time in the form of hh:mm:ss:mss. 
+  <p>The
   message type (e.g Receive) and node address (ua) are displayed next. The "IB"
-  are the input data bytes, displayed as hexadecimal digits, one digit per 8
-  bit byte.</p>
+  are the input data bytes.
+  Each byte is displayed as a separate hexadecimal number.</p>
 
 
   <p><img alt="" src="images/cmrinetmonitor-pollresponsetimestamp.png"

@@ -4,9 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
@@ -48,7 +46,13 @@ public class SampleScriptTest {
     public void runTest() throws javax.script.ScriptException, java.io.IOException {
         jmri.script.JmriScriptEngineManager.getDefault().eval(file);
     }
-        
+    
+    @BeforeClass
+    static public void startTests() {
+        // this is to System.out because that's where the test output goes
+        System.out.println("jmri.jmrit.jython.SampleScriptTest starts, following output is from script tests");
+    }
+    
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
@@ -70,6 +74,12 @@ public class SampleScriptTest {
     @After 
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
+    }
+
+    @AfterClass
+    static public void endTests() {
+        // this is to System.out because that's where the test output goes
+        System.out.println("jmri.jmrit.jython.SampleScriptTest ends, above output was from script tests");
     }
 
 }

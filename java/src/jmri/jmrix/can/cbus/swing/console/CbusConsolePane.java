@@ -1106,7 +1106,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
         m.setHeader(data * 4 + data2);
         for (j = 0; j < 8; j++) {
-            if (!dataFields[j].getText().equals("")) {
+            if (!dataFields[j].getText().isEmpty()) {
                 data = parseBinDecHexByte(dataFields[j].getText(), 255, _decimal, Bundle.getMessage("CbusConsoleTitle"),
                         Bundle.getMessage("DbxErrorDialog", j));
                 if (data == -1) {

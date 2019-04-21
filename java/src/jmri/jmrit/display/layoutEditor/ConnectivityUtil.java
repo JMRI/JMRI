@@ -2726,10 +2726,12 @@ public class ConnectivityUtil {
             "SLIP_LEFT", "SLIP_RIGHT"};
         if (conType < con_types.length) {
             result = con_types[conType];
-        } else if ((LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN <= conType)
-                && (conType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
-            result = "BEZIER_CONTROL_POINT #"
-                    + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+        } else if (LayoutTrack.isBezierHitType(conType)) {
+            result = "BEZIER_CONTROL_POINT #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+        } else if (conType == LayoutTrack.SHAPE_CENTER) {
+            result = "SHAPE_CENTER";
+        } else if (LayoutShape.isShapePointOffsetHitPointType(conType)) {
+            result = "SHAPE_POINT #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         } else if (conType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
             result = "TURNTABLE_RAY #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         }

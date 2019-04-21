@@ -23,6 +23,7 @@ public class LocoNetConsistManager extends AbstractConsistManager {
      * consist reader thread, which retrieves consist information from the
      * command station
      *
+     * @param lm the LocoNetSystemConnectionMemo to which this object is related
      */
     public LocoNetConsistManager(LocoNetSystemConnectionMemo lm) {
         super();

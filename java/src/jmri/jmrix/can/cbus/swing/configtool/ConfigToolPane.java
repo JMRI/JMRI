@@ -375,7 +375,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             bc.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (f2.getText().equals("")) {
+                    if (f2.getText().isEmpty()) {
                         create(f1.getText());
                     } else {
                         create(f1.getText() + ";" + f2.getText());

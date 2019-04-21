@@ -79,4 +79,16 @@ public class JemmyUtil {
         jbo.push();
     }
 
+    public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread");
+        t.start();
+        return t;
+    }
+
 }

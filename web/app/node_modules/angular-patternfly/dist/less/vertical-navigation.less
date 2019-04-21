@@ -1,0 +1,39 @@
+.navbar-header {
+  &.ignore-mobile {
+    float: left;
+  }
+}
+
+.navbar-collapse {
+  &.ignore-mobile {
+    width: auto;
+    border-top: 0;
+    box-shadow: none;
+    display: block;
+
+    .navbar-nav {
+      float: left;
+      margin: 0;
+
+      &.navbar-right {
+        float: right;
+        .dropdown-menu {
+          left: auto;
+          right: 0;
+        }
+      }
+
+      > li {
+        float: left;
+      }
+
+      .open .dropdown-menu {
+        position: absolute;
+        margin-top: 0;
+        background-color: @color-pf-white;
+        border: 1px solid @color-pf-black-400;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      }
+    }
+  }
+}

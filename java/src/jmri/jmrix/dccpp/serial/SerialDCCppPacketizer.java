@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
+import jmri.util.ThreadingUtil;
 
 /**
  * This is an extension of the DCCppPacketizer to handle the device specific
@@ -41,6 +42,8 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
 
+    boolean activeBackgroundRefresh = true;
+
     public SerialDCCppPacketizer(final jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
@@ -60,40 +63,25 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     }
 
     /**
-     * this is the background thread that periodically refreshes the last known
-     * function settings
+     * <code>true</code> when the self-rescheduling function refresh action was
+     * initially queued, to avoid duplicate actions
      */
-    private Thread backgroundRefresh = null;
+    private boolean backgroundRefreshStarted = false;
 
-    private final class RefreshThread extends Thread {
-        public RefreshThread() {
-            setDaemon(true);
-            setPriority(Thread.MIN_PRIORITY);
-            setName("SerialDCCppPacketizer.bkg_refresh");
-        }
-
+    final class RefreshAction implements ThreadingUtil.ThreadAction {
         @Override
         public void run() {
-            while (true) {
-                try {
-                    final DCCppMessage message = resendFunctions.take();
+            try {
+                if (activeBackgroundRefresh) {
+                    final DCCppMessage message = resendFunctions.poll();
 
                     if (message != null) {
                         message.setRetries(0);
                         sendDCCppMessage(message, null);
-
-                        // At 115200 baud only ~1k messages/s can be sent.
-                        // The limit is however how many messages DCC++ BaseStation can process.
-                        // At more than 25Hz random functions get activated and replies go missing.
-                        // Further on, reading CVs on the programming track is much slower.
-                        // The lowest common denominator between all modes is 4Hz, at this rate everything seems to work fine.
-                        sleep(250);
                     }
-
-                    setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
-                } catch (final InterruptedException e) {
-                    // should exit if interrupted
                 }
+            } finally {
+                ThreadingUtil.runOnLayoutDelayed(this, 250);
             }
         }
     }
@@ -101,15 +89,15 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     private void enqueueFunction(final DCCppMessage m) {
         /**
          * Set again the same group function value 250ms later (or more,
-         * depending on the queue depth; limited to 1kHz of calls)
+         * depending on the queue depth)
          */
         m.delayFor(250);
         resendFunctions.offer(m);
 
         synchronized (this) {
-            if (backgroundRefresh == null) {
-                backgroundRefresh = new RefreshThread();
-                backgroundRefresh.start();
+            if (!backgroundRefreshStarted) {
+                ThreadingUtil.runOnLayoutDelayed(new RefreshAction(), 250);
+                backgroundRefreshStarted = true;
             }
         }
     }
@@ -130,6 +118,47 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 
         if (isFunction)
             enqueueFunction(m);
+    }
+
+    /**
+     * Clear the background refresh queue. The state is still kept in JMRI.
+     */
+    public void clearRefreshQueue() {
+        resendFunctions.clear();
+    }
+
+    /**
+     * Check how many entries are in the background refresh queue
+     *
+     * @return number of queued function groups
+     */
+    public int getQueueLength() {
+        return resendFunctions.size();
+    }
+
+    /**
+     * Enable or disable the background refresh thread
+     *
+     * @param activeState <code>true</code> to keep refreshing the functions,
+     *            <code>false</code> to disable this functionality.
+     * @return the previous active state of the background refresh thread
+     */
+    public boolean setActiveRefresh(final boolean activeState) {
+        final boolean oldActiveState = activeBackgroundRefresh;
+
+        activeBackgroundRefresh = activeState;
+
+        return oldActiveState;
+    }
+
+    /**
+     * Check if the background function refresh thread is active or not
+     *
+     * @return the background refresh status, <code>true</code> for active,
+     *         <code>false</code> if disabled.
+     */
+    public boolean isActiveRefresh() {
+        return activeBackgroundRefresh;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class);

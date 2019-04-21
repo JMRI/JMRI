@@ -4,29 +4,17 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of LnTcpServerFrame
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class LnTcpServerFrameTest {
+public class LnTcpServerFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private LocoNetInterfaceScaffold lnis;
     private LocoNetSystemConnectionMemo memo;
-
-    @Test
-    public void testGetDefault() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LnTcpServerFrame action = LnTcpServerFrame.getDefault();
-        Assert.assertNotNull("exists", action);
-        action.dispose();
-    }
 
     @Test
     public void testGetInstance() {
@@ -37,6 +25,7 @@ public class LnTcpServerFrameTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -45,13 +34,17 @@ public class LnTcpServerFrameTest {
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true);
+        if(!GraphicsEnvironment.isHeadless()){
+          frame = LnTcpServerFrame.getInstance();
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
         lnis = null;
         memo.dispose();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }

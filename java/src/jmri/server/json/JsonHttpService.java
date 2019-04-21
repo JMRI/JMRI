@@ -2,6 +2,7 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
@@ -18,13 +19,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Randall Wood
  */
-@SuppressWarnings("serial")
 public abstract class JsonHttpService {
 
     protected final ObjectMapper mapper;
 
     protected JsonHttpService(@Nonnull ObjectMapper mapper) {
         this.mapper = mapper;
+        this.mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 
     /**
@@ -37,14 +38,42 @@ public abstract class JsonHttpService {
      * recognized.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
+     * @param data   JSON data set of attributes of the requested object
      * @param locale the requesting client's Locale
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
-     *                       occurs
+     *                           occurs
      */
     @Nonnull
-    public abstract JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException;
+    public abstract JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
+            @Nonnull Locale locale)
+            throws JsonException;
+
+    /**
+     * Respond to an HTTP GET request for the requested name.
+     * <p>
+     * If name is null, return a list of all objects for the given type, if
+     * appropriate.
+     * <p>
+     * This method should throw a 500 Internal Server Error if type is not
+     * recognized.
+     *
+     * @param type   the type of the requested object
+     * @param name   the system name of the requested object
+     * @param locale the requesting client's Locale
+     * @return a JSON description of the requested object
+     * @throws JsonException if the named object does not exist or other error
+     *                           occurs
+     * @deprecated since 4.15.5; use
+     *             {@link #doGet(String, String, JsonNode, Locale)} instead
+     */
+    @Nonnull
+    @Deprecated
+    public JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale)
+            throws JsonException {
+        return doGet(type, name, mapper.createObjectNode(), locale);
+    }
 
     /**
      * Respond to an HTTP POST request for the requested name.
@@ -53,17 +82,18 @@ public abstract class JsonHttpService {
      * does not exist.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object to be
-     *               updated
+     *                   updated
      * @param locale the requesting client's Locale
      * @return a JSON description of the requested object after updates have
      *         been applied
      * @throws JsonException if the named object does not exist or other error
-     *                       occurs
+     *                           occurs
      */
     @Nonnull
-    public abstract JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale) throws JsonException;
+    public abstract JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
+            @Nonnull Locale locale) throws JsonException;
 
     /**
      * Respond to an HTTP PUT request for the requested name.
@@ -72,16 +102,18 @@ public abstract class JsonHttpService {
      * are not intended to be addable.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object to be
-     *               created or updated
+     *                   created or updated
      * @param locale the requesting client's Locale
      * @return a JSON description of the requested object
      * @throws JsonException if the method is not allowed or other error occurs
      */
     @Nonnull
-    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type));
+    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale)
+            throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                Bundle.getMessage(locale, "PutNotAllowed", type));
     }
 
     /**
@@ -93,13 +125,34 @@ public abstract class JsonHttpService {
      * Do not throw an error if the requested object does not exist.
      *
      * @param type   the type of the deleted object
-     * @param name   the name of the deleted object
+     * @param name   the system name of the deleted object
      * @param locale the requesting client's Locale
      * @throws JsonException if this method is not allowed or other error occurs
      */
     public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                Bundle.getMessage(locale, "DeleteNotAllowed", type));
     }
+
+    /**
+     * Respond to an HTTP GET request for a list of items of type.
+     * <p>
+     * This is called by the {@link jmri.web.servlet.json.JsonServlet} to handle
+     * get requests for a type, but no name. Services that do not have named
+     * objects, such as the {@link jmri.server.json.time.JsonTimeHttpService}
+     * should respond to this with a list containing a single JSON object.
+     * Services that can't return a list may throw a 400 Bad Request
+     * JsonException in this case.
+     *
+     * @param type   the type of the requested list
+     * @param data   JSON data set of attributes of the requested objects
+     * @param locale the requesting client's Locale
+     * @return a JSON list
+     * @throws JsonException may be thrown by concrete implementations
+     */
+    @Nonnull
+    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale)
+            throws JsonException;
 
     /**
      * Respond to an HTTP GET request for a list of items of type.
@@ -115,9 +168,14 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
+     * @deprecated since 4.15.5; use
+     *             {@link #doGetList(String, JsonNode, Locale)} instead
      */
     @Nonnull
-    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException;
+    @Deprecated
+    public ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException {
+        return doGetList(type, mapper.createObjectNode(), locale);
+    }
 
     /**
      * Get the JSON Schema for the {@code data} property of the requested type
@@ -127,26 +185,28 @@ public abstract class JsonHttpService {
      * <p>
      * Note that a schema must be contained in a standard object as:
      * <p>
-     * {@code
-     * {"type":"schema", "data":{"schema":<em>schema</em>, "server":boolean}} }
+     * {@code {"type":"schema", "data":{"schema":<em>schema</em>,
+     * "server":boolean}} }
      * <p>
-     * If using {@link #doSchema(java.lang.String, boolean, java.lang.String, java.lang.String)
-     * }, an implementation can be as simple as: {@code
+     * If using
+     * {@link #doSchema(java.lang.String, boolean, java.lang.String, java.lang.String) },
+     * an implementation can be as simple as: {@code
      * return doSchema(type, server, "path/to/client/schema.json", "path/to/server/schema.json");
      * }
      *
      * @param type   the type for which a schema is requested
      * @param server true if the schema is for a message from the server; false
-     *               if the schema is for a message from the client
+     *                   if the schema is for a message from the client
      * @param locale the requesting client's Locale
      * @return a JSON Schema valid for the type
      * @throws JsonException if an error occurs preparing schema; if type is is
-     *                       not a type handled by this service, this must be
-     *                       thrown with an error code of 500 and the localized
-     *                       message "ErrorUnknownType"
+     *                           not a type handled by this service, this must
+     *                           be thrown with an error code of 500 and the
+     *                           localized message "ErrorUnknownType"
      */
     @Nonnull
-    public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale) throws JsonException;
+    public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale)
+            throws JsonException;
 
     /**
      * Helper to make implementing
@@ -156,14 +216,16 @@ public abstract class JsonHttpService {
      *
      * @param type         the type for which a schema is requested
      * @param server       true if the schema is for a message from the server;
-     *                     false if the schema is for a message from the client
+     *                         false if the schema is for a message from the
+     *                         client
      * @param serverSchema the path to the schema for a response object of type
      * @param clientSchema the path to the schema for a request object of type
      * @return a JSON Schema valid for the type
      * @throws JsonException if an error occurs preparing schema
      */
     @Nonnull
-    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull String serverSchema, @Nonnull String clientSchema) throws JsonException {
+    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull String serverSchema,
+            @Nonnull String clientSchema) throws JsonException {
         JsonNode schema;
         try {
             if (server) {
@@ -171,7 +233,9 @@ public abstract class JsonHttpService {
             } else {
                 schema = this.mapper.readTree(this.getClass().getClassLoader().getResource(clientSchema));
             }
-        } catch (IOException | NullPointerException ex) {
+        } catch (
+                IOException |
+                NullPointerException ex) {
             throw new JsonException(500, ex);
         }
         return this.doSchema(type, server, schema);
@@ -183,13 +247,14 @@ public abstract class JsonHttpService {
      *
      * @param type   the type for which a schema is requested
      * @param server true if the schema is for a message from the server; false
-     *               if the schema is for a message from the client
+     *                   if the schema is for a message from the client
      * @param schema the schema for a response object of type
      * @return a JSON Schema valid for the type
      * @throws JsonException if an error occurs preparing schema
      */
     @Nonnull
-    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema) throws JsonException {
+    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema)
+            throws JsonException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(JSON.TYPE, JSON.SCHEMA);
         ObjectNode data = root.putObject(JSON.DATA);

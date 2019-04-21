@@ -175,7 +175,6 @@ public class Sprogv4UpdateFrame
     }
 
     @Override
-    @SuppressWarnings("deprecation") // entire class is deprecated
     synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by sending an extended address command
         // which should be echoed
@@ -189,7 +188,6 @@ public class Sprogv4UpdateFrame
     }
 
     @Override
-    @SuppressWarnings("deprecation") // entire class is deprecated
     synchronized protected void sendWrite() {
         if (hexFile.getAddress() < 2 * 0x700) {
             log.debug("Send write Flash {}", hexFile.getAddress());
@@ -212,7 +210,6 @@ public class Sprogv4UpdateFrame
     }
 
     @Override
-    @SuppressWarnings("deprecation") // entire class is deprecated
     synchronized protected void doneWriting() {
         // Finished
         log.debug("Done writing");

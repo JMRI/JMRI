@@ -2,23 +2,25 @@ package jmri.jmris;
 
 import java.io.IOException;
 import jmri.JmriException;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmris.ServiceHandler class 
  *
  * @author Paul Bender
  */
-public class ServiceHandlerTest extends TestCase {
+public class ServiceHandlerTest {
 
+    @Test
     public void testCtorDefault() {
         ServiceHandler a = new ServiceHandler();
         Assert.assertNotNull(a);
     }
 
+    @Test
     public void testSetAndGetPowerServer(){
         AbstractPowerServer ps = new AbstractPowerServer(){
             @Override
@@ -35,6 +37,7 @@ public class ServiceHandlerTest extends TestCase {
         Assert.assertEquals("Power Server Get or Set failed",ps,a.getPowerServer());
     }
 
+    @Test
     public void testSetAndGetTurnoutServer(){
         AbstractTurnoutServer ts = new AbstractTurnoutServer(){
             @Override
@@ -51,6 +54,7 @@ public class ServiceHandlerTest extends TestCase {
         Assert.assertEquals("Turnout Server Get or Set failed",ts,a.getTurnoutServer());
    }
 
+    @Test
     public void testSetAndGetSensorServer(){
         AbstractSensorServer ts = new AbstractSensorServer(){
             @Override
@@ -68,6 +72,7 @@ public class ServiceHandlerTest extends TestCase {
 
    }
 
+    @Test
     public void testSetAndGetLightServer(){
         AbstractLightServer ts = new AbstractLightServer(){
             @Override
@@ -84,6 +89,7 @@ public class ServiceHandlerTest extends TestCase {
         Assert.assertEquals("Light Server Get or Set failed",ts,a.getLightServer());
     }
 
+    @Test
     public void testSetAndGetProgrammerServer(){
         AbstractProgrammerServer ts = new AbstractProgrammerServer(){
             @Override
@@ -100,6 +106,7 @@ public class ServiceHandlerTest extends TestCase {
         Assert.assertEquals("Programmer Server Get or Set failed",ts,a.getProgrammerServer());
     }
 
+    @Test
     public void testSetAndGetTimeServer(){
         AbstractTimeServer ts = new AbstractTimeServer(){
             @Override
@@ -122,37 +129,13 @@ public class ServiceHandlerTest extends TestCase {
         Assert.assertEquals("Light Server Get or Set failed",ts,a.getTimeServer());
     }
 
-
-
-    // from here down is testing infrastructure
-    public ServiceHandlerTest(String s) {
-        super(s);
-    }
-
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {ServiceHandlerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.ServiceHandlerTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
 
     }

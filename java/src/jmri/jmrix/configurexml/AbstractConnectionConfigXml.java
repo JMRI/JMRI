@@ -123,9 +123,16 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      */
     @Deprecated // part of #4670 migration to parsable prefixes
     protected void checkAndWarnPrefix(String prefix) {
-        if (! jmri.Manager.isLegacySystemPrefix(prefix)) return;
-        // legacy, so warn
-        log.warn("Connection is using a legacy prefix that needs to be migrated: {}", prefix);
+        if (prefix.length() == 1 && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix) ) return;
+        if (prefix.length() > 1 
+                && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(0,1)) 
+                && org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(1)) ) return;
+        
+        // No longer checking jmri.Manager.isLegacySystemPrefix(prefix)) as this is more rigorous
+            
+            
+        // unparsable, so warn
+        log.warn("Connection is using a prefix that needs to be migrated: {}", prefix);
         log.warn("See http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml for more information");
         
         // and show clickable dialog
@@ -203,6 +210,25 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     @Override
     public void load(Element element, Object o) {
         log.error("method with two args invoked");
+    }
+
+    /**
+     * Service routine to look through "parameter" child elements to find a
+     * particular parameter value
+     *
+     * @param e    Element containing parameters
+     * @param name name of desired parameter
+     * @return String value
+     */
+    protected String findParmValue(Element e, String name) {
+        List<Element> l = e.getChildren("parameter");
+        for (int i = 0; i < l.size(); i++) {
+            Element n = l.get(i);
+            if (n.getAttributeValue("name").equals(name)) {
+                return n.getTextTrim();
+            }
+        }
+        return null;
     }
 
     // initialize logging

@@ -42,7 +42,7 @@ class SearchPathTableModel extends AbstractTableModel implements PropertyChangeL
             case 0:
                 return p;
             case 1:
-                return (p.equals(ProfileManager.getDefault().getDefaultSearchPath()));
+                return (ProfileManager.getDefault().getDefaultSearchPath().equals(p));
             default:
                 return null;
         }

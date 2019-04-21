@@ -2,24 +2,23 @@ package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.NODE;
-import static jmri.server.json.JSON.RAILROAD;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
-import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -45,25 +44,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide JSON formatted responses for requests to requests for information
+ * Provide JSON formatted responses to requests for information
  * from the JMRI Web Server.
  * <p>
- * This server supports long polling in some GET requests, but also provides a
- * WebSocket to provide a more extensive control and monitoring capability.
- * <p>
- * This server responds to HTTP requests for objects in following manner:
- * <table>
- * <caption>HTTP methods handled by this servlet.</caption>
- * <tr><th>Method</th><th>List</th><th>Object</th></tr>
- * <tr><th>GET</th><td>Returns the list</td><td>Returns the object <em>if it
- * already exists</em></td></tr>
- * <tr><th>POST</th><td>Invalid</td><td>Modifies the object <em>if it already
- * exists</em></td></tr>
- * <tr><th>PUT</th><td>Invalid</td><td>Modifies the object, creating it if
- * required</td></tr>
- * </table>
+ * See {@link jmri.server.json} for details on how this Servlet handles
+ * JSON requests.
  *
- * @author Randall Wood Copyright (C) 2012, 2013, 2016
+ * @author Randall Wood Copyright (C) 2012, 2013, 2016, 2019
  */
 @WebServlet(name = "JsonServlet",
         urlPatterns = {"/json"})
@@ -77,7 +64,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
+        this.superInit();
         this.mapper = new ObjectMapper();
         for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
             JsonHttpService service = factory.getHttpService(this.mapper);
@@ -100,6 +87,17 @@ public class JsonServlet extends WebSocketServlet {
         }
     }
 
+    /**
+     * Package private method to call
+     * {@link org.eclipse.jetty.websocket.servlet.WebSocketServlet#init()} so
+     * this call can be mocked out in unit tests.
+     * 
+     * @throws ServletException if unable to initialize server
+     */
+    void superInit() throws ServletException {
+        super.init();
+    }
+
     @Override
     public void configure(WebSocketServletFactory factory) {
         factory.register(JsonWebSocket.class);
@@ -118,13 +116,18 @@ public class JsonServlet extends WebSocketServlet {
      * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
      * Note that data will vary for each type.
-     *
-     * @param request  an HttpServletRequest object that contains the request
-     *                 the client has made of the servlet
+     * 
+     * Note that if an array is returned when requesting a single object, the
+     * client must resolve the multiple objects in the array, since it is
+     * possible for plugins to JMRI to provide their own response, and JMRI is
+     * incapable of judging the correctness of the plugin's response.
+     * 
+     * @param request an HttpServletRequest object that contains the request the
+     *            client has made of the servlet
      * @param response an HttpServletResponse object that contains the response
-     *                 the servlet sends to the client
+     *            the servlet sends to the client
      * @throws java.io.IOException if an input or output error is detected when
-     *                             the servlet handles the GET request
+     *             the servlet handles the GET request
      */
     @Override
     protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -146,22 +149,29 @@ public class JsonServlet extends WebSocketServlet {
             final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-                parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], UTF8));
+                String value = URLDecoder.decode(entry.getValue()[0], UTF8);
+                log.debug("Setting parameter {} to {}", entry.getKey(), value);
+                try {
+                    parameters.setAll((ObjectNode) mapper.readTree(String.format("{\"%s\":%s}", entry.getKey(), value)));
+                } catch (JsonParseException ex) {
+                    log.error("Unable to parse JSON {\"{}\":{}}", entry.getKey(), value);
+                }
             }
             JsonNode reply = null;
             try {
                 if (name == null) {
                     if (this.services.get(type) != null) {
+                        ArrayList<ArrayNode> lists = new ArrayList<>();
                         ArrayNode array = this.mapper.createArrayNode();
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.addAll(service.doGetList(type, request.getLocale()));
+                                lists.add(service.doGetList(type, parameters, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
                         }
-                        switch (array.size()) {
+                        switch (lists.size()) {
                             case 0:
                                 if (exception != null) {
                                     throw exception;
@@ -169,22 +179,20 @@ public class JsonServlet extends WebSocketServlet {
                                 reply = array;
                                 break;
                             case 1:
-                                //for singleton types only, strip off the array
-                                if (type.equals(POWER) || type.equals(RAILROAD) 
-                                        || type.equals(TIME) || type.equals(NODE)) {
-                                    reply = array.get(0);
-                                } else {
-                                    reply = array;
-                                }   
+                                reply = lists.get(0);
                                 break;
                             default:
+                                for (ArrayNode list : lists) {
+                                    array.addAll(list);
+                                }
                                 reply = array;
                                 break;
                         }
                     }
                     if (reply == null) {
                         log.warn("Type {} unknown.", type);
-                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                     }
                 } else {
                     if (this.services.get(type) != null) {
@@ -192,7 +200,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doGet(type, name, request.getLocale()));
+                                array.add(service.doGet(type, name, parameters, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -214,7 +222,8 @@ public class JsonServlet extends WebSocketServlet {
                     }
                     if (reply == null) {
                         log.warn("Requested type '{}' unknown.", type);
-                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                     }
                 }
             } catch (JsonException ex) {
@@ -229,12 +238,12 @@ public class JsonServlet extends WebSocketServlet {
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
                             InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
-                            Bundle.getMessage(request.getLocale(), "JsonTitle")
-                    ),
-                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                            Bundle.getMessage(request.getLocale(), "JsonTitle")),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(),
+                            request.getContextPath()),
                     InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
-                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath())
-            ));
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(),
+                            request.getContextPath())));
 
         }
     }
@@ -305,7 +314,8 @@ public class JsonServlet extends WebSocketServlet {
                     }
                     if (reply == null) {
                         log.warn("Type {} unknown.", type);
-                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                     }
                 } else {
                     log.error("Name must be defined.");
@@ -382,7 +392,8 @@ public class JsonServlet extends WebSocketServlet {
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
-                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
                 log.warn("Type not specified.");
@@ -396,7 +407,8 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(UTF8_APPLICATION_JSON);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
@@ -429,22 +441,6 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     /**
-     * Send an error message in response to a request.
-     *
-     * @param response the HTTP response that will send the message
-     * @param code     the error code
-     * @param message  the error message
-     * @throws IOException if unable to send message
-     * @deprecated since 4.11.5 without public replacement
-     */
-    @Deprecated
-    public void sendError(HttpServletResponse response, int code, String message) throws IOException {
-        response.setStatus(code);
-        response.getWriter().write(message);
-        jmri.util.Log4JUtil.deprecationWarning(log, "sendError");        
-    }
-
-    /**
      * Send a message to the HTTP client in an HTTP response. This closes the
      * response to future messages.
      * <p>
@@ -453,14 +449,15 @@ public class JsonServlet extends WebSocketServlet {
      * if the message is not schema valid.
      *
      * @param response the HTTP response
-     * @param code     the HTTP response code
-     * @param message  the message to send
+     * @param code the HTTP response code
+     * @param message the message to send
      * @throws IOException if unable to send
      */
     private void sendMessage(HttpServletResponse response, int code, JsonNode message) throws IOException {
         if (this.preferences.getValidateServerMessages()) {
             try {
-                InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(message, true, response.getLocale());
+                InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(message, true,
+                        response.getLocale());
             } catch (JsonException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 response.getWriter().write(this.mapper.writeValueAsString(ex.getJsonMessage()));

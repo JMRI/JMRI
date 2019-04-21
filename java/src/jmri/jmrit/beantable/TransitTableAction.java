@@ -435,6 +435,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
+            sysNameLabel.setLabelFor(sysName);
             p.add(sysNameFixed);
             p.add(sysName);
             p.add(_autoSystemName);
@@ -452,6 +453,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // user name
             p = new JPanel();
             p.add(userNameLabel);
+            userNameLabel.setLabelFor(userName);
             p.add(userName);
             userName.setToolTipText(rbx.getString("TransitUserNameHint"));
             addFrame.getContentPane().add(p);
@@ -889,7 +891,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void replacePrimaryForSeqPressed(ActionEvent e) {
         int seq = getSeqNum();
         if (seq == 0) {
@@ -1097,7 +1098,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void addAlternateForSeqPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
             JOptionPane.showMessageDialog(addFrame, rbx
