@@ -28,22 +28,25 @@ public class LnPacketizerTest {
     }
 
     @Test
-    @Ignore("may be causing hang on travis and appveyor")
+    //@Ignore("may be causing hang on travis and appveyor")
     public void testStartThreads() {
-       lnp.connectPort(new LnPortController(memo){
+        LnPortController lpc = new LnPortController(memo) {
             @Override
-            public boolean status(){
-              return true;
+            public boolean status() {
+                return true;
             }
+
             @Override
-            public void configure(){
+            public void configure() {
             }
+
             @Override
-            public java.io.DataInputStream getInputStream(){
+            public java.io.DataInputStream getInputStream() {
                 return new DataInputStream(new ByteArrayInputStream(new byte[0]));
             }
+
             @Override
-            public java.io.DataOutputStream getOutputStream(){
+            public java.io.DataOutputStream getOutputStream() {
                 return new DataOutputStream(new ByteArrayOutputStream());
             }
 
@@ -51,22 +54,28 @@ public class LnPacketizerTest {
              * Get an array of valid baud rates; used to display valid options.
              */
             @Override
-            public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
-            }
-            /**
-             * Open a specified port. The appname argument is to be provided to the
-             * underlying OS during startup so that it can show on status displays, etc
-             */
-            @Override
-            public String openPort(String portName, String appName){
-               return "";
+            public String[] validBaudRates() {
+                String[] retval = {"9600"};
+                return retval;
             }
 
-         });
-       lnp.startThreads();
-       memo.dispose();
+            /**
+             * Open a specified port. The appname argument is to be provided to
+             * the underlying OS during startup so that it can show on status
+             * displays, etc
+             */
+            @Override
+            public String openPort(String portName, String appName) {
+                return "";
+            }
+
+        };
+        lnp.connectPort(lpc);
+        Assert.assertTrue("NOT OK to send", lpc.okToSend());
+        lnp.setthreadStopRequestOn();
+        lnp.startThreads();
+        Assert.assertTrue("Threads not terminated", lnp.waitForThreadsToStop());
+        memo.dispose();
     }
 
     @Before
