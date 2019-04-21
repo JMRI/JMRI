@@ -36,7 +36,7 @@
 	<variable item="Dynamic Lowest Speed Step" CV="189" default="10" tooltip="Lowest speed step (128 SS mode) the loco can go with dynamic brakes turned on">
 		<decVal max="126"/>
 	</variable>
-	<variable item="Dynamic Decel Rate" CV="190" default="50" tooltip="Decel Rate when Dynamic brakes are on">
+	<variable item="Dynamic Decel Rate" CV="190" default="125" tooltip="Decel Rate when Dynamic brakes are on">
 		<decVal/>
 	</variable>
 	<variable item="Dynamic Speed Step Decrease" CV="191" default="5" tooltip="Number of speed steps the loco will slow down per press of the dynamic brake Function">
@@ -357,7 +357,7 @@
 		<decVal max="100"/>
 		<label>Brake Release</label>
 	</variable>
-	<variable item="Volume Group 5" CV="T3CV.6.0.5" default="10">
+	<variable item="Volume Group 5" CV="T3CV.6.0.5" default="13">
 		<decVal max="100"/>
 		<label>Brake Squeal</label>
 	</variable>

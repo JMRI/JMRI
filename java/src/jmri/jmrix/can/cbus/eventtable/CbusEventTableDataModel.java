@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.eventtable;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.util.ArrayList;
@@ -231,8 +230,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case STLR_OFF_COLUMN:
                 return new JTextField(20).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
@@ -298,7 +296,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case STATE_COLUMN:
                 return Enum.class;
             default:
-                log.warn("no class set col {}",col);
                 return null;
         }
     }
@@ -377,7 +374,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case STLR_OFF_COLUMN:
                 return _mainArray.get(row).getStlOff();
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
@@ -398,7 +394,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
         else if (col == STATE_COLUMN) {
             _mainArray.get(row).setState( (CbusTableEvent.EvState) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, STATE_COLUMN); });
+            updateGuiCell(row,col);
         }
         else if (col == DELETE_BUTTON_COLUMN) {
             ThreadingUtil.runOnGUI( ()->{  ta.buttonDeleteClicked(row); });
@@ -417,40 +413,46 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
         else if (col == SESSION_ON_COLUMN) {
             _mainArray.get(row).bumpSessionOn();
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_ON_COLUMN); });
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_TOTAL_COLUMN); });
+            updateGuiCell(row,col);
+            updateGuiCell(row,SESSION_TOTAL_COLUMN);
             }
         else if (col == SESSION_OFF_COLUMN) {
             _mainArray.get(row).bumpSessionOff();
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_OFF_COLUMN); });
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row,SESSION_TOTAL_COLUMN); });
+            updateGuiCell(row,col);
+            updateGuiCell(row,SESSION_TOTAL_COLUMN);
         }
         else if (col == SESSION_IN_COLUMN) {
             _mainArray.get(row).bumpSessionIn();
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, SESSION_IN_COLUMN); });
+            updateGuiCell(row,col);
         }
         else if (col == CANID_COLUMN) {
             _mainArray.get(row).setCanId( (Integer) value);
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, CANID_COLUMN); });
+            updateGuiCell(row,col);
         }
         else if (col == SESSION_OUT_COLUMN) {
             _mainArray.get(row).bumpSessionOut();
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, SESSION_OUT_COLUMN);  });
+            updateGuiCell(row,col);
         }
         else if (col == LATEST_TIMESTAMP_COLUMN) {
             _mainArray.get(row).setDate( new Date() );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, LATEST_TIMESTAMP_COLUMN);  });
+            updateGuiCell(row,col);
         }
         else if (col == STLR_ON_COLUMN) {
             _mainArray.get(row).setStlOn( (String) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, STLR_ON_COLUMN);  });
+            updateGuiCell(row,col);
         }
         else if (col == STLR_OFF_COLUMN) {
             _mainArray.get(row).setStlOff( (String) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, STLR_OFF_COLUMN);  });
+            updateGuiCell(row,col);
         }
         // table is dirty
         ta._saved = false;
+    }
+    
+    private void updateGuiCell( int row, int col){
+        ThreadingUtil.runOnGUI( ()->{
+            fireTableCellUpdated(row, col);
+        });
     }
 
     /**
@@ -525,6 +527,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public void parseMessage( int canid, int node, int event, CbusTableEvent.EvState state, int in, int out) {
         
         int existingRow = seeIfEventOnTable( node, event);
+        
         if (existingRow<0) {
             int on=0;
             int off=0;
@@ -615,6 +618,24 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // notify the JTable object that a row has changed; do that in the Swing thread!
         ThreadingUtil.runOnGUI( ()->{ fireTableRowsInserted((getRowCount()-1), (getRowCount()-1)); });
         addToLog(1,newtabev.toString() + Bundle.getMessage("AddedToTable"));
+    }
+    
+    public CbusTableEvent provideEvent(int nn, int en){
+        for (int i = 0; i < getRowCount(); i++) {
+            if (_mainArray.get(i).matches(nn, en)) {
+                return _mainArray.get(i);
+            }
+        }
+        // not existing so creating new
+        
+        CbusTableEvent newtabev = new CbusTableEvent(nn,en,CbusTableEvent.EvState.UNKNOWN, -1, "", "", 0, 0, 0, 0, null );
+        _mainArray.add(newtabev);
+        // notify the JTable object that a row has changed; do that in the Swing thread!
+        ThreadingUtil.runOnGUI( ()->{ fireTableRowsInserted((getRowCount()-1), (getRowCount()-1)); });
+        addToLog(1,newtabev.toString() + Bundle.getMessage("AddedToTable"));
+        
+        return newtabev;
+        
     }
     
     /**

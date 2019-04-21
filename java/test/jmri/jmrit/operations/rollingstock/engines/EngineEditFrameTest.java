@@ -16,9 +16,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import jmri.util.junit.rules.*;
+import org.junit.*;
+import org.junit.rules.*;
 
 /**
  * Tests for the Operations EngineEditFrame class
@@ -27,6 +27,12 @@ import org.junit.Test;
  *
  */
 public class EngineEditFrameTest extends OperationsTestCase {
+    
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries      
 
 //    List<String> tempEngines;
     

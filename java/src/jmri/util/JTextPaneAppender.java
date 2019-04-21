@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.awt.Color;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.swing.JTextPane;
@@ -122,15 +123,24 @@ public class JTextPaneAppender extends AppenderSkeleton {
         }
         final String text = temp;
 
-        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
-            try {
-                StyledDocument myDoc = myTextPane.getStyledDocument();
-                myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
-                myTextPane.setCaretPosition(myDoc.getLength());
-            } catch (BadLocationException badex) {
-                System.err.println(badex);  // can't log this, as it would be recursive error
-            }
-        } ); 
+        // The following can't be jmri.util.ThreadingUtil.runOnGUI(..) because
+        // that's a recursive logging loop
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                try {
+                    StyledDocument myDoc = myTextPane.getStyledDocument();
+                    myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
+                    myTextPane.setCaretPosition(myDoc.getLength());
+                } catch (BadLocationException badex) {
+                    System.err.println(badex);  // can't log this, as it would be recursive error
+                }
+            } ); 
+        } catch (InterruptedException e) {
+            System.err.println("JTextPaneAppender interrupted while doing logging on GUI thread"); // can't log this, as it would be recursive error
+            Thread.currentThread().interrupt();
+        } catch (InvocationTargetException e) {
+            System.err.println("JTextPaneAppender error while logging on GUI thread: "+e.getCause()); // can't log this, as it would be recursive error
+        }
     }
 
     /**

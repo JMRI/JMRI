@@ -47,7 +47,7 @@ public class CbusNodeSingleEventTableDataModelTest {
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
         Assert.assertTrue("column has NO width", CbusNodeSingleEventTableDataModel.getPreferredWidth(999) > 0 );
-        
+            
         t = null;
         evNoRows = null;
     }
@@ -153,6 +153,8 @@ public class CbusNodeSingleEventTableDataModelTest {
         Assert.assertTrue("cell not editable ", (Integer)t.getValueAt(
             1,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)== 2 );
         
+        Assert.assertTrue("getValueAt 999", t.getValueAt(0,999) == null );
+        
         evThreeRows = null;
         t = null;
     
@@ -168,6 +170,16 @@ public class CbusNodeSingleEventTableDataModelTest {
             new CanSystemConnectionMemo(), 3,CbusNodeSingleEventTableDataModel.MAX_COLUMN,evThreeRows);    
     
         Assert.assertTrue("isTableLoaded fal 1", t.isTableLoaded()== false );
+        
+        Assert.assertEquals("hex val -1",-1, t.getValueAt(
+            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
+        Assert.assertEquals("bit val -1",-1, t.getValueAt(
+            0,CbusNodeSingleEventTableDataModel.EV_CURRENT_BIT_COLUMN));
+        Assert.assertTrue("select val -1",(Integer) t.getValueAt(
+            0,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN) == -1 );
+            
+            
+            
     
         evThreeRows = null;
         t = null;

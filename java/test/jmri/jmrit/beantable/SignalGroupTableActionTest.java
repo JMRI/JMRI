@@ -2,6 +2,8 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalHead;
@@ -10,7 +12,7 @@ import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalGroupTableAction class
@@ -99,10 +101,56 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
-    @Ignore("Signal Group create frame does not have a hardware address")
-    @ToDo("Re-write parent class test to use the right name")
     public void testAddThroughDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	    //Enter 1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("1");
+	    //and press create
+	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
     }
+
+    @Test
+    @Ignore("needs further setup")
+    @ToDo("To Edit, the signal group needs a mast added to it")
+    public void testEditButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	//Enter 1 in the text field labeled "System Name:"
+	   
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("1");
+	//and press create
+	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+	// find the "Edit" button and press it.  This may be in the table body.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonEdit"));
+        JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.dispose(f2);
+	JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
 
     // The minimal setup for log4J
     @Before

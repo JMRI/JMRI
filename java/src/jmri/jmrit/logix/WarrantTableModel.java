@@ -122,6 +122,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             } else {
                 _warList.remove(w);
             }
+            cleanBlockOrderList(w); // removes bad BlockOrders
             tempList.add(w); // add old or any new warrants
         }
         // remove listeners from any deleted warrants
@@ -136,6 +137,18 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             tempList.add(_warNX.get(i));
         }
         _warList = tempList;
+    }
+
+    private void cleanBlockOrderList(Warrant warrant) {
+        ArrayList<BlockOrder> valid = new ArrayList<>();
+        Iterator<BlockOrder> iter = warrant.getBlockOrders().iterator();
+        while (iter.hasNext()) {
+            BlockOrder bo = iter.next();
+            if (WarrantRoute.pathIsValid(bo.getBlock(), bo.getPathName()) == null) {
+                valid.add(bo);
+            }
+        }
+        warrant.setBlockOrders(valid);
     }
 
     protected void haltAllTrains() {
@@ -359,8 +372,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     @Override
     public Object getValueAt(int row, int col) {
-        // if (log.isDebugEnabled())
-        // log.debug("getValueAt: row= "+row+", column= "+col);
+//        if (log.isTraceEnabled()) {
+//            log.debug("getValueAt: row= "+row+", column= "+col);
+//        }
         Warrant w = getWarrantAt(row);
         // some error checking
         if (w == null) {
@@ -442,7 +456,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     "off");
         case CONTROL_COLUMN:
             String msg = w.getRunningMessage();
-            log.debug("getValueAt: warrant= {}, getRunningMessage= \"{}\"", w.getDisplayName(), msg);
+//            log.debug("getValueAt: warrant= {}, getRunningMessage= \"{}\"", w.getDisplayName(), msg);
             return msg;
         case EDIT_COLUMN:
             return Bundle.getMessage("ButtonEdit");
@@ -457,7 +471,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-//        if (log.isDebugEnabled())
+//        if (log.isTraceEnabled())
 //            log.debug("setValueAt: row= " + row + ", column= " + col
 //                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
         Warrant w = getWarrantAt(row);
@@ -539,7 +553,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             // a warrant change. fireTableRows then causes getValueAt() which
             // calls getRunningMessage()
             int mode = w.getRunMode();
-            if (log.isDebugEnabled()) {
+            if (log.isTraceEnabled()) {
                 log.debug("setValueAt({}) for warrant {}", value, w.getDisplayName());
             }
             if (mode == Warrant.MODE_LEARN) {
@@ -560,7 +574,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ABORT;
                     } else if (setting.equals(WarrantTableFrame.ramp)) {
                         s = Warrant.RAMP_HALT;
-                    } else if (setting.equals("Debug")) {
+                    } else /*if (setting.equals("Debug"))*/ {
                         s = Warrant.DEBUG;
                     }
                     w.controlRunTrain(s);
@@ -572,13 +586,13 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                removeWarrant(w, true); // removes any warrant
                 fireTableRowsDeleted(row, row);
+                removeWarrant(w, true); // removes any warrant
             } else {
                 w.controlRunTrain(Warrant.ABORT);
                 if (_warNX.contains(w)) { // don't remove regular warrants
-                    removeWarrant(w, false);
                     fireTableRowsDeleted(row, row);
+                    removeWarrant(w, false);
                 }
             }
             break;
@@ -586,9 +600,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
-/*        if (row < getRowCount()) {
-            fireTableRowsUpdated(row, row);                    
-        }*/
         if (msg != null) {
             JOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),
@@ -636,7 +647,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         } else if (e.getSource() instanceof Warrant) {
             // a value changed. Find it, to avoid complete redraw
             Warrant bean = (Warrant) e.getSource();
-//            log.debug("source is warrant "+bean.getDisplayName());
+            log.debug("source is warrant "+bean.getDisplayName());
             for (int i = 0; i < _warList.size(); i++) {
                 if (bean.equals(_warList.get(i))) {
 

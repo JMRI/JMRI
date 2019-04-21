@@ -10,6 +10,9 @@ import org.junit.*;
  */
 public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    private Z21SystemConnectionMemo memo;
+    private Z21InterfaceScaffold tc;
+
     @Test
     public void testProvidesReporterManager() {
         Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
@@ -57,8 +60,8 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
-        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        tc = new Z21InterfaceScaffold();
+        memo = new Z21SystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         //memo.configureManagers();
@@ -68,6 +71,10 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Override
     @After
     public void tearDown() {
+        scm = null;
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
     }
 

@@ -547,7 +547,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * <li>Retrieves "productID" and "model attributes from the "model" element
      * and "family" attribute from the roster entry. </li>
      * <li>Then invokes DecoderFile.isIncluded() with the retrieved values.</li>
-     * <li>Deals deals gracefully with null or missing elements and
+     * <li>Deals gracefully with null or missing elements and
      * attributes.</li>
      * </ul>
      *

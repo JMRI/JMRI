@@ -52,6 +52,7 @@ import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.CvUtil;
+import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
@@ -2399,19 +2400,19 @@ public class PaneProgPane extends javax.swing.JPanel
         // need to update this with e.g. the specific CV numbers
         if (_cvModel.getProgrammer() != null
                 && !_cvModel.getProgrammer().getCanRead()) {
-            start = CvUtil.concatTextHtmlAware(start, " (Hardware cannot read)");
+            start = StringUtil.concatTextHtmlAware(start, " (Hardware cannot read)");
         }
         if (_cvModel.getProgrammer() != null
                 && !_cvModel.getProgrammer().getCanWrite()) {
-            start = CvUtil.concatTextHtmlAware(start, " (Hardware cannot write)");
+            start = StringUtil.concatTextHtmlAware(start, " (Hardware cannot write)");
         }
 
         // indicate other reasons for read/write constraints
         if (variable.getReadOnly()) {
-            start = CvUtil.concatTextHtmlAware(start, " (Defined to be read only)");
+            start = StringUtil.concatTextHtmlAware(start, " (Defined to be read only)");
         }
         if (variable.getWriteOnly()) {
-            start = CvUtil.concatTextHtmlAware(start, " (Defined to be write only)");
+            start = StringUtil.concatTextHtmlAware(start, " (Defined to be write only)");
         }
 
         return start;

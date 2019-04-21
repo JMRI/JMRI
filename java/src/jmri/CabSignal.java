@@ -77,12 +77,6 @@ public interface CabSignal {
     public void forwardCabSignalToLayout();
 
     /*
-     * Disable the cab signal.  This method causes isCabSignalActive to return 
-     * false and the on-layout cab signal to be cleared, if possible.
-     */
-    public void disableCabSignal();
-
-    /*
      * get whether this cab signal is on or off
      *
      * @return true if on, false if off
@@ -95,6 +89,13 @@ public interface CabSignal {
      * @param active true if on, false if off
      */
     public void setCabSignalActive(boolean active);
+
+    /*
+     * set whether a Master Cab signal button is on or off
+     *
+     * @param active true if on, false if off
+     */
+    public void setMasterCabSigPauseActive(boolean active);
 
     /**
      * Add a listener for consist events
