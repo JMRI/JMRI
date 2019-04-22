@@ -322,18 +322,18 @@ public abstract class JsonHttpService {
      * used to force deletion by the client and may include a JSON list of the
      * objects using the object for which deletion was requested.
      * 
-     * @param type   the type of object in conflicting state
-     * @param name   the name of the object in conflicting state
-     * @param users  the using objects of this object; may be empty
-     * @param locale the client locale
+     * @param type      the type of object in conflicting state
+     * @param name      the name of the object in conflicting state
+     * @param conflicts the using objects of this object; may be empty
+     * @param locale    the client locale
      * @throws JsonException the exception
      */
-    public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name, @Nonnull ArrayNode users,
+    public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name, @Nonnull ArrayNode conflicts,
             @Nonnull Locale locale) throws JsonException {
         ObjectNode data = mapper.createObjectNode();
         data.put(FORCE_DELETE, JsonDeleteTokenManager.getDefault().getToken(type, name));
-        if (users.size() != 0) {
-            data.set(CONFLICT, users);
+        if (conflicts.size() != 0) {
+            data.set(CONFLICT, conflicts);
         }
         throw new JsonException(HttpServletResponse.SC_CONFLICT,
                 Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data);

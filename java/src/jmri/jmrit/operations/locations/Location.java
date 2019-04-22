@@ -670,7 +670,7 @@ public class Location implements java.beans.PropertyChangeListener {
         return _switchListComment;
     }
 
-    private String[] getTypeNames() {
+    public String[] getTypeNames() {
         String[] types = new String[_listTypes.size()];
         for (int i = 0; i < _listTypes.size(); i++) {
             types[i] = _listTypes.get(i);

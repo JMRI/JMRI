@@ -8,6 +8,7 @@ import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NULL;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.operations.JsonOperations.CAR;
+import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.CARS;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.KERNEL;
@@ -18,6 +19,8 @@ import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 import static jmri.server.json.operations.JsonOperations.WEIGHT;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +36,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
@@ -115,6 +119,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case CAR:
             case CARS:
                 return this.getCars(locale);
+            case CAR_TYPE:
+                return this.getCarTypes(locale);
             case ENGINE:
             case ENGINES:
                 return this.getEngines(locale);
@@ -134,6 +140,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public void doDelete(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        String token = data.path(FORCE_DELETE).asText();
         switch (type) {
             case KERNEL:
                 Kernel kernel = InstanceManager.getDefault(CarManager.class).getKernelByName(name);
@@ -141,14 +148,39 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", type, name));
                 }
-                if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, data.path(FORCE_DELETE).asText())) {
+                if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
                     throwDeleteConflictException(type, name, getKernelCars(kernel, locale), locale);
                 }
                 InstanceManager.getDefault(CarManager.class).deleteKernel(name);
                 break;
+            case CAR_TYPE:
+                List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(name);
+                List<Location> locations = new ArrayList<>();
+                for (Location location : InstanceManager.getDefault(LocationManager.class).getList()) {
+                    if (location.acceptsTypeName(name)) {
+                        locations.add(location);
+                    }
+                }
+                if ((cars.size() != 0 || locations.size() != 0) && !acceptForceDeleteToken(type, name, token)) {
+                    ArrayNode conflicts = mapper.createArrayNode();
+                    for (Car car : cars) {
+                        conflicts.add(utilities.getCar(car));
+                    }
+                    for (Location location : locations) {
+                        conflicts.add(utilities.getLocation(location, locale));
+                    }
+                    throwDeleteConflictException(type, name, conflicts, locale);
+                }
+                InstanceManager.getDefault(CarTypes.class).deleteName(name);
+                break;
             default:
                 super.doDelete(type, name, data, locale);
         }
+    }
+
+    private ArrayNode getCarTypes(Locale locale) {
+        // TODO: real results
+        return null;
     }
 
     private ObjectNode getKernel(Kernel kernel, Locale locale) {

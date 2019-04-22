@@ -27,6 +27,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Locale;
+
+import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -103,14 +106,14 @@ public class JsonUtil {
         if (car.getFinalDestinationTrack() != null) {
             node.set(JSON.FINAL_DESTINATION, this.getLocationAndTrack(car.getFinalDestinationTrack(), null));
         } else if (car.getFinalDestination() != null) {
-            node.set(JSON.FINAL_DESTINATION, this.getLocation(car.getFinalDestination(), null));
+            node.set(JSON.FINAL_DESTINATION, this.getLocation(car.getFinalDestination(), (RouteLocation) null));
         } else {
             node.set(JSON.FINAL_DESTINATION, null);
         }
         if (car.getReturnWhenEmptyDestTrack() != null) {
             node.set(JSON.RETURN_WHEN_EMPTY, this.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null));
         } else if (car.getReturnWhenEmptyDestination() != null) {
-            node.set(JSON.RETURN_WHEN_EMPTY, this.getLocation(car.getReturnWhenEmptyDestination(), null));
+            node.set(JSON.RETURN_WHEN_EMPTY, this.getLocation(car.getReturnWhenEmptyDestination(), (RouteLocation) null));
         } else {
             node.set(JSON.RETURN_WHEN_EMPTY, null);
         }
@@ -118,21 +121,28 @@ public class JsonUtil {
         return node;
     }
 
-    public JsonNode getLocation(Locale locale, String id) throws JsonException {
+    public JsonNode getLocation(@Nonnull Location location, Locale locale) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LOCATION);
         ObjectNode data = root.putObject(DATA);
+        data.put(NAME, location.getName());
+        data.put(ID, location.getId());
+        data.put(LENGTH, location.getLength());
+        data.put(COMMENT, location.getComment());
+        ArrayNode types = data.putArray(TYPE);
+        for (String type : location.getTypeNames()) {
+            types.add(type);
+        }
+        return root;
+    }
+
+    public JsonNode getLocation(Locale locale, String id) throws JsonException {
         try {
-            Location location = InstanceManager.getDefault(LocationManager.class).getLocationById(id);
-            data.put(NAME, location.getName());
-            data.put(ID, location.getId());
-            data.put(LENGTH, location.getLength());
-            data.put(COMMENT, location.getComment());
+            return getLocation(InstanceManager.getDefault(LocationManager.class).getLocationById(id), locale);
         } catch (NullPointerException e) {
             log.error("Unable to get location id [{}].", id);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, id));
         }
-        return root;
     }
 
     private ObjectNode getLocation(Location location, RouteLocation routeLocation) {

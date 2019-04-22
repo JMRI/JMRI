@@ -95,6 +95,14 @@ public class JsonOperations {
      * {@value #KERNEL}
      */
     public static final String KERNEL = "kernel"; // NOI18N
+    /**
+     * {@value #CAR_TYPE}
+     */
+    public static final String CAR_TYPE = "carType"; // NOI18N
+    /**
+     * {@value #CAR_TYPES}
+     */
+    public static final String CAR_TYPES = "carTypes"; // NOI18N
 
     /**
      * Prevent instantiation, since this class only contains static values
