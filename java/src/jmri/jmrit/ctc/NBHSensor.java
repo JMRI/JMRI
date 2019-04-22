@@ -86,6 +86,7 @@ public class NBHSensor {
         if (valid()) return _mNamedBeanHandleSensor.getBean();
         return null;
     }
+
     public boolean matchSensor(Sensor sensor) {
         if (valid()) return _mNamedBeanHandleSensor.getBean() == sensor;
         return false;
@@ -99,20 +100,24 @@ public class NBHSensor {
             _mNamedBeanHandleSensor = null;
         }
     }
+
 //  Use when something else has the thing we help with:
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
         _mNamedBeanHandleSensor = namedBeanHandleSensor;
     }
+
     public boolean valid() { return _mNamedBeanHandleSensor != null; }  // For those that want to know the internal state.
 
     private static Sensor getSafeExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) {
         try { return getExistingJMRISensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
         return null;
     }
+
     private static Sensor getSafeOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) {
         try { return getOptionalJMRISensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
         return null;
     }
+
 //  sensor is NOT optional and cannot be null.  Raises Exception in ALL error cases.
     private static Sensor getExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
@@ -122,6 +127,7 @@ public class NBHSensor {
             return returnValue;
         } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorRequiredSensorMissing")); }  // NOI18N
     }
+
 //  sensor is optional, but must exist if given.  Raises Exception in ALL error cases.
     private static Sensor getOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
