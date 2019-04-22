@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for CBUS controls.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusSensor extends AbstractSensor implements CanListener {

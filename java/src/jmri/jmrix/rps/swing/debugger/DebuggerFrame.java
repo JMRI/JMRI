@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for manual operation and debugging of the RPS system
+ * Frame for manual operation and debugging of the RPS system.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
@@ -361,4 +361,5 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     final javax.swing.JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
 
     private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class);
+
 }

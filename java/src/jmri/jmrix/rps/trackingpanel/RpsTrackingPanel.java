@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * Pane to show a 2D representation of the RPS Model and Measurements.
- * <p>
+ *
  * @see jmri.jmrix.rps.Model
  * @see jmri.jmrix.rps.Measurement
  *
@@ -319,5 +319,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         Shape rep2;
         Measurement measurement;
     }
+
     private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class);
+
 }

@@ -67,7 +67,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
                 }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -75,8 +75,8 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save streams
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -110,7 +110,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         }
 
         return null; // indicates OK return
-
     }
 
     /**

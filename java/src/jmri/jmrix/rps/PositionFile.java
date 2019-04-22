@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Persist RPS configuration information
- * <P>
+ *
  * @author Bob Jacobsen Copyright 2007, 2008
  */
 public class PositionFile extends XmlFile {
@@ -25,7 +25,7 @@ public class PositionFile extends XmlFile {
 
     /**
      * Initialize for writing information.
-     * <P>
+     * <p>
      * This is followed by multiple "set" calls, then a "store"
      */
     public void prepare() {
@@ -362,4 +362,5 @@ public class PositionFile extends XmlFile {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(PositionFile.class);
+
 }

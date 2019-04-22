@@ -73,7 +73,6 @@ public class Engine implements ReadingListener {
     /**
      * Set the maximum receiver number expected. If the highest value in the
      * hardware is 5, that's what's needed here.
-     *
      */
     public void setMaxReceiverNumber(int n) {
         log.debug("setReceiverCount to " + n);
@@ -103,7 +102,7 @@ public class Engine implements ReadingListener {
     }
 
     /**
-     * Get a particular receiver by address (starting at 1)
+     * Get a particular receiver by address (starting at 1).
      */
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) {
@@ -498,7 +497,7 @@ public class Engine implements ReadingListener {
 
     /**
      * Wait before sending next poll.
-     * <P>
+     * <p>
      * Waits specified time, and then checks to see if response has been
      * returned. If not, it waits again (twice) by 1/2 the interval, then
      * finally polls anyway.
@@ -612,4 +611,5 @@ public class Engine implements ReadingListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Engine.class);
+
 }

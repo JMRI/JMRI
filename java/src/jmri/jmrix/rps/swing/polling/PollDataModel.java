@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Pane for user management of RPS alignment.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class PollDataModel extends AbstractTableModel implements MeasurementListener {
 
     static final int NAMECOL = 0;

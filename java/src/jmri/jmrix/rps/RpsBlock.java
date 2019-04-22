@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Create a Block that can control a locomotive within a specific Block based on
- * an RpsSensor. It sets speed based on aspect of a specific signal
- *
+ * an RpsSensor. It sets speed based on aspect of a specific signal.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
  */
@@ -117,7 +116,6 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
                 log.warn("Throttle not yet available for: " + num);
             }
         }
-
     }
 
     void updateOneThrottle(DccThrottle t) {
@@ -145,5 +143,3 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     private final static Logger log = LoggerFactory.getLogger(RpsBlock.class);
 
 }
-
-

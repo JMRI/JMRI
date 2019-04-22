@@ -26,7 +26,6 @@ public class CbusReporterManager extends AbstractReporterManager implements
         this.memo = memo;
         this.tc = memo.getTrafficController();
         this.prefix = memo.getSystemPrefix();
-        this.memo = memo;
         if (tc != null) {
             tc.addCanListener(this);
         } else {

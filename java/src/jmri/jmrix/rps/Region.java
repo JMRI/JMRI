@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represent a region in space for the RPS system.
- * <P>
+ * <p>
  * The region is specfied by a <em>right-handed</em>
  * set of points.
  * <p>
@@ -140,4 +140,5 @@ public class Region {
     final Point3d[] points;
 
     private final static Logger log = LoggerFactory.getLogger(Region.class);
+
 }

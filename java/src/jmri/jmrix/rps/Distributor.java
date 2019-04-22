@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Distributes Readings and the Measurements calculated from them.
- * <P>
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
  *
-  */
+ * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ */
 public class Distributor {
 
     /**
@@ -32,7 +31,7 @@ public class Distributor {
     }
 
     /**
-     * Invoked when a new Reading is created
+     * Invoked when a new Reading is created.
      */
     @SuppressWarnings("unchecked")
     public void submitReading(Reading s) {
@@ -73,7 +72,7 @@ public class Distributor {
     }
 
     /**
-     * Invoked when a new Measurement is created
+     * Invoked when a new Measurement is created.
      */
     @SuppressWarnings("unchecked")
     public void submitMeasurement(Measurement s) {
@@ -112,7 +111,7 @@ public class Distributor {
     private final static Logger log = LoggerFactory.getLogger(Distributor.class);
 
     /**
-     * Forward the Reading from the Swing thread
+     * Forward the Reading from the Swing thread.
      */
     static class ForwardReading implements Runnable {
 
@@ -131,7 +130,7 @@ public class Distributor {
     }
 
     /**
-     * Forward the Measurement from the Swing thread
+     * Forward the Measurement from the Swing thread.
      */
     static class ForwardMeasurement implements Runnable {
 
@@ -150,5 +149,3 @@ public class Distributor {
     }
 
 }
-
-
