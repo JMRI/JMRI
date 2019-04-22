@@ -137,7 +137,6 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         if (result == null) {
             for (JsonHttpService service : this.getServices(type)) {
                 log.debug("Processing {} with {}", type, service);
-                System.out.println(config.getUrlMappings());
                 result = JsonSchemaFactory.getInstance()
                         .getSchema(service.doSchema(type, server, locale).path(JSON.DATA).path(JSON.SCHEMA), config);
                 if (result != null) {
