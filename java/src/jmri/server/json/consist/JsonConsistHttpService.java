@@ -144,7 +144,7 @@ public class JsonConsistHttpService extends JsonHttpService {
     }
 
     @Override
-    public void doDelete(String type, String name, Locale locale) throws JsonException {
+    public void doDelete(String type, String name, JsonNode data, Locale locale) throws JsonException {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
