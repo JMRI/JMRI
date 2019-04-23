@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JmriJFrame;
@@ -45,6 +46,7 @@ public class NodeConfigToolPaneTest {
         t.initComponents(memo);
         
         Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("core node model exists", nodeModel);
         
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
@@ -69,16 +71,21 @@ public class NodeConfigToolPaneTest {
 
     }
     
-    CanSystemConnectionMemo memo;
+    
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
     }
 
     @After
     public void tearDown() {
+        tcis = null;
         memo = null;
         JUnitUtil.tearDown();
     }

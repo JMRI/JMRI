@@ -72,15 +72,16 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
         
-        setBackgroundAllocateListener( preferences.getAllocateNNListener() );
-        
-        if ( preferences.getStartupSearchForCs() ) {
-            send.searchForCommandStations();
+        if ( preferences != null ) {
+            
+            setBackgroundAllocateListener( preferences.getAllocateNNListener() );
+            if ( preferences.getStartupSearchForCs() ) {
+                send.searchForCommandStations();
+            }
+            if ( preferences.getStartupSearchForNodes() ) {
+                send.searchForNodes();
+            }
         }
-        
-        if ( preferences.getStartupSearchForNodes() ) {
-            send.searchForNodes();
-        }        
         
     }
     
@@ -335,6 +336,9 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         int nodenum = ( m.getElement(1) * 256 ) + m.getElement(2);
         if (opc==CbusConstants.CBUS_STAT) {
