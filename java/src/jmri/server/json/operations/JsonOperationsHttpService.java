@@ -63,10 +63,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
         switch (type) {
             case CAR:
                 return this.utilities.getCar(locale, name);
+            case CAR_TYPE:
+                return getCarType(name, locale);
             case ENGINE:
                 return this.utilities.getEngine(locale, name);
             case KERNEL:
-                Kernel kernel = InstanceManager.getDefault(CarManager.class).getKernelByName(name);
+                Kernel kernel = getCarManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", type, name));
@@ -105,6 +107,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
+            case CAR_TYPE:
+                InstanceManager.getDefault(CarTypes.class).addName(name);
+                return getCarType(name, locale);
             case KERNEL:
                 Kernel kernel = getCarManager().newKernel(name);
                 return getKernel(kernel, locale);
@@ -143,7 +148,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         String token = data.path(FORCE_DELETE).asText();
         switch (type) {
             case KERNEL:
-                Kernel kernel = InstanceManager.getDefault(CarManager.class).getKernelByName(name);
+                Kernel kernel = getCarManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", type, name));
@@ -151,12 +156,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
                     throwDeleteConflictException(type, name, getKernelCars(kernel, locale), locale);
                 }
-                InstanceManager.getDefault(CarManager.class).deleteKernel(name);
+                getCarManager().deleteKernel(name);
                 break;
             case CAR_TYPE:
-                List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(name);
+                List<Car> cars = getCarManager().getByTypeList(name);
                 List<Location> locations = new ArrayList<>();
-                for (Location location : InstanceManager.getDefault(LocationManager.class).getList()) {
+                for (Location location : getLocationManager().getList()) {
                     if (location.acceptsTypeName(name)) {
                         locations.add(location);
                     }
@@ -178,9 +183,35 @@ public class JsonOperationsHttpService extends JsonHttpService {
         }
     }
 
-    private ArrayNode getCarTypes(Locale locale) {
-        // TODO: real results
-        return null;
+    private ObjectNode getCarType(String name, Locale locale) throws JsonException {
+        CarTypes manager = InstanceManager.getDefault(CarTypes.class);
+        if (!manager.containsName(name)) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                    Bundle.getMessage(locale, "ErrorNotFound", CAR_TYPE, name));
+        }
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, CAR_TYPE);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, name);
+        ArrayNode cars = data.putArray(CAR);
+        getCarManager().getByTypeList(name).forEach((car) -> {
+            cars.add(utilities.getCar(car));
+        });
+        ArrayNode locations = data.putArray(LOCATION);
+        getLocationManager().getList().stream().filter((location) -> {
+            return location.acceptsTypeName(name);
+        }).forEach((location) -> {
+            locations.add(utilities.getLocation(location, locale));
+        });
+        return root;
+    }
+
+    private ArrayNode getCarTypes(Locale locale) throws JsonException {
+        ArrayNode root = mapper.createArrayNode();
+        for (String name : InstanceManager.getDefault(CarTypes.class).getNames()) {
+            root.add(getCarType(name, locale));
+        }
+        return root;
     }
 
     private ObjectNode getKernel(Kernel kernel, Locale locale) {
@@ -214,7 +245,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        InstanceManager.getDefault(CarManager.class).getByIdList().forEach((rs) -> {
+        getCarManager().getByIdList().forEach((rs) -> {
             root.add(this.utilities.getCar(locale, rs.getId()));
         });
         return root;
@@ -230,7 +261,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByIdList()) {
+        for (Location location : getLocationManager().getLocationsByIdList()) {
             root.add(this.utilities.getLocation(locale, location.getId()));
         }
         return root;
@@ -273,11 +304,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
      *                                            location in data
      */
     public void setCar(Locale locale, String id, JsonNode data) throws JsonException {
-        Car car = InstanceManager.getDefault(CarManager.class).getById(id);
+        Car car = getCarManager().getById(id);
         if (!data.path(LOCATION).isMissingNode()) {
             String locationId = data.path(LOCATION).asText();
             String trackId = data.path(TRACK).asText();
-            Location location = InstanceManager.getDefault(LocationManager.class).getLocationById(locationId);
+            Location location = getLocationManager().getLocationById(locationId);
             Track track = (trackId != null) ? location.getTrackById(trackId) : null;
             if (!car.setLocation(location, track, true).equals(Track.OKAY)) {
                 throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", id, locationId, trackId));
@@ -287,6 +318,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     private CarManager getCarManager() {
         return InstanceManager.getDefault(CarManager.class);
+    }
+
+    private LocationManager getLocationManager() {
+        return InstanceManager.getDefault(LocationManager.class);
     }
 
     @Override
