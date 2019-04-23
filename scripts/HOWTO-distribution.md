@@ -310,7 +310,12 @@ If you're developing any additional (post-4.15.5) changes that you want in the J
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
-- On your local machine, open jvisualvm. Start "ant alltest" and attach jvisualvm to it. When it's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.15.5" Github issue so that historical resource usage info is available.
+- On your local machine, open jvisualvm. Do 
+
+    unsetenv JMRI_OPTIONS
+    ant alltest
+    
+and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.15.5" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
@@ -417,9 +422,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.5+R0d44598.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.5/JMRI.4.15.5+R0d44598.dmg) | 58e54b96da61d87bb19597cc20a3d78475a5016a1fb7a0ca23bd4c76a0e43ef1
-[JMRI.4.15.5+R0d44598.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.5/JMRI.4.15.5+R0d44598.exe) | d29a79874e5a183b132ff3fb9348d77315a8a5ad36b32aa683cc9043981dbc0b
-[JMRI.4.15.5+R0d44598.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.5/JMRI.4.15.5+R0d44598.tgz) | f162bc608365e80c62b6c9f69e1fe9e9ccbf1ba24a68233a19a4012e67adb53a
+[JMRI.4.15.4+R0d44598.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.5/JMRI.4.15.4+R0d44598.dmg) | 58e54b96da61d87bb19597cc20a3d78475a5016a1fb7a0ca23bd4c76a0e43ef1
+[JMRI.4.15.4+R0d44598.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.5/JMRI.4.15.4+R0d44598.exe) | d29a79874e5a183b132ff3fb9348d77315a8a5ad36b32aa683cc9043981dbc0b
+[JMRI.4.15.4+R0d44598.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.5/JMRI.4.15.4+R0d44598.tgz) | f162bc608365e80c62b6c9f69e1fe9e9ccbf1ba24a68233a19a4012e67adb53a
+
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
