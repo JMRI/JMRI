@@ -120,6 +120,7 @@ public class DefaultCabSignalTest {
                 sm.provideSensor("West1").setState(Sensor.INACTIVE);
                 sm.provideSensor("West2").setState(Sensor.INACTIVE);
              } catch (JmriException je) {
+                log.error("Expected error setting up test", je);
              }
         });
 
@@ -225,6 +226,6 @@ public class DefaultCabSignalTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(DefaultCabSignalTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalTest.class);
 
 }
