@@ -3,7 +3,7 @@
 # we know that one is always there.
 # Bob Jacobsen   (C) 2019
 
-import org.jdom
+import org.jdom2
 from jmri.jmrit import XmlFile
 class myXmlFile(XmlFile) :   # XmlFile is abstract
     def nullMethod() :
