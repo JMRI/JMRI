@@ -125,8 +125,11 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public int getRowCount() {
         if ( _mainArray == null ) {
             log.error("Node Table Array _mainArray not initialised");
+            return 0;
         }
-        return _mainArray.size();
+        else {
+            return _mainArray.size();
+        }
     }
 
     @Override
