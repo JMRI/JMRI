@@ -146,7 +146,7 @@ public class JsonManifest extends TrainCommon {
             for (RouteLocation destination : route) {
                 for (Car car : carList) {
                     if (car.getRouteLocation() == routeLocation && car.getRouteDestination() == destination) {
-                        pickups.add(this.utilities.getCar(car));
+                        pickups.add(this.utilities.getCar(car, locale));
                     }
                 }
             }
@@ -155,7 +155,7 @@ public class JsonManifest extends TrainCommon {
             ArrayNode setouts = this.mapper.createArrayNode();
             for (Car car : carList) {
                 if (car.getRouteDestination() == routeLocation) {
-                    setouts.add(this.utilities.getCar(car));
+                    setouts.add(this.utilities.getCar(car, locale));
                 }
             }
             jsonCars.set(JSON.REMOVE, setouts);
@@ -187,7 +187,7 @@ public class JsonManifest extends TrainCommon {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
             if (engine.getRouteDestination() != null && engine.getRouteDestination().equals(routeLocation)) {
-                node.add(this.utilities.getEngine(engine));
+                node.add(this.utilities.getEngine(engine, locale));
             }
         }
         return node;
@@ -197,7 +197,7 @@ public class JsonManifest extends TrainCommon {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
             if (engine.getRouteLocation() != null && engine.getRouteLocation().equals(routeLocation)) {
-                node.add(this.utilities.getEngine(engine));
+                node.add(this.utilities.getEngine(engine, locale));
             }
         }
         return node;
