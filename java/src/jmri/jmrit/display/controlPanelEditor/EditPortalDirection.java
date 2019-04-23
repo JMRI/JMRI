@@ -171,6 +171,11 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         return portalPanel;
     }
 
+    protected void clearListSelection() {
+        _portalList.clearSelection();
+        _parent._editor.highlight(null);
+    }
+
     /**
      * *********************** end setup *************************
      */

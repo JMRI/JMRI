@@ -493,7 +493,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     //////////////////////////// end setup ////////////////////////////
-    private void clearListSelection() {
+    protected void clearListSelection() {
         _pathList.clearSelection();
         int oldState = _block.getState();
         int newState = oldState & ~OBlock.ALLOCATED;

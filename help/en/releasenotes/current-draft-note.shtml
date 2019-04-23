@@ -537,7 +537,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Down ramps used by NXWarrants and are also used when speed changes required by signals, occupancy 
+            <li>Down ramps used by NXWarrants are also used when speed changes required by signals, occupancy 
             	conditions or user interventions occur. The throttle settings generated for down ramps have been modified. 
             	The throttle setting is increased by 10% at each time interval. Also, the last throttle interval now is always the throttle
             	interval as specified in Warrant Preferences. Accuracy of the position where the train stops should be improved.
