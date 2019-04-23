@@ -16,7 +16,7 @@ import org.junit.*;
  */
 public class LZV100FrameTest extends jmri.util.JmriJFrameTestBase {
         
-    private XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+    private XNetInterfaceScaffold tc;
 
     @Before
     @Override
