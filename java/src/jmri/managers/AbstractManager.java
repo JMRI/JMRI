@@ -106,30 +106,21 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists. This is intended to be used by concrete classes to
-     * implement their getBySystemName method. We can't call it that here
-     * because Java doesn't have polymorphic return types.
-     *
-     * @param systemName the system name
-     * @return requested NamedBean object or null if none exists
+     * Now obsolete. Used {@link getBeanBySystemName} instead.
+     * @deprecated 4.15.6
      */
+    @Deprecated // since 4.15.6
     protected E getInstanceBySystemName(String systemName) {
-        return _tsys.get(systemName);
+        return getBeanBySystemName(systemName);
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists. This is intended to be used by concrete classes to
-     * implement their getBySystemName method. We cant call it that here because
-     * Java doesn't have polymorphic return types.
-     *
-     * @param userName the user name
-     * @return requested E (NamedBean, i.e. Turnout) object or null if none exists
+     * Now obsolete. Used {@link getBeanByUserName} instead.
+     * @deprecated 4.15.6
      */
+    @Deprecated // since 4.15.6
     protected E getInstanceByUserName(String userName) {
-        String normalizedUserName = NamedBean.normalizeUserName(userName);
-        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
+        return getBeanByUserName(userName);
     }
 
     /** {@inheritDoc} */
