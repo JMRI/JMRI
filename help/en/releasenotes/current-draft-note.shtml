@@ -447,20 +447,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>The handling of Turnout system names has been updated
-                to be (more, hopefully completely) consistent with the
-                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.
-                Specifically, case now (generally) matters in system names:
-                <ul>
-                    <li>You can now have an internal turnout named "ITsome lower case name".
-                    <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
-                        "ITSome LoWeR cAse Name" and get the same one.
-                </ul>
-                This should not require any migration for stored configurations or
-                panel files, as they have been automatically been being kept consistent
-                since JMRI 4.8.  But you might have case errors in i.e. scripts which
-                will fixing inconsistent references in your scripts.
-                </li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
