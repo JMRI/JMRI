@@ -327,7 +327,9 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     // or incoming CanReply
     @Override
     public void message(CanMessage m) {
-        
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         if (CbusOpCodes.isEventRequest(opc)) {
             processEvRequest( CbusMessage.getNodeNumber(m) , CbusMessage.getEvent(m) );
@@ -343,7 +345,10 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     // incoming cbus message
     // handled the same as outgoing
     @Override
-    public void reply(CanReply r) { 
+    public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         CanMessage m = new CanMessage(r);
         message(m);
     }
