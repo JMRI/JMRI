@@ -2,16 +2,15 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of NodeConfigToolPane
@@ -19,17 +18,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
-public class NodeConfigToolPaneTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigToolPane t = new NodeConfigToolPane();
-        Assert.assertNotNull("exists", t);
-        
-        t.dispose();
-        t = null;
-    }
+public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testInitComp() {
@@ -41,44 +30,37 @@ public class NodeConfigToolPaneTest {
         
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
         
-        NodeConfigToolPane t = new NodeConfigToolPane();
-        t.initComponents(memo);
+        NodeConfigToolPane panel = new NodeConfigToolPane();
+        panel.initComponents(memo);
         
-        Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("exists", panel);
+        Assert.assertNotNull("core node model exists", nodeModel);
         
-        // for Jemmy to work, we need the pane inside of a frame
-        JmriJFrame f = new JmriJFrame();
-        f.add(t);
-        if (t.getTitle() != null) {
-            f.setTitle(t.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
-        
-        // Find new window by name
-        JFrameOperator jfo = new JFrameOperator( t.getTitle() );
-        
-        // Ask to close window
-        jfo.requestClose();
         
         nodeModel.dispose();
         nodeModel = null;
-        
-        jfo = null;
-        t = null;
 
     }
     
-    CanSystemConnectionMemo memo;
+    
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        panel = new NodeConfigToolPane();
+        title = Bundle.getMessage("MenuItemNodeConfig");
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane";
     }
 
     @After
     public void tearDown() {
+        tcis = null;
         memo = null;
         JUnitUtil.tearDown();
     }

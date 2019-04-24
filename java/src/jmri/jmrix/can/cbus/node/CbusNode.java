@@ -1239,7 +1239,8 @@ public class CbusNode implements CanListener {
                 int index = _nodeEvents.get(i).getIndex();
                 int nextevvar = _nodeEvents.get(i).getNextOutstanding();
                 
-                if ( index > 0 ) {
+                // index from NERD / ENRSP indexing may start at 0
+                if ( index > -1 ) {
                 
                     // start timer
                     setNextEvVarTimeout();
