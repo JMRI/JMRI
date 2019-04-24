@@ -106,7 +106,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Now obsolete. Used {@link getBeanBySystemName} instead.
+     * Now obsolete. Used {@link #getBeanBySystemName} instead.
      * @deprecated 4.15.6
      */
     @Deprecated // since 4.15.6
@@ -115,7 +115,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
-     * Now obsolete. Used {@link getBeanByUserName} instead.
+     * Now obsolete. Used {@link #getBeanByUserName} instead.
      * @deprecated 4.15.6
      */
     @Deprecated // since 4.15.6
