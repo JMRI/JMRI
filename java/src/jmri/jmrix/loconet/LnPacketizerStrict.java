@@ -67,7 +67,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int opCode;
-            while (true) {  // loop permanently, program close will exit
+            do {   // loop until asked to stop
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) {
@@ -182,6 +182,9 @@ public class LnPacketizerStrict extends LnPacketizer {
                         jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                     }
                     // done with this one
+                } catch (LocoNetException e) {
+                    // we are shutting down
+                    log.debug("We are Shutting Down", e); // NOI18N
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException: " + e); // NOI18N
@@ -199,7 +202,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                 catch (RuntimeException e) {
                     log.warn("run: unexpected Exception: " + e); // NOI18N
                 }
-            } // end of permanent loop
+            } while (!threadStopRequest); // end of permanent loop
+            threadStopRequestRecDone = true;
         }
     }
 
@@ -235,7 +239,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int waitCount;
-            while (true) { // loop permanently
+            do {   // loop until asked to stop
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -349,7 +353,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                     new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
                     log.trace("end wait"); // NOI18N
                 }
-            }
+            } while (!threadStopRequest);
+            threadStopRequestXmitDone = true;
         }
     }
 
@@ -362,27 +367,23 @@ public class LnPacketizerStrict extends LnPacketizer {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
-
-        // make sure that the xmt priority is no lower than the current priority
-        int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
-        // start the XmtHandler in a thread of its own
-        if (xmtHandler == null) {
-            xmtHandler = new XmtHandlerStrict();
-        }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
-        log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
-        xmtThread.setDaemon(true);
-        xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
-        xmtThread.start();
-
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
             rcvHandler = new RcvHandlerStrict(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.setPriority(Thread.MAX_PRIORITY - 1);
         rcvThread.start();
+
+        // start the XmtHandler in a thread of its own
+        if (xmtHandler == null) {
+            xmtHandler = new XmtHandlerStrict();
+        }
+        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread.setDaemon(true);
+        xmtThread.setPriority(Thread.MAX_PRIORITY - 2);
+        xmtThread.start();
 
         log.info("Strict Packetizer in use");
 

@@ -100,6 +100,9 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                         Thread.currentThread().interrupt();
                         return;
                     }
+                } catch (ThreadDeath td) {
+                    log.debug("Thread has died");
+                    return;
                 }
             }
 

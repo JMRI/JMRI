@@ -35,6 +35,9 @@ public class HexFileFrameTest {
             
         p.getSystemConnectionMemo().dispose();
         p.dispose();
+        f.packets.setThreadStopRequest(true);
+        Assert.assertTrue("Threads not terminated", f.packets.waitForThreadsToStop());
+       
         f.sourceThread.stop();
         f.sourceThread.join();
  }   
