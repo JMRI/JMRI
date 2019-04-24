@@ -469,10 +469,6 @@ public class LnPacketizer extends LnTrafficController {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
-<<<<<<< HEAD
-        threadStopRequest = false;
-=======
->>>>>>> xPacketTest-1
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
