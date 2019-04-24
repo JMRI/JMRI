@@ -1425,6 +1425,18 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
     }
 
+    /**
+     * Stop() all existing objects and clear the list.
+     * <p>
+     * Intended to be only used during testing.
+     */
+    public static void stopAllAndClear() {
+        for (BlockBossLogic b : bblList) {
+            b.stop();
+        }
+        bblList.clear();
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
 
 }
