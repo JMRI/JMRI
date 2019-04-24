@@ -1,11 +1,10 @@
 package jmri.jmrix.openlcb;
 
+
 import jmri.Light;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbLightManager class.
@@ -13,6 +12,11 @@ import org.junit.Test;
  * @author	Jeff Collell
  */
 public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
+
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
 
     @Override
     public String getSystemName(int i) {
@@ -109,16 +113,48 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
-
-        l = new OlcbLightManager(m);
+        l = new OlcbLightManager(memo);
     }
 
     @After
     public void tearDown() {
         l.dispose();
+        l = null;
+    }
+
+    @BeforeClass
+    static public void preClassInit() {
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+    
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+    }
+
+    @AfterClass
+    public static void postClassTearDown() throws Exception {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
+        connection = null;
+        nodeID = null;
         JUnitUtil.tearDown();
     }
 

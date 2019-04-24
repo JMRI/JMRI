@@ -72,7 +72,7 @@ public class LnPacketizerTest {
         };
         lnp.connectPort(lpc);
         Assert.assertTrue("NOT OK to send", lpc.okToSend());
-        lnp.setthreadStopRequestOn();
+        lnp.setThreadStopRequest(true);
         lnp.startThreads();
         Assert.assertTrue("Threads not terminated", lnp.waitForThreadsToStop());
         memo.dispose();

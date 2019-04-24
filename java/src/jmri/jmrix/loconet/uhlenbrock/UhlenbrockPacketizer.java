@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LocoNetException;
 import jmri.jmrix.loconet.LocoNetInterface;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
@@ -236,6 +237,9 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     }
 
                     // done with this one
+                } catch (LocoNetException e) {
+                    // we are shutting down
+                    log.debug("We are Shutting Down", e); // NOI18N
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException: ", e);

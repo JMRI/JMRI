@@ -1,6 +1,12 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,8 +18,71 @@ import org.junit.Test;
  */
 public class LnPacketizerStrictTest extends LnPacketizerTest {
 
+    protected LnPacketizer lnp;
+    protected LocoNetSystemConnectionMemo memo;
+
+    @Test
+    public void testCtor() {
+       Assert.assertNotNull("exists", lnp );
+    }
+
+    @Test
+    public void testStatusWithoutInit() {
+       Assert.assertFalse("not connected", lnp.status() );
+    }
+
+    @Test
+    //@Ignore("may be causing hang on travis and appveyor")
+    public void testStartThreads() {
+        LnPortController lpc = new LnPortController(memo) {
+            @Override
+            public boolean status() {
+                return true;
+            }
+
+            @Override
+            public void configure() {
+            }
+
+            @Override
+            public java.io.DataInputStream getInputStream() {
+                return new DataInputStream(new ByteArrayInputStream(new byte[0]));
+            }
+
+            @Override
+            public java.io.DataOutputStream getOutputStream() {
+                return new DataOutputStream(new ByteArrayOutputStream());
+            }
+
+            /**
+             * Get an array of valid baud rates; used to display valid options.
+             */
+            @Override
+            public String[] validBaudRates() {
+                String[] retval = {"9600"};
+                return retval;
+            }
+
+            /**
+             * Open a specified port. The appname argument is to be provided to
+             * the underlying OS during startup so that it can show on status
+             * displays, etc
+             */
+            @Override
+            public String openPort(String portName, String appName) {
+                return "";
+            }
+
+        };
+        lnp.connectPort(lpc);
+        Assert.assertTrue("NOT OK to send", lpc.okToSend());
+        lnp.setThreadStopRequest(true);
+        lnp.startThreads();
+        Assert.assertTrue("Threads not terminated", lnp.waitForThreadsToStop());
+        memo.dispose();
+    }
+
     @Before
-    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
@@ -21,9 +90,9 @@ public class LnPacketizerStrictTest extends LnPacketizerTest {
     }
 
     @After
-    @Override
     public void tearDown() {
         lnp = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

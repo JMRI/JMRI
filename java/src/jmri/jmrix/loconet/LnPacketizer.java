@@ -188,16 +188,18 @@ public class LnPacketizer extends LnTrafficController {
      * @param istream stream to read from
      * @return buffer of received data
      * @throws java.io.IOException failure during stream read
+     * @throws LocoNetException when killed gracefully
      *
      */
-    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
-        while (true) { // loop will repeat until character found
+    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException, LocoNetException {
+        while (!threadStopRequest) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);
             if (nchars > 0) {
                 return rcvBuffer[0];
             }
         }
+        throw new LocoNetException("Closing PkReadThread");
     }
     // Defined this way to reduce new object creation
     private byte[] rcvBuffer = new byte[1];
@@ -323,6 +325,9 @@ public class LnPacketizer extends LnTrafficController {
                     }
 
                     // done with this one
+                } catch (LocoNetException e) {
+                    // we are shutting down
+                    log.debug("We are Shutting Down", e); // NOI18N
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException: {}", e); // NOI18N
@@ -334,6 +339,9 @@ public class LnPacketizer extends LnTrafficController {
                     log.debug("IOException, should only happen with HexFIle: {}", e); // NOI18N
                     log.info("End of file"); // NOI18N
                     disconnectPort(controller);
+                    if (threadStopRequest) {
+                        threadStopRequestRecDone = true;
+                    }
                     return;
                 } // normally, we don't catch RuntimeException, but in this
                   // permanently running loop it seems wise.
@@ -461,14 +469,17 @@ public class LnPacketizer extends LnTrafficController {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
+<<<<<<< HEAD
         threadStopRequest = false;
+=======
+>>>>>>> xPacketTest-1
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
         rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.setPriority(Thread.MAX_PRIORITY - 1);
         rcvThread.start();
 
         if (xmtHandler == null) {
@@ -478,7 +489,7 @@ public class LnPacketizer extends LnTrafficController {
         // start the XmtHandler in a thread of its own
         xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         xmtThread.setDaemon(true);
-        xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
+        xmtThread.setPriority(Thread.MAX_PRIORITY - 2);
         xmtThread.start();
 
         log.info("lnPacketizer Started");
@@ -490,18 +501,21 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * Testing Only - request the rec and xmit threads to be terminated
      * if set before start, one loop only is performed.
+     * @param value - either order a stop, or clear a stop
      */
-    protected void setthreadStopRequestOn() {
-        threadStopRequest = true;
+    public void setThreadStopRequest(boolean value) {
+        threadStopRequest = value;
     }
 
     /**
      * Testing Only - Spins its wheels for 100ms or threads terminated
      * @return true threads were terminated
      */
-     protected boolean waitForThreadsToStop() {
+     public boolean waitForThreadsToStop() {
+         rcvThread.interrupt();   // break the wait.
+         xmtThread.interrupt();   // break the wait
         for (int i = 1; i < 10; i++) {
-            if (!threadStopRequestXmitDone || !threadStopRequestRecDone) {
+            if (threadStopRequestXmitDone && threadStopRequestRecDone) {
                 return true;
             }
             try {
@@ -520,8 +534,8 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * Testing Only - Flag that indicates threads have been terminated
      */
-    protected volatile boolean threadStopRequestXmitDone = false;
-    protected volatile boolean threadStopRequestRecDone  = false;
+    public volatile boolean threadStopRequestXmitDone = false;
+    public volatile boolean threadStopRequestRecDone  = false;
     
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 

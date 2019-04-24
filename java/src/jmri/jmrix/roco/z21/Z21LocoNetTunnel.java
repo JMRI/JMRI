@@ -77,6 +77,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
+        try {
         log.debug("LocoNet Tunnel Thread Started");
         for (;;) {
             LocoNetMessage m = readMessage();
@@ -84,6 +85,9 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
                // don't forward a null message.
                message(m);
             }
+        }
+        } catch (ThreadDeath td) {
+            return;
         }
     }
 
