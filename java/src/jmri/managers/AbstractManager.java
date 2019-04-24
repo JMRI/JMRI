@@ -118,7 +118,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Now obsolete. Used {@link #getBeanByUserName} instead.
-     * @param systemName the system name, but don't call this method
+     * @param userName the system name, but don't call this method
 	 * @return the results of a {@link #getBeanByUserName} call, which you should use instead of this
      * @deprecated 4.15.6
      */
