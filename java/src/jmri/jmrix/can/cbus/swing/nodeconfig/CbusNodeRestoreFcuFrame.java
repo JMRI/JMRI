@@ -538,7 +538,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             if ( !evList.get(i).getName().isEmpty() ){
                 eventModel.provideEvent(evList.get(i).getNn(),evList.get(i).getEn()).setName(evList.get(i).getName());
             }
-        }        
+        }
+        eventModel.fireTableDataChanged();
     }
     
     private void showConfirmThenSave(){
