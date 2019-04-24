@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 import jmri.jmrix.openlcb.OlcbSignalMast;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbTestInterface;
 
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -12,6 +11,7 @@ import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -21,12 +21,7 @@ import org.openlcb.IdentifyEventsMessage;
 
 import org.jdom2.Element;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * OlcbSignalMastXmlTest
@@ -37,7 +32,10 @@ import org.junit.Test;
  */
 public class OlcbSignalMastXmlTest {
         
-    static OlcbSystemConnectionMemo memo;
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
 
     @Test
     public void testCtor(){
@@ -67,29 +65,50 @@ public class OlcbSignalMastXmlTest {
         Assert.assertEquals("1.2.3.4.5.6.7.4", e.getChild("held").getChild("notheld").getValue());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
+        messages = new java.util.ArrayList<>();
+    }
+
+    @BeforeClass
+    static public void preClassInit() {
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+        
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+        
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
     }
 
     @After
     public void tearDown() {
-    }
-
-    @BeforeClass
-    public static void preClassInit() {
-        JUnitUtil.setUp();
-        memo = OlcbTestInterface.createForLegacyTests();
+        messages = null;
     }
 
     @AfterClass
-    public static void postClassTearDown() {
+    public static void postClassTearDown() throws Exception {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }
         memo = null;
+        connection = null;
+        nodeID = null;
         JUnitUtil.tearDown();
     }
-
 }
 
