@@ -459,7 +459,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=1;
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
         t.setFeedbackMode("DELAYED");
         t.message(m);
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
