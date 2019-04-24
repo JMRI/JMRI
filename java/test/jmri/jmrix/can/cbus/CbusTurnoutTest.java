@@ -394,6 +394,19 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.message(m);
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
         
+        m.setElement(0, 0x98); // ASON OPC
+        m.setExtended(true);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m.setExtended(false);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
         m = null;
         
     }
@@ -419,6 +432,18 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(0, 0x99); // ASOF OPC
         t.reply(r);
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        
+        r.setElement(0, 0x98); // ASON OPC
+        r.setExtended(true);
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
         r = null;
         
     }
