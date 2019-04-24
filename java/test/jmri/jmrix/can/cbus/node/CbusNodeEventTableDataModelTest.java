@@ -30,9 +30,7 @@ public class CbusNodeEventTableDataModelTest {
     @Test
     public void testNodeNoEv() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
+        
         
         CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
@@ -131,8 +129,7 @@ public class CbusNodeEventTableDataModelTest {
         
         t.updateFromNode(0,CbusNodeEventTableDataModel.EV_VARS_COLUMN);
         
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
+        
         
         nodeModel.addNode(myNode);
         
@@ -157,8 +154,6 @@ public class CbusNodeEventTableDataModelTest {
         
         mainpane.dispose();
         mainpane = null;
-        nodeModel.dispose();
-        nodeModel = null;
         myNode.dispose();
         myNode = null;
         myNodeEvent = null;
@@ -168,14 +163,32 @@ public class CbusNodeEventTableDataModelTest {
         
     }    
     
+    private CbusNodeTableDataModel nodeModel;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
     }
 
     @After
     public void tearDown() {
+        
+        memo = null;
+        tcis = null;
+        
+        nodeModel.dispose();
+        nodeModel = null;
+        
         JUnitUtil.tearDown();
     }
 
