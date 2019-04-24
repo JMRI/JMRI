@@ -392,7 +392,7 @@ public class IconEditorWindowTest {
         JUnitUtil.initShutDownManager();
 
         if (!GraphicsEnvironment.isHeadless()) {
-            _editor = new PanelEditor("IconEditorTestPanel");
+            _editor = new PanelEditor("IconEditorTestPanel", false, true);
             Assert.assertNotNull(JFrameOperator.waitJFrame("IconEditorTestPanel", true, true));
             _panel = _editor.getTargetPanel();
             Assert.assertNotNull(_panel);
@@ -410,7 +410,7 @@ public class IconEditorWindowTest {
             _editor.dispose();
         }
         _editor = null;
-        
+
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
         JUnitUtil.tearDown();
     }

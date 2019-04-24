@@ -52,7 +52,7 @@ public class JsonUtilSocketServiceTest {
 
     /**
      * Test of onMessage method, of class JsonUtilSocketService. Tests only
-     * responses that are expected to be consistent between a 
+     * responses that are expected to be consistent between a
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
      *                             these tests occurs
@@ -135,7 +135,7 @@ public class JsonUtilSocketServiceTest {
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
     }
-    
+
     /**
      * Test of onList method, of class JsonUtilSocketService. Does not test CONFIG_PROFILE
      * JSON type, see {@link #testOnListConfigProfile()} for that. Does not test PANEL
@@ -194,8 +194,8 @@ public class JsonUtilSocketServiceTest {
         Editor switchboard = new SwitchboardEditor("json test switchboard");
         Editor controlPanel = new ControlPanelEditor("json test control panel");
         Editor layoutPanel = new LayoutEditor("json test layout panel");
-        Editor panel = new PanelEditor("json test panel");
-        Editor disabled = new PanelEditor("disabled json test panel");
+        Editor panel = new PanelEditor("json test panel", false, true);
+        Editor disabled = new PanelEditor("disabled json test panel", false, true);
         disabled.setAllowInFrameServlet(false);
         // 5 editors should return array of 4 since one is barred
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -279,12 +279,12 @@ public class JsonUtilSocketServiceTest {
             }
             return super.doGet(type, name, locale);
         }
-        
+
         public void setThrowException(boolean throwException) {
             this.throwException = throwException;
         }
-        
+
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
 }

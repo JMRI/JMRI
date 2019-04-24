@@ -72,7 +72,7 @@ public class LinkingLabelTest extends PositionableTestBase {
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel", false, true);
             p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");
             NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
             to.setIcon(icon);

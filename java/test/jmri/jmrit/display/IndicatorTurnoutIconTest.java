@@ -37,7 +37,7 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        IndicatorTurnoutIcon to = (IndicatorTurnoutIcon)p; 
+        IndicatorTurnoutIcon to = (IndicatorTurnoutIcon)p;
 
         IndicatorTurnoutIcon to2 = (IndicatorTurnoutIcon) to.deepClone();
 
@@ -52,7 +52,7 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
+            editor = new PanelEditor("Test IndicatorTurnoutIcon Panel", false, true);
             IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
             jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
             to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));

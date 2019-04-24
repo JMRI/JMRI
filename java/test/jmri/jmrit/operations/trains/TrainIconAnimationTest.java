@@ -57,7 +57,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
-                "Train Test Panel");
+                "Train Test Panel", false, true);
         InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
 
         // confirm panel creation

@@ -139,7 +139,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     public ControlPanelEditor(String name) {
-        super(name);
+        super(name, false, false);
         init(name);
     }
 
@@ -222,7 +222,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _itemPalette.setVisible(true);
             }
         }.init(this));
-        
+
         if (SystemType.isMacOSX()) {
             mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
         } else {

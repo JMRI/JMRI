@@ -116,8 +116,8 @@ public class PanelEditor extends Editor implements ItemListener {
     public PanelEditor() {
     }
 
-    public PanelEditor(String name) {
-        super(name, false, true);
+    public PanelEditor(String name, boolean saveSize, boolean savePosition) {
+        super(name, saveSize, savePosition);
         init(name);
     }
 
@@ -543,7 +543,7 @@ public class PanelEditor extends Editor implements ItemListener {
      *
      */
     public JmriJFrame makeFrame(String name) {
-        JmriJFrame targetFrame = new JmriJFrame(name);
+        JmriJFrame targetFrame = new JmriJFrame(name, false, false);
         targetFrame.setVisible(false);
 
         JMenuBar menuBar = new JMenuBar();

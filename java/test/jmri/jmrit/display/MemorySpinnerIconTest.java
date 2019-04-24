@@ -89,7 +89,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel", false, true);
             p=tos1 = new MemorySpinnerIcon(editor);
             tos1.setMemory("IM1");
         }

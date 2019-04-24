@@ -85,7 +85,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
         super.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel", false, true);
             p = rpsIcon = new RpsPositionIcon(editor);
         }
     }

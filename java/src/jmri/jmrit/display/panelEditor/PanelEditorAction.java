@@ -29,7 +29,7 @@ public class PanelEditorAction extends AbstractAction {
                 name = Bundle.getMessage("PanelDefaultName", i);
             }
         }
-        PanelEditor frame = new PanelEditor(name);
+        PanelEditor frame = new PanelEditor(name, false, true);
         InstanceManager.getDefault(PanelMenu.class).addEditorPanel(frame);
         frame.setLocation(20, 20);
 

@@ -36,7 +36,7 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            e = new PanelEditor("Panel Editor Test");
+            e = new PanelEditor("Panel Editor Test", false, true);
         }
     }
 

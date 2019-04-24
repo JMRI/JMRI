@@ -1272,7 +1272,7 @@ public class SwitchboardEditor extends Editor {
      * @param name title for the Switchboard
      */
     public JmriJFrame makeFrame(String name) {
-        JmriJFrame targetFrame = new JmriJFrame(name);
+        JmriJFrame targetFrame = new JmriJFrame(name, false, false);
         targetFrame.setVisible(true);
 
         JMenuBar menuBar = new JMenuBar();

@@ -138,7 +138,10 @@
       panel changing during subsequent saves! The position and size
       of your panel will only change when you select <strong>Save
       Location and Size</strong>. So save your panel often to preserve
-      your work.</p>
+      your work.  There is an alternate option for saving the panel's location
+      and size.  The <strong>Always Save Location and Size</strong> option can
+      be set if you want to always have the panel positioned where it was
+      located when saved.</p>
 
       <p><strong>Layout Editor</strong> supports the construction and display
       of PanelPro panels. <strong>Layout Editor</strong> is similar to the
@@ -725,6 +728,11 @@
         and location saved when this item was selected, provided
         the computer operating system permits a window with that
         size and location.</li>
+
+        <li><strong>Always Save Location and Size</strong> - When this item is
+        selected, the <strong>current</strong> window size and location
+        will be saved each time the panel is saved.  This is the same behavior
+        as the other editors.</li>
 
         <li><strong>Add</strong>
           <ul>
@@ -1811,7 +1819,7 @@
       <p>The <strong>Block Line Dash Percentage</strong> has
       <strong><em>nothing</em></strong> to do with dashed track.  This is a
       special setting to create an on/off pattern to blocks.  The <strong>
-      British 70's</strong> or Czechoslovak <strong>&#268;SD A&#381;D-71</strong> 
+      British 70's</strong> or Czechoslovak <strong>&#268;SD A&#381;D-71</strong>
       preset uses this option.</p>
 
       <h3>Notes</h3>

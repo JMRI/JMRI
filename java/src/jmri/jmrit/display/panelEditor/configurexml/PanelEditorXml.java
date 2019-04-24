@@ -123,7 +123,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
-        PanelEditor panel = new PanelEditor(name);
+        PanelEditor panel = new PanelEditor(name, false, true);
         panel.setTitle();
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);

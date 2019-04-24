@@ -79,7 +79,7 @@ public class SignalMastIconTest extends PositionableIconTest {
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new PanelEditor("Test SignalMastIcon Panel");
+            editor = new PanelEditor("Test SignalMastIcon Panel", false, true);
             p = new SignalMastIcon(editor);
             to = new SignalMastIcon(editor);
             to.setShowAutoText(true);
