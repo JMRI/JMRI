@@ -378,7 +378,18 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li><strong>Custom scripts that release throttles may need to be modified.</strong><br>
+            <ul>
+                <li>AutoDispatcher2</li>
+                <li>RobotThrottle2</li>
+                <li>RobotThrottle3</li>
+                <li>RocoCrane</li>
+                <li>Zimo Programmers</li>
+            </ul>
+            <br>
+            Old syntax: <code>self.throttle.release()</code> <br>
+            New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
+            </li>
         </ul>
 
     <h3>Signals</h3>
