@@ -20,8 +20,8 @@ import org.junit.Test;
  */
 public class CbusNodeTableDataModelTest {
     
-    CanSystemConnectionMemo memo;
-    TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Test
     public void testCTor() {
@@ -393,10 +393,10 @@ public class CbusNodeTableDataModelTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         
         memo = null;
         tcis = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeTableDataModelTest.class);
