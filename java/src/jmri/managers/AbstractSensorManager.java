@@ -96,12 +96,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    protected Sensor getInstanceBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public Sensor getByUserName(String key) {
         return _tuser.get(key);
     }
