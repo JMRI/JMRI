@@ -214,6 +214,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String blockCars(JsonNode cars, RouteLocation location, boolean isManifest) {
         StringBuilder builder = new StringBuilder();
+        log.debug("Cars is {}", cars);
         if (cars.path(JSON.ADD).size() > 0 || cars.path(JSON.REMOVE).size() > 0) {
             if (cars.path(JSON.ADD).size() > 0) {
                 for (JsonNode car : cars.path(JSON.ADD)) {
@@ -299,7 +300,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         }
         StringBuilder builder = new StringBuilder();
         for (String attribute : format) {
-            if (!attribute.trim().equals("")) {
+            if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 log.debug("Adding car with attribute {}", attribute);
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
@@ -327,7 +328,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String dropCar(JsonNode car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         for (String attribute : format) {
-            if (!attribute.trim().equals("")) {
+            if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 log.debug("Removing car with attribute {}", attribute);
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
@@ -369,7 +370,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String dropEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
         for (String attribute : Setup.getDropEngineMessageFormat()) {
-            if (!attribute.trim().equals("")) {
+            if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.DESTINATION; // treat "track" as "destination"
@@ -399,7 +400,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         StringBuilder builder = new StringBuilder();
         log.debug("PickupEngineMessageFormat: {}", (Object) Setup.getPickupEngineMessageFormat());
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
-            if (!attribute.trim().equals("")) {
+            if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.LOCATION; // treat "track" as "location"
