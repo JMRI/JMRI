@@ -26,13 +26,12 @@ public class CtcRunAction extends JmriAbstractAction {
             // Prevent duplicate copies
             return;
         }
-        CTCMain _mCTCMain = new CTCMain();
-        jmri.InstanceManager.setDefault(CTCMain.class, _mCTCMain);
+        jmri.InstanceManager.setDefault(CTCMain.class, CTCJythonAccessInstanceManager._mCTCMain);
 
         // Set the file path.
         String filename = CTCFiles.getFullName("CTCSystem.xml");  // NOI18N
 
-        _mCTCMain.readDataFromXMLFile(filename);
+        CTCJythonAccessInstanceManager._mCTCMain.readDataFromXMLFile(filename);
     }
 
     // never invoked, because we overrode actionPerformed above
