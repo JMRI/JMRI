@@ -1418,7 +1418,7 @@
         </jacoco:coverage>
     </target>
 
-    <target name="headless-coveragereport" depends="headlesstest" description="Generate Test Coverage Report from logheadlesstest">
+    <target name="headless-coveragereport" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1438,7 +1438,7 @@
        </jacoco:report>
     </target>
 
-    <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from logheadlesstest">
+    <target name="headless-coveragecheck" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
