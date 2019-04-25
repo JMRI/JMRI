@@ -1360,7 +1360,7 @@
     </target>
 
     <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="${jacocoexec}">
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1554,9 +1554,8 @@
 
     </target>
 
-    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite with jacaco output">
+    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite with jacoco output">
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
