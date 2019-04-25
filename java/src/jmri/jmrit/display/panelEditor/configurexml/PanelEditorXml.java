@@ -123,6 +123,25 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
+
+        // If available, override location and size with machine dependent values
+        jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr != null) {
+            String windowFrameRef = name;
+
+            java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+            if (prefsWindowLocation != null) {
+                x = (int) prefsWindowLocation.getX();
+                y = (int) prefsWindowLocation.getY();
+            }
+
+            java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+            if (prefsWindowSize != null) {
+                height = (int) prefsWindowSize.getHeight();
+                width = (int) prefsWindowSize.getWidth();
+            }
+        }
+
         PanelEditor panel = new PanelEditor(name);
         panel.setTitle();
         panel.getTargetFrame().setLocation(x, y);

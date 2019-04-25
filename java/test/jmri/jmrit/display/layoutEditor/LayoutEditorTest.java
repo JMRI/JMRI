@@ -144,21 +144,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetLayoutWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout width", 0, e.getLayoutWidth());
+        Assert.assertEquals("layout width", 1420, e.getLayoutWidth());
     }
 
     @Test
     public void testGetLayoutHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout height", 0, e.getLayoutHeight());
+        Assert.assertEquals("layout height", 780, e.getLayoutHeight());
     }
 
     @Test
     public void testGetWindowWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen width - 20
-        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
+        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         Assert.assertEquals("window width", w, e.getWindowWidth());
     }
 
@@ -166,7 +166,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetWindowHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen height - 120
-        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
+        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         Assert.assertEquals("window height", h, e.getWindowHeight());
     }
 
@@ -762,7 +762,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
         Assert.assertNotNull("Options Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",18,jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count",17,jmo.getItemCount());
     }
 
     @Test
