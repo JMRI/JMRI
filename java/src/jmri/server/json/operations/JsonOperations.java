@@ -96,6 +96,10 @@ public class JsonOperations {
      */
     public static final String KERNEL = "kernel"; // NOI18N
     /**
+     * {@value #LEAD}
+     */
+    public static final String LEAD = "lead"; // NOI18N
+    /**
      * {@value #CAR_TYPE}
      */
     public static final String CAR_TYPE = "carType"; // NOI18N

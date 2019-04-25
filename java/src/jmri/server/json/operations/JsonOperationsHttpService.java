@@ -13,6 +13,7 @@ import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.CARS;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.KERNEL;
+import static jmri.server.json.operations.JsonOperations.LEAD;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
 import static jmri.server.json.operations.JsonOperations.TRACK;
@@ -235,6 +236,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         data.put(NAME, kernel.getName());
         data.put(WEIGHT, kernel.getAdjustedWeightTons());
         data.put(LENGTH, kernel.getTotalLength());
+        data.put(LEAD, utilities.getCar(kernel.getLead(), locale));
         data.set(CARS, getKernelCars(kernel, locale));
         return root;
     }
