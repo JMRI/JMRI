@@ -22,6 +22,10 @@
             "items": {
                 "type": "object"
             }
+        },
+        "rename": {
+            "type": "string",
+            "description": "Old name of kernel if just renamed"
         }
     },
     "additionalProperties": false,

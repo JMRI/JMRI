@@ -7,6 +7,10 @@
         "name": {
             "type": "string",
             "description": "Name of the kernel being requested"
+        },
+        "rename": {
+            "type": "string",
+            "description": "New name for the kernel being requested"
         }
     },
     "additionalProperties": false,

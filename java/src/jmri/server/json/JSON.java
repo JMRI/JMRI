@@ -776,6 +776,12 @@ public final class JSON {
      * @since 5.1
      */
     public static final String CONFLICT = "conflict"; // NOI18N
+    /**
+     * {@value #RENAME}
+     * 
+     * @since 5.1
+     */
+    public static final String RENAME = "rename"; // NOI18N
 
     /* ZeroConf support */
     /**

@@ -6,6 +6,7 @@ import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NULL;
+import static jmri.server.json.JSON.RENAME;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
@@ -87,13 +88,26 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        String newName = name;
         switch (type) {
             case TRAIN:
-                this.setTrain(locale, name, data);
+                this.setTrain(name, data, locale);
                 return this.utilities.getTrain(name, locale);
             case CAR:
-                this.setCar(locale, name, data);
+                this.setCar(name, data, locale);
                 return this.utilities.getCar(name, locale);
+            case CAR_TYPE:
+                if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
+                    newName = data.path(RENAME).asText();
+                    InstanceManager.getDefault(CarTypes.class).replaceName(name, newName);
+                }
+                return getCarType(newName, locale).put(RENAME, name);
+            case KERNEL:
+                if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
+                    newName = data.path(RENAME).asText();
+                    getCarManager().replaceKernelName(name, newName);
+                }
+                return getKernel(getCarManager().getKernelByName(name), locale).put(RENAME, name);
             case ENGINE:
             case LOCATION:
             case TRAINS:
@@ -228,9 +242,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     private ArrayNode getKernelCars(Kernel kernel, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
         kernel.getCars().forEach((car) -> {
-            ObjectNode root = array.addObject();
-            root.put(TYPE, CAR);
-            root.set(DATA, utilities.getCar(car, locale));
+            array.add(utilities.getCar(car, locale));
         });
         return array;
     }
@@ -245,25 +257,25 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        getCarManager().getByIdList().forEach((rs) -> {
-            root.add(this.utilities.getCar(rs.getId(), locale));
+        getCarManager().getByIdList().forEach((car) -> {
+            root.add(this.utilities.getCar(car, locale));
         });
         return root;
     }
 
     public ArrayNode getEngines(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((rs) -> {
-            root.add(this.utilities.getEngine(rs.getId(), locale));
+        InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((engine) -> {
+            root.add(this.utilities.getEngine(engine, locale));
         });
         return root;
     }
 
     public ArrayNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (Location location : getLocationManager().getLocationsByIdList()) {
-            root.add(this.utilities.getLocation(location.getId(), locale));
-        }
+        getLocationManager().getLocationsByIdList().forEach((location) -> {
+            root.add(utilities.getLocation(location, locale));
+        });
         return root;
     }
 
@@ -274,13 +286,13 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
      * cannot be completed, throws error code 428.
      *
-     * @param locale The locale to throw exceptions in.
-     * @param id     The id of the train.
-     * @param data   Train data to change.
+     * @param id     id of the train
+     * @param data   train data to change
+     * @param locale locale to throw exceptions in
      * @throws jmri.server.json.JsonException if the train cannot move to the
      *                                            location in data.
      */
-    public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
+    public void setTrain(String id, JsonNode data, Locale locale) throws JsonException {
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
         if (!data.path(LOCATION).isMissingNode()) {
             String location = data.path(LOCATION).asText();
@@ -297,13 +309,13 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * <p>
      * Currently only sets the location of the car.
      *
-     * @param locale locale to throw exceptions in
      * @param id     id of the car
      * @param data   car data to change
+     * @param locale locale to throw exceptions in.
      * @throws jmri.server.json.JsonException if the car cannot be set to the
      *                                            location in data
      */
-    public void setCar(Locale locale, String id, JsonNode data) throws JsonException {
+    public void setCar(String id, JsonNode data, Locale locale) throws JsonException {
         Car car = getCarManager().getById(id);
         if (!data.path(LOCATION).isMissingNode()) {
             String locationId = data.path(LOCATION).asText();
@@ -333,6 +345,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         server,
                         "jmri/server/json/operations/car-server.json",
                         "jmri/server/json/operations/car-client.json");
+            case CAR_TYPE:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/operations/carType-server.json",
+                        "jmri/server/json/operations/carType-client.json");
             case ENGINE:
             case ENGINES:
                 return doSchema(type,
