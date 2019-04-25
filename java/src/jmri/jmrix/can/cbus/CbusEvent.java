@@ -158,7 +158,7 @@ public class CbusEvent {
     /**
      * Send ON event CAN frame
      * <p>
-     * Long event if Node num > 0, else short
+     * Long event if Node num greater than 0, else short
      *
      */
     public void sendOn(){
@@ -168,7 +168,7 @@ public class CbusEvent {
     /**
      * Send OFF event CAN frame
      * <p>
-     * Long event if Node num > 0, else short
+     * Long event if Node num greater than 0, else short
      *
      */
     public void sendOff(){
@@ -178,7 +178,7 @@ public class CbusEvent {
     /**
      * Send event status request CAN frame
      * <p>
-     * Long request if Node num > 0, else short
+     * Long request if Node num greater than 0, else short
      *
      */
     public void sendRequest(){
@@ -192,7 +192,7 @@ public class CbusEvent {
      * <p>
      * If current state unknown, toggle sends event off
      * <p>
-     * Long event if Node num > 0, else short
+     * Long event if Node num greater than 0, else short
      * @param state The enum state requested to be sent, ie ON, OFF, REQUEST, TOGGLE
      *
      */
