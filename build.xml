@@ -1375,6 +1375,9 @@
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg line="${jvm.args}"/>
+
             <classpath refid="test.class.path"/>
 
             <test name="jmri.HeadLessTest" outfile="junit-results">
