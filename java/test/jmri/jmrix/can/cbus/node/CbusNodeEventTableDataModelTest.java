@@ -21,7 +21,7 @@ public class CbusNodeEventTableDataModelTest {
     public void testCTor() {
         
         CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
-            new CanSystemConnectionMemo(), 3,CbusNodeEventTableDataModel.MAX_COLUMN);
+            memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
         
         t = null;
@@ -29,8 +29,6 @@ public class CbusNodeEventTableDataModelTest {
 
     @Test
     public void testNodeNoEv() {
-        
-        
         
         CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
@@ -60,8 +58,6 @@ public class CbusNodeEventTableDataModelTest {
         myNode.dispose();
         myNode = null;
         t = null;
-        memo = null;
-        tcis = null;
         
     }
     
@@ -71,10 +67,6 @@ public class CbusNodeEventTableDataModelTest {
         
         // not headless as setValueAt triggers window open
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane mainpane = new 
             jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane();
@@ -158,8 +150,6 @@ public class CbusNodeEventTableDataModelTest {
         myNode = null;
         myNodeEvent = null;
         t = null;
-        memo = null;
-        tcis = null;
         
     }    
     
