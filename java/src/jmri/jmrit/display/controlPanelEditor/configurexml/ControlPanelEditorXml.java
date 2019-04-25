@@ -143,6 +143,25 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
+
+        // If available, override location and size with machine dependent values
+        jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr != null) {
+            String windowFrameRef = "jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:" + name;
+
+            java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+            if (prefsWindowLocation != null) {
+                x = (int) prefsWindowLocation.getX();
+                y = (int) prefsWindowLocation.getY();
+            }
+
+            java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+            if (prefsWindowSize != null) {
+                height = (int) prefsWindowSize.getHeight();
+                width = (int) prefsWindowSize.getWidth();
+            }
+        }
+
         ControlPanelEditor panel = new ControlPanelEditor(name);
         panel.getTargetFrame().setVisible(false);   // save painting until last
         InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
@@ -250,8 +269,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (ClassNotFoundException | InstantiationException 
-                    | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException 
+            } catch (ClassNotFoundException | InstantiationException
+                    | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e.getMessage(), e);
                 result = false;

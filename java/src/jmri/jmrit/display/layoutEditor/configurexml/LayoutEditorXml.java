@@ -312,6 +312,27 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 return false;
             }
         }
+
+        // If available, override location and size with machine dependent values
+        jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr != null) {
+            String windowFrameRef = "jmri.jmrit.display.layoutEditor.LayoutEditor:" + name;
+
+            java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+            if (prefsWindowLocation != null) {
+                x = (int) prefsWindowLocation.getX();
+                y = (int) prefsWindowLocation.getY();
+//                 log.warn("loc = {}", prefsWindowLocation);
+            }
+
+            java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+            if (prefsWindowSize != null) {
+                windowHeight = (int) prefsWindowSize.getHeight();
+                windowWidth = (int) prefsWindowSize.getWidth();
+//                 log.warn("size = {}", prefsWindowSize);
+            }
+        }
+
         LayoutEditor panel = new LayoutEditor(name);
         panel.setLayoutName(name);
         InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
