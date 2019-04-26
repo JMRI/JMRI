@@ -16,9 +16,9 @@
 <!-- version 1.1 - Mark Waters Jan 30 2015 -->
 <!-- Added CVs from Nigel Cliffe's 'CV372-CV399sound_v34.xml' file, using qualifiers to combine them into a single file -->
 <!-- version 1.2 - Ronald Kuhn - add german translation 06 Jun 2016 -->
+<!-- version 1.3 - Alain Carasso - CV396/397 were inverted 05 March 2018 -->
+<!-- version 1.4 - Ronald Kuhn - add german translation and tooltips, change CV- and item-values for more overview 26 Apr 2019 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  
-  
   
   <!--  CV372/373 are for electric locos -->
 <variables>
@@ -27,20 +27,23 @@
           <relation>ge</relation>
           <value>34</value>
         </qualifier>
-  <variable item="Volume dependent on Speed" CV="372" default="0" tooltip="CV372">
+  <variable CV="372" item="Volume dependent on Speed" default="0">
     <decVal />
     <label xml:lang="de">E-Motor: Lautstärke Beschleunigen</label>
     <label xml:lang="cs">Závislost hlasitosti na rychlosti</label>
+      <tooltip>CV372</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Volume dependent on Braking" CV="373" default="0" tooltip="CV373">
+  <variable CV="373" item="Volume dependent on Braking" default="0">
     <decVal />
     <label xml:lang="de">E-Motor: Lautstärke Bremsen</label>
     <label xml:lang="cs">Závislost hlasitosti na brždění</label>
+      <tooltip>CV373</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
 </variables>
   
-  
-  <variable item="Function Key for Coasting" CV="374" default="0">
+  <variable CV="374" item="Function Key for Coasting" default="0">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -137,7 +140,7 @@
     <label xml:lang="de">Coasting Taste</label>
     <label xml:lang="cs">Funkční klávesa pro výběh</label>
   </variable>
-  <variable item="Sound Slot during Coasting" CV="375" default="0">
+  <variable CV="375" item="Sound Slot during Coasting" default="0">
     <enumVal>
       <enumChoice choice="0">
         <choice>0</choice>
@@ -185,18 +188,22 @@
           <relation>ge</relation>
           <value>34</value>
         </qualifier>  
-  <variable item="Percentage Reduction of Driving Sound Volume" CV="376" default="0" tooltip="CV376">
+  <variable CV="376" item="Percentage Reduction of Driving Sound Volume" default="0">
     <decVal />
-    <label xml:lang="de">Fahrsound Lautstärke</label>
+    <label xml:lang="de">Fahrsound Lautstärke (Multiplikator)</label>
     <label xml:lang="cs">Hlasitost zvuku při jízdě</label>
+      <tooltip>CV376</tooltip>
+      <tooltip xml:lang="de">Zur Lautstärkenreduktion der Ablauf-Sounds (255 = 100%)</tooltip>
   </variable>
-  <variable item="Likeihood of switchgear sparks" CV="378" default="0" tooltip="CV378">
+  <variable CV="378" item="Likeihood of switchgear sparks" default="0">
     <decVal />
     <label xml:lang="de">Lichtblitzen Beschleunigen</label>
     <label xml:lang="cs">Pravděpodobnost jiskření kontroleru</label>
+      <tooltip>CV378</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
   
-  <variable item="Electric brake function key" CV="380" default="0" tooltip="CV380">
+  <variable CV="380" item="Electric brake function key" default="0">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -291,39 +298,53 @@
     </enumVal>
     <label xml:lang="de">Elektrische Bremse Taste</label>
     <label xml:lang="cs">Funkční klávesa elektrodynamická brzda</label>
+      <tooltip>CV380</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake minimum speed" CV="381" default="0" tooltip="CV381">
+  <variable CV="381" item="Electric brake minimum speed" default="0">
     <decVal />
     <label xml:lang="de">Elektrische Bremse min. Fahrstufe</label>
     <label xml:lang="cs">Elektrdynamická brzda minimální rychlost</label>
+      <tooltip>CV381</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake maximum speed" CV="382" default="0" tooltip="CV382">
+  <variable CV="382" item="Electric brake maximum speed" default="0">
     <decVal />
     <label xml:lang="de">Elektrische Bremse max. Fahrstufe</label>
     <label xml:lang="cs">Elektrdynamická brzda maximální rychlost</label>
+      <tooltip>CV382</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake pitch" CV="383" default="0" tooltip="CV383">
+  <variable CV="383" item="Electric brake pitch" default="0">
     <decVal />
     <label xml:lang="de">&lt;html&gt;Elektrische Bremse Abhängigkeit&lt;br&gt;Tonhöhe von Fahrgeschwindigkeit&lt;/html&gt;</label>
     <label xml:lang="cs">Elektrodynamická brzda výška tónu</label>
+      <tooltip>CV383</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake deceleration threshold" CV="384" default="0" tooltip="CV384">
+  <variable CV="384" item="Electric brake deceleration threshold" default="0">
     <decVal />
     <label xml:lang="de">Elektrische Bremse Verzögerungsschwelle</label>
     <label xml:lang="cs">Elektrodynamická brzda mez zpomalení</label>
+      <tooltip>CV384</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake downhill" CV="385" default="0" tooltip="CV385">
+  <variable CV="385" item="Electric brake downhill" default="0">
     <decVal />
     <label xml:lang="de">Elektrische Bremse Gefällefahrt</label>
     <label xml:lang="cs">Elektrodynamická brzda mez spádu</label>
+      <tooltip>CV385</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake loop time interval" mask="XXXXXVVV" CV="386" default="0" tooltip="CV386, values 0-7">
+  <variable CV="386" item="Electric brake loop time interval" mask="XXXXXVVV" default="0">
     <decVal />
     <label xml:lang="de">Elektrische Bremse Loop 1</label>
     <tooltip xml:lang="de">Laufzeit-Verlängerung (0-7 = 0-7s)</tooltip>
     <label xml:lang="cs">Elektrodynamická brzda časový interval smyčky</label>
+      <tooltip>CV386, values 0-7</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Electric brake loop cutoff" mask="XXXXVXXX" CV="386" default="0" tooltip="CV386 bit 3">
+  <variable CV="386" item="Electric brake loop cutoff" mask="XXXXVXXX" default="0">
     <enumVal>
         <enumChoice choice="0">
         <choice>Fade out</choice>
@@ -337,40 +358,49 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Elektrische Bremse Loop 2</label>
-    <tooltip xml:lang="de">Am Ende Sound Loop beenden und Sample bis Ende abspielen statt Sound ausblenden</tooltip>
     <label xml:lang="cs">Elektrodynamická brzda ukončení smyčky</label>
+      <tooltip>CV386 bit 3</tooltip>
+      <tooltip xml:lang="de">Am Ende Sound Loop beenden und Sample bis Ende abspielen statt Sound ausblenden</tooltip>
   </variable>
   
-  <variable item="Influence of Acceleration on Diesel Sound Steps" CV="387" default="0" tooltip="CV387">
+  <variable CV="387" item="Influence of Acceleration on Diesel Sound Steps" default="0">
     <decVal />
     <label xml:lang="de">Beschleunigen Diesel-Sound</label>
     <label xml:lang="cs">Vliv zrychlení na zvuk spalovacího motoru</label>
+      <tooltip>CV387</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Influence of Deceleration on Diesel Sound Steps" CV="388" default="0" tooltip="CV388">
+  <variable CV="388" item="Influence of Deceleration on Diesel Sound Steps" default="0">
     <decVal />
     <label xml:lang="de">Bremsen Diesel-Sound</label>
     <label xml:lang="cs">Vliv zpomalení na zvuk spalovacího motoru</label>
+      <tooltip>CV388</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Limitation of Acceleration on Diesel Sound Steps" CV="389" default="0" tooltip="CV389">
+  <variable CV="389" item="Limitation of Acceleration on Diesel Sound Steps" default="0">
     <decVal />
     <label xml:lang="de">Diesel Stufe Beschleunigungslimit</label>
     <label xml:lang="cs">Omezení zrychlení na zvuk spalovacího motoru</label>
+      <tooltip>CV389</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
   
-  <variable item="Momentum reduction when driving solo" CV="390" default="0" tooltip="CV390">
+  <variable CV="390" item="Momentum reduction when driving solo" default="0">
     <decVal />
     <label xml:lang="de">Reduzierung Verzögerungszeiten</label>
     <label xml:lang="cs">Omezení zrychlení při strojové jízdě</label>
+      <tooltip>CV390</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Driving idle sound speed step threshold" CV="391" default="0" tooltip="CV391">
+  <variable CV="391" item="Driving idle sound speed step threshold" default="0">
     <decVal />
     <label xml:lang="de">Gescchwindigkeitsschwelle anheben</label>
     <label xml:lang="cs">Mez rychlostního kroku pro zvuk volnoběhu</label>
+      <tooltip>CV391</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
   
-  
-  
-  <variable item="Lights flash with switchgear sound" CV="394" mask="XXXXXXXV" default="0" tooltip="CV394 bit 0">
+  <variable CV="394" item="Lights flash with switchgear sound" mask="XXXXXXXV" default="0">
     <enumVal>
         <enumChoice choice="0">
         <choice>no</choice>
@@ -385,14 +415,16 @@
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
     <label xml:lang="cs">Blikání světel pri zvuko kontroleru</label>
+      <tooltip>CV394 bit 0</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
 
-  <variable item="Maximum Volume" CV="395" default="0">
+  <variable CV="395" item="Maximum Volume" default="0">
     <decVal />
     <label xml:lang="de">Maximale Lautstärke</label>
     <label xml:lang="cs">Maximální hlasitost</label>
   </variable>
-  <variable item="Function Key to Increase Volume"  CV="396"  default="0" tooltip="CV396">
+  <variable CV="396" item="Function Key to Reduce Volume" default="0">
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -487,8 +519,10 @@
     </enumVal>
     <label xml:lang="de">Leiser Taste</label>
     <label xml:lang="cs">Funkční klávesa pro zvýšení hlasitosti</label>
+      <tooltip>CV396</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
-  <variable item="Function Key to Reduce Volume"  CV="397"  default="0"  tooltip="CV397">
+  <variable CV="397" item="Function Key to Increase Volume" default="0">
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -581,11 +615,13 @@
         <choice>F28</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="de">Lauter Taste</label>
-    <label xml:lang="cs">Funkční klávesa pro snížení hlasitosti</label>
+     <label xml:lang="de">Lauter Taste</label>
+     <label xml:lang="cs">Funkční klávesa pro snížení hlasitosti</label>
+      <tooltip>CV397</tooltip>
+      <tooltip xml:lang="de"> </tooltip>
   </variable>
   
-  <variable item="Automatic Coasting Speed Steps"  CV="398"  default="0">
+  <variable CV="398" item="Automatic Coasting Speed Steps" default="0">
     <decVal />
     <label xml:lang="de">Automatische Coasting-Wirkung</label>
     <label xml:lang="cs">Rychlostní kroky pro automatický výběh</label>
@@ -594,7 +630,5 @@
     <tooltip xml:lang="cs">Počet rychlostích kroků snížených za 0,5 vteřiny pro automatické spuštění výběhu</tooltip>
   </variable>
 </variables>
-  
-  
   
 </variables>
