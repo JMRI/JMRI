@@ -258,6 +258,9 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // check for hanging shutdown tasks
+        checkShutDownManager();
+        
         // checking time?
         if (checkTestDuration) {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
@@ -881,7 +884,24 @@ public class JUnitUtil {
         if (sm == null) return;
         List<ShutDownTask> list = sm.tasks();
         while (list != null && list.size() > 0) {
-            sm.deregister(list.get(0));
+            ShutDownTask task = list.get(0);
+            sm.deregister(task);
+            list = sm.tasks();  // avoid ConcurrentModificationException
+        }
+    }
+
+    /**
+     * Warns if the {@link jmri.ShutDownManager} was not left empty
+     * @see #initShutDownManager()
+     */
+    public static void checkShutDownManager() {
+        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
+        if (sm == null) return;
+        List<ShutDownTask> list = sm.tasks();
+        while (list != null && list.size() > 0) {
+            ShutDownTask task = list.get(0);
+            log.warn("Test {} left ShutDownTask registered: {}}", getTestClassName(), task.getName());
+            sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
     }
@@ -1137,7 +1157,7 @@ public class JUnitUtil {
             window.dispose();
         });
     }
-    
+        
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;
