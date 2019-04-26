@@ -51,18 +51,18 @@ public class CtcRunActionTest {
         // Clear Right turnout left on sideing using Call On.
         try {
             sm.getSensor("B-Side").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS3:LEVER").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS5:LEVER").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS6:CB").setKnownState(Sensor.INACTIVE);
             new EventTool().waitNoEvent(1000);
-            sm.getSensor("IS3:SN").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS3:SR").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS5:SN").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS5:SR").setKnownState(Sensor.ACTIVE);
 
-            sm.getSensor("IS4:CALLON").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS4:NL").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS4:LL").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS6:CALLON").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS6:NL").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS6:LL").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS6:CB").setKnownState(Sensor.INACTIVE);
         } catch (JmriException ex) {
             log.error("sensor exeptions: ", ex);
         }

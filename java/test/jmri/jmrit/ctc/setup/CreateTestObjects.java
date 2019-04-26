@@ -30,6 +30,7 @@ public class CreateTestObjects {
         createTurnout("IT101", "T-Left");
         createTurnout("IT102", "T-Right");
         createTurnout("IT103", "T-Stub");
+        createTurnout("IT104", "T-Spur");
 
         createSignalHead("IH01", "Left-U");
         createSignalHead("IH02", "Left-L");
@@ -112,6 +113,21 @@ public class CreateTestObjects {
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:CALLON");
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:LOCKTOGGLE");
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:UNLOCKEDIND");
+
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS7:LEVER");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS7:SN");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS7:SR");
+
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:CB");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:LK");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:NK");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:RK");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:LL");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:NL");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:RL");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:CALLON");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:LOCKTOGGLE");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS8:UNLOCKEDIND");
     }
 
     public static void createSensor(String sname, String uname) {
