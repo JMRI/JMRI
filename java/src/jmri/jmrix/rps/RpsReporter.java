@@ -23,14 +23,14 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     public RpsReporter(String systemName, String prefix) {
         super(systemName);
         // create Region from all but prefix
-        region = new Region(systemName.substring(prefix.length() + 1, systemName.length())); // multichar prefix from memo
+        region = new Region(systemName.substring(prefix.length() + 1)); // multichar prefix from memo
         Model.instance().addRegion(region);
     }
 
     public RpsReporter(String systemName, String userName, String prefix) {
         super(systemName, userName);
         // create Region from all but prefix
-        region = new Region(systemName.substring(prefix.length() + 1, systemName.length())); // multichar prefix from memo
+        region = new Region(systemName.substring(prefix.length() + 1)); // multichar prefix from memo
         Model.instance().addRegion(region);
     }
 

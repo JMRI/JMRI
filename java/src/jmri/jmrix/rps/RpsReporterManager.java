@@ -1,7 +1,8 @@
 package jmri.jmrix.rps;
 
 import jmri.Reporter;
-import jmri.managers.AbstractReporterManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RPS implementation of a ReporterManager.
@@ -9,7 +10,7 @@ import jmri.managers.AbstractReporterManager;
  * @author	Bob Jacobsen Copyright (C) 2008, 2019
  * @since 2.3.1
  */
-public class RpsReporterManager extends AbstractReporterManager {
+public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
 
     private RpsSystemConnectionMemo memo = null;
     protected String prefix = "R";
@@ -31,6 +32,7 @@ public class RpsReporterManager extends AbstractReporterManager {
      */
     @Override
     protected Reporter createNewReporter(String systemName, String userName) {
+        log.debug(userName);
         RpsReporter r = new RpsReporter(systemName, userName, prefix);
         Distributor.instance().addMeasurementListener(r);
         return r;
@@ -46,5 +48,7 @@ public class RpsReporterManager extends AbstractReporterManager {
     static public RpsReporterManager instance() {
         return null;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(RpsReporterManager.class);
 
 }

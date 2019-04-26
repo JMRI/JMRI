@@ -71,13 +71,13 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     public void setUp() {
         JUnitUtil.setUp();
 
-        l = new RpsSensorManager();
+        l = new RpsSensorManager(new RpsSystemConnectionMemo());
     }
 
     @After
     public void tearDown() {
         l.dispose();
         JUnitUtil.tearDown();
-
     }
+
 }

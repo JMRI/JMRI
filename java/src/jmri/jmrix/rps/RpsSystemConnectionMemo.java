@@ -29,7 +29,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public RpsSystemConnectionMemo() {
-        this("R", "RPS"); // Product name NOI18N
+        this("R", "RPS"); // default connection prefix, RPS product name NOI18N
         log.debug("Created nameless RpsSystemConnectionMemo");
     }
 
@@ -82,6 +82,24 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
         return reporterManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean provides(Class<?> type) {
+        if (getDisabled()) {
+            return false;
+        }
+
+        if (type.equals(jmri.SensorManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.ReporterManager.class)) {
+            return true;
+        }
+        return super.provides(type); // nothing, by default
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
@@ -90,6 +108,9 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
         }
         if (T.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
+        }
+        if (T.equals(jmri.ReporterManager.class)) {
+            return (T) getReporterManager();
         }
         return super.get(T);
     }
