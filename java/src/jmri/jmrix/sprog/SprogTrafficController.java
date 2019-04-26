@@ -293,6 +293,20 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             }
             replyAvailable = false;
             sendToInterface(messageToSend.message);
+            log.debug("Waiting for a reply");
+            try {
+                synchronized (lock) {
+                    lock.wait(timeout); // Wait for notify
+                }
+            } catch (InterruptedException e) {
+                log.debug("waitingForReply interrupted");
+            }
+            if (!replyAvailable) {
+                // Timed out
+                log.warn("Timeout waiting for reply from hardware");
+            } else {
+                log.debug("Notified of reply");
+            }
         }
     }
 
