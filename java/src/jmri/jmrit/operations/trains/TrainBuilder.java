@@ -35,6 +35,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+
+import org.apache.commons.lang3.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -5241,36 +5243,40 @@ public class TrainBuilder extends TrainCommon {
         log.debug(msg);
 
         if (trainManager.isBuildMessagesEnabled()) {
-            if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
-                JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                        new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
-            } else {
-                // build error, could not find destinations for cars departing staging
-                Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
-                int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
-                        .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
-                if (results == 0) {
-                    log.debug("User requested that cars be removed from staging track");
-                    removeCarsFromStaging();
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
+                    JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                            new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // build error, could not find destinations for cars departing staging
+                    Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
+                    int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
+                            .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+                    if (results == 0) {
+                        log.debug("User requested that cars be removed from staging track");
+                        removeCarsFromStaging();
+                    }
                 }
-            }
-            int size = carManager.getList(_train).size();
-            if (size > 0) {
-                if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
-                        new Object[]{size, _train.getName()}), Bundle.getMessage("buildResetTrain"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
+                int size = carManager.getList(_train).size();
+                if (size > 0) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
+                                    new Object[]{size, _train.getName()}),
+                            Bundle.getMessage("buildResetTrain"),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        _train.reset();
+                    }
+                } else if ((size = engineManager.getList(_train).size()) > 0) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
+                                    new Object[]{size, _train.getName()}),
+                            Bundle.getMessage("buildResetTrain"),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        _train.reset();
+                    }
                 }
-            } else if ((size = engineManager.getList(_train).size()) > 0) {
-                if (JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
-                                new Object[]{size, _train.getName()}),
-                        Bundle.getMessage("buildResetTrain"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
-                }
-            }
+            });
         }
         if (_buildReport != null) {
             addLine(_buildReport, ONE, msg);

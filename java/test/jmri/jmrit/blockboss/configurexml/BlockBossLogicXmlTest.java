@@ -156,6 +156,7 @@ public class BlockBossLogicXmlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 
