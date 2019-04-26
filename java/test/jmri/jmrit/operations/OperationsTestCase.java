@@ -60,6 +60,8 @@ public class OperationsTestCase {
                 // ignore.
             }
         }
+        
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }
