@@ -2,7 +2,6 @@ package jmri.web.servlet.operations;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import java.io.IOException;
@@ -46,7 +45,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return "Error manifest file not found for this train";
         }
         StringBuilder builder = new StringBuilder();
-        ArrayNode locations = (ArrayNode) this.getJsonManifest().path(JsonOperations.LOCATIONS);
+        JsonNode locations = this.getJsonManifest().path(JsonOperations.LOCATIONS);
         String previousLocationName = null;
         boolean hasWork;
         for (JsonNode location : locations) {
@@ -96,12 +95,10 @@ public class HtmlManifest extends HtmlTrainCommon {
 
             // engine change or helper service?
             if (location.path(JSON.OPTIONS).size() > 0) {
-                Iterator<JsonNode> options = location.path(JSON.OPTIONS).elements();
                 boolean changeEngines = false;
                 boolean changeCaboose = false;
-                while (options.hasNext()) {
-                    String option = options.next().textValue();
-                    switch (option) {
+                for (JsonNode option : location.path(JSON.OPTIONS)) {
+                    switch (option.asText()) {
                         case JSON.CHANGE_ENGINES:
                             changeEngines = true;
                             break;
@@ -215,46 +212,40 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String blockCars(JsonNode cars, RouteLocation location, boolean isManifest) {
         StringBuilder builder = new StringBuilder();
         log.debug("Cars is {}", cars);
-        if (cars.path(JSON.ADD).size() > 0 || cars.path(JSON.REMOVE).size() > 0) {
-            if (cars.path(JSON.ADD).size() > 0) {
-                for (JsonNode car : cars.path(JSON.ADD)) {
-                    if (!this.isLocalMove(car)) {
-                        // TODO utility format not quite ready, so display each car in manifest for now.
-                        // if (this.isUtilityCar(car)) {
-                        // builder.append(pickupUtilityCars(cars, car, location, isManifest));
-                        // } // use truncated format if there's a switch list
-                        // else
-                        if (isManifest && Setup.isTruncateManifestEnabled()
-                                && location.getLocation().isSwitchListEnabled()) {
-                            builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
-                        } else {
-                            builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
-                        }
-                    }
+        for (JsonNode car : cars.path(JSON.ADD)) {
+            if (!this.isLocalMove(car)) {
+                // TODO utility format not quite ready, so display each car in manifest for now.
+                // if (this.isUtilityCar(car)) {
+                // builder.append(pickupUtilityCars(cars, car, location, isManifest));
+                // } // use truncated format if there's a switch list
+                // else
+                if (isManifest && Setup.isTruncateManifestEnabled()
+                        && location.getLocation().isSwitchListEnabled()) {
+                    builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
+                } else {
+                    builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
                 }
             }
-            if (cars.path(JSON.REMOVE).size() > 0) {
-                for (JsonNode car : cars.path(JSON.REMOVE)) {
-                    boolean local = isLocalMove(car);
-                    // TODO utility format not quite ready, so display each car in manifest for now.
-                    // if (this.isUtilityCar(car)) {
-                    // builder.append(setoutUtilityCars(cars, car, location, isManifest));
-                    // } else
-                    if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
-                        // use truncated format if there's a switch list
-                        builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
-                    } else {
-                        String[] format;
-                        if (isManifest) {
-                            format = (!local) ? Setup.getDropManifestMessageFormat() : Setup
-                                    .getLocalManifestMessageFormat();
-                        } else {
-                            format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup
-                                    .getLocalSwitchListMessageFormat();
-                        }
-                        builder.append(dropCar(car, format, local));
-                    }
+        }
+        for (JsonNode car : cars.path(JSON.REMOVE)) {
+            boolean local = isLocalMove(car);
+            // TODO utility format not quite ready, so display each car in manifest for now.
+            // if (this.isUtilityCar(car)) {
+            // builder.append(setoutUtilityCars(cars, car, location, isManifest));
+            // } else
+            if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
+                // use truncated format if there's a switch list
+                builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
+            } else {
+                String[] format;
+                if (isManifest) {
+                    format = (!local) ? Setup.getDropManifestMessageFormat() : Setup
+                            .getLocalManifestMessageFormat();
+                } else {
+                    format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup
+                            .getLocalSwitchListMessageFormat();
                 }
+                builder.append(dropCar(car, format, local));
             }
         }
         return String.format(locale, strings.getProperty("CarsList"), builder.toString());
@@ -299,6 +290,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return ""; // print nothing for local move, see dropCar()
         }
         StringBuilder builder = new StringBuilder();
+        JsonNode data = car.path(JSON.DATA);
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
@@ -306,18 +298,18 @@ public class HtmlManifest extends HtmlTrainCommon {
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.LOCATION; // treat "track" as "location"
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getPickupLocation(data.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.DESTINATION)) {
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getDropLocation(data.path(attribute),
                                             ShowLocation.location))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.DESTINATION_TRACK)) {
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.LOCATION),
+                            this.getFormattedAttribute(attribute, this.getDropLocation(data.path(JsonOperations.LOCATION),
                                             ShowLocation.both))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, data)).append(" "); // NOI18N
                 }
             }
         }
@@ -327,6 +319,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropCar(JsonNode car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
+        JsonNode data = car.path(JSON.DATA);
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
@@ -334,18 +327,18 @@ public class HtmlManifest extends HtmlTrainCommon {
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.DESTINATION; // treat "track" as "destination"
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getDropLocation(data.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.LOCATION) && isLocal) {
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getPickupLocation(data.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.LOCATION)) {
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getPickupLocation(data.path(attribute),
                                             ShowLocation.location))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, data)).append(" "); // NOI18N
                 }
             }
         }
@@ -359,26 +352,25 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropEngines(JsonNode engines) {
         StringBuilder builder = new StringBuilder();
-        if (engines.size() > 0) {
-            for (JsonNode engine : engines) {
-                builder.append(this.dropEngine(engine));
-            }
-        }
+        engines.forEach((engine) -> {
+            builder.append(this.dropEngine(engine));
+        });
         return String.format(locale, strings.getProperty("EnginesList"), builder.toString());
     }
 
     protected String dropEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        JsonNode data = engine.path(JSON.DATA);
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.DESTINATION; // treat "track" as "destination"
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getDropLocation(engine.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getDropLocation(data.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, data)).append(" "); // NOI18N
                 }
             }
         }
@@ -398,6 +390,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        JsonNode data = engine.path(JSON.DATA);
         log.debug("PickupEngineMessageFormat: {}", (Object) Setup.getPickupEngineMessageFormat());
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             if (!attribute.trim().isEmpty()) {
@@ -405,10 +398,10 @@ public class HtmlManifest extends HtmlTrainCommon {
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.LOCATION; // treat "track" as "location"
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getPickupLocation(engine.path(attribute),
+                            this.getFormattedAttribute(attribute, this.getPickupLocation(data.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, data)).append(" "); // NOI18N
                 }
             }
         }
@@ -472,7 +465,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 boolean setout = false;
                 if (cars.path(JSON.ADD).size() > 0) {
                     for (JsonNode car : cars.path(JSON.ADD)) {
-                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.ID).textValue())) {
+                        if (track.getKey().equals(car.path(JSON.DATA).path(JsonOperations.TRACK).path(JSON.ID).textValue())) {
                             pickup = true;
                             break; // we do not need to iterate all cars
                         }
@@ -480,7 +473,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 if (cars.path(JSON.REMOVE).size() > 0) {
                     for (JsonNode car : cars.path(JSON.REMOVE)) {
-                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.ID).textValue())) {
+                        if (track.getKey().equals(car.path(JSON.DATA).path(JsonOperations.TRACK).path(JSON.ID).textValue())) {
                             setout = true;
                             break; // we do not need to iterate all cars
                         }
@@ -502,11 +495,12 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        if (car.path(JsonOperations.LOCATION).path(JSON.ROUTE).isMissingNode()
-                || car.path(JsonOperations.DESTINATION).path(JSON.ROUTE).isMissingNode()) {
+        JsonNode data = car.path(JSON.DATA);
+        if (data.path(JsonOperations.LOCATION).path(JSON.ROUTE).isMissingNode()
+                || data.path(JsonOperations.DESTINATION).path(JSON.ROUTE).isMissingNode()) {
             return false;
         }
-        return car.path(JsonOperations.LOCATION).path(JSON.ROUTE).equals(car.path(JsonOperations.DESTINATION).path(JSON.ROUTE));
+        return data.path(JsonOperations.LOCATION).path(JSON.ROUTE).equals(data.path(JsonOperations.DESTINATION).path(JSON.ROUTE));
     }
 
     protected boolean isUtilityCar(JsonNode car) {
