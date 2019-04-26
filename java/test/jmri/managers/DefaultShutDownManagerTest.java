@@ -86,6 +86,14 @@ public class DefaultShutDownManagerTest {
         }
     }
 
+    @Test
+    public void testInstanceManagerCreates() {
+        JUnitUtil.initShutDownManager();
+        jmri.ShutDownManager sdm = jmri.InstanceManager.getDefault(jmri.ShutDownManager.class);
+        Assert.assertNotNull(sdm);
+    }
+    
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
