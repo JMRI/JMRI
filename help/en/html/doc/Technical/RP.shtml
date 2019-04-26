@@ -203,9 +203,7 @@
             with <code>ci-compile-deprecations</code> to check this, or look at the
             <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">Jenkins CI report</a>
             (click the Types tab) to check the JMRI/JMRI master branch.
-            Don't forget to also migrate the 
-            Jython sample scripts! 
-
+        <li><strong>Don't forget to migrate the Jython sample scripts!</strong>
         <li>Wait an appropriate length of time; the more visible the class or method,
             the longer to wait.  Things that were in scripts should wait at least two
             production releases.
