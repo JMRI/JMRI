@@ -762,7 +762,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
         Assert.assertNotNull("Options Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",18,jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count",19,jmo.getItemCount());
     }
 
     @Test
@@ -838,6 +838,23 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"
                              + Bundle.getMessage("ToolBarSideFloat"), "/");
+    }
+
+    @Test
+    public void testPanelLocation() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
+
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("SetLocation"), "/");
+
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("SetLocationAlways"), "/");
+
+        e.componentMoved(null);
+        e.componentResized(null);
     }
 
     @Test

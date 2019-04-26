@@ -72,6 +72,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
     public JCheckBox graphicStateDisplay;
+    public JCheckBox editorMachineDependedntDisplay;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -83,6 +84,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doClickSelection(p = new JPanel());
         add(p);
         doGraphicState(p = new JPanel());
+        add(p);
+        doEditorMachineDependent(p = new JPanel());
         add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
@@ -106,6 +109,16 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
         });
         panel.add(graphicStateDisplay);
+    }
+
+    void doEditorMachineDependent(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        editorMachineDependedntDisplay = new JCheckBox(ConfigBundle.getMessage("GUIEditorMachineDependent"));
+        editorMachineDependedntDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isEditorMachineDependent());
+        editorMachineDependedntDisplay.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setEditorMachineDependent(editorMachineDependedntDisplay.isSelected());
+        });
+        panel.add(editorMachineDependedntDisplay);
     }
 
     void doLAF(JPanel panel) {

@@ -42,6 +42,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String GRAPHICTABLESTATE = "graphicTableState";
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
+    public final static String EDITOR_MACHINE_DEPENDENT= "editorMachineDependent";
     /**
      * Smallest font size a user can set the font size to other than zero
      * ({@value}). A font size of 0 indicates that the system default font size
@@ -67,6 +68,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
+    private boolean editorMachineDependent = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
     private boolean dirty = false;
@@ -100,6 +102,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
+            this.setEditorMachineDependent(preferences.getBoolean(EDITOR_MACHINE_DEPENDENT, this.isEditorMachineDependent()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
             log.debug("About to setDefault Locale");
@@ -160,6 +163,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
         preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
+        preferences.putBoolean(EDITOR_MACHINE_DEPENDENT, this.isEditorMachineDependent());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -388,6 +392,24 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
+     * @return the editorMachineDependent value
+     */
+    public boolean isEditorMachineDependent() {
+        return editorMachineDependent;
+    }
+
+    /**
+     * @param editorMachineDependent the editorMachineDependent value to set
+     */
+    public void setEditorMachineDependent(boolean editorMachineDependent) {
+        boolean oldEditorMachineDependent = this.editorMachineDependent;
+        this.editorMachineDependent = editorMachineDependent;
+        this.setDirty(true);
+        this.setRestartRequired(true);
+        firePropertyChange(EDITOR_MACHINE_DEPENDENT, oldEditorMachineDependent, editorMachineDependent);
+    }
+
+    /**
      * @return the lookAndFeel
      */
     public String getLookAndFeel() {
@@ -459,13 +481,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             }
         }
     }
-    
+
     /**
-     * Stand-alone service routine to 
+     * Stand-alone service routine to
      * set the default Locale.
      *
      * Intended to be invoked early, as soon as a profile is
-     * available, to ensure the correct language is set as 
+     * available, to ensure the correct language is set as
      * startup proceeds. Must be followed eventually
      * by a complete {@link #setLocale}.
      */
