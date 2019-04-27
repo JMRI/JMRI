@@ -22,7 +22,6 @@ import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JSON;
-import jmri.server.json.JsonException;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
 import jmri.util.FileUtil;

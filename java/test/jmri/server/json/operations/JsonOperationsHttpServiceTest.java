@@ -61,7 +61,7 @@ public class JsonOperationsHttpServiceTest {
     }
 
     @Test
-    public void TestDeleteInUseKernel() throws JsonException {
+    public void testDeleteInUseKernel() throws JsonException {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         Kernel k1 = manager.newKernel("test1");
         Car c1 = manager.newRS("road", "1");

@@ -167,7 +167,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                             Bundle.getMessage(locale, "ErrorNotFound", type, name));
                 }
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
-                    throwDeleteConflictException(type, name, getKernelCars(kernel, locale), locale);
+                    throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), locale);
                 }
                 getCarManager().deleteKernel(name);
                 break;
@@ -182,10 +182,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if ((cars.size() != 0 || locations.size() != 0) && !acceptForceDeleteToken(type, name, token)) {
                     ArrayNode conflicts = mapper.createArrayNode();
                     for (Car car : cars) {
-                        conflicts.add(utilities.getCar(car, locale));
+                        conflicts.add(message(CAR, utilities.getCar(car, locale)));
                     }
                     for (Location location : locations) {
-                        conflicts.add(utilities.getLocation(location, locale));
+                        conflicts.add(message(LOCATION, utilities.getLocation(location, locale)));
                     }
                     throwDeleteConflictException(type, name, conflicts, locale);
                 }
@@ -231,14 +231,18 @@ public class JsonOperationsHttpService extends JsonHttpService {
         data.put(WEIGHT, kernel.getAdjustedWeightTons());
         data.put(LENGTH, kernel.getTotalLength());
         data.set(LEAD, utilities.getCar(kernel.getLead(), locale));
-        data.set(CARS, getKernelCars(kernel, locale));
+        data.set(CARS, getKernelCars(kernel, false, locale));
         return message(KERNEL, data);
     }
 
-    private ArrayNode getKernelCars(Kernel kernel, Locale locale) {
+    private ArrayNode getKernelCars(Kernel kernel, boolean asMessage, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
         kernel.getCars().forEach((car) -> {
-            array.add(utilities.getCar(car, locale));
+            if (asMessage) {
+                array.add(message(CAR, utilities.getCar(car, locale)));
+            } else {
+                array.add(utilities.getCar(car, locale));
+            }
         });
         return array;
     }
