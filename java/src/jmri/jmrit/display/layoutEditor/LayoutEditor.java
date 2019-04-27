@@ -2503,16 +2503,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        //  save location and size
-        //
-//         JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
-//         optionMenu.add(locationItem);
-//         locationItem.addActionListener((ActionEvent event) -> {
-//             setCurrentPositionAndSize();
-//             log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
-//         });
-
-        //
         // Add Options
         //
         JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));

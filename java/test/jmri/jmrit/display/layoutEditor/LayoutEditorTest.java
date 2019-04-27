@@ -141,15 +141,15 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testGetLayoutWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // defaults to 0
-        Assert.assertEquals("layout width", 1420, e.getLayoutWidth());
+        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        Assert.assertEquals("layout width", w - 20, e.getLayoutWidth());
     }
 
     @Test
     public void testGetLayoutHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // defaults to 0
-        Assert.assertEquals("layout height", 780, e.getLayoutHeight());
+        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        Assert.assertEquals("layout height", h - 120, e.getLayoutHeight());
     }
 
     @Test
