@@ -1,13 +1,11 @@
 package jmri.server.json.operations;
 
-import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NULL;
 import static jmri.server.json.JSON.RENAME;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.CARS;
@@ -64,11 +62,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case CAR:
-                return this.utilities.getCar(name, locale);
+                return message(CAR, utilities.getCar(name, locale));
             case CAR_TYPE:
                 return getCarType(name, locale);
             case ENGINE:
-                return this.utilities.getEngine(name, locale);
+                return message(ENGINE, utilities.getEngine(name, locale));
             case KERNEL:
                 Kernel kernel = getCarManager().getKernelByName(name);
                 if (kernel == null) {
@@ -77,10 +75,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
                 return getKernel(kernel, locale);
             case LOCATION:
-                return this.utilities.getLocation(name, locale);
+                return message(LOCATION, utilities.getLocation(name, locale));
             case TRAIN:
             case TRAINS:
-                return this.utilities.getTrain(name, locale);
+                return message(TRAIN, utilities.getTrain(name, locale));
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
@@ -93,10 +91,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
         switch (type) {
             case TRAIN:
                 this.setTrain(name, data, locale);
-                return this.utilities.getTrain(name, locale);
+                return message(TRAIN, utilities.getTrain(name, locale));
             case CAR:
                 this.setCar(name, data, locale);
-                return this.utilities.getCar(name, locale);
+                return message(CAR, utilities.getCar(name, locale));
             case CAR_TYPE:
                 if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
@@ -204,9 +202,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                     Bundle.getMessage(locale, "ErrorNotFound", CAR_TYPE, name));
         }
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, CAR_TYPE);
-        ObjectNode data = root.putObject(DATA);
+        ObjectNode data = mapper.createObjectNode();
         data.put(NAME, name);
         ArrayNode cars = data.putArray(CAR);
         getCarManager().getByTypeList(name).forEach((car) -> {
@@ -218,27 +214,25 @@ public class JsonOperationsHttpService extends JsonHttpService {
         }).forEach((location) -> {
             locations.add(utilities.getLocation(location, locale));
         });
-        return root;
+        return message(CAR_TYPE, data);
     }
 
     private ArrayNode getCarTypes(Locale locale) throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(CarTypes.class).getNames()) {
-            root.add(getCarType(name, locale));
+            array.add(getCarType(name, locale));
         }
-        return root;
+        return array;
     }
 
     private ObjectNode getKernel(Kernel kernel, Locale locale) {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, KERNEL);
-        ObjectNode data = root.putObject(DATA);
+        ObjectNode data = mapper.createObjectNode();
         data.put(NAME, kernel.getName());
         data.put(WEIGHT, kernel.getAdjustedWeightTons());
         data.put(LENGTH, kernel.getTotalLength());
         data.put(LEAD, utilities.getCar(kernel.getLead(), locale));
         data.set(CARS, getKernelCars(kernel, locale));
-        return root;
+        return message(KERNEL, data);
     }
 
     private ArrayNode getKernelCars(Kernel kernel, Locale locale) {
@@ -260,7 +254,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public ArrayNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         getCarManager().getByIdList().forEach((car) -> {
-            root.add(this.utilities.getCar(car, locale));
+            root.add(message(CAR, utilities.getCar(car, locale)));
         });
         return root;
     }
@@ -268,7 +262,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public ArrayNode getEngines(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((engine) -> {
-            root.add(this.utilities.getEngine(engine, locale));
+            root.add(message(ENGINE, utilities.getEngine(engine, locale)));
         });
         return root;
     }
@@ -276,7 +270,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public ArrayNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         getLocationManager().getLocationsByIdList().forEach((location) -> {
-            root.add(utilities.getLocation(location, locale));
+            root.add(message(LOCATION, utilities.getLocation(location, locale)));
         });
         return root;
     }

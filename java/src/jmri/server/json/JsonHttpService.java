@@ -282,13 +282,11 @@ public abstract class JsonHttpService {
     @Nonnull
     protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema)
             throws JsonException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(JSON.TYPE, JSON.SCHEMA);
-        ObjectNode data = root.putObject(JSON.DATA);
+        ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, type);
         data.put(JSON.SERVER, server);
         data.set(JSON.SCHEMA, schema);
-        return root;
+        return message(JSON.SCHEMA, data);
     }
 
     /**
@@ -328,7 +326,8 @@ public abstract class JsonHttpService {
      * @param locale    the client locale
      * @throws JsonException the exception
      */
-    public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name, @Nonnull ArrayNode conflicts,
+    public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name,
+            @Nonnull ArrayNode conflicts,
             @Nonnull Locale locale) throws JsonException {
         ObjectNode data = mapper.createObjectNode();
         data.put(FORCE_DELETE, JsonDeleteTokenManager.getDefault().getToken(type, name));
@@ -339,4 +338,32 @@ public abstract class JsonHttpService {
                 Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data);
     }
 
+    /**
+     * Create a message node without an explicit method.
+     * 
+     * @param type the message type
+     * @param data the message data
+     * @return a message node
+     */
+    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data) {
+        return message(type, data, null);
+    }
+
+    /**
+     * Create a message node.
+     * 
+     * @param type   the message type
+     * @param data   the message data
+     * @param method the message method
+     * @return a message node
+     */
+    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @Nullable String method) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(JSON.TYPE, type);
+        root.set(JSON.DATA, data);
+        if (method != null) {
+            root.put(JSON.METHOD, method);
+        }
+        return root;
+    }
 }

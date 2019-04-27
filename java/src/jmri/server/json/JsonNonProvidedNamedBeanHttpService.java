@@ -47,11 +47,11 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     @Nonnull
     protected final ArrayNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale)
             throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
+        ArrayNode array = this.mapper.createArrayNode();
         for (T bean : manager.getNamedBeanSet()) {
-            root.add(this.doGet(bean, bean.getSystemName(), type, locale));
+            array.add(this.doGet(bean, bean.getSystemName(), type, locale));
         }
-        return root;
+        return array;
     }
 
     /**
@@ -91,9 +91,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
         if (bean == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
         }
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, type);
-        ObjectNode data = root.putObject(JSON.DATA);
+        ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, bean.getSystemName());
         data.put(JSON.USERNAME, bean.getUserName());
         data.put(JSON.COMMENT, bean.getComment());
@@ -106,7 +104,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
                 properties.add(mapper.createObjectNode().putNull(key));
             }
         });
-        return root;
+        return message(type, data);
     }
 
     /**

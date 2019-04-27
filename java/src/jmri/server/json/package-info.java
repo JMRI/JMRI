@@ -66,7 +66,8 @@
  * <dd>The RESTful method to be used, defaults to <em>get</em> if not
  * present.</dd>
  * <dt><code>data</code></dt>
- * <dd>The data object; see the schema for the properties of this object.</dd>
+ * <dd>The JSON represtation of a JMRI object; see the schema for the properties
+ * of this object, since the properties vary by <em>type</em>.</dd>
  * </dl>
  * <p>
  * A message from the server is either a single JSON Object
@@ -127,8 +128,8 @@
  * <p>
  * Changes to the major number represent a backwards incompatible change in the
  * protocol, while changes to the minor number represent an addition to the
- * protocol. The JSON protocol version is available to clients in the {@code hello}
- * message.
+ * protocol. The JSON protocol version is available to clients in the
+ * {@code hello} message.
  * </p>
  * <dl>
  * <dt>5.0 (JMRI 4.15.4)</dt>
@@ -146,8 +147,8 @@
  * <dt>4.1 (JMRI 4.11.4)</dt>
  * <dd>The RESTful method associated with a JSON message from the client absent
  * a {@code method} name with a value of {@value jmri.server.json.JSON#GET},
- * {@value jmri.server.json.JSON#POST}, {@value jmri.server.json.JSON#PUT},
- * or {@value jmri.server.json.JSON#DELETE} is assumed to be
+ * {@value jmri.server.json.JSON#POST}, {@value jmri.server.json.JSON#PUT}, or
+ * {@value jmri.server.json.JSON#DELETE} is assumed to be
  * {@value jmri.server.json.JSON#GET}.</dd>
  * <dt>4.0 (JMRI 4.3.4)</dt>
  * <dd>Prior to version 4.0, the JSON servers had a single definition for all
