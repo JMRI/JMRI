@@ -115,13 +115,8 @@ public class OperationsServlet extends HttpServlet {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
-            try {
-                JsonUtil utilities = new JsonUtil(this.mapper);
-                response.getWriter().print(utilities.getTrains(request.getLocale()));
-            } catch (JsonException ex) {
-                int code = ex.getJsonMessage().path(JSON.DATA).path(JsonException.CODE).asInt(200);
-                response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
-            }
+            JsonUtil utilities = new JsonUtil(this.mapper);
+            response.getWriter().print(utilities.getTrains(request.getLocale()));
         } else if ("html".equals(request.getParameter("format"))) {
             response.setContentType(UTF8_TEXT_HTML);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
