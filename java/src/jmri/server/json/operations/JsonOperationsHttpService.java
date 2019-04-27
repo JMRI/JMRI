@@ -230,7 +230,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
         data.put(NAME, kernel.getName());
         data.put(WEIGHT, kernel.getAdjustedWeightTons());
         data.put(LENGTH, kernel.getTotalLength());
-        data.set(LEAD, utilities.getCar(kernel.getLead(), locale));
+        Car lead = kernel.getLead();
+        if (lead != null) {
+            data.set(LEAD, utilities.getCar(kernel.getLead(), locale));
+        } else {
+            data.putNull(LEAD);
+        }
         data.set(CARS, getKernelCars(kernel, false, locale));
         return message(KERNEL, data);
     }
