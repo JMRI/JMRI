@@ -19,7 +19,7 @@ public class CbusNodeNVTableDataModelTest {
     public void testCTor() {
         
         CbusNodeNVTableDataModel nodeModel = new CbusNodeNVTableDataModel(
-            new CanSystemConnectionMemo(), 3,CbusNodeNVTableDataModel.MAX_COLUMN);
+            memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
         Assert.assertNotNull("exists",nodeModel);
         
@@ -29,10 +29,6 @@ public class CbusNodeNVTableDataModelTest {
     
     @Test
     public void testNodeNoNv() {
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         CbusNodeNVTableDataModel t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
@@ -55,17 +51,11 @@ public class CbusNodeNVTableDataModelTest {
         myNode.dispose();
         myNode = null;
         t = null;
-        memo = null;
-        tcis = null;
         
     }
     
     @Test
     public void testNodeWithNv() {
-    
-    CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         CbusNodeNVTableDataModel t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
@@ -193,20 +183,30 @@ public class CbusNodeNVTableDataModelTest {
         myNode.dispose();
         myNode = null;
         t = null;
-        memo = null;
-        tcis = null;
     
     }
+    
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
     
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
     }
 
     @After
     public void tearDown() {
+        
+        memo = null;
+        tcis = null;
+        
         JUnitUtil.tearDown();
     }
 

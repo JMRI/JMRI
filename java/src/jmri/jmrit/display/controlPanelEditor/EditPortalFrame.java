@@ -110,15 +110,12 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        javax.swing.border.Border padding = BorderFactory.createEmptyBorder(10, 5, 4, 5);
+        contentPane.setBorder(padding);
 
-        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-        contentPane.add(makePortalPanel());
-        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
+        contentPane.add(new JScrollPane(makePortalPanel()));
+        setContentPane(contentPane);
 
-        JPanel border = new JPanel();
-        border.setLayout(new java.awt.BorderLayout(10, 10));
-        border.add(contentPane);
-        setContentPane(new JScrollPane(border));
         pack();
         if (_loc.x < 0) {
             setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
@@ -160,7 +157,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private JPanel makePortalPanel() {
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
-        portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel();
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
