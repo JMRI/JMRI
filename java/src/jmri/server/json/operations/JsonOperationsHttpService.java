@@ -204,11 +204,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
         }
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, name);
-        ArrayNode cars = data.putArray(CAR);
+        ArrayNode cars = data.putArray(CARS);
         getCarManager().getByTypeList(name).forEach((car) -> {
             cars.add(utilities.getCar(car, locale));
         });
-        ArrayNode locations = data.putArray(LOCATION);
+        ArrayNode locations = data.putArray(LOCATIONS);
         getLocationManager().getList().stream().filter((location) -> {
             return location.acceptsTypeName(name);
         }).forEach((location) -> {

@@ -69,38 +69,40 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         this.setLocale(locale);
         String id = data.path(JSON.ID).asText(); // Operations uses ID attribute instead of name attribute
         // add listener to id if not already listening
-        switch (type) {
-            case TRAIN:
-                if (!this.trainListeners.containsKey(id)) {
-                    this.trainListeners.put(id, new TrainListener(id));
-                    InstanceManager.getDefault(TrainManager.class).getTrainById(id)
-                            .addPropertyChangeListener(this.trainListeners.get(id));
-                }
-                break;
-            case CAR:
-                if (!this.carListeners.containsKey(id)) {
-                    this.carListeners.put(id, new CarListener(id));
-                    InstanceManager.getDefault(CarManager.class).getById(id)
-                            .addPropertyChangeListener(this.carListeners.get(id));
-                }
-                break;
-            case LOCATION:
-                if (!this.locationListeners.containsKey(id)) {
-                    this.locationListeners.put(id, new LocationListener(id));
-                    InstanceManager.getDefault(LocationManager.class).getLocationById(id)
-                            .addPropertyChangeListener(this.locationListeners.get(id));
-                }
-                break;
-            case ENGINE:
-                if (!this.engineListeners.containsKey(id)) {
-                    this.engineListeners.put(id, new EngineListener(id));
-                    InstanceManager.getDefault(EngineManager.class).getById(id)
-                            .addPropertyChangeListener(this.engineListeners.get(id));
-                }
-                break;
-            default:
-                // other types ignored
-                break;
+        if (!method.equals(JSON.DELETE)) {
+            switch (type) {
+                case TRAIN:
+                    if (!this.trainListeners.containsKey(id)) {
+                        this.trainListeners.put(id, new TrainListener(id));
+                        InstanceManager.getDefault(TrainManager.class).getTrainById(id)
+                                .addPropertyChangeListener(this.trainListeners.get(id));
+                    }
+                    break;
+                case CAR:
+                    if (!this.carListeners.containsKey(id)) {
+                        this.carListeners.put(id, new CarListener(id));
+                        InstanceManager.getDefault(CarManager.class).getById(id)
+                                .addPropertyChangeListener(this.carListeners.get(id));
+                    }
+                    break;
+                case LOCATION:
+                    if (!this.locationListeners.containsKey(id)) {
+                        this.locationListeners.put(id, new LocationListener(id));
+                        InstanceManager.getDefault(LocationManager.class).getLocationById(id)
+                                .addPropertyChangeListener(this.locationListeners.get(id));
+                    }
+                    break;
+                case ENGINE:
+                    if (!this.engineListeners.containsKey(id)) {
+                        this.engineListeners.put(id, new EngineListener(id));
+                        InstanceManager.getDefault(EngineManager.class).getById(id)
+                                .addPropertyChangeListener(this.engineListeners.get(id));
+                    }
+                    break;
+                default:
+                    // other types ignored
+                    break;
+            }
         }
         switch (method) {
             case JSON.GET:
