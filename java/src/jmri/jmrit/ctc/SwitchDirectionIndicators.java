@@ -47,12 +47,18 @@ public class SwitchDirectionIndicators {
         if (_mActualTurnoutHasFeedback) { // Let real sensor that drives turnout feedback set indicators:
             _mActualTurnoutPropertyChangeListener = (PropertyChangeEvent e) -> { if (e.getPropertyName().equals("KnownState")) setSwitchIndicationSensorsToPresentState(); };   // NOI18N
             _mActualTurnout.addPropertyChangeListener(_mActualTurnoutPropertyChangeListener);
+            setSwitchIndicationSensorsToPresentState();
         } else { // Simulate feedback delay if any:
             _mSimulatedTurnoutFeedbackTimerActionListener = (ActionEvent) -> { setSwitchIndicationSensorsToPresentState(); };
             _mSimulatedTurnoutFeedbackTimer = new Timer(codingTimeInMilliseconds, _mSimulatedTurnoutFeedbackTimerActionListener);
             _mSimulatedTurnoutFeedbackTimer.setRepeats(false);
+/*      Due to a timing issue in JMRI, all turnouts that don't have a "real" feedback are reported as getKnownState() == UNKNOWN
+        when this code runs.  Since we can't determine the proper alignment of the turnout, just FORCE SWITCHNORMAL on the indicators:
+        I tried doing sensors.getSensor("IS25:TIN").setKnownState(ACTIVE) in scripts, but they ran before the original code in here,
+        and turned it off again.  Ergo this "poor" solution:
+*/            
+            setSwitchIndicatorSensors(CTCConstants.SWITCHNORMAL);
         }
-        setSwitchIndicationSensorsToPresentState();
     }
     
     public void removeAllListeners() {
