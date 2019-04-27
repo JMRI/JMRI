@@ -8,6 +8,7 @@ import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
+import static jmri.server.json.operations.JsonOperations.ROLLING_STOCK;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 
@@ -26,7 +27,7 @@ public class JsonOperationsServiceFactory implements JsonServiceFactory<JsonOper
 
     @Override
     public String[] getTypes() {
-        return new String[]{CAR, CARS, CAR_TYPE, ENGINE, ENGINES, LOCATION, LOCATIONS, TRAIN, TRAINS, KERNEL};
+        return new String[]{CAR, CARS, CAR_TYPE, ENGINE, ENGINES, KERNEL, LOCATION, LOCATIONS, ROLLING_STOCK, TRAIN, TRAINS};
     }
 
     @Override

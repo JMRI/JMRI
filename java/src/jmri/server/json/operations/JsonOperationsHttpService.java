@@ -14,6 +14,7 @@ import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.LEAD;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
+import static jmri.server.json.operations.JsonOperations.ROLLING_STOCK;
 import static jmri.server.json.operations.JsonOperations.TRACK;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
@@ -76,12 +77,15 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 return getKernel(kernel, locale);
             case LOCATION:
                 return message(LOCATION, utilities.getLocation(name, locale));
+            case ROLLING_STOCK:
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                        Bundle.getMessage(locale, "GetNotAllowed", type));
             case TRAIN:
             case TRAINS:
                 return message(TRAIN, utilities.getTrain(name, locale));
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
+                        Bundle.getMessage(locale, "ErrorInternal", type));
         }
     }
 
@@ -147,6 +151,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case LOCATION:
             case LOCATIONS:
                 return this.getLocations(locale);
+            case ROLLING_STOCK:
+                return this.getCars(locale).addAll(this.getEngines(locale));
             case TRAIN:
             case TRAINS:
                 return this.utilities.getTrains(locale);
