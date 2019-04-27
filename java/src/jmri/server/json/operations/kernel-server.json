@@ -23,11 +23,15 @@
                 "type": "object"
             }
         },
+        "lead": {
+            "type": ["object", "null"],
+            "description": "The lead car in the kernel"
+        },
         "rename": {
             "type": "string",
             "description": "Old name of kernel if just renamed"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "cars", "length", "weight"]
+    "required": ["name", "cars", "lead", "length", "weight"]
 }
