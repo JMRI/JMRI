@@ -3,16 +3,6 @@
     "title": "jmri-json-server-message",
     "type": ["object", "array"],
     "description": "Message from JMRI to client",
-    "properties": {
-        "type": {
-            "type": "string",
-            "description": "Data type if data is present, message type otherwise"
-        },
-        "data": {
-            "type": "object",
-            "description": "Data carried in message, see individual types for valid schemas"
-        }
-    },
     "definitions": {
         "jmri-json-server-message": {
             "oneOf": [
@@ -28,6 +18,15 @@
                         "data": {
                             "type": "object",
                             "description": "Data carried in message, see individual types for valid schemas"
+                        },
+                        "method": {
+                            "type": "string",
+                            "enum": ["get", "put", "post", "delete", "list"],
+                            "description": "HTTP Method equivalent advisory to the client to inform the client of a need to take an action on an object (for example, will be \"delete\" if advising a client that the client should delete an object that was deleted by the server); will not be present on objects merely being updated or added"
+                        },
+                        "id": {
+                            "type": "integer",
+                            "description": "A message id previously assigned by the client and returned unmodified in messages in direct response to the message from the client"
                         }
                     },
                     "additionalProperties": false,

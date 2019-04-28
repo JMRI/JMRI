@@ -16,7 +16,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.ReporterManager;
-import jmri.Manager.NameValidity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +41,12 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale)
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id)
             throws IOException, JmriException, JsonException {
         setLocale(locale);
         String name = data.path(NAME).asText();
         // protect against a request made with a user name instead of a system name
-        if (!method.equals(PUT) && service.getManager().validSystemNameFormat(name) != NameValidity.VALID) {
+        if (!method.equals(PUT)) {
             T bean = service.getManager().getBeanBySystemName(name);
             if (bean == null) {
                 bean = service.getManager().getBeanByUserName(name);
@@ -60,14 +59,14 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         }
         switch (method) {
             case PUT:
-                connection.sendMessage(service.doPut(type, name, data, locale));
+                connection.sendMessage(service.doPut(type, name, data, locale, id), id);
                 break;
             case GET:
-                connection.sendMessage(service.doGet(type, name, data, locale));
+                connection.sendMessage(service.doGet(type, name, data, locale, id), id);
                 break;
             case POST:
             default:
-                connection.sendMessage(service.doPost(type, name, data, locale));
+                connection.sendMessage(service.doPost(type, name, data, locale, id), id);
         }
         if (!this.beanListeners.containsKey(name)) {
             addListenerToBean(name);
@@ -75,9 +74,9 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
         setLocale(locale);
-        connection.sendMessage(service.doGetList(type, data, locale));
+        connection.sendMessage(service.doGetList(type, data, locale, id), id);
     }
 
     @Override
@@ -120,7 +119,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             try {
-                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), getLocale()));
+                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), getLocale(), 0), 0);
             } catch (
                     IOException |
                     JsonException ex) {
@@ -139,14 +138,14 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
                 try {
                     // send the new list
                     connection.sendMessage(service.doGetList(service.getType(),
-                            service.getObjectMapper().createObjectNode(), getLocale()));
+                            service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
                 // if we get an error, unregister as listener

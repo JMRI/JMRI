@@ -48,7 +48,7 @@
  * should be an idempotent method if the requested object does not exist.</dd>
  * <dt>{@value jmri.server.json.JSON#LIST}</dt>
  * <dd>Used in the socket interfaces to get a list of the given
- * <code>type</code>. The equavalent form in the RESTful interface is a
+ * <code>type</code>. The equivalent form in the RESTful interface is a
  * <code>GET</code> request to <code>/json/&lt;type&gt;</code>.</dd>
  * </dl>
  *
@@ -66,15 +66,19 @@
  * <dd>The RESTful method to be used, defaults to <em>get</em> if not
  * present.</dd>
  * <dt><code>data</code></dt>
- * <dd>The JSON represtation of a JMRI object; see the schema for the properties
- * of this object, since the properties vary by <em>type</em>.</dd>
+ * <dd>The JSON representation of a JMRI object; see the schema for the
+ * properties of this object, since the properties vary by <em>type</em>.</dd>
+ * <dt><code>id</code></dt>
+ * <dd>A message identity as a positive integer that will be returned unmodified
+ * to the client in any messages that are direct responses to the message
+ * containing an id. Defaults to zero if not present.</dd>
  * </dl>
  * <p>
  * A message from the server is either a single JSON Object
  * <code>{"type":"<em>type</em>","data":{...}}</code> except as noted below or a
  * JSON Array of objects. In the RESTful interface, messages from the client in
  * <em>POST</em> and <em>PUT</em> requests may contain a JSON object that
- * cooresponds to the <code>data</code> object in the socket interfaces.
+ * corresponds to the <code>data</code> object in the socket interfaces.
  * </p>
  * 
  * <h3>Exceptions</h3>
@@ -114,6 +118,9 @@
  * initiating the close (either a client or server) sends a message
  * <code>{"type":"goodbye"}</code> and closes its connection. The receiving
  * system should not respond and close its connection.</dd>
+ * <dt>Malformed JSON</dt>
+ * <dd>When receiving a message with malformed JSON, the JMRI server will not
+ * attempt to include an id if present in the malformed message.</dd>
  * </dl>
  * <p>
  * <strong>Note</strong> The <em>name</em> property of a data object
@@ -128,18 +135,33 @@
  * <p>
  * Changes to the major number represent a backwards incompatible change in the
  * protocol, while changes to the minor number represent an addition to the
+ * protocol, and changes to patch number represent a bug fix within the
  * protocol. The JSON protocol version is available to clients in the
- * {@code hello} message.
- * </p>
+ * {@code hello} message. Within test releases between to two production
+ * releases, breaking changes only reset the major number once (for example,
+ * breaking changes in JMRI 4.15.4 to JSON protocol version 4.1 followed by
+ * breaking changes to 5.0.0 in 4.15.6 result in JSON protocol version 5.0.0,
+ * not 6.0.0, since 4.15.4 and 4.15.6 are between JMRI production releases 4.14
+ * and 4.16).
+ * <p>
+ * Starting with 5.0.0, the JSON protocol version follows semantic version
+ * rules, prior to that the version is just a major.minor version.
  * <dl>
- * <dt>5.0 (JMRI 4.15.4)</dt>
- * <dd>Introduces a backwards-incompatible changes of:
+ * <dt>5.0.0 (JMRI 4.15.4 with further changes in 4.15.6)</dt>
+ * <dd>Adds the ability for a client to specify a message ID that will be
+ * included in messages returned in direct response to the identified message.
+ * <p>
+ * Introduces backwards-incompatible changes of:
  * <ul>
  * <li>Respecting the requirement that a JSON message object from the client
  * include a {@code method} name to not be treated as a
  * {@value jmri.server.json.JSON#GET} introduced in version 4.1.</li>
  * <li>Removes code that creates listeners for objects not requested by the
  * client</li>
+ * <li>JSON Operations objects use <code>name</code> instead of <code>id</code>
+ * to match behavior of other JSON objects.</li>
+ * <li>JSON Throttle objects use <code>name</code> instead of
+ * <code>throttle</code> to match behavior of other JSON objects.</li>
  * <li>Deprecates, but does not remove, support for plural tokens for listing
  * types, using the singular token syntax introduced in version 3.0.</li>
  * </ul>

@@ -4,17 +4,17 @@
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"train\"",
     "properties": {
-        "name": {
+        "userName": {
             "type": "string",
-            "description": "Name of train"
+            "description": "Operations name for train"
         },
         "icon_name": {
             "type": "string",
             "description": "Name of icon for train in panels"
         },
-        "id": {
+        "name": {
             "type": "string",
-            "description": "Id for train"
+            "description": "Operations id for train"
         },
         "departureTime": {
             "type": "string",
@@ -50,5 +50,5 @@
         }
     },
     "additionalProperties": true,
-    "required": ["name", "id"]
+    "required": ["name", "userName"]
 }

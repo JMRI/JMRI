@@ -2,6 +2,8 @@ package jmri.server.json.memory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -23,6 +25,8 @@ import org.junit.Test;
  */
 public class JsonMemoryHttpServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testDoGet() throws JmriException {
         JsonMemoryHttpService service = new JsonMemoryHttpService(new ObjectMapper());
@@ -30,18 +34,18 @@ public class JsonMemoryHttpServiceTest {
         Memory memory1 = manager.provideMemory("IM1"); // no value
         JsonNode result;
         try {
-            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonMemory.MEMORY, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IM1", result.path(JSON.DATA).path(JSON.NAME).asText());
             // JSON node has the text "null" if memory is null
             Assert.assertEquals("null", result.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("throw");
-            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("close");
-            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JSON.VALUE).asText());
         } catch (JsonException ex) {
@@ -60,19 +64,19 @@ public class JsonMemoryHttpServiceTest {
         try {
             // set off
             message = mapper.createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "close");
-            result = service.doPost(JsonMemory.MEMORY, "IM1", message, Locale.ENGLISH);
+            result = service.doPost(JsonMemory.MEMORY, "IM1", message, locale, 42);
             Assert.assertEquals("close", memory1.getValue());
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JSON.VALUE).asText());
             // set on
             message = mapper.createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "throw");
-            result = service.doPost(JsonMemory.MEMORY, "IM1", message, Locale.ENGLISH);
+            result = service.doPost(JsonMemory.MEMORY, "IM1", message, locale, 42);
             Assert.assertEquals("throw", memory1.getValue());
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JSON.VALUE).asText());
             // set null
             message = mapper.createObjectNode().put(JSON.NAME, "IM1").putNull(JSON.VALUE);
-            result = service.doPost(JsonMemory.MEMORY, "IM1", message, Locale.ENGLISH);
+            result = service.doPost(JsonMemory.MEMORY, "IM1", message, locale, 42);
             Assert.assertNull(memory1.getValue());
             Assert.assertEquals("null", result.path(JSON.DATA).path(JSON.VALUE).asText());
         } catch (JsonException ex) {
@@ -90,7 +94,7 @@ public class JsonMemoryHttpServiceTest {
             // add a memory
             Assert.assertNull(manager.getMemory("IM1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "close");
-            service.doPut(JsonMemory.MEMORY, "IM1", message, Locale.ENGLISH);
+            service.doPut(JsonMemory.MEMORY, "IM1", message, locale, 42);
             Assert.assertNotNull(manager.getMemory("IM1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -104,12 +108,12 @@ public class JsonMemoryHttpServiceTest {
             JsonMemoryHttpService service = new JsonMemoryHttpService(mapper);
             MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
             JsonNode result;
-            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), Locale.ENGLISH);
+            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideMemory("IM1");
             manager.provideMemory("IM2");
-            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), Locale.ENGLISH);
+            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {
@@ -120,7 +124,7 @@ public class JsonMemoryHttpServiceTest {
     @Test
     public void testDelete() {
         try {
-            (new JsonMemoryHttpService(new ObjectMapper())).doDelete(JsonMemory.MEMORY, "", Locale.ENGLISH);
+            (new JsonMemoryHttpService(new ObjectMapper())).doDelete(JsonMemory.MEMORY, "", NullNode.getInstance(), locale, 42);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;

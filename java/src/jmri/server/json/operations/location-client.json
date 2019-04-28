@@ -6,7 +6,7 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "Id of the engine being requested"
+            "description": "Operations id of the engine being requested"
         }
     },
     "additionalProperties": false,

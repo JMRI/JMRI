@@ -41,15 +41,16 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param data    JSON object possibly containing filters to limit the list
      *                    to
      * @param locale  the requesting client's Locale
+     * @param id      the message id set by the client
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    protected final ArrayNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale)
+    protected final ArrayNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale, int id)
             throws JsonException {
         ArrayNode array = this.mapper.createArrayNode();
         for (T bean : manager.getNamedBeanSet()) {
-            array.add(this.doGet(bean, bean.getSystemName(), type, locale));
+            array.add(this.doGet(bean, bean.getSystemName(), type, locale, id));
         }
         return array;
     }
@@ -67,12 +68,13 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param name   the name of the requested object
      * @param type   the type of the requested object
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
      *                           occurs
      */
     @Nonnull
-    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale)
+    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale, int id)
             throws JsonException;
 
     /**
@@ -82,14 +84,15 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param name   the name of the bean; used only if the bean is null
      * @param type   the JSON type of the bean
      * @param locale the locale used for any error messages
+     * @param id     the message id set by the client
      * @return a JSON node
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale)
+    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale, int id)
             throws JsonException {
         if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
         }
         ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, bean.getSystemName());
@@ -104,7 +107,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
                 properties.add(mapper.createObjectNode().putNull(key));
             }
         });
-        return message(type, data);
+        return message(type, data, id);
     }
 
     /**
@@ -119,14 +122,15 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param name   the system name of the bean
      * @param type   the JSON type of the bean
      * @param locale the locale used for any error messages
+     * @param id     the message id set by the client
      * @return the bean so that this can be used in a method chain
      * @throws JsonException if the bean is null
      */
     @Nonnull
     protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type,
-            @Nonnull Locale locale) throws JsonException {
+            @Nonnull Locale locale, int id) throws JsonException {
         if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
         }
         if (data.path(JSON.USERNAME).isTextual()) {
             bean.setUserName(data.path(JSON.USERNAME).asText());

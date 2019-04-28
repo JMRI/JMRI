@@ -36,13 +36,13 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), name, type, locale);
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), name, type, locale, id);
     }
 
     @Override
-    protected ObjectNode doGet(LayoutBlock layoutBlock, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = super.getNamedBean(layoutBlock, name, type, locale); // throws JsonException if layoutBlock == null
+    protected ObjectNode doGet(LayoutBlock layoutBlock, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = super.getNamedBean(layoutBlock, name, type, locale, id); // throws JsonException if layoutBlock == null
         ObjectNode data = root.with(DATA);
         if (layoutBlock != null) {
             data.put(STATE, layoutBlock.getState());
@@ -58,31 +58,32 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        LayoutBlock layoutBlock = this.postNamedBean(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), data, name, type, locale);
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        LayoutBlock layoutBlock = this.postNamedBean(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), data, name, type, locale, id);
         //layoutBlock.state is a bogus construct, so don't expect valid results from this
         if (!data.path(STATE).isMissingNode()) {
             layoutBlock.setState(data.path(STATE).asInt());
         }
-        return this.doGet(type, name, data, locale);
+        return this.doGet(type, name, data, locale, id);
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
-        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, locale);
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, locale, id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case LAYOUTBLOCK:
             case LAYOUTBLOCKS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/layoutblock/layoutBlock-server.json",
-                        "jmri/server/json/layoutblock/layoutBlock-client.json");
+                        "jmri/server/json/layoutblock/layoutBlock-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 }

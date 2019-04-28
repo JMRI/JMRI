@@ -28,6 +28,8 @@ import jmri.util.junit.rules.RetryRule;
 
 public class JsonTimeSocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Rule
     // this test is sensitive to load on test system, so allow a single retry before failing
     public RetryRule retryRule = new RetryRule(1);
@@ -43,7 +45,7 @@ public class JsonTimeSocketServiceTest {
         manager.setRun(false); // stop for testing
         // GET method
         service.onMessage(JsonTimeServiceFactory.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
-                Locale.ENGLISH);
+                locale, 42);
         JsonNode message = connection.getMessage();
         Date current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
@@ -57,7 +59,7 @@ public class JsonTimeSocketServiceTest {
         ObjectNode data = connection.getObjectMapper().createObjectNode();
         data.put(JSON.RATE, rate); // integer
         data.put(JSON.STATE, JSON.ON); // start the fast clock -- to test that listeners set in onMessage work
-        service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, locale, 42);
         message = connection.getMessage();
         current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
@@ -76,7 +78,7 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
         data.put(JSON.STATE, JSON.OFF); // stop the fast clock
-        service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, locale, 42);
         current = manager.getTime();
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
@@ -87,7 +89,7 @@ public class JsonTimeSocketServiceTest {
         // POST unreasonable rate
         data.put(JSON.RATE, 123456.789); // double so that both integers and doubles are tested
         try {
-            service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Invalid Request", 400, ex.getCode());
@@ -98,7 +100,7 @@ public class JsonTimeSocketServiceTest {
         data.put(JSON.RATE, 100); // set rate to max valid rate
         data.put(JsonTimeServiceFactory.TIME, "this is not a time");
         try {
-            service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Invalid Request", 400, ex.getCode());
@@ -106,7 +108,7 @@ public class JsonTimeSocketServiceTest {
         }
         // POST good time
         data.put(JsonTimeServiceFactory.TIME, formatter.format(waitFor));
-        service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, locale, 42);
         message = connection.getMessage();
         current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
@@ -124,7 +126,7 @@ public class JsonTimeSocketServiceTest {
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         try {
             service.onList(JsonTimeServiceFactory.TIME, connection.getObjectMapper().createObjectNode(),
-                    Locale.ENGLISH);
+                    locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP BAD REQUEST", 400, ex.getCode());
@@ -148,7 +150,7 @@ public class JsonTimeSocketServiceTest {
         manager.setRun(false); // stop for testing
         // GET method
         service.onMessage(JsonTimeServiceFactory.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
-                Locale.ENGLISH);
+                locale, 42);
         // Thrown JsonException on next message
         http.setThrowException(true);
         // We should be listening so make a change
@@ -185,12 +187,12 @@ public class JsonTimeSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, Timebase timebase, Date time, Locale locale) throws JsonException {
+        public JsonNode doGet(String type, Timebase timebase, Date time, Locale locale, int id) throws JsonException {
             if (throwException) {
                 throwException = false;
-                throw new JsonException(499, "Mock Exception");
+                throw new JsonException(499, "Mock Exception", id);
             }
-            return super.doGet(type, timebase, time, locale);
+            return super.doGet(type, timebase, time, locale, id);
         }
 
         public void setThrowException(boolean throwException) {

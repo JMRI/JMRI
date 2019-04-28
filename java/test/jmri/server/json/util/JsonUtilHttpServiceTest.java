@@ -2,6 +2,7 @@ package jmri.server.json.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.GraphicsEnvironment;
 import javax.servlet.http.HttpServletResponse;
@@ -67,16 +68,16 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGet() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
-        Assert.assertEquals(instance.getHello(locale, 10), instance.doGet(JSON.HELLO, null, instance.getObjectMapper().createObjectNode(), locale));
-        Assert.assertEquals(instance.getMetadata(locale, Metadata.JMRIVERCANON), instance.doGet(JSON.METADATA, Metadata.JMRIVERCANON, instance.getObjectMapper().createObjectNode(), locale));
-        Assert.assertEquals(instance.getMetadata(locale), instance.doGet(JSON.METADATA, null, instance.getObjectMapper().createObjectNode(), locale));
-        Assert.assertEquals(instance.getNode(locale), instance.doGet(JSON.NODE, null, instance.getObjectMapper().createObjectNode(), locale));
-        Assert.assertEquals(instance.getNetworkServices(locale), instance.doGet(JSON.NETWORK_SERVICE, null, instance.getObjectMapper().createObjectNode(), locale));
-        Assert.assertEquals(instance.getNetworkServices(locale), instance.doGet(JSON.NETWORK_SERVICES, null, instance.getObjectMapper().createObjectNode(), locale));
+        Assert.assertEquals(instance.getHello(locale, 10, 42), instance.doGet(JSON.HELLO, null, instance.getObjectMapper().createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getMetadata(locale, Metadata.JMRIVERCANON, 42), instance.doGet(JSON.METADATA, Metadata.JMRIVERCANON, instance.getObjectMapper().createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getMetadata(locale, 42), instance.doGet(JSON.METADATA, null, instance.getObjectMapper().createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getNode(locale, 42), instance.doGet(JSON.NODE, null, instance.getObjectMapper().createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getNetworkServices(locale, 42), instance.doGet(JSON.NETWORK_SERVICE, null, instance.getObjectMapper().createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getNetworkServices(locale, 42), instance.doGet(JSON.NETWORK_SERVICES, null, instance.getObjectMapper().createObjectNode(), locale, 42));
         JsonException exception = null;
         try {
             instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
-                    instance.getObjectMapper().createObjectNode(), locale);
+                    instance.getObjectMapper().createObjectNode(), locale, 42);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -84,7 +85,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals(HttpServletResponse.SC_NOT_FOUND, exception.getCode());
         exception = null;
         try {
-            instance.doGet("INVALID TYPE TOKEN", null, instance.getObjectMapper().createObjectNode(), locale);
+            instance.doGet("INVALID TYPE TOKEN", null, instance.getObjectMapper().createObjectNode(), locale, 42);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -98,8 +99,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
         }));
-        Assert.assertEquals(instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE), instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
-                        instance.getObjectMapper().createObjectNode(), locale));
+        Assert.assertEquals(instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE, 42), instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
+                        instance.getObjectMapper().createObjectNode(), locale, 42));
         service.stop();
         JUnitUtil.waitFor(() -> {
             return service.isPublished() == false;
@@ -118,10 +119,10 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGetList() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
-        Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, mapper.createObjectNode(), locale));
-        Assert.assertEquals(instance.getNetworkServices(locale), instance.doGetList(JSON.NETWORK_SERVICES, mapper.createObjectNode(), locale));
-        Assert.assertEquals(instance.getSystemConnections(locale), instance.doGetList(JSON.SYSTEM_CONNECTIONS, mapper.createObjectNode(), locale));
-        Assert.assertEquals(instance.getConfigProfiles(locale), instance.doGetList(JSON.CONFIG_PROFILES, mapper.createObjectNode(), locale));
+        Assert.assertEquals(instance.getMetadata(locale, 42), instance.doGetList(JSON.METADATA, mapper.createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getNetworkServices(locale, 42), instance.doGetList(JSON.NETWORK_SERVICES, mapper.createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getSystemConnections(locale, 42), instance.doGetList(JSON.SYSTEM_CONNECTIONS, mapper.createObjectNode(), locale, 42));
+        Assert.assertEquals(instance.getConfigProfiles(locale, 42), instance.doGetList(JSON.CONFIG_PROFILES, mapper.createObjectNode(), locale, 42));
     }
 
     /**
@@ -135,7 +136,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         String type = JSON.HELLO;
         String name = JSON.HELLO;
-        Assert.assertEquals(instance.doGet(type, name, instance.getObjectMapper().createObjectNode(), locale), instance.doPost(type, name, null, locale));
+        Assert.assertEquals(instance.doGet(type, name, NullNode.getInstance(), locale, 42), instance.doPost(type, name, NullNode.getInstance(), locale, 42));
     }
 
     /**
@@ -147,7 +148,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     public void testGetHello() throws JsonException {
         int heartbeat = 1000; // one second
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getHello(locale, heartbeat);
+        JsonNode result = instance.getHello(locale, heartbeat, 0);
         this.validate(result);
         Assert.assertEquals("Hello type", JSON.HELLO, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
@@ -161,6 +162,11 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals("Profile", profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText());
         Assert.assertEquals("Message has 2 elements", 2, result.size());
         Assert.assertEquals("Message data has 6 elements", 6, data.size());
+        result = instance.getHello(locale, heartbeat, 42);
+        this.validate(result);
+        data = result.path(JSON.DATA);
+        Assert.assertEquals("Message has 2 elements", 3, result.size());
+        Assert.assertEquals("Message data has 6 elements", 6, data.size());
     }
 
     /**
@@ -173,7 +179,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result;
         for (String metadata : Metadata.getSystemNameList()) {
-            result = instance.getMetadata(locale, metadata);
+            result = instance.getMetadata(locale, metadata, 42);
             this.validate(result);
             Assert.assertEquals(JSON.METADATA, result.path(JSON.TYPE).asText());
             Assert.assertEquals(metadata, result.path(JSON.DATA).path(JSON.NAME).asText());
@@ -181,7 +187,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         }
         JsonException exception = null;
         try {
-            instance.getMetadata(locale, "invalid_metadata_entry");
+            instance.getMetadata(locale, "invalid_metadata_entry", 42);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -196,7 +202,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetMetadata_Locale() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getMetadata(locale);
+        JsonNode result = instance.getMetadata(locale, 42);
         this.validate(result);
         Assert.assertNotNull(result);
         Assert.assertEquals(Metadata.getSystemNameList().size(), result.size());
@@ -211,7 +217,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     public void testGetNetworkServices() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         // no services published
-        JsonNode result = instance.getNetworkServices(locale);
+        JsonNode result = instance.getNetworkServices(locale, 42);
         this.validate(result);
         Assert.assertEquals(0, result.size());
         // publish a service
@@ -223,7 +229,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
         }));
-        result = instance.getNetworkServices(locale);
+        result = instance.getNetworkServices(locale, 42);
         this.validate(result);
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
@@ -249,7 +255,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetNode() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getNode(locale);
+        JsonNode result = instance.getNode(locale, 42);
         this.validate(result);
         // We should have a single node with no history of nodes
         // There are 3 "former" IDs when there is no history
@@ -268,7 +274,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetSystemConnections() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getSystemConnections(locale);
+        JsonNode result = instance.getSystemConnections(locale, 42);
         this.validate(result);
         // We should only have one internal connection
         Assert.assertEquals(1, result.size());
@@ -292,7 +298,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         // non-existent service
         JsonException exception = null;
         try {
-            result = instance.getNetworkService(locale, "non-existant-service"); // NOI18N
+            result = instance.getNetworkService(locale, "non-existant-service", 42); // NOI18N
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -308,7 +314,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
         }));
-        result = instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE);
+        result = instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE, 42);
         this.validate(result);
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
@@ -333,7 +339,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetRailroad() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getRailroad(locale);
+        JsonNode result = instance.getRailroad(locale, 42);
         this.validate(result);
         Assert.assertEquals(JSON.RAILROAD, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
@@ -350,7 +356,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        ObjectNode result = instance.getPanel(locale, editor, JSON.XML);
+        ObjectNode result = instance.getPanel(locale, editor, JSON.XML, 42);
         this.validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -366,7 +372,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getPanels(locale, JSON.XML);
+        JsonNode result = instance.getPanels(locale, JSON.XML, 42);
         this.validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -382,7 +388,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = instance.getPanels(locale);
+        JsonNode result = instance.getPanels(locale, 42);
         this.validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -397,7 +403,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetConfigProfiles() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        ArrayNode result = instance.getConfigProfiles(locale);
+        ArrayNode result = instance.getConfigProfiles(locale, 42);
         this.validate(result);
         Assert.assertEquals("Result has every profile", ProfileManager.getDefault().getProfiles().length, result.size());
     }

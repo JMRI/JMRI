@@ -46,39 +46,15 @@ public abstract class JsonHttpService {
      * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
      *                           occurs
      */
     @Nonnull
     public abstract JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
-            @Nonnull Locale locale)
+            @Nonnull Locale locale, int id)
             throws JsonException;
-
-    /**
-     * Respond to an HTTP GET request for the requested name.
-     * <p>
-     * If name is null, return a list of all objects for the given type, if
-     * appropriate.
-     * <p>
-     * This method should throw a 500 Internal Server Error if type is not
-     * recognized.
-     *
-     * @param type   the type of the requested object
-     * @param name   the system name of the requested object
-     * @param locale the requesting client's Locale
-     * @return a JSON description of the requested object
-     * @throws JsonException if the named object does not exist or other error
-     *                           occurs
-     * @deprecated since 4.15.5; use
-     *             {@link #doGet(String, String, JsonNode, Locale)} instead
-     */
-    @Nonnull
-    @Deprecated
-    public JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale)
-            throws JsonException {
-        return doGet(type, name, mapper.createObjectNode(), locale);
-    }
 
     /**
      * Respond to an HTTP POST request for the requested name.
@@ -91,6 +67,7 @@ public abstract class JsonHttpService {
      * @param data   JSON data set of attributes of the requested object to be
      *                   updated
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object after updates have
      *         been applied
      * @throws JsonException if the named object does not exist or other error
@@ -98,7 +75,7 @@ public abstract class JsonHttpService {
      */
     @Nonnull
     public abstract JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
-            @Nonnull Locale locale) throws JsonException;
+            @Nonnull Locale locale, int id) throws JsonException;
 
     /**
      * Respond to an HTTP PUT request for the requested name.
@@ -111,14 +88,15 @@ public abstract class JsonHttpService {
      * @param data   JSON data set of attributes of the requested object to be
      *                   created or updated
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if the method is not allowed or other error occurs
      */
     @Nonnull
-    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale)
+    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-                Bundle.getMessage(locale, "PutNotAllowed", type));
+                Bundle.getMessage(locale, "PutNotAllowed", type), id);
     }
 
     /**
@@ -133,32 +111,13 @@ public abstract class JsonHttpService {
      * @param name   the system name of the deleted object
      * @param data   additional data
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @throws JsonException if this method is not allowed or other error occurs
      */
-    public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale)
+    public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-                Bundle.getMessage(locale, "DeleteNotAllowed", type));
-    }
-
-    /**
-     * Respond to an HTTP DELETE request for the requested name.
-     * <p>
-     * Throw an HTTP 405 Method Not Allowed exception if the object is not
-     * intended to be removable.
-     * <p>
-     * Do not throw an error if the requested object does not exist.
-     *
-     * @param type   the type of the deleted object
-     * @param name   the system name of the deleted object
-     * @param locale the requesting client's Locale
-     * @throws JsonException if this method is not allowed or other error occurs
-     * @deprecated since 4.15.6; use
-     *             {@link #doDelete(String, String, JsonNode, Locale)} instead
-     */
-    @Deprecated
-    public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
-        doDelete(type, name, mapper.createObjectNode(), locale);
+                Bundle.getMessage(locale, "DeleteNotAllowed", type), id);
     }
 
     /**
@@ -174,35 +133,13 @@ public abstract class JsonHttpService {
      * @param type   the type of the requested list
      * @param data   JSON data set of attributes of the requested objects
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale)
+    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException;
-
-    /**
-     * Respond to an HTTP GET request for a list of items of type.
-     * <p>
-     * This is called by the {@link jmri.web.servlet.json.JsonServlet} to handle
-     * get requests for a type, but no name. Services that do not have named
-     * objects, such as the {@link jmri.server.json.time.JsonTimeHttpService}
-     * should respond to this with a list containing a single JSON object.
-     * Services that can't return a list may throw a 400 Bad Request
-     * JsonException in this case.
-     *
-     * @param type   the type of the requested list
-     * @param locale the requesting client's Locale
-     * @return a JSON list
-     * @throws JsonException may be thrown by concrete implementations
-     * @deprecated since 4.15.5; use
-     *             {@link #doGetList(String, JsonNode, Locale)} instead
-     */
-    @Nonnull
-    @Deprecated
-    public ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException {
-        return doGetList(type, mapper.createObjectNode(), locale);
-    }
 
     /**
      * Get the JSON Schema for the {@code data} property of the requested type
@@ -216,7 +153,7 @@ public abstract class JsonHttpService {
      * "server":boolean}} }
      * <p>
      * If using
-     * {@link #doSchema(java.lang.String, boolean, java.lang.String, java.lang.String) },
+     * {@link #doSchema(String, boolean, String, String, int)},
      * an implementation can be as simple as: {@code
      * return doSchema(type, server, "path/to/client/schema.json", "path/to/server/schema.json");
      * }
@@ -225,6 +162,7 @@ public abstract class JsonHttpService {
      * @param server true if the schema is for a message from the server; false
      *                   if the schema is for a message from the client
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON Schema valid for the type
      * @throws JsonException if an error occurs preparing schema; if type is is
      *                           not a type handled by this service, this must
@@ -232,12 +170,12 @@ public abstract class JsonHttpService {
      *                           localized message "ErrorUnknownType"
      */
     @Nonnull
-    public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale)
+    public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, int id)
             throws JsonException;
 
     /**
      * Helper to make implementing
-     * {@link #doSchema(java.lang.String, boolean, java.util.Locale)} easier.
+     * {@link #doSchema(String, boolean, Locale, int)} easier.
      * Throws a JsonException based on an IOException or NullPointerException if
      * unable to read the schemas as resources.
      *
@@ -247,12 +185,13 @@ public abstract class JsonHttpService {
      *                         client
      * @param serverSchema the path to the schema for a response object of type
      * @param clientSchema the path to the schema for a request object of type
+     * @param id           the message id set by the client
      * @return a JSON Schema valid for the type
      * @throws JsonException if an error occurs preparing schema
      */
     @Nonnull
     protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull String serverSchema,
-            @Nonnull String clientSchema) throws JsonException {
+            @Nonnull String clientSchema, int id) throws JsonException {
         JsonNode schema;
         try {
             if (server) {
@@ -263,30 +202,31 @@ public abstract class JsonHttpService {
         } catch (
                 IOException |
                 NullPointerException ex) {
-            throw new JsonException(500, ex);
+            throw new JsonException(500, ex, id);
         }
-        return this.doSchema(type, server, schema);
+        return this.doSchema(type, server, schema, id);
     }
 
     /**
      * Helper to make implementing
-     * {@link #doSchema(java.lang.String, boolean, java.util.Locale)} easier.
+     * {@link #doSchema(String, boolean, Locale, int)} easier.
      *
      * @param type   the type for which a schema is requested
      * @param server true if the schema is for a message from the server; false
      *                   if the schema is for a message from the client
      * @param schema the schema for a response object of type
+     * @param id     the message id set by the client
      * @return a JSON Schema valid for the type
      * @throws JsonException if an error occurs preparing schema
      */
     @Nonnull
-    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema)
+    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema, int id)
             throws JsonException {
         ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, type);
         data.put(JSON.SERVER, server);
         data.set(JSON.SCHEMA, schema);
-        return message(JSON.SCHEMA, data);
+        return message(JSON.SCHEMA, data, id);
     }
 
     /**
@@ -324,29 +264,31 @@ public abstract class JsonHttpService {
      * @param name      the name of the object in conflicting state
      * @param conflicts the using objects of this object; may be empty
      * @param locale    the client locale
+     * @param id        the message id set by the client
      * @throws JsonException the exception
      */
     public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name,
             @Nonnull ArrayNode conflicts,
-            @Nonnull Locale locale) throws JsonException {
+            @Nonnull Locale locale, int id) throws JsonException {
         ObjectNode data = mapper.createObjectNode();
         data.put(FORCE_DELETE, JsonDeleteTokenManager.getDefault().getToken(type, name));
         if (conflicts.size() != 0) {
             data.set(CONFLICT, conflicts);
         }
         throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data);
+                Bundle.getMessage(locale, "ErrorDeleteConflict", type, name), data, id);
     }
 
     /**
      * Create a message node without an explicit method.
      * 
-     * @param type the message type
-     * @param data the message data
+     * @param type   the message type
+     * @param data   the message data
+     * @param id     the message id provided by the client
      * @return a message node
      */
-    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data) {
-        return message(type, data, null);
+    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, int id) {
+        return message(type, data, null, id);
     }
 
     /**
@@ -355,14 +297,32 @@ public abstract class JsonHttpService {
      * @param type   the message type
      * @param data   the message data
      * @param method the message method
+     * @param id     the message id provided by the client
      * @return a message node
      */
-    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @Nullable String method) {
+    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
+        return message(mapper, type, data, method, id);
+    }
+
+    /**
+     * Create a message node.
+     * 
+     * @param mapper the ObjectMapper to use to construct the message
+     * @param type   the message type
+     * @param data   the message data
+     * @param method the message method
+     * @param id     the message id provided by the client
+     * @return a message node
+     */
+    public static final ObjectNode message(@Nonnull ObjectMapper mapper, @Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, type);
         root.set(JSON.DATA, data);
         if (method != null) {
             root.put(JSON.METHOD, method);
+        }
+        if (id > 0) {
+            root.put(JSON.ID, id);
         }
         return root;
     }

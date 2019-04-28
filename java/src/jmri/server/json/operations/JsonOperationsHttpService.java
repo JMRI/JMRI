@@ -20,6 +20,7 @@ import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 import static jmri.server.json.operations.JsonOperations.WEIGHT;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -60,120 +61,120 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR:
-                return message(CAR, utilities.getCar(name, locale));
+                return message(CAR, utilities.getCar(name, locale), id);
             case CAR_TYPE:
-                return getCarType(name, locale);
+                return getCarType(name, locale, id);
             case ENGINE:
-                return message(ENGINE, utilities.getEngine(name, locale));
+                return message(ENGINE, utilities.getEngine(name, locale), id);
             case KERNEL:
                 Kernel kernel = getCarManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", type, name));
+                            Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
                 }
-                return getKernel(kernel, locale);
+                return getKernel(kernel, locale, id);
             case LOCATION:
-                return message(LOCATION, utilities.getLocation(name, locale));
+                return message(LOCATION, utilities.getLocation(name, locale, id), id);
             case ROLLING_STOCK:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-                        Bundle.getMessage(locale, "GetNotAllowed", type));
+                        Bundle.getMessage(locale, "GetNotAllowed", type), id);
             case TRAIN:
             case TRAINS:
-                return message(TRAIN, utilities.getTrain(name, locale));
+                return message(TRAIN, utilities.getTrain(name, locale, id), id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorInternal", type));
+                        Bundle.getMessage(locale, "ErrorInternal", type), id);
         }
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         String newName = name;
         switch (type) {
             case TRAIN:
-                this.setTrain(name, data, locale);
-                return message(TRAIN, utilities.getTrain(name, locale));
+                this.setTrain(name, data, locale, id);
+                return message(TRAIN, utilities.getTrain(name, locale, id), id);
             case CAR:
-                this.setCar(name, data, locale);
-                return message(CAR, utilities.getCar(name, locale));
+                this.setCar(name, data, locale, id);
+                return message(CAR, utilities.getCar(name, locale), id);
             case CAR_TYPE:
                 if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
                     InstanceManager.getDefault(CarTypes.class).replaceName(name, newName);
                 }
-                return getCarType(newName, locale).put(RENAME, name);
+                return getCarType(newName, locale, id).put(RENAME, name);
             case KERNEL:
                 if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
                     getCarManager().replaceKernelName(name, newName);
                 }
-                return getKernel(getCarManager().getKernelByName(name), locale).put(RENAME, name);
+                return getKernel(getCarManager().getKernelByName(name), locale, id).put(RENAME, name);
             case ENGINE:
             case LOCATION:
             case TRAINS:
-                return this.doGet(type, name, data, locale);
+                return this.doGet(type, name, data, locale, id);
             default:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-                        Bundle.getMessage(locale, "PostNotAllowed", type)); // NOI18N
+                        Bundle.getMessage(locale, "PostNotAllowed", type), id); // NOI18N
         }
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doPut(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR_TYPE:
                 InstanceManager.getDefault(CarTypes.class).addName(name);
-                return getCarType(name, locale);
+                return getCarType(name, locale, id);
             case KERNEL:
                 Kernel kernel = getCarManager().newKernel(name);
-                return getKernel(kernel, locale);
+                return getKernel(kernel, locale, id);
             default:
-                return super.doPut(type, name, data, locale);
+                return super.doPut(type, name, data, locale, id);
         }
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR:
             case CARS:
-                return this.getCars(locale);
+                return this.getCars(locale, id);
             case CAR_TYPE:
-                return this.getCarTypes(locale);
+                return this.getCarTypes(locale, id);
             case ENGINE:
             case ENGINES:
-                return this.getEngines(locale);
+                return this.getEngines(locale, id);
             case KERNEL:
-                return this.getKernels(locale);
+                return this.getKernels(locale, id);
             case LOCATION:
             case LOCATIONS:
-                return this.getLocations(locale);
+                return this.getLocations(locale, id);
             case ROLLING_STOCK:
-                return this.getCars(locale).addAll(this.getEngines(locale));
+                return this.getCars(locale, id).addAll(this.getEngines(locale, id));
             case TRAIN:
             case TRAINS:
                 return this.utilities.getTrains(locale);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
+                        Bundle.getMessage(locale, "ErrorInternal", type), id); // NOI18N
         }
     }
 
     @Override
-    public void doDelete(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         String token = data.path(FORCE_DELETE).asText();
         switch (type) {
             case KERNEL:
                 Kernel kernel = getCarManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", type, name));
+                            Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
                 }
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
-                    throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), locale);
+                    throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), locale, id);
                 }
                 getCarManager().deleteKernel(name);
                 break;
@@ -188,25 +189,25 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if ((cars.size() != 0 || locations.size() != 0) && !acceptForceDeleteToken(type, name, token)) {
                     ArrayNode conflicts = mapper.createArrayNode();
                     for (Car car : cars) {
-                        conflicts.add(message(CAR, utilities.getCar(car, locale)));
+                        conflicts.add(message(CAR, utilities.getCar(car, locale), 0));
                     }
                     for (Location location : locations) {
-                        conflicts.add(message(LOCATION, utilities.getLocation(location, locale)));
+                        conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0));
                     }
-                    throwDeleteConflictException(type, name, conflicts, locale);
+                    throwDeleteConflictException(type, name, conflicts, locale, id);
                 }
                 InstanceManager.getDefault(CarTypes.class).deleteName(name);
                 break;
             default:
-                super.doDelete(type, name, data, locale);
+                super.doDelete(type, name, data, locale, id);
         }
     }
 
-    private ObjectNode getCarType(String name, Locale locale) throws JsonException {
+    private ObjectNode getCarType(String name, Locale locale, int id) throws JsonException {
         CarTypes manager = InstanceManager.getDefault(CarTypes.class);
         if (!manager.containsName(name)) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", CAR_TYPE, name));
+                    Bundle.getMessage(locale, "ErrorNotFound", CAR_TYPE, name), id);
         }
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, name);
@@ -220,18 +221,18 @@ public class JsonOperationsHttpService extends JsonHttpService {
         }).forEach((location) -> {
             locations.add(utilities.getLocation(location, locale));
         });
-        return message(CAR_TYPE, data);
+        return message(CAR_TYPE, data, id);
     }
 
-    private ArrayNode getCarTypes(Locale locale) throws JsonException {
+    private ArrayNode getCarTypes(Locale locale, int id) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(CarTypes.class).getNames()) {
-            array.add(getCarType(name, locale));
+            array.add(getCarType(name, locale, id));
         }
         return array;
     }
 
-    private ObjectNode getKernel(Kernel kernel, Locale locale) {
+    private ObjectNode getKernel(Kernel kernel, Locale locale, int id) {
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, kernel.getName());
         data.put(WEIGHT, kernel.getAdjustedWeightTons());
@@ -243,14 +244,14 @@ public class JsonOperationsHttpService extends JsonHttpService {
             data.putNull(LEAD);
         }
         data.set(CARS, getKernelCars(kernel, false, locale));
-        return message(KERNEL, data);
+        return message(KERNEL, data, id);
     }
 
     private ArrayNode getKernelCars(Kernel kernel, boolean asMessage, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
         kernel.getCars().forEach((car) -> {
             if (asMessage) {
-                array.add(message(CAR, utilities.getCar(car, locale)));
+                array.add(message(CAR, utilities.getCar(car, locale), 0));
             } else {
                 array.add(utilities.getCar(car, locale));
             }
@@ -258,34 +259,34 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return array;
     }
 
-    private ArrayNode getKernels(Locale locale) {
+    private ArrayNode getKernels(Locale locale, int id) {
         ArrayNode root = mapper.createArrayNode();
         getCarManager().getKernelNameList().forEach((kernel) -> {
-            root.add(getKernel(getCarManager().getKernelByName(kernel), locale));
+            root.add(getKernel(getCarManager().getKernelByName(kernel), locale, id));
         });
         return root;
     }
 
-    public ArrayNode getCars(Locale locale) {
+    public ArrayNode getCars(Locale locale, int id) {
         ArrayNode root = mapper.createArrayNode();
         getCarManager().getByIdList().forEach((car) -> {
-            root.add(message(CAR, utilities.getCar(car, locale)));
+            root.add(message(CAR, utilities.getCar(car, locale), id));
         });
         return root;
     }
 
-    public ArrayNode getEngines(Locale locale) {
+    public ArrayNode getEngines(Locale locale, int id) {
         ArrayNode root = mapper.createArrayNode();
         InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((engine) -> {
-            root.add(message(ENGINE, utilities.getEngine(engine, locale)));
+            root.add(message(ENGINE, utilities.getEngine(engine, locale), id));
         });
         return root;
     }
 
-    public ArrayNode getLocations(Locale locale) throws JsonException {
+    public ArrayNode getLocations(Locale locale, int id) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         getLocationManager().getLocationsByIdList().forEach((location) -> {
-            root.add(message(LOCATION, utilities.getLocation(location, locale)));
+            root.add(message(LOCATION, utilities.getLocation(location, locale), id));
         });
         return root;
     }
@@ -297,20 +298,21 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
      * cannot be completed, throws error code 428.
      *
-     * @param id     id of the train
+     * @param name   id of the train
      * @param data   train data to change
      * @param locale locale to throw exceptions in
+     * @param id     message id set by client
      * @throws jmri.server.json.JsonException if the train cannot move to the
      *                                            location in data.
      */
-    public void setTrain(String id, JsonNode data, Locale locale) throws JsonException {
-        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
+    public void setTrain(String name, JsonNode data, Locale locale, int id) throws JsonException {
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(name);
         if (!data.path(LOCATION).isMissingNode()) {
             String location = data.path(LOCATION).asText();
             if (location.equals(NULL)) {
                 train.terminate();
             } else if (!train.move(location)) {
-                throw new JsonException(428, Bundle.getMessage(locale, "ErrorTrainMovement", id, location));
+                throw new JsonException(428, Bundle.getMessage(locale, "ErrorTrainMovement", name, location), id);
             }
         }
     }
@@ -320,21 +322,22 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * <p>
      * Currently only sets the location of the car.
      *
-     * @param id     id of the car
+     * @param name   id of the car
      * @param data   car data to change
-     * @param locale locale to throw exceptions in.
+     * @param locale locale to throw exceptions in
+     * @param id     message id set by client
      * @throws jmri.server.json.JsonException if the car cannot be set to the
      *                                            location in data
      */
-    public void setCar(String id, JsonNode data, Locale locale) throws JsonException {
-        Car car = getCarManager().getById(id);
+    public void setCar(String name, JsonNode data, Locale locale, int id) throws JsonException {
+        Car car = getCarManager().getById(name);
         if (!data.path(LOCATION).isMissingNode()) {
             String locationId = data.path(LOCATION).asText();
             String trackId = data.path(TRACK).asText();
             Location location = getLocationManager().getLocationById(locationId);
             Track track = (trackId != null) ? location.getTrackById(trackId) : null;
             if (!car.setLocation(location, track, true).equals(Track.OKAY)) {
-                throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", id, locationId, trackId));
+                throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", name, locationId, trackId), id);
             }
         }
     }
@@ -348,45 +351,62 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR:
             case CARS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/car-server.json",
-                        "jmri/server/json/operations/car-client.json");
+                        "jmri/server/json/operations/car-client.json",
+                        id);
             case CAR_TYPE:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/carType-server.json",
-                        "jmri/server/json/operations/carType-client.json");
+                        "jmri/server/json/operations/carType-client.json",
+                        id);
             case ENGINE:
             case ENGINES:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/engine-server.json",
-                        "jmri/server/json/operations/engine-client.json");
+                        "jmri/server/json/operations/engine-client.json",
+                        id);
             case KERNEL:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/kernel-server.json",
-                        "jmri/server/json/operations/kernel-client.json");
+                        "jmri/server/json/operations/kernel-client.json",
+                        id);
             case LOCATION:
             case LOCATIONS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/location-server.json",
-                        "jmri/server/json/operations/location-client.json");
+                        "jmri/server/json/operations/location-client.json",
+                        id);
+            case ROLLING_STOCK:
+                if (server) {
+                    try {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/operations/rollingStock-server.json")), id);
+                    } catch (IOException ex) {
+                        throw new JsonException(500, ex, id);
+                    }
+                } else {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type), id);
+                }
             case TRAIN:
             case TRAINS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/train-server.json",
-                        "jmri/server/json/operations/train-client.json");
+                        "jmri/server/json/operations/train-client.json",
+                        id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorUnknownType", type));
+                        Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 

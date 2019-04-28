@@ -61,7 +61,7 @@ public class JsonManifest extends TrainCommon {
         } else {
             root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(Setup.getRailroadName()));
         }
-        root.put(JSON.NAME, StringEscapeUtils.escapeHtml4(this.train.getName()));
+        root.put(JSON.USERNAME, StringEscapeUtils.escapeHtml4(this.train.getName()));
         root.put(JSON.DESCRIPTION, StringEscapeUtils.escapeHtml4(this.train.getDescription()));
         root.set(JsonOperations.LOCATIONS, this.getLocations());
         if (!this.train.getManifestLogoPathName().equals(Train.NONE)) {
@@ -82,8 +82,8 @@ public class JsonManifest extends TrainCommon {
             String locationName = splitString(routeLocation.getName());
             ObjectNode jsonLocation = this.mapper.createObjectNode();
             ObjectNode jsonCars = this.mapper.createObjectNode();
-            jsonLocation.put(JSON.NAME, StringEscapeUtils.escapeHtml4(locationName));
-            jsonLocation.put(JSON.ID, routeLocation.getId());
+            jsonLocation.put(JSON.USERNAME, StringEscapeUtils.escapeHtml4(locationName));
+            jsonLocation.put(JSON.NAME, routeLocation.getId());
             if (routeLocation != train.getRoute().getDepartsRouteLocation()) {
                 jsonLocation.put(JSON.ARRIVAL_TIME, train.getExpectedArrivalTime(routeLocation));
             }
@@ -97,7 +97,7 @@ public class JsonManifest extends TrainCommon {
             // add location comment and id
             ObjectNode locationNode = this.mapper.createObjectNode();
             locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment()));
-            locationNode.put(JSON.ID, routeLocation.getLocation().getId());
+            locationNode.put(JSON.NAME, routeLocation.getLocation().getId());
             jsonLocation.set(JsonOperations.LOCATION, locationNode);
             jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getComment()));
             // engine change or helper service?

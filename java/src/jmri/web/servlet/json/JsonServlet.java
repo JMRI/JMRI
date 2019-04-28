@@ -1,6 +1,7 @@
 package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.VALUE;
@@ -133,11 +134,17 @@ public class JsonServlet extends WebSocketServlet {
     protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter(ID));
+        } catch (NumberFormatException ex) {
+            id = 0;
+        }
 
         if (request.getAttribute("result") != null) {
             JsonNode result = (JsonNode) request.getAttribute("result");
             int code = result.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-            this.sendMessage(response, code, result);
+            this.sendMessage(response, code, result, id);
             return;
         }
 
@@ -166,7 +173,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                lists.add(service.doGetList(type, parameters, request.getLocale()));
+                                lists.add(service.doGetList(type, parameters, request.getLocale(), id));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -192,7 +199,7 @@ public class JsonServlet extends WebSocketServlet {
                     if (reply == null) {
                         log.warn("Type {} unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
                     }
                 } else {
                     if (this.services.get(type) != null) {
@@ -200,7 +207,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doGet(type, name, parameters, request.getLocale()));
+                                array.add(service.doGet(type, name, parameters, request.getLocale(), id));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -223,14 +230,14 @@ public class JsonServlet extends WebSocketServlet {
                     if (reply == null) {
                         log.warn("Requested type '{}' unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
                     }
                 }
             } catch (JsonException ex) {
                 reply = ex.getJsonMessage();
             }
             int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-            this.sendMessage(response, code, reply);
+            this.sendMessage(response, code, reply, id);
         } else {
             response.setContentType(ServletUtil.UTF8_TEXT_HTML); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
@@ -258,6 +265,12 @@ public class JsonServlet extends WebSocketServlet {
         String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter(ID));
+        } catch (NumberFormatException ex) {
+            id = 0;
+        }
         JsonNode data;
         JsonNode reply = null;
         try {
@@ -292,7 +305,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doPost(type, name, data, request.getLocale()));
+                                array.add(service.doPost(type, name, data, request.getLocale(), id));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -315,21 +328,21 @@ public class JsonServlet extends WebSocketServlet {
                     if (reply == null) {
                         log.warn("Type {} unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
                     }
                 } else {
                     log.error("Name must be defined.");
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Name must be defined."); // Need to I18N
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Name must be defined.", id); // Need to I18N
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", id); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
         int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-        this.sendMessage(response, code, reply);
+        this.sendMessage(response, code, reply, id);
     }
 
     @Override
@@ -342,6 +355,12 @@ public class JsonServlet extends WebSocketServlet {
         String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter(ID));
+        } catch (NumberFormatException ex) {
+            id = 0;
+        }
         JsonNode data;
         JsonNode reply = null;
         try {
@@ -351,7 +370,7 @@ public class JsonServlet extends WebSocketServlet {
                     data = data.path(DATA);
                 }
             } else {
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "PUT request must be a JSON object"); // need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "PUT request must be a JSON object", id); // need to I18N
             }
             if (type != null) {
                 // for historical reasons, set the name to POWER on a power request
@@ -366,7 +385,7 @@ public class JsonServlet extends WebSocketServlet {
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.add(service.doPut(type, name, data, request.getLocale()));
+                                array.add(service.doPut(type, name, data, request.getLocale(), id));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
@@ -388,22 +407,22 @@ public class JsonServlet extends WebSocketServlet {
                     }
                     if (reply == null) {
                         // not a creatable item
-                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, type + " is not a creatable type"); // need to I18N
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, type + " is not a creatable type", id); // need to I18N
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
+                            Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", id); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
         int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-        this.sendMessage(response, code, reply);
+        this.sendMessage(response, code, reply, id);
     }
 
     @Override
@@ -417,11 +436,17 @@ public class JsonServlet extends WebSocketServlet {
         String[] rest = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter(ID));
+        } catch (NumberFormatException ex) {
+            id = 0;
+        }
         JsonNode reply = mapper.createObjectNode();
         try {
             if (type != null) {
                 if (name == null) {
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified"); // need to I18N
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified", id); // need to I18N
                 }
                 JsonNode data = mapper.createObjectNode();
                 if (request.getContentType().contains(APPLICATION_JSON)) {
@@ -431,11 +456,11 @@ public class JsonServlet extends WebSocketServlet {
                     }
                 }
                 for (JsonHttpService service : this.services.get(type)) {
-                    service.doDelete(type, name, data, request.getLocale());
+                    service.doDelete(type, name, data, request.getLocale(), id);
                 }
             } else {
                 log.debug("Type not specified.");
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified."); // Need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", id); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
@@ -443,7 +468,7 @@ public class JsonServlet extends WebSocketServlet {
         int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
         // only include a response body if something went wrong
         if (code != HttpServletResponse.SC_OK) {
-            this.sendMessage(response, code, reply);
+            this.sendMessage(response, code, reply, id);
         }
     }
 
@@ -458,13 +483,14 @@ public class JsonServlet extends WebSocketServlet {
      * @param response the HTTP response
      * @param code the HTTP response code
      * @param message the message to send
+     * @param id set by client for message
      * @throws IOException if unable to send
      */
-    private void sendMessage(HttpServletResponse response, int code, JsonNode message) throws IOException {
+    private void sendMessage(HttpServletResponse response, int code, JsonNode message, int id) throws IOException {
         if (this.preferences.getValidateServerMessages()) {
             try {
                 InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(message, true,
-                        response.getLocale());
+                        response.getLocale(), id);
             } catch (JsonException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 response.getWriter().write(this.mapper.writeValueAsString(ex.getJsonMessage()));

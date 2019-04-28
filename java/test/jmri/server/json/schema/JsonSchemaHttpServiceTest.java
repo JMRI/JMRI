@@ -17,6 +17,8 @@ import org.junit.Test;
  */
 public class JsonSchemaHttpServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -35,7 +37,7 @@ public class JsonSchemaHttpServiceTest {
     @Test
     public void testDoGet() throws JsonException {
         JsonSchemaHttpService instance = new JsonSchemaHttpService(new ObjectMapper());
-        JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, instance.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+        JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, instance.getObjectMapper().createObjectNode(), locale, 42);
         Assert.assertTrue("Is an array", result.isArray());
         Assert.assertEquals("Array has two elements", 2, result.size());
         Assert.assertTrue("1st element is JsonObject", result.get(0).isObject());
@@ -43,7 +45,7 @@ public class JsonSchemaHttpServiceTest {
         this.testIsSchema(result.get(0));
         this.testIsSchema(result.get(1));
         try {
-            instance.doGet(JSON.JSON, JSON.JSON, instance.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            instance.doGet(JSON.JSON, JSON.JSON, instance.getObjectMapper().createObjectNode(), locale, 42);
             Assert.fail("Should have thrown exception");
         } catch (JsonException ex) {
             Assert.assertEquals("Exception code is 400", 400, ex.getCode());

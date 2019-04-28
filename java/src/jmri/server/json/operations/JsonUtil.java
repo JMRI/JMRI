@@ -5,7 +5,6 @@ import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DIRECTION;
 import static jmri.server.json.JSON.EXPECTED_ARRIVAL;
 import static jmri.server.json.JSON.EXPECTED_DEPARTURE;
-import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
@@ -14,6 +13,7 @@ import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.ROUTE;
 import static jmri.server.json.JSON.SEQUENCE;
 import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.TRACK;
@@ -155,8 +155,8 @@ public class JsonUtil {
      */
     public ObjectNode getLocation(@Nonnull Location location, Locale locale) {
         ObjectNode data = mapper.createObjectNode();
-        data.put(NAME, location.getName());
-        data.put(ID, location.getId());
+        data.put(USERNAME, location.getName());
+        data.put(NAME, location.getId());
         data.put(LENGTH, location.getLength());
         data.put(COMMENT, location.getComment());
         ArrayNode types = data.putArray(TYPE);
@@ -169,24 +169,25 @@ public class JsonUtil {
     /**
      * Get the JSON representation of a Location.
      * 
-     * @param id     the ID of the location
+     * @param name   the ID of the location
      * @param locale the client's locale
+     * @param id     the message id set by the client
      * @return the JSON representation of the location
      * @throws JsonException if id does not match a known location
      */
-    public ObjectNode getLocation(String id, Locale locale) throws JsonException {
+    public ObjectNode getLocation(String name, Locale locale, int id) throws JsonException {
         try {
-            return getLocation(InstanceManager.getDefault(LocationManager.class).getLocationById(id), locale);
+            return getLocation(InstanceManager.getDefault(LocationManager.class).getLocationById(name), locale);
         } catch (NullPointerException e) {
-            log.error("Unable to get location id [{}].", id);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, id));
+            log.error("Unable to get location id [{}].", name);
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, name), id);
         }
     }
 
     private ObjectNode getLocation(Location location, RouteLocation routeLocation, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, location.getName());
-        node.put(ID, location.getId());
+        node.put(USERNAME, location.getName());
+        node.put(NAME, location.getId());
         if (routeLocation != null) {
             node.put(ROUTE, routeLocation.getId());
         } else {
@@ -203,14 +204,14 @@ public class JsonUtil {
 
     private ObjectNode getTrack(Track track, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, track.getName());
-        node.put(ID, track.getId());
+        node.put(USERNAME, track.getName());
+        node.put(NAME, track.getId());
         return node;
     }
 
     private ObjectNode getRollingStock(RollingStock rs, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(ID, rs.getId());
+        node.put(NAME, rs.getId());
         node.put(NUMBER, TrainCommon.splitString(rs.getNumber()));
         node.put(ROAD, rs.getRoadName());
         String[] type = rs.getTypeName().split("-"); // second half of string
@@ -246,9 +247,9 @@ public class JsonUtil {
      */
     public ObjectNode getTrain(Train train, Locale locale) {
         ObjectNode data = this.mapper.createObjectNode();
-        data.put(NAME, train.getName());
+        data.put(USERNAME, train.getName());
         data.put(JSON.ICON_NAME, train.getIconName());
-        data.put(ID, train.getId());
+        data.put(NAME, train.getId());
         data.put(JSON.DEPARTURE_TIME, train.getFormatedDepartureTime());
         data.put(JSON.DESCRIPTION, train.getDescription());
         data.put(COMMENT, train.getComment());
@@ -283,17 +284,18 @@ public class JsonUtil {
     /**
      * Get the JSON representation of a Train.
      * 
-     * @param id     the id of the train
+     * @param name   the id of the train
      * @param locale the client's locale
+     * @param id     the message id set by the client
      * @return the JSON representation of the train with id
      * @throws JsonException if id does not represent a known train
      */
-    public ObjectNode getTrain(String id, Locale locale) throws JsonException {
+    public ObjectNode getTrain(String name, Locale locale, int id) throws JsonException {
         try {
-            return getTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(id), locale);
+            return getTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(name), locale);
         } catch (NullPointerException ex) {
-            log.error("Unable to get train id [{}].", id, ex);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JsonOperations.TRAIN, id));
+            log.error("Unable to get train id [{}].", name, ex);
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JsonOperations.TRAIN, name), id);
         }
     }
 
@@ -332,8 +334,8 @@ public class JsonUtil {
         train.getRoute().getLocationsBySequenceList().forEach((route) -> {
             ObjectNode root = mapper.createObjectNode();
             RouteLocation rl = route;
-            root.put(ID, rl.getId());
-            root.put(NAME, rl.getName());
+            root.put(NAME, rl.getId());
+            root.put(USERNAME, rl.getName());
             root.put(DIRECTION, rl.getTrainDirectionString());
             root.put(COMMENT, rl.getComment());
             root.put(SEQUENCE, rl.getSequenceNumber());

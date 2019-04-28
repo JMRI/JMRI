@@ -9,9 +9,10 @@ public final class JSON {
 
     /**
      * JMRI JSON protocol version. See {@link jmri.server.json} for the version
-     * history.
+     * history. Starting with 5.0.0, this is a semantic version string; prior to
+     * that, it is just an X.Y version string.
      */
-    public static final String JSON_PROTOCOL_VERSION = "5.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "5.0.0"; // NOI18N
 
     /* JSON structure */
     /**

@@ -4,6 +4,8 @@ import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -27,6 +29,8 @@ import org.junit.Test;
  */
 public class JsonReporterHttpServiceTest  {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testDoGet() throws JmriException {
         JsonReporterHttpService service = new JsonReporterHttpService(new ObjectMapper());
@@ -34,23 +38,23 @@ public class JsonReporterHttpServiceTest  {
         Reporter reporter1 = manager.provideReporter("IR1"); // no value
         JsonNode result;
         try {
-            result = service.doGet(REPORTER, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            result = service.doGet(REPORTER, "IR1", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals(REPORTER, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             // JSON node has the text "null" if reporter is null
             Assert.assertEquals("null", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             reporter1.setReport("throw");
-            result = service.doGet(REPORTER, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            result = service.doGet(REPORTER, "IR1", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             reporter1.setReport("close");
-            result = service.doGet(REPORTER, "IR1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            result = service.doGet(REPORTER, "IR1", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             // Request a non-existent reporter
             try {
-                service.doGet(REPORTER, "IR2", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+                service.doGet(REPORTER, "IR2", service.getObjectMapper().createObjectNode(), locale, 42);
                 Assert.fail("Expected exception not thrown.");
             } catch (JsonException ex) {
                 Assert.assertEquals(404, ex.getCode());
@@ -72,32 +76,32 @@ public class JsonReporterHttpServiceTest  {
         try {
             // set non-null report
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "close");
-            result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
+            result = service.doPost(REPORTER, "IR1", message, locale, 42);
             Assert.assertEquals("close", reporter1.getCurrentReport());
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             // set different non-null report 
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "throw");
-            result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
+            result = service.doPost(REPORTER, "IR1", message, locale, 42);
             Assert.assertEquals("throw", reporter1.getCurrentReport());
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             // set null report
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").putNull(JsonReporter.REPORT);
-            result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
+            result = service.doPost(REPORTER, "IR1", message, locale, 42);
             Assert.assertNull(reporter1.getCurrentReport());
             Assert.assertEquals("null", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             // set new user name
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JSON.USERNAME, "TEST REPORTER");
             Assert.assertEquals("expected name", "test reporter", reporter1.getUserName());
-            result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
+            result = service.doPost(REPORTER, "IR1", message, locale, 42);
             Assert.assertEquals("new name", "TEST REPORTER", reporter1.getUserName());
             Assert.assertNotNull(result);
             Assert.assertEquals("new name in JSON", "TEST REPORTER", result.path(JSON.DATA).path(JSON.USERNAME).asText());
             // set comment
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JSON.COMMENT, "a comment");
             Assert.assertNull("null comment", reporter1.getComment());
-            result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
+            result = service.doPost(REPORTER, "IR1", message, locale, 42);
             Assert.assertEquals("new comment", "a comment", reporter1.getComment());
             Assert.assertNotNull(result);
             Assert.assertEquals("new comment in JSON", "a comment", result.path(JSON.DATA).path(JSON.COMMENT).asText());
@@ -108,7 +112,7 @@ public class JsonReporterHttpServiceTest  {
         try {
             // set off
             message = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
-            result = service.doPost(REPORTER, "JR1", message, Locale.ENGLISH);
+            result = service.doPost(REPORTER, "JR1", message, locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Not found thrown", 404, ex.getCode());
@@ -125,7 +129,7 @@ public class JsonReporterHttpServiceTest  {
             // add a reporter
             Assert.assertNull(manager.getReporter("IR1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "close");
-            service.doPut(REPORTER, "IR1", message, Locale.ENGLISH);
+            service.doPut(REPORTER, "IR1", message, locale, 42);
             Assert.assertNotNull(manager.getReporter("IR1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -142,7 +146,7 @@ public class JsonReporterHttpServiceTest  {
         });
         message = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
         try {
-            service.doPut(REPORTER, "JR1", message, Locale.ENGLISH);
+            service.doPut(REPORTER, "JR1", message, locale, 42);
             Assert.fail("JR1 should not have been created");
         } catch (JsonException ex) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for reporter");
@@ -157,12 +161,12 @@ public class JsonReporterHttpServiceTest  {
             JsonReporterHttpService service = new JsonReporterHttpService(mapper);
             ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
             JsonNode result;
-            result = service.doGetList(REPORTER, mapper.createObjectNode(), Locale.ENGLISH);
+            result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideReporter("IR1");
             manager.provideReporter("IR2");
-            result = service.doGetList(REPORTER, mapper.createObjectNode(), Locale.ENGLISH);
+            result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 42);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {
@@ -174,7 +178,7 @@ public class JsonReporterHttpServiceTest  {
     @Test
     public void testDelete() {
         try {
-            (new JsonReporterHttpService(new ObjectMapper())).doDelete(REPORTER, null, Locale.ENGLISH);
+            (new JsonReporterHttpService(new ObjectMapper())).doDelete(REPORTER, null, NullNode.getInstance(), locale, 42);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;

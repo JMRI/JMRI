@@ -38,13 +38,13 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         String name = data.path(NAME).asText();
         if (method.equals(PUT)) {
-            this.connection.sendMessage(this.service.doPut(type, name, data, locale));
+            this.connection.sendMessage(this.service.doPut(type, name, data, locale, id), id);
         } else {
-            this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+            this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
         }
         if (!this.layoutBlockListeners.containsKey(name)) {
             LayoutBlock layoutblock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
@@ -57,9 +57,9 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, data, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
         log.debug("adding LayoutBlocksListener");
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(layoutBlocksListener); //add parent listener
     }
@@ -95,9 +95,9 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
                         e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), connection.getObjectMapper().createObjectNode(), getLocale()));
+                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                     } catch (JsonException ex) {
-                        connection.sendMessage(ex.getJsonMessage());
+                        connection.sendMessage(ex.getJsonMessage(), 0);
                     }
                 } catch (IOException ex) {
                     // if we get an error, de-register
@@ -116,14 +116,14 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(LAYOUTBLOCKS, service.getObjectMapper().createObjectNode(), getLocale()));
+                    connection.sendMessage(service.doGetList(LAYOUTBLOCKS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending LayoutBlocks: {}", ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
                 // if we get an error, de-register

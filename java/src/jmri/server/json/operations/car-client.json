@@ -6,7 +6,7 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "Id of the car being requested"
+            "description": "Operations id of the car being requested"
         }
     },
     "additionalProperties": false,

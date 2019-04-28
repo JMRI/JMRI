@@ -54,7 +54,7 @@ public class JsonHttpServiceTestBase {
      */
     public final void validate(JsonNode node) {
         try {
-            InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, true, locale);
+            InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, true, locale, 0);
         } catch (JsonException ex) {
             Assert.fail("Unable to validate schema.");
         }

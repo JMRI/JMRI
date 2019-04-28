@@ -49,9 +49,9 @@ public class HtmlManifest extends HtmlTrainCommon {
         String previousLocationName = null;
         boolean hasWork;
         for (JsonNode location : locations) {
-            RouteLocation routeLocation = train.getRoute().getLocationById(location.path(JSON.ID).textValue());
-            log.debug("Processing {} ({})", routeLocation.getName(), location.path(JSON.ID).textValue());
-            String routeLocationName = location.path(JSON.NAME).textValue();
+            RouteLocation routeLocation = train.getRoute().getLocationById(location.path(JSON.NAME).textValue());
+            log.debug("Processing {} ({})", routeLocation.getName(), location.path(JSON.NAME).textValue());
+            String routeLocationName = location.path(JSON.USERNAME).textValue();
             builder.append(String.format(locale, strings.getProperty("LocationStart"), routeLocation.getId())); // NOI18N
             hasWork = (location.path(JsonOperations.CARS).path(JSON.ADD).size() > 0
                     || location.path(JsonOperations.CARS).path(JSON.REMOVE).size() > 0
@@ -443,12 +443,12 @@ public class HtmlManifest extends HtmlTrainCommon {
         // TODO handle tracks without names
         switch (show) {
             case location:
-                return String.format(locale, strings.getProperty(prefix + "Location"), location.path(JSON.NAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "Location"), location.path(JSON.USERNAME).asText());
             case track:
-                return String.format(locale, strings.getProperty(prefix + "Track"), location.path(JsonOperations.TRACK).path(JSON.NAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "Track"), location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText());
             case both:
             default: // default here ensures the method always returns
-                return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"), location.path(JSON.NAME).asText(), location.path(JsonOperations.TRACK).path(JSON.NAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"), location.path(JSON.USERNAME).asText(), location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText());
         }
     }
 
@@ -462,7 +462,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 boolean setout = false;
                 if (cars.path(JSON.ADD).size() > 0) {
                     for (JsonNode car : cars.path(JSON.ADD)) {
-                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.ID).textValue())) {
+                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.NAME).textValue())) {
                             pickup = true;
                             break; // we do not need to iterate all cars
                         }
@@ -470,7 +470,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 if (cars.path(JSON.REMOVE).size() > 0) {
                     for (JsonNode car : cars.path(JSON.REMOVE)) {
-                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.ID).textValue())) {
+                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.NAME).textValue())) {
                             setout = true;
                             break; // we do not need to iterate all cars
                         }

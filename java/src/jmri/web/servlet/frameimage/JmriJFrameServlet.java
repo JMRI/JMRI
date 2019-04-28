@@ -360,7 +360,7 @@ public class JmriJFrameServlet extends HttpServlet {
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
             for (JmriJFrame frame : JmriJFrame.getFrameList()) {
                 if (usePanels && frame instanceof Editor) {
-                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML);
+                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML, 0);
                     if (node != null) {
                         root.add(node);
                         frames.add(((Editor) frame).getTargetFrame());
@@ -380,7 +380,7 @@ public class JmriJFrameServlet extends HttpServlet {
                             root.add(node);
                             frames.add(frame);
                         } catch (UnsupportedEncodingException ex) {
-                            JsonException je = new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to encode panel title \"" + title + "\"");
+                            JsonException je = new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to encode panel title \"" + title + "\"", 0);
                             response.sendError(je.getCode(), mapper.writeValueAsString(je.getJsonMessage()));
                             return;
                         }

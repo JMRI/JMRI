@@ -31,14 +31,14 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListCar() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.CAR, mapper.createObjectNode(), locale);
+        service.onList(JsonOperations.CAR, mapper.createObjectNode(), locale, 42);
     }
 
     @Test
     public void testOnMessageKernel() throws IOException, JmriException, JsonException {
         try {
             service.onMessage(JsonOperations.KERNEL, mapper.createObjectNode().put(JSON.NAME, "non-existant"), JSON.GET,
-                    locale);
+                    locale, 42);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             if (ex.getCode() != 404) {
@@ -49,7 +49,7 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListKernel() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), locale);
+        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), locale, 42);
     }
 
     @Before

@@ -35,14 +35,14 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     @Override
     @Nonnull
     public final JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
-            @Nonnull Locale locale) throws JsonException {
+            @Nonnull Locale locale, int id) throws JsonException {
         if (!type.equals(getType())) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    Bundle.getMessage(locale, "LoggedError"));
+                    Bundle.getMessage(locale, "LoggedError"), id);
         }
         // NOTE: although allowing a user name to be used, a system name is recommended as it is
         // less likely to suffer errors in translation between the allowed name and URL conversion
-        return this.doGet(this.getManager().getNamedBean(name), name, type, locale);
+        return this.doGet(this.getManager().getNamedBean(name), name, type, locale, id);
     }
 
     /**
@@ -50,15 +50,15 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Override
     @Nonnull
-    public final JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale) throws JsonException {
+    public final JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
         if (!type.equals(getType())) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    Bundle.getMessage(locale, "LoggedError"));
+                    Bundle.getMessage(locale, "LoggedError"), id);
         }
         // NOTE: although allowing a user name to be used, a system name is recommended as it is
         // less likely to suffer errors in translation between the allowed name and URL conversion
-        T bean = this.postNamedBean(getManager().getNamedBean(name), data, name, type, locale);
-        return this.doPost(bean, name, type, data, locale);
+        T bean = this.postNamedBean(getManager().getNamedBean(name), data, name, type, locale, id);
+        return this.doPost(bean, name, type, data, locale, id);
     }
 
     /**
@@ -69,18 +69,18 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * the NamedBean.
      */
     @Override
-    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale)
+    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException {
         try {
             getManager().provide(name);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                    Bundle.getMessage(locale, "ErrorInvalidSystemName", name, getType()));
+                    Bundle.getMessage(locale, "ErrorInvalidSystemName", name, getType()), id);
         } catch (Exception ex) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    Bundle.getMessage(locale, "ErrorCreatingObject", getType(), name));
+                    Bundle.getMessage(locale, "ErrorCreatingObject", getType(), name), id);
         }
-        return this.doPost(type, name, data, locale);
+        return this.doPost(type, name, data, locale, id);
     }
 
     /**
@@ -88,8 +88,8 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Nonnull
     @Override
-    public final ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
-        return doGetList(getManager(), type, data, locale);
+    public final ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+        return doGetList(getManager(), type, data, locale, id);
     }
 
     /**
@@ -105,13 +105,14 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * @param name   the name of the requested object
      * @param type   the type of the requested object
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
      *                           occurs
      */
     @Override
     @Nonnull
-    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale)
+    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale, int id)
             throws JsonException;
 
     /**
@@ -122,11 +123,12 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * @param type   the type of the requested object
      * @param data   data describing the requested object
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if an error occurs
      */
     @Nonnull
-    protected abstract ObjectNode doPost(T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale)
+    protected abstract ObjectNode doPost(T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException;
 
     /**

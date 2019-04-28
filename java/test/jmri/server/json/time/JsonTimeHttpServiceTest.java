@@ -18,11 +18,13 @@ import jmri.util.JUnitUtil;
 
 public class JsonTimeHttpServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void doGetList() throws JsonException {
         JsonTimeHttpService service = new JsonTimeHttpService(new ObjectMapper());
         Timebase manager = InstanceManager.getDefault(Timebase.class);
-        ArrayNode array = service.doGetList(JsonTimeServiceFactory.TIME, service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+        ArrayNode array = service.doGetList(JsonTimeServiceFactory.TIME, service.getObjectMapper().createObjectNode(), locale, 42);
         Assert.assertNotNull(array);
         Assert.assertEquals("One element in array", 1, array.size());
         Assert.assertTrue("First element is a JSON object", array.get(0).isObject());

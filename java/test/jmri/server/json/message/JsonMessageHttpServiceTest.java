@@ -8,18 +8,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
 
 public class JsonMessageHttpServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testDoGet() {
         ObjectMapper mapper = new ObjectMapper();
         JsonMessageHttpService service = new JsonMessageHttpService(mapper);
         try {
-            service.doGet(JsonMessage.MESSAGE, "", mapper.createObjectNode(), Locale.ENGLISH);
+            service.doGet(JsonMessage.MESSAGE, "", mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -32,7 +35,7 @@ public class JsonMessageHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonMessageHttpService service = new JsonMessageHttpService(mapper);
         try {
-            service.doPut(JsonMessage.MESSAGE, "", mapper.createObjectNode(), Locale.ENGLISH);
+            service.doPut(JsonMessage.MESSAGE, "", mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -45,7 +48,7 @@ public class JsonMessageHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonMessageHttpService service = new JsonMessageHttpService(mapper);
         try {
-            service.doPost(JsonMessage.MESSAGE, "", mapper.createObjectNode(), Locale.ENGLISH);
+            service.doPost(JsonMessage.MESSAGE, "", mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -58,7 +61,7 @@ public class JsonMessageHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonMessageHttpService service = new JsonMessageHttpService(mapper);
         try {
-            service.doDelete(JsonMessage.MESSAGE, "", Locale.ENGLISH);
+            service.doDelete(JsonMessage.MESSAGE, "", NullNode.getInstance(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -71,7 +74,7 @@ public class JsonMessageHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonMessageHttpService service = new JsonMessageHttpService(mapper);
         try {
-            service.doGetList(JsonMessage.MESSAGE, mapper.createObjectNode(), Locale.ENGLISH);
+            service.doGetList(JsonMessage.MESSAGE, mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());

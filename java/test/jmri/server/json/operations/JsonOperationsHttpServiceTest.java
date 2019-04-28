@@ -32,19 +32,19 @@ public class JsonOperationsHttpServiceTest {
 
     @Test
     public void testCarType() throws JsonException {
-        JsonNode result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale);
+        JsonNode result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertTrue(result.isArray());
         assertEquals(33, result.size());
-        result = service.doPut(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale);
+        result = service.doPut(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertEquals(JsonOperations.CAR_TYPE, result.path(JSON.TYPE).asText());
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.CARS).isArray());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray());
-        JsonNode result2 = service.doGet(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale);
+        JsonNode result2 = service.doGet(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
         assertEquals(result, result2);
-        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale);
+        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertTrue(result.isArray());
         assertEquals(34, result.size());
@@ -52,8 +52,8 @@ public class JsonOperationsHttpServiceTest {
         assertEquals("test1", result.path(0).path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray());
-        service.doDelete(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale);
-        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale);
+        service.doDelete(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
+        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertTrue(result.isArray());
         assertEquals(33, result.size());
@@ -61,20 +61,20 @@ public class JsonOperationsHttpServiceTest {
 
     @Test
     public void testKernel() throws JsonException {
-        JsonNode result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale);
+        JsonNode result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertTrue(result.isArray());
         assertEquals(0, result.size());
-        result = service.doPut(JsonOperations.KERNEL, "test1", service.getObjectMapper().createObjectNode(), locale);
+        result = service.doPut(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertEquals(JsonOperations.KERNEL, result.path(JSON.TYPE).asText());
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(0, result.path(JSON.DATA).path(JSON.LENGTH).asInt());
         assertEquals(0, result.path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.CARS).isArray());
-        JsonNode result2 = service.doGet(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale);
+        JsonNode result2 = service.doGet(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
         assertEquals(result, result2);
-        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale);
+        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertTrue(result.isArray());
         assertEquals(1, result.size());
@@ -83,8 +83,8 @@ public class JsonOperationsHttpServiceTest {
         assertEquals(0, result.path(0).path(JSON.DATA).path(JSON.LENGTH).asInt());
         assertEquals(0, result.path(0).path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray());
-        service.doDelete(JsonOperations.KERNEL, "test1", service.getObjectMapper().createObjectNode(), locale);
-        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale);
+        service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
+        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 42);
         assertNotNull(result);
         assertTrue(result.isArray());
         assertEquals(0, result.size());
@@ -102,7 +102,7 @@ public class JsonOperationsHttpServiceTest {
         c1.setKernel(k1);
         String deleteToken = null;
         try {
-            service.doDelete(JsonOperations.KERNEL, "test1", service.getObjectMapper().createObjectNode(), locale);
+            service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -114,7 +114,7 @@ public class JsonOperationsHttpServiceTest {
         }
         assertNotNull(deleteToken);
         ObjectNode data = service.getObjectMapper().createObjectNode().put(JSON.FORCE_DELETE, deleteToken);
-        service.doDelete(JsonOperations.KERNEL, "test1", data, locale);
+        service.doDelete(JsonOperations.KERNEL, "test1", data, locale, 42);
         assertNull(c1.getKernel());
     }
 

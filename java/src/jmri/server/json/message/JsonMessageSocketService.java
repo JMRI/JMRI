@@ -28,17 +28,17 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale)
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id)
             throws IOException, JmriException, JsonException {
         switch (type) {
             case JSON.HELLO:
                 if (!data.path(CLIENT).isMissingNode()) {
                     String client = data.path(CLIENT).asText();
                     if (!client.isEmpty()) {
-                        subscribe(client);
+                        subscribe(client, id);
                     } else {
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                                Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type));
+                                Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type), id);
                     }
                 }
                 break;
@@ -52,11 +52,11 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                                 getManager().unsubscribe(client);
                             } else {
                                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                                        Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type));
+                                        Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type), id);
                             }
                         } else {
                             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                                    Bundle.getMessage(locale, "ErrorMissingAttribute", JsonMessage.CLIENT, type));
+                                    Bundle.getMessage(locale, "ErrorMissingAttribute", JsonMessage.CLIENT, type), id);
                         }
                         break;
                     case JSON.GET:
@@ -69,21 +69,21 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                             String client = data.path(CLIENT).asText();
                             if (!client.isEmpty()) {
                                 if (getManager().getClients(connection).contains(client)) {
-                                    connection.sendMessage(getClient(client, locale));
+                                    connection.sendMessage(getClient(client, locale, id), id);
                                 } else {
                                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                            Bundle.getMessage(locale, "MessageClientNotForThisConnection", client));
+                                            Bundle.getMessage(locale, "MessageClientNotForThisConnection", client), id);
                                 }
                             } else {
-                                connection.sendMessage(getClient(getManager().getClient(connection), locale));
+                                connection.sendMessage(getClient(getManager().getClient(connection), locale, id), id);
                             }
                         } else {
                             if (getManager().getClients(connection).isEmpty()) {
                                 String client = UUID.randomUUID().toString();
-                                subscribe(client);
-                                connection.sendMessage(getClient(client, locale));
+                                subscribe(client, id);
+                                connection.sendMessage(getClient(client, locale, id), id);
                             } else {
-                                onList(type, data, locale);
+                                onList(type, data, locale, id);
                             }
                         }
                         break;
@@ -94,14 +94,14 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                         if (!data.path(CLIENT).isMissingNode()) {
                             String client = data.path(CLIENT).asText();
                             if (!client.isEmpty()) {
-                                subscribe(client);
+                                subscribe(client, id);
                             } else {
                                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                                        Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type));
+                                        Bundle.getMessage(locale, "ErrorEmptyAttribute", JsonMessage.CLIENT, type), id);
                             }
                         } else {
                             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                                    Bundle.getMessage(locale, "ErrorMissingAttribute", JsonMessage.CLIENT, type));
+                                    Bundle.getMessage(locale, "ErrorMissingAttribute", JsonMessage.CLIENT, type), id);
                         }
                         break;
                 }
@@ -113,22 +113,22 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
         switch (type) {
             case JSON.HELLO:
                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                        Bundle.getMessage(locale, "UnlistableService", type));
+                        Bundle.getMessage(locale, "UnlistableService", type), id);
             case JsonMessage.CLIENT:
                 Set<String> clients = getManager().getClients(connection);
                 if (clients.isEmpty()) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "NoMessageClientForThisConnection", type));
+                            Bundle.getMessage(locale, "NoMessageClientForThisConnection", type), id);
                 }
                 ArrayNode array = service.getObjectMapper().createArrayNode();
                 for (String client : clients) {
-                    array.add(getClient(client, locale));
+                    array.add(getClient(client, locale, id));
                 }
-                connection.sendMessage(array);
+                connection.sendMessage(array, id);
                 break;
             default:
                 // silently ignore
@@ -140,10 +140,10 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
         getManager().unsubscribe(this.connection);
     }
 
-    private JsonNode getClient(String client, Locale locale) throws JsonException {
+    private JsonNode getClient(String client, Locale locale, int id) throws JsonException {
         if (client == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "NoMessageClientForThisConnection"));
+                    Bundle.getMessage(locale, "NoMessageClientForThisConnection"), id);
         }
         ObjectNode root = this.connection.getObjectMapper().createObjectNode();
         root.put(JSON.TYPE, JsonMessage.CLIENT);
@@ -152,12 +152,12 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
         return root;
     }
 
-    private void subscribe(String client) throws JsonException {
+    private void subscribe(String client, int id) throws JsonException {
         try {
             getManager().subscribe(client, this.connection);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                    Bundle.getMessage(this.connection.getLocale(), "ErrorClientConflict", CLIENT));
+                    Bundle.getMessage(this.connection.getLocale(), "ErrorClientConflict", CLIENT), id);
         }
     }
 

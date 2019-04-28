@@ -18,12 +18,14 @@ import org.junit.Test;
  */
 public class JsonThrottleHttpServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testDoGet() {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doGet(JsonThrottle.THROTTLE, "", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            service.doGet(JsonThrottle.THROTTLE, "", service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -36,7 +38,7 @@ public class JsonThrottleHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doPut(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), Locale.ENGLISH);
+            service.doPut(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -49,7 +51,7 @@ public class JsonThrottleHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doPost(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), Locale.ENGLISH);
+            service.doPost(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -62,7 +64,7 @@ public class JsonThrottleHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doGetList(JsonThrottle.THROTTLE, mapper.createObjectNode(), Locale.ENGLISH);
+            service.doGetList(JsonThrottle.THROTTLE, mapper.createObjectNode(), locale, 42);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());

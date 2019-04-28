@@ -81,6 +81,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @param type   the type; use {@link JSON#JSON} to get the schema for
      *               messages, or any other value for a data schema
      * @param locale the locale for error messages, if any
+     * @param id     message id set by client
      * @return the requested schema
      * @throws JsonException            if unable to get schema due to errors
      *                                  processing schema
@@ -88,8 +89,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *                                  type
      */
     @Nonnull
-    public JsonSchema getClientSchema(@Nonnull String type, @Nonnull Locale locale) throws JsonException {
-        return this.getSchema(type, false, locale, this.clientSchemas);
+    public JsonSchema getClientSchema(@Nonnull String type, @Nonnull Locale locale, int id) throws JsonException {
+        return this.getSchema(type, false, locale, this.clientSchemas, id);
     }
 
     /**
@@ -98,6 +99,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @param type   the type; use {@link JSON#JSON} to get the schema for
      *               messages, or any other value for a data schema
      * @param locale the locale for error messages, if any
+     * @param id     message id set by client
      * @return the requested schema
      * @throws JsonException            if unable to get schema due to errors
      *                                  processing schema
@@ -105,17 +107,17 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *                                  type
      */
     @Nonnull
-    public JsonSchema getServerSchema(@Nonnull String type, @Nonnull Locale locale) throws JsonException {
-        return this.getSchema(type, true, locale, this.serverSchemas);
+    public JsonSchema getServerSchema(@Nonnull String type, @Nonnull Locale locale, int id) throws JsonException {
+        return this.getSchema(type, true, locale, this.serverSchemas, id);
     }
 
-    private synchronized JsonSchema getSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map) throws JsonException {
+    private synchronized JsonSchema getSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map, int id) throws JsonException {
         this.cacheServices();
         JsonSchema result = map.get(type);
         if (result == null) {
             for (JsonHttpService service : this.getServices(type)) {
                 log.debug("Processing {} with {}", type, service);
-                result = JsonSchemaFactory.getInstance().getSchema(service.doSchema(type, server, locale).path(JSON.DATA).path(JSON.SCHEMA));
+                result = JsonSchemaFactory.getInstance().getSchema(service.doSchema(type, server, locale, id).path(JSON.DATA).path(JSON.SCHEMA));
                 if (result != null) {
                     map.put(type, result);
                     break;
@@ -135,31 +137,33 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @param server  true if message is from the JSON server; false otherwise
      * @param locale  the locale for any exceptions that need to be reported to
      *                clients
+     * @param id      the id to be included with any exceptions reported to
+     *                clients
      * @throws JsonException if the message does not validate
      */
-    public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale) throws JsonException {
+    public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale, int id) throws JsonException {
         log.trace("validateMessage(\"{}\", \"{}\", \"{}\", ...)", message, server, locale);
         HashMap<String, JsonSchema> map = server ? this.serverSchemas : this.clientSchemas;
-        this.validateJsonNode(message, JSON.JSON, server, locale, map);
+        this.validateJsonNode(message, JSON.JSON, server, locale, map, id);
         if (message.isArray()) {
             Iterator<JsonNode> elements = message.elements();
             while (elements.hasNext()) {
-                this.validateMessage(elements.next(), server, locale);
+                this.validateMessage(elements.next(), server, locale, id);
             }
         } else {
             String type = message.path(JSON.TYPE).asText();
             JsonNode data = message.path(JSON.DATA);
             if (!data.isMissingNode()) {
-                this.validateJsonNode(data, type, server, locale, map);
+                this.validateJsonNode(data, type, server, locale, map, id);
             }
         }
     }
 
-    private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map) throws JsonException {
+    private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map, int id) throws JsonException {
         log.trace("validateJsonNode(\"{}\", \"{}\", \"{}\", ...)", node, type, server);
         Set<ValidationMessage> errors = null;
         try {
-            errors = this.getSchema(type, server, locale, map).validate(node);
+            errors = this.getSchema(type, server, locale, map, id).validate(node);
         } catch (JsonException ex) {
             log.error("Unable to validate JSON schemas", ex);
         }
@@ -168,7 +172,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
             errors.forEach((error) -> {
                 log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(), error.getMessage(), error.getPath(), error.getType());
             });
-            throw new JsonException(server ? 500 : 400, Bundle.getMessage(locale, "LoggedError"));
+            throw new JsonException(server ? 500 : 400, Bundle.getMessage(locale, "LoggedError"), id);
         }
     }
 

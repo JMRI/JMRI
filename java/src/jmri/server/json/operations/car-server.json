@@ -4,9 +4,9 @@
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"car\"",
     "properties": {
-        "id": {
+        "name": {
             "type": "string",
-            "description": "Id for car"
+            "description": "Operations id for car"
         },
         "number": {
             "type": "string",
@@ -98,7 +98,7 @@
     },
     "additionalProperties": false,
     "required": [
-        "id",
+        "name",
         "number",
         "road",
         "type",
