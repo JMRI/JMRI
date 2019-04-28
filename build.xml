@@ -1790,7 +1790,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="1650"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -1861,7 +1861,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="1650"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             
@@ -1931,11 +1931,9 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing"/> <!-- dropping some 1.8 warnings -->
             <arg value="-Xmaxwarns"/>
-            <arg value="500"/><!-- change from default 100 warnings -->
-            <arg value="-Xmaxerrs"/>
-            <arg value="500"/><!-- change from default 100 errors -->
+            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             
