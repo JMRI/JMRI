@@ -141,22 +141,22 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testGetLayoutWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());
-        Assert.assertEquals("layout width", w - 20, e.getLayoutWidth());
+        // defaults to 0
+        Assert.assertEquals("layout width", 0, e.getLayoutWidth());
     }
 
     @Test
     public void testGetLayoutHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-        Assert.assertEquals("layout height", h - 120, e.getLayoutHeight());
+        // defaults to 0
+        Assert.assertEquals("layout height", 0, e.getLayoutHeight());
     }
 
     @Test
     public void testGetWindowWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen width - 20
-        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
         Assert.assertEquals("window width", w, e.getWindowWidth());
     }
 
@@ -164,7 +164,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetWindowHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen height - 120
-        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
         Assert.assertEquals("window height", h, e.getWindowHeight());
     }
 
