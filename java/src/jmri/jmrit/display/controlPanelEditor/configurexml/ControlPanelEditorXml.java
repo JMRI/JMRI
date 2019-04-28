@@ -156,7 +156,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             }
 
             java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-            if (prefsWindowSize != null) {
+            if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                 height = (int) prefsWindowSize.getHeight();
                 width = (int) prefsWindowSize.getWidth();
             }
