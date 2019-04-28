@@ -322,14 +322,12 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             if (prefsWindowLocation != null) {
                 x = (int) prefsWindowLocation.getX();
                 y = (int) prefsWindowLocation.getY();
-//                 log.warn("loc = {}", prefsWindowLocation);
             }
 
             java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
             if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                 windowHeight = (int) prefsWindowSize.getHeight();
                 windowWidth = (int) prefsWindowSize.getWidth();
-//                 log.warn("size = {}", prefsWindowSize);
             }
         }
 
