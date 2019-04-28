@@ -45,7 +45,7 @@ public class XpaTurnout extends AbstractTurnout {
 
     // Handle a request to change state by sending a formatted DCC packet
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    synchronized protected void forwardCommandChangeToLayout(int s) {
         XpaMessage m;
         // sort out states
         if ((s & _mClosed) != 0) {
