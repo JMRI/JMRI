@@ -8,8 +8,11 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 
 /**
- *
- * @author rhwood
+ * Default implementation of {@link ListCellEditor} that provides for using
+ * various components as editors.
+ * 
+ * @author Randall Wood
+ * @param <E> the class of object in the supported list
  */
 public class DefaultListCellEditor<E> extends DefaultCellEditor implements ListCellEditor<E> {
 

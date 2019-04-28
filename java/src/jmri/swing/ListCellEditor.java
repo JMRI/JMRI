@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.swing;
 
 import java.awt.Component;
@@ -9,8 +5,10 @@ import javax.swing.CellEditor;
 import javax.swing.JList;
 
 /**
- *
- * @author rhwood
+ * An editor for cells in a list.
+ * 
+ * @author Randall Wood
+ * @param <E> the class of object in the supported list
  */
 public interface ListCellEditor<E> extends CellEditor {
 

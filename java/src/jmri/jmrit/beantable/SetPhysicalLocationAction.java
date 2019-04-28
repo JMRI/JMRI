@@ -78,6 +78,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Frame Constructor.
+         * 
+         * @param reporter the reporter to set the location for
          */
         public SetPhysicalLocationFrame(Reporter reporter) {
             super(rb.getString("MenuSetPhysicalLocation"), new SetPhysicalLocationPanel(reporter));
@@ -159,6 +161,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Construct the combo box with the list of available Reporters.
+         * 
+         * @return a combo box listing Reporter display names
          */
         protected JComboBox<String> getReporterComboBox() {
             ReporterManager mgr = InstanceManager.getDefault(jmri.ReporterManager.class);
@@ -182,6 +186,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Close button action.
+         * 
+         * @param ae the action event
          */
         public void closeButtonActionPerformed(ActionEvent ae) {
             JOptionPane.showMessageDialog(null,
@@ -193,6 +199,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Save button action -> save this Reporter's location.
+         * 
+         * @param ae the action event
          */
         public void saveButtonActionPerformed(ActionEvent ae) {
             // check to see if a location has been selected

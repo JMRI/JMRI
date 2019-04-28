@@ -190,6 +190,9 @@ public class AddSignalMastPanel extends JPanel {
 
     /**
      * Select a particular signal implementation to display
+     * 
+     * @param view the name of the {@link SignalMastAddPane} containing the
+     *                 signal implementation to display
      */
     void selection(String view) {
         log.trace(" selection({}) start", view);
@@ -419,12 +422,14 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Check of user name done when creating new SignalMast.
-     * In case of error, it looks a message and (if not headless) shows a dialog.
-     * @return true if OK to proceed
+     * Check of user name done when creating new SignalMast. In case of error,
+     * it logs an error message and shows a dialog if possible.
+     * 
+     * @param nam the name to check
+     * @return true if name is available to use; false if the name is in use
      */
     boolean checkUserName(String nam) {
-        if (!((nam == null) || (nam.equals("")))) {
+        if (!((nam == null) || (nam.isEmpty()))) {
             // user name provided, check if that name already exists
             NamedBean nB = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(nam);
             if (nB != null) {

@@ -1,12 +1,13 @@
 package jmri;
 
 /**
- * Describes metadata about a given property key for a NamedBean. This metadata is used by the
- * BeanTable actions to display and edit the properties in question.
+ * Describes metadata about a given property key for a NamedBean. This metadata
+ * is used by the BeanTable actions to display and edit the properties in
+ * question.
  *
  * @author Balazs Racz Copyright (C) 2018
+ * @param <E> supported subclass of NamedBean
  */
-
 public abstract class NamedBeanPropertyDescriptor<E> {
     /**
      * Key of the property, to be used in the setProperty and getProperty functions on the

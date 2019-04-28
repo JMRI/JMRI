@@ -55,6 +55,9 @@ public interface ShutDownManager {
 
     /**
      * Provide access to the current registered shutdown tasks.
+     * 
+     * @return a list of ShutDownTasks; may or may not be editable depending on
+     *         implementation
      */
     public List<ShutDownTask> tasks();
     

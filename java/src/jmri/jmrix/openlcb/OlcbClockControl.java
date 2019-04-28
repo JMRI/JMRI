@@ -132,11 +132,8 @@ public class OlcbClockControl extends DefaultClockControl {
             hardwareClock.requestSetRate(newRate);
         } else if (Math.abs(hardwareClock.getRate() - newRate) > 0.0001) {
             // Trigger update notification that we rejected the change, but not inline.
-            ThreadingUtil.runOnLayoutDelayed(new ThreadingUtil.ThreadAction() {
-                @Override
-                public void run() {
-                    clockUpdate(TimeProtocol.PROP_RATE_UPDATE, null);
-                }
+            ThreadingUtil.runOnLayoutDelayed(() -> {
+                clockUpdate(TimeProtocol.PROP_RATE_UPDATE, null);
             }, 50);
         }
 

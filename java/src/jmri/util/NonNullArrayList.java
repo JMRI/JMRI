@@ -1,6 +1,8 @@
 package jmri.util;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -8,34 +10,35 @@ import javax.annotation.Nonnull;
  *
  * @see java.util.ArrayList
  * @see java.util.List
- * @author	Bob Jacobsen, Copyright (C) 2017
+ * @author Bob Jacobsen, Copyright (C) 2017
+ * @param <E> the class of object in the List
  */
 public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
-    public boolean add(@Nonnull E e) {
-        if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
+    public boolean add(E e) {
+        Objects.requireNonNull(e, "NonNullArrayList.addAll cannot add null item");
         return super.add(e);
     }
 
     @Override
-    public void add(int i, @Nonnull E e) {
-        if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
+    public void add(int i, E e) {
+        Objects.requireNonNull(e, "NonNullArrayList.addAll cannot add null item");
         super.add(i, e);
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
+    public boolean addAll(Collection<? extends E> c) {
         for (E e : c ) {
-            if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot accept collection containing null");
+            Objects.requireNonNull(e, "NonNullArrayList.addAll cannot accept collection containing null");
         }
         return super.addAll(c);
     }
 
     @Override
-    public boolean addAll(int i, Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
+    public boolean addAll(int i, Collection<? extends E> c) {
         for (E e : c ) {
-            if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot accept collection containing null");
+            Objects.requireNonNull(e, "NonNullArrayList.addAll cannot accept collection containing null");
         }
         return super.addAll(i, c);
     }
@@ -50,8 +53,8 @@ public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
     @Nonnull
-    public E set(int i, @Nonnull E e) {
-        if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot set item null");
+    public E set(int i, E e) {
+        Objects.requireNonNull(e, "NonNullArrayList.addAll cannot set item null");
         return super.set(i, e);
     }
 

@@ -34,7 +34,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLayout(@Nonnull ThreadAction ta) {
+    static public void runOnLayout(@Nonnull Runnable ta) {
         runOnGUI(ta);
     }
 
@@ -53,7 +53,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLayoutEventually(@Nonnull ThreadAction ta) {
+    static public void runOnLayoutEventually(@Nonnull Runnable ta) {
         runOnGUIEventually(ta);
     }
 
@@ -75,7 +75,7 @@ public class ThreadingUtil {
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
     @Nonnull 
-    static public Timer runOnLayoutDelayed(@Nonnull ThreadAction ta, int delay) {
+    static public Timer runOnLayoutDelayed(@Nonnull Runnable ta, int delay) {
         return runOnGUIDelayed(ta, delay);
     }
 
@@ -103,7 +103,7 @@ public class ThreadingUtil {
      * 
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnGUI(@Nonnull ThreadAction ta) {
+    static public void runOnGUI(@Nonnull Runnable ta) {
         if (isGUIThread()) {
             // run now
             ta.run();
@@ -127,16 +127,16 @@ public class ThreadingUtil {
      * Run some GUI-specific code before returning a value
      * <p>
      * Typical uses:
-     * <p> {@code
-     * ThreadingUtil.runOnGUI(() -> {
-     *     mine.setVisible();
-     * });
-     * }
      * <p>
-     * If an InterruptedException is encountered, it'll be deferred to the 
-     * next blocking call via Thread.currentThread().interrupt()
+     * {@code
+     * ThreadingUtil.runOnGUI(() -> {
+     *     mine.setVisible(); }); }
+     * <p>
+     * If an InterruptedException is encountered, it'll be deferred to the next
+     * blocking call via Thread.currentThread().interrupt()
      * 
      * @param ta What to run, usually as a lambda expression
+     * @return an object supported by ta
      */
     static public <E> E runOnGUIwithReturn(@Nonnull ReturningThreadAction<E> ta) {
         if (isGUIThread()) {
@@ -177,7 +177,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnGUIEventually(@Nonnull ThreadAction ta) {
+    static public void runOnGUIEventually(@Nonnull Runnable ta) {
         // dispatch to Swing
         SwingUtilities.invokeLater(ta);
     }
@@ -201,7 +201,7 @@ public class ThreadingUtil {
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
     @Nonnull 
-    static public Timer runOnGUIDelayed(@Nonnull ThreadAction ta, int delay) {
+    static public Timer runOnGUIDelayed(@Nonnull Runnable ta, int delay) {
         // dispatch to Swing via timer
         Timer timer = new Timer(delay, (ActionEvent e) -> {
             ta.run();
@@ -278,7 +278,7 @@ public class ThreadingUtil {
     }
     
     /**
-     * Interface for use in ThreadingUtil's lambda interfaces
+     * Interface for use in ThreadingUtil's lambda interfaces.
      */
     @FunctionalInterface
     static public interface ThreadAction extends Runnable {
@@ -294,6 +294,8 @@ public class ThreadingUtil {
 
     /**
      * Interface for use in ThreadingUtil's lambda interfaces
+     * 
+     * @param <E> the object class returned by run
      */
     @FunctionalInterface
     static public interface ReturningThreadAction<E> {

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NamedBeanTable GUI.
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @param <E> supported subclass of NamedBean
  */
 abstract public class AbstractTableAction<E extends NamedBean> extends AbstractAction {
 

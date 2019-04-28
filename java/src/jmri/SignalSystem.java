@@ -81,10 +81,11 @@ public interface SignalSystem extends NamedBean {
     public float getMaximumLineSpeed();
     
     /**
-     * Provide a multi-line summary of the signal system content,
-     * typically for printing. Not intended for further parsing, 
-     * i.e. for persistance, as format likely to differ from type 
-     * to type, and to change often.
+     * Provide a multi-line summary of the signal system content, typically for
+     * printing. Not intended for further parsing, i.e. for persistance, as
+     * format likely to differ from type to type, and to change often.
+     * 
+     * @return the summary
      */
     public String summary();
 

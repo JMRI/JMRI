@@ -99,7 +99,10 @@ public class ColorUtil {
 
     /**
      * @param string Either a hexadecimal representation of the rgb value of a
-     * color or a color name defined as a constant.
+     *                   color or a color name defined as a constant.
+     * @return the color, null if string equals {@value #ColorTrack} or the
+     *         localized equivalent of "None", or black if not parsable as a
+     *         color
      */
     public static Color stringToColor(String string) {
         try {

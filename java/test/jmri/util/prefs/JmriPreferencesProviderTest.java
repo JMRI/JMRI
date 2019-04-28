@@ -42,7 +42,7 @@ public class JmriPreferencesProviderTest {
     /**
      * Test of findProvider method, of class JmriPreferencesProvider.
      *
-     * @throws java.io.IOException
+     * @throws java.io.IOException if unable to create a profile
      */
     @Test
     public void testFindProvider() throws IOException {

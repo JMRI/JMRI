@@ -1,14 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.swing;
 
 import javax.swing.ListModel;
 
 /**
- *
- * @author rhwood
+ * A model for an editable list.
+ * 
+ * @author Randall Wood
+ * @param <E> the supported class in this model
  */
 public interface EditableListModel<E> extends ListModel<E> {
 

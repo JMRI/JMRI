@@ -36,7 +36,7 @@ public class NonNullArrayListTest {
         boolean thrown = false;
         try {
             t.add(null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             thrown = true;
         } finally {
             Assert.assertTrue(thrown);
@@ -49,7 +49,7 @@ public class NonNullArrayListTest {
         boolean thrown = false;
         try {
             t.add(0, null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             thrown = true;
         } finally {
             Assert.assertTrue(thrown);
@@ -62,7 +62,7 @@ public class NonNullArrayListTest {
         boolean thrown = false;
         try {
             t.set(0, null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             thrown = true;
         } finally {
             Assert.assertTrue(thrown);

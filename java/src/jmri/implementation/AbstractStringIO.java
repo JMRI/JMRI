@@ -49,6 +49,8 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     /**
      * Set the string of this StringIO.
      * Called from the implementation class when the layout updates this StringIO.
+     * 
+     * @param newValue the new string value; subclasses may place limites on legal values
      */
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;

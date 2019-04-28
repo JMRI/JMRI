@@ -647,7 +647,7 @@ public class ProfileManager extends Bean {
      *
      * @return A new profile if profile does not already exist
      * @throws java.io.IOException if unable to create a Profile
-     * @throws java.lang.RuntimeException if profile already exists
+     * @throws IllegalArgumentException if profile already exists
      */
     @Nonnull
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
@@ -674,7 +674,8 @@ public class ProfileManager extends Bean {
      * @param config the configuration file
      * @param name   the name of the configuration
      * @return The profile with the migrated configuration
-     * @throws java.io.IOException if unable to create a Profile
+     * @throws IllegalArgumentException if a profile with name already exists
+     * @throws java.io.IOException      if unable to create a Profile
      */
     @Nonnull
     public Profile migrateConfigToProfile(@Nonnull File config, @Nonnull String name) throws IllegalArgumentException, IOException {
@@ -700,33 +701,73 @@ public class ProfileManager extends Bean {
      * Profile-related states requiring preparation to use profiles:
      * <table>
      * <caption>Matrix of states determining if migration required.</caption>
-     * <tr><th>Profile Catalog</th><th>Profile Config</th><th>App
-     * Config</th><th>Action</th></tr>
-     * <tr><td>YES</td><td>YES</td><td>YES</td><td>No preparation required -
-     * migration from earlier JMRI complete</td></tr>
-     * <tr><td>YES</td><td>YES</td><td>NO</td><td>No preparation required - JMRI
-     * installed after profiles feature introduced</td></tr>
-     * <tr><td>YES</td><td>NO</td><td>YES</td><td>Migration required - other
-     * JMRI applications migrated to profiles by this user, but not this
-     * one</td></tr>
-     * <tr><td>YES</td><td>NO</td><td>NO</td><td>No preparation required -
-     * prompt user for desired profile if multiple profiles exist, use default
-     * otherwise</td></tr>
-     * <tr><td>NO</td><td>NO</td><td>NO</td><td>New user - create and use
-     * default profile</td></tr>
-     * <tr><td>NO</td><td>NO</td><td>YES</td><td>Migration required - need to
-     * create first profile</td></tr>
-     * <tr><td>NO</td><td>YES</td><td>YES</td><td>No preparation required -
-     * catalog will be automatically regenerated</td></tr>
-     * <tr><td>NO</td><td>YES</td><td>NO</td><td>No preparation required -
-     * catalog will be automatically regenerated</td></tr>
+     * <tr>
+     * <th>Profile Catalog</th>
+     * <th>Profile Config</th>
+     * <th>App Config</th>
+     * <th>Action</th>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>No preparation required - migration from earlier JMRI complete</td>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>No preparation required - JMRI installed after profiles feature
+     * introduced</td>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>Migration required - other JMRI applications migrated to profiles by
+     * this user, but not this one</td>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>No preparation required - prompt user for desired profile if multiple
+     * profiles exist, use default otherwise</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>New user - create and use default profile</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>Migration required - need to create first profile</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>No preparation required - catalog will be automatically
+     * regenerated</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>No preparation required - catalog will be automatically
+     * regenerated</td>
+     * </tr>
      * </table>
      * This method returns true if a migration occurred, and false in all other
      * circumstances.
      *
      * @param configFilename the name of the app config file
      * @return true if a user's existing config was migrated, false otherwise
-     * @throws java.io.IOException if unable to to create a Profile
+     * @throws IllegalArgumentException if a profile with same name as configFilename already exists
+     * @throws java.io.IOException      if unable to to create a Profile
      */
     public boolean migrateToProfiles(@Nonnull String configFilename) throws IllegalArgumentException, IOException {
         File appConfigFile = new File(configFilename);

@@ -206,7 +206,7 @@ public class LnPacketizerStrict extends LnPacketizer {
     /**
      * Captive class to notify of one message
      */
-    private static class RcvMemo implements jmri.util.ThreadingUtil.ThreadAction {
+    private static class RcvMemo implements Runnable {
 
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;

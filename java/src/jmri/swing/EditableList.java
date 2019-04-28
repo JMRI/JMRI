@@ -23,8 +23,10 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 
 /**
- *
- * @author rhwood
+ * A {@link JList} that is editable in place.
+ * 
+ * @author Randall Wood
+ * @param <E> the class of object in the list
  */
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 
@@ -72,7 +74,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
         return editingIndex;
     }
 
-     //This uses the deprecated {@link JComponent#setNextFocusableComponent} method.
+    //This uses the deprecated {@link JComponent#setNextFocusableComponent} method.
     @SuppressWarnings( "deprecation" )
     public Component prepareEditor(int index) {
         E value = getModel().getElementAt(index);

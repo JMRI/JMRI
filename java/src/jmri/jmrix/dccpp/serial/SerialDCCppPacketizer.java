@@ -68,7 +68,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      */
     private boolean backgroundRefreshStarted = false;
 
-    final class RefreshAction implements ThreadingUtil.ThreadAction {
+    final class RefreshAction implements Runnable {
         @Override
         public void run() {
             try {

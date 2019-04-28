@@ -10,7 +10,8 @@ import java.util.Iterator;
  * <a href="http://www.javaspecialists.eu/archive/Issue107.html">JavaSpecialists
  * issue 107</a>
  *
- * @author rhwood
+ * @author Randall Wood
+ * @param <T> the supported class in the enumeration
  */
 public class IterableEnumeration<T> implements Iterable<T> {
 

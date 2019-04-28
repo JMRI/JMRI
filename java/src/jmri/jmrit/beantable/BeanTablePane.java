@@ -23,6 +23,7 @@ import jmri.swing.RowSorterUtil;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @param <E> supported subclass of NamedBean
  */
 public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPanel {
 

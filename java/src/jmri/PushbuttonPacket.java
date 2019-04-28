@@ -50,6 +50,9 @@ public class PushbuttonPacket {
         CVP_2Bname};
 
     /**
+     * @param prefix system connection prefix followed by the letter "T"
+     * @param turnoutNum the turnout number
+     * @param locked true if locked; false otherwise
      * @throws IllegalArgumentException if input not OK
      * @return a DCC packet
      */

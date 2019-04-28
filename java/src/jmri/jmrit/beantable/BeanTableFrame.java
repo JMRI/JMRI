@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @param <E> supported subclass of NamedBean
  */
 public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
 
