@@ -117,33 +117,8 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertEquals("starting ev vars","1, 2, 3, 4",t.getValueAt( 
             0,CbusNodeEventTableDataModel.EV_VARS_COLUMN) );
             
-        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );            
-        
-        t.updateFromNode(0,CbusNodeEventTableDataModel.EV_VARS_COLUMN);
-        
-        
-        
-        nodeModel.addNode(myNode);
-        
-        t.setValueAt("doclick",0,CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN);
-        t.disposeEvFrame();
-        try {
-            t.disposeEvFrame();
-        } catch (Exception e) {
-            Assert.assertTrue("edit event frame was successfully disposed of so caused a null exception",true);
-        }
-        
-        t.setValueAt("doclick",0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN);
-        try {
-            t.disposeEvFrame();
-        } catch (Exception e) {
-            Assert.assertTrue("no event frame was created so caused a null exception",true);
-        }
-        
-        Assert.assertTrue( t.getRowCount()== 1 );
-        t.removeRow(0);
-        Assert.assertTrue( "Node manages the events, not the table",t.getRowCount()== 1 );
-        
+        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
+
         mainpane.dispose();
         mainpane = null;
         myNode.dispose();
