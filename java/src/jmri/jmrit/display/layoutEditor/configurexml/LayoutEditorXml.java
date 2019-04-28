@@ -316,7 +316,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
 
             java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-            if (prefsWindowSize != null) {
+            if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                 windowHeight = (int) prefsWindowSize.getHeight();
                 windowWidth = (int) prefsWindowSize.getWidth();
 //                 log.warn("size = {}", prefsWindowSize);

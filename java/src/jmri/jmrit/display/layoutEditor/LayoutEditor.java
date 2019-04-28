@@ -1073,18 +1073,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    public void componentMoved(java.awt.event.ComponentEvent e) {
-        setCurrentPositionAndSize();
-        super.componentMoved(e);
-    }
-
-    @Override
-    public void componentResized(java.awt.event.ComponentEvent e) {
-        setCurrentPositionAndSize();
-        super.componentResized(e);
-    }
-
-    @Override
     public void newPanelDefaults() {
         getLayoutTrackDrawingOptions().setMainRailWidth(2);
         getLayoutTrackDrawingOptions().setSideRailWidth(1);
