@@ -49,20 +49,22 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
         LayoutEditor p = (LayoutEditor) o;
+        java.awt.Point loc = p.getLocation();
+        java.awt.Dimension size = p.getSize();
 
         Element panel = new Element("LayoutEditor");
 
         panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
-        panel.setAttribute("x", "" + p.getUpperLeftX());
-        panel.setAttribute("y", "" + p.getUpperLeftY());
+        panel.setAttribute("x", "" + loc.getX());
+        panel.setAttribute("y", "" + loc.getY());
         // From this version onwards separate sizes for window and panel are stored the
         // following two statements allow files written here to be read in 2.2 and before
         panel.setAttribute("height", "" + p.getLayoutHeight());
         panel.setAttribute("width", "" + p.getLayoutWidth());
         // From this version onwards separate sizes for window and panel are stored
-        panel.setAttribute("windowheight", "" + p.getWindowHeight());
-        panel.setAttribute("windowwidth", "" + p.getWindowWidth());
+        panel.setAttribute("windowheight", "" + size.getHeight());
+        panel.setAttribute("windowwidth", "" + size.getWidth());
         panel.setAttribute("panelheight", "" + p.getLayoutHeight());
         panel.setAttribute("panelwidth", "" + p.getLayoutWidth());
         panel.setAttribute("sliders", "" + (p.getScroll() ? "yes" : "no")); // deprecated
