@@ -12,10 +12,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.1" lastUpdated="20190429"/>
+  <!-- deleted wrong Servo-options from file-version 1                                       -->
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1" lastUpdated="20190407"/>
   <!-- This decoder configuration file is based on other Zimo non-sound decoders             -->
   <!-- Tested on a MX616, which reported v37.8 firmware and                                  -->
-  <!-- decoderID 195 (which matches manuals), on 25 April 2019 (RK)                         -->
+  <!-- decoderID 195 (which matches manuals), on 25 April 2019 (RK)                          -->
   <!--                                                                                       -->
   <!-- Based on the "2018 12 15" German version of the ZIMO small decoder manual             -->
   <!--                                                                                       -->
@@ -98,7 +100,6 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
      <!-- CV7 set to default 37 -->
       <variable CV="7" readOnly="yes" default="37">
         <decVal/>
@@ -132,7 +133,6 @@
         <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
       <!-- Begin constant stopping distance variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV830-CV833.xml"/>
@@ -153,6 +153,5 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
 </decoder-config>
