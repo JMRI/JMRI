@@ -24,7 +24,7 @@ import org.junit.runners.Suite;
         LayoutEditorActionTest.class,
         LayoutEditorAuxToolsTest.class,
         LayoutEditorFindItemsTest.class,
-//         LayoutEditorLoadAndStoreTest.class,  Disabled until the location and size have been removed fron the xml file.
+        LayoutEditorLoadAndStoreTest.class,
         LayoutEditorTest.class,
         LayoutEditorWindowTest.class,
         LayoutShapeTest.class,

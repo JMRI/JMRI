@@ -46,10 +46,13 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");
         panel.setAttribute("name", "" + frame.getTitle());
+
+        // The window location and size are deprecated at 4.15.6 and will be removed after 4.18.
         panel.setAttribute("x", "" + posn.x);
         panel.setAttribute("y", "" + posn.y);
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
+
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));

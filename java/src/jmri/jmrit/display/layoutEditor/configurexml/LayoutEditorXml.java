@@ -56,15 +56,13 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
-        panel.setAttribute("x", "" + loc.getX());
-        panel.setAttribute("y", "" + loc.getY());
-        // From this version onwards separate sizes for window and panel are stored the
-        // following two statements allow files written here to be read in 2.2 and before
-        panel.setAttribute("height", "" + p.getLayoutHeight());
-        panel.setAttribute("width", "" + p.getLayoutWidth());
-        // From this version onwards separate sizes for window and panel are stored
-        panel.setAttribute("windowheight", "" + size.getHeight());
-        panel.setAttribute("windowwidth", "" + size.getWidth());
+
+        // The window location and size are deprecated at 4.15.6 and will be removed after 4.18.
+        panel.setAttribute("x", "" + loc.x);
+        panel.setAttribute("y", "" + loc.y);
+        panel.setAttribute("windowheight", "" + size.height);
+        panel.setAttribute("windowwidth", "" + size.width);
+
         panel.setAttribute("panelheight", "" + p.getLayoutHeight());
         panel.setAttribute("panelwidth", "" + p.getLayoutWidth());
         panel.setAttribute("sliders", "" + (p.getScroll() ? "yes" : "no")); // deprecated
@@ -242,8 +240,12 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         int sidetrackwidth = 3;
         int mainlinetrackwidth = 3;
         try {
-            x = shared.getAttribute("x").getIntValue();
-            y = shared.getAttribute("y").getIntValue();
+            if ((a = shared.getAttribute("x")) != null) {
+                x = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("y")) != null) {
+                y = a.getIntValue();
+            }
 
             // For compatibility with previous versions, try and
             // see if height and width tags are contained in the file

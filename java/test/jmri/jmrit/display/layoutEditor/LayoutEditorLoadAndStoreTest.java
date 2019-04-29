@@ -4,6 +4,7 @@ import java.io.File;
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -22,7 +23,7 @@ import org.junit.runners.Parameterized;
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
 @RunWith(Parameterized.class)
-public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
+@Ignore public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
 
     @Parameterized.Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
