@@ -125,7 +125,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertFalse(s.isEmpty());
     }
 
-    private Field getField(Class c, String fieldName) {
+    protected Field getField(Class c, String fieldName) {
         try {
             return c.getDeclaredField(fieldName);
         } catch (NoSuchFieldException ex) {
