@@ -16,7 +16,6 @@ import java.beans.PropertyVetoException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import jmri.Sensor;
-import jmri.ProvidingManager;
 import jmri.util.JUnitAppender;
 import org.apache.log4j.Level;
 import org.junit.*;
@@ -126,7 +125,6 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-       ProvidingManager<Sensor> m = (ProvidingManager<Sensor>) l;
        String s1 = l.makeSystemName("00 02:1");
        String s2 = l.makeSystemName("00 02:2");
        Assert.assertNotNull(s1);
@@ -138,8 +136,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
        Sensor e2;
 
        try {
-          e1 = m.provide(s1);
-          e2 = m.provide(s2);
+          e1 = l.provide(s1);
+          e2 = l.provide(s2);
        } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
           // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
           // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.

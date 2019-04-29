@@ -11,7 +11,6 @@ import java.beans.PropertyVetoException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import jmri.Turnout;
-import jmri.ProvidingManager;
 import jmri.util.JUnitAppender;
 import org.apache.log4j.Level;
 import org.junit.*;
@@ -98,7 +97,6 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-       ProvidingManager<Turnout> m = (ProvidingManager<Turnout>) l;
        String s1 = l.makeSystemName("00 02:1");
        String s2 = l.makeSystemName("00 02:2");
        Assert.assertNotNull(s1);
@@ -110,8 +108,8 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
        Turnout e2;
 
        try {
-          e1 = m.provide(s1);
-          e2 = m.provide(s2);
+          e1 = l.provide(s1);
+          e2 = l.provide(s2);
        } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
           // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
           // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.
