@@ -1033,6 +1033,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     ////////////////// Overridden methods of Editor //////////////////
     private boolean _manualSelection = false;
 
+    @Override 
+    public void deselectSelectionGroup() {
+        _circuitBuilder.hidePortalIcons();
+        super.deselectSelectionGroup();
+    }
+
     protected Positionable getCurrentSelection(MouseEvent event) {
         if (_pastePending && !event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
             return getCopySelection(event);
