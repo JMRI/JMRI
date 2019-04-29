@@ -48,10 +48,13 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml");
         panel.setAttribute("name", "" + frame.getName());
+
+        // The window location and size are deprecated at 4.15.6 and will be removed after 4.18.
         panel.setAttribute("x", "" + posn.x);
         panel.setAttribute("y", "" + posn.y);
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
+
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
