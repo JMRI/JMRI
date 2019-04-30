@@ -28,6 +28,7 @@ public class RpsMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
+            // ignore
         }
         f.setVisible(true);
     }

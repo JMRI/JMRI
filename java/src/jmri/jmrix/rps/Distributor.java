@@ -40,10 +40,7 @@ public class Distributor {
         synchronized (this) {
             v = (Vector<ReadingListener>) readingListeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " ReadingListeners about item ");
-        }
+        log.debug("notify {} ReadingListeners about item", v.size());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -81,10 +78,7 @@ public class Distributor {
         synchronized (this) {
             v = (Vector<MeasurementListener>) measurementListeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " MeasurementListeners about item ");
-        }
+        log.debug("notify {} MeasurementListeners about item", v.size());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -107,8 +101,6 @@ public class Distributor {
     ////////////////////////////
     final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
     final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
-
-    private final static Logger log = LoggerFactory.getLogger(Distributor.class);
 
     /**
      * Forward the Reading from the Swing thread.
@@ -147,5 +139,7 @@ public class Distributor {
             client.notify(s);
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(Distributor.class);
 
 }

@@ -26,7 +26,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     }
 
     public RpsTrackingFrame(RpsSystemConnectionMemo _memo) {
-        this("RPS Tracking Display",_memo);
+        this("RPS Tracking Display", _memo);
     }
 
     @Override

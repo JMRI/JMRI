@@ -160,8 +160,8 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportAction("Export Readings as CSV...",memo));
-        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportMeasurementAction("Export Measurements as CSV...",memo));
+        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportAction("Export Readings as CSV...", memo));
+        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportMeasurementAction("Export Measurements as CSV...", memo));
         setJMenuBar(menuBar);
 
         // add help
@@ -177,7 +177,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     void doOnce() {
         switch (mode.getSelectedIndex()) {
             default: // should not happen
-                log.error("Did not expect selected mode " + mode.getSelectedIndex());
+                log.error("Did not expect selected mode {}", mode.getSelectedIndex());
                 return;
             case 0: // From time fields
                 doReadingFromTimeFields();
@@ -190,14 +190,14 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
                     doLoadReadingFromFile();
                     doReadingFromTimeFields();
                 } catch (java.io.IOException e) {
-                    log.error("exception " + e);
+                    log.error("exception ", e);
                 }
                 return;
             case 3: // From X,Y,Z file
                 try {
                     doLoadMeasurementFromFile();
                 } catch (java.io.IOException e) {
-                    log.error("exception " + e);
+                    log.error("exception ", e);
                 }
                 return;
 

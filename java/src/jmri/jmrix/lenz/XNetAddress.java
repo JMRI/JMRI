@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Lenz XpressNet
- * <P>
+ * <p>
  * Two address format are supported: 
  * <ul>
  * <li> 

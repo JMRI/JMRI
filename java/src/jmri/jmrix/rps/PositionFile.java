@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Persist RPS configuration information
+ * Persist RPS configuration information.
  *
  * @author Bob Jacobsen Copyright 2007, 2008
  */
@@ -26,7 +26,7 @@ public class PositionFile extends XmlFile {
     /**
      * Initialize for writing information.
      * <p>
-     * This is followed by multiple "set" calls, then a "store"
+     * This is followed by multiple "set" calls, then a "store".
      */
     public void prepare() {
         root = new Element("rpsfile");

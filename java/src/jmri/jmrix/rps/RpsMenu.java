@@ -27,8 +27,6 @@ public class RpsMenu extends JMenu {
         }
         _memo = memo;
 
-        setText("RPS");  // Product name NOI18N
-
         // tools that work
         add(new jmri.jmrix.rps.rpsmon.RpsMonAction(_memo));
         add(new jmri.jmrix.rps.aligntable.AlignTableAction(_memo));

@@ -19,7 +19,7 @@ public class RpsTrackingFrameAction extends AbstractAction {
     }
 
     public RpsTrackingFrameAction(RpsSystemConnectionMemo _memo) {
-        this("RPS Tracking Display",_memo);
+        this("RPS Tracking Display", _memo);
     }
 
     @Override

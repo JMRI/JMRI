@@ -21,7 +21,7 @@ public class DebuggerAction extends AbstractAction {
     }
 
     public DebuggerAction(RpsSystemConnectionMemo _memo) {
-        this("RPS Debugger Window",_memo);
+        this("RPS Debugger Window", _memo);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DebuggerAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("starting frame: Exception: " + ex.toString());
+            log.warn("starting frame: Exception: ", ex);
         }
         f.setVisible(true);
 

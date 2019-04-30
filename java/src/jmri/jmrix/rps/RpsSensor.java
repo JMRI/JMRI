@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractSensor for RPS systems
+ * Extend jmri.AbstractSensor for RPS systems.
  * <p>
  * System names are "RSpppp", where ppp is a representation of the region, for
  * example "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".

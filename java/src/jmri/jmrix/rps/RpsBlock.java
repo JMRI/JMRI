@@ -46,10 +46,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     void handleParameterChange(String property,
             Object oldState, Object newState,
             Object source) {
-        if (log.isDebugEnabled()) {
-            log.debug("Change " + property + " from " + source);
-        }
-
+        log.debug("Change {} from {}", property, source);
         if (property.equals("Arriving")) {
             arriving((Integer) newState);
         } else if (property.equals("Leaving")) {
@@ -113,7 +110,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
             if (t != null) {
                 updateOneThrottle(t);
             } else {
-                log.warn("Throttle not yet available for: " + num);
+                log.warn("Throttle not yet available for: {}", num);
             }
         }
     }

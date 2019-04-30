@@ -218,13 +218,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         TransmitterStatus transmitter = transmitters.get(id);
         double xend = m.getX();
         double yend = m.getY();
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + xend + "," + yend);
-        }
+        log.debug("notify {},{}", xend, yend);
         if (transmitter == null) {
             // create Transmitter status with current measurement
             // so we can draw line next time
-            log.debug("create new TransmitterStatus for " + m.getId());
+            log.debug("create new TransmitterStatus for {}", m.getId());
             transmitter = new TransmitterStatus();
             transmitter.measurement = m;
             transmitter.color = nextColor();

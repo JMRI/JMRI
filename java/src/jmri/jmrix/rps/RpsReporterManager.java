@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import jmri.JmriException;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,37 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
         RpsReporter r = new RpsReporter(systemName, userName, prefix);
         Distributor.instance().addMeasurementListener(r);
         return r;
+    }
+
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
+        // first, check validity
+        try {
+            validSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        return getSystemPrefix() + typeLetter() + curAddress;
+    }
+
+    /**
+     * Public method to validate system name format returns 'true' if system
+     * name has a valid format, else returns 'false'.
+     *
+     * @param systemName the address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (RpsAddress.validSystemNameFormat(systemName, 'R', prefix));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddReporterEntryToolTip");
+        return entryToolTip;
     }
 
     /**
