@@ -85,13 +85,13 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+        ArrayNode array = this.mapper.createArrayNode();
         for (SignalHead head : InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet()) {
             String name = head.getSystemName();
-            root.add(this.doGet(SIGNAL_HEAD, name, data, locale, id));
+            array.add(this.doGet(SIGNAL_HEAD, name, data, locale, id));
         }
-        return root;
+        return message(array, id);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class JsonSchemaServiceCacheTest {
             }
             services.forEach((service) -> {
                 try {
-                    service.doSchema(type, true, locale, 42);
+                    service.doSchema(type, true, locale, 0);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();
                     Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
@@ -58,7 +58,7 @@ public class JsonSchemaServiceCacheTest {
                             ex.getMessage());
                 }
                 try {
-                    service.doSchema(type, false, locale, 42);
+                    service.doSchema(type, false, locale, 0);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();
                     Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
@@ -71,7 +71,7 @@ public class JsonSchemaServiceCacheTest {
                 }
                 // test that every service throws an expected exception
                 try {
-                    service.doSchema("invalid-type", true, locale, 42);
+                    service.doSchema("invalid-type", true, locale, 0);
                     Assert.fail("Expected exception for type \"invalid-type\" not thrown by " + service);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();

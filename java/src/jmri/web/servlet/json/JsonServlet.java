@@ -168,7 +168,7 @@ public class JsonServlet extends WebSocketServlet {
             try {
                 if (name == null) {
                     if (this.services.get(type) != null) {
-                        ArrayList<ArrayNode> lists = new ArrayList<>();
+                        ArrayList<JsonNode> lists = new ArrayList<>();
                         ArrayNode array = this.mapper.createArrayNode();
                         JsonException exception = null;
                         try {
@@ -183,16 +183,24 @@ public class JsonServlet extends WebSocketServlet {
                                 if (exception != null) {
                                     throw exception;
                                 }
-                                reply = array;
+                                reply = JsonHttpService.message(mapper, array, null, id); // either empty array or object with empty data
                                 break;
                             case 1:
                                 reply = lists.get(0);
                                 break;
                             default:
-                                for (ArrayNode list : lists) {
-                                    array.addAll(list);
+                                for (JsonNode list : lists) {
+                                    if (list.isArray()) {
+                                        list.forEach((item) -> {
+                                            array.add(item);
+                                        });
+                                    } else if (list.path(DATA).isArray()) {
+                                        list.path(DATA).forEach((item) -> {
+                                            array.add(item);
+                                        });
+                                    }
                                 }
-                                reply = array;
+                                reply = JsonHttpService.message(mapper, array, null, id);
                                 break;
                         }
                     }

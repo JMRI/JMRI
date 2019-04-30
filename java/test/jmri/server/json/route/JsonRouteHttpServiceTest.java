@@ -238,12 +238,12 @@ public class JsonRouteHttpServiceTest {
             JsonRouteHttpService service = new JsonRouteHttpService(mapper);
             RouteManager manager = InstanceManager.getDefault(RouteManager.class);
             JsonNode result;
-            result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideRoute("IR1", "Route1");
             manager.provideRoute("IR2", "Route2");
-            result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

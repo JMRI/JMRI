@@ -438,6 +438,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                             "jmri/server/json/util/systemConnection-client.json",
                             id);
                 case JsonException.ERROR:
+                case JSON.LIST:
                 case JSON.PONG:
                     if (server) {
                         return doSchema(type, server,

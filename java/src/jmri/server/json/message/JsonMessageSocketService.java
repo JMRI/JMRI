@@ -128,7 +128,7 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                 for (String client : clients) {
                     array.add(getClient(client, locale, id));
                 }
-                connection.sendMessage(array, id);
+                connection.sendMessage(service.message(array, id), id);
                 break;
             default:
                 // silently ignore

@@ -134,11 +134,12 @@ public abstract class JsonHttpService {
      * @param data   JSON data set of attributes of the requested objects
      * @param locale the requesting client's Locale
      * @param id     the message id set by the client
-     * @return a JSON list
+     * @return a JSON list or message containing type {@value JSON#LIST}, the
+     *         list as data, and the passed in id
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
+    public abstract JsonNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException;
 
     /**
@@ -280,6 +281,19 @@ public abstract class JsonHttpService {
     }
 
     /**
+     * Create a message node from an array.
+     * 
+     * @param data the array
+     * @param id   the message id provided by the client
+     * @return if id is a positive, non-zero integer, return a message of type
+     *         {@value JSON#LIST} with data as the data and id set; otherwise
+     *         just return data without modification
+     */
+    public final JsonNode message(@Nonnull ArrayNode data, int id) {
+        return message(mapper, data, null, id);
+    }
+
+    /**
      * Create a message node without an explicit method.
      * 
      * @param type   the message type
@@ -302,6 +316,21 @@ public abstract class JsonHttpService {
      */
     public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
         return message(mapper, type, data, method, id);
+    }
+
+    /**
+     * Create a message node from an array.
+     * 
+     * @param mapper the ObjectMapper to use to construct the message
+     * @param data   the array
+     * @param method the message method
+     * @param id     the message id provided by the client
+     * @return if id is a positive, non-zero integer, return a message of type
+     *         {@value JSON#LIST} with data as the data and id set; otherwise
+     *         just return data without modification
+     */
+    public static final JsonNode message(@Nonnull ObjectMapper mapper, @Nonnull ArrayNode data, @Nullable String method, int id) {
+        return (id > 0) ? message(mapper, JSON.LIST, data, method, id) : data;
     }
 
     /**

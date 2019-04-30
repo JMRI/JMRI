@@ -138,15 +138,15 @@ public class JsonTurnoutHttpServiceTest {
             JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
             TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
             JsonNode result;
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideTurnout("IT1");
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(1, result.size());
             manager.provideTurnout("IT2");
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

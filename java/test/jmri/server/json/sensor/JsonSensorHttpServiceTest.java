@@ -162,12 +162,12 @@ public class JsonSensorHttpServiceTest {
             JsonSensorHttpService service = new JsonSensorHttpService(mapper);
             SensorManager manager = InstanceManager.getDefault(SensorManager.class);
             JsonNode result;
-            result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideSensor("IS1");
             manager.provideSensor("IS2");
-            result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

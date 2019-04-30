@@ -2,6 +2,8 @@ package jmri.server.json.roster;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -80,7 +82,7 @@ public class JsonRosterSocketServiceTest {
 
         // list the groups in a JSON message for assertions
         this.connection.sendMessage((JsonNode) null, 0);
-        instance.onMessage(JsonRoster.ROSTER_GROUPS, this.connection.getObjectMapper().createObjectNode(), JSON.GET, locale, 42);
+        instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), JSON.GET, locale, 0);
         JsonNode message = this.connection.getMessage();
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         Assert.assertNotNull("Message was sent", message);
@@ -254,7 +256,7 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onMessage should cause listening to start if it hasn't already
-        instance.onMessage(JsonRoster.ROSTER, data, JSON.GET, locale, 42);
+        instance.onMessage(JsonRoster.ROSTER, data, JSON.GET, locale, 0);
         JsonNode message = this.connection.getMessage();
         Assert.assertNotNull("Message was sent", message);
         Assert.assertEquals(Roster.getDefault().numEntries(), message.size());
@@ -310,7 +312,7 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onList should cause listening to start if it hasn't already
-        instance.onList(JsonRoster.ROSTER, data, locale, 42);
+        instance.onList(JsonRoster.ROSTER, data, locale, 0);
         JsonNode message = this.connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals(Roster.getDefault().numEntries(), message.size());

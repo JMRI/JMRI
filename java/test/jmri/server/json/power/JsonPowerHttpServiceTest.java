@@ -111,7 +111,7 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGetList() {
         try {
             JsonNode result = (new JsonPowerHttpService(mapper)).doGetList(JsonPowerServiceFactory.POWER,
-                    mapper.createObjectNode(), locale, 42);
+                    mapper.createObjectNode(), locale, 0);
             this.validate(result);
             Assert.assertTrue(result.isArray());
             Assert.assertEquals(1, result.size());

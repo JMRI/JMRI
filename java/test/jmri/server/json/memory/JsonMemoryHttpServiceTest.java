@@ -108,12 +108,12 @@ public class JsonMemoryHttpServiceTest {
             JsonMemoryHttpService service = new JsonMemoryHttpService(mapper);
             MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
             JsonNode result;
-            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonMemory.MEMORY, NullNode.getInstance(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideMemory("IM1");
             manager.provideMemory("IM2");
-            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonMemory.MEMORY, NullNode.getInstance(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

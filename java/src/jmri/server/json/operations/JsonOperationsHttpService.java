@@ -137,26 +137,26 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR:
             case CARS:
-                return this.getCars(locale, id);
+                return message(getCars(locale, id), id);
             case CAR_TYPE:
                 return this.getCarTypes(locale, id);
             case ENGINE:
             case ENGINES:
-                return this.getEngines(locale, id);
+                return message(getEngines(locale, id), id);
             case KERNEL:
                 return this.getKernels(locale, id);
             case LOCATION:
             case LOCATIONS:
                 return this.getLocations(locale, id);
             case ROLLING_STOCK:
-                return this.getCars(locale, id).addAll(this.getEngines(locale, id));
+                return message(getCars(locale, id).addAll(getEngines(locale, id)), id);
             case TRAIN:
             case TRAINS:
-                return this.utilities.getTrains(locale);
+                return message(utilities.getTrains(locale), id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         Bundle.getMessage(locale, "ErrorInternal", type), id); // NOI18N
@@ -224,12 +224,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return message(CAR_TYPE, data, id);
     }
 
-    private ArrayNode getCarTypes(Locale locale, int id) throws JsonException {
+    private JsonNode getCarTypes(Locale locale, int id) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(CarTypes.class).getNames()) {
             array.add(getCarType(name, locale, id));
         }
-        return array;
+        return message(array, id);
     }
 
     private ObjectNode getKernel(Kernel kernel, Locale locale, int id) {
@@ -259,36 +259,36 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return array;
     }
 
-    private ArrayNode getKernels(Locale locale, int id) {
-        ArrayNode root = mapper.createArrayNode();
+    private JsonNode getKernels(Locale locale, int id) {
+        ArrayNode array = mapper.createArrayNode();
         getCarManager().getKernelNameList().forEach((kernel) -> {
-            root.add(getKernel(getCarManager().getKernelByName(kernel), locale, id));
+            array.add(getKernel(getCarManager().getKernelByName(kernel), locale, id));
         });
-        return root;
+        return message(array, id);
     }
 
     public ArrayNode getCars(Locale locale, int id) {
-        ArrayNode root = mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         getCarManager().getByIdList().forEach((car) -> {
-            root.add(message(CAR, utilities.getCar(car, locale), id));
+            array.add(message(CAR, utilities.getCar(car, locale), id));
         });
-        return root;
+        return array;
     }
 
     public ArrayNode getEngines(Locale locale, int id) {
-        ArrayNode root = mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((engine) -> {
-            root.add(message(ENGINE, utilities.getEngine(engine, locale), id));
+            array.add(message(ENGINE, utilities.getEngine(engine, locale), id));
         });
-        return root;
+        return array;
     }
 
-    public ArrayNode getLocations(Locale locale, int id) throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
+    public JsonNode getLocations(Locale locale, int id) throws JsonException {
+        ArrayNode array = mapper.createArrayNode();
         getLocationManager().getLocationsByIdList().forEach((location) -> {
-            root.add(message(LOCATION, utilities.getLocation(location, locale), id));
+            array.add(message(LOCATION, utilities.getLocation(location, locale), id));
         });
-        return root;
+        return message(array, id);
     }
 
     /**

@@ -22,7 +22,6 @@ import static jmri.server.json.JSON.OWNER;
 import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.SELECTED_ICON;
 import static jmri.server.json.JSON.SHUNTING_FUNCTION;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.VALUE;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -91,7 +90,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
             case JsonRoster.ROSTER_ENTRY:
@@ -104,7 +103,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         }
     }
 
-    public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data, int id) throws JsonException {
+    public JsonNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data, int id) throws JsonException {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group) || Roster.allEntries(locale).equals(group)) {
             group = null;
@@ -116,11 +115,11 @@ public class JsonRosterHttpService extends JsonHttpService {
         String decoderModel = (!data.path(DECODER_MODEL).isMissingNode()) ? data.path(DECODER_MODEL).asText() : null;
         String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String name = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
-        ArrayNode root = this.mapper.createArrayNode();
+        ArrayNode array = this.mapper.createArrayNode();
         for (RosterEntry entry : Roster.getDefault().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, name, group)) {
-            root.add(getRosterEntry(locale, entry, id));
+            array.add(getRosterEntry(locale, entry, id));
         }
-        return root;
+        return message(array, id);
     }
 
     /**
@@ -217,13 +216,13 @@ public class JsonRosterHttpService extends JsonHttpService {
         return message(JsonRoster.ROSTER_ENTRY, data, id);
     }
 
-    public ArrayNode getRosterGroups(Locale locale, int id) throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
-        root.add(getRosterGroup(locale, Roster.ALLENTRIES, id));
+    public JsonNode getRosterGroups(Locale locale, int id) throws JsonException {
+        ArrayNode array = mapper.createArrayNode();
+        array.add(getRosterGroup(locale, Roster.ALLENTRIES, id));
         for (String name : Roster.getDefault().getRosterGroupList()) {
-            root.add(getRosterGroup(locale, name, id));
+            array.add(getRosterGroup(locale, name, id));
         }
-        return root;
+        return message(array, id);
     }
 
     public JsonNode getRosterGroup(Locale locale, String name, int id) throws JsonException {

@@ -230,7 +230,7 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGetList() throws Exception {
         InstanceManager.getDefault(BlockManager.class).createNewBlock("test");
         JsonBlockHttpService instance = new JsonBlockHttpService(mapper);
-        JsonNode result = instance.doGetList(JsonBlock.BLOCK, mapper.createObjectNode(), locale, 42);
+        JsonNode result = instance.doGetList(JsonBlock.BLOCK, mapper.createObjectNode(), locale, 0);
         Assert.assertEquals(1, result.size());
         this.validate(result);
     }

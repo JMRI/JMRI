@@ -2,7 +2,6 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.annotation.Nonnull;
@@ -88,7 +87,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Nonnull
     @Override
-    public final ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public final JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         return doGetList(getManager(), type, data, locale, id);
     }
 

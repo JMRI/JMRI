@@ -113,7 +113,7 @@ public class JsonTurnoutSocketServiceTest {
         manager.deregister(turnout1);
         manager.deregister(turnout2);
         service.onList(JsonTurnoutServiceFactory.TURNOUT, connection.getObjectMapper().createObjectNode(),
-                locale, 42);
+                locale, 0);
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());

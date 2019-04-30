@@ -68,7 +68,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, locale, id);
     }
 

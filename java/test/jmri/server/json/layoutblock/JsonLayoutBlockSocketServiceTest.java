@@ -132,7 +132,7 @@ public class JsonLayoutBlockSocketServiceTest {
         Assert.assertNotNull("LayoutBlock2 is created", lb2);
         Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
-        instance.onList(JsonLayoutBlock.LAYOUTBLOCK, null, locale, 42);
+        instance.onList(JsonLayoutBlock.LAYOUTBLOCK, null, locale, 0);
         // onList should not add a listener to all LayoutBlocks
         Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();

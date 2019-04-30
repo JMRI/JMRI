@@ -71,10 +71,10 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
-        ArrayNode result = this.mapper.createArrayNode();
-        result.add(this.doGet(type, null, data, locale, id));
-        return result;
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+        ArrayNode array = this.mapper.createArrayNode();
+        array.add(this.doGet(type, null, data, locale, id));
+        return message(array, id);
     }
 
     @Override

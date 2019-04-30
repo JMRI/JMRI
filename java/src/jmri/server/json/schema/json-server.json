@@ -5,7 +5,7 @@
     "description": "Message from JMRI to client",
     "definitions": {
         "jmri-json-server-message": {
-            "oneOf": [
+            "anyOf": [
                 {
                     "type": "object",
                     "description": "Message from JMRI to client with data",
@@ -16,8 +16,18 @@
                             "pattern": "^((?!(pong|goodbye)).)*$"
                         },
                         "data": {
-                            "type": "object",
-                            "description": "Data carried in message, see individual types for valid schemas"
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "description": "Data carried in message, see individual types for valid schemas"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            ]
                         },
                         "method": {
                             "type": "string",

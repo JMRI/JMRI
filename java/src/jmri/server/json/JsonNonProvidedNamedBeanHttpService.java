@@ -46,13 +46,13 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    protected final ArrayNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale, int id)
+    protected final JsonNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale, int id)
             throws JsonException {
         ArrayNode array = this.mapper.createArrayNode();
         for (T bean : manager.getNamedBeanSet()) {
             array.add(this.doGet(bean, bean.getSystemName(), type, locale, id));
         }
-        return array;
+        return message(array, id);
     }
 
     /**

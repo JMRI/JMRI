@@ -31,7 +31,7 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListCar() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.CAR, mapper.createObjectNode(), locale, 42);
+        service.onList(JsonOperations.CAR, mapper.createObjectNode(), locale, 0);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListKernel() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), locale, 42);
+        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), locale, 0);
     }
 
     @Before

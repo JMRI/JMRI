@@ -1,6 +1,8 @@
 package jmri.server.json.roster;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
@@ -50,11 +52,11 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGet() throws JsonException {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", instance.getObjectMapper().createObjectNode(), locale, 42).size());
-        Assert.assertEquals(2, instance.doGet(JsonRoster.ROSTER, "", instance.getObjectMapper().createObjectNode(), locale, 42).size());
+        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), locale, 0).size());
+        Assert.assertEquals(2, instance.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), locale, 0).size());
         // call with invalid first argument
         try {
-            instance.doGet(TEST_GROUP1, TEST_GROUP1, instance.getObjectMapper().createObjectNode(), locale, 42);
+            instance.doGet(TEST_GROUP1, TEST_GROUP1, NullNode.getInstance(), locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
@@ -97,10 +99,10 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGetList() throws JsonException {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", instance.getObjectMapper().createObjectNode(), locale, 42).size());
+        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), locale, 0).size());
         // call with invalid first argument
         try {
-            instance.doGet(TEST_GROUP1, TEST_GROUP1, instance.getObjectMapper().createObjectNode(), locale, 42);
+            instance.doGet(TEST_GROUP1, TEST_GROUP1, NullNode.getInstance(), locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
@@ -118,13 +120,13 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // no group name - check only size - it should contain all entries in Roster
         Assert.assertEquals(Roster.getDefault().numEntries(),
-                instance.getRoster(locale, this.mapper.createObjectNode(), 42).size());
+                instance.getRoster(locale, this.mapper.createObjectNode(), 0).size());
         // existent group name - check only size - it should contain all entries in named RosterGroup
         Assert.assertEquals(Roster.getDefault().numGroupEntries(TEST_GROUP1),
-                instance.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_GROUP1), 42).size());
+                instance.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_GROUP1), 0).size());
         // non-existent group name - check only size - it should be empty
         Assert.assertEquals(0,
-                instance.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_ENTRY1), 42).size());
+                instance.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_ENTRY1), 0).size());
     }
 
     /**
@@ -168,7 +170,7 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetRosterGroups() throws JsonException {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
-        Assert.assertEquals(Roster.getDefault().getRosterGroups().size() + 1, instance.getRosterGroups(locale, 42).size());
+        Assert.assertEquals(Roster.getDefault().getRosterGroups().size() + 1, instance.getRosterGroups(locale, 0).size());
     }
 
     /**

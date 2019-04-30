@@ -87,7 +87,7 @@ public class JsonPowerSocketServiceTest {
         JsonPowerSocketService service = new JsonPowerSocketService(connection);
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         power.setPower(PowerManager.UNKNOWN);
-        service.onList(JsonPowerServiceFactory.POWER, message, locale, 42);
+        service.onList(JsonPowerServiceFactory.POWER, message, locale, 0);
         message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertTrue(message.isArray());
@@ -114,7 +114,7 @@ public class JsonPowerSocketServiceTest {
         JsonPowerSocketService service = new JsonPowerSocketService(connection, http);
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         power.setPower(PowerManager.UNKNOWN);
-        service.onList(JsonPowerServiceFactory.POWER, message, locale, 42);
+        service.onList(JsonPowerServiceFactory.POWER, message, locale, 0);
         http.setThrowException(true);
         power.setPower(PowerManager.ON);
         message = connection.getMessage();

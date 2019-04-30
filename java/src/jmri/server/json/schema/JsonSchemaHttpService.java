@@ -47,9 +47,10 @@ public class JsonSchemaHttpService extends JsonHttpService {
                         if (server != null) {
                             return this.doSchema(JSON.JSON, server, locale, id);
                         }
-                        return this.mapper.createArrayNode()
+                        return message(mapper.createArrayNode()
                                 .add(this.doSchema(JSON.JSON, true, locale, id))
-                                .add(this.doSchema(JSON.JSON, false, locale, id));
+                                .add(this.doSchema(JSON.JSON, false, locale, id)),
+                                id);
                     default:
                         try {
                             ArrayNode schemas = this.mapper.createArrayNode();
@@ -88,7 +89,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
                             if (schemas.size() == 1) {
                                 return schemas.get(0);
                             }
-                            return schemas;
+                            return message(schemas, id);
                         } catch (NullPointerException ex) {
                             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", name), ex, id);
                         }
@@ -114,15 +115,15 @@ public class JsonSchemaHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode parameters, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode parameters, Locale locale, int id) throws JsonException {
         switch (type) {
             case JSON.TYPE:
-                ArrayNode root = this.mapper.createArrayNode();
+                ArrayNode array = this.mapper.createArrayNode();
                 JsonNode data = this.mapper.createObjectNode();
                 for (String name : InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes()) {
-                    root.add(this.doPost(type, name, data, locale, id));
+                    array.add(this.doGet(type, name, data, locale, id));
                 }
-                return root;
+                return message(array, id);
             default:
                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type), id);
         }

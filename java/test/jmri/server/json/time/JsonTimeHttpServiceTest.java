@@ -7,8 +7,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -24,7 +25,7 @@ public class JsonTimeHttpServiceTest {
     public void doGetList() throws JsonException {
         JsonTimeHttpService service = new JsonTimeHttpService(new ObjectMapper());
         Timebase manager = InstanceManager.getDefault(Timebase.class);
-        ArrayNode array = service.doGetList(JsonTimeServiceFactory.TIME, service.getObjectMapper().createObjectNode(), locale, 42);
+        JsonNode array = service.doGetList(JsonTimeServiceFactory.TIME, NullNode.getInstance(), locale, 0);
         Assert.assertNotNull(array);
         Assert.assertEquals("One element in array", 1, array.size());
         Assert.assertTrue("First element is a JSON object", array.get(0).isObject());

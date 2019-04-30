@@ -161,12 +161,12 @@ public class JsonReporterHttpServiceTest  {
             JsonReporterHttpService service = new JsonReporterHttpService(mapper);
             ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
             JsonNode result;
-            result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideReporter("IR1");
             manager.provideReporter("IR2");
-            result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

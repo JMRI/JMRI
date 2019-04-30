@@ -111,12 +111,12 @@ public class JsonPowerHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+        ArrayNode array = this.mapper.createArrayNode();
         for (PowerManager manager : InstanceManager.getList(PowerManager.class)) {
-            root.add(this.doGet(type, manager.getUserName(), data, locale, id));
+            array.add(this.doGet(type, manager.getUserName(), data, locale, id));
         }
-        return root;
+        return message(array, id);
     }
 
     @Override

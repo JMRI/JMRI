@@ -155,15 +155,15 @@ public class JsonConsistHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager"), id); // NOI18N
         }
-        ArrayNode root = mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         for (LocoAddress address : this.manager.getConsistList()) {
-            root.add(getConsist(locale, address, id));
+            array.add(getConsist(locale, address, id));
         }
-        return root;
+        return message(array, id);
     }
 
     /**

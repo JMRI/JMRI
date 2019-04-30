@@ -37,7 +37,7 @@ public class JsonSchemaHttpServiceTest {
     @Test
     public void testDoGet() throws JsonException {
         JsonSchemaHttpService instance = new JsonSchemaHttpService(new ObjectMapper());
-        JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, instance.getObjectMapper().createObjectNode(), locale, 42);
+        JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, instance.getObjectMapper().createObjectNode(), locale, 0);
         Assert.assertTrue("Is an array", result.isArray());
         Assert.assertEquals("Array has two elements", 2, result.size());
         Assert.assertTrue("1st element is JsonObject", result.get(0).isObject());

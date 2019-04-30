@@ -117,7 +117,7 @@ public class JsonSignalHeadSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         TestJsonSignalHeadHttpService http = new TestJsonSignalHeadHttpService(connection.getObjectMapper());
         JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection, http);
-        service.onList(JsonSignalHead.SIGNAL_HEAD, connection.getObjectMapper().createObjectNode(), locale, 42);
+        service.onList(JsonSignalHead.SIGNAL_HEAD, connection.getObjectMapper().createObjectNode(), locale, 0);
         Assert.assertEquals("One listener", 1, manager.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull(message);

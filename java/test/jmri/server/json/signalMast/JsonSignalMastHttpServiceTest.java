@@ -128,14 +128,14 @@ public class JsonSignalMastHttpServiceTest {
             SignalHeadManager headManager = InstanceManager.getDefault(SignalHeadManager.class);
             SignalMastManager mastManager = InstanceManager.getDefault(SignalMastManager.class);
             JsonNode result;
-            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             headManager.register(new VirtualSignalHead("IH1"));
             mastManager.provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
             headManager.register(new VirtualSignalHead("IH2"));
             mastManager.provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
-            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

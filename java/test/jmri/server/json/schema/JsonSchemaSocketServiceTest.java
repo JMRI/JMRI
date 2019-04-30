@@ -122,7 +122,7 @@ public class JsonSchemaSocketServiceTest {
         JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
         // GET without NAME returns JSON schema
         try {
-            instance.onMessage(type, data, JSON.GET, locale, 42);
+            instance.onMessage(type, data, JSON.GET, locale, 0);
         } catch (JsonSchemaException ex) {
             JUnitAppender.assertErrorMessage("Failed to load json schema!");
             Assume.assumeNoException("Unable to reach json-schema.org", ex);
@@ -144,7 +144,7 @@ public class JsonSchemaSocketServiceTest {
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
         // GET with NAME returns the desired schema
         try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, locale, 42);
+            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, locale, 0);
         } catch (JsonSchemaException ex) {
             JUnitAppender.assertErrorMessage("Failed to load json schema!");
             Assume.assumeNoException("Unable to reach json-schema.org", ex);
@@ -216,7 +216,7 @@ public class JsonSchemaSocketServiceTest {
         // GET with NAME, SERVER==true, and CLIENT==true returns the desired schema
         try {
             instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true, \"client\":true}"),
-                    JSON.GET, locale, 42);
+                    JSON.GET, locale, 0);
         } catch (JsonSchemaException ex) {
             JUnitAppender.assertErrorMessage("Failed to load json schema!");
             Assume.assumeNoException("Unable to reach json-schema.org", ex);
@@ -255,7 +255,7 @@ public class JsonSchemaSocketServiceTest {
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
         }
-        instance.onList(JSON.TYPE, data, locale, 42);
+        instance.onList(JSON.TYPE, data, locale, 0);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Result is array", message.isArray());

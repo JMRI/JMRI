@@ -2,6 +2,8 @@ package jmri.server.json.signalHead;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import java.util.Locale;
 import jmri.JmriException;
 import jmri.SignalHead;
@@ -133,12 +135,12 @@ public class JsonSignalHeadHttpServiceTest {
             ObjectMapper mapper = new ObjectMapper();
             JsonSignalHeadHttpService service = new JsonSignalHeadHttpService(mapper);
             JsonNode result;
-            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, NullNode.getInstance(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
             jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH2","Head 2"));
-            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, mapper.createObjectNode(), locale, 42);
+            result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, NullNode.getInstance(), locale, 0);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {
