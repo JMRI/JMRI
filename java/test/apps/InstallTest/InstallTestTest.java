@@ -16,7 +16,6 @@ import org.junit.Test;
 public class InstallTestTest {
 
     @Test
-    @Ignore("Causes Exception")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstallTest t = new InstallTest();

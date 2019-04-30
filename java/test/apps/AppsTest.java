@@ -16,7 +16,6 @@ import org.junit.Test;
 public class AppsTest {
 
     @Test
-    @Ignore("Causes Exception")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Apps t = new Apps();
