@@ -66,7 +66,7 @@ public class ConsistToolFrameTest {
         Assert.assertFalse("Consists has at least one entry",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
         Assert.assertTrue("Consists exists after add",InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
 	// delete the consist
-	cs.pushDeleteButton();  
+	cs.pushDeleteWithDismiss();  
         Assert.assertFalse("Consists removed after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
 	cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
@@ -95,7 +95,7 @@ public class ConsistToolFrameTest {
 	Assert.assertNotEquals("12 position after reverse",jmri.Consist.POSITION_LEAD,c.getPosition(addr12));
 	Assert.assertEquals("13 position after reverse",jmri.Consist.POSITION_LEAD,c.getPosition(addr13));
 	// delete the consist
-	cs.pushDeleteButton();  
+	cs.pushDeleteWithDismiss();  
         Assert.assertFalse("Consists removed after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
 	cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
@@ -123,7 +123,7 @@ public class ConsistToolFrameTest {
 	((TestConsistManager)InstanceManager.getDefault(ConsistManager.class)).addCalls);
 		
 	// delete the consist
-	cs.pushDeleteButton();  
+	cs.pushDeleteWithDismiss();  
 	cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
@@ -158,7 +158,6 @@ public class ConsistToolFrameTest {
     }
 
     @Test
-    @Ignore("dialog not dismissed")
     public void testDeleteNoConsistAddress() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
@@ -167,7 +166,9 @@ public class ConsistToolFrameTest {
 	ConsistToolScaffold cs = new ConsistToolScaffold();
 	cs.pushDeleteButton();
 	// this should trigger a warning dialog, which we want to dismiss.
-	JemmyUtil.pressDialogButton(frame,"OK");
+	JemmyUtil.pressDialogButton("Message","OK");
+	cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
 
     @Before
