@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author Randall Wood Copyright 2018
  */
-public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
+public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase<JsonNamedBeanHttpService<Turnout>> {
 
     public JsonNamedBeanHttpServiceTest() {
     }
@@ -27,6 +27,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        service = new JsonTurnoutHttpService(mapper);
         JUnitUtil.initInternalTurnoutManager();
     }
 
@@ -48,9 +49,8 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
     public void testDoGet() throws Exception {
         String name = "non-existant";
         String type = "non-existant";
-        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         try {
-            instance.doGet(type, name, instance.getObjectMapper().createObjectNode(), locale, 42);
+            service.doGet(type, name, service.getObjectMapper().createObjectNode(), locale, 42);
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -72,9 +72,8 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         Turnout bean = null;
         String name = "non-existant";
         String type = "non-existant";
-        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         try {
-            instance.getNamedBean(bean, name, type, locale, 0);
+            service.getNamedBean(bean, name, type, locale, 0);
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -101,8 +100,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         bean.setComment("Turnout Comment");
         bean.setProperty("foo", "bar");
         bean.setProperty("bar", null);
-        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
-        JsonNode root = instance.getNamedBean(bean, name, JsonTurnoutServiceFactory.TURNOUT, locale, 42);
+        JsonNode root = service.getNamedBean(bean, name, JsonTurnoutServiceFactory.TURNOUT, locale, 42);
         JsonNode data = root.path(JSON.DATA);
         Assert.assertEquals("Correct system name", bean.getSystemName(), data.path(JSON.NAME).asText());
         Assert.assertEquals("Correct user name", bean.getUserName(), data.path(JSON.USERNAME).asText());
@@ -137,9 +135,8 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         Turnout bean = null;
         String name = "non-existant";
         String type = "non-existant";
-        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         try {
-            instance.postNamedBean(bean, this.mapper.createObjectNode(), name, type, locale, 42);
+            service.postNamedBean(bean, this.mapper.createObjectNode(), name, type, locale, 42);
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());

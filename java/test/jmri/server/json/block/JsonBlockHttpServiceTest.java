@@ -26,12 +26,13 @@ import org.junit.Test;
  *
  * @author Randall Wood Copyright 2018
  */
-public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
+public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase<JsonBlockHttpService> {
 
     @Before
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        service = new JsonBlockHttpService(mapper);
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initReporterManager();
@@ -45,7 +46,6 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
 
     @Test
     public void testDoGet() throws JmriException, IOException {
-        JsonBlockHttpService service = new JsonBlockHttpService(mapper);
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
@@ -101,7 +101,6 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
 
     @Test
     public void testDoPost() throws JmriException, IOException {
-        JsonBlockHttpService service = new JsonBlockHttpService(mapper);
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
         try {
@@ -198,7 +197,6 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
     @SuppressWarnings("null")
     @Test
     public void testDoPut() throws IOException {
-        JsonBlockHttpService service = new JsonBlockHttpService(mapper);
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         try {
             // add a block

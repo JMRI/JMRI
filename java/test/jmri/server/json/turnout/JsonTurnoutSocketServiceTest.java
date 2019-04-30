@@ -107,7 +107,7 @@ public class JsonTurnoutSocketServiceTest {
         JsonNode message;
         JsonTurnoutSocketService service = new JsonTurnoutSocketService(connection);
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-        // use register instead of provide in tests to avoid messages from the Turnouts themselves
+        // provide and deregister in tests to avoid messages from the Turnouts themselves
         Turnout turnout1 = manager.provide("IT1");
         Turnout turnout2 = manager.provide("IT2");
         manager.deregister(turnout1);

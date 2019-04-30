@@ -16,11 +16,13 @@ import org.junit.Assert;
  * Common methods for JMRI JSON Service HTTP provider tests.
  *
  * @author Randall Wood Copyright 2018
+ * @param <I> The class of JsonHttpService being tested
  */
-public class JsonHttpServiceTestBase {
+public class JsonHttpServiceTestBase<I extends JsonHttpService> {
 
     protected ObjectMapper mapper = null;
     protected Locale locale = Locale.ENGLISH;
+    protected I service;
 
     /**
      *
@@ -41,6 +43,7 @@ public class JsonHttpServiceTestBase {
      */
     @OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
+        this.service = null;
         this.mapper = null;
         JUnitUtil.tearDown();
     }
