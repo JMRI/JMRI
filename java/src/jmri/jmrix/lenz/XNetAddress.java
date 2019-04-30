@@ -52,7 +52,7 @@ public class XNetAddress {
             if( ( systemName.charAt(prefix.length())=='S' ||
                   systemName.charAt(prefix.length())=='s' ) && 
                   curAddress.contains(":")) {
-               //Address format passed is in the form of encoderAddress:input or T:turnout address
+               // Address format passed is in the form of encoderAddress:input or T:turnout address
                int seperator = curAddress.indexOf(":");
                int encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                int input = Integer.parseInt(curAddress.substring(seperator + 1));
