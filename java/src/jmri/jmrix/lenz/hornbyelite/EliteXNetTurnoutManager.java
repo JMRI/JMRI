@@ -23,7 +23,6 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        bitNum
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
         if (bitNum == -1) {
