@@ -21,6 +21,19 @@ import javax.servlet.http.HttpServletResponse;
  * It is recommended that this class be as lightweight as possible, by relying
  * either on a helper stored in the InstanceManager, or a helper with static
  * methods.
+ * <p>
+ * <h2>Message ID Handling</h2> A message ID from a client is a positive integer
+ * greater than zero, to be passed back unchanged to the client so the client
+ * can track direct responses to requests (this is not needed in the RESTful
+ * API, but is available in the RESTful API). The Message ID (or zero if none)
+ * is passed into most public methods of JsonHttpService as the {@code id}
+ * parameter. When creating an object that is to be embedded in another object
+ * as a property, it is permissable to pass the additive inverse of the ID to
+ * ensure the ID is not included in the embedded object, but allow any error
+ * messages to be thrown with the correct message ID.
+ * <p>
+ * Note that to ensure this works, only create a complete object with
+ * {@link #message(String, JsonNode, String, int)} or one of its variants.
  *
  * @author Randall Wood
  */
@@ -284,10 +297,14 @@ public abstract class JsonHttpService {
      * Create a message node from an array.
      * 
      * @param data the array
-     * @param id   the message id provided by the client
+     * @param id   the message id provided by the client or its additive inverse
      * @return if id is a positive, non-zero integer, return a message of type
      *         {@value JSON#LIST} with data as the data and id set; otherwise
-     *         just return data without modification
+     *         return data without modification
+     * @see #message(String, JsonNode, String, int)
+     * @see #message(String, JsonNode, int)
+     * @see #message(ObjectMapper, ArrayNode, String, int)
+     * @see #message(ObjectMapper, String, JsonNode, String, int)
      */
     public final JsonNode message(@Nonnull ArrayNode data, int id) {
         return message(mapper, data, null, id);
@@ -296,10 +313,15 @@ public abstract class JsonHttpService {
     /**
      * Create a message node without an explicit method.
      * 
-     * @param type   the message type
-     * @param data   the message data
-     * @param id     the message id provided by the client
-     * @return a message node
+     * @param type the message type
+     * @param data the message data
+     * @param id   the message id provided by the client or its additive inverse
+     * @return a message node without a method property; an id property is only
+     *         present if id is greater than zero
+     * @see #message(ArrayNode, int)
+     * @see #message(String, JsonNode, String, int)
+     * @see #message(ObjectMapper, ArrayNode, String, int)
+     * @see #message(ObjectMapper, String, JsonNode, String, int)
      */
     public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, int id) {
         return message(type, data, null, id);
@@ -311,8 +333,13 @@ public abstract class JsonHttpService {
      * @param type   the message type
      * @param data   the message data
      * @param method the message method
-     * @param id     the message id provided by the client
-     * @return a message node
+     * @param id     the message id provided by the client or its additive
+     *                   inverse
+     * @return a message node; an id proper
+     * @see #message(ArrayNode, int)
+     * @see #message(String, JsonNode, int)
+     * @see #message(ObjectMapper, ArrayNode, String, int)
+     * @see #message(ObjectMapper, String, JsonNode, String, int)
      */
     public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
         return message(mapper, type, data, method, id);
@@ -324,10 +351,15 @@ public abstract class JsonHttpService {
      * @param mapper the ObjectMapper to use to construct the message
      * @param data   the array
      * @param method the message method
-     * @param id     the message id provided by the client
+     * @param id     the message id provided by the client or its additive
+     *                   inverse
      * @return if id is a positive, non-zero integer, return a message of type
      *         {@value JSON#LIST} with data as the data and id set; otherwise
      *         just return data without modification
+     * @see #message(ArrayNode, int)
+     * @see #message(String, JsonNode, String, int)
+     * @see #message(String, JsonNode, int)
+     * @see #message(ObjectMapper, String, JsonNode, String, int)
      */
     public static final JsonNode message(@Nonnull ObjectMapper mapper, @Nonnull ArrayNode data, @Nullable String method, int id) {
         return (id > 0) ? message(mapper, JSON.LIST, data, method, id) : data;
@@ -339,9 +371,16 @@ public abstract class JsonHttpService {
      * @param mapper the ObjectMapper to use to construct the message
      * @param type   the message type
      * @param data   the message data
-     * @param method the message method
-     * @param id     the message id provided by the client
-     * @return a message node
+     * @param method the message method or null
+     * @param id     the message id provided by the client or its additive
+     *                   inverse
+     * @return a message node; if method is null, no method property is
+     *         included; if id is not greater than zero, no id property is
+     *         included
+     * @see #message(ArrayNode, int)
+     * @see #message(String, JsonNode, String, int)
+     * @see #message(String, JsonNode, int)
+     * @see #message(ObjectMapper, ArrayNode, String, int)
      */
     public static final ObjectNode message(@Nonnull ObjectMapper mapper, @Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
         ObjectNode root = mapper.createObjectNode();

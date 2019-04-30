@@ -179,7 +179,7 @@
  * protocol structure as well as some tokens used by multiple modules.</dd>
  * <dt>3.0 (JMRI 3.11.2)</dt>
  * <dd>Types no longer need be plural to list. This means that RESTful URLs can
- * be /json/type/id for a single object and /json/type for a list of objects,
+ * be /json/type/name for a single object and /json/type for a list of objects,
  * and /json/types is no longer needed to list (i.e. /json/turnout/IT1 gets
  * turnout IT1, and /json/turnout gets the list of turnouts).</dd>
  * <dt>2.0 (JMRI 3.9.3)</dt>
