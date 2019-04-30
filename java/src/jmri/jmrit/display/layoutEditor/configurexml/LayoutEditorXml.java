@@ -56,13 +56,10 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
-
-        // The window location and size are deprecated at 4.15.6 and will be removed after 4.18.
         panel.setAttribute("x", "" + loc.x);
         panel.setAttribute("y", "" + loc.y);
         panel.setAttribute("windowheight", "" + size.height);
         panel.setAttribute("windowwidth", "" + size.width);
-
         panel.setAttribute("panelheight", "" + p.getLayoutHeight());
         panel.setAttribute("panelwidth", "" + p.getLayoutWidth());
         panel.setAttribute("sliders", "" + (p.getScroll() ? "yes" : "no")); // deprecated

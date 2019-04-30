@@ -4,7 +4,6 @@ import java.io.File;
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
