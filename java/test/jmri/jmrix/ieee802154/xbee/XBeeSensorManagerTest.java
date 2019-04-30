@@ -8,9 +8,20 @@ import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+import java.beans.PropertyVetoException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import jmri.Sensor;
-import jmri.util.junit.annotations.*;
+import jmri.util.JUnitAppender;
+import org.apache.log4j.Level;
 import org.junit.*;
+import jmri.util.junit.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * XBeeSensorManagerTest.java
@@ -81,10 +92,15 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Override
-    @Ignore("ignoring this test due to the system name format, needs to be properly coded")
-    @ToDo("fix system name format")
     @Test
     public void testUpperLower() {
+        Sensor t = l.provideSensor(getSystemName(getNumToTest2()));
+        String name = t.getSystemName();
+        
+        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
+        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        
+        Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
     @Test
@@ -104,6 +120,72 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testPullResistanceConfigurable(){
        Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+    }
+
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+       String s1 = l.makeSystemName("00 02:1");
+       String s2 = l.makeSystemName("00 02:2");
+       Assert.assertNotNull(s1);
+       Assert.assertFalse(s1.isEmpty());
+       Assert.assertNotNull(s2);
+       Assert.assertFalse(s2.isEmpty());
+
+       Sensor e1;
+       Sensor e2;
+
+       try {
+          e1 = l.provide(s1);
+          e2 = l.provide(s2);
+       } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
+          // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
+          // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.
+          // Some other tests give an IllegalArgumentException here.
+
+          // If the test is unable to provide a named bean, abort this test.
+          JUnitAppender.clearBacklog(Level.WARN);
+          log.debug("Cannot provide a named bean", ex);
+          Assume.assumeTrue("We got no exception", false);
+          return;
+       }
+
+       // Use reflection to change the systemName of e2
+       // Try to find the field
+       Field f1 = getField(e2.getClass(), "mSystemName");
+       f1.setAccessible(true);
+       f1.set(e2, e1.getSystemName());
+
+       // Remove bean if it's already registered
+       if (l.getBeanBySystemName(e1.getSystemName()) != null) {
+          l.deregister(e1);
+       }
+       // Remove bean if it's already registered
+       if (l.getBeanBySystemName(e2.getSystemName()) != null) {
+          l.deregister(e2);
+       }
+
+       // Register the bean once. This should be OK.
+       l.register(e1);
+
+       // Register bean twice. This gives only a debug message.
+       l.register(e1);
+
+       String expectedMessage = "systemName is already registered: " + e1.getSystemName();
+       boolean hasException = false;
+       try {
+          // Register different bean with existing systemName.
+          // This should fail with an IllegalArgumentException.
+          l.register(e2);
+       } catch (IllegalArgumentException ex) {
+          hasException = true;
+          Assert.assertTrue("exception message is correct",
+             expectedMessage.equals(ex.getMessage()));
+          JUnitAppender.assertErrorMessage(expectedMessage);
+       }
+       Assert.assertTrue("exception is thrown", hasException);
+
+       l.deregister(e1);
     }
 
 
@@ -144,6 +226,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         tc.terminate();
         jmri.util.JUnitUtil.tearDown();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
 
 }
 
