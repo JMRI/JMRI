@@ -23,7 +23,7 @@ import org.junit.runners.Parameterized;
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
 @RunWith(Parameterized.class)
-@Ignore public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
+public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
 
     @Parameterized.Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
