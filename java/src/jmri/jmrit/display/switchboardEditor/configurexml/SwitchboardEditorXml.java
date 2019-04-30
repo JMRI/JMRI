@@ -46,13 +46,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");
         panel.setAttribute("name", "" + frame.getTitle());
-
-        // The window location and size are deprecated at 4.15.6 and will be removed after 4.18.
         panel.setAttribute("x", "" + posn.x);
         panel.setAttribute("y", "" + posn.y);
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
-
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
@@ -94,6 +91,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
+        Attribute a;
         // find coordinates
         int x = 0;
         int y = 0;
@@ -108,10 +106,18 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         String name;
 
         try {
-            x = shared.getAttribute("x").getIntValue();
-            y = shared.getAttribute("y").getIntValue();
-            height = shared.getAttribute("height").getIntValue();
-            width = shared.getAttribute("width").getIntValue();
+            if ((a = shared.getAttribute("x")) != null) {
+                x = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("y")) != null) {
+                y = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("height")) != null) {
+                height = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("width")) != null) {
+                width = a.getIntValue();
+            }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert Switchboard's attribute");
             result = false;
@@ -155,7 +161,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings.
-        Attribute a;
         boolean value = true;
 
         if ((a = shared.getAttribute("editable")) != null && a.getValue().equals("no")) {
