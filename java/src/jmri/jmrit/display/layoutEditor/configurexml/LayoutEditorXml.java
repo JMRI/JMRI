@@ -94,9 +94,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("turnoutcirclethrowncolor", turnoutCircleThrownColor);
         }
         panel.setAttribute("turnoutfillcontrolcircles", (p.isTurnoutFillControlCircles() ? "yes" : "no"));
-        //if (p.isTurnoutFillControlCircles()) {
-        //    panel.setAttribute("turnoutfillcontrolcircles", "yes");
-        //}
 
         panel.setAttribute("turnoutcirclesize", "" + p.getTurnoutCircleSize());
         panel.setAttribute("turnoutdrawunselectedleg", (p.isTurnoutDrawUnselectedLeg() ? "yes" : "no"));
