@@ -90,6 +90,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         String turnoutCircleColor = p.getTurnoutCircleColor();
         panel.setAttribute("turnoutcirclecolor", turnoutCircleColor);
         String turnoutCircleThrownColor = p.getTurnoutCircleThrownColor();
+        // optional attributes
         if (!turnoutCircleColor.equals(turnoutCircleThrownColor)) {
             panel.setAttribute("turnoutcirclethrowncolor", turnoutCircleThrownColor);
         }
@@ -345,12 +346,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         panel.setTurnoutCircleThrownColor(ColorUtil.stringToColor(turnoutCircleThrownColor));
 
-        try {
-            //TODO: why is this returning a "true" attribute when the attribute is missing?
+        try {   // the "turnoutfillcontrolcircles" attribute has a default="no" value in the schema;
+            // it will always return a "no" attribute if the attribute is not present.
             panel.setTurnoutFillControlCircles(shared.getAttribute("turnoutfillcontrolcircles").getBooleanValue());
-//            if ((a = shared.getAttribute("turnoutfillcontrolcircles")) != null) {
-//                panel.setTurnoutFillControlCircles(a.getBooleanValue());
-//            }
         } catch (DataConversionException e) {
             log.warn("unable to convert turnoutfillcontrolcircles attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
