@@ -319,7 +319,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Petr Šídlo improved the Czech translation</li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -460,6 +460,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Add new <code>TestWaitsForever</class> test class to allow end-of-job debug.</li>
         </ul>
 
