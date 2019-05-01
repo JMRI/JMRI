@@ -241,7 +241,8 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
         rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());
         rlNew.setDepartureTime(rl.getDepartureTime());
-        rlNew.setComment(rl.getComment());     
+        rlNew.setComment(rl.getComment());
+        rlNew.setCommentColor(rl.getCommentColor());
         if (!invert) {
             rlNew.setDropAllowed(rl.isDropAllowed());
             rlNew.setPickUpAllowed(rl.isPickUpAllowed());
