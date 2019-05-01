@@ -90,6 +90,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 }
             }
         }
+        setSelected(pi);
         _parent._editor.highlight(pi);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("portalIconPosition"),
                 Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
@@ -512,16 +513,12 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             }
         }
         setSelected(icon);
-/*        clearListSelection();
-        _portalList.setSelectedValue(portal, true);
-        _portalList.dataChange();*/
         return msg;
     }
 
     /*
      * If icon is on the home block, find another intersecting block
      */
-
     private OBlock findAdjacentBlock(PortalIcon icon) {
         ArrayList<OBlock> neighbors = new ArrayList<>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);

@@ -482,7 +482,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             return msg;
         }
         if (_currentPath != null && !_currentPath.getName().equals(name)) {
-//            _pathChange = true;
             return Bundle.getMessage("samePath", _currentPath.getName(), name);
         }
         java.util.List<Path> list = _block.getPaths();
@@ -790,31 +789,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
         _currentPath.setName(name);
         changePathNameInIcons(name, _currentPath);
-
-/*        // Change the path name in the track icons
-        java.util.List<Positionable> list = _parent.getCircuitGroup();
-        // cannot do remove/add path on the fly due to conncurrent access with Iterator
-        ArrayList<IndicatorTrack> changeGroup = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) instanceof IndicatorTrack) {
-                IndicatorTrack icon = (IndicatorTrack) list.get(i);
-                ArrayList<String> paths = icon.getPaths();
-                if (paths != null) {
-                    for (int j = 0; j < paths.size(); j++) {
-                        if (oldName.equals(paths.get(j))) {
-                            changeGroup.add(icon);
-                        }
-                    }
-                }
-            }
-        }
-        for (int i = 0; i < changeGroup.size(); i++) {
-            IndicatorTrack track = changeGroup.get(i);
-            track.removePath(oldName);
-            track.addPath(name);
-        }
-//        _pathListModel.dataChange();*/
-        
         _pathList.setSelectedValue(_currentPath, true);
     }
 
@@ -838,7 +812,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 }
             }
         }
-
     }
 
     private void deletePath() {

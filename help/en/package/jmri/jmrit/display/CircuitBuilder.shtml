@@ -258,13 +258,18 @@
     <h4>Path Editing mode</h4>
     Use this window is to create and edit the paths in the track circuit.
     In this mode, no panel items can be moved or selected.</p>
-    <p>To create a new OPath, type a name for it into the <b>Path Name</b> text field. Then select
+    <p>
+    To create a new OPath, first press the <b>Clear Selection</b> button. Then type a name for the
+    path into the <b>Path Name</b> text field. Now select all
     the track icons that mark the route. Selected route icons change their color to green. 
     When selecting a turnout track icon, the position of
     the points may not be correct. <i>To change the <b>position</b> of the points</i>, hold the <b>Shift</b>
     key down while clicking on the turnout icon. One or two portals must also be selected
     to complete the definition of an OPath.  A selected a portal icon changes from a red 
     circle to a green square.</p>
+    <p>
+    Be sure you select all the turnout icons for turnouts that need to be set to define the path.  Also
+    be sure that the portals needed for entrance and or exit have icons and that they are selected.</p>
     <p>
     If the value of the <b>Length</b> text field is "0.0" the length of the path will be inherited
     from the value of what was entered for the length of the OBlock circuit.  If the length of the

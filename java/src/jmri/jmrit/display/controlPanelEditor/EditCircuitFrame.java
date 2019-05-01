@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+
 import jmri.Sensor;
 import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
@@ -390,13 +392,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     }
 
     protected void closingEvent(boolean close) {
-        String msg = _parent.checkCircuitFrame(_block); // check for icons
-        String title = "noIcons";
-        // check Sensors
-        if (msg == null) {
-            msg = checkForSensors();
-            title = "noSensor";
-        }
+        String title = "newCircuitItem";
+        String msg = _parent.setIconGroup(_block);
         if (msg == null) {
             String name = _length.getText();
             try {
@@ -415,6 +412,16 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             } catch (NumberFormatException nfe) {
                 msg = Bundle.getMessage("MustBeFloat", name);
             }
+        }
+        if (msg == null) {
+            if (!_parent.iconsConverted(_block)) {
+                msg = Bundle.getMessage("pathsNeedConversion");
+            }
+        }
+        // check Sensors
+        if (msg == null) {
+            msg = checkForSensors();
+            title = "noSensor";
         }
         if (msg != null) {
             if (close) {
