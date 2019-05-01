@@ -454,8 +454,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
     /**
      * Set the path icons for display.
-     *
-     * @param pathChanged true if path has changed; false otherwise
      */
     private void updatePath() {
         // to avoid ConcurrentModificationException now set data

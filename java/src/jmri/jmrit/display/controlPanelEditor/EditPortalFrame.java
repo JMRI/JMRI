@@ -150,11 +150,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         return panel;
     }
 
-    /**
-     *
-     * @param update true frame for correcting icon position
-     * @return JPanel
-     */
     private JPanel makePortalPanel() {
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
