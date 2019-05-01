@@ -87,9 +87,12 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("defaultoccupiedtrackcolor", p.getDefaultOccupiedTrackColor());
         panel.setAttribute("defaultalternativetrackcolor", p.getDefaultAlternativeTrackColor());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
-        panel.setAttribute("turnoutcirclecolor", p.getTurnoutCircleColor());
-        panel.setAttribute("turnoutcirclethrowncolor", p.getTurnoutCircleThrownColor());
-        //comment to restart CI
+        String turnoutCircleColor = p.getTurnoutCircleColor();
+        panel.setAttribute("turnoutcirclecolor", turnoutCircleColor);
+        String turnoutCircleThrownColor = p.getTurnoutCircleThrownColor();
+        if (!turnoutCircleColor.equals(turnoutCircleThrownColor)) {
+            panel.setAttribute("turnoutcirclethrowncolor", turnoutCircleThrownColor);
+        }
         //panel.setAttribute("turnoutfillcontrolcircles", (p.isTurnoutFillControlCircles() ? "yes" : "no"));
         if (p.isTurnoutFillControlCircles()) {
             panel.setAttribute("turnoutfillcontrolcircles", "yes");
