@@ -13,7 +13,7 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs
+- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
@@ -22,7 +22,7 @@ On macOS, most of these changes can be affected with:
 ```
 find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-(you may need to install gsed using [Homebrew](http://brew.sh))
+(you may need to install gsed using [Homebrew](http://brew.sh)), although this probably doesn't fix the Javadoc links.
 
 On Linux, these same changes can be affected with:
 ```
