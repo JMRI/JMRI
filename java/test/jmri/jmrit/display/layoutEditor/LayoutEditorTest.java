@@ -360,7 +360,10 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
         e.setTurnoutFillControlCircles(true);
-        Assert.assertTrue("isTurnoutFillControlCircles after set", e.isTurnoutFillControlCircles());
+        Assert.assertTrue("isTurnoutFillControlCircles after set true", e.isTurnoutFillControlCircles());
+        // set back to default (false) and confirm new value
+        e.setTurnoutFillControlCircles(false);
+        Assert.assertFalse("isTurnoutFillControlCircles after set false", e.isTurnoutFillControlCircles());
     }
 
     @Test
