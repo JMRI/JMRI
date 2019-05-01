@@ -6,14 +6,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Locale;
-
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,21 +19,44 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
-public class JsonOperationsHttpServiceTest {
+public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonOperationsHttpService> {
 
-    private JsonOperationsHttpService service;
-    private Locale locale = Locale.ENGLISH;
+    @Test
+    public void testCar() {
+        // try a non-existent car
+        try {
+            service.doGet(JsonOperations.CAR, "", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+        }
+    }
+
+    @Test
+    public void testDoGetListCarEngineRollingStock() throws JsonException {
+        JsonNode result = service.doGetList(JsonOperations.CAR, NullNode.getInstance(), locale, 0);
+        validate(result);
+        assertEquals("9 cars", 9, result.size());
+        result = service.doGetList(JsonOperations.ENGINE, NullNode.getInstance(), locale, 0);
+        validate(result);
+        assertEquals("4 engines", 4, result.size());
+        result = service.doGetList(JsonOperations.ROLLING_STOCK, NullNode.getInstance(), locale, 0);
+        validate(result);
+        assertEquals("13 rolling stock", 13, result.size());
+    }
 
     @Test
     public void testCarType() throws JsonException {
         JsonNode result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 0);
-        assertNotNull(result);
+        validate(result);
         assertTrue(result.isArray());
-        assertEquals(33, result.size());
+        assertEquals(3, result.size());
         result = service.doPut(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
-        assertNotNull(result);
+        validate(result);
         assertEquals(JsonOperations.CAR_TYPE, result.path(JSON.TYPE).asText());
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.CARS).isArray());
@@ -45,28 +64,28 @@ public class JsonOperationsHttpServiceTest {
         JsonNode result2 = service.doGet(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
         assertEquals(result, result2);
         result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 0);
-        assertNotNull(result);
+        validate(result);
         assertTrue(result.isArray());
-        assertEquals(34, result.size());
+        assertEquals(4, result.size());
         assertEquals(JsonOperations.CAR_TYPE, result.path(0).path(JSON.TYPE).asText());
         assertEquals("test1", result.path(0).path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray());
         service.doDelete(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
         result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 0);
-        assertNotNull(result);
+        validate(result);
         assertTrue(result.isArray());
-        assertEquals(33, result.size());
+        assertEquals(3, result.size());
     }
 
     @Test
     public void testKernel() throws JsonException {
         JsonNode result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 0);
-        assertNotNull(result);
+        validate(result);
         assertTrue(result.isArray());
         assertEquals(0, result.size());
         result = service.doPut(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
-        assertNotNull(result);
+        validate(result);
         assertEquals(JsonOperations.KERNEL, result.path(JSON.TYPE).asText());
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(0, result.path(JSON.DATA).path(JSON.LENGTH).asInt());
@@ -75,7 +94,7 @@ public class JsonOperationsHttpServiceTest {
         JsonNode result2 = service.doGet(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
         assertEquals(result, result2);
         result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 0);
-        assertNotNull(result);
+        validate(result);
         assertTrue(result.isArray());
         assertEquals(1, result.size());
         assertEquals(JsonOperations.KERNEL, result.path(0).path(JSON.TYPE).asText());
@@ -85,7 +104,7 @@ public class JsonOperationsHttpServiceTest {
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray());
         service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
         result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 0);
-        assertNotNull(result);
+        validate(result);
         assertTrue(result.isArray());
         assertEquals(0, result.size());
     }
@@ -119,14 +138,11 @@ public class JsonOperationsHttpServiceTest {
     }
 
     @Before
-    public void setUp() {
-        service = new JsonOperationsHttpService(new ObjectMapper());
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        service = null;
-        JUnitUtil.tearDown();
+    public void setUp() throws Exception {
+        super.setUp();
+        JUnitUtil.initIdTagManager();
+        JUnitOperationsUtil.setupOperationsTests();
+        JUnitOperationsUtil.initOperationsData();
+        service = new JsonOperationsHttpService(mapper);
     }
 }

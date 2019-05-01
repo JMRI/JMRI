@@ -21,7 +21,7 @@
             "description": "The engine type"
         },
         "length": {
-            "type": "int",
+            "type": "integer",
             "description": "Current engine length for available siding calculations"
         },
         "color": {
@@ -37,11 +37,11 @@
             "description": "Freeform comment concerning engine"
         },
         "location": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "The current location of the engine"
         },
         "destination": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "the current destination of the engine"
         },
         "model": {

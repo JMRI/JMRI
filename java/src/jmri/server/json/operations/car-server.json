@@ -35,6 +35,18 @@
             "type": "string",
             "description": "The load in the car (may also be the localized E (Empty) or L (Load)"
         },
+        "passenger": {
+            "type": "boolean",
+            "description": "True if the car is a passenger vehicle; false otherwise"
+        },
+        "caboose": {
+            "type": "boolean",
+            "description": "True if the car is to be treated as a caboose; false otherwise"
+        },
+        "fred": {
+            "type": "boolean",
+            "description": "True if the car contains a FRED; false otherwise"
+        },
         "hazardous": {
             "type": "boolean",
             "description": "True if the load is considered hazardous; false otherwise"
@@ -104,6 +116,9 @@
         "type",
         "length",
         "load",
+        "caboose",
+        "fred",
+        "passenger",
         "hazardous",
         "removeComment",
         "addComment",

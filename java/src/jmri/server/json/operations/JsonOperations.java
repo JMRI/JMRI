@@ -64,6 +64,14 @@ public class JsonOperations {
      */
     public static final String CABOOSE = "caboose"; // NOI18N
     /**
+     * {@value #FRED}
+     */
+    public static final String FRED = "fred"; // NOI18N
+    /**
+     * {@value #PASSENGER}
+     */
+    public static final String PASSENGER = "passenger"; // NOI18N
+    /**
      * {@value #TERMINATE}
      */
     public static final String TERMINATE = "terminate"; // NOI18N

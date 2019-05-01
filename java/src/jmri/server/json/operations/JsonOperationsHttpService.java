@@ -64,11 +64,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR:
-                return message(CAR, utilities.getCar(name, locale), id);
+                return message(CAR, utilities.getCar(name, locale, id), id);
             case CAR_TYPE:
                 return getCarType(name, locale, id);
             case ENGINE:
-                return message(ENGINE, utilities.getEngine(name, locale), id);
+                return message(ENGINE, utilities.getEngine(name, locale, id), id);
             case KERNEL:
                 Kernel kernel = getCarManager().getKernelByName(name);
                 if (kernel == null) {
@@ -99,7 +99,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 return message(TRAIN, utilities.getTrain(name, locale, id), id);
             case CAR:
                 this.setCar(name, data, locale, id);
-                return message(CAR, utilities.getCar(name, locale), id);
+                return message(CAR, utilities.getCar(name, locale, id), id);
             case CAR_TYPE:
                 if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
@@ -262,7 +262,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
     private JsonNode getKernels(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
         getCarManager().getKernelNameList().forEach((kernel) -> {
-            array.add(getKernel(getCarManager().getKernelByName(kernel), locale, id));
+            // individual kernels should not have id in array, but same method is used to get
+            // single kernels as requested, so pass additive inverse of id to allow errors
+            array.add(getKernel(getCarManager().getKernelByName(kernel), locale, id * -1));
         });
         return message(array, id);
     }

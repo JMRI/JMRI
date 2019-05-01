@@ -56,6 +56,7 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
      * @param node the node to validate
      */
     public final void validate(JsonNode node) {
+        Assert.assertNotNull("Node is not null.", node);
         try {
             InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, true, locale, 0);
         } catch (JsonException ex) {

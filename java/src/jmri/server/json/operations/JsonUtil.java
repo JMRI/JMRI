@@ -14,7 +14,9 @@ import static jmri.server.json.JSON.ROUTE;
 import static jmri.server.json.JSON.SEQUENCE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
+import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.TRACK;
 
@@ -24,6 +26,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
@@ -67,24 +70,19 @@ public class JsonUtil {
     /**
      * Get the JSON representation of a Car.
      * 
-     * @param id     the ID of the Car
+     * @param name   the ID of the Car
      * @param locale the client's locale
+     * @param id     the message id set by the client
      * @return the JSON representation of the Car
+     * @throws JsonException if no car by name exists
      */
-    public ObjectNode getCar(String id, Locale locale) {
-        return this.getCar(InstanceManager.getDefault(CarManager.class).getById(id), locale);
-    }
-
-    /**
-     * Get the JSON representation of an Engine.
-     *
-     * @param engine the Engine
-     * @return the JSON representation of engine
-     * @deprecated since 4.15.6; use {@link #getEngine(Engine, Locale)} instead
-     */
-    @Deprecated
-    public ObjectNode getEngine(Engine engine) {
-        return getEngine(engine, Locale.getDefault());
+    public ObjectNode getCar(String name, Locale locale, int id) throws JsonException {
+        Car car = carManager().getById(name);
+        if (car == null) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                    Bundle.getMessage(locale, "ErrorNotFound", CAR, name), id);
+        }
+        return this.getCar(car, locale);
     }
 
     /**
@@ -104,12 +102,19 @@ public class JsonUtil {
     /**
      * Get the JSON representation of an Engine.
      *
-     * @param id     the ID of the Engine
+     * @param name   the ID of the Engine
      * @param locale the client's locale
+     * @param id     the message id set by the client
      * @return the JSON representation of engine
+     * @throws JsonException if no engine exists by name
      */
-    public ObjectNode getEngine(String id, Locale locale) {
-        return this.getEngine(InstanceManager.getDefault(EngineManager.class).getById(id), locale);
+    public ObjectNode getEngine(String name, Locale locale, int id) throws JsonException {
+        Engine engine = engineManager().getById(name);
+        if (engine == null) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                    Bundle.getMessage(locale, "ErrorNotFound", ENGINE, name), id);
+        }
+        return this.getEngine(engine, locale);
     }
 
     /**
@@ -119,10 +124,13 @@ public class JsonUtil {
      * @param locale the client's locale
      * @return the JSON representation of car
      */
-    public ObjectNode getCar(Car car, Locale locale) {
+    public ObjectNode getCar(@Nonnull Car car, Locale locale) {
         ObjectNode data = this.getRollingStock(car, locale);
         data.put(JSON.LOAD, car.getLoadName()); // NOI18N
         data.put(JSON.HAZARDOUS, car.isHazardous());
+        data.put(JsonOperations.CABOOSE, car.isCaboose());
+        data.put(JsonOperations.PASSENGER, car.isPassenger());
+        data.put(JsonOperations.FRED, car.hasFred());
         data.put(JSON.REMOVE_COMMENT, car.getDropComment());
         data.put(JSON.ADD_COMMENT, car.getPickupComment());
         data.put(JSON.KERNEL, car.getKernel() != null ? car.getKernelName() : null);
@@ -177,7 +185,7 @@ public class JsonUtil {
      */
     public ObjectNode getLocation(String name, Locale locale, int id) throws JsonException {
         try {
-            return getLocation(InstanceManager.getDefault(LocationManager.class).getLocationById(name), locale);
+            return getLocation(locationManager().getLocationById(name), locale);
         } catch (NullPointerException e) {
             log.error("Unable to get location id [{}].", name);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, name), id);
@@ -209,7 +217,7 @@ public class JsonUtil {
         return node;
     }
 
-    private ObjectNode getRollingStock(RollingStock rs, Locale locale) {
+    private ObjectNode getRollingStock(@Nonnull RollingStock rs, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
         node.put(NAME, rs.getId());
         node.put(NUMBER, TrainCommon.splitString(rs.getNumber()));
@@ -217,7 +225,7 @@ public class JsonUtil {
         String[] type = rs.getTypeName().split("-"); // second half of string
         // can be anything
         node.put(TYPE, type[0]);
-        node.put(LENGTH, rs.getLength());
+        node.put(LENGTH, rs.getLengthInteger());
         node.put(COLOR, rs.getColor());
         node.put(OWNER, rs.getOwner());
         node.put(COMMENT, rs.getComment());
@@ -292,7 +300,7 @@ public class JsonUtil {
      */
     public ObjectNode getTrain(String name, Locale locale, int id) throws JsonException {
         try {
-            return getTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(name), locale);
+            return getTrain(trainManager().getTrainById(name), locale);
         } catch (NullPointerException ex) {
             log.error("Unable to get train id [{}].", name, ex);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JsonOperations.TRAIN, name), id);
@@ -307,7 +315,7 @@ public class JsonUtil {
      */
     public ArrayNode getTrains(Locale locale) {
         ArrayNode array = this.mapper.createArrayNode();
-        InstanceManager.getDefault(TrainManager.class).getTrainsByNameList().forEach((train) -> {
+        trainManager().getTrainsByNameList().forEach((train) -> {
             array.add(getTrain(train, locale));
         });
         return array;
@@ -315,7 +323,7 @@ public class JsonUtil {
 
     private ArrayNode getCarsForTrain(Train train, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
-        InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train).forEach((car) -> {
+        carManager().getByTrainDestinationList(train).forEach((car) -> {
             array.add(getCar(car, locale));
         });
         return array;
@@ -323,7 +331,7 @@ public class JsonUtil {
 
     private ArrayNode getEnginesForTrain(Train train, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
-        InstanceManager.getDefault(EngineManager.class).getByTrainBlockingList(train).forEach((engine) -> {
+        engineManager().getByTrainBlockingList(train).forEach((engine) -> {
             array.add(getEngine(engine, locale));
         });
         return array;
@@ -345,5 +353,21 @@ public class JsonUtil {
             array.add(root); //add this routeLocation to the routeLocation array
         });
         return array; //return array of routeLocations
+    }
+    
+    private CarManager carManager() {
+        return InstanceManager.getDefault(CarManager.class);
+    }
+
+    private EngineManager engineManager() {
+        return InstanceManager.getDefault(EngineManager.class);
+    }
+
+    private LocationManager locationManager() {
+        return InstanceManager.getDefault(LocationManager.class);
+    }
+
+    private TrainManager trainManager() {
+        return InstanceManager.getDefault(TrainManager.class);
     }
 }
