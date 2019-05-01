@@ -1,7 +1,6 @@
 package jmri.server.json.turnout;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
 import static org.junit.Assert.assertEquals;
@@ -11,7 +10,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -31,8 +29,6 @@ import org.junit.Test;
  * @author Randall Wood
  */
 public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Turnout, JsonTurnoutHttpService> {
-
-    private Locale locale = Locale.ENGLISH;
 
     @Test
     public void testDoGet() throws JmriException, JsonException {

@@ -1,7 +1,6 @@
 package jmri.server.json.memory;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
 import static org.junit.Assert.assertEquals;
@@ -9,7 +8,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -28,8 +26,6 @@ import org.junit.Test;
  * @author Randall Wood
  */
 public class JsonMemoryHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Memory, JsonMemoryHttpService> {
-
-    private Locale locale = Locale.ENGLISH;
 
     @Test
     public void testDoGet() throws JmriException, JsonException {

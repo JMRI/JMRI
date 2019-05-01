@@ -7,10 +7,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -32,8 +30,6 @@ import org.junit.Test;
  * @author Randall Wood
  */
 public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Reporter, JsonReporterHttpService> {
-
-    private Locale locale = Locale.ENGLISH;
 
     @Test
     public void testDoGet() throws JmriException, JsonException {
