@@ -38,6 +38,11 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         Assert.assertNotNull("exists", l);
     }
 
+    @Test
+    public void testGetSystemPrefix() {
+        Assert.assertEquals("R", l.getSystemPrefix());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

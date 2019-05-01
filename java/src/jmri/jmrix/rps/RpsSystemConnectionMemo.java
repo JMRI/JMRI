@@ -29,18 +29,18 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public RpsSystemConnectionMemo() {
-        this("R", "RPS"); // default connection prefix, RPS product name NOI18N
+        this("R", "RPS"); // default connection prefix, default RPS product name NOI18N
         log.debug("Created nameless RpsSystemConnectionMemo");
     }
 
-    /**
-     * No separate TrafficController used in RPS
-     */
+    /*    *//**
+     * No TrafficController used in RPS.
+     *//*
     void setRpsAdapter(SerialAdapter sa) {
         serialAdapter = sa;
-    }
+    }*/
 
-    private SerialAdapter serialAdapter;
+    //private SerialAdapter serialAdapter;
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
@@ -62,7 +62,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
         if (sensorManager == null) {
-            sensorManager = new RpsSensorManager(this); // should we provide serialAdapter as well?
+            sensorManager = new RpsSensorManager(this);
         }
         return sensorManager;
     }
@@ -77,7 +77,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
         if (reporterManager == null) {
-            reporterManager = new RpsReporterManager(this); // should we provide serialAdapter as well?
+            reporterManager = new RpsReporterManager(this);
         }
         return reporterManager;
     }

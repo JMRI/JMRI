@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Address format supported:
  * <ul>
- * <li> 
- * RS(0,0,0);(1,0,0);(1,1,0);(0,1,0) where (0,0,0) is the first point coordinate of the associated region
- * </li>
+ *   <li>
+ *   RS(0,0,0);(1,0,0);(1,1,0);(0,1,0) where (0,0,0) is the first point coordinate of the associated region
+ *   </li>
  * </ul>
  *
  * @author Egbert Broerse (C) 2019 Based on lenz.XNetAddress example and rps.Region code.
@@ -37,13 +37,13 @@ public class RpsAddress {
         String s = systemName.substring(prefix.length() + 1);
         String[] pStrings = s.split(";");
         if (pStrings.length < 3) {
-            log.warn("need to have at least 3 points in {}", s);
+            log.warn("need to have at least 3 points in {}", systemName);
             return NameValidity.INVALID;
         }
         for (int i = 0; i < pStrings.length; i++) {
             if (!(pStrings[i].startsWith("(")) || !(pStrings[i].endsWith(")"))) {
                 // here if an illegal format
-                log.warn("missing brackets in point: {}", pStrings[i]);
+                log.warn("missing brackets in point {}: \"{}\"", i, pStrings[i]);
                 return NameValidity.INVALID;
             }
             // remove leading ( and trailing )
@@ -51,12 +51,13 @@ public class RpsAddress {
             try {
                 String[] coord = coords.split(",");
                 if (coord.length != 3) {
-                    log.warn("need to have three coordinates in {}", pStrings[i]);
+                    log.warn("need to have three coordinates in point {}: \"{}\"", i, pStrings[i]);
                     return NameValidity.INVALID;
                 }
                 double x = Double.valueOf(coord[0]);
                 double y = Double.valueOf(coord[1]);
                 double z = Double.valueOf(coord[2]);
+                log.debug("succes converting systemName point {} to {},{},{}", i, x, y, z);
                 // valid, continue
             } catch (Exception e) {
                 return NameValidity.INVALID;

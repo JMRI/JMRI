@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
 
-    private RpsSystemConnectionMemo memo = null;
+    //private RpsSystemConnectionMemo memo = null;
     protected String prefix = "R";
 
     public RpsReporterManager(RpsSystemConnectionMemo memo) {
         super();
-        this.memo = memo;
+        //this.memo = memo;
         prefix = memo.getSystemPrefix();
     }
 
@@ -40,13 +40,18 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
     }
 
     public String createSystemName(String curAddress, String prefix) throws JmriException {
+        if (!prefix.equals(getSystemPrefix())) {
+            log.warn("prefix does not match memo.prefix");
+            return null;
+        }
+        String sys = getSystemPrefix() + typeLetter() + curAddress;
         // first, check validity
         try {
-            validSystemNameFormat(curAddress);
+            validSystemNameFormat(sys);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        return getSystemPrefix() + typeLetter() + curAddress;
+        return sys;
     }
 
     /**
