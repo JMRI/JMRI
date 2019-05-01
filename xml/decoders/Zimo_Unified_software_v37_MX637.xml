@@ -96,8 +96,6 @@
         <label xml:lang="it">ID 4 Decoder: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV399.xml"/>
-      <!--xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/-->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
       <!-- Begin constant stopping distance variables -->
@@ -108,7 +106,7 @@
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel_alternative.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8+.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>
@@ -120,6 +118,5 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
 </decoder-config>

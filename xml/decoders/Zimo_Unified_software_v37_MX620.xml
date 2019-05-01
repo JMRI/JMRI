@@ -28,7 +28,7 @@
   <!--                                                                                       -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX620" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
+      <model model="MX620 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -49,7 +49,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620F" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+      <model model="MX620F version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -70,7 +70,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620N" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+      <model model="MX620N version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -91,7 +91,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620R" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
+      <model model="MX620R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -163,7 +163,7 @@
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel_alternative.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap4+2.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>
