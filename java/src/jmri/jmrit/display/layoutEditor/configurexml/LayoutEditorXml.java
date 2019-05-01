@@ -89,6 +89,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
         panel.setAttribute("turnoutcirclecolor", p.getTurnoutCircleColor());
         panel.setAttribute("turnoutcirclethrowncolor", p.getTurnoutCircleThrownColor());
+        //comment to restart CI
         //panel.setAttribute("turnoutfillcontrolcircles", (p.isTurnoutFillControlCircles() ? "yes" : "no"));
         if (p.isTurnoutFillControlCircles()) {
             panel.setAttribute("turnoutfillcontrolcircles", "yes");
