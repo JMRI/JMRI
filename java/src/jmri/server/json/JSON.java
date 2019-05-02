@@ -764,21 +764,27 @@ public final class JSON {
     /**
      * {@value #FORCE_DELETE}
      * 
-     * @since 5.1
+     * @since 5.0.0
      */
     public static final String FORCE_DELETE = "forceDelete"; // NOI18N
     /**
      * {@value #CONFLICT}
      * 
-     * @since 5.1
+     * @since 5.0.0
      */
     public static final String CONFLICT = "conflict"; // NOI18N
     /**
      * {@value #RENAME}
      * 
-     * @since 5.1
+     * @since 5.0.0
      */
     public static final String RENAME = "rename"; // NOI18N
+    /**
+     * {@value #RFID}
+     * 
+     * @since 5.0.0
+     */
+    public static final String RFID = "rfid"; // NOI18N
 
     /* ZeroConf support */
     /**

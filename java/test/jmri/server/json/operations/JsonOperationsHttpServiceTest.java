@@ -1,6 +1,7 @@
 package jmri.server.json.operations;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ import jmri.util.JUnitUtil;
 public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonOperationsHttpService> {
 
     @Test
-    public void testCar() {
+    public void testCar() throws JsonException {
         // try a non-existent car
         try {
             service.doGet(JsonOperations.CAR, "", NullNode.getInstance(), locale, 0);
@@ -34,6 +35,55 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
         }
+        // get a known car
+        Car car = InstanceManager.getDefault(CarManager.class).getByRoadAndNumber("CP", "C10099");
+        JsonNode result = service.doGet(JsonOperations.CAR, car.getId(), NullNode.getInstance(), locale, 42);
+        validate(result);
+        assertEquals(JsonOperations.CAR, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        JsonNode data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Car", 23, data.size());
+        assertEquals(car.getId(), data.path(JSON.NAME).asText());
+        assertEquals(car.getRoadName(), data.path(JSON.ROAD).asText());
+        assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
+        assertTrue(data.path(JSON.RFID).isValueNode());
+        assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
+        assertEquals(car.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
+        assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
+        assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(car.getComment(), data.path(JSON.COMMENT).asText());
+        assertEquals(car.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
+        assertEquals(car.getTrackId(), data.path(JsonOperations.LOCATION).path(JsonOperations.TRACK).path(JSON.NAME).asText());
+        assertTrue(data.path(JsonOperations.DESTINATION).isValueNode());
+        assertTrue(data.path(JsonOperations.DESTINATION).isNull());
+        assertEquals(car.getLoadName(), data.path(JSON.LOAD).asText());
+        assertTrue(data.path(JSON.HAZARDOUS).isValueNode());
+        assertFalse(data.path(JSON.HAZARDOUS).asBoolean());
+        assertTrue(data.path(JsonOperations.CABOOSE).isValueNode());
+        assertTrue(data.path(JsonOperations.CABOOSE).asBoolean());
+        assertTrue(data.path(JsonOperations.PASSENGER).isValueNode());
+        assertFalse(data.path(JsonOperations.PASSENGER).asBoolean());
+        assertTrue(data.path(JsonOperations.FRED).isValueNode());
+        assertFalse(data.path(JsonOperations.FRED).asBoolean());
+        assertTrue(data.path(JSON.ADD_COMMENT).isValueNode());
+        assertTrue(data.path(JSON.ADD_COMMENT).asText().isEmpty());
+        assertTrue(data.path(JSON.REMOVE_COMMENT).isValueNode());
+        assertTrue(data.path(JSON.REMOVE_COMMENT).asText().isEmpty());
+        assertTrue(data.path(JsonOperations.KERNEL).isValueNode());
+        assertTrue(data.path(JsonOperations.KERNEL).isNull());
+        assertTrue(data.path(JSON.UTILITY).isValueNode());
+        assertFalse(data.path(JSON.UTILITY).asBoolean());
+        assertTrue(data.path(JSON.FINAL_DESTINATION).isValueNode());
+        assertTrue(data.path(JSON.FINAL_DESTINATION).isNull());
+        assertTrue(data.path(JSON.RETURN_WHEN_EMPTY).isValueNode());
+        assertTrue(data.path(JSON.RETURN_WHEN_EMPTY).isNull());
+        assertTrue(data.path(JSON.STATUS).isValueNode());
+        assertTrue(data.path(JSON.STATUS).asText().isEmpty());
+        // add a car
+        data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "31995");
+        result = service.doPut(JsonOperations.CAR, "", data, locale, 0);
     }
 
     @Test

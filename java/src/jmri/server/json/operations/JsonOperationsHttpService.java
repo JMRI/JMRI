@@ -1,10 +1,15 @@
 package jmri.server.json.operations;
 
+import static jmri.server.json.JSON.COLOR;
+import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.NUMBER;
 import static jmri.server.json.JSON.RENAME;
+import static jmri.server.json.JSON.RFID;
+import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.CARS;
@@ -35,6 +40,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -42,6 +48,7 @@ import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
@@ -69,7 +76,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case ENGINE:
                 return message(ENGINE, utilities.getEngine(name, locale, id), id);
             case KERNEL:
-                Kernel kernel = getCarManager().getKernelByName(name);
+                Kernel kernel = carManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
@@ -108,9 +115,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case KERNEL:
                 if (!data.path(RENAME).isMissingNode() && data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
-                    getCarManager().replaceKernelName(name, newName);
+                    carManager().replaceKernelName(name, newName);
                 }
-                return getKernel(getCarManager().getKernelByName(name), locale, id).put(RENAME, name);
+                return getKernel(carManager().getKernelByName(name), locale, id).put(RENAME, name);
             case ENGINE:
             case LOCATION:
             case TRAINS:
@@ -124,11 +131,28 @@ public class JsonOperationsHttpService extends JsonHttpService {
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
+            case CAR:
+                if (data.path(ROAD).isMissingNode()) {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", ROAD, type), id); // NOI18N
+                }
+                if (data.path(NUMBER).isMissingNode()) {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NUMBER, type), id); // NOI18N
+                }
+                String road = data.path(ROAD).asText();
+                String number = data.path(NUMBER).asText();
+                if (carManager().getById(name) != null || carManager().getByRoadAndNumber(road, number) != null) {
+                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                            Bundle.getMessage(locale, "ErrorPutRollingStockConflict", type, road, number), id); // NOI18N
+                }
+                carManager().newRS(road, number);
+                return postCar(carManager().newRS(road, number), data, locale, id);
             case CAR_TYPE:
                 InstanceManager.getDefault(CarTypes.class).addName(name);
                 return getCarType(name, locale, id);
             case KERNEL:
-                Kernel kernel = getCarManager().newKernel(name);
+                Kernel kernel = carManager().newKernel(name);
                 return getKernel(kernel, locale, id);
             default:
                 return super.doPut(type, name, data, locale, id);
@@ -167,7 +191,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         String token = data.path(FORCE_DELETE).asText();
         switch (type) {
             case KERNEL:
-                Kernel kernel = getCarManager().getKernelByName(name);
+                Kernel kernel = carManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
@@ -175,12 +199,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
                     throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), locale, id);
                 }
-                getCarManager().deleteKernel(name);
+                carManager().deleteKernel(name);
                 break;
             case CAR_TYPE:
-                List<Car> cars = getCarManager().getByTypeList(name);
+                List<Car> cars = carManager().getByTypeList(name);
                 List<Location> locations = new ArrayList<>();
-                for (Location location : getLocationManager().getList()) {
+                for (Location location : locationManager().getList()) {
                     if (location.acceptsTypeName(name)) {
                         locations.add(location);
                     }
@@ -211,11 +235,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, name);
         ArrayNode cars = data.putArray(CARS);
-        getCarManager().getByTypeList(name).forEach((car) -> {
+        carManager().getByTypeList(name).forEach((car) -> {
             cars.add(utilities.getCar(car, locale));
         });
         ArrayNode locations = data.putArray(LOCATIONS);
-        getLocationManager().getList().stream().filter((location) -> {
+        locationManager().getList().stream().filter((location) -> {
             return location.acceptsTypeName(name);
         }).forEach((location) -> {
             locations.add(utilities.getLocation(location, locale));
@@ -260,17 +284,17 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     private JsonNode getKernels(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        getCarManager().getKernelNameList().forEach((kernel) -> {
+        carManager().getKernelNameList().forEach((kernel) -> {
             // individual kernels should not have id in array, but same method is used to get
             // single kernels as requested, so pass additive inverse of id to allow errors
-            array.add(getKernel(getCarManager().getKernelByName(kernel), locale, id * -1));
+            array.add(getKernel(carManager().getKernelByName(kernel), locale, id * -1));
         });
         return message(array, id);
     }
 
     public ArrayNode getCars(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        getCarManager().getByIdList().forEach((car) -> {
+        carManager().getByIdList().forEach((car) -> {
             array.add(message(CAR, utilities.getCar(car, locale), id));
         });
         return array;
@@ -278,7 +302,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getEngines(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((engine) -> {
+        engineManager().getByIdList().forEach((engine) -> {
             array.add(message(ENGINE, utilities.getEngine(engine, locale), id));
         });
         return array;
@@ -286,7 +310,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public JsonNode getLocations(Locale locale, int id) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
-        getLocationManager().getLocationsByIdList().forEach((location) -> {
+        locationManager().getLocationsByIdList().forEach((location) -> {
             array.add(message(LOCATION, utilities.getLocation(location, locale), id));
         });
         return message(array, id);
@@ -331,11 +355,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
      *                                            location in data
      */
     public void setCar(String name, JsonNode data, Locale locale, int id) throws JsonException {
-        Car car = getCarManager().getById(name);
+        Car car = carManager().getById(name);
         if (!data.path(LOCATION).isMissingNode()) {
             String locationId = data.path(LOCATION).asText();
             String trackId = data.path(TRACK).asText();
-            Location location = getLocationManager().getLocationById(locationId);
+            Location location = locationManager().getLocationById(locationId);
             Track track = (trackId != null) ? location.getTrackById(trackId) : null;
             if (!car.setLocation(location, track, true).equals(Track.OKAY)) {
                 throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", name, locationId, trackId), id);
@@ -343,11 +367,45 @@ public class JsonOperationsHttpService extends JsonHttpService {
         }
     }
 
-    private CarManager getCarManager() {
+    /**
+     * Set the properties in the data parameter for the given car.
+     *
+     * @param car    the car to change
+     * @param data   car data to change
+     * @param locale locale to throw exceptions in
+     * @param id     message id set by client
+     * @return       JSON representation of the car
+     */
+    public JsonNode postCar(Car car, JsonNode data, Locale locale, int id) {
+        postRollingStock(car, data, locale, id);
+        return message(CAR, utilities.getCar(car, locale), id);
+    }
+
+    /**
+     * Set the properties in the data parameter for the given rolling stock.
+     *
+     * @param rs     the rolling stock to change
+     * @param data   rolling stock data to change
+     * @param locale locale to throw exceptions in
+     * @param id     message id set by client
+     */
+    public void postRollingStock(RollingStock rs, JsonNode data, Locale locale, int id) {
+        rs.setRoadName(data.path(ROAD).asText(rs.getRoadName()));
+        rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
+        rs.setColor(data.path(COLOR).asText(rs.getColor()));
+        rs.setComment(data.path(COMMENT).asText(rs.getComment()));
+        rs.setRfid(data.path(RFID).asText(rs.getRfid()));
+    }
+
+    protected CarManager carManager() {
         return InstanceManager.getDefault(CarManager.class);
     }
 
-    private LocationManager getLocationManager() {
+    protected EngineManager engineManager() {
+        return InstanceManager.getDefault(EngineManager.class);
+    }
+
+    protected LocationManager locationManager() {
         return InstanceManager.getDefault(LocationManager.class);
     }
 

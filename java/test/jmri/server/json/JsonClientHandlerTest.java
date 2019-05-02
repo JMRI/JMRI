@@ -174,7 +174,7 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response is an error", JsonException.ERROR,
                 message.path(JSON.TYPE).asText());
         Assert.assertEquals("Response contains error code 400", 400, data.path(JsonException.CODE).asInt());
-        Assert.assertEquals("Response contains error message", "Data portion of JSON message missing.",
+        Assert.assertEquals("Response contains error message", "Data property of JSON message missing.",
                 data.path(JsonException.MESSAGE).asText());
     }
 

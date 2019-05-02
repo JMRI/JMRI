@@ -60,7 +60,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" must not be empty for type \"hello\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" must not be empty for type \"hello\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
@@ -88,7 +88,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" is required for type \"client\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" is required for type \"client\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
@@ -98,7 +98,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" must not be empty for type \"client\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" must not be empty for type \"client\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
@@ -126,7 +126,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" is required for type \"client\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" is required for type \"client\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
@@ -136,7 +136,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" must not be empty for type \"client\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" must not be empty for type \"client\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
@@ -172,7 +172,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" is required for type \"client\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" is required for type \"client\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
@@ -182,7 +182,7 @@ public class JsonMessageSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Data attribute \"client\" must not be empty for type \"client\".", ex.getMessage());
+            Assert.assertEquals("Property \"client\" must not be empty for type \"client\".", ex.getMessage());
         }
         Assert.assertNull("No clients", manager.getClient(connection));
         Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());

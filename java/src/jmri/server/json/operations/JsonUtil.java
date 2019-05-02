@@ -9,6 +9,7 @@ import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
 import static jmri.server.json.JSON.OWNER;
+import static jmri.server.json.JSON.RFID;
 import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.ROUTE;
 import static jmri.server.json.JSON.SEQUENCE;
@@ -224,6 +225,7 @@ public class JsonUtil {
         node.put(ROAD, rs.getRoadName());
         String[] type = rs.getTypeName().split("-"); // second half of string
         // can be anything
+        node.put(RFID, rs.getRfid());
         node.put(TYPE, type[0]);
         node.put(LENGTH, rs.getLengthInteger());
         node.put(COLOR, rs.getColor());

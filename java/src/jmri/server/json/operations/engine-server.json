@@ -16,6 +16,13 @@
             "type": "string",
             "description": "The engine owning railroad"
         },
+        "rfid": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "RFID tag attached to car; null if none"
+        },
         "type": {
             "type": "string",
             "description": "The engine type"
@@ -37,11 +44,17 @@
             "description": "Freeform comment concerning engine"
         },
         "location": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The current location of the engine"
         },
         "destination": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "the current destination of the engine"
         },
         "model": {
@@ -54,5 +67,15 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "number", "road", "type", "length", "owner", "comment", "model", "consist"]
+    "required": [
+        "name",
+        "number",
+        "road",
+        "type",
+        "length",
+        "owner",
+        "comment",
+        "model",
+        "consist"
+    ]
 }
