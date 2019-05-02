@@ -593,10 +593,6 @@ public final class JSON {
 
     /* JSON value types */
     /**
-     * {@value #NULL}
-     */
-    public static final String NULL = "null"; // NOI18N
-    /**
      * {@value #INTEGER}
      */
     public static final String INTEGER = "int"; // NOI18N

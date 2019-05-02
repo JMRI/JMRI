@@ -4,7 +4,6 @@ import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.LENGTH;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.NULL;
 import static jmri.server.json.JSON.RENAME;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
@@ -309,12 +308,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
      */
     public void setTrain(String name, JsonNode data, Locale locale, int id) throws JsonException {
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(name);
-        if (!data.path(LOCATION).isMissingNode()) {
-            String location = data.path(LOCATION).asText();
-            if (location.equals(NULL)) {
+        JsonNode location = data.path(LOCATION);
+        if (!location.isMissingNode()) {
+            if (location.isNull()) {
                 train.terminate();
-            } else if (!train.move(location)) {
-                throw new JsonException(428, Bundle.getMessage(locale, "ErrorTrainMovement", name, location), id);
+            } else if (!train.move(location.asText())) {
+                throw new JsonException(428, Bundle.getMessage(locale, "ErrorTrainMovement", name, location.asText()), id);
             }
         }
     }
