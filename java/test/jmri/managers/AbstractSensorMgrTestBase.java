@@ -103,7 +103,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Sensor t = l.provideSensor("" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -160,7 +160,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         String name = t.getSystemName();
         
         int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
-        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        String lowerName = name.substring(0, prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
         
         Assert.assertEquals(t, l.getSensor(lowerName));
     }
@@ -178,7 +178,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
 
     @Test
     public void testPullResistanceConfigurable(){
-       Assert.assertFalse("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+       Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
     }
 
     /**

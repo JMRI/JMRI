@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represent a region in space for the RPS system.
- * <P>
- * The region is specfied by a <em>right-handed</em>
+ * <p>
+ * The region is specified by a <em>right-handed</em>
  * set of points.
  * <p>
  * Regions are immutable once created.
@@ -41,6 +41,29 @@ public class Region {
     GeneralPath path;
 
     /**
+     * Ctor from a string like "(0,0,0);(1,0,0);(1,1,0);(0,1,0)"
+     */
+    public Region(String s) {
+        String[] pStrings = s.split(";");
+        points = new Point3d[pStrings.length];
+
+        // load each point
+        for (int i = 0; i < points.length; i++) {
+            // remove leading ( and trailing )
+            String coords = pStrings[i].substring(1, pStrings[i].length() - 1);
+            String[] coord = coords.split(",");
+            if (coord.length != 3) {
+                log.error("need to have three coordinates in {}", pStrings[i]);
+            }
+            double x = Double.valueOf(coord[0]);
+            double y = Double.valueOf(coord[1]);
+            double z = Double.valueOf(coord[2]);
+            points[i] = new Point3d(x, y, z);
+        }
+        initPath(points);
+    }
+
+    /**
      * Provide Java2D access to the shape of this region.
      * <p>
      * This should provide a copy of the GeneralPath path, to keep the
@@ -63,29 +86,6 @@ public class Region {
             path.lineTo((float) points[i].x, (float) points[i].y);
         }
         path.lineTo((float) points[0].x, (float) points[0].y);
-    }
-
-    /**
-     * Ctor from a string like "(0,0,0);(1,0,0);(1,1,0);(0,1,0)"
-     */
-    public Region(String s) {
-        String[] pStrings = s.split(";");
-        points = new Point3d[pStrings.length];
-
-        // load each point
-        for (int i = 0; i < points.length; i++) {
-            // remove leading ( and trailing )
-            String coords = pStrings[i].substring(1, pStrings[i].length() - 1);
-            String[] coord = coords.split(",");
-            if (coord.length != 3) {
-                log.error("need to have three coordinates in {}", pStrings[i]);
-            }
-            double x = Double.valueOf(coord[0]);
-            double y = Double.valueOf(coord[1]);
-            double z = Double.valueOf(coord[2]);
-            points[i] = new Point3d(x, y, z);
-        }
-        initPath(points);
     }
 
     @Override
@@ -140,4 +140,5 @@ public class Region {
     final Point3d[] points;
 
     private final static Logger log = LoggerFactory.getLogger(Region.class);
+
 }

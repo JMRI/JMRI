@@ -18,12 +18,12 @@ public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBas
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        r = new RpsReporter("RR(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
+        r = new RpsReporter("RR(0,0,0);(1,0,0);(1,1,0);(0,1,0)", "R");
     }
 
     @After
     public void tearDown() {
-	r = null;
+	    r = null;
         JUnitUtil.tearDown();
     }
 
