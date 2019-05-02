@@ -70,17 +70,17 @@
         <label>
             <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
             <text xml:lang="it">Numero Centinaia =1 è valore intermedio per motori 'coreless'</text>
-            <text xml:lang="de">Hunderterstelle: modifizierte Einstellungen für Glockenanker-Motoren (Faulhaber, Maxxon, usw.)</text>
+            <text xml:lang="de">Hunderterstelle - modifizierte Einstellungen für Glockenanker-Motoren (Faulhaber, Maxxon, usw.)</text>
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
             <text xml:lang="it">Numero decine è valore proporzionale, valore medio=5</text>
-            <text xml:lang="de">Zehnerstelle: Proportional-Wert der PID-Regelung</text>
+            <text xml:lang="de">Zehnerstelle - Proportional-Wert der PID-Regelung</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
             <text xml:lang="it">Numero unità è valore integrale, valore medio =5</text>
-            <text xml:lang="de">Einerstelle: Integral-Wert der PID-Regelung</text>
+            <text xml:lang="de">Einerstelle - Integral-Wert der PID-Regelung</text>
           </label>
           <label>
             <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
