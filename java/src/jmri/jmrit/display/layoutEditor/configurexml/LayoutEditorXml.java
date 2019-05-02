@@ -49,17 +49,26 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
         LayoutEditor p = (LayoutEditor) o;
-        java.awt.Point loc = p.getLocation();
-        java.awt.Dimension size = p.getSize();
 
         Element panel = new Element("LayoutEditor");
 
         panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
-        panel.setAttribute("x", "" + loc.x);
-        panel.setAttribute("y", "" + loc.y);
-        panel.setAttribute("windowheight", "" + size.height);
-        panel.setAttribute("windowwidth", "" + size.width);
+        if (InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+            panel.setAttribute("x", "" + p.getUpperLeftX());
+            panel.setAttribute("y", "" + p.getUpperLeftY());
+            panel.setAttribute("windowheight", "" + p.getWindowHeight());
+            panel.setAttribute("windowwidth", "" + p.getWindowWidth());
+        } else {
+            // Use real location and size
+            java.awt.Point loc = p.getLocation();
+            panel.setAttribute("x", "" + loc.x);
+            panel.setAttribute("y", "" + loc.y);
+
+            java.awt.Dimension size = p.getSize();
+            panel.setAttribute("windowheight", "" + size.height);
+            panel.setAttribute("windowwidth", "" + size.width);
+        }
         panel.setAttribute("panelheight", "" + p.getLayoutHeight());
         panel.setAttribute("panelwidth", "" + p.getLayoutWidth());
         panel.setAttribute("sliders", "" + (p.getScroll() ? "yes" : "no")); // deprecated
@@ -315,20 +324,22 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr != null) {
-            String windowFrameRef = "jmri.jmrit.display.layoutEditor.LayoutEditor:" + name;
+        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+            jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+            if (prefsMgr != null) {
+                String windowFrameRef = "jmri.jmrit.display.layoutEditor.LayoutEditor:" + name;
 
-            java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-            if (prefsWindowLocation != null) {
-                x = (int) prefsWindowLocation.getX();
-                y = (int) prefsWindowLocation.getY();
-            }
+                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                if (prefsWindowLocation != null) {
+                    x = (int) prefsWindowLocation.getX();
+                    y = (int) prefsWindowLocation.getY();
+                }
 
-            java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-            if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
-                windowHeight = (int) prefsWindowSize.getHeight();
-                windowWidth = (int) prefsWindowSize.getWidth();
+                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
+                    windowHeight = (int) prefsWindowSize.getHeight();
+                    windowWidth = (int) prefsWindowSize.getWidth();
+                }
             }
         }
 

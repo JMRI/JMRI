@@ -72,6 +72,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
     public JCheckBox graphicStateDisplay;
+    public JCheckBox editorUseOldLocSizeDisplay;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -83,6 +84,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doClickSelection(p = new JPanel());
         add(p);
         doGraphicState(p = new JPanel());
+        add(p);
+        doEditorUseOldLocSize(p = new JPanel());
         add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
@@ -106,6 +109,16 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
         });
         panel.add(graphicStateDisplay);
+    }
+
+    void doEditorUseOldLocSize(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        editorUseOldLocSizeDisplay = new JCheckBox(ConfigBundle.getMessage("GUIUseOldLocSize"));
+        editorUseOldLocSizeDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isEditorUseOldLocSize());
+        editorUseOldLocSizeDisplay.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setEditorUseOldLocSize(editorUseOldLocSizeDisplay.isSelected());
+        });
+        panel.add(editorUseOldLocSizeDisplay);
     }
 
     void doLAF(JPanel panel) {
