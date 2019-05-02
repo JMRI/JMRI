@@ -154,20 +154,22 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr != null) {
-            String windowFrameRef = "jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:" + name;
+        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+            jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+            if (prefsMgr != null) {
+                String windowFrameRef = "jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:" + name;
 
-            java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-            if (prefsWindowLocation != null) {
-                x = (int) prefsWindowLocation.getX();
-                y = (int) prefsWindowLocation.getY();
-            }
+                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                if (prefsWindowLocation != null) {
+                    x = (int) prefsWindowLocation.getX();
+                    y = (int) prefsWindowLocation.getY();
+                }
 
-            java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-            if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
-                height = (int) prefsWindowSize.getHeight();
-                width = (int) prefsWindowSize.getWidth();
+                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
+                    height = (int) prefsWindowSize.getHeight();
+                    width = (int) prefsWindowSize.getWidth();
+                }
             }
         }
 

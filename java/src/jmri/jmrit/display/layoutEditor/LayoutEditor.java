@@ -142,6 +142,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JPanel editToolBarContainerPanel = null;
     private transient JPanel helpBarPanel = null;
     private transient JPanel helpBar = new JPanel();
+    private transient boolean editorUseOldLocSize;
 
     private transient Font toolBarFont = null;
 
@@ -521,6 +522,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         super(name);
         setSaveSize(true);
         layoutName = name;
+
+        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();
@@ -2484,6 +2487,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 redrawPanel();
             }
         });
+
+        if (editorUseOldLocSize) {
+            //
+            //  save location and size
+            //
+            JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
+            optionMenu.add(locationItem);
+            locationItem.addActionListener((ActionEvent event) -> {
+                setCurrentPositionAndSize();
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+            });
+        }
 
         //
         // Add Options
