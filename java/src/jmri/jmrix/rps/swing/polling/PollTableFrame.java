@@ -5,7 +5,7 @@ import jmri.util.JmriJFrame;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
- * Frame for control of RPS polling
+ * Frame for control of RPS polling.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
@@ -52,4 +52,5 @@ public class PollTableFrame extends JmriJFrame {
         pane.setDefaults();
         setModifiedFlag(false);
     }
+
 }

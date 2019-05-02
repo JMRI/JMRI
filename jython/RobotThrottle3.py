@@ -285,7 +285,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (self.debugLevel >= LowDebug) :
                 self.msgText("stop and release the current loco: " + str(oldId))
             self.doStop();
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
             self.currentThrottle = None
             if (self.debugLevel >= LowDebug) :
                 self.msgText("Throttle " + str(oldId) + " released")
@@ -674,7 +674,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             #self.msgText("releasing throttle")
             self.currentThrottle.setSpeedSetting(0)
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
         self.isAborting = True
         return
 

@@ -47,14 +47,14 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set timeout
             activeSerialPort.enableReceiveTimeout(10);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -132,7 +132,7 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: ", e.getMessage());
         }
         return null;
     }
