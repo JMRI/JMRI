@@ -106,9 +106,17 @@
 
         <tr>
             <td>
-                <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/">Builds</a> - Unit Tests Run and Skipped<br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/testReport/">
                     <img src="http://builds.jmri.org/jenkins/job/Development/job/Builds/test/trend">
+                </a>
+http://builds.jmri.org/jenkins/job/Development/job/Builds/test/trend?failureOnly=true
+            </td>
+
+            <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Failures<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/testReport/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/Builds/test/trend?failureOnly=true">
                 </a>
             </td>
         </tr>
