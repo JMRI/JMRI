@@ -48,9 +48,11 @@
         <display item="BEMF Intensity"/>
       </column>
       <column>
+        <display item="Brake key"/>
         <label>
           <text>   </text>
         </label>
+        <display item="Brake time"/>
       </column>
       <separator/>
       <column>
