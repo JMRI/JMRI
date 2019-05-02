@@ -80,7 +80,8 @@
     In this case it is a direction
     arrow indicating the direction of travel of the warranted train.  However, they are a necessity
     for CircuitBuilder to be able to define Portals and OPaths. In such editing modes the icon is
-    usually a red circle that may be dragged or selected.
+    usually a red circle that may be dragged or selected. <b>Note:</b> <i>It is important that every
+    block depicted on the panel have <b>all</b> its portals represented by a portal icon.</i> 
 
     <h2>The Circuit Builder Menu</h2>
 
@@ -225,6 +226,13 @@
     on the panel with a mouse click will select the portal it represents
     in the portal list.  When repositioning a portal icon it may be necessary to "unlock"
     its position.
+    </p><p>
+     There may be diagrams where a portal icon cannot span icons from each block
+     that the portal connects. An example of this is when the track diagram depicts a loop
+     as a line of blocks across the panel from left to right. Here a leftmost block icon 
+     cannot be spanned by one from the rightmost block. This is a case where one of the
+     blocks must have a dis-contiguous track icon. To define such a portal, place an 
+     extra track icon from one block adjacent to an icon of the other. 
     <ul>
         <li>The Edit Portal window has a list of the portals already defined for the
         track circuit (OBlock) and a text field to name new portals to be created. The window
