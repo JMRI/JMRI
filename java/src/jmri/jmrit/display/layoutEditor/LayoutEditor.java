@@ -425,6 +425,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient float mainlineTrackWidth = 4.0F;
     private transient float sidelineTrackWidth = 2.0F;
 
+    private transient Color mainlineTrackColor = Color.DARK_GRAY ;
+    private transient Color sidelineTrackColor = Color.DARK_GRAY ;
     private transient Color defaultTrackColor = Color.DARK_GRAY;
     private transient Color defaultOccupiedTrackColor = Color.red;
     private transient Color defaultAlternativeTrackColor = Color.white;
@@ -2813,6 +2815,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
+    /**
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+     * @return 
+     */
     @Nonnull
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
@@ -2822,19 +2828,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
-            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
-            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
 
+    /** 
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+     * @param ltdo 
+     */
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
 
         // integrate LayoutEditor drawing options with previous drawing options
         mainlineTrackWidth = layoutTrackDrawingOptions.getMainBlockLineWidth();
         sidelineTrackWidth = layoutTrackDrawingOptions.getSideBlockLineWidth();
-        defaultTrackColor = layoutTrackDrawingOptions.getMainRailColor();
+        mainlineTrackColor = layoutTrackDrawingOptions.getMainRailColor();
+        sidelineTrackColor = layoutTrackDrawingOptions.getSideRailColor();
         redrawPanel();
     }
 
