@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-reporter-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"time\"",
+    "properties": {
+        "time": {
+            "type": "string",
+            "description": "If present, set the fast clock time to the provided ISO 8601 time"
+        },
+        "rate": {
+            "type": "number",
+            "description": "If present, set the rate for the fast clock"
+        },
+        "state": {
+            "type": "integer",
+            "description": "If present, sets the state of the fast clock",
+            "enum": [0, 2, 4]
+        }
+    },
+    "additionalProperties": false,
+    "required": []
+}

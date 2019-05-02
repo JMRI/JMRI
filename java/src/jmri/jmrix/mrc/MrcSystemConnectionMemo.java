@@ -18,7 +18,7 @@ import jmri.InstanceManager;
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MrcSystemConnectionMemo() {
-        super("MR", "MRC"); //IN18N
+        super("M", "MRC"); //IN18N
         register(); // registers general type
         InstanceManager.store(this, MrcSystemConnectionMemo.class); // also register as specific type
 
@@ -68,7 +68,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     /*    public void configureCommandStation(int val) {
      getMrcTrafficController().setCommandOptions(val);
-     jmri.InstanceManager.setCommandStation(mrcTrafficController);
+     jmri.InstanceManager.store(mrcTrafficController, jmri.CommandStation.class);
      }*/
 
     /**
@@ -152,14 +152,16 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.setThrottleManager(throttleManager);
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
         clockManager = new jmri.jmrix.mrc.MrcClockControl(getMrcTrafficController(), getSystemPrefix());
-        InstanceManager.addClockControl(clockManager);
+        // make sure InstanceManager knows about that
+        InstanceManager.store(clockManager, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, clockManager);
 
     }
 

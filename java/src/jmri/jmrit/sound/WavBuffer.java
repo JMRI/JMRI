@@ -36,7 +36,10 @@ public class WavBuffer {
 
         try {
             buffer = new byte[(int) file.length()];
-            s.read(buffer);
+            int count = s.read(buffer);
+            if (count != buffer.length) {
+                log.warn("Excepted {} bytes but read {} from file {}", buffer.length, count, file.getName());
+            }
 
             initFmt();
             initData();

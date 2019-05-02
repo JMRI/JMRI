@@ -14,7 +14,7 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     public String getSystemName(int i){
-       return "TMS" + i;
+       return "TS" + i;
     }
 
     @Test

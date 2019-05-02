@@ -8,18 +8,14 @@ import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test the SignalMastIcon.
  * <p>
  * Description:
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class SignalMastIconTest extends PositionableIconTest {
 
@@ -81,7 +77,7 @@ public class SignalMastIconTest extends PositionableIconTest {
     @Before
     @Override
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test SignalMastIcon Panel");
             p = new SignalMastIcon(editor);
@@ -90,32 +86,36 @@ public class SignalMastIconTest extends PositionableIconTest {
 
             // reset instance manager & create test heads
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
-                 new DefaultSignalHead("IH1") {
-                    @Override
-                    protected void updateOutput() {
-                    }
-                 }
-                 );
+                    new DefaultSignalHead("IH1") {
+                        @Override
+                        protected void updateOutput() {
+                        }
+                    });
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
-                 new DefaultSignalHead("IH2") {
-                    @Override
-                    protected void updateOutput() {
-                 }
-            }
-            );
+                    new DefaultSignalHead("IH2") {
+                        @Override
+                        protected void updateOutput() {
+                        }
+                    });
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
-                 new DefaultSignalHead("IH3") {
-                    @Override
-                    protected void updateOutput() {
-                 }
-            }
-            );
+                    new DefaultSignalHead("IH3") {
+                        @Override
+                        protected void updateOutput() {
+                        }
+                    });
 
             s = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                 .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
+                    .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
 
             to.setSignalMast(new jmri.NamedBeanHandle<>(s.getSystemName(), s));
         }
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        to = null;
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class);

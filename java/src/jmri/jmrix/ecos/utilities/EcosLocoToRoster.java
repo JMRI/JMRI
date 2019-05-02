@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -53,6 +54,7 @@ import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +65,6 @@ public class EcosLocoToRoster implements EcosListener {
     RosterEntry re;
     String filename = null;
     DecoderFile pDecoderFile = null;
-    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
     String _ecosObject;
     int _ecosObjectInt;
     Label _statusLabel = null;
@@ -249,7 +250,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
         re = new RosterEntry();
         re.setId(rosterId);
-        List<DecoderFile> decoder = decoderind.matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
+        List<DecoderFile> decoder = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
         if (decoder.size() == 1) {
             pDecoderFile = decoder.get(0);
             selectedDecoder(pDecoderFile);
@@ -273,6 +274,8 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
+        justification = "TODO fill out the actions in these clauses")
     public void reply(EcosReply m) {
         int startval;
         int endval;
@@ -541,7 +544,11 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());
 
-        re.setDccAddress(Integer.toString(ecosLoco.getNumber()));
+        if (ecosLoco.getNumber() == 0) {
+            re.setDccAddress(Integer.toString(EcosLocoAddress.MFX_DCCAddressOffset+ecosLoco.getEcosObjectAsInt()));
+        } else {
+            re.setDccAddress(Integer.toString(ecosLoco.getNumber()));
+        }
         //re.setLongAddress(true);
 
         re.setRoadName("");
@@ -732,7 +739,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         });
 
-//      Mouselistener for doubleclick activation of proprammer   
+//      Mouselistener for doubleclick activation of proprammer
         dTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -740,7 +747,7 @@ public class EcosLocoToRoster implements EcosListener {
                 //if (_statusLabel != null) _statusLabel.setText("StateIdle");
                 dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
-                /* check for both double click and that it's a decoder 
+                /* check for both double click and that it's a decoder
                  that is being clicked on.  If it's just a Family, the programmer
                  button is enabled by the TreeSelectionListener, but we don't
                  want to automatically open a programmer so a user has the opportunity
@@ -812,9 +819,9 @@ public class EcosLocoToRoster implements EcosListener {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
         dTree.clearSelection();
-        Enumeration<DefaultMutableTreeNode> e = dRoot.breadthFirstEnumeration();
+        Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
-            DefaultMutableTreeNode node = e.nextElement();
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
             if (node.toString().equals(pMfg)) {
                 TreePath path = new TreePath(node.getPath());
                 dTree.expandPath(path);
@@ -862,9 +869,9 @@ public class EcosLocoToRoster implements EcosListener {
             String findFamily = f.getFamily();
             String findModel = f.getModel();
 
-            Enumeration<DefaultMutableTreeNode> e = dRoot.breadthFirstEnumeration();
+            Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
             while (e.hasMoreElements()) {
-                DefaultMutableTreeNode node = e.nextElement();
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
 
                 // convert path to comparison string
                 TreeNode[] list = node.getPath();
@@ -944,10 +951,8 @@ public class EcosLocoToRoster implements EcosListener {
 
             readConfig(programmerRoot, r);
 
-        } catch (Exception e) {
-            log.error("exception reading programmer file: " + filename);
-            // provide traceback too
-            e.printStackTrace();
+        } catch (IOException | JDOMException e) {
+            log.error("exception reading programmer file: {}", filename, e);
         }
     }
 

@@ -36,14 +36,14 @@ class ShutDown(jmri.implementation.AbstractShutDownTask):
 
 #---------------------------------------------------------------------------------
 # this is the code to be invoked when the program is shutting down
-	def execute(self):
-		conn = httplib.HTTPConnection(deviceURL)
-		conn.request("GET", "/io.cgi=?DOI1") # Open switch 1
-		conn.close()
-		conn = httplib.HTTPConnection(deviceURL)
-		conn.request("GET", "/io.cgi=?DOI2") # Open switch 2
-		conn.close()
-		return True # True to shutdown, False to abort shutdown
+    def execute(self):
+        conn = httplib.HTTPConnection(deviceURL)
+        conn.request("GET", "/io.cgi=?DOI1") # Open switch 1
+        conn.close()
+        conn = httplib.HTTPConnection(deviceURL)
+        conn.request("GET", "/io.cgi=?DOI2") # Open switch 2
+        conn.close()
+        return True # True to shutdown, False to abort shutdown
 
 #*********************************************************************************
 

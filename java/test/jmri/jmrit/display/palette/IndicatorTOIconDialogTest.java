@@ -1,7 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
@@ -11,10 +10,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,7 +21,7 @@ public class IndicatorTOIconDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
+        PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test");
         Editor editor = new EditorScaffold();
         IndicatorTOItemPanel itp = new IndicatorTOItemPanel(df,"IT01","",tableModel,editor);
@@ -37,14 +33,17 @@ public class IndicatorTOIconDialogTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialogTest.class);

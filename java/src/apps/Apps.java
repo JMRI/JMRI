@@ -1,8 +1,11 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
-import apps.gui3.TabbedPreferencesAction;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesFrame;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,6 +49,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -84,13 +88,16 @@ import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.Log4JUtil;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
+import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,7 +112,7 @@ import org.slf4j.LoggerFactory;
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
     static String profileFilename;
-    Action prefsAction = new TabbedPreferencesAction();
+    private Action prefsAction;  // defer initialization until needed so that Bundle accesses translate
 
     @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
             justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
@@ -113,22 +120,29 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         super(true);
         long start = System.nanoTime();
+        log.trace("starting ctor at {}", start);
 
         splash(false);
         splash(true, true);
+        log.trace("splash screens up, about to setButtonSpace");
         setButtonSpace();
+        log.trace("about to setJynstrumentSpace");
         setJynstrumentSpace();
 
+        log.trace("setLogo");
         jmri.Application.setLogo(logo());
+        log.trace("setURL");
         jmri.Application.setURL(line2());
 
         // Enable proper snapping of JSliders
         SliderSnap.init();
 
         // Prepare font lists
+        log.trace("prepareFontLists");
         prepareFontLists();
 
         // Get configuration profile
+        log.trace("start to get configuration profile - locate files");
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
         // Needs to be declared final as we might need to
@@ -149,8 +163,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
+        log.trace("check if profile exists");
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!profileFile.exists()) { // no profile config for this app
+            log.trace("profileFile {} doesn't exist", profileFile);
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
                     // notify user of change only if migration occurred
@@ -168,6 +184,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.error(ex.getMessage());
             }
         }
+        log.trace("about to try getStartingProfile");
         try {
             ProfileManagerDialog.getStartingProfile(sp);
             // Manually setting the configFilename property since calling
@@ -175,12 +192,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", (profile != null ? profile.getId() : "<none>"));
+            log.info("Starting with profile {}", profile.getId());
+            
+            // rapid language set; must follow up later with full setting as part of preferences
+            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
 
         // install shutdown manager
+        log.trace("about to install ShutDownManager");
         InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
 
         // add the default shutdown task to save blocks
@@ -204,13 +225,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 });
 
         // Install configuration manager and Swing error handler
+        // Constructing the JmriConfigurationManager also loads various configuration services
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
-
-        // install preference manager
-        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
 
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
@@ -244,6 +263,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             file = singleConfig;
         }
+                
+        // ensure the UserPreferencesManager has loaded. Done on GUI
+        // thread as it can modify GUI objects
+        log.debug("*** About to getDefault(jmri.UserPreferencesManager.class) with file {}", file);
+        ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        });
+        log.debug("*** Done");
+
+        // now (attempt to) load the config file
         log.debug("Using config file(s) {}", file.getPath());
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
@@ -331,7 +360,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                tp.init();
+                // tp.init();
                 tp.saveContents();
                 cm.storePrefs();
             });
@@ -341,7 +370,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             if (!GraphicsEnvironment.isHeadless()) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", (profile != null ? profile.getName() : "<none>")),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
@@ -353,19 +382,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initial the preferences.
-        // Doing it in a thread at this stage means we can let it work in the background.
-        new Thread(() -> {
-            try {
-                InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                    tp.init();
-                });
-            } catch (RuntimeException ex) {
-                log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
-            }
-        }, "init prefs").start();
-
-        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        // Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         new Thread(() -> {
             try {
                 InstanceManager.getDefault(DecoderIndexFile.class);
@@ -449,14 +466,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
-    }
-
-    /**
      * Prepare the JPanel to contain buttons in the startup GUI. Since it's
      * possible to add buttons via the preferences, this space may have
      * additional buttons appended to it later. The default implementation here
@@ -523,7 +532,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         systemsMenu(menuBar, wi);
         scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi);
-        menuBar.add(new WindowMenu(wi)); // * GT 28-AUG-2008 Added window menu
+        menuBar.add(new WindowMenu(wi));
         helpMenu(menuBar, wi);
         log.debug("end building menus");
     }
@@ -554,7 +563,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
     }
 
+    /**
+     * Open Preferences action.
+     * Often done due to error
+     */
     public void doPreferences() {
+        if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
         prefsAction.actionPerformed(null);
     }
 
@@ -596,6 +610,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
         if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
             editMenu.addSeparator();
+            if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
             editMenu.add(prefsAction);
         }
 
@@ -639,6 +654,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         d.add(new jmri.jmrix.libusb.UsbViewAction());
 
         d.add(new JSeparator());
+
+        d.add(new RailDriverMenuItem());
+
         try {
             d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {
@@ -654,6 +672,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
+
+        d.add(new JSeparator());
+        d.add(new apps.TrainCrew.InstallFromURL());
+        
+        // add final to menu bar
         menuBar.add(d);
 
     }
@@ -748,7 +771,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             cs.setText(" ");
             return;
         }
-        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
+        
+        log.debug("conn.name() is {} ",conn.name()); // eg CAN via MERG Network Interface
+        log.debug("conn.getConnectionName() is {} ",conn.getConnectionName()); // eg MERG2
+        log.debug("conn.getManufacturer() is {} ",conn.getManufacturer()); // eg MERG
+        
+        ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -762,7 +790,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(name, conn.getInfo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);
@@ -811,11 +839,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line3()));
 
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        if (profile != null) {
-            pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
-        } else {
-            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));
-        }
+        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
+
         // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
         int i = 0;
@@ -920,21 +945,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static protected void splash(boolean show) {
         splash(show, false);
-    }
-
-    /**
-     * Invoke the standard Log4J logging initialization.
-     * <p>
-     * No longer used in JMRI. ({@link #splash} calls the initialization
-     * directly. Left as a deprecated method because other code, such as CATS,
-     * is still using in in JMRI 3.7 and perhaps 3.8
-     *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
-     */
-    @Deprecated
-    static protected void initLog4J() {
-        jmri.util.Log4JUtil.initLogging();
     }
 
     static protected void splash(boolean show, boolean debug) {
@@ -1077,6 +1087,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Create menu categories and add to the menu bar, add actions to menus
         containedPane.createMenus(containedPane.menuBar, wi);
+        // connect Help target now that globalHelpBroker has been instantiated
+        containedPane.attachHelp();
 
         // invoke plugin, if any
         JmriPlugin.start(frame, containedPane.menuBar);
@@ -1093,12 +1105,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         Dimension screen = frame.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
 
-        Point p = InstanceManager.getDefault(UserPreferencesManager.class).getWindowLocation(containedPane.getClass().getName());
-        if (p != null) {
-            frame.setLocation(p);
-        } else {
-            frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
-        }
+        // first set a default position and size
+        frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then attempt set from stored preference
+        frame.setFrameLocation();
+        
+        // and finally show
         frame.setVisible(true);
     }
 
@@ -1143,23 +1156,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     /**
-     * Set, log and return some startup information.
-     * <p>
-     * This method needs to be refactored, but it's in use (2/2014) by CATS so
-     * can't easily be changed right away.
-     *
-     * @param name Program/application name as known by the user
-     * @return The output of {@link Log4JUtil#startupInfo(java.lang.String)}
-     * @deprecated Since 3.7.1, use {@link #setStartupInfo(java.lang.String) }
-     * plus {@link Log4JUtil#startupInfo(java.lang.String) }
-     */
-    @Deprecated
-    protected static String startupInfo(String name) {
-        setStartupInfo(name);
-        return Log4JUtil.startupInfo(name);
-    }
-
-    /**
      * Set and log some startup information. This is intended to be the central
      * connection point for common startup and logging.
      *
@@ -1179,11 +1175,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     private void prepareFontLists() {
         // Prepare font lists
-        new Thread(() -> {
+        Thread fontThread = new Thread(() -> {
             log.debug("Prepare font lists...");
             FontComboUtil.prepareFontLists();
             log.debug("...Font lists built");
-        }, "PrepareFontListsThread").start();
+        }, "PrepareFontListsThread");
+        
+        fontThread.setDaemon(true);
+        fontThread.setPriority(Thread.MIN_PRIORITY);
+        fontThread.start();
     }
 
     @Override
@@ -1207,5 +1207,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
+    /**
+     * Attach Help target to Help button on Main Screen.
+     */
+    protected void attachHelp() {
+    }
+
     private final static Logger log = LoggerFactory.getLogger(Apps.class);
+
 }

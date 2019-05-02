@@ -233,8 +233,8 @@ only CV15 can be written.
       stations, but eventually give an answer. This can be made
       faster in the future by having command stations attempt to
       read just the expected value, instead of 0 to 255, in the
-      absense of an acknowledge. 
-      <!--#include virtual="/Footer" --></p>
+      absense of an acknowledge.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

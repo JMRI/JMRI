@@ -26,7 +26,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     }
 
     /**
-     * Default implementation for storing the contents of a Acela
+     * Default implementation for storing the contents of an Acela
      * AcelaSignalHead
      *
      * @param o Object to store, of type AcelaSignalHead

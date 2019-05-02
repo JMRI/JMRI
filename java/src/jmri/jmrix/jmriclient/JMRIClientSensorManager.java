@@ -28,7 +28,7 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new JMRIClientSensor(addr, memo);
         t.setUserName(userName);
         return t;

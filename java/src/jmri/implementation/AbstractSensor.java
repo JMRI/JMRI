@@ -96,26 +96,24 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
     
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public void useDefaultTimerSettings(boolean boo) {
         setUseDefaultTimerSettings(boo);
     }
     
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public boolean useDefaultTimerSettings() {
         return getUseDefaultTimerSettings();
     }
-    
 
     protected Thread thr;
     protected Runnable r;
 
-    /* 
-     * Before going active or inactive or checking that we can go active, we will wait 500ms
-     * for things to settle down to help prevent a race condition
+    /**
+     * Before going active or inactive or checking that we can go active, we will wait for
+     * sensorDebounceGoing(In)Active for things to settle down to help prevent a race condition.
      */
-
     protected void sensorDebounce() {
         final int lastKnownState = _knownState;
         r = new Runnable() {
@@ -162,40 +160,13 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
     }
 
-    // setKnownState() for implementations that can't
-    // actually do it on the layout. Not intended for use by implementations
-    // that can
+    /**
+     * Perform setKnownState(int) for implementations that can't actually
+     * do it on the layout. Not intended for use by implementations that can.
+     */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
-        if (_rawState != s) {
-            if (((s == ACTIVE) && (sensorDebounceGoingActive > 0))
-                    || ((s == INACTIVE) && (sensorDebounceGoingInActive > 0))) {
-
-                int oldRawState = _rawState;
-                _rawState = s;
-                if (thr != null) {
-                    thr.interrupt();
-                }
-                if ((restartcount != 0) && (restartcount % 10 == 0)) {
-                    log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
-                }
-                firePropertyChange("RawState", oldRawState, s);
-                sensorDebounce();
-                return;
-            } else {
-                //we shall try to stop the thread as one of the state changes 
-                //might start the thread, while the other may not.
-                if (thr != null) {
-                    thr.interrupt();
-                }
-                _rawState = s;
-            }
-        }
-        if (_knownState != s) {
-            int oldState = _knownState;
-            _knownState = s;
-            firePropertyChange("KnownState", oldState, _knownState);
-        }
+        setOwnState(s);
     }
 
     /**
@@ -221,8 +192,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 sensorDebounce();
                 return;
             } else {
-                //we shall try to stop the thread as one of the state changes 
-                //might start the thread, while the other may not.
+                // we shall try to stop the thread as one of the state changes
+                // might start the thread, while the other may not.
                 if (thr != null) {
                     thr.interrupt();
                 }
@@ -243,7 +214,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     /**
      * Implement a shorter name for setKnownState.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use setKnownState instead.
      * The is provided to make Jython script access easier to read.
      */
@@ -254,7 +225,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     /**
      * Implement a shorter name for getKnownState.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use getKnownState instead.
      * The is provided to make Jython script access easier to read.
      */
@@ -286,7 +257,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     /**
      * Get the inverted state. If true, the electrical signal that results in an
      * ACTIVE state now results in an INACTIVE state.
-     * <P>
+     * <p>
      * Used in polling loops in system-specific code, so made final to allow
      * optimization.
      */
@@ -298,6 +269,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     /**
      * By default, all implementations based on this can invert
      */
+    @Override
     public boolean canInvert() { return true; }
 
     protected boolean _inverted = false;
@@ -313,7 +285,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * train identities via such methods as RailCom. The setting and creation of
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
-     * <p>
+     *
      * @param er the reporter to set
      */
     @Override
@@ -338,10 +310,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     /**
-     * Get the pull resistance
+     * Get the pull resistance.
      *
      * @return the currently set PullResistance value.  In this default 
-     * impelmetnation, PullResistance.PULL_OFF is always returned.
+     * implementation, PullResistance.PULL_OFF is always returned.
      */
     @Override
     public PullResistance getPullResistance(){

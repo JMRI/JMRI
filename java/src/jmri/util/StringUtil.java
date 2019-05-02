@@ -5,7 +5,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collection;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -23,6 +22,9 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright 2003
  */
 public class StringUtil {
+
+    public static final String HTML_CLOSE_TAG = "</html>";
+    public static final String HTML_OPEN_TAG = "<html>";
 
     /**
      * Starting with two arrays, one of names and one of corresponding numeric
@@ -213,33 +215,117 @@ public class StringUtil {
         }
         return b;
     }
-
+    
     /**
-     * This is a lexagraphic sort; lower case goes to the end. Identical entries
-     * are retained, so the output length is the same as the input length.
+     * Create an int[] from a String containing paired hexadecimal values.
+     * <p>
+     * Option to include array length as leading array value
+     * <p>
+     * eg. #("01020AB121",true) returns int[5, 1, 2, 10, 177, 33]
+     * <p>
+     * eg. ("01020AB121",false) returns int[1, 2, 10, 177, 33]
      *
-     * @param values the Strings to sort.
-     * @deprecated since 4.5.6; use
-     * {@link java.util.Arrays#sort(java.lang.Object[])} instead.
+     * @param s String of hex value pairs, eg "01020AB121".
+     * @param headerTotal if true, adds index [0] with total of pairs found 
+     * @return int array, with one field for each pair.
+     *
      */
-    @Deprecated
-    static public void sort(@Nonnull String[] values) {
-        Arrays.sort(values);
+    @Nonnull
+    static public int[] intBytesWithTotalFromNonSpacedHexString(@Nonnull String s, boolean headerTotal) {
+        if (s.length() % 2 == 0) {
+            int numBytes = ( s.length() / 2 );
+            if ( headerTotal ) {
+                int[] arr = new int[(numBytes+1)];
+                arr[0]=numBytes;
+                for (int i = 0; i < numBytes; i++) {
+                    arr[(i+1)] = getByte(i,s);
+                }
+                return arr;
+            }
+            else {
+                int[] arr = new int[(numBytes)];
+                for (int i = 0; i < numBytes; i++) {
+                    arr[(i)] = getByte(i,s);
+                }
+                return arr;
+            }
+        } else {
+            return new int[]{0};
+        }
     }
-
+    
     /**
-     * This is a case-blind sort. Identical entries are retained, so the output
-     * length is the same as the input length.
+     * Get a single hex digit from a String.
+     * <p>
+     * eg. getHexDigit(0,"ABCDEF") returns 10
+     * eg. getHexDigit(3,"ABCDEF") returns 14
      *
-     * @param values the Objects to sort
-     * @deprecated since 4.5.6; use
-     * {@link java.util.Arrays#sort(java.lang.Object[])} instead.
+     * @param index digit offset, 0 is very first digit on left.
+     * @param byteString String of hex values, eg "01020AB121".
+     * @return hex value of single digit
      */
-    @Deprecated
-    static public void sort(@Nonnull Object[] values) {
-        Arrays.sort(values);
+    static public int getHexDigit(int index, @Nonnull String byteString) {
+        int b = 0;
+        b = byteString.charAt(index);
+        if ((b >= '0') && (b <= '9')) {
+            b = b - '0';
+        } else if ((b >= 'A') && (b <= 'F')) {
+            b = b - 'A' + 10;
+        } else if ((b >= 'a') && (b <= 'f')) {
+            b = b - 'a' + 10;
+        } else {
+            b = 0;
+        }
+        return (byte) b;
     }
-
+    
+    /**
+     * Get a single hex data byte from a string
+     * <p>
+     * eg. getByte(2,"0102030405") returns 3
+     * 
+     * @param b The byte offset, 0 is byte 1
+     * @param byteString the whole string, eg "01AB2CD9"
+     * @return The value, else 0
+     */
+    static public int getByte(int b, @Nonnull String byteString) {
+        if ((b >= 0)) {
+            int index = b * 2;
+            int hi = getHexDigit(index++, byteString);
+            int lo = getHexDigit(index, byteString);
+            if ((hi < 16) && (lo < 16)) {
+                return (hi * 16 + lo);
+            }
+        }
+        return 0;
+    }
+    
+    /**
+     * Create a hex byte[] of Unicode character values from a String containing full text (non hex) values.
+     * <p>
+     * eg fullTextToHexArray("My FroG",8) would return byte[0x4d,0x79,0x20,0x46,0x72,0x6f,0x47,0x20]
+     *
+     * @param s String, eg "Test", value is trimmed to max byte length
+     * @param numBytes Number of bytes expected in return ( eg. to match max. message size )
+     * @return hex byte array, with one byte for each character. Right padded with empty spaces (0x20)
+     *
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
+        byte[] b = new byte[numBytes];
+        java.util.Arrays.fill(b, (byte) 0x20);
+        s = s.substring(0, Math.min(s.length(), numBytes));
+        String convrtedNoSpaces = String.format( "%x", 
+            new java.math.BigInteger(1, s.getBytes(/*YOUR_CHARSET?*/) ) );
+        int byteNum=0;
+        for (int i = 0; i < convrtedNoSpaces.length(); i+=2) {
+            b[byteNum] = (byte) Integer.parseInt(convrtedNoSpaces.substring(i, i + 2), 16);
+            byteNum++;
+        }
+        return b;
+    }
+    
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
@@ -254,6 +340,7 @@ public class StringUtil {
      * Sort String[] representing numbers, in ascending order.
      *
      * @param values the Strings to sort
+     * @throws NumberFormatException if string[] doesn't only contain numbers
      */
     static public void numberSort(@Nonnull String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
@@ -268,93 +355,6 @@ public class StringUtil {
                 }
             }
         }
-    }
-
-    /**
-     * Join a collection of strings, separated by a delimiter
-     *
-     * @param s	        collection of strings
-     * @param delimiter the delimiter
-     * @return the results of
-     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
-     * @deprecated since 4.7.2; use
-     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
-     * instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    public static String join(@Nonnull Collection<String> s, @Nonnull String delimiter) {
-        return String.join(delimiter, s);
-    }
-
-    /**
-     * Join an array of strings, separated by a delimiter
-     *
-     * @param s	        collection of strings
-     * @param delimiter the delimiter
-     * @return the results of
-     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
-     * @deprecated since 4.5.6; use
-     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
-     * instead
-     */
-    @CheckReturnValue
-    @Deprecated
-    @Nonnull
-    public static String join(@Nonnull String[] s, @Nonnull String delimiter) {
-        return String.join(delimiter, s);
-    }
-
-    /**
-     * Split a string into an array of Strings, at a particular divider. This is
-     * similar to the new String.split method, except that this does not provide
-     * regular expression handling; the divider string is just a string.
-     *
-     * @param input   String to split
-     * @param divider Where to divide the input; this does not appear in output
-     * @return an array of Strings
-     * @deprecated since 4.5.6; use
-     * {@link java.lang.String#split(java.lang.String)} instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    static public String[] split(@Nonnull String input, @Nonnull String divider) {
-        int size = 0;
-        String temp = input;
-
-        // count entries
-        while (temp.length() > 0) {
-            size++;
-            int index = temp.indexOf(divider);
-            if (index < 0) {
-                break;    // break not found
-            }
-            temp = temp.substring(index + divider.length());
-            if (temp.length() == 0) {  // found at end
-                size++;
-                break;
-            }
-        }
-
-        String[] result = new String[size];
-
-        // find entries
-        temp = input;
-        size = 0;
-        while (temp.length() > 0) {
-            int index = temp.indexOf(divider);
-            if (index < 0) {
-                break;    // done with all but last
-            }
-            result[size] = temp.substring(0, index);
-            temp = temp.substring(index + divider.length());
-            size++;
-        }
-        result[size] = temp;
-
-        return result;
     }
 
     /**
@@ -474,8 +474,9 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    @Deprecated
+    @Deprecated // since 4.9.1
     static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
         return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
     }
 
@@ -493,8 +494,9 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    @Deprecated
+    @Deprecated // since 4.9.1
     static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
         return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
@@ -570,4 +572,146 @@ public class StringUtil {
         }
         return new String(retval);
     }
+
+    /**
+     * Trim a text string to length provided and (if shorter) pad with trailing spaces.
+     * Removes 1 extra character to the right for clear column view.
+     *
+     * @param value contents to process
+     * @param length trimming length
+     * @return trimmed string, left aligned by padding to the right
+     */
+    @CheckReturnValue
+    static public String padString (String value, int length) {
+        if (length > 1) {
+            return String.format("%-" + length + "s", value.substring(0, Math.min(value.length(), length - 1)));
+        } else {
+            return value;
+        }
+    }
+
+    /**
+     * Return the first int value within a string
+     * eg :X X123XX456X: will return 123
+     * eg :X123 456: will return 123
+     *
+     * @param str contents to process
+     * @return first value in int form , -1 if not found
+     */
+    @CheckReturnValue
+    static public int getFirstIntFromString(@Nonnull String str){
+        StringBuilder sb = new StringBuilder();
+        for (int i =0; i<str.length(); i ++) {
+            char c = str.charAt(i);
+            if (c != ' ' ){
+                if (Character.isDigit(c)) {
+                    sb.append(c);
+                } else {
+                    if ( sb.length() > 0 ) {
+                        break;
+                    }
+                }
+            } else {
+                if ( sb.length() > 0 ) {
+                    break;
+                }
+            }
+        }
+        if ( sb.length() > 0 ) {
+            return (Integer.parseInt(sb.toString()));  
+        }
+        return -1;
+    }
+
+    /**
+     * Return the last int value within a string
+     * eg :XX123XX456X: will return 456
+     * eg :X123 456: will return 456
+     *
+     * @param str contents to process
+     * @return last value in int form , -1 if not found
+     */
+    @CheckReturnValue
+    static public int getLastIntFromString(@Nonnull String str){
+        StringBuilder sb = new StringBuilder();
+        for (int i = str.length() - 1; i >= 0; i --) {
+            char c = str.charAt(i);
+            if(c != ' '){
+                if (Character.isDigit(c)) {
+                    sb.insert(0, c);
+                } else {
+                    if ( sb.length() > 0 ) {
+                        break;
+                    }
+                }
+            } else {
+                if ( sb.length() > 0 ) {
+                    break;
+                }
+            }
+        }
+        if ( sb.length() > 0 ) {
+            return (Integer.parseInt(sb.toString()));  
+        }
+        return -1;
+    }
+
+    /**
+     * Replace the last occurance of string value within a String
+     * eg  from ABC to DEF will convert XXABCXXXABCX to XXABCXXXDEFX
+     *
+     * @param string contents to process
+     * @param from value within string to be replaced
+     * @param to new value
+     * @return string with the replacement, original value if no match.
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public String replaceLast(@Nonnull String string, @Nonnull String from, @Nonnull String to) {
+        int lastIndex = string.lastIndexOf(from);
+        if (lastIndex < 0) {
+            return string;
+        }
+        String tail = string.substring(lastIndex).replaceFirst(from, to);
+        return string.substring(0, lastIndex) + tail;
+    }
+
+    /**
+     * Concatenates text Strings where either could possibly be in HTML format
+     * (as used in many Swing components).
+     * <p>
+     * Ensures any appended text is added within the {@code <html>...</html>}
+     * element, if there is any.
+     *
+     * @param baseText  original text
+     * @param extraText text to be appended to original text
+     * @return Combined text, with a single enclosing {@code <html>...</html>}
+     * element (only if needed).
+     */
+    public static String concatTextHtmlAware(String baseText, String extraText) {
+        if (baseText == null && extraText == null) {
+            return null;
+        }
+        if (baseText == null) {
+            return extraText;
+        }
+        if (extraText == null) {
+            return baseText;
+        }
+        boolean hasHtml = false;
+        String result = baseText + extraText;
+        result = result.replaceAll("(?i)" + HTML_OPEN_TAG, "");
+        result = result.replaceAll("(?i)" + HTML_CLOSE_TAG, "");
+        if (!result.equals(baseText + extraText)) {
+            hasHtml = true;
+            log.debug("\n\nbaseText:\n\"{}\"\nextraText:\n\"{}\"\n", baseText, extraText);
+        }
+        if (hasHtml) {
+            result = HTML_OPEN_TAG + result + HTML_CLOSE_TAG;
+            log.debug("\nCombined String:\n\"{}\"\n", result);
+        }
+        return result;
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
 }

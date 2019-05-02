@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-systemConnection-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"systemConnection\"",
+    "properties": {
+        "name": {
+            "type": ["string", "null"],
+            "description": "Name of the system connection"
+        },
+        "prefix": {
+            "type": "string",
+            "description": "Prefix used for the system connection"
+        },
+        "mfg": {
+            "type": ["string", "null"],
+            "description": "Manufacturer of the system connection"
+        },
+        "description": {
+            "type": ["string", "null"],
+            "description": "Description of the system connection"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "mfg", "prefix", "description"]
+}

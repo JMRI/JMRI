@@ -9,7 +9,7 @@
   <title>JMRI: Sections Documentation</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Dave Duchamp" name="Author">
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Sections">
   <!--#include virtual="/Style" -->
 </head>
@@ -356,6 +356,7 @@
       (recommended), select <b>File&gt;Store&gt;Store Configuration
       and Panels To File...</b> or select <b>Panels&gt;Store
       Panels...</b> in the main JMRI window.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

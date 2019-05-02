@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import apps.tests.Log4JFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,54 +16,56 @@ public class AngularRouteTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
+    @SuppressWarnings("null")
     @Test
     public void testGetConstructor() {
-        AngularRoute ar;
         try {
-            ar = new AngularRoute(null, "b", "c", "d");
+            new AngularRoute(null, "b", "c", "d");
             fail("NPE should have been thrown");
         } catch (NullPointerException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", "b", "c", "d");
+            new AngularRoute("a", "b", "c", "d");
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", null, null, null);
+            new AngularRoute("a", null, null, null);
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", null, "c", "d");
+            new AngularRoute("a", null, "c", "d");
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", "b", null, "d");
+            new AngularRoute("a", "b", null, "d");
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", null, null, "d");
+            new AngularRoute("a", null, null, "d");
         } catch (IllegalArgumentException ex) {
             fail("IllegalArgumentException should not have been thrown");
         }
         try {
-            ar = new AngularRoute("a", "b", "c", null);
+            new AngularRoute("a", "b", "c", null);
         } catch (IllegalArgumentException ex) {
             fail("IllegalArgumentException should not have been thrown");
         }

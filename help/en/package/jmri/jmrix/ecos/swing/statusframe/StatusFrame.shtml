@@ -26,8 +26,8 @@
 
       <p>The ECoS Info tool displays version information from the
       ECoS control unit. It's a good way to check that the
-      communications is working. 
-      <!--#include virtual="/Footer" --></p>
+      communications is working.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

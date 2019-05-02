@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                       -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -101,19 +100,19 @@
       </variable>
       <variable CV="122" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo1_Address 1" default="30">
         <decVal min="0" max="127"/>
-        <label>Stopposition red Servo_1 Address 1</label>
+        <label>Stop position red Servo_1 Address 1</label>
       </variable>
       <variable CV="123" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo1_Address 1" default="95">
         <decVal min="0" max="127"/>
-        <label>Stopposition green Servo_1 Address 1</label>
+        <label>Stop position green Servo_1 Address 1</label>
       </variable>
       <variable CV="162" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo1_Address 2" default="30">
         <decVal min="0" max="127"/>
-        <label>Stopposition red Servo_1 Address 2</label>
+        <label>Stop position red Servo_1 Address 2</label>
       </variable>
       <variable CV="163" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo1_Address 2" default="95">
         <decVal min="0" max="127"/>
-        <label>Stopposition green Servo_1 Address 2</label>
+        <label>Stop position green Servo_1 Address 2</label>
       </variable>
       <variable CV="134" comment="A value of 1 will increase each 1 millisecond by 1" item="Speed_servo2" default="40">
         <decVal min="1" max="127"/>
@@ -121,19 +120,19 @@
       </variable>
       <variable CV="132" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo2_Address 1" default="30">
         <decVal min="1" max="127"/>
-        <label>Stopposition red Servo_2 Address 1</label>
+        <label>Stop position red Servo_2 Address 1</label>
       </variable>
       <variable CV="133" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo2_Address 1" default="95">
         <decVal min="1" max="127"/>
-        <label>Stopposition green Servo_2 Address 1</label>
+        <label>Stop position green Servo_2 Address 1</label>
       </variable>
       <variable CV="172" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo2_Address 2" default="30">
         <decVal min="1" max="127"/>
-        <label>Stopposition red Servo_2 Address 2</label>
+        <label>Stop position red Servo_2 Address 2</label>
       </variable>
       <variable CV="173" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo2_Address 2" default="95">
         <decVal min="1" max="127"/>
-        <label>Stopposition green Servo_2 Address 2</label>
+        <label>Stop position green Servo_2 Address 2</label>
       </variable>
       <variable CV="144" comment="A value of 1 will increase each 1 millisecond by 1" item="Speed_servo3" default="40">
         <decVal min="1" max="127"/>
@@ -141,19 +140,19 @@
       </variable>
       <variable CV="142" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo3_Address 1" default="30">
         <decVal min="1" max="127"/>
-        <label>Stopposition red Servo_3 Address 1</label>
+        <label>Stop position red Servo_3 Address 1</label>
       </variable>
       <variable CV="143" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo3_Address 1" default="95">
         <decVal min="1" max="127"/>
-        <label>Stopposition green Servo_3 Address 1</label>
+        <label>Stop position green Servo_3 Address 1</label>
       </variable>
-      <variable CV="182" comment="The value between 0 to 127 will increase the Stopposition" item="Stop_red_servo3_Address 2" default="30">
+      <variable CV="182" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo3_Address 2" default="30">
         <decVal min="1" max="127"/>
-        <label>Stopposition red Servo_3 Address 2</label>
+        <label>Stop position red Servo_3 Address 2</label>
       </variable>
       <variable CV="183" comment="The value between 0 to 127 will increase theStop position" item="Stop_green_servo3_Address 2" default="95">
         <decVal min="1" max="127"/>
-        <label>Stopposition green Servo_3 Address 2</label>
+        <label>Stop position green Servo_3 Address 2</label>
       </variable>
       <variable CV="154" comment="A value of 1 will increase each 1 millisecond by 1" item="Speed_servo4" default="40">
         <decVal min="1" max="127"/>
@@ -161,25 +160,25 @@
       </variable>
       <variable CV="152" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo4_Address 1" default="30">
         <decVal min="1" max="127"/>
-        <label>Stopposition red Servo_4 Address 1</label>
+        <label>Stop position red Servo_4 Address 1</label>
       </variable>
-      <variable CV="153" comment="The value between 0 to 127 will increase theStopposition" item="Stop_green_servo4_Address 1" default="95">
+      <variable CV="153" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo4_Address 1" default="95">
         <decVal min="1" max="127"/>
-        <label>Stopposition green Servo_4 Address 1</label>
+        <label>Stop position green Servo_4 Address 1</label>
       </variable>
-      <variable CV="192" comment="The value between 0 to 127 will increase theStop position" item="Stop_red_servo4_Address 2" default="30">
+      <variable CV="192" comment="The value between 0 to 127 will increase the Stop position" item="Stop_red_servo4_Address 2" default="30">
         <decVal min="1" max="127"/>
-        <label>Stopposition red Servo_4 Address 2</label>
+        <label>Stop position red Servo_4 Address 2</label>
       </variable>
-      <variable CV="193" comment="The value between 0 to 127 will increase theStop position" item="Stop_green_servo4_Address 2" default="95">
+      <variable CV="193" comment="The value between 0 to 127 will increase the Stop position" item="Stop_green_servo4_Address 2" default="95">
         <decVal min="1" max="127"/>
-        <label>Stopposition green Servo_4 Address 2</label>
+        <label>Stop position green Servo_4 Address 2</label>
       </variable>
       <variable CV="125" comment="The value between 0 to 127 will increase Bouncing Distance" item="Bounce_Amplitude_red_servo1" default="0">
         <decVal max="127"/>
         <label>Bounce Amplitude red  Servo_1</label>
       </variable>
-      <variable CV="126" comment="The value between 0 to 127     will increase Bouncing Duration" item="Bounce_Duration_red_servo1" default="0">
+      <variable CV="126" comment="The value between 0 to 127 will increase Bouncing Duration" item="Bounce_Duration_red_servo1" default="0">
         <decVal max="127"/>
         <label>Bounce Duration red  Servo_1</label>
       </variable>

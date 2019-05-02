@@ -21,7 +21,7 @@ import purejavacomm.UnsupportedCommOperationException;
 /**
  * Provide access to LocoNet via a MS100 attached to a serial comm port.
  * Normally controlled by the MS100Frame class.
- * <P>
+ * <p>
  * By default, this attempts to use 16600 baud. If that fails, it falls back to
  * 16457 baud. Neither the baud rate configuration nor the "option 1" option are
  * used.
@@ -35,13 +35,14 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
+                new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
+
     }
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
-    @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
@@ -50,7 +51,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -95,8 +96,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}",
+                        activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
@@ -114,8 +115,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -132,14 +132,14 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // create memo
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

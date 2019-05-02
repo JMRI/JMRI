@@ -1,5 +1,6 @@
 package jmri;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author John Harper Copyright 2005
  *
  */
-public class TurnoutOperationManager {
+public class TurnoutOperationManager implements InstanceManagerAutoDefault {
 
     private final SortedMap<String, TurnoutOperation> turnoutOperations = new TreeMap<>();
     private List<TurnoutOperation> operationTypes = new LinkedList<>(); // array of the defining instances of each class, held in order of appearance
@@ -31,6 +32,13 @@ public class TurnoutOperationManager {
 
     private boolean initialized = false;
 
+    /** 
+     * Does deferred initialization.
+     * <p>
+     * This is deferred because it invokes
+     * loadOperationTypes, which gets the current turnout manager, often the
+     * proxy manager, which in turn can invoke loadOperationTypes again. 
+     */
     private void initialize() {
         if (!initialized) {
             initialized = true;
@@ -135,35 +143,12 @@ public class TurnoutOperationManager {
      * Get the default instance.
      *
      * @return the default instance, created if necessary
+     * @deprecated since 4.11.4; get from the InstanceManager instead
      */
+    @Deprecated // since 4.11.4
     public synchronized static @Nonnull
     TurnoutOperationManager getDefault() {
-        return InstanceManager.getOptionalDefault(TurnoutOperationManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(TurnoutOperationManager.class, new TurnoutOperationManager());
-        });
-    }
-
-    /*
-     * Did not do most of the actions described below, so not sure comments are
-     * in wrong place.
-     */
-    /**
-     * get the one-and-only instance of this class, if necessary creating it
-     * first. At creation also preload the known TurnoutOperator subclasses
-     * (done here to avoid constructor ordering problems).
-     *
-     * There's a threading problem here, because this invokes
-     * loadOperationTypes, which gets the current turnout manager, often the
-     * proxy manager, which in turn invokes loadOperationTypes again. This is
-     * bad.
-     *
-     * @return the TurnoutOperationManager
-     * @deprecated since 4.7.1; use {@link #getDefault()} instead
-     */
-    @Deprecated
-    @Nonnull
-    public synchronized static TurnoutOperationManager getInstance() {
-        return getDefault();
+        return InstanceManager.getDefault(TurnoutOperationManager.class);
     }
 
     /**
@@ -192,9 +177,9 @@ public class TurnoutOperationManager {
                     // creating the instance invokes the TurnoutOperation ctor,
                     // which calls addOperation here, which adds it to the 
                     // turnoutOperations map.
-                    thisClass.newInstance();
+                    thisClass.getDeclaredConstructor().newInstance();
                     log.debug("loaded TurnoutOperation class {}", thisClassName);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e1) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e1) {
                     log.error("during loadOperationTypes", e1);
                 }
             }

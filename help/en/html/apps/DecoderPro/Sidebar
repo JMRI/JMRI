@@ -32,13 +32,13 @@
 
 <dt><h3>Other Apps</h3></dt>
 <dd>
-		<ul>
+	<ul>
 		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
 		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
 		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
-    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+        <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
-		</ul>
+	</ul>
 </dd>
 
 <dt><h3><a href="../../tools/index.shtml">Tools</a></h3></dt>
@@ -62,6 +62,7 @@ layout.
 		<li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>
 		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
 		<li><dfn><a href="../../tools/IdTags.shtml">ID Tags</a></dfn>
+		<li><dfn><a href="../../tools/TimeTable.shtml">Timetable</a></dfn>
 		
 		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
 	</ul>
@@ -74,6 +75,7 @@ to running trains in the background.
     <ul>
     <li><dfn><a href="../../tools/signaling/index.shtml">Signaling</a></dfn>
     <li><dfn><a href="../../tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+    <li><dfn><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dfn>
     <li><dfn><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
     <li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
     <li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>

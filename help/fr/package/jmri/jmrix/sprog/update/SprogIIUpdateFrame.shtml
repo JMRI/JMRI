@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
 
   <title>JMRI: SPROG II Update Tool</title><!-- Style -->
@@ -25,13 +24,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: Outil de Mise &agrave; Jour SPROG II</h2>L'Outil de
-      Mise &agrave; Jour SPROG IIvous permets de charger un nouveau
-      logiciel dans SPROG II.
+      <h2>JMRI: Outil de Mise &agrave; Jour SPROG II</h2>
+      <p>L'Outil de Mise &agrave; Jour SPROG II vous permets
+      de charger un nouveau logiciel dans SPROG II.</p>
 
-      <p>ceci est la page d'aide
-      package/jmri/jmrix/sprog/update/SprogIIUpdateFrame 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

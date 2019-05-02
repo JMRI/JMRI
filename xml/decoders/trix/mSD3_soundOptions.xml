@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Sound Options CVs for Märklin mSD/3 decoders                           -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2018</year>
+      <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Alain</firstname>
+          <surname>Le Marchand</surname>
+        </personname>
+      </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2018-03-18</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>Creation</revremark>
+      </revision>
+    </revhistory>
+    <variable CV="61" item="Sound Group 1 Option 4" default="30">
+        <decVal/>
+        <label>Min. Random Sound Interval</label>
+        <label xml:lang="de">Zufallssound Intervall Min.</label>
+        <label xml:lang="fr">Intervalle sonore aléatoire min.</label>
+    </variable>
+    <variable CV="62" item="Sound Group 1 Option 5" default="50">
+        <decVal/>
+        <label>Max. Random Sound Interval</label>
+        <label xml:lang="de">Zufallssound Intervall Max.</label>
+        <label xml:lang="fr">Intervalle sonore aléatoire Max.</label>
+    </variable>
+</variables>

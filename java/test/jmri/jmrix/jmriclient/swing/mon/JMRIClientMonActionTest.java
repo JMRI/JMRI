@@ -15,26 +15,26 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class JMRIClientMonActionTest {
-
-    @Test
-    public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JMRIClientMonAction action = new JMRIClientMonAction("IEEE 802.15.4 test Action", new JMRIClientSystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
-    }
+	
+    private JMRIClientSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JMRIClientMonAction action = new JMRIClientMonAction( new JMRIClientSystemConnectionMemo());
+        JMRIClientMonAction action = new JMRIClientMonAction();
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new JMRIClientSystemConnectionMemo();
+        jmri.InstanceManager.setDefault(JMRIClientSystemConnectionMemo.class,memo);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+	memo = null;
+    	JUnitUtil.tearDown();
+    }
 }

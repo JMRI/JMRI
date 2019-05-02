@@ -11,6 +11,7 @@ import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,7 +169,7 @@ public class AutoTurnouts {
             // this is an error but is it? It only happens when system is under stress
             // which would point to a threading issue.
             try {
-            log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block and Section mismatch",
+            log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block[{}] and Section[{}] mismatch",
                     at.getActiveTrainName(),at.isAllocationReversed(),s.getUserName(),
                     at.getStartBlock().getUserName(),at.getEndBlock().getUserName());
             } catch (Exception ex ) {
@@ -192,14 +193,16 @@ public class AutoTurnouts {
                 nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
                 nextBlockSeqNum = curBlockSeqNum - 1;
             }
-            if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
-                log.error("Error in block sequence numbers when setting/checking turnouts");
+            if ((nextBlock == null &&
+                    ((!at.isAllocationReversed() && curBlock != at.getEndBlock()) ||
+                            (at.isAllocationReversed() && curBlock != at.getStartBlock())))) {
+                log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",
+                        curBlock.getUserName());
                 return false;
             }
         }
 
-        List<LayoutTurnout> turnoutList = new ArrayList<>();
-        List<Integer> settingsList = new ArrayList<>();
+        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = new ArrayList<>();
         // get turnouts by Block
         boolean turnoutsOK = true;
         while (curBlock != null) {
@@ -209,14 +212,13 @@ public class AutoTurnouts {
              */
             if (prevBlock != null) {
                 turnoutList = ct.getTurnoutList(curBlock, prevBlock, nextBlock);
-                settingsList = ct.getTurnoutSettingList();
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
-                Turnout to = turnoutList.get(i).getTurnout();
-                int setting = settingsList.get(i);
-                if (turnoutList.get(i) instanceof LayoutSlip) {
-                    setting = ((LayoutSlip) turnoutList.get(i)).getTurnoutState(settingsList.get(i));
+                Turnout to = turnoutList.get(i).getObject().getTurnout();
+                int setting = turnoutList.get(i).getExpectedState();
+                if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
+                    setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutState(turnoutList.get(i).getExpectedState());
                 }
                 // check or ignore current setting based on flag, set in Options
                 if (!trustKnownTurnouts) {
@@ -252,10 +254,10 @@ public class AutoTurnouts {
                                 (setting == Turnout.CLOSED ? closedText : thrownText));
                     }
                 }
-                if (turnoutList.get(i) instanceof LayoutSlip) {
+                if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
                     //Look at the state of the second turnout in the slip
-                    setting = ((LayoutSlip) turnoutList.get(i)).getTurnoutBState(settingsList.get(i));
-                    to = ((LayoutSlip) turnoutList.get(i)).getTurnoutB();
+                    setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutBState(turnoutList.get(i).getExpectedState());
+                    to = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutB();
                     if (!trustKnownTurnouts) {
                         to.setCommandedState(setting);
                     } else if (to.getKnownState() != setting) {

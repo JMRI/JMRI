@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154;
 
 /**
- * Contains the data payload of a serial reply packet. Note that its _only_ the
+ * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
@@ -273,10 +273,6 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             chksum ^= getElement(loop + 1);
         }
         return ((chksum & 0xFFFF) == ((getElement(len - 2) << 8) + getElement(len - 1)));
-    }
-
-    public String toMonitorString() {
-        return toString();
     }
 
 }

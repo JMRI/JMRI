@@ -85,7 +85,8 @@
       prototype.<br>
 
       <h2>Roster Function Labels</h2><img src=
-      "images/DecProFunctionLabels.png" alt=""><br>
+      "images/DecProFunctionLabels.png" alt="">
+      <p>
       It is also recommended to fill in the Function Labels entries
       in the Function Labels pane in DecoderPro (also accessible
       from Advanced mode). These entries will be used by the
@@ -106,7 +107,9 @@
       "BasicThrottleWindow.shtml">Basic Throttle Window
       description</a>.<br>
       You might also want to have a look at Jynstruments for
-      advanced function buttons. <!--#include virtual="/Footer" -->
+      advanced function buttons.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

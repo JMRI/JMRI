@@ -8,6 +8,7 @@
       <text>Enabled Protocols</text>
       <text xml:lang="it">Protocolli Abilitati</text>
       <text xml:lang="de">Protokolle Aktivieren</text>
+      <text xml:lang="ca">Protocols Habilitats</text>
     </label>
     <label>
       <text> </text>
@@ -24,6 +25,7 @@
     <label>
       <text>Memory Settings</text>
       <text xml:lang="de">Speichereinstellungen</text>
+      <text xml:lang="ca">Propietats de memòria</text>
     </label>
     <label>
       <text> </text>
@@ -38,6 +40,7 @@
       <text>Command Station Compatibility</text>
       <text xml:lang="it">Centrali Compatibili</text>
       <text xml:lang="de">Steuerungskompatibilität</text>
+      <text xml:lang="ca">Compatibilitat amb la central</text>
     </label>
     <label>
       <text> </text>
@@ -54,6 +57,7 @@
       <text>RailCom® Settings</text>
       <text xml:lang="it">RailCom®</text>
       <text xml:lang="de">RailCom®</text>
+      <text xml:lang="ca">Configuració Railcom</text>
     </label>
     <label>
       <text> </text>
@@ -70,6 +74,7 @@
       <text>Speed Step Mode</text>
       <text xml:lang="it">Modalità Passaggio Velocità</text>
       <text xml:lang="de">Fahrstufenmodus</text>
+      <text xml:lang="ca">Mode de Passos de Velocitat</text>
     </label>
     <label>
       <text> </text>
@@ -94,6 +99,7 @@
     <label>
       <text>Allowed Brake Sections</text>
       <text xml:lang="de">Bremsstrecken</text>
+      <text xml:lang="ca">Seccions de Frenada Habilitades</text>
     </label>
     <label>
       <text> </text>
@@ -118,6 +124,7 @@
     <label>
       <text>Constant Brake Distance</text>
       <text xml:lang="de">Konstanter Bremsweg</text>
+      <text xml:lang="ca">Distància de frenada constant</text>
     </label>
     <label>
       <text> </text>
@@ -126,6 +133,20 @@
     <display item="ESU V4 Advanced Constant Brake Option 3"/>
     <display item="ESU V4 Advanced Constant Brake Option 1"/>
     <display item="ESU V4 Advanced Constant Brake Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Dynamic Brake Settings</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Dynamic Brake Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Dynamic Brake Slider 1" layout="above" format="hslider"/>
+    </row>
     <label>
       <text> </text>
     </label>
@@ -147,6 +168,7 @@
     <label>
       <text>Preserve Direction</text>
       <text xml:lang="de">Fahrtrichtung</text>
+      <text xml:lang="ca">Preserva el sentit</text>
     </label>
     <label>
       <text> </text>
@@ -159,6 +181,7 @@
     <label>
       <text>Starting Delay</text>
       <text xml:lang="de">Verzögerter Start</text>
+      <text xml:lang="ca">Inici del retard</text>
     </label>
     <label>
       <text> </text>
@@ -178,6 +201,7 @@
     <label>
       <text>Stop Behaviour</text>
       <text xml:lang="de">Stop Verhalten</text>
+      <text xml:lang="ca">Comportament de parada</text>
     </label>
     <label>
       <text> </text>

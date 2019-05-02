@@ -14,11 +14,16 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMessage implements Message {
 
     /**
-     * Creates a new instance of AbstractMessage.
+     * Create a new instance of AbstractMessage.
      */
     public AbstractMessage() {
     }
 
+    /**
+     * Create a new instance of AbstractMessage of a given byte size.
+     *
+     * @param n number of elements
+     */
     public AbstractMessage(int n) {
         if (n < 1) {
             log.error("invalid length in call to ctor");
@@ -80,7 +85,7 @@ public abstract class AbstractMessage implements Message {
             return false;
         }
         for(int i = 0;i<this.getNumDataElements();i++){
-            if(this.getElement(i)!=m.getElement(i)){
+            if(this.getElement(i) != m.getElement(i)){
                 return false;
             }
         }

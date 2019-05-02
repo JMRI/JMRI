@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
+<!-- Updated by Blorec Herv&#233; le 2013-09-09-->
 
 <html lang="fr">
 <head>
@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Utilisation XML</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -86,8 +86,8 @@
       avec un &eacute;diteur de texte, mais un &eacute;diteur
       d&eacute;di&eacute; peut aider beaucoup. Nous avons une liste
       <a href="XmlEditors.shtml">des &eacute;diteurs</a> , ainsi
-      que quelques commentaires sur chacun d'eux 
-      <!--#include virtual="/Footer" --></p>
+      que quelques commentaires sur chacun d'eux .</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

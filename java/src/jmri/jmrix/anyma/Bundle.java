@@ -18,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * Convention is to provide a subclass of this name in each package, working off
  * the local resource bundle name.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class Bundle extends jmri.jmrix.Bundle {
@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrix.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
 
     /**
@@ -53,7 +53,7 @@ public class Bundle extends jmri.jmrix.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key) {
-        return b.handleGetMessage(locale, key);
+        return getBundle().handleGetMessage(locale, key);
     }
 
     /**
@@ -70,7 +70,7 @@ public class Bundle extends jmri.jmrix.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Bundle extends jmri.jmrix.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
 
     private final static Bundle b = new Bundle();
@@ -99,8 +99,7 @@ public class Bundle extends jmri.jmrix.Bundle {
         return name;
     }
 
-    @Override
-    protected jmri.Bundle getBundle() {
+    protected static jmri.Bundle getBundle() {
         return b;
     }
 

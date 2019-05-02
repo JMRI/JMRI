@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class RfidPanelTest {
         
-   private RfidSystemConnectionMemo memo = null;
+   // private RfidSystemConnectionMemo memo = null;
 
    @Test
    public void MemoConstructorTest(){
@@ -33,12 +33,12 @@ public class RfidPanelTest {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        memo = new RfidSystemConnectionMemo();
+        // memo = new RfidSystemConnectionMemo();
    }
 
    @After
    public void tearDown(){
-        memo=null;
+        // memo=null;
         JUnitUtil.tearDown();
    }
 

@@ -8,9 +8,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars CarManager class Last manually
@@ -32,22 +31,24 @@ public class CarManagerTest extends OperationsTestCase {
     private Location l2;
     private Location l3;
 
+    @Test
     public void testCTor() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         Assert.assertNotNull("Manager Creation", manager);
     }
 
+    @Test
     public void testAddCars() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<Car> carList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, carList.size());
-        c1 = manager.newCar("CP", "1");
-        c2 = manager.newCar("ACL", "3");
-        c3 = manager.newCar("CP", "3");
-        c4 = manager.newCar("CP", "3-1");
-        c5 = manager.newCar("PC", "2");
-        c6 = manager.newCar("AA", "1");
+        c1 = manager.newRS("CP", "1");
+        c2 = manager.newRS("ACL", "3");
+        c3 = manager.newRS("CP", "3");
+        c4 = manager.newRS("CP", "3-1");
+        c5 = manager.newRS("PC", "2");
+        c6 = manager.newRS("AA", "1");
         carList = manager.getByIdList();
         Assert.assertEquals("Finishing Number of Cars", 6, carList.size());
         manager.dispose();
@@ -55,6 +56,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("After dispose Number of Cars", 0, carList.size());
     }
 
+    @Test
     public void testListCarsById() {
         resetCarManager();
 
@@ -72,6 +74,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by id", c5, carList.get(5));
     }
 
+    @Test
     public void testListCarsByBuildDate() {
         resetCarManager();
 
@@ -96,6 +99,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by built", c1, carList.get(5));
     }
 
+    @Test
     public void testListCarsByMoves() {
         resetCarManager();
 
@@ -120,6 +124,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by move", c3, carList.get(5));
     }
 
+    @Test
     public void testListCarsByOwner() {
         resetCarManager();
 
@@ -136,6 +141,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by owner", c1, carList.get(5));
     }
 
+    @Test
     public void testListCarsByColor() {
         resetCarManager();
 
@@ -159,6 +165,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by color", c3, carList.get(5));
     }
 
+    @Test
     public void testListCarsByRoadName() {
         resetCarManager();
 
@@ -175,6 +182,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by road name", c5, carList.get(5));
     }
 
+    @Test
     public void testListCarsByLoad() {
         resetCarManager();
 
@@ -191,6 +199,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by load", c3, carList.get(5));
     }
 
+    @Test
     public void testListCarsByKernel() {
         resetCarManager();
 
@@ -222,6 +231,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by kernel", c1, carList.get(5));
     }
 
+    @Test
     public void testListCarsByLocation() {
         resetCarManager();
 
@@ -237,6 +247,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by location", c3, carList.get(5));
     }
 
+    @Test
     public void testListCarsByDestination() {
         resetCarManager();
 
@@ -253,6 +264,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by destination", c4, carList.get(5));
     }
 
+    @Test
     public void testListCarsByTrain() {
         resetCarManager();
 
@@ -289,6 +301,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by train", c1, carList.get(5));
     }
 
+    @Test
     public void testListCarsBySpecifiedTrain() {
         resetCarManager();
 
@@ -324,6 +337,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("3rd car in list by t3", c3, carList.get(2));
     }
 
+    @Test
     public void testListCarsByTrainDestination() {
         resetCarManager();
 
@@ -359,6 +373,7 @@ public class CarManagerTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testListCarsAvailableByTrain() {
         resetCarManager();
 
@@ -422,6 +437,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("3rd car in list available for t3", c3, carList.get(2));
     }
 
+    @Test
     public void testListCarsByNumber() {
         resetCarManager();
 
@@ -438,6 +454,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by number", c4, carList.get(5));
     }
 
+    @Test
     public void testGetCarByRoadNumber() {
         resetCarManager();
 
@@ -452,6 +469,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("find c6 by road and number", c6, manager.getByRoadAndNumber("AA", "1"));
     }
 
+    @Test
     public void testListCarsByRfid() {
         resetCarManager();
 
@@ -468,6 +486,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by rfid", c1, carList.get(5));
     }
 
+    @Test
     public void testGetCarByRfid() {
         resetCarManager();
 
@@ -482,6 +501,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
     }
 
+    @Test
     public void testListCarsByType() {
         resetCarManager();
 
@@ -506,6 +526,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by type", c1, carList.get(5));
     }
 
+    @Test
     public void testListCarsByLastMovedDate() {
         resetCarManager();
 
@@ -555,6 +576,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
     }
 
+    @Test
     public void testSortListedCarsByLastMovedDate() {
         resetCarManager();
 
@@ -604,6 +626,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
     }
 
+    @Test
     public void testListCabooseRoads() {
         resetCarManager();
 
@@ -616,6 +639,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("2nd road", "CP", cabooseRoads.get(1));
     }
 
+    @Test
     public void testListFREDRoads() {
         resetCarManager();
 
@@ -627,6 +651,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("1st road", "PC", fredRoads.get(0));
     }
 
+    @Test
     public void testListCarsAtLocation() {
         resetCarManager();
 
@@ -638,6 +663,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertFalse("c3 not in car list at location", carList.contains(c3));
     }
 
+    @Test
     public void testListCarsOnTrack() {
         resetCarManager();
 
@@ -655,12 +681,12 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        c1 = manager.newCar("CP", "1");
-        c2 = manager.newCar("ACL", "3");
-        c3 = manager.newCar("CP", "3");
-        c4 = manager.newCar("CP", "3-1");
-        c5 = manager.newCar("PC", "2");
-        c6 = manager.newCar("AA", "1");
+        c1 = manager.newRS("CP", "1");
+        c2 = manager.newRS("ACL", "3");
+        c3 = manager.newRS("CP", "3");
+        c4 = manager.newRS("CP", "3-1");
+        c5 = manager.newRS("PC", "2");
+        c6 = manager.newRS("AA", "1");
 
         //setup the cars
         c1.setTypeName("Boxcar");
@@ -768,33 +794,5 @@ public class CarManagerTest extends OperationsTestCase {
         // car with FRED
         c5.setFred(true);
 
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public CarManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarManagerTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 }

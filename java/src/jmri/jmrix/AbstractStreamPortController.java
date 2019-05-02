@@ -25,13 +25,17 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
         output = out;
     }
 
-    // returns the InputStream from the port
+    public AbstractStreamPortController(SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
+
+    // return the InputStream from the port
     @Override
     public DataInputStream getInputStream() {
         return input;
     }
 
-    // returns the outputStream to the port
+    // return the outputStream to the port
     @Override
     public DataOutputStream getOutputStream() {
         return output;
@@ -52,6 +56,12 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
     public void connect() {
     }
 
+    public void connect(AbstractPortController port) {
+        _name = port.getCurrentPortName();
+        input = port.getInputStream();
+        output = port.getOutputStream();
+    }
+
     @Override
     public void dispose() {
         super.dispose();
@@ -60,4 +70,5 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
     }
 
     // static private final Logger log = LoggerFactory.getLogger(AbstractStreamPortController.class);
+
 }

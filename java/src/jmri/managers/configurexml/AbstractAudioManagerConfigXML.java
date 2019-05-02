@@ -60,8 +60,9 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(audio);
         AudioManager am = (AudioManager) o;
         if (am != null) {
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
             java.util.Iterator<String> iter
-                    = am.getSystemNameList().iterator();
+                    = am.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) {
@@ -80,7 +81,9 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            for (String sname : am.getSystemNameList()) {
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
+            List<String> t = am.getSystemNameAddedOrderList();
+            for (String sname : t) {
                 if (log.isDebugEnabled()) {
                     log.debug("Check if " + sname + " is a VSD object");
                 }
@@ -249,10 +252,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce.setAttribute("out", "" + as.getFadeOut());
                     e.addContent(ce);
 
-                    ce = new Element("dopplerfactor");
-                    ce.addContent("" + as.getDopplerFactor());
-                    e.addContent(ce);
-
                     ce = new Element("positionrelative");
                     ce.addContent("" + (as.isPositionRelative() ? "yes" : "no"));
                     e.addContent(ce);
@@ -287,7 +286,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      *
      * @param audio Element containing the Audio elements to load.
      */
-    @SuppressWarnings("unchecked")
     public void loadAudio(Element audio) {
 
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -439,10 +437,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     if ((value = ce.getAttributeValue("out")) != null) {
                         as.setFadeOut(Integer.parseInt(value));
                     }
-                }
-
-                if ((ce = e.getChild("dopplerfactor")) != null && ce.getValue().length() != 0) {
-                    as.setDopplerFactor(Float.parseFloat(ce.getValue()));
                 }
 
                 if ((ce = e.getChild("positionrelative")) != null) {

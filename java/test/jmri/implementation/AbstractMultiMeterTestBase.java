@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.MultiMeter;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -17,11 +18,15 @@ import org.junit.Test;
   */
 public abstract class AbstractMultiMeterTestBase {
 
-    // implementing classes must provide these abstract members:
-    //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp();    	// load mm with actual object; create scaffolds as needed
 
+    @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
+    public void tearDown(){
+       mm.dispose();
+       jmri.util.JUnitUtil.tearDown();
+    }
 
     protected MultiMeter mm = null;	// holds objects under test
 

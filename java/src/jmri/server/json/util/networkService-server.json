@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-networkService-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"networkService\"; may contain additional service-specific properties",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "mDNS name of service"
+        },
+        "port": {
+            "type": "integer",
+            "description": "Network port service is running on"
+        },
+        "type": {
+            "type": "string",
+            "description": "mDNS type of service"
+        },
+        "version": {
+            "type": "string",
+            "description": "JMRI complete version including build stamps"
+        },
+        "jmri": {
+            "type": "string",
+            "description": "JMRI simple version"
+        },
+        "node": {
+            "type": "string",
+            "description": "Name of JMRI node"
+        }
+    },
+    "additionalProperties": true,
+    "required": ["name", "port", "type", "version", "jmri", "node"]
+}

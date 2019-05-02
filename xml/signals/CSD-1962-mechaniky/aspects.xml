@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>ČSD 1962 mechanická návěstidla</name>
+  <date>1962</date>
+  <reference>Československé státní dráhy; ČSD D1 Návěstní předpisy Dopravní nakladatelství; 1960</reference>
+  <reference>Czechoslovak State Railways; D1 Signal Aspects Rules; Transport Publishing; 1960</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-12-28</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Test set</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+  
+<!-- ČSD -->
+
+    <aspect>
+      <name>Stůj</name>
+      <title>Stop</title>
+      <indication>Stop</indication>
+      <description>One red arm horizontal</description>
+      <description>One red light</description>
+      <reference>Aspect 1</reference>
+      <comment>Stůj</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Volno</name>
+      <title>Clear</title>
+      <indication>Proceed</indication>
+      <description>One red arm raised</description>
+      <description>Yellow disc flipped horizontally</description>
+      <description>One green light</description>
+      <reference>Aspect 2</reference>
+      <comment>Volno</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Výstraha</name>
+      <title>Caution</title>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <description>One red arm raised, yellow arm horizontal</description>
+      <description>Yellow disc</description>
+      <description>One yellow light</description>
+      <reference>Aspect 3</reference>
+      <comment>Výstraha</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Pomalu</name>
+      <title>Slowly</title>
+      <indication>Slowly, preparing to 40 km/h at next signal</indication>
+      <description>Yellow disc and red arm raised</description>
+      <description>One yellow light and lower one green light</description>
+      <reference>Aspect 7</reference>
+      <comment>Pomalu, u hlavního návěstidla rychlost 40 km/h</comment>
+      <speed>Normal</speed>
+      <speed2>40 km/h</speed2>
+      <route>Normal</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Odjezdové návěstidlo dovoluje jízdu</name>
+      <title>Exit signal mast permit departure</title>
+      <indication>Exit signal mast permit departure, speed depend on main or diverging rail</indication>
+      <description>One white light slowly flashing</description>
+      <reference>Aspect 201</reference>
+      <comment>Odjezdové návěstidlo dovoluje jízdu</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Vjezd odbočkou</name>
+      <title>Slowly 40 km/h proceed preparing to stop at next signal</title>
+      <indication>Proceed slowly 40 km/h and preparing to stop at next signal</indication>
+      <description>Two red arm raised, one yellow arm horizontal</description>
+      <description>Two yellow lights</description>
+      <description>Two red arm raised</description>
+      <description>Two green lights</description>
+      <reference>Aspect 23</reference>
+      <comment>Vjezd odbočkou, rychlost 40 km/h</comment>
+      <speed>40 km/h</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Uzavření koleje zrušeno</name>
+      <title>Exit signal mast permit departure or shunting allowed</title>
+      <indication>Exit signal mast permit departure, speed depend on main or diverging rail, shunting allowed</indication>
+      <description>Black raised banner in white disc</description>
+      <reference>Aspect 36</reference>
+      <comment>Odjezdové návěstidlo dovoluje jízdu</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stůj, kolej uzavřena</name>
+      <title>Stop with blue</title>
+      <indication>Stop for train and shunting</indication>
+      <description>Black horizontal banner in white disc</description>
+      <reference>Aspect 35</reference>
+      <comment>Stůj</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Posun zakázán</name>
+      <title>Shunting forbidden</title>
+      <indication>Shunting not allowed</indication>
+      <description>Blue square</description>
+      <description>One blue light</description>
+      <reference>Aspect 105</reference>
+      <comment>Posun zakázán</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>27</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Posun dovolen</name>
+      <title>Shunting allowed</title>
+      <indication>Shunting allowed</indication>
+      <description>Blue square flipped horizontally</description>
+      <description>One white light</description>
+      <reference>Aspect 106</reference>
+      <comment>Posun dovolen</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>28</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Opatrně na přivolávací návěst</name>
+      <title>Calling-on signal</title>
+      <indication>Proceed slow, being prepared to stop</indication>
+      <description>Three white light arranged to triangl</description>
+      <reference>Aspect 203</reference>
+      <comment>Opatrně na přivolávací návěst</comment>
+      <speed>Slowly</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+
+  </aspects>
+
+  <imagetypes>
+	<imagetype type="prototype"/>
+	
+        <imagetype type="AŽD b"/>
+	
+        <imagetype type="ESP b"/>
+	
+  </imagetypes>
+
+  <appearancefiles>
+
+    <appearancefile href="appearance-entry_auxiliary.xml"/>
+    <appearancefile href="appearance-entry_distant_auxiliary.xml"/>
+    
+    <appearancefile href="appearance-entry.xml"/>
+    <appearancefile href="appearance-entry_distant.xml"/>
+    
+
+    <appearancefile href="appearance-exit.xml"/>
+        
+    <appearancefile href="appearance-block.xml"/>
+    <appearancefile href="appearance-block_distant.xml"/>
+    
+    <appearancefile href="appearance-shunting.xml"/>
+        
+    <appearancefile href="appearance-waiting.xml"/>
+        
+    <appearancefile href="appearance-embedded.xml"/>
+    
+    <appearancefile href="appearance-protection.xml"/>
+      
+    <appearancefile href="appearance-test.xml"/>
+
+  </appearancefiles>
+
+</aspecttable>

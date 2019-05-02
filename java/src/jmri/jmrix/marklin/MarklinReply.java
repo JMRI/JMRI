@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 /**
  * Carries the reply to an MarklinMessage.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Kevin Dickerson Copyright (C) 2007
@@ -64,18 +63,25 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Get a hex string representation of this MarklinReply.
-     *
-     * @return the hex string
+     * {@inheritDoc}
      */
-    public String toHexString() {
-
+    @Override
+    public String toString(){
         StringBuilder buf = new StringBuilder();
         buf.append("0x").append(Integer.toHexString(_dataChars[0]));
         for (int i = 1; i < _nDataChars; i++) {
             buf.append(", 0x").append(Integer.toHexString(_dataChars[i]));
         }
         return buf.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toMonitorString(){
+	    // eventually, the MarklinMon class should probably be integrated here.
+	    return jmri.jmrix.marklin.swing.monitor.MarklinMon.displayReply(this);
     }
 
     public boolean isResponse() {

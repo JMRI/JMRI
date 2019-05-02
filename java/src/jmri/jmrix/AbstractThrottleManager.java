@@ -18,11 +18,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author      Steve Rawlinson Copyright (C) 2016
+ * @author Steve Rawlinson Copyright (C) 2016
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 
@@ -115,11 +115,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * throttleListeners is indexed by the address, and contains as elements an
-     * ArrayList of WaitingThrottle objects, each of which has one ThrottleListner. 
-     * This allows more than one ThrottleLister to request a throttle at a time, 
+     * ArrayList of WaitingThrottle objects, each of which has one ThrottleListner.
+     * This allows more than one ThrottleLister to request a throttle at a time,
      * the entries in this Hashmap are only valid during the throttle setup process.
      */
-    private HashMap<LocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<LocoAddress, ArrayList<WaitingThrottle>>(5);
+    private final HashMap<LocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<>(5);
 
     static class WaitingThrottle {
 
@@ -155,7 +155,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * notification of changes to a throttle that hasn't yet been created/ The
      * entries in this Hashmap are only valid during the throttle setup process.
      */
-    private HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> listenerOnly = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
+    private final HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> listenerOnly = new HashMap<>(5);
 
     //This keeps a map of all the current active DCC loco Addresses that are in use.
     /**
@@ -163,11 +163,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * subclass of the throttle assigned to an address and the number of
      * requests and active users for this address.
      */
-    private Hashtable<DccLocoAddress, Addresses> addressThrottles = new Hashtable<DccLocoAddress, Addresses>();
+    private final Hashtable<DccLocoAddress, Addresses> addressThrottles = new Hashtable<>();
 
     /**
      * Does this DCC system allow a Throttle (e.g. an address) to be used by
      * only one user at a time?
+     * @return true or false
      */
     protected boolean singleUse() {
         return true;
@@ -219,7 +220,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         if (addressThrottles.containsKey(la)) {
             log.debug("A throttle to address " + la.getNumber() + " already exists, so will return that throttle");
             a.add(new WaitingThrottle(l, re));
-            notifyThrottleKnown(addressThrottles.get(la).getThrottle(), la, true);
+            notifyThrottleKnown(addressThrottles.get(la).getThrottle(), la);
             return throttleFree;
         } else {
             log.debug(la.getNumber() + " has not been created before");
@@ -277,12 +278,15 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Abstract member to actually do the work of configuring a new throttle,
      * usually via interaction with the DCC system
+     * @param a  address
+     * @param control  false  - read only.
      */
     abstract public void requestThrottleSetup(LocoAddress a, boolean control);
 
     /**
      * Abstract member to actually do the work of configuring a new throttle,
      * usually via interaction with the DCC system
+     * @param a  address.
      */
     public void requestThrottleSetup(LocoAddress a) {
         requestThrottleSetup(a, true);
@@ -314,10 +318,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    private void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
+    protected void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(la);
-            if (a == null) {
+            if (a == null || l == null ) {
                 return;
             }
             for (int i = 0; i < a.size(); i++) {
@@ -400,7 +404,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @param address desired LocoAddress 
+     * @param address desired LocoAddress
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
@@ -421,10 +425,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * notification message back to the requestor with a string reason as to why
      * the request has failed.
      *
-     * @param address The DCC Loco Address that the request failed on.
+     * @param address The Loco Address that the request failed on.
      * @param reason  A text string passed by the ThrottleManae as to why
      */
-    public void failedThrottleRequest(DccLocoAddress address, String reason) {
+    public void failedThrottleRequest(LocoAddress address, String reason) {
         ArrayList<WaitingThrottle> a = throttleListeners.get(address);
         if (a == null) {
             log.warn("failedThrottleRequest with zero-length listeners: " + address);
@@ -453,8 +457,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * <P>
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
+     * @param throttle  throttle object
+     * @param addr  address.
      */
-    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr, boolean suppressUseIncrements) {
+    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for " + addr);
         DccLocoAddress dla = (DccLocoAddress) addr;
         Addresses ads = null;
@@ -473,13 +479,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 ThrottleListener l = a.get(i).getListener();
                 log.debug("Notify listener " + (i + 1) + " of " + a.size() );
                 l.notifyThrottleFound(throttle);
-                if (suppressUseIncrements == false) {
-                    // this is a new throttle
-                   addressThrottles.get(dla).incrementUse();
-                } else {
-                    // requestThrottle() found an existing throttle, we're re-using that one
-                    log.debug("incrementUse suppressed");
-                }
+                addressThrottles.get(dla).incrementUse();
                 addressThrottles.get(dla).addListener(l);
                 if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
                     throttle.setRosterEntry(a.get(i).getRosterEntry());
@@ -502,10 +502,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             }
             listenerOnly.remove(dla);
         }
-    }
-    
-    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
-        notifyThrottleKnown(throttle, addr, false);
     }
 
     /**
@@ -605,12 +601,35 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     @Override
+    public boolean addressStillRequired(int address, boolean isLongAddress) {
+        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+        return addressStillRequired(la);
+    }
+
+    @Override
+    public boolean addressStillRequired(int address) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        return addressStillRequired(address, isLong);
+    }
+
+    @Override
+    public boolean addressStillRequired(BasicRosterEntry re) {
+        return addressStillRequired(re.getDccLocoAddress());
+    }
+
+    @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("AbstractThrottleManager.releaseThrottle: {}, {}", t, l);
         disposeThrottle(t, l);
     }
 
     @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("AbstractThrottleManager.disposeThrottle: {}, {}", t, l);
+
 //        if (!active) log.error("Dispose called when not active");  <-- might need to control this in the sub class
         DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
         if (addressReleased(la, l)) {
@@ -635,6 +654,33 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         releaseThrottle(t, l);
     }
 
+    @Override
+    public int getThrottleUsageCount(LocoAddress la) {
+        if (addressThrottles.containsKey( la)) {
+            return addressThrottles.get(la).getUseCount();
+        }
+        return 0;
+    }
+
+    @Override
+    public int getThrottleUsageCount(int address, boolean isLongAddress) {
+        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+        return getThrottleUsageCount(la);
+    }
+
+    @Override
+    public int getThrottleUsageCount(int address) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        return getThrottleUsageCount(address, isLong);
+    }
+    @Override
+    public int getThrottleUsageCount(BasicRosterEntry re) {
+        return getThrottleUsageCount(re.getDccLocoAddress());
+    }
+
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l) {
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).containsListener(l)) {
@@ -643,13 +689,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 addressThrottles.get(la).removeListener(l);
             } else if (l == null) {
                 log.debug("decrementUse called withOUT listener");
-                /*The release release has been called, but as no listener has 
+                /*The release release has been called, but as no listener has
                  been specified, we can only decrement the use flag*/
                 addressThrottles.get(la).decrementUse();
             }
         }
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).getUseCount() > 0) {
+                log.debug("addressReleased still has at least one listener");
                 return true;
             }
         }
@@ -742,7 +789,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * This subClass, keeps track of which loco address have been requested and
-     * by whom, it primarily uses a increment count to keep track of all the the
+     * by whom, it primarily uses a increment count to keep track of all the
      * Addresses in use as not all external code will have been refactored over
      * to use the new disposeThrottle.
      */
@@ -750,7 +797,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
         int useActiveCount = 0;
         DccThrottle throttle = null;
-        ArrayList<ThrottleListener> listeners = new ArrayList<ThrottleListener>();
+        ArrayList<ThrottleListener> listeners = new ArrayList<>();
         BasicRosterEntry re = null;
 
         protected Addresses(DccThrottle throttle) {
@@ -816,7 +863,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             // Check for duplication here
             if (listeners.contains(l))
                 log.debug("this Addresses listeners already includes listener" + l);
-            else 
+            else
                 listeners.add(l);
         }
 

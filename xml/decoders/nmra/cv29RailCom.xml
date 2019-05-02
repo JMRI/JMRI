@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2018-03-13</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Added Dutch translation</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -46,5 +52,6 @@
     <label xml:lang="de">RailCom</label>
     <label xml:lang="it">Abilita RailCom</label>
     <label xml:lang="cs">Zpřístupnit RailCom</label>
+    <label xml:lang="nl">RailCom</label>
   </variable>
 </variables>

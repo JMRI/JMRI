@@ -22,6 +22,7 @@
 
 import jmri
 import java
+import java.awt
 import javax.swing
 
 class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
@@ -32,14 +33,14 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
 
         self.status.text = "Getting throttle"
         Addr = int(self.Address.text)
-	if (Addr > 100) :
-	    long = True
-	else :
-	    long = False
+    if (Addr > 100) :
+        long = True
+    else :
+        long = False
         self.Throttle = self.getThrottle(Addr, long)
         if (self.Throttle == None) :
              print "Couldn't assign throttle!"
-	else :
+    else :
              self.status.text ="Crane Ready"
         return
 
@@ -53,7 +54,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.start()
         self.Address.enabled = False
         self.StartButton.enabled = False
-	self.ReleaseButton.enabled = True
+    self.ReleaseButton.enabled = True
         self.AccessoryButton.enabled = True
         self.RotateLeftButton.enabled = True
         self.RotateRightButton.enabled = True
@@ -62,13 +63,13 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.HookDownButton.enabled = True
         self.HookUpButton.enabled = True
         return
-	
+    
     def whenReleaseButtonClicked(self,event) :
-	self.Throttle.release()
+    self.Throttle.release(None)
         self.status = javax.swing.JLabel("Enter address & click start")
         self.Address.enabled = True
         self.StartButton.enabled = True
-	self.ReleaseButton.enabled = False
+    self.ReleaseButton.enabled = False
         self.AccessoryButton.enabled = False
         self.RotateLeftButton.enabled = False
         self.RotateRightButton.enabled = False
@@ -76,7 +77,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.BoomUpButton.enabled = False
         self.HookDownButton.enabled = False
         self.HookUpButton.enabled = False
-	return
+    return
     
     def whenAccessoryButtonClicked(self,event) :
         if (self.AccessoryButton.isSelected()) :
@@ -171,9 +172,9 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
     # create the buttons
         self.StartButton = javax.swing.JButton("Start")
         self.StartButton.actionPerformed = self.whenStartButtonClicked
-	
-	self.ReleaseButton = javax.swing.JButton("Release")
-	self.ReleaseButton.actionPerformed = self.whenReleaseButtonClicked
+    
+    self.ReleaseButton = javax.swing.JButton("Release")
+    self.ReleaseButton.actionPerformed = self.whenReleaseButtonClicked
 
         self.AccessoryButton = javax.swing.JToggleButton("Accessory")
         self.AccessoryButton.itemStateChanged = self.whenAccessoryButtonClicked
@@ -202,7 +203,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.HookUpButton.mousePressed = self.startHookUp
         self.HookUpButton.mouseReleased = self.endHookUp
     
-	self.ReleaseButton.enabled = False
+    self.ReleaseButton.enabled = False
         self.AccessoryButton.enabled = False
         self.RotateLeftButton.enabled = False
         self.RotateRightButton.enabled = False
@@ -215,35 +216,35 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.status = javax.swing.JLabel("Enter address & click start")
         
         # Put contents in frame and display
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         f.contentPane.add(temppanel)
-	
+    
         # put the text field on a line preceded by a label
         temppanel = javax.swing.JPanel()
         temppanel.add(javax.swing.JLabel("Address"))
         temppanel.add(self.Address)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())  
         temppanel.add(self.StartButton)
-	temppanel.add(self.ReleaseButton)
+    temppanel.add(self.ReleaseButton)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.RotateLeftButton)
         temppanel.add(self.RotateRightButton)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.BoomDownButton)
         temppanel.add(self.BoomUpButton)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.HookDownButton)
@@ -254,7 +255,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.AccessoryButton)
         f.contentPane.add(temppanel)
-	
+    
         f.contentPane.add(self.status)
         f.pack()
         f.show()

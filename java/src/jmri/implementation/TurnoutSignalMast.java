@@ -1,7 +1,6 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * A Signalmast that is built up using turnouts to control a specific
  * appearance. System name specifies the creation information:
  * <pre>
- * IF$tsm:basic:one-searchlight:(IT1)(IT2)
+ * IF$tsm:basic:one-searchlight(IT1)(IT2)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$tsm - defines signal masts of this type
@@ -51,6 +50,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
+
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
@@ -76,29 +77,41 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             log.warn("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
             throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
         }
-        if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
+        
+        
+        if (getLit()) { // If the signalmast is lit, then send the commands to change the aspect.
+            
+            // reset all states before setting this one, including this one
             if (resetPreviousStates) {
-                //Clear all the current states, this will result in the signalmast going blank for a very short time.
-                for (String appearances : turnouts.keySet()) {
-                    if (!isAspectDisabled(appearances)) {
+                // Clear all the current states, this will result in the signalmast going blank for a very short time.
+                for (Map.Entry<String, TurnoutAspect> entry : turnouts.entrySet()) {
+                    String appearance = entry.getKey();
+                    TurnoutAspect aspt = entry.getValue();
+                    if (!isAspectDisabled(appearance)) {
                         int setState = Turnout.CLOSED;
-                        if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+                        if (aspt.getTurnoutState() == Turnout.CLOSED) {
                             setState = Turnout.THROWN;
                         }
-                        if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
-                            turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                        if (aspt.getTurnout() != null ) {
+                            if (aspt.getTurnout().getKnownState() != setState) {
+                                aspt.getTurnout().setCommandedState(setState);
+                            }
+                        } else {
+                            log.error("Trying to reset \"" + appearance + "\" on signal mast \"" + getDisplayName() + "\" which has not been configured");
                         }
                     }
                 }
             }
-            Turnout turnToSet = turnouts.get(aspect).getTurnout();
-            int stateToSet = turnouts.get(aspect).getTurnoutState();
-            //Set the new signal mast state
-            if (turnToSet != null) {
+
+            // set the finel state if possible
+            if (turnouts.get(aspect) != null && turnouts.get(aspect).getTurnout() != null) {
+                Turnout turnToSet = turnouts.get(aspect).getTurnout();
+                int stateToSet = turnouts.get(aspect).getTurnoutState();
                 turnToSet.setCommandedState(stateToSet);
             } else {
-                log.error("Trying to set a state " + aspect + " on signal mast " + getDisplayName() + " which has not been configured");
+                log.error("Trying to set \"" + aspect + "\" on signal mast \"" + getDisplayName() + "\" which has not been configured");
             }
+            
         } else if (log.isDebugEnabled()) {
             log.debug("Mast set to unlit, will not send aspect change to hardware");
         }
@@ -138,23 +151,24 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             return;
         }
         if (newLit) {
-            //This will force the signalmast to send out the commands to set the aspect again.
+            // This will force the signalmast to send out the commands to set the aspect again.
             setAspect(getAspect());
         } else {
             if (unLit != null) {
+                // there is a specific unlit output defined
                 Turnout t = unLit.getTurnout();
                 if (t != null && t.getKnownState() != getUnLitTurnoutState()) {
                     t.setCommandedState(getUnLitTurnoutState());
                 }
-                // set all Heads to state
             } else {
-                for (String appearances : turnouts.keySet()) {
+                // turn everything off
+                for (TurnoutAspect aspect : turnouts.values()) {
                     int setState = Turnout.CLOSED;
-                    if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+                    if (aspect.getTurnoutState() == Turnout.CLOSED) {
                         setState = Turnout.THROWN;
                     }
-                    if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
-                        turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                    if (aspect.getTurnout().getKnownState() != setState) {
+                        aspect.getTurnout().setCommandedState(setState);
                     }
                 }
             }
@@ -211,9 +225,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
         TurnoutAspect(String turnoutName, int turnoutState) {
             if (turnoutName != null && !turnoutName.equals("")) {
-                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
                 state = turnoutState;
+                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+                if (turn == null) {  
+                    log.error("TurnoutAspect couldn't locate turnout {}", turnoutName);
+                    return;
+                }
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
             }
         }
 

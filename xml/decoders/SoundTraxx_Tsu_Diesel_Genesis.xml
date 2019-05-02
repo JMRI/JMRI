@@ -27,6 +27,7 @@
   <version author="Alain Le Marchand" version="12" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="13" lastUpdated="20150607"/>
   <version author="Alain Le Marchand" version="14" lastUpdated="20160103"/>
+  <version author="Alain Le Marchand" version="15" lastUpdated="20180103"/>
   <!-- This file contains the Tsunami definitions for Genesis OEM diesel locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 and add CV 53, 54, 57, 58 and add N scale models -->
@@ -39,10 +40,12 @@
   <!-- version 9	Add GP50 -->
   <!-- version 10	Added GP40-2 & fix include statement for CV153 to 160 -->
   <!-- version 11	Implement live function group exchange -->
-  <!-- version 12       Function labels according to Genesis mapping, Output names normalized with other TSU Diesel -->
-  <!-- version 13       Function labels updated for N-scale models -->
-  <!-- version 14       Add RTR SD40, based on CV read from real model, provided by Steve "Breezlys".-->
-  <!--                  No official documentation available, so some guessing. Considered that reverb not used as all default = 0 -->
+  <!-- version 12 Function labels according to Genesis mapping, Output names normalized with other TSU Diesel -->
+  <!-- version 13 Function labels updated for N-scale models -->
+  <!-- version 14 Add RTR SD40, based on CV read from real model, provided by Steve "Breezlys".-->
+  <!--            No official documentation available, so some guessing. Considered that reverb not used as all default = 0 -->
+  <!-- version 15 Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                                -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Genesis OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Athearn Genesis and RTR Tsunami diesel decoders">
@@ -1774,15 +1777,12 @@
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

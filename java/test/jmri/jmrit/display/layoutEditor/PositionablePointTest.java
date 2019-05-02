@@ -387,6 +387,7 @@ public class PositionablePointTest {
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
             le = new LayoutEditor();
         }
     }
@@ -396,12 +397,14 @@ public class PositionablePointTest {
         if (le != null) {
             JUnitUtil.dispose(le);
         }
+        le = null;
         JUnitUtil.tearDown();
     }
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

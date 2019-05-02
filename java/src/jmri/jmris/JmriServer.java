@@ -33,7 +33,7 @@ public class JmriServer {
 
     /**
      * @return the default instance of a JmriServer
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()}
+     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault(jmri.jmris.JmriServer.class)}
      * instead.
      */
     @Deprecated

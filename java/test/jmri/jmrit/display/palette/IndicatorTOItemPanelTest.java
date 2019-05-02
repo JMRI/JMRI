@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +21,7 @@ public class IndicatorTOItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
+        PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("Indicator TO Item Panel Test");
         Editor editor = new EditorScaffold();
         IndicatorTOItemPanel t = new IndicatorTOItemPanel(df,"IT01","",tableModel,editor);
@@ -35,8 +33,9 @@ public class IndicatorTOItemPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
-
+    
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

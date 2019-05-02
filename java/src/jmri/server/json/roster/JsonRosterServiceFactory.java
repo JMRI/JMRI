@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonRosterServiceFactory implements JsonServiceFactory {
+public class JsonRosterServiceFactory implements JsonServiceFactory<JsonRosterHttpService, JsonRosterSocketService> {
 
     @Override
     public String[] getTypes() {

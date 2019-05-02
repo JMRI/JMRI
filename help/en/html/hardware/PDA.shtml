@@ -7,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Using a PDA</title>
-  <meta content="Michael Beck" name="Author">
-  <meta content="John Plocher" name="Author">
+  <meta name="author" content="Michael Beck">
+  <meta name="author" content="John Plocher">
   <meta name="keywords" content="model railroad JMRI PDA">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -57,7 +57,7 @@
       client.</p>
 
       <p>4. After staring up JMRI Throttles and turnout control, I
-      use the the terminal services client of the Axim to access
+      use the terminal services client of the Axim to access
       the computer screen.</p>
 
       <p>5. I can then control the layout with the Axim.</p>
@@ -93,7 +93,8 @@
       <p>For the currently supported approach, involving running a
       specific program on your Smartphone, see the <a href=
       "../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a>
-      page. <!--#include virtual="/Footer" --></p>
+      page.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

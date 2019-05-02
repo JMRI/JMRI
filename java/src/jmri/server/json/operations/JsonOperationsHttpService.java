@@ -30,7 +30,7 @@ import jmri.server.json.JsonHttpService;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood (C) 2016, 2018
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 
@@ -43,7 +43,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case CAR:
                 return this.utilities.getCar(locale, name);
@@ -71,14 +71,14 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case ENGINE:
             case LOCATION:
             case TRAINS:
-                return this.doGet(type, name, locale);
+                return this.doGet(type, name, data, locale);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
         }
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case CARS:
                 return this.getCars(locale);
@@ -165,6 +165,38 @@ public class JsonOperationsHttpService extends JsonHttpService {
             if (!car.setLocation(location, track, true).equals(Track.OKAY)) {
                 throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", id, locationId, trackId));
             }
+        }
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case CAR:
+            case CARS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/operations/car-server.json",
+                        "jmri/server/json/operations/car-client.json");
+            case ENGINE:
+            case ENGINES:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/operations/engine-server.json",
+                        "jmri/server/json/operations/engine-client.json");
+            case LOCATION:
+            case LOCATIONS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/operations/location-server.json",
+                        "jmri/server/json/operations/location-client.json");
+            case TRAIN:
+            case TRAINS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/operations/train-server.json",
+                        "jmri/server/json/operations/train-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 

@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * tests for the jmri.jmrix.sprog package
+ * Tests for the jmri.jmrix.sprog package.
  *
  * @author	Bob Jacobsen
  */
@@ -31,6 +31,7 @@ import org.junit.runners.Suite;
    jmri.jmrix.sprog.console.PackageTest.class,
    jmri.jmrix.sprog.sprogmon.PackageTest.class,
    jmri.jmrix.sprog.sprogslotmon.PackageTest.class,
+   jmri.jmrix.sprog.simulator.PackageTest.class,
    SPROGMenuTest.class,
    SPROGCSMenuTest.class,
    SprogPortControllerTest.class,
@@ -45,7 +46,9 @@ import org.junit.runners.Suite;
    SprogReplyTest.class,
    jmri.jmrix.sprog.update.PackageTest.class,
    SprogSlotTest.class,
-   BundleTest.class
+   BundleTest.class,
+   SprogCSStreamConnectionConfigTest.class,
 })
+
 public class PackageTest {
 }

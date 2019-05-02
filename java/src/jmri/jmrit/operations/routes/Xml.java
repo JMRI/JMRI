@@ -36,7 +36,10 @@ public class Xml {
     static final String DEPART_TIME = "departTime"; // NOI18N
     static final String TRAIN_ICON_X = "trainIconX"; // NOI18N
     static final String TRAIN_ICON_Y = "trainIconY"; // NOI18N
+    static final String TRAIN_ICON_RANGE_X = "trainIconRangeX"; // NOI18N
+    static final String TRAIN_ICON_RANGE_Y = "trainIconRangeY"; // NOI18N
     static final String SEQUENCE_ID = "sequenceId"; // NOI18N
+    static final String COMMENT_COLOR = "commentColor";
 
     // RouteManagerXml.java
     static final String ROUTES = "routes"; // NOI18N

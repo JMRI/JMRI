@@ -38,9 +38,6 @@ public class XBeeNodeConfigActionTest {
         XBeeConnectionMemo memo = new XBeeConnectionMemo();
         XBeeTrafficController tc = new XBeeTrafficController(){
             @Override
-            public void setInstance() {
-            }
-            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
@@ -50,6 +47,7 @@ public class XBeeNodeConfigActionTest {
             }
         };
         InstanceManager.setDefault(XBeeConnectionMemo.class, memo);
+        memo.setTrafficController(tc);
         XBeeNodeConfigAction action = new XBeeNodeConfigAction("IEEE 802.15.4 test Action");
         Assert.assertNotNull("exists", action);
     }
@@ -60,9 +58,6 @@ public class XBeeNodeConfigActionTest {
         XBeeConnectionMemo memo = new XBeeConnectionMemo();
         XBeeTrafficController tc = new XBeeTrafficController(){
             @Override
-            public void setInstance() {
-            }
-            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
@@ -71,6 +66,7 @@ public class XBeeNodeConfigActionTest {
                 return null;
             }
         };
+        memo.setTrafficController(tc);
         InstanceManager.setDefault(XBeeConnectionMemo.class, memo);
         XBeeNodeConfigAction action = new XBeeNodeConfigAction();
         Assert.assertNotNull("exists", action);
@@ -82,5 +78,7 @@ public class XBeeNodeConfigActionTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();    
+    }
 }

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * <p>
  * This connects a Pi-SPROG One command station via a serial com port.
- * <P>
+ * <p>
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -37,10 +37,10 @@ public class PiSprogOneCSSerialDriverAdapter
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when class converted to multi-system
     static public PiSprogOneCSSerialDriverAdapter instance() {
         return null;
     }
-    private final static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class);
 
 }

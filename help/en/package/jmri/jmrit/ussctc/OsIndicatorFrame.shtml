@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: OS Indicator Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help OS Indicator">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -66,8 +63,7 @@
         create a new follower or modify an existing one.</dd>
       </dl>
 
-      <p>This is the help/jmri/jmrit/ussctc/OsIndicatorFrame help
-      page <!--#include virtual="/Footer" --></p>
+      page <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

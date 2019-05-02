@@ -172,6 +172,80 @@ displayed from the text in the "label" attribute, which is:
         or updated
         (<a href="#update">Updates and Migration</a>).</p>
 
+        <h4>Public-domain and DIY decoders</h4>
+
+        <span class="since">Since <a href="/releasenotes/jmri4.11.5.shtml" target="_blank">JMRI 4.11.5</a></span>
+
+        <p>The "Read Type from Decoder" feature is available for Public-domain and DIY decoders.</p>
+
+        <p>Three identifiers are used to identify the decoder:</p>
+
+            <dl>
+                <dt>Manufacturer:</dt>
+
+                <dd>Numeric value <b>CV8 = 13</b> according to the NMRA standard S-9.2.2.
+                file.</dd>
+
+                <dt>Version code:</dt>
+
+                <dd>The numeric value from <b>CV7</b> where the software version is stored.</dd>
+
+                <dt>Product ID code:</dt>
+
+                <dd>Numeric value stored in <b>CV47</b>, <b>CV48</b>, <b>CV49</b> and <b>CV50</b> 
+                according to NMRA standard S-9.2.2 file and reserved for use by the manufacturer.
+
+                    <p>Product ID is calculated using the following formula:</p>
+
+                    <ul>
+                        <li>Product ID = (((CV47 * 256) + CV48) * 256 + CV49) * 256 + CV50</li>
+                    </ul>
+
+                    <p>Individual CVs have the following meaning:</p>
+
+                    <ul>
+                        <li>CV47 - country code, for example CV47 = 1 for the Czech Republic</li>
+                        <li>CV48 - developer or group of developers code, such as CV48 = 1 for dccdoma.cz</li>
+                        <li>CV49 - third ProductID for further identification</li>
+                        <li>CV50 - fourth ProductID for further identification</li>
+                    </ul>
+                </dd>
+            </dl>
+
+        <p>The corresponding decoder definition xml file has a filled &lt;family&gt; element. Example:</p>
+    
+       <pre style="font-family: monospace;">
+  &lt;decoder&gt;
+    &lt;family name="dccdoma.cz" mfg="Public-domain and DIY" &gt;
+      &lt;model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" &#8230;  /&gt;
+    &lt;/family&gt;
+    &#8230;
+  &lt;/decoder&gt;</pre>
+
+        <p>The individual attributes of this element must be filled in as follows:</p>
+        <ul>
+            <li><b>mfg="Public-domain and DIY"</b> that matches CV8</li>
+            <li><b>lowVersionID="nn" highVersionID="mm"</b> that matches CV7</li>
+            <li><b>productID="nnnnnn"</b> that matches CV47, CV48, CV49 and CV50</li>
+        </ul>
+
+        <p>The name of the xml file with the definition of the decoder should have the following structure:</p>
+
+        <pre style="font-family: monospace;"><b>Public_Domain</b>_<b>family-name</b>_<b>model-model</b>.xml</pre>
+
+        <p>Where each part of a file name has the following meaning:</p>
+        <ul>
+            <li><b>Public_Domain</b> that matches attribute &lt;family mfg="Public-domain and DIY" &gt;</li>
+            <li><b>family-name</b> that matches attribute &lt;family name="developer" &gt;</li>
+            <li><b>model-model</b> that matches attribute &lt;model model="decoder name" &gt;</li>
+        </ul>
+
+        <p>Example of a definition decoder file for signal decoder <i>UNI16ARD-NAV.xml</i> 
+            from the developers group <i>dccdoma.cz</i> who are from <i>the Czech Republic</i> 
+            <a href="../../../../../xml/decoders/Public_Domain_dccdoma_UNI16ARD_NAV.xml">Public_Domain_dccdoma_UNI16ARD_NAV.xml</a>.</p> 
+        
+        <p>For the new <i>country code</i> and new <i>developer code</i>, please contact Groups.io jmriusers <a href="https://groups.io/g/jmriusers">https://groups.io/g/jmriusers</a>.</p>
+        
       <a name="pane_considerations" id="pane_considerations"></a>
       <h3>Pane Considerations</h3>Programmer panes are used to
       split and organise decoder variables into convenient named
@@ -734,6 +808,11 @@ selects the different algorithm needed here.
       <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
         by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
         ESU.
+        
+      <p>Alternately the PI and/or SI CV numbers can be set by using a "nn=nn" syntax when specifying
+        PI and/or SI.  For example, using a cvFirst false syntax, "101=12.80" sets CV101 to 12 before
+        accessing CV 80, regardless of the PI value configured into the capability.
+
       <p>If skipDupIndexWrite is true, certain writes to the PI and SI
         CVs can be skipped if the user selects skipping them. This speeds up access.
         Some decoders  require that the CVs be written for each operation, 
@@ -769,7 +848,115 @@ selects the different algorithm needed here.
       </ul>For examples of how to use these, see the TCS WOW
       decoder definition.
 
-      <h4>Split Variables - "long" addresses over 2 CVs</h4>
+      <a name="splitval" id="splitval"></a>
+      <h3>Split Variables - spread over multiple CVs</h3>
+
+      <span class="since">Since <a href="jmri4.15.5.shtml">JMRI 4.15.5</a></span>
+
+      <p>Some decoders use variables that are spread over multiple CVs, contiguous or not.</p>
+
+      <p>A number of types are provided to handle this situation:</p>
+      <ul>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              type. This handles a numeric value stored across up to at least 8 CVs.
+              <ul>
+                  <li>
+                      For examples, see <a href= "#splitvalExample">splitVal example</a> below and this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details of required/optional attributes and advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html" target="_blank">splitHexVal</a>
+              type. This is like
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              but with the number entered and displayed in hexadecimal. An optional "case=" attribute can be used to force
+              the number to be displayed in "upper" or "lower" case.
+              <ul>
+                  <li>
+                      For examples, see this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html" target="_blank">splitDateTimeVal</a>
+              type. This is like
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              but the number displayed represents a Date and/or Time value.
+              <ul>
+                  <li>
+                      For examples, see this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details of required/optional attributes and advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">splitTextVal</a>
+              type. This is like
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              but allows the entry, storage (in CVs) and display of text strings.
+              The number of CVs allocated by the user in the definition governs the maximum string length.
+              <ul>
+                  <li>
+                      For examples, see this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4projectInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details of required/optional attributes and advanced features, see this
+                      <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+      </ul>
+
+      The original technique of specifying a "CV" and a "highCV" is not appropriate
+      in cases where many more CVs are needed. Alternative more concise methods of specifying
+      multiple CVs (contiguous or not) in the "CV" parameter are now available:
+      <ul>
+          <li>
+              The available methods (with example strings) are detailed under
+              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.String-" target="_blank">expandCvList</a>
+              on this
+              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.String-" target="_blank">JavaDoc page</a>.
+          </li>
+          <li>
+              For example, this
+              <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4projectInfoCVs.xml" target="_blank">decoder fragment file</a>
+              has a <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">splitTextVal</a>
+              requiring 28 CVs.
+          </li>
+          <li>
+              Other examples are found in this
+              <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+          </li>
+          <li>
+              The following example reads the RailCom&reg; Production Date as per
+              <a href="http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">
+              NMRA standard 9.3.2</a>:
+          </li>
+      </ul>
+      
+      <pre style="font-family: monospace;">
+    &lt;variable CV="0.255.269:4" readOnly="yes" item="PDate"&gt;
+        &lt;splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/&gt;
+        &lt;label&gt;Production Date&lt;/label&gt;
+    &lt;/variable&gt;
+      </pre>
+
+
+      <a name="splitvalExample" id="splitvalExample"></a>
+      <h4>splitVal example - "long" addresses over 2 CVs</h4>
 
       <p>Some decoders, mostly accessory decoders, are using "long"
       addresses that are split over 2 CVs, contiguous or not.</p>
@@ -788,8 +975,8 @@ selects the different algorithm needed here.
     &lt;/variable&gt;
 </pre>
 
-      <p>The first declared CV is the LSB (Least Significant Byte)
-      whereas the "high CV" is the MSB (Most Significant Byte).</p>
+      <p>The declared "CV" is the LSB (Least Significant Byte)
+      whereas the "highCV" is the MSB (Most Significant Byte).</p>
 
       <p>splitVal actually has two parameters, a "Factor" and an
       "Offset":</p>
@@ -810,11 +997,8 @@ selects the different algorithm needed here.
       target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
       file.</p>
 
-      <p>For details and more advanced features, see this <a href=
-      "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
-      target="_blank">Javadoc page</a></p><a name="conditional" id=
-      "conditional"></a>
-
+      
+      <a name="conditional" id="conditional"></a>
       <h3>Conditional Decoder Definitions</h3>To reduce the number
       of decoder definition files needed, each file can contain
       definitions for multiple decoder models. JMRI provides ways
@@ -829,7 +1013,8 @@ selects the different algorithm needed here.
       <h4>Include/Exclude During Variable Expansion</h4>Whether a
       variable element is expanded and used can be made conditional
       on the decoder type using "include" and "exclude" attributes
-      on &lt;variables&gt; and &lt;variable&gt; elements.
+      on &lt;variables&gt;, &lt;variable&gt;,
+      &lt;enumChoice&gt; and &lt;enumChoiceGroup&gt; elements.
 
       <p>A variable definition will not be expanded and used:</p>
 
@@ -839,7 +1024,7 @@ selects the different algorithm needed here.
         in the exclude list.</li>
 
         <li>If an include attribute is present, at least one of the
-        decoders product ID, model name, nor family name is found
+        decoders product ID, model name, or family name is found
         in the include list.</li>
       </ul>Both of these conditions must be true, and it's possible
       to use both include and exclude on the same element, but it's
@@ -863,7 +1048,24 @@ selects the different algorithm needed here.
       <p>Attributes on a &lt;variables&gt; element act on all the
       &lt;variable&gt; elements within it, along with any include
       or exclude attributes on those individual
-      variables.</p><a name="pane_include" id="pane_include"></a>
+      variables.</p>
+      
+      <p>You can also use the include mechanism
+      to specify the default value of a variable.
+      <p>Example:</p>
+      <pre style="font-family: monospace;">
+      &lt;variable label="My Variable" CV="72" default="3"&gt;
+        &lt;defaultItem default="12" include="815"/&gt;  
+        &lt;decVal/&gt;
+      &lt;/variable&gt;
+</pre>
+      <p>This will set the default (initial) value
+      of the CV to 12 if the "815" matches, 
+      and otherwise use the default-default of 3.
+      You can have as many defaultItem elements
+      as needed; the first one that matches is used.</p>
+      
+      <a name="pane_include" id="pane_include"></a>
 
       <h4>Include/Exclude During Pane Creation</h4>Whether a pane
       (or part of a pane) is created can be made conditional on the

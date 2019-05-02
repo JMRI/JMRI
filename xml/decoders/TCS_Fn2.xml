@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved  -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,10 +14,12 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20061010"/>
   <version author="John Crellin" version="1.2" lastUpdated="20140601"/>
+  <version author="Marc N Fournier" version="1.3" lastUpdated="20181018"/>  
   <!-- Version 1 - made from TCS_X.xml -->
   <!-- Version 1.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 1.2- 20140602 Added CV 15 and missing lighting effects(jcrellin0661@gmail.com) -->
   <!-- 20140627 Added Translation and XI:include (fortuna.enzo@gmail.com) -->
+  <!-- Version 1.3- 20181019  Correction to CV51, CV52. Bit value of 9 is not used -->
   <decoder>
     <family name="TCS FL2 and FL4 Decoders" mfg="Train Control Systems">
       <model model="FL2" numOuts="2" numFns="14">
@@ -62,7 +63,7 @@
 			<enumVal>
 				<enumChoice choice="1 slowest" value="1">
             <choice>1 slowest</choice>
-            <choice xml:lang="it">1 piï¿½ lento</choice>
+            <choice xml:lang="it">1 più lento</choice>
         </enumChoice>
 				<enumChoice choice="2"/>
 				<enumChoice choice="3"/>
@@ -76,7 +77,7 @@
 				<enumChoice choice="11"/>
 				<enumChoice choice="12 fastest">
             <choice>12 fastest</choice>
-            <choice xml:lang="it">12 piï¿½ veloce</choice>
+            <choice xml:lang="it">12 più veloce</choice>
           </enumChoice>
 			</enumVal>
 			<label>Ditch Light Blink Rate</label>
@@ -85,25 +86,25 @@
 		<variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 1</label>
-      <label xml:lang="it">Luminositï¿½ 1 di smorzamento</label>
+      <label xml:lang="it">Luminosità 1 di smorzamento</label>
       <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 2</label>
-			<label xml:lang="it">Luminositï¿½ 2 di smorzamento</label>
+			<label xml:lang="it">Luminosità 2 di smorzamento</label>
 			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 3</label>
-			<label xml:lang="it">Luminositï¿½ 3 di smorzamento</label>
+			<label xml:lang="it">Luminosità 3 di smorzamento</label>
 			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 4</label>
-			<label xml:lang="it">Luminositï¿½ 4 di smorzamento</label>
+			<label xml:lang="it">Luminosità 4 di smorzamento</label>
 			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="112" default="1" item="Function F0F effect generated">
@@ -124,17 +125,17 @@
 		<variable CV="115" default="6" item="Function F0F behavior">
 			<decVal min="2" max="26"/>
 			<label>Mars/Gyra Mid Brightness</label>
-			<label xml:lang="it">Luminositï¿½ Media Mars/Gyra</label>
+			<label xml:lang="it">Luminosità Media Mars/Gyra</label>
 		</variable>
 		<variable CV="116" default="22" item="Function F0F options">
 			<decVal min="4" max="28"/>
 			<label>Mars/Gyra Max Brightness</label>
-			<label xml:lang="it">Luminositï¿½ Max Mars/Gyra</label>
+			<label xml:lang="it">Luminosità Max Mars/Gyra</label>
 		</variable>
 		<variable CV="118" default="1" item="Function F0R effect generated">
 			<decVal min="1" max="5"/>
 			<label>Beacon Min Brightness</label>
-			<label xml:lang="it">Luminositï¿½ Min Faro</label>
+			<label xml:lang="it">Luminosità Min Faro</label>
 		</variable>
 		<variable CV="119" default="5" item="Function F0R option 2">
 			<decVal/>
@@ -149,12 +150,12 @@
 		<variable CV="121" default="15" item="Function F0R behavior">
 			<decVal min="2" max="26"/>
 			<label>Beacon Mid Brightness</label>
-			<label xml:lang="it">Luminositï¿½ Media Faro</label>
+			<label xml:lang="it">Luminosità Media Faro</label>
 		</variable>
 		<variable CV="122" default="25" item="Function F0R options">
 			<decVal min="4" max="28"/>
 			<label>Beacon Max Brightness</label>
-			<label xml:lang="it">Luminositï¿½ Max.Faro</label>
+			<label xml:lang="it">Luminosità Max.Faro</label>
 		</variable>
 		<variable CV="140" default="140" item="Function 3 effect generated">
 			<decVal/>
@@ -219,13 +220,13 @@
 		<variable CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
 			<decVal/>
 			<label>Random Flicker 1 Speed</label>
-			<label xml:lang="it">Velocitï¿½ Sfarfallio casuale 1</label>
+			<label xml:lang="it">Velocità Sfarfallio casuale 1</label>
 			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
 		</variable>
 		<variable CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
 			<decVal/>
 			<label>Random Flicker 2 Speed</label>
-			<label xml:lang="it">Velocitï¿½ Sfarfallio casuale 2</label>
+			<label xml:lang="it">Velocità Sfarfallio casuale 2</label>
 			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
 		</variable>
      
@@ -267,7 +268,7 @@
       </label>
       <label>
         <text>useful when several decoders are used in one loco</text>
-        <text xml:lang="it">utile qundo si usano piï¿½ decoder in una loco</text>
+        <text xml:lang="it">utile qundo si usano più decoder in una loco</text>
       </label>
       <label>
         <text>on the same address, e.g. for adding sound</text>

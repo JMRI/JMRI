@@ -14,12 +14,16 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- showEmptyPanes="no" -->
-  <version author="robin@n3ix.com" version="1.02" lastUpdated="20120810"/>
+  <version author="robin@n3ix.com" version="1.02.1" lastUpdated="20180410"/>
+  <version author="Alain Le Marchand" version="1.02.2" lastUpdated="20190114"/>
+  <!-- version 1.02.2 - clean-up following Github issue #6407 - no functional change -->
   <decoder>
     <family name="Quad-LN" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address.">
       <model model="Quad-LN" comment="4 Servo Driver" lowVersionID="5"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" comment="Short address" item="Short Address" default="1">
         <shortAddressVal/>
@@ -30,48 +34,58 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
+      <!--  Note that the Hi byte in CV3 is not used, with mask "XXXXXXXX".
+            This code is required to apply factor and offset to a single CV,
+            that are only supported with the splitVal statement.
+            Besides it is also consistent with other decoders of the same family
+            that are using longer addresses coded over CV2 et CV3     -->
       <variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
         <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="1"/>
-        <label>Servo Start Address</label>
+        <label>Desired Servo Start Address</label>
+        <tooltip>&lt;html&gt;Desired address of first servo.&lt;br&gt;
+                Entry will be rounded down to a block-of-eight boundary (1, 9 ,... 2041).&lt;br&gt;
+                Avoid using addresses 1017-1020 if possible&lt;br&gt;
+                (those addresses are also used by a special interrogation command).&lt;br&gt;
+                &lt;/html&gt;</tooltip>
       </variable>
-      <variable item="Servo Base Block Lo Change" CV="254" mask="XXXXXXXX" default="0">
-        <splitVal highCV="2" upperMask="VVVVVVVV"/>
-        <label>Servo Base Block Lo Change</label>
+      <variable item="Servo Base Block Lo Change" CV="2" infoOnly="yes">
+        <decVal/>
+        <label>Servo Base Block Lo</label>
       </variable>
-      <variable item="Servo Base Block Hi Change" CV="255" mask="XXXXXXXX" default="0">
-        <splitVal highCV="3" upperMask="VVVVVVVV"/>
-        <label>Servo Base Block Hi Change</label>
+      <variable item="Servo Base Block Hi Change" CV="3" infoOnly="yes">
+        <decVal/>
+        <label>Servo Base Block Hi</label>
       </variable>
-      <variable item="Servo1 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="1">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="1"/>
+      <variable item="Servo1 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="1"/>
         <label>Servo1 Addr</label>
       </variable>
-      <variable item="Servo2 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="2">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="2"/>
+      <variable item="Servo2 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="2"/>
         <label>Servo2 Addr</label>
       </variable>
-      <variable item="Servo3 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="3">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="3"/>
+      <variable item="Servo3 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="3"/>
         <label>Servo3 Addr</label>
       </variable>
-      <variable item="Servo4 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="4">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="4"/>
+      <variable item="Servo4 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="4"/>
         <label>Servo4 Addr</label>
       </variable>
-      <variable item="Servo5 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="5">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="5"/>
+      <variable item="Servo5 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="5"/>
         <label>Servo5 Addr</label>
       </variable>
-      <variable item="Servo6 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="6">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="6"/>
+      <variable item="Servo6 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="6"/>
         <label>Servo6 Addr</label>
       </variable>
-      <variable item="Servo7 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="7">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="7"/>
+      <variable item="Servo7 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="7"/>
         <label>Servo7 Addr</label>
       </variable>
-      <variable item="Servo8 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="8">
-        <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="8"/>
+      <variable item="Servo8 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="0">
+        <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="8"/>
         <label>Servo8 Addr</label>
       </variable>
       <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
@@ -106,45 +120,48 @@
       </variable>
       <variable item="Sensor Start Address" CV="10" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="1"/>
-        <label>Sensor Start Address</label>
+        <label>Desired Sensor Start Address</label>
+        <tooltip>&lt;html&gt;Desired address of first sensor.&lt;br&gt;
+            Entry will be rounded down block-of-eight boundary (1, 9, ... 4089).&lt;br&gt;
+            &lt;/html&gt;</tooltip>
       </variable>
-      <variable item="Sensor Base Block Lo Change" CV="252" mask="XXXXXXXX" default="0">
-        <splitVal highCV="10" upperMask="VVVVVVVV"/>
-        <label>Sensor Base Block Lo Change</label>
+      <variable item="Sensor Base Block Lo Change" CV="10" infoOnly="yes">
+        <decVal/>
+        <label>Sensor Base Block Lo</label>
       </variable>
-      <variable item="Sensor Base Block Hi Change" CV="253" mask="XXXXXXXX" default="0">
-        <splitVal highCV="11" upperMask="VVVVVVVV"/>
-        <label>Sensor Base Block Hi Change</label>
+      <variable item="Sensor Base Block Hi Change" CV="11" infoOnly="yes">
+        <decVal/>
+        <label>Sensor Base Block Hi</label>
       </variable>
-      <variable item="Sensor1 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="1">
+      <variable item="Sensor1 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="1"/>
         <label>Sensor1 Addr</label>
       </variable>
-      <variable item="Sensor2 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="2">
+      <variable item="Sensor2 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="2"/>
         <label>Sensor2 Addr</label>
       </variable>
-      <variable item="Sensor3 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="3">
+      <variable item="Sensor3 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="3"/>
         <label>Sensor3 Addr</label>
       </variable>
-      <variable item="Sensor4 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="4">
+      <variable item="Sensor4 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="4"/>
         <label>Sensor4 Addr</label>
       </variable>
-      <variable item="Sensor5 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="5">
+      <variable item="Sensor5 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="5"/>
         <label>Sensor5 Addr</label>
       </variable>
-      <variable item="Sensor6 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="6">
+      <variable item="Sensor6 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="6"/>
         <label>Sensor6 Addr</label>
       </variable>
-      <variable item="Sensor7 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="7">
+      <variable item="Sensor7 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="7"/>
         <label>Sensor7 Addr</label>
       </variable>
-      <variable item="Sensor8 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="8">
+      <variable item="Sensor8 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="8"/>
         <label>Sensor8 Addr</label>
       </variable>
@@ -3703,12 +3720,8 @@
           <label>
             <text> </text>
           </label>
-          <display item="Servo Start Address" label="Desired Servo Start Address" tooltip="Desired address of first servo.  Entry will be rounded down to a block-of-eight boundary (1, 9 ,... 2033).">
-            <label>Servo Start Address</label>
-          </display>
-          <display item="Sensor Start Address" label="Desired Sensor Start Address" tooltip="Desired address of first sensor.  Entry will be rounded down block-of-eight boundary (1, 9, ... 4089).">
-            <label>Sensor Start Address</label>
-          </display>
+          <display item="Servo Start Address"/>
+          <display item="Sensor Start Address"/>
           <label>
             <text> </text>
           </label>
@@ -3798,7 +3811,7 @@
       <row>
         <column>
           <label>
-            <text>Decoder File Version: 1.02</text>
+            <text>Decoder File Version: 1.02.2</text>
           </label>
         </column>
       </row>
@@ -3819,20 +3832,12 @@
       </label>
       <row>
         <column>
-          <display item="Servo Base Block Hi Change" label="Servo Base Hi Block" tooltip="DO NOT EDIT HERE">
-            <label>Servo Base Lo Block</label>
-          </display>
-          <display item="Servo Base Block Lo Change" label="Servo Base Lo Block" tooltip="DO NOT EDIT HERE">
-            <label>Servo Base Lo Block</label>
-          </display>
+          <display item="Servo Base Block Hi Change" tooltip="DO NOT EDIT HERE"/>
+          <display item="Servo Base Block Lo Change" tooltip="DO NOT EDIT HERE"/>
         </column>
         <column>
-          <display item="Sensor Base Block Hi Change" label="Sensor Base Hi Block" tooltip="DO NOT EDIT HERE">
-            <label>Sensor Base Lo Block</label>
-          </display>
-          <display item="Sensor Base Block Lo Change" label="Sensor Base Lo Block" tooltip="DO NOT EDIT HERE">
-            <label>Sensor Base Lo Block</label>
-          </display>
+          <display item="Sensor Base Block Hi Change" tooltip="DO NOT EDIT HERE"/>
+          <display item="Sensor Base Block Lo Change" tooltip="DO NOT EDIT HERE"/>
         </column>
       </row>
     </column>

@@ -68,7 +68,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public AcelaMessage getAcelaResetMsg() {
-        // create a Acela message and add initialization bytes
+        // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
         m.setElement(0, 0x15);  //  Acela command to reset Acela network
@@ -76,7 +76,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public AcelaMessage getAcelaOnlineMsg() {
-        // create a Acela message and add initialization bytes
+        // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
         m.setElement(0, 0x16);  //  Acela command to put Acela network ONLINE
@@ -84,7 +84,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public AcelaMessage getAcelaPollNodesMsg() {
-        // create a Acela message and add initialization bytes
+        // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
         m.setElement(0, 0x18);  // Acela command to poll Acela network nodes
@@ -92,7 +92,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public AcelaMessage getAcelaPollSensorsMsg() {
-        // create a Acela message and add initialization bytes
+        // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
         m.setElement(0, 0x14);  // Acela command to poll all sensors
@@ -100,7 +100,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public AcelaMessage getAcelaConfigSensorMsg() {
-        // create a Acela message and add initialization bytes
+        // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(4);
         m.setBinary(true);
         m.setElement(0, 0x10);  // Acela command to configure one sensor

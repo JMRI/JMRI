@@ -86,42 +86,42 @@ public class ActivateTrainFrame {
     private final JComboBox<String> startingBlockBox = new JComboBox<>();
     private List<Block> startingBlockBoxList = new ArrayList<>();
     private List<Integer> startingBlockSeqList = new ArrayList<>();
-    private JComboBox<String> destinationBlockBox = new JComboBox<String>();
+    private final JComboBox<String> destinationBlockBox = new JComboBox<>();
     private List<Block> destinationBlockBoxList = new ArrayList<>();
-    private List<Integer> destinationBlockSeqList = new ArrayList<Integer>();
+    private List<Integer> destinationBlockSeqList = new ArrayList<>();
     private JButton addNewTrainButton = null;
     private JButton loadButton = null;
     private JButton saveButton = null;
     private JButton deleteButton = null;
-    private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
-    private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
-    private JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
-    private JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
-    private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks"));
-    private ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
-    private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
-    private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
-    private JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
-    private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
-    private JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
+    private final JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
+    private final JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
+    private final JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
+    private final JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
+    private final JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks") + ":");
+    private final ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
+    private final JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
+    private final JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
+    private final JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
+    private final JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
+    private final JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
     int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
     String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
-    private JComboBox<String> delayedStartBox = new JComboBox<String>(delayedStartString);
-    private JLabel delayedReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
-    private JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
-    private JComboBox<String> delayedReStartBox = new JComboBox<String>(delayedStartString);
-    private jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
-    private jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
+    private final JComboBox<String> delayedStartBox = new JComboBox<>(delayedStartString);
+    private final JLabel delayedReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
+    private final JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
+    private final JComboBox<String> delayedReStartBox = new JComboBox<>(delayedStartString);
+    private final jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
+    private final jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
 
-    private JSpinner departureHrSpinner = new JSpinner(new SpinnerNumberModel(8, 0, 23, 1));
-    private JSpinner departureMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
-    private JLabel departureTimeLabel = new JLabel(Bundle.getMessage("DepartureTime"));
-    private JLabel departureSepLabel = new JLabel(":");
+    private final JSpinner departureHrSpinner = new JSpinner(new SpinnerNumberModel(8, 0, 23, 1));
+    private final JSpinner departureMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+    private final JLabel departureTimeLabel = new JLabel(Bundle.getMessage("DepartureTime"));
+    private final JLabel departureSepLabel = new JLabel(":");
 
-    private JSpinner delayMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-    private JLabel delayMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
+    private final JSpinner delayMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+    private final JLabel delayMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
 
-    private JComboBox<String> trainTypeBox = new JComboBox<String>();
+    private final JComboBox<String> trainTypeBox = new JComboBox<>();
     // Note: See also items related to automatically running trains near the end of this module
 
     boolean transitsFromSpecificBlock = false;
@@ -272,15 +272,17 @@ public class ActivateTrainFrame {
             destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
             initiatePane.add(p4);
             JPanel p4b = new JPanel();
-            p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel") + ":"));
+            p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
             p4b.setLayout(new FlowLayout());
-//            p4b.add(allocateMethodLabel);
             allocateMethodButtonGroup.add(allocateAllTheWayRadioButton);
             allocateMethodButtonGroup.add(allocateBySafeRadioButton);
             allocateMethodButtonGroup.add(allocateNumberOfBlocks);
             p4b.add(allocateAllTheWayRadioButton);
+            allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayHint"));
             p4b.add(allocateBySafeRadioButton);
+            allocateBySafeRadioButton.setToolTipText(Bundle.getMessage("AllocateSafeHint"));
             p4b.add(allocateNumberOfBlocks);
+            allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
             allocateAllTheWayRadioButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -300,6 +302,7 @@ public class ActivateTrainFrame {
                 }
             });
             p4b.add(allocateCustomSpinner);
+            allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
             initiatePane.add(p4b);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
@@ -426,7 +429,7 @@ public class ActivateTrainFrame {
                 }
             });
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
-            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("AddNewTrainButton")));
+            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("ButtonCreate")));
             addNewTrainButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -769,13 +772,10 @@ public class ActivateTrainFrame {
     }
 
     private void initializeFreeTransitsCombo(List<Transit> transitList) {
-        List<String> allTransits = _TransitManager.getSystemNameList();
         transitSelectBox.removeAllItems();
         transitBoxList.clear();
         if (transitList.isEmpty()) {
-            for (int i = 0; i < allTransits.size(); i++) {
-                String tName = allTransits.get(i);
-                Transit t = _TransitManager.getBySystemName(tName);
+            for (Transit t : _TransitManager.getNamedBeanSet()) {
                 transitList.add(t);
             }
 
@@ -831,6 +831,17 @@ public class ActivateTrainFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
+                        // check to see if speed profile exists and is not empty
+                        if (r.getSpeedProfile() == null || r.getSpeedProfile().getProfileSize() < 1) {
+                            // disable profile boxes etc.
+                            setSpeedProfileOptions(false);
+                            // turnoff options
+                            _useSpeedProfile = false;
+                            _stopBySpeedProfile = false;
+                        } else {
+                            // enable profile boxes
+                            setSpeedProfileOptions(true);
+                        }
                         if (transitsFromSpecificBlock) {
                             //resets the transit box if required
                             transitsFromSpecificBlock = false;
@@ -845,7 +856,7 @@ public class ActivateTrainFrame {
             trainSelectBox.addActionListener(trainSelectBoxListener);
         } else if (_TrainsFromTrains) {
             // initialize free trains from operations
-            List<Train> trains = TrainManager.instance().getTrainsByNameList();
+            List<Train> trains = jmri.InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
             if (trains.size() > 0) {
                 for (int i = 0; i < trains.size(); i++) {
                     Train t = trains.get(i);
@@ -860,6 +871,23 @@ public class ActivateTrainFrame {
         }
         if (trainBoxList.size() > 0) {
             trainSelectBox.setSelectedIndex(0);
+        }
+    }
+
+    /**
+     * Sets the labels and inputs for speed profile running
+     * @param b True if the roster entry has valid speed profile else false
+     */
+    private void setSpeedProfileOptions(boolean b) {
+        useSpeedProfileLabel.setEnabled(b);
+        useSpeedProfileCheckBox.setEnabled(b);
+        stopBySpeedProfileLabel.setEnabled(b);
+        stopBySpeedProfileCheckBox.setEnabled(b);
+        stopBySpeedProfileAdjustLabel.setEnabled(b);
+        stopBySpeedProfileAdjustSpinner.setEnabled(b);
+        if (!b) {
+            useSpeedProfileCheckBox.setSelected(false);
+            stopBySpeedProfileCheckBox.setSelected(false);
         }
     }
 
@@ -1101,7 +1129,7 @@ public class ActivateTrainFrame {
             info.setDccAddress(" ");
         } else if (_TrainsFromUser) {
             info.setTrainName(trainNameField.getText());
-            info.setDccAddress((String) dccAddressSpinner.getValue());
+            info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
@@ -1221,28 +1249,28 @@ public class ActivateTrainFrame {
      * </ul>
      */
     // auto run items in ActivateTrainFrame
-    private JPanel pa1 = new JPanel();
-    private JLabel speedFactorLabel = new JLabel(Bundle.getMessage("SpeedFactorLabel"));
-    private JSpinner speedFactorSpinner = new JSpinner();
-    private JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
-    private JSpinner maxSpeedSpinner = new JSpinner();
-    private JPanel pa2 = new JPanel();
-    private JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
-    private JComboBox<String> rampRateBox = new JComboBox<String>();
-    private JPanel pa2a = new JPanel();
-    private JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
-    private JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
-    private JLabel stopBySpeedProfile = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
-    private JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
-    private JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
-    private JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
-    private JPanel pa3 = new JPanel();
-    private JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
-    private JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
-    private JPanel pa4 = new JPanel();
-    private JCheckBox resistanceWheelsBox = new JCheckBox(Bundle.getMessage("ResistanceWheels"));
-    private JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
-    private JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
+    private final JPanel pa1 = new JPanel();
+    private final JLabel speedFactorLabel = new JLabel(Bundle.getMessage("SpeedFactorLabel"));
+    private final JSpinner speedFactorSpinner = new JSpinner();
+    private final JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
+    private final JSpinner maxSpeedSpinner = new JSpinner();
+    private final JPanel pa2 = new JPanel();
+    private final JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
+    private final JComboBox<String> rampRateBox = new JComboBox<>();
+    private final JPanel pa2a = new JPanel();
+    private final JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
+    private final JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
+    private final JLabel stopBySpeedProfileLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
+    private final JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
+    private final JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
+    private final JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
+    private final JPanel pa3 = new JPanel();
+    private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
+    private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
+    private final JPanel pa4 = new JPanel();
+    private final JCheckBox resistanceWheelsBox = new JCheckBox(Bundle.getMessage("ResistanceWheels"));
+    private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
+    private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
     // auto run variables
     float _speedFactor = 1.0f;
     float _maxSpeed = 0.6f;
@@ -1293,9 +1321,9 @@ public class ActivateTrainFrame {
         useSpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint"));
         initiatePane.add(pa2);
         pa2a.setLayout(new FlowLayout());
-        pa2a.add(stopBySpeedProfile);
+        pa2a.add(stopBySpeedProfileLabel);
         pa2a.add(stopBySpeedProfileCheckBox);
-        stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("StopBySpeedProfileHint"));
+        stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
         stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
@@ -1382,9 +1410,16 @@ public class ActivateTrainFrame {
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
-        info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
-        info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
-        info.setStopBySpeedProfileAdjust((float)stopBySpeedProfileAdjustSpinner.getValue());
+        // Only use speed profile values if enabled
+        if (useSpeedProfileCheckBox.isEnabled()) {
+            info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
+            info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
+            info.setStopBySpeedProfileAdjust((float) stopBySpeedProfileAdjustSpinner.getValue());
+        } else {
+            info.setUseSpeedProfile(false);
+            info.setStopBySpeedProfile(false);
+            info.setStopBySpeedProfileAdjust(1.0f);
+        }
     }
 
     private boolean readAutoRunItems() {

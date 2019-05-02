@@ -18,11 +18,9 @@ public class ToolsMenu extends JMenu {
 
         super();
 
-        setText(rb.getString("MenuCtcTools"));
+        setText(Bundle.getMessage("MenuCtcTools"));   // NOI18N
 
-        add(new OsIndicatorAction(rb.getString("MenuItemOsIndicator")));
-        add(new FollowerAction(rb.getString("MenuItemFollower")));
+        add(new OsIndicatorAction(Bundle.getMessage("MenuItemOsIndicator")));   // NOI18N
+        add(new FollowerAction(Bundle.getMessage("MenuItemFollower")));    // NOI18N
     }
-
-    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
 }

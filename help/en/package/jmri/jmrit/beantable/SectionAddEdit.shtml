@@ -9,7 +9,7 @@
   <title>JMRI: Add/Edit Sections</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Section Add Edit">
   <!--#include virtual="/Style" -->
 </head>
@@ -158,6 +158,7 @@
         </li>
       </ol>
 
+      <a name='editsection' id="editsection"></a>
       <h2>Editing an existing Section</h2>
       <p>To edit an existing Section, follow this procedure:</p>
 

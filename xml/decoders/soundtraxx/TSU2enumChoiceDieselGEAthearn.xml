@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Michael</firstname>
+        <surname>Mosher</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-02-27</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>New file, for TSU2 OEM Athearn Diesel file.</revremark>
+    </revision>
+  </revhistory>
+    <enumChoice>
+        <choice>FDL-12</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>FDL-16</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>7FDL-16</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Dual FDL-16</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>GEVO-12</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>7FDL-16 with HEP</choice>
+    </enumChoice>
+</enumChoiceGroup>

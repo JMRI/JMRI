@@ -1,18 +1,18 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the Turnout class
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  */
-public class TurnoutTest extends TestCase {
+public class TurnoutTest {
 
     @SuppressWarnings("all")
+    @Test
     public void testStateConstants() {
         Assert.assertTrue("Thrown and Closed differ", (Turnout.THROWN & Turnout.CLOSED) == 0);
         Assert.assertTrue("Thrown and Unknown differ", (Turnout.THROWN & Turnout.UNKNOWN) == 0);
@@ -21,21 +21,11 @@ public class TurnoutTest extends TestCase {
         Assert.assertTrue("Closed and Inconsistent differ", (Turnout.CLOSED & Turnout.INCONSISTENT) == 0);
     }
 
-    // from here down is testing infrastructure
-    public TurnoutTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {TurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TurnoutTest.class);
-        return suite;
+    @Test 
+    public void testInverTurnoutState() {
+        Assert.assertEquals("Closed state Inverted",Turnout.THROWN,Turnout.invertTurnoutState(Turnout.CLOSED));
+        Assert.assertEquals("Thrown state Inverted",Turnout.CLOSED,Turnout.invertTurnoutState(Turnout.THROWN));
     }
 
 }

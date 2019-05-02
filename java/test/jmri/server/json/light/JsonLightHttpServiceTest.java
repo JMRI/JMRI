@@ -1,9 +1,7 @@
 package jmri.server.json.light;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Locale;
+import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -11,79 +9,106 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import jmri.implementation.AbstractLight;
 
 /**
  *
  * @author Paul Bender
- * @author Randall Wood
+ * @author Randall Wood Copyright 2018
  */
-public class JsonLightHttpServiceTest extends TestCase {
+public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
 
-    public void testCtorSuccess() {
-        JsonLightHttpService service = new JsonLightHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
-    public void testDoGet() throws JmriException {
-        JsonLightHttpService service = new JsonLightHttpService(new ObjectMapper());
+    @Test
+    public void testDoGet() throws JmriException, IOException {
+        JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
-        Light light1 = manager.provideLight("IL1");
+        Light light1 = new AbstractLight("IL1") {
+            // allow setting of "illegal" states for testing
+            @Override
+            public void setState(int newState) {
+                if (newState == Light.ON && newState == Light.OFF) {
+                    // if ON or OFF allow full transition to occur
+                    super.setState(newState);
+                } else {
+                    // do the state change in the hardware
+                    doNewState(mState, newState); // old state, new state
+                    // change value and tell listeners
+                    notifyStateChange(mState, newState);
+                }
+            }
+        };
+        manager.register(light1);
         JsonNode result;
         try {
-            result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
+            result = service.doGet(JsonLight.LIGHT, "IL1", service.getObjectMapper().createObjectNode(), locale);
             Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertEquals(JsonLight.LIGHT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IL1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.ON);
-            result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
+            result = service.doGet(JsonLight.LIGHT, "IL1", service.getObjectMapper().createObjectNode(), locale);
             Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.OFF);
-            result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
+            result = service.doGet(JsonLight.LIGHT, "IL1", service.getObjectMapper().createObjectNode(), locale);
             Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            light1.setState(Light.INCONSISTENT);
+            result = service.doGet(JsonLight.LIGHT, "IL1", service.getObjectMapper().createObjectNode(), locale);
+            Assert.assertNotNull(result);
+            this.validate(result);
+            Assert.assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            light1.setState(Light.UNKNOWN);
+            result = service.doGet(JsonLight.LIGHT, "IL1", service.getObjectMapper().createObjectNode(), locale);
+            Assert.assertNotNull(result);
+            this.validate(result);
+            Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
     }
 
-    public void testDoPost() throws JmriException {
-        ObjectMapper mapper = new ObjectMapper();
+    @Test
+    public void testDoPost() throws JmriException, IOException {
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         Light light1 = manager.provideLight("IL1");
-        JsonNode result;
-        JsonNode message;
         try {
             // set off
-            message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
-            result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
+            JsonNode result = service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertEquals(Light.OFF, light1.getState());
             Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set on
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
-            result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            result = service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertEquals(Light.ON, light1.getState());
             Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set unknown - remains on
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
-            result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            result = service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertEquals(Light.ON, light1.getState());
+            Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set invalid state
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // Invalid value
             JsonException exception = null;
             try {
-                service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+                service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             } catch (JsonException ex) {
                 exception = ex;
             }
@@ -95,86 +120,66 @@ public class JsonLightHttpServiceTest extends TestCase {
         }
     }
 
-    public void testDoPut() {
-        ObjectMapper mapper = new ObjectMapper();
+    @Test
+    public void testDoPut() throws IOException {
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
-        JsonNode message;
         try {
             // add a light
             Assert.assertNull(manager.getLight("IL1"));
-            message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, Light.OFF);
-            service.doPut(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, Light.OFF);
+            JsonNode result = service.doPut(JsonLight.LIGHT, "IL1", message, locale);
+            Assert.assertNotNull(result);
+            this.validate(result);
             Assert.assertNotNull(manager.getLight("IL1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
+    @Test
     public void testDoGetList() {
         try {
-            ObjectMapper mapper = new ObjectMapper();
             JsonLightHttpService service = new JsonLightHttpService(mapper);
             LightManager manager = InstanceManager.getDefault(LightManager.class);
-            JsonNode result;
-            result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
+            JsonNode result = service.doGetList(JsonLight.LIGHT, mapper.createObjectNode(), locale);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideLight("IL1");
             manager.provideLight("IL2");
-            result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
+            result = service.doGetList(JsonLight.LIGHT, mapper.createObjectNode(), locale);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
+            this.validate(result);
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
+    @Test
     public void testDelete() {
         try {
-            (new JsonLightHttpService(new ObjectMapper())).doDelete(JsonLight.LIGHT, null, Locale.ENGLISH);
+            (new JsonLightHttpService(mapper)).doDelete(JsonLight.LIGHT, "", locale);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
         }
         Assert.fail("Did not throw expected error.");
     }
-    
-    // from here down is testing infrastructure
-    public JsonLightHttpServiceTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonLightHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonLightHttpServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
+    public void setUp() throws Exception {
         super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
+    @After
     @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
+    public void tearDown() throws Exception {
         super.tearDown();
-        Log4JFixture.tearDown();
     }
 
 }

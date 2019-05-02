@@ -25,7 +25,7 @@ public class AcelaSignalHeadXmlTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         InstanceManager.setDefault(AcelaSystemConnectionMemo.class, new AcelaSystemConnectionMemo());
     }
 

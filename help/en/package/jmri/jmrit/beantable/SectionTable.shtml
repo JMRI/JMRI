@@ -9,7 +9,7 @@
   <title>JMRI: Section Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Dave Duchamp" name="Author">
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Section Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -26,30 +26,35 @@
 
       <h2>Requirements for using Sections</h2>
 
-      <p>Sections may be used with a Panel Editor panel, with a
-      <a href="../display/LayoutEditor.shtml">Layout Editor
-      </a> panel, with a CTC machine, or directly without
-      any panel provided. Sections are part of <a href=
+      <p>Sections may be used with a Panel Editor Panel, with a
+      <a href="../display/LayoutEditor.shtml">Layout Editor</a>
+      Panel, with a CTC machine, or directly without
+      any Panel provided. Sections are part of <a href=
       "../dispatcher/Dispatcher.shtml">Dispatcher</a>
       and build on JMRI's Blocks and Paths structure.
       So before attempting to create any Sections, you
       should have <a href="BlockTable.shtml">Blocks</a>
       and <a href="BlockTable.shtml#blockPaths">Paths</a>
-      fully initialized for your layout.
+      fully initialized for your layout.<br>
       (An easy way to automatically initialize your Blocks
       and Paths is to sketch out a
-      <a href="../display/LayoutEditor.shtml">Layout Editor
-      </a> panel of your
-      layout, with Blocks assigned. By assigning Blocks to all
-      track segments, turnouts, etc. in Layout Editor, the Paths
-      will be created automatically for you by the software.)</p>
+      <a href="../display/LayoutEditor.shtml">Layout Editor</a>
+      Panel of your layout, with Blocks assigned to each Track
+      Segment, Turnout, etc. By assigning Blocks &ndash;and Occupancy
+      Sensors&ndash; to all track items in Layout Editor, the Paths can
+      be created automatically for you by the software.)</p>
+
+      <!-- image by Egbert Broerse @silverailscolo 2018 -->
+      <img src="images/DispatcherSection.png" width="842" height="137">
 
       <p>Layout blocking should be carefully planned, to provide
-      "<i>reasonable</i>" Sections--Sections that make sense for a
-      dispatcher to allocate to a train. For right-handed or
-      left-handed turnouts switching mainline track, for example,
-      this usually means including the turnout in the same block as
-      the track entering at the turnout throat, and providing
+      "<i>reasonable</i>" Sections&mdash;Sections that make sense for a
+      dispatcher to allocate to a
+      <a href="../dispatcher/NewTrain.shtml">Train</a>.<br>
+      For right-handed or left-handed turnouts switching mainline track,
+      for example, this usually means including the turnout in
+      the same block as the track entering at the turnout throat,
+      and providing
       separate blocks for continuing and diverging tracks. Some
       prefer to have a turnout in a separate block, and that works
       fine also. From a dispatching perspective, tracks of mainline
@@ -102,12 +107,14 @@
         any comment you may want to use to keep track of your
         Sections. It is for information only.</li>
 
-        <li><img src="images/SectionDeleteWarning.png" height="57" width="279" align="right">
-        Click the <b>Delete</b> button in a specific row to
+        <li><a href="images/SectionDeleteWarning.png"><img src=
+        "images/SectionDeleteWarning.png" height="57"
+        width="279" align="right"></a>Click the <b>Delete</b>
+        button in a specific row to
         delete the Section in that row. Remember to remove any
         Transits that are using this Section. Any Transit that uses a
-        deleted Section will be broken! Use this button with
-        caution!
+        deleted Section will be broken! Review the warning dialog
+        and use this button with caution!
         </li>
 
         <li><b>First Block</b> - This column displays the first
@@ -129,7 +136,7 @@
       <h3>Creating a new Section</h3>
 
       <p>To Create a new Section, click the
-      "<a href="SectionAddEdit.shtml">Add.."</a> button at the bottom of the
+      "<a href="SectionAddEdit.shtml">Add...</a>" button at the bottom of the
       Section Table pane. A window will be brought up that will
       allow you to define the blocks included in the new Section,
       and if necessary, designate which entry points to the section
@@ -326,7 +333,7 @@
       Editor, then it is possible to also have Sections
       automatically generated based upon that same logic.</p>
 
-      <p>The tool to accomplish can be found in the <b>Signal Mast
+      <p>The tool to accomplish this can be found in the <b>Signal Mast
       Logic Table</b> | <b>Tools</b> | <b>Generate Sections</b>.
       Running this will
       immediately create Sections that each contain all of the
@@ -342,18 +349,19 @@
       reverse direction Sensors and place them in the Section,
       however currently the Signal Mast Logic does not use these
       and their creation is only there to allow validation of the
-      Section (or use by the user in unrelated Logix if
+      Section (or inclusion by the user in unrelated Logix if
       desired).</p>
 
       <p>Sections generated with the tool will only have a pair of
-      Entry Points and simply follow the path between the two
+      Entry Points and simply follow the Path between the two
       Signals.</p>
 
       <p>Direction Sensors (Forward and Reverse) are created by the
-      Generate Sections tool, but - if desired - Stopping Sensors (Forward
-      and Reverse) need to be added manually by the user via the Edit
-      Sections pane that opens when you click the Edit button for a specific
-      Section in the Section Table.</p>
+      <b>Generate Sections</b> tool, but - if desired - Stopping Sensors
+      (Forward and Reverse) need to be added manually by the user via the
+      <b><a href="SectionAddEdit.shtml#editsection">Edit Sections</a></b>
+      pane that opens when you click the <b>Edit</b> button for a
+      specific Section in the Section Table.</p>
 
       <p>The details of the Optional Direction and Stopping Sensors
       are saved when the Panel file is stored.</p>

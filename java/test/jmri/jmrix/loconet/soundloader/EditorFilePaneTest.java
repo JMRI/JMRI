@@ -3,9 +3,7 @@ package jmri.jmrix.loconet.soundloader;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrix.loconet.spjfile.SpjFile;
 import java.io.File;
 
 /**

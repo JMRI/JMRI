@@ -71,6 +71,32 @@ public class Z21XNetSimulatorAdapterTest {
         Assert.assertEquals("TurnoutOperationResponse",new XNetReply("43 00 14 02 55"),a.generateReply(new XNetMessage("53 00 14 89 CE")));
     }
 
+    @Test
+    public void testGenerateOpsModeWriteCvReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("Ops Mode Write CV Reply",new XNetReply("01 04 05"),a.generateReply(new XNetMessage("E6 30 00 42 EC 03 05 7D")));
+    }
+
+    @Test
+    public void testGenerateOpsModeVerifyCvReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("Ops Mode Verify CV Reply",new XNetReply("64 14 00 03 05 76"),a.generateReply(new XNetMessage("E6 30 00 42 E4 03 05 7A")));
+    }
+
+    @Test
+    public void testGenerateOpsModeWriteBitReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("Ops Mode Write Bit Reply",new XNetReply("01 04 05"),a.generateReply(new XNetMessage("E6 30 00 32 E8 02 E9 E7")));
+
+    }
+
+    @Test
+    public void testGenerateOpsModeVerifyBitReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("Ops Mode Verify Bit Reply",new XNetReply("01 04 05"),a.generateReply(new XNetMessage("E6 30 00 32 E8 02 F9 F7")));
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

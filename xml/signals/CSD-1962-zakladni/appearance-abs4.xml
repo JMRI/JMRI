@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-11-19</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 26 Unlit</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-zakladni</aspecttable>
+  <name>Čtyřznaký autoblok</name>
+  <description>Čtyřznaký autoblok.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/000_stuj_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/001_volno_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/002_vystraha_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/003_o40_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/004_o60_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/005_o80_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/022_opvystraha_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/023_opo40_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/024_opo60_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/025_opo80_ab4.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/026_zhasnuto_ab4.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances>
+      <permissive>
+          <aspect>Stůj</aspect>
+      </permissive>
+      <dark>
+          <aspect>Zhasnuto</aspect>
+      </dark>
+  </specificappearances>  
+  
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+      <ourAspect>Opakovaná výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 80 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 80</ourAspect>
+      <ourAspect>Opakovaná očekávej 80</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+    
+</appearancetable>  

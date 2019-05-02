@@ -8,8 +8,8 @@
 
   <title>JMRI Hardware Support - Fleischmann Twin Centre via Serial
   Port</title>
-  <meta content="Michael Beck" name="Author">
-  <meta content="John Plocher" name="Author">
+  <meta name="author" content="Michael Beck">
+  <meta name="author" content="John Plocher">
   <meta name="keywords" content=
   "Uhlenbrock Intellibox java model railroad JMRI install">
   <!-- Style -->
@@ -33,7 +33,8 @@
       <p>JMRI can communicate with the Fleischmann Twin Centre in
       several ways. For more details, see the <a href=
       "Uhlenbrock.shtml">page on configuring Uhlenbrock-compatible
-      devices</a>. <!--#include virtual="/Footer" --></p>
+      devices</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

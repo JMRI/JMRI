@@ -5,19 +5,20 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the LnPortController class
- * <p>
+ * JUnit tests for the LnPortController class.
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
+
+    private LocoNetSystemConnectionMemo memo;
 
     @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-       LnTrafficController tc = new LocoNetInterfaceScaffold();
+       memo = new LocoNetSystemConnectionMemo();
+       new LocoNetInterfaceScaffold(memo);
        apc = new LnPortController(memo){
             @Override
             public boolean status(){
@@ -51,13 +52,13 @@ public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
             public String openPort(String portName, String appName){
                return "";
             }
-
        };
     }
 
     @Override
     @After
     public void tearDown(){
+       memo.dispose();
        JUnitUtil.tearDown();
     }
 

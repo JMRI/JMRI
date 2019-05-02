@@ -31,14 +31,13 @@
       Signals</h2>
 
       <h2><b>Home signal</b> <b><img src="output5_html_289c901.png"
-      name="obr&#225;zky16" align="middle" width="14" height="35"
-      border="0"> <img src="output5_html_m212244f.png" name=
-      "obr&#225;zky17" align="middle" width="15" height="28"
+      align="middle" width="14" height="35"
+      border="0"> <img src="output5_html_m212244f.png" align="middle" width="15" height="28"
       border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-OEBB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -197,12 +196,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Advance signal</b> <b><img src=
-      "output5_html_5402c321.png" name="obr&#225;zky18" align=
+      "output5_html_5402c321.png" align=
       "middle" width="16" height="15" border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-OEBB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">

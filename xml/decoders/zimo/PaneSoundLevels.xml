@@ -616,8 +616,8 @@
         <text> </text>
       </label>
       <display item="Maximum Volume"/>
-      <display item="Function Key to Increase Volume"/>
       <display item="Function Key to Reduce Volume"/>
+      <display item="Function Key to Increase Volume"/>
       
       <label>
         <text> </text>

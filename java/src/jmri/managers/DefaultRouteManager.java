@@ -1,6 +1,8 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -10,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a RouteManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -40,10 +42,14 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     /**
-     * Method to provide a Route whether or not is already exists.
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #newRoute(String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
     public Route provideRoute(String systemName, String userName) {
+        log.debug("provideRoute({})", systemName);
         Route r;
         r = getByUserName(systemName);
         if (r != null) {
@@ -57,9 +63,9 @@ public class DefaultRouteManager extends AbstractManager<Route>
         r = new DefaultRoute(systemName, userName);
         // save in the maps
         register(r);
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
-         user from manually recreating them*/
+        /* The following keeps track of the last created auto system name.
+         Currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them. */
         if (systemName.startsWith("IR:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
@@ -67,12 +73,18 @@ public class DefaultRouteManager extends AbstractManager<Route>
                     lastAutoRouteRef = autoNumber;
                 }
             } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
         }
         return r;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #provideRoute(String, String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
     @Override
     public Route newRoute(String userName) {
         int nextAutoRouteRef = lastAutoRouteRef + 1;
@@ -85,6 +97,22 @@ public class DefaultRouteManager extends AbstractManager<Route>
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     int lastAutoRouteRef = 0;
+
+    /**
+     * {@inheritDoc}
+     *
+     * Forces upper case and trims leading and trailing whitespace.
+     * The IR prefix is added if necessary.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        if (inputName.length() < 3 || !inputName.startsWith("IR")) {
+            inputName = "IR" + inputName;
+        }
+        return inputName.toUpperCase().trim();
+    }
 
     /**
      * Remove an existing route. Route must have been deactivated before
@@ -133,5 +161,11 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return Bundle.getMessage("BeanNameRoute");
     }
 
+    @Override
+    public Route provide(String name) throws IllegalArgumentException {
+        return provideRoute(name, null);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
+
 }

@@ -42,8 +42,7 @@ public class SignallingSourceAction extends AbstractAction {
         try {
             f.initComponents(source);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());  // NOI18N
-            ex.printStackTrace();
+            log.error("Exception: ", ex);
         }
         f.setVisible(true);
     }

@@ -16,7 +16,7 @@ public class LnOverTcpPacketizerTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("LnOverTcpPacketizer constructor",new LnOverTcpPacketizer());
+      Assert.assertNotNull("LnOverTcpPacketizer constructor", new LnOverTcpPacketizer());
    }
 
    @Before

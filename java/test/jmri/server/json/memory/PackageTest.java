@@ -13,7 +13,6 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     JsonMemoryHttpServiceTest.class,
     JsonMemorySocketServiceTest.class,
-    JsonMemoryServiceFactoryTest.class,
     JsonMemoryTest.class
 })
 public class PackageTest {

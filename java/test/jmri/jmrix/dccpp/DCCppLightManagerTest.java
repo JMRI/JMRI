@@ -28,14 +28,9 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     @Test
     public void testAsAbstractFactory() {
-        // create and register the manager object
-        DCCppLightManager xlm = new DCCppLightManager(xnis, "DCCPP");
-        jmri.InstanceManager.setLightManager(xlm);
 
         // ask for a Light, and check type
-        LightManager lm = jmri.InstanceManager.lightManagerInstance();
-
-        Light tl = lm.newLight("DCCPPL21", "my name");
+        Light tl = l.newLight("DCCPPL21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received light value " + tl);
@@ -44,14 +39,14 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + lm.getBySystemName("DCCPPL21"));
+            log.debug("by system name: " + l.getBySystemName("DCCPPL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + lm.getByUserName("my name"));
+            log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != lm.getBySystemName("DCCPPL21"));
-        Assert.assertTrue(null != lm.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("DCCPPL21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
     }
 
     // from here down is testing infrastructure
@@ -59,7 +54,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface, register
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         // create and register the manager object
@@ -70,6 +65,11 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     @After
     public void tearDown() {
+        l.dispose();
+        l = null;
+        xnis = null;
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

@@ -20,7 +20,7 @@ public class LogOutputWindowAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame f = jmri.util.JLogoutputFrame.getInstance().getMainFrame();
-        f.setTitle("LogOutputTitle");
+        f.setTitle(Bundle.getMessage("LogOutputTitle"));
         f.setVisible(true);
     }
 

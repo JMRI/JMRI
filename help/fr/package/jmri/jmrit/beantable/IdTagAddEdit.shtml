@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<!-- Updated by Herv&#233; Blorec 2013-10-11-->
 
 <html lang="fr">
 <head>
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Adding/Editing Id Tags</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Matthew Harris" name="Author">
+  <meta name="author" content="Matthew Harris">
   <meta name="keywords" content="JMRI help Id Tag Add Edit">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -49,7 +46,8 @@
 
       <p>L'&eacute;tiquette ID indiqu&eacute;e dans le tableau est
       d&eacute;termin&eacute;e &agrave; partir du nom
-      syst&egrave;me. <!--#include virtual="/Footer" --></p>
+      syst&egrave;me.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -13,12 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="3" lastUpdated="20180216"/>
   <version author="sulzerbeast@gmail.com" version="2" lastUpdated="20070323"/>
   <version author="sulzerbeast@gmail.com" version="1" lastUpdated="20070321"/>
   <!-- version 1 -->
   <!-- created from LF100XF.xml -->
   <!-- version 2 -->
   <!-- tidied up directional headlights field, moved to Lenz pane -->
+  <!-- Version 3 - Implement Reset properly (Alain Le Marchand) -->
   <decoder>
     <family name="Function Decoder" mfg="Lenz" lowVersionID="10">
       <model model="LF101XF" numOuts="6" numFns="12">
@@ -46,11 +48,6 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
-      </variable>
-      <variable item="Manufacturer ID - Reset" CV="8">
-        <decVal/>
-        <label>Manufacturer ID - Reset</label>
-        <label xml:lang="de">Manufacturer ID - Reset</label>
       </variable>
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
@@ -851,6 +848,11 @@
         <label xml:lang="de">Decoder Software Version</label>
       </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
   </decoder>
   <pane>
     <name>Lenz</name>

@@ -1,36 +1,47 @@
 package apps.DecoderPro;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+import java.io.IOException;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- *
- * Tests for the DecoderPro application.
- *
- * @author  Paul Bender Copyright (C) 2016
+ * This is more of an acceptance test than a unit test. It confirms that the entire
+ * application can start up and configure itself.
+ * 
+ * @author Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2017
  */
-public class DecoderProTest {
+
+public class DecoderProTest extends apps.LaunchJmriAppBase {
+
+    protected void launch(String[] args) {
+        DecoderPro.main(args);
+    }
+    
+    @Test
+    public void testLaunchLocoNet() throws IOException {
+        runOne("LocoNet_Simulator", "DecoderPro", "DecoderPro version");
+    }
 
     @Test
-    @Ignore("This test works, but actually starts DecoderPro")
-    public void testCtor() {
-        apps.Apps a = new DecoderPro();
-        Assert.assertNotNull(a);
+    public void testLaunchEasyDcc() throws IOException {
+        runOne("EasyDcc_Simulator", "DecoderPro", "DecoderPro version");
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+    @Test
+    public void testLaunchSprog() throws IOException {
+        runOne("Sprog_Simulator", "DecoderPro", "DecoderPro version");
     }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Test
+    public void testLaunchTmcc() throws IOException {
+        runOne("TMCC_Simulator", "DecoderPro", "DecoderPro version");
+    }
+
+    @Test
+    public void testLaunchInitLoop() throws IOException {
+        runOne("Prevent_Init_Loop", "DecoderPro", "DecoderPro version");
     }
 
 }

@@ -5,8 +5,6 @@ import static jmri.server.json.reporter.JsonReporter.REPORTERS;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -15,7 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonReporterServiceFactory implements JsonServiceFactory {
+public class JsonReporterServiceFactory implements JsonServiceFactory<JsonReporterHttpService, JsonReporterSocketService> {
 
     @Override
     public String[] getTypes() {
@@ -23,12 +21,12 @@ public class JsonReporterServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonReporterSocketService getSocketService(JsonConnection connection) {
         return new JsonReporterSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonReporterHttpService getHttpService(ObjectMapper mapper) {
         return new JsonReporterHttpService(mapper);
     }
 

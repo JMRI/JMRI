@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233;  2016-08-28--> 
+<!-- Updated by Blorec Herv&#233;  2016-08-28-->
 <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Technical Info
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
 
     <!--#include virtual="/Style" -->
@@ -104,8 +104,8 @@ Il y a plusieurs fa&#231;ons de modifier JMRI:
 <h2>Renseignements sur le projet JMRI (Pour les personnes int&#233;ress&#233;es &#224; la fa&#231;on dont le logiciel est en cours d'&#233;criture</h2>
 
 Une grande partie des discussion sur le d&#233;veloppement JMRI a lieu sur la liste de diffusion JMRI-Developers:
-<a href="https://lists.sourceforge.net/lists/listinfo/jmri-developers"> Abonnez-vous </a>,
-<a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers"> Archive </a>
+<a href="https://jmri-developers.groups.io/g/jmri/join"> Abonnez-vous </a>,
+<a href="https://jmri-developers.groups.io/g/jmri/topics"> Archive </a>
 
 <p>
 <a href="http://GitHub.com">GitHub</a> fournit nos r&#233;pertoires logiciels via l'

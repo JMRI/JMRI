@@ -13,7 +13,7 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new GcTrafficController();
     }

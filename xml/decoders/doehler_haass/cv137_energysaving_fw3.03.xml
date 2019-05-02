@@ -44,5 +44,6 @@
     <label xml:lang="fr">Désactiver économie d'énergie</label>
     <label xml:lang="de">Energiesparmodus ausschalten</label>
     <label xml:lang="it">Disattiva modalità risparmio energetico</label>
+    <label xml:lang="ca">Desactiva modalitat de baix consum</label>
   </variable>
 </variables>

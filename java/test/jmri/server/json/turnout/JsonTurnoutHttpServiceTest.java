@@ -1,6 +1,5 @@
 package jmri.server.json.turnout;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
@@ -12,24 +11,19 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonTurnoutHttpServiceTest extends TestCase {
+public class JsonTurnoutHttpServiceTest {
 
-    public void testCtorSuccess() {
-        JsonTurnoutHttpService service = new JsonTurnoutHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
+    @Test
     public void testDoGet() throws JmriException {
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(new ObjectMapper());
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
@@ -37,24 +31,33 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
         JsonNode result;
         try {
             turnout1.setState(Turnout.UNKNOWN);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonTurnoutServiceFactory.TURNOUT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.CLOSED);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.CLOSED, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.THROWN);
-            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            turnout1.setState(Turnout.INCONSISTENT);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+                    service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
+            Assert.assertNotNull(result);
+            Assert.assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
     }
 
+    @Test
     public void testDoPost() throws JmriException {
         ObjectMapper mapper = new ObjectMapper();
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
@@ -81,22 +84,33 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             result = service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
             Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            // set inverted - becomes closed
+            Assert.assertFalse(turnout1.getInverted());
+            message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.INVERTED, true);
+            result = service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+            Assert.assertTrue("Turnout is inverted", turnout1.getInverted());
+            Assert.assertEquals(JSON.CLOSED, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            Assert.assertEquals(true, result.path(JSON.DATA).path(JSON.INVERTED).asBoolean());
+            // reset inverted - becomes thrown
+            message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.INVERTED, false);
+            result = service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+            Assert.assertFalse("Turnout is not inverted", turnout1.getInverted());
+            Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set invalid state
             message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, 42); // Invalid value
-            JsonException exception = null;
             try {
                 service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+                Assert.fail("Expected exception not thrown");
             } catch (JsonException ex) {
-                exception = ex;
+                Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
             }
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
-            Assert.assertNotNull(exception);
-            Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
     }
 
+    @Test
     public void testDoPut() {
         ObjectMapper mapper = new ObjectMapper();
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
@@ -112,71 +126,53 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
+    @Test
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
             TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
             JsonNode result;
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideTurnout("IT1");
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), Locale.ENGLISH);
+            Assert.assertNotNull(result);
+            Assert.assertEquals(1, result.size());
             manager.provideTurnout("IT2");
-            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
+    @Test
     public void testDelete() {
         try {
-            (new JsonTurnoutHttpService(new ObjectMapper())).doDelete(JsonTurnoutServiceFactory.TURNOUT, null, Locale.ENGLISH);
+            (new JsonTurnoutHttpService(new ObjectMapper())).doDelete(JsonTurnoutServiceFactory.TURNOUT, "", Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
         }
         Assert.fail("Did not throw expected error.");
     }
-    
-    // from here down is testing infrastructure
-    public JsonTurnoutHttpServiceTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonTurnoutHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonTurnoutHttpServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

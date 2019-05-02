@@ -3,10 +3,7 @@ package jmri.jmrit.symbolicprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,6 +41,9 @@ public class QuantumCvMgrImporterTest {
         CvTableModel tm = new CvTableModel(new JLabel(), null);
         QuantumCvMgrImporter t = new QuantumCvMgrImporter(f,tm);
         Assert.assertNotNull("exists",t);
+
+        jmri.util.JUnitAppender.assertWarnMessage("Adding CV 1 description \"\", which was in import file but not defined by the decoder definition");
+        jmri.util.JUnitAppender.assertWarnMessage("Adding CV 2 description \"\", which was in import file but not defined by the decoder definition");
     }
 
     // The minimal setup for log4J

@@ -15,7 +15,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController(){
+       new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }

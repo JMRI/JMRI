@@ -91,8 +91,8 @@
 
       <h3>JMRI Help</h3>
 
-      <p>Back to the <a href="index.shtml">XBee Help</a> page 
-      <!--#include virtual="/Footer" --></p>
+      <p>Back to the <a href="index.shtml">XBee Help</a> page.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

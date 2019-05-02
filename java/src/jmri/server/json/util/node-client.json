@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-node-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"node\"",
+    "properties": {
+    },
+    "additionalProperties": false
+}

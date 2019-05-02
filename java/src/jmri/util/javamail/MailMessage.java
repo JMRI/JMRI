@@ -19,7 +19,6 @@ package jmri.util.javamail;
  */
 
 /*
- * @(#)msgsend.java 1.20 07/07/06
  *
  * Copyright 1997-2007 Sun Microsystems, Inc. All Rights Reserved.
  *
@@ -77,7 +76,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MailMessage {
 
-    // first two required 
+    // first two required
     String to;
     String mailhost;
     String subject;
@@ -319,7 +318,7 @@ public class MailMessage {
             }
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+            log.error("Unable to send message.", e);
         }
     }
 

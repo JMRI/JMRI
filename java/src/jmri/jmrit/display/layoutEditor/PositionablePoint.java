@@ -1,8 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,11 +18,13 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -41,8 +45,12 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.signalling.SignallingGuiTools;
+import jmri.util.ColorUtil;
+import jmri.util.FileUtil;
 import jmri.util.MathUtil;
+import jmri.util.QuickPromptUtil;
 import jmri.util.swing.JCBHandle;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Three types of Positionable Point are supported: Anchor - point on track -
  * two track connections End Bumper - end of track point - one track connection
- * Edge Connector - This is used to link track segements between two different
+ * Edge Connector - This is used to link track segments between two different
  * panels
  * <P>
  * Note that a PositionablePoint exists for specifying connectivity and drawing
@@ -67,6 +75,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class PositionablePoint extends LayoutTrack {
 
@@ -86,8 +95,8 @@ public class PositionablePoint extends LayoutTrack {
 
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
-    /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
-                     this is so that we can keep up with moves and changes of userNames */
+    /* We use a namedbeanhandle for the sensors, even though we only store the name here,
+    this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
@@ -103,6 +112,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         String result = "PositionalablePoint";
         switch (type) {
@@ -150,6 +160,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
@@ -170,10 +181,11 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * @return the bounds of this positional point
      */
+    @Override
     public Rectangle2D getBounds() {
         Point2D c = getCoordsCenter();
         //Note: empty bounds don't draw...
-        // so now I'm mading them 0.5 bigger in all directions (1 pixel total)
+        // so now I'm making them 0.5 bigger in all directions (1 pixel total)
         return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
     }
 
@@ -615,6 +627,7 @@ public class PositionablePoint extends LayoutTrack {
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         if (type == EDGE_CONNECTOR) {
             connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
@@ -665,9 +678,11 @@ public class PositionablePoint extends LayoutTrack {
             if (oldTrack != null) {
                 result = true;  // assume success (optimist!)
                 if (connect1 == oldTrack) {
-                    connect1 = null;
+                    connect1 = null;        // disconnect connect1
                     reCheckBlockBoundary();
                     removeLinkedPoint();
+                    connect1 = connect2;    // Move connect2 to connect1
+                    connect2 = null;        // disconnect connect2
                 } else if (connect2 == oldTrack) {
                     connect2 = null;
                     reCheckBlockBoundary();
@@ -847,8 +862,6 @@ public class PositionablePoint extends LayoutTrack {
         if ((connect1 != null) || (connect2 != null)) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
-                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + connect1.getName());
-                //jmi.setEnabled(false);
                 connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -863,8 +876,6 @@ public class PositionablePoint extends LayoutTrack {
                 });
             }
             if (connect2 != null) {
-                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + connect2.getName());
-                //jmi.setEnabled(false);
                 connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -880,6 +891,287 @@ public class PositionablePoint extends LayoutTrack {
             }
             popup.add(connectionsMenu);
         }
+
+        if ((type == EDGE_CONNECTOR) || (type == END_BUMPER)) {
+            //
+            // decorations menu
+            //
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            JMenu decorationsMenu = new JMenu(Bundle.getMessage("DecorationMenuTitle"));
+            decorationsMenu.setToolTipText(Bundle.getMessage("DecorationMenuToolTip"));
+            popup.add(decorationsMenu);
+
+            JCheckBoxMenuItem jcbmi;
+            if (type == EDGE_CONNECTOR) {
+                JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
+                decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
+                decorationsMenu.add(arrowsMenu);
+
+                JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationStyleMenuTitle"));
+                arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                arrowsMenu.add(arrowsCountMenu);
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(false);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(false);
+                    }
+                    if (!connect1.isArrowEndStart() && !connect1.isArrowEndStop()) {
+                        connect1.setArrowStyle(0);
+                    }
+                });
+                boolean etherEnd = ((connect1.getConnect1() == this) && connect1.isArrowEndStart())
+                        || ((connect1.getConnect2() == this) && connect1.isArrowEndStop());
+
+                jcbmi.setSelected((connect1.getArrowStyle() == 0) || !etherEnd);
+
+                ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(1);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 1) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(2);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 2) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(3);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 3) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(4);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 4) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(5);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 5) && etherEnd);
+
+                JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
+                arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
+                arrowsMenu.add(arrowsDirMenu);
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirIn(false);
+                    connect1.setArrowDirOut(false);
+                });
+                jcbmi.setSelected(!connect1.isArrowDirIn() && !connect1.isArrowDirOut());
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirIn(true);
+                    connect1.setArrowDirOut(false);
+                });
+                jcbmi.setSelected(connect1.isArrowDirIn() && !connect1.isArrowDirOut());
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirOut(true);
+                    connect1.setArrowDirIn(false);
+                });
+                jcbmi.setSelected(!connect1.isArrowDirIn() && connect1.isArrowDirOut());
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirIn(true);
+                    connect1.setArrowDirOut(true);
+                });
+                jcbmi.setSelected(connect1.isArrowDirIn() && connect1.isArrowDirOut());
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+                jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", connect1.getArrowColor());
+                    if ((newColor != null) && !newColor.equals(connect1.getArrowColor())) {
+                        connect1.setArrowColor(newColor);
+                    }
+                });
+                jmi.setForeground(connect1.getArrowColor());
+                jmi.setBackground(ColorUtil.contrast(connect1.getArrowColor()));
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + connect1.getArrowLineWidth()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for arrow line width
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            connect1.getArrowLineWidth());
+                    connect1.setArrowLineWidth(newValue);
+                });
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + connect1.getArrowLength()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for arrow length
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            connect1.getArrowLength());
+                    connect1.setArrowLength(newValue);
+                });
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationGapMenuItemTitle")) + connect1.getArrowGap()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for arrow gap
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationGapMenuItemTitle"),
+                            Bundle.getMessage("DecorationGapMenuItemTitle"),
+                            connect1.getArrowGap());
+                    connect1.setArrowGap(newValue);
+                });
+            } // if (type == EDGE_CONNECTOR)
+
+            if (type == END_BUMPER) {
+                JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
+                decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
+                decorationsMenu.add(endBumperMenu);
+
+                JCheckBoxMenuItem enableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EndBumperEnableMenuItemTitle"));
+                enableCheckBoxMenuItem.setToolTipText(Bundle.getMessage("EndBumperEnableMenuItemToolTip"));
+
+                endBumperMenu.add(enableCheckBoxMenuItem);
+                enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setBumperEndStart(enableCheckBoxMenuItem.isSelected());
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setBumperEndStop(enableCheckBoxMenuItem.isSelected());
+                    }
+                });
+                if (connect1.getConnect1() == this) {
+                    enableCheckBoxMenuItem.setSelected(connect1.isBumperEndStart());
+                }
+                if (connect1.getConnect2() == this) {
+                    enableCheckBoxMenuItem.setSelected(connect1.isBumperEndStop());
+                }
+
+                jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+                jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", connect1.getBumperColor());
+                    if ((newColor != null) && !newColor.equals(connect1.getBumperColor())) {
+                        connect1.setBumperColor(newColor);
+                    }
+                });
+                jmi.setForeground(connect1.getBumperColor());
+                jmi.setBackground(ColorUtil.contrast(connect1.getBumperColor()));
+
+                jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + connect1.getBumperLineWidth()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for width
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            connect1.getBumperLineWidth(), new Predicate<Integer>() {
+                        @Override
+                        public boolean test(Integer t) {
+                            if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+                            }
+                            return true;
+                        }
+                    });
+                    connect1.setBumperLineWidth(newValue);
+                });
+
+                jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + connect1.getBumperLength()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for length
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            connect1.getBumperLength(), new Predicate<Integer>() {
+                        @Override
+                        public boolean test(Integer t) {
+                            if (t < 0 || t > TrackSegment.MAX_BUMPER_LENGTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_LENGTH));
+                            }
+                            return true;
+                        }
+                    });
+                    connect1.setBumperLength(newValue);
+                });
+            }
+        }   // if ((type == EDGE_CONNECTOR) || (type == END_BUMPER))
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -1003,6 +1295,14 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("A", 1);
                 type = ANCHOR;
+                if (connect1.getConnect1() == PositionablePoint.this) {
+                    connect1.setArrowEndStart(false);
+                    connect1.setBumperEndStart(false);
+                }
+                if (connect1.getConnect2() == PositionablePoint.this) {
+                    connect1.setArrowEndStop(false);
+                    connect1.setBumperEndStop(false);
+                }
                 layoutEditor.repaint();
             }
         }));
@@ -1020,6 +1320,14 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EB", 1);
                 type = END_BUMPER;
+                if (connect1.getConnect1() == PositionablePoint.this) {
+                    connect1.setArrowEndStart(false);
+                    connect1.setBumperEndStart(true);
+                }
+                if (connect1.getConnect2() == PositionablePoint.this) {
+                    connect1.setArrowEndStop(false);
+                    connect1.setBumperEndStop(true);
+                }
                 layoutEditor.repaint();
             }
         }));
@@ -1031,6 +1339,12 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EC", 1);
                 type = EDGE_CONNECTOR;
+                if (connect1.getConnect1() == PositionablePoint.this) {
+                    connect1.setBumperEndStart(false);
+                }
+                if (connect1.getConnect2() == PositionablePoint.this) {
+                    connect1.setBumperEndStop(false);
+                }
                 layoutEditor.repaint();
             }
         }));
@@ -1125,7 +1439,6 @@ public class PositionablePoint extends LayoutTrack {
 
     void removeLinkedPoint() {
         if (type == EDGE_CONNECTOR && getLinkedPoint() != null) {
-
             if (getConnect2() != null && getLinkedEditor() != null) {
                 //as we have removed the point, need to force the update on the remote end.
                 LayoutEditor oldLinkedEditor = getLinkedEditor();
@@ -1136,15 +1449,14 @@ public class PositionablePoint extends LayoutTrack {
                 ts.updateBlockInfo();
             }
             linkedPoint = null;
-            //linkedEditor=null;
         }
     }
 
     /**
-     * Removes this object from display and persistance
+     * Removes this object from display and persistence
      */
     private void remove() {
-        // remove from persistance by flagging inactive
+        // remove from persistence by flagging inactive
         active = false;
     }
 
@@ -1183,7 +1495,7 @@ public class PositionablePoint extends LayoutTrack {
             return;
         }
         editLink = new JDialog();
-        editLink.setTitle("EDIT LINK from " + getConnect1().getLayoutBlock().getDisplayName());
+        editLink.setTitle(Bundle.getMessage("EdgeEditLinkFrom", getConnect1().getLayoutBlock().getDisplayName()));
 
         JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
@@ -1215,9 +1527,8 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
-        ArrayList<LayoutEditor> panels = InstanceManager.getDefault(
-                PanelMenu.class
-        ).getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> panels
+                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         editorCombo.addItem(new JCBHandle<LayoutEditor>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);
@@ -1240,7 +1551,7 @@ public class PositionablePoint extends LayoutTrack {
         selectorPanel.add(editorCombo);
         linkPointsBox = new JComboBox<String>();
         updatePointBox();
-        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingBlock")));
+        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingTo")));
         selectorPanel.add(linkPointsBox);
         return selectorPanel;
     }
@@ -1252,19 +1563,18 @@ public class PositionablePoint extends LayoutTrack {
             linkPointsBox.setEnabled(false);
             return;
         }
-        int ourDir = getConnect1Dir();
+
         linkPointsBox.setEnabled(true);
-        LayoutEditor le = (LayoutEditor) editorCombo.getItemAt(
-                editorCombo.getSelectedIndex()).item();
+        LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
             if (p.getType() == EDGE_CONNECTOR) {
                 if (p.getLinkedPoint() == this) {
                     pointList.add(p);
-                    linkPointsBox.addItem(p.getConnect2().getLayoutBlock().getDisplayName());
-                    linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
+                    linkPointsBox.addItem(p.getName());
+                    linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() && ourDir != p.getConnect1Dir()) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
                         }
@@ -1273,7 +1583,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         }
         editLink.pack();
-    }   // updatePointBox
+    } // updatePointBox
 
     public void updateLink() {
         if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {
@@ -1319,17 +1629,32 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
+        //note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Point2D p, minPoint = MathUtil.zeroPoint2D;
+
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double distance, minDistance = POSITIVE_INFINITY;
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
-            if (r.contains(hitPoint)) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
                 result = POS_POINT;
             }
         }
+        if ((useRectangles && !r.contains(minPoint))
+                || (!useRectangles && (minDistance > circleRadius))) {
+            result = NONE;
+        }
         return result;
-    }
+    }   // findHitPointType
 
     /**
      * return the coordinates for a specified connection type
@@ -1337,6 +1662,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
         if (connectionType != POS_POINT) {
@@ -1381,7 +1707,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType - the connection type to test
+     * @param connectionType  the connection type to test
      * @return true if the connection for this connection type is free
      */
     @Override
@@ -1395,32 +1721,54 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
-    /*
-     * {@inheritDoc}
-     */
     @Override
-    protected void draw(Graphics2D g2) {
-        // nothing to see here... move along...
-    }   // draw
+    public boolean isMainline() {
+        boolean result = false; // assume failure (pessimist!)
+        if (getConnect1() != null) {
+            result = getConnect1().isMainline();
+        }
+        if (getType() == ANCHOR) {
+            if (getConnect2() != null) {
+                result |= getConnect2().isMainline();
+            }
+        }
+        return result;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
-        if ((getConnect1() == null)
-                || ((getType() == ANCHOR) && (getConnect2() == null))) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        //nothing to do here... move along...
+    }   // draw1
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        //nothing to do here... move along...
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if ((specificType == NONE) || (specificType == POS_POINT)) {
+            if ((getConnect1() == null)
+                    || ((getType() == ANCHOR) && (getConnect2() == null))) {
+                g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+            }
         }
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
         TrackSegment ts1 = getConnect1();
         if (ts1 == null) {
             g2.setColor(Color.red);
@@ -1439,16 +1787,19 @@ public class PositionablePoint extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
         // nothing to see here... move along...
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -1468,7 +1819,8 @@ public class PositionablePoint extends LayoutTrack {
             eastBoundSignalMastNamed = null;
             setWestBoundSensor("");
             setEastBoundSensor("");
-            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+            //TODO: May want to look at a method to remove the assigned mast
+            //from the panel and potentially any SignalMast logics generated
         } else if (getConnect1() == null || getConnect2() == null) {
             //could still be in the process of rebuilding the point details
             return;
@@ -1484,11 +1836,12 @@ public class PositionablePoint extends LayoutTrack {
             eastBoundSignalMastNamed = null;
             setWestBoundSensor("");
             setEastBoundSensor("");
-            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+            //TODO: May want to look at a method to remove the assigned mast 
+            //from the panel and potentially any SignalMast logics generated
         }
     }   // reCheckBlockBoundary
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -1588,28 +1941,27 @@ public class PositionablePoint extends LayoutTrack {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-         * For each (non-null) blocks of this track do:
-         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is not in one of the TrackNameSets for this block
-         * #3) add a new set (with this block/track) to
-         *     blockNamesToTrackNameSetMap and
-         * #4) check all the connections in this
-         *     block (by calling the 2nd method below)
-         * <p>
-         *     Basically, we're maintaining contiguous track sets for each block found
-         *     (in blockNamesToTrackNameSetMap)
-         */
+        * For each (non-null) blocks of this track do:
+        * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+        * #2) If this track is not in one of the TrackNameSets for this block
+        * #3) add a new set (with this block/track) to
+        *     blockNamesToTrackNameSetMap and
+        * #4) check all the connections in this
+        *     block (by calling the 2nd method below)
+        * <p>
+        *     Basically, we're maintaining contiguous track sets for each block found
+        *     (in blockNamesToTrackNameSetMap)
+        */
         //check the 1st connection points block
         TrackSegment ts1 = getConnect1();
         String blk1 = null;
         List<Set<String>> TrackNameSets = null;
-        Set<String> TrackNameSet = null;
+        Set<String> TrackNameSet = null;    // assume not found (pessimist!)
 
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
             if (blk1 != null) {
-                TrackNameSet = null;    // assume not found (pessimist!)
                 TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
                 if (TrackNameSets != null) { // (#1)
                     for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -1619,13 +1971,13 @@ public class PositionablePoint extends LayoutTrack {
                         }
                     }
                 } else {    // (#3)
-                    log.info("-New block ('{}') trackNameSets", blk1);
+                    log.debug("*New block ('{}') trackNameSets", blk1);
                     TrackNameSets = new ArrayList<>();
                     blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
                 }
                 if (TrackNameSet == null) {
                     TrackNameSet = new LinkedHashSet<>();
-                    log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                    log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
                     TrackNameSet.add(getName());
                     TrackNameSets.add(TrackNameSet);
                 }
@@ -1652,13 +2004,13 @@ public class PositionablePoint extends LayoutTrack {
                             }
                         }
                     } else {    // (#3)
-                        log.info("-New block ('{}') trackNameSets", blk2);
+                        log.debug("*New block ('{}') trackNameSets", blk2);
                         TrackNameSets = new ArrayList<>();
                         blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
                     }
                     if (TrackNameSet == null) {
                         TrackNameSet = new LinkedHashSet<>();
-                        log.info("-    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                        log.debug("*    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
                         TrackNameSets.add(TrackNameSet);
                         TrackNameSet.add(getName());
                     }
@@ -1673,6 +2025,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -1684,7 +2037,7 @@ public class PositionablePoint extends LayoutTrack {
                 if (blk1.equals(blockName)) {
                     // if we are added to the TrackNameSet
                     if (TrackNameSet.add(getName())) {
-                        log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                        log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                     }
                     // this should never be null... but just in case...
                     if (connect1 != null) {
@@ -1701,7 +2054,7 @@ public class PositionablePoint extends LayoutTrack {
                     if (blk2.equals(blockName)) {
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                            log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                         }
                         // this should never be null... but just in case...
                         if (connect2 != null) {
@@ -1717,11 +2070,12 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // positionable points don't have blocks...
         // nothing to see here, move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(PositionablePoint.class);
 }

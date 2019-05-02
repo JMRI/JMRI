@@ -1,53 +1,49 @@
 package jmri.jmrit.withrottle;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of FacelessServer
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class FacelessServerTest extends TestCase {
+public class FacelessServerTest {
 
+    private FacelessServer panel;
+
+    @Test
     public void testCtor() {
-        FacelessServer panel = new FacelessServer(){
-           @Override
-           public void createServerThread(){
-           }
-        };
-
         Assert.assertNotNull("exists", panel );
     }
 
-    // from here down is testing infrastructure
-    public FacelessServerTest(String s) {
-        super(s);
+    @Test
+    public void testGetDeviceList() {
+        Assert.assertNotNull("exists", panel.getDeviceList() );
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FacelessServerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FacelessServerTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        panel = new FacelessServer(){
+           @Override
+           public void listen(){
+           }
+        };
     }
     
-    @Override
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        try {
+          panel.disableServer();
+          JUnitUtil.waitFor( () -> { return panel.isListen; });
+        } catch(java.lang.NullPointerException npe) {
+          // not all tests fully configure the server, so an
+          // NPE here is ok.
+        }
+        JUnitUtil.tearDown();
     }
 }

@@ -1,6 +1,8 @@
 package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JPanel extension to handle automatic creation of window title and help
@@ -36,10 +38,10 @@ abstract public class PowerlinePanel extends jmri.util.swing.JmriPanel implement
             try {
                 initComponents((SerialSystemConnectionMemo) context);
             } catch (Exception e) {
-                //log.error("PowerlinePanel initContext failed");
-                e.printStackTrace();
+                log.error("PowerlinePanel initContext failed", e);
             }
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(PowerlinePanel.class);
 }

@@ -34,7 +34,6 @@ public class CanConfigurationManager extends ConfigurationManager {
         return false; // nothing, by default
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {

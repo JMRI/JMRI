@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -36,6 +34,7 @@ public class PaneServiceProgFrameTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
         setupDoc();
     }
@@ -48,9 +47,6 @@ public class PaneServiceProgFrameTest {
     // variables for the test XML structures
     private Element root = null;
     private Document doc = null;
-    private Element decoderIndexElement = null;
-    private Element family1 = null;
-    private Element family2 = null;
 
     // provide a test document in the above static variables
     void setupDoc() {
@@ -60,7 +56,7 @@ public class PaneServiceProgFrameTest {
         doc.setDocType(new DocType("decoderIndex-config", "decoderIndex-config.dtd"));
 
         // add some elements
-        root.addContent(decoderIndexElement = new Element("decoderIndex")
+        root.addContent(new Element("decoderIndex")
                 .addContent(new Element("mfgList")
                         .addContent(new Element("manufacturer")
                                 .setAttribute("mfg", "NMRA")
@@ -71,7 +67,7 @@ public class PaneServiceProgFrameTest {
                         )
                 )
                 .addContent(new Element("familyList")
-                        .addContent(family1 = new Element("family")
+                        .addContent(new Element("family")
                                 .setAttribute("mfg", "NMRA")
                                 .setAttribute("name", "NMRA S&RP definitions")
                                 .setAttribute("file", "NMRA.xml")
@@ -84,7 +80,7 @@ public class PaneServiceProgFrameTest {
                                         .setAttribute("comment", "required CVs in RP 9.2.1")
                                 )
                         )
-                        .addContent(family2 = new Element("family")
+                        .addContent(new Element("family")
                                 .setAttribute("mfg", "Digitrax")
                                 .setAttribute("name", "FX2 family")
                                 .setAttribute("file", "DH142.xml")
@@ -110,6 +106,6 @@ public class PaneServiceProgFrameTest {
         return;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneServiceProgFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PaneServiceProgFrameTest.class.getName());
 
 }

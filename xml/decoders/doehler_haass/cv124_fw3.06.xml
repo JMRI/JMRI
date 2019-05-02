@@ -39,5 +39,6 @@
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/choice-F1F8.xml"/>
     <label>Acceleration Delay</label>
     <label xml:lang="de">Anfahrverzögerung F-Taste</label>
+    <label xml:lang="ca">Retard d'acceleració</label>
   </variable>
 </variables>

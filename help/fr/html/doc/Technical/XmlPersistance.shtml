@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
+<!-- Updated by Blorec Herv&#233; le 2013-09-09-->
 
 <html lang="fr">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
@@ -10,7 +10,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Persistence XML</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml persistance"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -183,8 +183,8 @@
       dont le contenu est alors d&eacute;fini par un fichier de
       sch&eacute;ma. Ces fichiers sont conserv&eacute;s dans le
       r&eacute;pertoire <a href=
-      "http://jmri.org/xml/schema">xml/schema</a> . 
-      <!--#include virtual="/Footer" --></p>
+      "http://jmri.org/xml/schema">xml/schema</a> .</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

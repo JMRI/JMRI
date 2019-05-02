@@ -2,7 +2,10 @@ package jmri.jmrit.blockboss.configurexml;
 
 import java.util.Enumeration;
 import java.util.List;
+
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.*;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,9 +154,20 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
             Element block = l.get(i);
             BlockBossLogic bb = null;
             try {
-                bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
+                String signalName = block.getAttributeValue("signal");
+                if (signalName == null || signalName.isEmpty()) {
+                    // this is an error
+                    log.error("Ignoring a <signalelement> element with no signal attribute value");
+                    break;
+                }
+                if (InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName) == null) {
+                    // this is an error
+                    log.error("SignalHead {} not defined, <signalelement> element referring to it is ignored", signalName);
+                    break;
+                }
+                bb = BlockBossLogic.getStoppedObject(signalName);
             } catch (Exception e) {
-                log.error("An error occurred trying to find the signal for the signal elements for " + block.getAttributeValue("signal"));
+                log.error("An error occurred trying to find the signal for the signal elements for " + block.getAttributeValue("signal"), e);
                 result = false;
             }
             if (bb != null) {

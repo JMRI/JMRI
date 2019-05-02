@@ -24,8 +24,9 @@
   <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <p id="mainContent">
-      <h1>JMRI: Preferences Pane</h1>The Preferences pane is where
+    <div id="mainContent">
+      <h1>JMRI: Preferences Pane</h1>
+      The Preferences pane is where
       you configure the basic operation of your JMRI application.
 
       <p>The screen is split into two sections: on the left hand
@@ -53,8 +54,8 @@
       <a href="#RailroadName">Railroad Name</a><br>
       <a href="#JSONServer">JSON Server</a><br>
       <a href="#WebServer">Web Server</a><br>
-      <a href="#SRCP%20Server">SRCP Server</a><br>
-      <a href="#Simple%20Server">Simple Server</a><br>
+      <a href="#SRCP_Server">SRCP Server</a><br>
+      <a href="#Simple_Server">Simple Server</a><br>
       <a href="#Warrants">Warrants</a><br></p>
 
       <p>Perhaps the most important control is at the bottom of
@@ -271,8 +272,8 @@
       "images/PrefsRoster47.png" height="184" width="416" align=
       "right" alt="JMRI v4.7 Roster Prefs tab"></a>
 
+      <a id="programmer" name="programmer"></a>
       <dl>
-        <a id="programmer" name="programmer"></a>
         <dt>Programmer</dt>
 
         <dd>
@@ -483,7 +484,7 @@
       <p>This tab lets you control what the web server provides.
       For more information, see the <a href=
       "../../html/web/index.shtml#Configure">Web Server Preferences
-      pane</a> page. <a name="SRCP Server"></a></p>
+      pane</a> page. <a name="SRCP_Server"></a></p>
 
       <h2>SRCP Server</h2>
 
@@ -493,7 +494,7 @@
       "server".</p>
 
       <p>On this pane you can specify the port for the connection
-      (usually left at default).</p><a name="Simple Server"></a>
+      (usually left at default).</p><a name="Simple_Server"></a>
 
       <h2>Simple Server</h2>
 
@@ -589,7 +590,7 @@
         corresponding to the above, 
         300 to 1000 milliseconds would be appropriate.</li>
       </ul>
-      <p>You should experiment by watching how NXWarrants start and end
+      <p>You should experiment by watching how NX Warrants start and end
        or by issuing "Stop" and "Resume" commands to a recorded
       warrant.</p>
        

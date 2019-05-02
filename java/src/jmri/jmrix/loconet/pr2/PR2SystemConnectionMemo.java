@@ -2,7 +2,9 @@ package jmri.jmrix.loconet.pr2;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnPr2ThrottleManager;
+import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
@@ -38,7 +40,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         jmri.InstanceManager.setThrottleManager(getPr2ThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
@@ -121,6 +123,12 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     @Override
     public void dispose() {
         InstanceManager.deregister(this, PR2SystemConnectionMemo.class);
+
+        if (powerPr2Manager != null) {
+            powerPr2Manager.dispose();
+            InstanceManager.deregister(powerPr2Manager, LnPowerManager.class);
+        }
+
         super.dispose();
     }
 

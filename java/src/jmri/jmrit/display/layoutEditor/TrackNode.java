@@ -29,6 +29,7 @@ import jmri.Block;
  * Object and Node Type, are not returned.
  *
  * @author Dave Duchamp Copyright (C) 2009
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class TrackNode {
 
@@ -115,5 +116,3 @@ public class TrackNode {
         return null;
     }
 }
-
-

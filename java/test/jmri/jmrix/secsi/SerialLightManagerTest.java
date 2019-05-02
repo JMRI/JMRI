@@ -25,8 +25,8 @@ public class SerialLightManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tcis = new SerialTrafficControlScaffold();
         memo = new SecsiSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
     }
 

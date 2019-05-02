@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.SortOrder;
 
 /**
  * Interface for the User Preferences Manager.
@@ -656,24 +655,6 @@ public interface UserPreferencesManager {
      * @return complete set of keys
      */
     public java.util.Set<String> getPropertyKeys(String strClass);
-
-    /**
-     * Stores the details of a tables column, so that it can be saved and
-     * re-applied when jmri is re-started. Retained for reading JMRI 4.4 and
-     * earlier user interface preferences.
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @param order  The position that the column appears in the header
-     * @param width  The width of the column
-     * @param sort   The sort order of the column
-     * @param hidden Should the column be hidden
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
 
     /*
      Example informational message dialog box.

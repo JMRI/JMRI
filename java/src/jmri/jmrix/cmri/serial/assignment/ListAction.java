@@ -21,7 +21,7 @@ public class ListAction extends AbstractAction {
     }
 
     public ListAction(CMRISystemConnectionMemo memo) {
-        this(Bundle.getMessage("MenuItemAssignments"), memo);
+        this(Bundle.getMessage("WindowTitle"), memo);
     }
 
     @Override

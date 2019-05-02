@@ -11,6 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ItemPaletteTest.class,
+    ColorDialogTest.class,
+    FontPanelTest.class,
     BundleTest.class,
     BackgroundItemPanelTest.class,
     ClockItemPanelTest.class,
@@ -33,6 +35,8 @@ import org.junit.runners.Suite;
     IconDialogTest.class,
     IndicatorTOIconDialogTest.class,
     MultiSensorIconDialogTest.class,
+    DragJComponentTest.class,
+    SignalHeadIconDialogTest.class,
 })
 public class PackageTest {
 }

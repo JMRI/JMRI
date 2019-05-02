@@ -8,7 +8,7 @@ import javax.swing.JPanel;
  * This uses the {@link LIUSBEthernetAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2011
-  *
+ *
  * @see LIUSBEthernetAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
@@ -22,7 +22,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter.
+     * Ctor for a functional Swing object with no preexisting adapter.
      */
     public ConnectionConfig() {
         super();

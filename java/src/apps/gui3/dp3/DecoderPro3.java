@@ -82,17 +82,12 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {
         jmri.UserPreferencesManager p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
+        if (!p.hasProperties(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new java.awt.Dimension(1024, 600));
             mainFrame.setPreferredSize(new java.awt.Dimension(1024, 600));
         }
 
         mainFrame.setVisible(true);
-    }
-
-    @Override
-    protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3ActionListBundle");
     }
 
     // Main entry point
@@ -117,7 +112,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         if ((!configOK) || (!configDeferredLoadOK)) {
             if (preferenceFileExists) {
                 //if the preference file already exists then we will launch the normal preference window
-                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
+                AbstractAction prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
                 prefsAction.actionPerformed(null);
             }
         }

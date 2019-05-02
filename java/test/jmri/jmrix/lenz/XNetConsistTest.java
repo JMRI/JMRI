@@ -95,7 +95,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
         c = new XNetConsist(5, tc, memo);
@@ -104,7 +104,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         tc=null;
         memo=null;
     }

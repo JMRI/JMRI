@@ -18,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -41,7 +42,7 @@
       right-hand (RH), left hand (LH) or wye (WYE) turnouts.
       Schematically, the final throat-to-throat setup looks as
       shown below:</p><a href="./images/DoubleXover8.gif"><img src=
-      "./images/TToTTurnout8.gif" align="center" width="280"
+      "./images/TToTTurnout8.gif" width="280"
       height="75" hspace="0" vspace="0"></a>
 
       <p>If requested, this tool will place signal icons on the
@@ -238,7 +239,9 @@
       needs.</p>
 
       <p><b>Please remember to save your panel after using this
-      tool.</b></p><!--#include virtual="/Footer" -->
+      tool.</b></p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

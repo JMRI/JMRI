@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for the Bundle class
+ * Tests for the Bundle class.
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */

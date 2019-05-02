@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Tests for the OBlockManager class
- * <P>
+ * <p>
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
  */
@@ -38,7 +38,7 @@ public class OBlockManagerTest {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            OBlock t = l.provideOBlock("");
+            l.provideOBlock("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;

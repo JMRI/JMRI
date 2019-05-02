@@ -20,7 +20,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     private int propertyChangeCount;
     private java.beans.PropertyChangeListener listener = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
         sendOnReply();
@@ -46,8 +46,18 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Override
+    protected void sendIdleReply() {
+        return;
+    }
+
+    @Override
     protected void hearOff() {
         sendOffReply();
+    }
+
+    @Override
+    protected void hearIdle() {
+        return;
     }
 
     @Override
@@ -70,6 +80,11 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     protected boolean outboundOffOK(int index) {
         XNetMessage m = XNetMessage.getEmergencyOffMsg();
         return tc.outbound.elementAt(index).equals(m);
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return true;
     }
 
     @Test

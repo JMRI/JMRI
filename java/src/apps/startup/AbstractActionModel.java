@@ -42,12 +42,14 @@ public abstract class AbstractActionModel implements StartupModel {
     }
 
     @Override
-    public void setName(@Nonnull String n) {
+    public void setName(String n) {
+        log.debug("setName(\"{}\")", n);
         // can set className to null if no class found for n
         this.className = StartupActionModelUtil.getDefault().getClassName(n);
     }
 
     public void setClassName(@Nonnull String n) {
+        log.debug("setClassName(\"{}\")", n);
         Objects.requireNonNull(n, "Class name cannot be null");
         this.className = n;
     }
@@ -108,7 +110,7 @@ public abstract class AbstractActionModel implements StartupModel {
     public void performAction() throws JmriException {
         log.debug("Invoke Action from {}", className);
         try {
-            Action action = (Action) Class.forName(className).newInstance();
+            Action action = (Action) Class.forName(className).getDeclaredConstructor().newInstance();
             if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
                 SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(this.getSystemPrefix());
                 if (memo != null) {
@@ -117,7 +119,13 @@ public abstract class AbstractActionModel implements StartupModel {
                     log.warn("Connection \"{}\" does not exist and cannot be assigned to action {}\nThis warning can be silenced by configuring the connection associated with the startup action.", this.getSystemPrefix(), className);
                 }
             }
-            this.performAction(action);
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                 this.performAction(action);
+                } catch (JmriException ex) {
+                    log.error("Error while performing startup action for class: {}", className, ex);
+               }
+            });
         } catch (ClassNotFoundException ex) {
             log.error("Could not find specified class: {}", className);
         } catch (IllegalAccessException ex) {
@@ -125,6 +133,12 @@ public abstract class AbstractActionModel implements StartupModel {
             throw new JmriException(ex);
         } catch (InstantiationException ex) {
             log.error("Could not instantiate specified class: {}", className, ex);
+            throw new JmriException(ex);
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            log.error("Error while invoking startup action for class: {}", className, ex);
+            throw new JmriException(ex);
+        } catch (NoSuchMethodException ex) {
+            log.error("Could not locate specified method: {}", className, ex);
             throw new JmriException(ex);
         } catch (Exception ex) {
             log.error("Error while performing startup action for class: {}", className, ex);

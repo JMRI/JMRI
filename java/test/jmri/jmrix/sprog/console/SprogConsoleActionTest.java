@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of SprogConsoleAction  
+ * Test simple functioning of SprogConsoleAction.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -19,7 +19,7 @@ public class SprogConsoleActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        SprogConsoleAction action = new SprogConsoleAction("SPROG Action Test",new jmri.jmrix.sprog.SprogSystemConnectionMemo());
+        SprogConsoleAction action = new SprogConsoleAction("SPROG Action Test", new jmri.jmrix.sprog.SprogSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
@@ -30,4 +30,5 @@ public class SprogConsoleActionTest {
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
+
 }

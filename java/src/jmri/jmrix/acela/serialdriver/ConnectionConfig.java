@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
 
 /**
- * Definition of objects to handle configuring a CTI Electronics Acela
- * layout connection via a SerialDriverAdapter object.
+ * Definition of objects to handle configuring a CTI Electronics Acela layout
+ * connection via a SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
@@ -15,15 +15,18 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Create a connection configuration without a preexisting adapter.
      */
     public ConnectionConfig() {
         super();

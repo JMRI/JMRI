@@ -20,19 +20,10 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
-    protected boolean isAvailable;  // Flag  stating if the throttle is in 
-    // use or not.
-    protected java.util.TimerTask statusTask; // Timer Task used to 
-    // periodically get 
-    // current status of the 
-    // throttle when throttle 
-    // not available.
-    protected static final int statTimeoutValue = 1000; // Interval to check the 
     protected DCCppTrafficController tc = null;
 
     // status of the throttle
     protected static final int THROTTLEIDLE = 0;  // Idle Throttle
-    protected static final int THROTTLESTATSENT = 1;  // Sent Status request
     protected static final int THROTTLESPEEDSENT = 2;  // Sent speed/dir command to locomotive
     protected static final int THROTTLEFUNCSENT = 4;   // Sent a function command to locomotive.
 
@@ -61,15 +52,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         this.setDccAddress(((DccLocoAddress) address).getNumber());
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
         this.speedStepMode = DccThrottle.SpeedStepMode128;
-        //       this.isForward=true;
-        setIsAvailable(false);
-
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary
-                = f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary
-                = f10Momentary = f11Momentary = f12Momentary = false;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
-        //sendStatusInformationRequest();
         if (log.isDebugEnabled()) {
             log.debug("DCCppThrottle constructor called for address " + address);
         }
@@ -159,73 +143,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         queueMessage(msg, THROTTLEIDLE);
     }
 
-    /**
-     * Send the DCC++ message to set the Momentary state of locomotive
-     * functions F0, F1, F2, F3, F4
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup1() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup1SetMomMsg(this.getDccAddress(),
-                f0Momentary, f1Momentary, f2Momentary, f3Momentary, f4Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F5,
-     * F6, F7, F8
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup2() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup2SetMomMsg(this.getDccAddress(),
-                f5Momentary, f6Momentary, f7Momentary, f8Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F9,
-     * F10, F11, F12
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup3() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup2SetMomMsg(this.getDccAddress(),
-                f9Momentary, f10Momentary, f11Momentary, f12Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F13,
-     * F14, F15, F16 F17 F18 F19 F20
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup4() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup4SetMomMsg(this.getDccAddress(),
-                f13Momentary, f14Momentary, f15Momentary, f16Momentary,
-                f17Momentary, f18Momentary, f19Momentary, f20Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F21,
-     * F22, F23, F24 F25 F26 F27 F28
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup5() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup5SetMomMsg(this.getDccAddress(),
-                f21Momentary, f22Momentary, f23Momentary, f24Momentary,
-                f25Momentary, f26Momentary, f27Momentary, f28Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
     /* 
      * setSpeedSetting - notify listeners and send the new speed to the
      * command station.
@@ -256,7 +173,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
     }
 
-    /* Since xpressnet has a seperate Opcode for emergency stop,
+    /* Since DCC++ has a seperate Opcode for emergency stop,
      * We're setting this up as a seperate protected function
      */
     protected void sendEmergencyStop() {
@@ -279,8 +196,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     /*
      * setSpeedStepMode - set the speed step value and the related
      *                    speedIncrement value.
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128
+     * <p>
+     * @param Mode  the current speed step mode - default should be 128
      *              speed step mode in most cases
      *
      * NOTE: DCC++ only supports 128-step mode.  So we ignore the speed
@@ -301,7 +218,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     @Override
     protected void throttleDispose() {
         active = false;
-        stopStatusTimer();
         finishRecord();
     }
 
@@ -337,7 +253,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle " + getDccAddress() + " - recieved message " + l.toString());
+            log.debug("Throttle {} - received message \"{}\"", getDccAddress(), l.toString());
         }
         if (requestState == THROTTLEIDLE) {
             if (log.isDebugEnabled()) {
@@ -359,7 +275,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      if (log.isDebugEnabled()) {
   log.debug("Last Command processed successfully.");
      }
-     setIsAvailable(true);
      requestState = THROTTLEIDLE;
      sendQueuedMessage();
   
@@ -425,64 +340,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         } else {
             // Try to send the next queued message,  if one is available.
             sendQueuedMessage();
-        }
-    }
-
-    // Status Information processing routines
-    // Used for return values from Status requests.
-    //Get SpeedStep and availability information
-
-
-
-    /*
-     * Set the internal isAvailable property
-     */
-    protected void setIsAvailable(boolean Available) {
-        if (this.isAvailable != Available) {
-            notifyPropertyChangeListener("IsAvailable",
-                    Boolean.valueOf(this.isAvailable),
-                    Boolean.valueOf(this.isAvailable = Available));
-        }
-        /* if we're setting this to true, stop the timer,
-         otherwise start the timer. */
-        if (Available == true) {
-            stopStatusTimer();
-        } else {
-            startStatusTimer();
-        }
-    }
-
-    /*
-     * Set up the status timer, and start it.
-     */
-    protected void startStatusTimer() {
-        if (log.isDebugEnabled()) {
-            log.debug("Status Timer Started");
-        }
-        if (statusTask != null) {
-            statusTask.cancel();
-        }
-        statusTask = new java.util.TimerTask() {
-            @Override
-            public void run() {
-                /* If the timer times out, just send a status 
-                 request message */
-  // TODO: how to do this for DCC++?
-                //sendStatusInformationRequest();
-            }
-        };
-        new java.util.Timer().schedule(statusTask, statTimeoutValue, statTimeoutValue);
-    }
-
-    /*
-     * Stop the Status Timer 
-     */
-    protected void stopStatusTimer() {
-        if (log.isDebugEnabled()) {
-            log.debug("Status Timer Stopped");
-        }
-        if (statusTask != null) {
-            statusTask.cancel();
         }
     }
 

@@ -25,6 +25,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     /**
      * Initialise a Signal Mast Logic for a given source Signal mast.
      *
-     * @param source - The Signal Mast we are configuring an SML for
+     * @param source  The Signal Mast we are configuring an SML for
      */
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
         super(source.toString()); // default system name
@@ -144,7 +145,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void setDestinationMast(SignalMast dest) {
         if (destList.containsKey(dest)) {
-            log.warn("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
+            // if already present, not a change
+            log.debug("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
         int oldSize = destList.size();
@@ -970,7 +972,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         getSourceMast().setAspect(aspectSet);
                     });
                 } catch (Exception ex) {
-                    log.error("Exception while setting Signal Logic {}", ex.getMessage());
+                    log.error("Exception while setting Signal Logic: {}", ex);
                 }
                 return;
             }
@@ -1396,6 +1398,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             firePropertyChange("sensors", null, this.destination);
         }
 
+        @SuppressWarnings("unused") // not used now, preserved for later use
         void removeSensor(NamedBeanHandle<Sensor> sen) {
             for (NamedBeanSetting nbh : userSetSensors) {
                 if (nbh.getBean().equals(sen.getBean())) {
@@ -2161,11 +2164,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         if ((levelXing.getLayoutBlockAC() != null)
                                 && (levelXing.getLayoutBlockBD() != null)
                                 && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                            if (lblks.contains(levelXing.getLayoutBlockAC())) {
+                            if (lblks.contains(levelXing.getLayoutBlockAC()) &&
+                                    levelXing.getLayoutBlockAC() != facingBlock) {  // Don't include the facing xing blocks
                                 block.put(levelXing.getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
                                 xingAutoBlocks.add(levelXing.getLayoutBlockBD().getBlock());
                                 blockInXings.add(levelXing);
-                            } else if (lblks.contains(levelXing.getLayoutBlockBD())) {
+                            } else if (lblks.contains(levelXing.getLayoutBlockBD()) &&
+                                    levelXing.getLayoutBlockBD() != facingBlock) {  // Don't include the facing xing blocks
                                 block.put(levelXing.getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
                                 xingAutoBlocks.add(levelXing.getLayoutBlockAC().getBlock());
                                 blockInXings.add(levelXing);
@@ -2196,8 +2201,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
          */
         LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> lblks) {
             ConnectivityUtil connection;
-            List<LayoutTurnout> turnoutlist;
-            List<Integer> throwlist;
+            List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList;
             Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
             LinkedHashMap<Block, Integer> block = new LinkedHashMap<Block, Integer>();
             for (int i = 0; i < lblks.size(); i++) {
@@ -2213,13 +2217,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     }
                     //We use the best connectivity for the current block;
                     connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
-                    turnoutlist = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
-                    throwlist = connection.getTurnoutSettingList();
-                    for (int x = 0; x < turnoutlist.size(); x++) {
-                        LayoutTurnout lt = turnoutlist.get(x);
+                    turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                    for (int x = 0; x < turnoutList.size(); x++) {
+                        LayoutTurnout lt = turnoutList.get(x).getObject();
                         if (lt instanceof LayoutSlip) {
                             LayoutSlip ls = (LayoutSlip) lt;
-                            int slipState = throwlist.get(x);
+                            int slipState = turnoutList.get(x).getExpectedState();
                             int taState = ls.getTurnoutState(slipState);
                             turnoutSettings.put(ls.getTurnout(), taState);
                             int tbState = ls.getTurnoutBState(slipState);
@@ -2238,15 +2241,15 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                     log.debug("D " + lt.getConnectD());
                                 }
                             }
-                            turnoutSettings.put(turnout, throwlist.get(x));
+                            turnoutSettings.put(turnout, turnoutList.get(x).getExpectedState());
                             if (lt.getSecondTurnout() != null) {
-                                turnoutSettings.put(lt.getSecondTurnout(), throwlist.get(x));
+                                turnoutSettings.put(lt.getSecondTurnout(), turnoutList.get(x).getExpectedState());
                             }
                             /* TODO: We could do with a more inteligent way to deal with double crossovers, other than just looking at the state of the other conflicting blocks
                              such as looking at Signalmasts that protect the other blocks and the settings of any other turnouts along the way.
                              */
                             if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
-                                if (throwlist.get(x) == jmri.Turnout.THROWN) {
+                                if (turnoutList.get(x).getExpectedState() == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
                                         if (lt.getLayoutBlockB() != null) {
                                             dblCrossoverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
@@ -2478,14 +2481,14 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
             for (NamedBeanSetting nbh : userSetTurnouts) {
                 Turnout key = (Turnout) nbh.getBean();
-                if (key.getState() == Turnout.CLOSED) {
+                if (nbh.getSetting() == Turnout.CLOSED) {
                     if (((key.getStraightLimit() < minimumBlockSpeed) || (minimumBlockSpeed == 0)) && (key.getStraightLimit() != -1)) {
                         minimumBlockSpeed = key.getStraightLimit();
                         if (log.isDebugEnabled()) {
                             log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
                         }
                     }
-                } else if (key.getState() == Turnout.THROWN) {
+                } else if (nbh.getSetting() == Turnout.THROWN) {
                     if (((key.getDivergingLimit() < minimumBlockSpeed) || (minimumBlockSpeed == 0)) && (key.getDivergingLimit() != -1)) {
                         minimumBlockSpeed = key.getDivergingLimit();
                         if (log.isDebugEnabled()) {
@@ -2848,6 +2851,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
@@ -2857,10 +2861,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
      *
      * @return Always zero
      */
+    @Override
     public int getState() {
         return 0;
     }
 
+    @Override
     public void setState(int i) {
     }
 

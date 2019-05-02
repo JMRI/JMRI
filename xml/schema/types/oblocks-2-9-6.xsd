@@ -46,12 +46,12 @@
               <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" />
+                  <xs:attribute name="systemName" type="beanNameType" /> <!-- user or system name OK -->
                 </xs:complexType>
               </xs:element>
               <xs:element name="errorSensor" minOccurs="0" maxOccurs="1" >
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" />
+                  <xs:attribute name="systemName" type="beanNameType" /> <!-- user or system name OK -->
                 </xs:complexType>
               </xs:element>
               <xs:element name="path" type="OBlockPathType" minOccurs="0" maxOccurs="unbounded" />

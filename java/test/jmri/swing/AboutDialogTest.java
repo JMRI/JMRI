@@ -36,11 +36,13 @@ public class AboutDialogTest {
         JFrame frame = new JFrame();
         AboutDialog dialog = new AboutDialog(frame, true);
 
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleAbout", jmri.Application.getApplicationName()));
             jdo.close();
-        }).start();
+        });
+        t.setName("About Dialog Close Thread");
+        t.start();
         ThreadingUtil.runOnGUI(() -> {
             dialog.setVisible(true);
         });

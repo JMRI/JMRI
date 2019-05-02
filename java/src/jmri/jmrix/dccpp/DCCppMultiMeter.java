@@ -1,7 +1,5 @@
 package jmri.jmrix.dccpp;
 
-import jmri.MultiMeter;
-import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +45,7 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     public void message(DCCppMessage m) {
     }
 
+    @Override
     protected void requestUpdateFromLayout() {
         tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), this);
     }
@@ -70,14 +69,6 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     @Override
     public boolean hasVoltage() {
         return false;
-    }
-
-    /**
-     * Remove references to and from this object, so that it can eventually be
-     * garbage-collected.
-     */
-    @Override
-    public void dispose() {
     }
 
     // Handle a timeout notification

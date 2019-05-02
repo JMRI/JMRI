@@ -32,7 +32,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Location implements java.beans.PropertyChangeListener {
 
+    public static final String LOC_TRACK_REGIX = "s";
+
     public static final String NONE = "";
+    public static final int RANGE_DEFAULT = 25;
 
     protected String _id = NONE;
     protected String _name = NONE;
@@ -56,16 +59,18 @@ public class Location implements java.beans.PropertyChangeListener {
     protected Point _trainIconWest = new Point();
     protected Point _trainIconNorth = new Point();
     protected Point _trainIconSouth = new Point();
-    protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
+    protected int _trainIconRangeX = RANGE_DEFAULT; // the x & y detection range for the train icon
+    protected int _trainIconRangeY = RANGE_DEFAULT;
+    protected Hashtable<String, Track> _trackHashTable = new Hashtable<>();
     protected PhysicalLocation _physicalLocation = new PhysicalLocation();
-    protected List<String> _listTypes = new ArrayList<String>();
+    protected List<String> _listTypes = new ArrayList<>();
 
     // IdTag reader associated with this location.
     protected Reporter _reader = null;
 
     // Pool
     protected int _idPoolNumber = 0;
-    protected Hashtable<String, Pool> _poolHashTable = new Hashtable<String, Pool>();
+    protected Hashtable<String, Pool> _poolHashTable = new Hashtable<>();
 
     public static final int NORMAL = 1; // types of track allowed at this location
     public static final int STAGING = 2; // staging only
@@ -117,6 +122,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Sets the location's name.
+     * 
      * @param name The string name for this location.
      *
      */
@@ -190,6 +196,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Set total length of all tracks for this location
+     * 
      * @param length The integer sum of all tracks at this location.
      *
      */
@@ -331,7 +338,9 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Sets the quantity of rolling stock for this location
-     * @param number An integer representing the quantity of rolling stock at this location.
+     * 
+     * @param number An integer representing the quantity of rolling stock at
+     *            this location.
      *
      */
     public void setNumberRS(int number) {
@@ -396,6 +405,7 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * When true, a switchlist is desired for this location. Used for preview
      * and printing a manifest for a single location
+     * 
      * @param switchList When true, switch lists are enabled for this location.
      *
      */
@@ -519,7 +529,42 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * Sets the X range for detecting the manual movement of a train icon.
+     * 
+     * @param x the +/- range for detection
+     */
+    public void setTrainIconRangeX(int x) {
+        int old = _trainIconRangeX;
+        _trainIconRangeX = x;
+        if (old != x) {
+            setDirtyAndFirePropertyChange("trainIconRangeX", Integer.toString(old), Integer.toString(x)); // NOI18N
+        }
+    }
+
+    public int getTrainIconRangeX() {
+        return _trainIconRangeX;
+    }
+
+    /**
+     * Sets the Y range for detecting the manual movement of a train icon.
+     * 
+     * @param y the +/- range for detection
+     */
+    public void setTrainIconRangeY(int y) {
+        int old = _trainIconRangeY;
+        _trainIconRangeY = y;
+        if (old != y) {
+            setDirtyAndFirePropertyChange("trainIconRangeY", Integer.toString(old), Integer.toString(y)); // NOI18N
+        }
+    }
+
+    public int getTrainIconRangeY() {
+        return _trainIconRangeY;
+    }
+
+    /**
      * Adds rolling stock to a specific location.
+     * 
      * @param rs The RollingStock to add.
      *
      */
@@ -684,7 +729,7 @@ public class Location implements java.beans.PropertyChangeListener {
         Track track = getTrackByName(name, type);
         if (track == null) {
             _IdNumber++;
-            String id = _id + "s" + Integer.toString(_IdNumber);
+            String id = _id + LOC_TRACK_REGIX + Integer.toString(_IdNumber);
             log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
             track = new Track(id, name, type, this);
             InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length for manifests
@@ -696,6 +741,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * 
      * @param track The Track to be loaded at this location.
      */
     public void register(Track track) {
@@ -704,7 +750,7 @@ public class Location implements java.beans.PropertyChangeListener {
         // add to the locations's available track length
         setLength(getLength() + track.getLength());
         // find last id created
-        String[] getId = track.getId().split("s");
+        String[] getId = track.getId().split(LOC_TRACK_REGIX);
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber) {
             _IdNumber = id;
@@ -762,7 +808,7 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List<String> getTrackIdsByIdList() {
         String[] arr = new String[_trackHashTable.size()];
-        List<String> out = new ArrayList<String>();
+        List<String> out = new ArrayList<>();
         Enumeration<String> en = _trackHashTable.keys();
         int i = 0;
         while (en.hasMoreElements()) {
@@ -782,7 +828,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return Sorted list of tracks by id for this location.
      */
     public List<Track> getTrackByIdList() {
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
         List<String> trackIds = getTrackIdsByIdList();
         for (String id : trackIds) {
             out.add(getTrackById(id));
@@ -796,7 +842,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return tracks at this location.
      */
     public List<Track> getTrackList() {
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
         Enumeration<Track> en = _trackHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -814,7 +860,7 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List<Track> getTrackByNameList(String type) {
 
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
 
         for (Track track : getTrackByIdList()) {
             boolean locAdded = false;
@@ -845,7 +891,7 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List<Track> getTrackByMovesList(String type) {
 
-        List<Track> moveList = new ArrayList<Track>();
+        List<Track> moveList = new ArrayList<>();
 
         for (Track track : getTrackByIdList()) {
             boolean locAdded = false;
@@ -863,7 +909,7 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // bias tracks with schedules to the start of the list
         // remove any alternate tracks from the list
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
         for (int i = 0; i < moveList.size(); i++) {
             Track track = moveList.get(i);
             if (!track.getScheduleId().equals(NONE)) {
@@ -888,7 +934,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return list of tracks at this location ordered by blocking order
      */
     public List<Track> getTracksByBlockingOrderList(String type) {
-        List<Track> orderList = new ArrayList<Track>();
+        List<Track> orderList = new ArrayList<>();
         for (Track track : getTrackByNameList(type)) {
             boolean trackAdded = false;
             for (int j = 0; j < orderList.size(); j++) {
@@ -997,9 +1043,9 @@ public class Location implements java.beans.PropertyChangeListener {
      * @param box JComboBox to be updated.
      * @param rs Rolling Stock to be serviced
      * @param filter When true, remove tracks not able to service rs.
-     * @param destination When true, the tracks are destinations for the rs.
+     * @param isDestination When true, the tracks are destinations for the rs.
      */
-    public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean destination) {
+    public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean isDestination) {
         updateComboBox(box);
         if (!filter || rs == null) {
             return;
@@ -1007,12 +1053,12 @@ public class Location implements java.beans.PropertyChangeListener {
         List<Track> tracks = getTrackByNameList(null);
         for (Track track : tracks) {
             String status = "";
-            if (destination) {
+            if (isDestination) {
                 status = rs.testDestination(this, track);
             } else {
                 status = rs.testLocation(this, track);
             }
-            if (status.equals(Track.OKAY) && (!destination || !track.getTrackType().equals(Track.STAGING))) {
+            if (status.equals(Track.OKAY) && (!isDestination || !track.isStaging())) {
                 box.setSelectedItem(track);
                 log.debug("Available track: {} for location: {}", track.getName(), getName());
             } else {
@@ -1087,7 +1133,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return A list of Pools
      */
     public List<Pool> getPoolsByNameList() {
-        List<Pool> pools = new ArrayList<Pool>();
+        List<Pool> pools = new ArrayList<>();
         Enumeration<Pool> en = _poolHashTable.elements();
         while (en.hasMoreElements()) {
             pools.add(en.nextElement());
@@ -1097,6 +1143,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * True if this location has a track with pick up or set out restrictions.
+     * 
      * @return True if there are restrictions at this location.
      */
     public boolean hasServiceRestrictions() {
@@ -1206,6 +1253,24 @@ public class Location implements java.beans.PropertyChangeListener {
         return false;
     }
 
+    public boolean hasOrderRestrictions() {
+        for (Track track : getTrackList()) {
+            if (!track.getServiceOrder().equals(Track.NORMAL)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasSchedules() {
+        for (Track track : getTrackList()) {
+            if (track.isSpur() && track.getSchedule() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*
      * set the jmri.Reporter object associated with this location.
      * 
@@ -1253,6 +1318,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Location(Element e) {
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -1313,12 +1379,22 @@ public class Location implements java.beans.PropertyChangeListener {
                     (y = e.getAttribute(Xml.SOUTH_TRAIN_ICON_Y)) != null) {
                 setTrainIconSouth(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
             }
+
+            if ((x = e.getAttribute(Xml.TRAIN_ICON_RANGE_X)) != null) {
+                setTrainIconRangeX(Integer.parseInt(x.getValue()));
+            }
+            if ((y = e.getAttribute(Xml.TRAIN_ICON_RANGE_Y)) != null) {
+                setTrainIconRangeY(Integer.parseInt(y.getValue()));
+            }
+
         } catch (NumberFormatException nfe) {
             log.error("Train icon coordinates aren't vaild for location {}", getName());
         }
+        
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
         }
+
         if ((a = e.getAttribute(Xml.SWITCH_LIST_COMMENT)) != null) {
             _switchListComment = a.getValue();
         }
@@ -1327,7 +1403,6 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
             String[] types = new String[carTypes.size()];
             for (int i = 0; i < carTypes.size(); i++) {
@@ -1337,7 +1412,6 @@ public class Location implements java.beans.PropertyChangeListener {
                 }
             }
             setTypeNames(types);
-            @SuppressWarnings("unchecked")
             List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
             types = new String[locoTypes.size()];
             for (int i = 0; i < locoTypes.size(); i++) {
@@ -1355,14 +1429,12 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // early version of operations called tracks "secondary"
         if (e.getChildren(Xml.SECONDARY) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTracks = e.getChildren(Xml.SECONDARY);
             for (Element eTrack : eTracks) {
                 register(new Track(eTrack, this));
             }
         }
         if (e.getChildren(Xml.TRACK) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTracks = e.getChildren(Xml.TRACK);
             log.debug("location ({}) has {} tracks", getName(), eTracks.size());
             for (Element eTrack : eTracks) {
@@ -1420,6 +1492,12 @@ public class Location implements java.beans.PropertyChangeListener {
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_X, Integer.toString(getTrainIconSouth().x));
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_Y, Integer.toString(getTrainIconSouth().y));
         }
+        if (getTrainIconRangeX() != RANGE_DEFAULT) {
+            e.setAttribute(Xml.TRAIN_ICON_RANGE_X, Integer.toString(getTrainIconRangeX()));
+        }
+        if (getTrainIconRangeY() != RANGE_DEFAULT) {
+            e.setAttribute(Xml.TRAIN_ICON_RANGE_Y, Integer.toString(getTrainIconRangeY()));
+        }
         if (_reader != null) {
             e.setAttribute(Xml.READER, _reader.getDisplayName());
         }
@@ -1430,7 +1508,8 @@ public class Location implements java.beans.PropertyChangeListener {
             StringBuffer buf = new StringBuffer();
             for (String type : types) {
                 // remove types that have been deleted by user
-                if (InstanceManager.getDefault(CarTypes.class).containsName(type) || InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
+                if (InstanceManager.getDefault(CarTypes.class).containsName(type) ||
+                        InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
                     buf.append(type + "%%"); // NOI18N
                 }
             }

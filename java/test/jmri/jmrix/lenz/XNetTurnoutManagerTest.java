@@ -24,7 +24,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         return "XT" + i;
     }
 
-    XNetInterfaceScaffold lnis;
+    protected XNetInterfaceScaffold lnis;
 
     @Test
     @Override
@@ -66,10 +66,6 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Test
     public void testAsAbstractFactory() {
-        // create and register the manager object
-        XNetTurnoutManager l = new XNetTurnoutManager(lnis, "X");
-        jmri.InstanceManager.setTurnoutManager(l);
-
         // ask for a Turnout, and check type
         TurnoutManager t = jmri.InstanceManager.turnoutManagerInstance();
 
@@ -103,8 +99,22 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
+    @Test
+    @Override
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    @Override
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
+
     @After
     public void tearDown() {
+	lnis = null;
+	l = null;
         JUnitUtil.tearDown();
     }
 

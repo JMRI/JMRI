@@ -1,6 +1,8 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -18,13 +20,16 @@ public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
-        // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
-        memo = new GrapevineSystemConnectionMemo();
-        memo.setTrafficController(tcis);
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
 
-        t = new SerialTurnout("GT1116", "t4",memo);
+        // prepare an interface
+        memo = new GrapevineSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tcis);
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6, tcis));
+
+        t = new SerialTurnout("GT1116", "t4", memo);
     }
 
     @Override
@@ -42,6 +47,16 @@ public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 7A 81 1B 81 1E 81 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+    }
+
+    // reset objects
+    @After
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

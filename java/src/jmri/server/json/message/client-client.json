@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-client-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"client\"",
+    "properties": {
+        "client": {
+            "type": "string",
+            "description": "A token the client can use to subscribe to a message stream"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-09-25-->  
+<!-- Updated by Blorec Herv&#233; 2013-09-25-->
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: CVS FAQ
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code CVS FAQ">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -143,7 +143,7 @@ de ". DS_Store"  (sans les guillemets). CVS va ignorer tous les . DS_Store dans 
 
 En r&#232;gle g&#233;n&#233;rale, trois types de noms d'&#233;tiquettessont utilis&#233;s:
 <OL>
-<LI> "Release-1-5-4 Â» - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
+<LI> "Release-1-5-4 » - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
 Elles sont cr&#233;&#233;es lors de la lib&#233;ration de la version, et ne devrait pas &#234;tre chang&#233;es.
 <LI> "Release-1-5-4-branch" - c'est la branche-balise d&#233;finissant une "branche patch" pour une version sp&#233;cifique. C'est la seule fois que nous font usage de branches CVS, s'il vous pla&#238;t noter que nous n'utilisons pas de branches pour le d&#233;veloppement normal.
 <LI> "rgj20050603a" - de la forme "initiales" "date" "quelque lettre", ne peut &#234;tre utilis&#233; que par des d&#233;veloppeurs individuels pour garder une trace de ce qu'ils font. Tout ce que nous demandons, c'est que vous commenciez une &#233;tiquette avec vos initiales.
@@ -156,7 +156,7 @@ JMRI se compose de deux grandes arborescences de code, et un certain nombre de r
 Le code est divis&#233; en "jmri", le code principal JMRI, et "test", l'ensemble des
  tests est automatis&#233;s. Ils sont s&#233;par&#233;s de sorte qu'il est facile de construire tout
 le logiciel distribu&#233;, sans y inclure le code de test.
-(Si vous regardez directement le d&#233;p&#244;t CVS, vous verrez aussi les r&#233;pertoires "jmritÂ» et
+(Si vous regardez directement le d&#233;p&#244;t CVS, vous verrez aussi les r&#233;pertoires "jmrit» et
 "jmrix" , qui sont obsol&#232;tes, et conserv&#233;s exclusivement pour des raisons historiques).
 <p>
 De m&#234;me, l'information auxiliaire est gard&#233;s dans "lib", "xml",

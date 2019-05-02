@@ -4,11 +4,10 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid Oaktree Connection Types
- * <P>
+ * Return a list of valid Oaktree Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
@@ -17,7 +16,8 @@ public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.oaktree.serialdriver.ConnectionConfig"
+            "jmri.jmrix.oaktree.serialdriver.ConnectionConfig",
+            "jmri.jmrix.oaktree.simulator.ConnectionConfig"
         };
     }
 

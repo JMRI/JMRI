@@ -92,8 +92,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "IO Exception while opening port " + portName + ": " + ex;
         }
 
@@ -113,12 +112,9 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         XpaTrafficController tc = memo.getXpaTrafficController();
         tc.connectPort(this);
         
-        memo.setPowerManager(new jmri.jmrix.xpa.XpaPowerManager(tc));
         jmri.InstanceManager.store(memo.getPowerManager(), jmri.PowerManager.class);
 
-        memo.setTurnoutManager(new jmri.jmrix.xpa.XpaTurnoutManager(memo));
         jmri.InstanceManager.store(memo.getTurnoutManager(),jmri.TurnoutManager.class);
-        memo.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager(memo));
         jmri.InstanceManager.store(memo.getThrottleManager(),jmri.ThrottleManager.class);
 
         // start operation

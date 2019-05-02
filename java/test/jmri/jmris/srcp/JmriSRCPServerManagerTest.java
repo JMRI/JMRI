@@ -25,6 +25,7 @@ public class JmriSRCPServerManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

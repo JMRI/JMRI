@@ -199,17 +199,15 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        tc = new XBeeTrafficController() {
-            @Override
-            public void setInstance() {
-            }
-        };
+        JUnitUtil.setUp();
+        tc = new XBeeTrafficController();
     }
 
     @After
     @Override
     public void tearDown() {
+        ((XBeeTrafficController)tc).terminate();
+        tc = null;
         JUnitUtil.tearDown();
     }
 

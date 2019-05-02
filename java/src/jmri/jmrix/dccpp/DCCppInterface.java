@@ -1,23 +1,22 @@
-// DCCppInterface
 package jmri.jmrix.dccpp;
 
 /**
  * DCCppInterface defines the general connection to a DCC++ layout.
- * <P>
+ * <p>
  * Use this interface to send messages to a DCC++ layout. Classes implementing
  * the DCCppListener interface can register here to receive incoming DCC++
  * messages as events.
- * <P>
+ * <p>
  * The jmri.jrmix.dccpp.DCCppTrafficControler provides the first implementation of
  * this interface.
- * <P>
+ * <p>
  * How do you locate an implemenation of this interface? That's an interesting
  * question. This is inherently DCC++ specific, so it would be inappropriate to
  * put it in the jmri.InterfaceManager. And Java interfaces can't have static
  * members, so we can't provide an implementation() member. For now, we use a
  * static implementation member in the DCCppTrafficController implementation to
  * locate _any_ implementation; this clearly needs to be improved.
- * <P>
+ * <p>
  * DCCppListener implementations registering for traffic updates cannot assume
  * that messages will be returned in any particular thread. See the DCCppListener
  * doc for more background.
@@ -42,13 +41,13 @@ public interface DCCppInterface {
 
     /**
      * Request notification of things happening on the DCC++.
-     * <P>
+     * <p>
      * The same listener can register multiple times with different masks.
      * (Multiple registrations with a single mask value are equivalent to a
      * single registration) Mask values are defined as class constants. Note
      * that these are bit masks, and should be OR'd, not added, if multiple
      * values are desired.
-     * <P>
+     * <p>
      * The event notification contains the received message as source, not this
      * object, so that we can notify of an incoming message to multiple places
      * and then move on.
@@ -98,7 +97,7 @@ public interface DCCppInterface {
     public static final int PROGRAMMING = 4;
 
     /**
-     * Mask value to request notification of XPressNet FeedBack (i.e. sensor)
+     * Mask value to request notification of FeedBack (i.e. sensor)
      * related messages
      */
     public static final int FEEDBACK = 8;

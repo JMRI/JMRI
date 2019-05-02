@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a LightManager.
- * <P>
+ * <p>
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -19,17 +19,13 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         implements LightManager, java.beans.PropertyChangeListener {
 
     /**
-     * constructor
+     * Create a new LightManager instance.
      */
     public AbstractLightManager() {
         super();
     }
 
-    /**
-     * get XML order
-     *
-     * @return the XML order
-     */
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.LIGHTS;
@@ -164,21 +160,12 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     public void activateAllLights() {
         // Set up an iterator over all Lights contained in this manager
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
+        java.util.Iterator<Light> iter
+                = getNamedBeanSet().iterator();
         while (iter.hasNext()) {
-            String systemName = iter.next();
-            if (systemName == null) {
-                log.error("System name null during activation of Lights");
-            } else {
-                log.debug("Activated Light system name is " + systemName);
-                Light l = getBySystemName(systemName);
-                if (l == null) {
-                    log.error("light null during activation of lights");
-                } else {
-                    l.activateLight();
-                }
-            }
+            Light l = iter.next();
+            log.debug("Activated Light system name is " + l.getSystemName());
+            l.activateLight();
         }
     }
 

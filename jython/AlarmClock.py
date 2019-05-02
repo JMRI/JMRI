@@ -5,6 +5,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.beans
 import jmri
 
 # Change the next line to the name of the turnout you want to
@@ -14,7 +15,7 @@ outputTurnout = "IT100"
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is
 # of course possible.
-timebase = jmri.InstanceManager.timebaseInstance()
+timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
 class TimeListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
     #print "change",event.propertyName

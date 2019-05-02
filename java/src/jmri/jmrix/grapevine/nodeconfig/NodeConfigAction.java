@@ -15,13 +15,14 @@ public class NodeConfigAction extends AbstractAction {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public NodeConfigAction(String s,GrapevineSystemConnectionMemo _memo) {
+    public NodeConfigAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public NodeConfigAction(GrapevineSystemConnectionMemo _memo) {
-        this(Bundle.getMessage("WindowTitle"),_memo);
+        this(Bundle.getMessage("WindowTitle"), _memo);
+
     }
 
     @Override

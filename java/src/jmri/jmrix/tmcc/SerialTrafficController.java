@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     /**
-     * Ctor
+     * Create a new TMCC SerialTrafficController instance.
      *
      * @param adaptermemo the associated SystemConnectionMemo
      */
@@ -102,19 +102,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static volatile protected SerialTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
-    }
-
-    /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
     @Override
@@ -131,8 +118,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Handles initialization, output and polling for TMCC from within the
-     * running thread
+     * Handle initialization, output and polling for TMCC from within the
+     * running thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -268,7 +255,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 }
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("char send wait interupted");
+                                log.error("char send wait interrupted");
                             }
                         }
                         break;
@@ -280,7 +267,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 xmtRunnable.wait(m.getTimeout());
                             }
                         } catch (InterruptedException e) {
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));

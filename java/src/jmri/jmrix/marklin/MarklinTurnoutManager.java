@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Marklin systems.
- * <P>
+ * <p>
  * Based on work by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2012
@@ -34,7 +34,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
             log.error("failed to convert systemName " + systemName + " to a turnout address");
             return null;

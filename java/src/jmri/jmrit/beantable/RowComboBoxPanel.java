@@ -377,9 +377,9 @@ public abstract class RowComboBoxPanel
     /*
      * Placeholder method; contents are overridden in application.
      */
-    protected JComboBox getEditorBox(int row) {
+    protected JComboBox<String> getEditorBox(int row) {
         String [] list = {"Error", "Not Valid"};
-        return new JComboBox<String> (list);
+        return new JComboBox<>(list);
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);

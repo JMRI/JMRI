@@ -80,6 +80,7 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     // base class methods for the TamsPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -112,6 +113,11 @@ public class SimulatorAdapter extends TamsPortController implements
 
     @Override
     public String getCurrentBaudRate() {
+        return "";
+    }
+
+    @Override
+    public String getCurrentPortName(){
         return "";
     }
 
@@ -180,7 +186,7 @@ public class SimulatorAdapter extends TamsPortController implements
     /**
      * Get characters from the input source.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private TamsMessage loadChars() throws java.io.IOException {

@@ -7,9 +7,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -34,22 +33,24 @@ public class EngineManagerTest extends OperationsTestCase {
     private Location l2;
     private Location l3;
 
+    @Test
     public void testCTor() {
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         Assert.assertNotNull("Manager Creation", manager);
     }
 
+    @Test
     public void testAddEngines() {
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         List<Engine> engineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, engineList.size());
-        e1 = manager.newEngine("CP", "1");
-        e2 = manager.newEngine("ACL", "3");
-        e3 = manager.newEngine("CP", "3");
-        e4 = manager.newEngine("CP", "3-1");
-        e5 = manager.newEngine("PC", "2");
-        e6 = manager.newEngine("AA", "1");
+        e1 = manager.newRS("CP", "1");
+        e2 = manager.newRS("ACL", "3");
+        e3 = manager.newRS("CP", "3");
+        e4 = manager.newRS("CP", "3-1");
+        e5 = manager.newRS("PC", "2");
+        e6 = manager.newRS("AA", "1");
         engineList = manager.getByIdList();
         Assert.assertEquals("Finishing Number of Engines", 6, engineList.size());
         manager.dispose();
@@ -57,6 +58,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("After dispose Number of Engines", 0, engineList.size());
     }
 
+    @Test
     public void testListEnginesById() {
         resetEngineManager();
 
@@ -73,6 +75,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by id", e5, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByBuildDate() {
         resetEngineManager();
 
@@ -97,6 +100,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by built", e1, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByMoves() {
         resetEngineManager();
 
@@ -121,6 +125,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by move", e3, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByOwner() {
         resetEngineManager();
 
@@ -145,6 +150,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by owner", e1, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByRoadName() {
         resetEngineManager();
 
@@ -161,6 +167,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by road name", e5, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByConsist() {
         resetEngineManager();
 
@@ -185,6 +192,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by consist", e1, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByLocation() {
         resetEngineManager();
 
@@ -201,6 +209,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by location", e3, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByDestination() {
         resetEngineManager();
 
@@ -217,6 +226,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by destination", e4, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByTrain() {
         resetEngineManager();
 
@@ -251,6 +261,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by train", e1, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesBySpecifiedTrain() {
         resetEngineManager();
 
@@ -286,6 +297,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testListAvaialbleEngines() {
         resetEngineManager();
 
@@ -322,6 +334,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("3rd engine in list available for t3", e3, engineList.get(2));
     }
 
+    @Test
     public void testAvailableAfterReleaseFromTrain() {
         resetEngineManager();
 
@@ -363,6 +376,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testListEnginesByNumber() {
         resetEngineManager();
 
@@ -379,6 +393,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by number", e4, engineList.get(5));
     }
 
+    @Test
     public void testFindEnginesByRoadNameAndNumber() {
         resetEngineManager();
 
@@ -393,6 +408,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("find e6 by road and number", e6, manager.getByRoadAndNumber("AA", "1"));
     }
 
+    @Test
     public void testListEnginesByRfid() {
         resetEngineManager();
 
@@ -426,6 +442,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by rfid", e1, engineList.get(5));
     }
 
+    @Test
     public void testFindEnginesByRfid() {
         resetEngineManager();
 
@@ -458,6 +475,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testListEnginesByType() {
         resetEngineManager();
 
@@ -473,6 +491,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by type", e1, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesByLastMovedDate() {
         resetEngineManager();
 
@@ -521,6 +540,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by move date", e5, engineList.get(5));
     }
 
+    @Test
     public void testSortListedEnginesByLastMovedDate() {
         resetEngineManager();
 
@@ -569,6 +589,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("6th engine in list by move date", e5, engineList.get(5));
     }
 
+    @Test
     public void testListEnginesAtLocation() {
         resetEngineManager();
 
@@ -580,6 +601,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertFalse("e3 not in engine list at location", engineList.contains(e3));
     }
 
+    @Test
     public void testListEnginesOnTrack() {
         resetEngineManager();
 
@@ -597,12 +619,12 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        e1 = manager.newEngine("CP", "1");
-        e2 = manager.newEngine("ACL", "3");
-        e3 = manager.newEngine("CP", "3");
-        e4 = manager.newEngine("CP", "3-1");
-        e5 = manager.newEngine("PC", "2");
-        e6 = manager.newEngine("AA", "1");
+        e1 = manager.newRS("CP", "1");
+        e2 = manager.newRS("ACL", "3");
+        e3 = manager.newRS("CP", "3");
+        e4 = manager.newRS("CP", "3-1");
+        e5 = manager.newRS("PC", "2");
+        e6 = manager.newRS("AA", "1");
 
         e1.setModel("GP356");
         e2.setModel("GP354");
@@ -680,33 +702,4 @@ public class EngineManagerTest extends OperationsTestCase {
         e6.setMoves(9999);
 
     }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public EngineManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineManagerTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
 }

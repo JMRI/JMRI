@@ -12,14 +12,20 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     // Needed for instantiation by reflection, do not remove.
+    /**
+     * Create a connection configuration without a preexisting adapter.
+     */
     public ConnectionConfig() {
         super();
     }

@@ -1,21 +1,17 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.Turnout;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,11 +22,11 @@ public class IconDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EditorScaffold es = new EditorScaffold();
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
+        new EditorScaffold();
+        PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
-        TableItemPanel tip = new TableItemPanel(df,"IS01","",tableModel,editor);
+        TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel,editor);
         IconDialog t = new IconDialog("Icon","Icon",tip,null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
@@ -40,6 +36,7 @@ public class IconDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

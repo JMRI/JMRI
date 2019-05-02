@@ -10,11 +10,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
- * SprogCSStreamPortControllerTest.java
- *
- * Description:	tests for the jmri.jmrix.sprog.SprogCSStreamPortController class
+ * Tests for the jmri.jmrix.sprog.SprogCSStreamPortController class.
  *
  * @author	Paul Bender Copyright (C) 2014-2016
  */

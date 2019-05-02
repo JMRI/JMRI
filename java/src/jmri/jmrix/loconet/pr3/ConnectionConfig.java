@@ -13,23 +13,33 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * 
+     * @param p   Serial port adapter for the connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
 
+    /**
+     * Get the connection type name
+     * @return Connection type name
+     */
     @Override
     public String name() {
         return "LocoNet PR3"; // NOI18N
     }
 
+    /**
+     * Is Option List 2 Advanced?
+     * @return boolean, always false 
+     */
     public boolean isOptList2Advanced() {
         return false;
     }

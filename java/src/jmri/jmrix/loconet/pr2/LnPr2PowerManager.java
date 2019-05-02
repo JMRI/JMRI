@@ -13,26 +13,24 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
 
 /**
- * PowerManager implementation for controlling layout power via PR2
- * <P>
+ * PowerManager implementation for controlling layout power via PR2.
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
     public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
-        this.sm = memo.getSlotManager();
         this.tc = memo.getLnTrafficController();
         this.memo = memo;
     }
 
-    SlotManager sm;
     LnTrafficController tc;
     LocoNetSystemConnectionMemo memo;
 
@@ -45,11 +43,11 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // set bit 1 in CV 128
-                pm.writeCV(128, 1, null);
+                pm.writeCV("128", 1, null);
                 power = ON;
                 firePropertyChange("Power", null, null); // NOI18N
                 // start making sure that the power is refreshed
@@ -73,11 +71,11 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // reset bit 1 in CV 128
-                pm.writeCV(128, 0, null);
+                pm.writeCV("128", 0, null);
                 power = OFF;
             }
         }
@@ -108,7 +106,12 @@ public class LnPr2PowerManager extends LnPowerManager {
             firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
-            timer.stop();
+            if (timer != null) {
+                // Protect against uninitialized timer, for case where some other
+                // LocoNet agent issues OPC_GPOFF before JMRI initializes its timer.
+                // A NPE was seen, before protected added, with the DCS52.
+                timer.stop();
+            }
             firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == 0xEF) {
             // if this is a service mode write, drop out of power on mode
@@ -118,7 +121,9 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // go to power off due to service mode op
                 if (power == ON) {
                     power = OFF;
-                    timer.stop();
+                    if (timer != null) {
+                        timer.stop();
+                    }
                     firePropertyChange("Power", null, null); // NOI18N
                 }
             }
@@ -140,6 +145,15 @@ public class LnPr2PowerManager extends LnPowerManager {
                 }
             }
         }
+    }
+    
+    /**
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
     }
 
     // timer support to send updates & keep power alive

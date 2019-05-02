@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +22,9 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
-    public LocoNetThrottledTransmitter(LocoNetInterface controller, boolean mTurnoutExtraSpace) {
+    public LocoNetThrottledTransmitter(@Nonnull LocoNetInterface controller, boolean mTurnoutExtraSpace) {
         this.controller = controller;
+        this.memo = controller.getSystemConnectionMemo();
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
 
         // calculation is needed time to send on DCC:
@@ -36,12 +38,37 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         attachServiceThread();
     }
 
+    /**
+     * Reference to the system connection memo.
+     */
+    LocoNetSystemConnectionMemo memo = null;
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m) {
+        log.debug("LnTrafficController set memo to {}", m.getUserName());
+        memo = m;
+    }
+
+    /**
+     * Get the system connection memo associated with this traffic controller.
+     *
+     * @return the associated systemConnectionMemo object
+     */
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
+        return memo;
+    }
+
     boolean mTurnoutExtraSpace;
 
     /**
      * Request that server thread cease operation, no more messages can be sent.
      * Note that this returns before the thread is known to be done if it still
-     * has work pending.  If you need to be sure it's done, check and wait on 
+     * has work pending.  If you need to be sure it's done, check and wait on
      * !running.
      */
     public void dispose() {
@@ -142,8 +169,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
                     // and go round again
                 } catch (Exception e) {
                     // just report error and continue
-                    log.error("Exception in ServiceThread: " + e);
-                    e.printStackTrace();
+                    log.error("Exception in ServiceThread: ", e);
                 }
             }
             running = false;
@@ -182,8 +208,13 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         @Override
         public int compareTo(Delayed d) {
             // -1 means this is less than m
-            long delta = this.getDelay(TimeUnit.MILLISECONDS)
-                    - d.getDelay(TimeUnit.MILLISECONDS);
+            long delta;
+            if (d instanceof Memo) {
+                delta = this.endTimeMsec - ((Memo)d).endTimeMsec;
+            } else {
+                delta = this.getDelay(TimeUnit.MILLISECONDS)
+                        - d.getDelay(TimeUnit.MILLISECONDS);
+            }
             if (delta > 0) {
                 return 1;
             } else if (delta < 0) {

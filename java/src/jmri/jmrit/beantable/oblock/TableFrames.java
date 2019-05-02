@@ -312,9 +312,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (String sysName : sysNames) {
-            WarrantTableAction.checkPathPortals(manager.getBySystemName(sysName));
+        for (OBlock oblock : manager.getNamedBeanSet()) {
+            WarrantTableAction.checkPathPortals(oblock);
         }
         if (_showWarnings) {
             WarrantTableAction.showPathPortalErrors();
@@ -389,20 +388,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             }
         };
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (String sysName : sysNames) {
-            OBlock block = manager.getBySystemName(sysName);
+        for (OBlock block : manager.getNamedBeanSet()) {
             JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
-            mi.setActionCommand(sysName);
+            mi.setActionCommand(block.getSystemName());
             mi.addActionListener(openFrameAction);
             openBlockPath.add(mi);
         }
         _openMenu.add(openBlockPath);
 
         JMenu openTurnoutPath = new JMenu(Bundle.getMessage("OpenBlockPathTurnoutMenu"));
-        sysNames = manager.getSystemNameArray();
-        for (String sysName : sysNames) {
-            OBlock block = manager.getBySystemName(sysName);
+        for (OBlock block : manager.getNamedBeanSet()) {
             JMenu openTurnoutMenu = new JMenu(Bundle.getMessage("OpenTurnoutMenu", block.getDisplayName()));
             openTurnoutPath.add(openTurnoutMenu);
             openFrameAction = new ActionListener() {
@@ -416,7 +411,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             while (iter.hasNext()) {
                 OPath path = (OPath) iter.next();
                 JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
-                mi.setActionCommand(makePathTurnoutName(sysName, path.getName()));
+                mi.setActionCommand(makePathTurnoutName(block.getSystemName(), path.getName()));
                 mi.addActionListener(openFrameAction);
                 openTurnoutMenu.add(mi);
             }
@@ -432,7 +427,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockModel = new OBlockTableModel(this);
         _oBlockTable = new JTable(_oBlockModel);
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(_oBlockModel);
-        sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
+        // use NamedBean's built-in Comparator interface for sorting
         _oBlockTable.setRowSorter(sorter);
         _oBlockTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{OBlockTableModel.EDIT_COL,
             OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
@@ -488,7 +483,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
-//        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.SPEEDCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL), false);
 //        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
 
@@ -525,8 +520,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalModel = new PortalTableModel(this);
         _portalTable = new JTable(_portalModel);
         TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
-        sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
-        sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);

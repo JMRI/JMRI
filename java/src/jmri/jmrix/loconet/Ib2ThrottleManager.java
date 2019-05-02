@@ -25,4 +25,5 @@ public class Ib2ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Ib2ThrottleManager.class);
+
 }

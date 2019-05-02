@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved-->
-<!-- $Id$ -->
 <!-- -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under-->
 <!-- the terms of version 2 of the GNU General Public License as published-->
@@ -37,7 +36,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
-      <variable item="Decoder Version" CV="7" default="4" readOnly="yes">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="4">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -55,26 +54,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
-      <variable item="Speed Table Definition" CV="29" default="0" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="it">Usa Tensione  (Vstart, Vmid, Vhigh)</choice>
-            <choice xml:lang="fr">Utiliser V démarrage (Vstart, Vmid, Vhigh)</choice>
-            <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
-          </enumChoice>
-	  <!--
-          <enumChoice choice="(Not supported) Use table in CVs 67 through 94">
-            <choice>(Not supported) Use table in CVs 67 through 94</choice>
-            <choice xml:lang="de">(Nicht unterstützt) Geschwindigkeitskennlinie nutzen</choice>
-          </enumChoice>
-	  -->
-        </enumVal>
-        <label>Speed Table Definition - Not Used</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie - Nicht belegt</label>
-        <label xml:lang="fr">Tableau de vitesse=no</label>
-        <label xml:lang="it">Tabella Velocità non usata</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29speedTableNotUsed.xml"/>
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49dataformat.xml"/>
@@ -85,7 +65,7 @@
         <label xml:lang="de">Soundmodul</label>
       </variable>
       <variable item="LISSY module" CV="49" default="0" mask="XXXXXVXX">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>LISSY mini transmitter</label>
         <label xml:lang="de">LISSY Mini-Sendemodul</label>
       </variable>
@@ -130,11 +110,7 @@
       <!-- </variable> -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv100error.xml"/>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
 </decoder-config>

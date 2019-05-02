@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * <p>
  * This connects an SSPROG DCC SPROG Nano command station via a USB virtual 
  * serial com port.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -30,10 +30,10 @@ public class SprogNanoSerialDriverAdapter
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     static public SprogNanoSerialDriverAdapter instance() {
         return null;
     }
-    private final static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class);
 
 }

@@ -13,9 +13,9 @@ import jmri.ShutDownTask;
  * the method to test. To clear the state of shutting down, call
  * {@link #resetShuttingDown()}.</p>
  * <p>
- * The list of registered tasts is exposed via {@link #shutDownTasks()} to allow
- * verification that a method that registers or deregisters a ShutDownTask as a
- * side effect did so correctly.</p>
+ * The modifiable list of registered tasks is exposed via
+ * {@link #shutDownTasks()} to allow verification that a method that registers
+ * or unregisters a ShutDownTask as a side effect did so correctly.</p>
  *
  * @author Randall Wood
  */
@@ -35,6 +35,11 @@ public class MockShutDownManager implements ShutDownManager {
     @Override
     public void deregister(ShutDownTask task) {
         this.tasks.remove(task);
+    }
+
+    @Override
+    public List<ShutDownTask> tasks() {
+        return java.util.Collections.unmodifiableList(tasks);
     }
 
     @Override

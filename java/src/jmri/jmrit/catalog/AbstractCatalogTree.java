@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
 import jmri.NamedBean;
@@ -146,8 +147,28 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /**
@@ -171,6 +192,17 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
         if (listenerRef != null) {
             listenerRefs.put(l, listenerRef);
+        }
+    }
+
+    @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+        if (beanRef != null) {
+            register.put(listener, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(listener, listenerRef);
         }
     }
 
@@ -268,6 +300,18 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * By default, does an alphanumeric-by-chunks comparison
+     */
+    @CheckReturnValue
+    @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        return ac.compare(suffix1, suffix2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class);

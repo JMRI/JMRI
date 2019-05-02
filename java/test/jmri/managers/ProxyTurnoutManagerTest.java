@@ -1,21 +1,22 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import java.util.*;
+
+import jmri.*;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the ProxyTurnoutManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
   */
-public class ProxyTurnoutManagerTest extends TestCase {
+public class ProxyTurnoutManagerTest {
 
     public String getSystemName(int i) {
         return "JT" + i;
@@ -33,10 +34,12 @@ public class ProxyTurnoutManagerTest extends TestCase {
         }
     }
 
+    @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
     }
 
+    @Test
     public void testPutGet() {
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
@@ -46,6 +49,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testDefaultSystemName() {
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
@@ -54,6 +58,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testNormalizeName() {
         // create
         String name = l.provideTurnout("" + getNumToTest1()).getSystemName();
@@ -61,6 +66,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertEquals(name, l.normalizeSystemName(name));
     }
 
+    @Test
     public void testProvideFailure() {
         boolean correct = false;
         try {
@@ -73,6 +79,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT");
     }
 
+    @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
@@ -86,18 +93,21 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertTrue("same new ", t1 == t2);
     }
 
+    @Test
     public void testMisses() {
         // try to get nonexistant objects
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testUpperLower() {
         Turnout t = l.provideTurnout("" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getTurnout(name.toLowerCase()));
     }
 
+    @Test
     public void testRename() {
         // get
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "before");
@@ -108,6 +118,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Test
     public void testTwoNames() {
         Turnout jl212 = l.provideTurnout("JT212");
         Turnout jl211 = l.provideTurnout("JT211");
@@ -117,6 +128,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertTrue(jl212 != jl211);
     }
 
+    @Test
     public void testDefaultNotInternal() {
         Turnout lut = l.provideTurnout("211");
 
@@ -124,6 +136,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertEquals("JT211", lut.getSystemName());
     }
 
+    @Test
     public void testProvideUser() {
         Turnout l1 = l.provideTurnout("211");
         l1.setUserName("user 1");
@@ -141,6 +154,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertNull(l4);
     }
 
+    @Test
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
@@ -176,27 +190,9 @@ public class ProxyTurnoutManagerTest extends TestCase {
         return 7;
     }
 
-    // from here down is testing infrastructure
-    public ProxyTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ProxyTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ProxyTurnoutManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalTurnoutManager() {
             @Override
@@ -204,11 +200,11 @@ public class ProxyTurnoutManagerTest extends TestCase {
                 return "J";
             }
         };
-        jmri.InstanceManager.setTurnoutManager(l);
+        InstanceManager.setTurnoutManager(l);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

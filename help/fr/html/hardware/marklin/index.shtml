@@ -28,7 +28,8 @@ et par cons&#233;quent, les ordinateurs qui se connectent au CS2 doit &#234;tre 
 <p>
 Cette mise en oeuvre du protocole CAN CS2 a &#233;t&#233; d&#233;velopp&#233; et test&#233; sur la version du firmware 2.
 <b>
-Cette interface est encore en d&#233;veloppement, si vous trouvez des probl&#232;mes alors s'il vous pla&#238;t poser une question sur le groupe Yahoo</b>
+Cette interface est encore en d&#233;veloppement, si vous trouvez des probl&#232; 
+mes alors s'il vous pla&#238;t poser une question sur le groupe <a href="https://groups.io/g/jmriusers">Utilisateurs JMRI</a></b>
 <p>
 Le Support &#224; la Marklin CS2 &#233;tait d'abord disponible en
 <a href="http://jmri.org/releasenotes/jmri3.1.1.shtml"> JMRI 3.1.1</a>.<p>
@@ -36,7 +37,7 @@ Le Support &#224; la Marklin CS2 &#233;tait d'abord disponible en
 <a name="limitations"></a><h2>Limitations</h2>
 <b>
 Cette interface est encore en d&#233;veloppement; si vous trouvez n'importe quel probl&#232;me, alors s'il vous plait envoyez un message 
-sur la liste des <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">Utilisateurs JMRI</a> mailing list.</b>
+sur la liste des <a href="https://groups.io/g/jmriusers">Utilisateurs JMRI</a> mailing list.</b>
 <p>
 Le Couplage et la Programmation ne sont pas encore support&#233;s.
 

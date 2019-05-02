@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-server-message",
+    "type": ["object", "array"],
+    "description": "Message from JMRI to client",
+    "properties": {
+        "type": {
+            "type": "string",
+            "description": "Data type if data is present, message type otherwise"
+        },
+        "data": {
+            "type": "object",
+            "description": "Data carried in message, see individual types for valid schemas"
+        }
+    },
+    "definitions": {
+        "jmri-json-server-message": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "description": "Message from JMRI to client with data",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Data type if data is present, message type otherwise",
+                            "pattern": "^((?!(pong|goodbye)).)*$"
+                        },
+                        "data": {
+                            "type": "object",
+                            "description": "Data carried in message, see individual types for valid schemas"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["type", "data"]
+                },
+                {
+                    "type": "object",
+                    "description": "Message from JMRI to client without data (only known types)",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Message type",
+                            "enum": ["pong", "goodbye"]
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["type"]
+                }
+            ]
+        }
+    },
+    "anyOf": [
+        {
+            "$ref": "#/definitions/jmri-json-server-message"
+        },
+        {
+            "type": "array",
+            "description": "Multiple results in response to client message",
+            "items": {
+                "$ref": "#/definitions/jmri-json-server-message"
+            }
+        }
+    ]
+}

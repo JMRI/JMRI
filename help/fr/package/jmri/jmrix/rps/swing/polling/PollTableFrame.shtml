@@ -7,7 +7,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: RPS Polling Control</title><!-- Style -->
   <meta http-equiv=
@@ -126,8 +125,8 @@
       <p>Pour sauvegarder les valeurs de sorte qu'ils seront
       utilis&Atilde;&copy;s automatiquement lorsque le programme
       est commenc&Atilde;&copy; , cliquez sur "Stocker maintenant
-      les valeurs par d&Atilde;&copy;fauts". 
-      <!--#include virtual="/Footer" --></p>
+      les valeurs par d&Atilde;&copy;fauts".</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -48,6 +48,8 @@ public class ErrorHandler {
      * Default implementation doesn't do anything here, everything already
      * logged above.
      */
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_CONFUSING", 
+            justification = "Seems to be a false positive due to jmri.jmris.simpleserver.parser.SimpleCharStream.Done()")
     public void done() {
     }
 

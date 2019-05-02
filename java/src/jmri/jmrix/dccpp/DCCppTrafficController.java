@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 public abstract class DCCppTrafficController extends AbstractMRTrafficController implements DCCppInterface {
 
     /**
+     * Create a new DCCppTrafficController instance.
      * Must provide a DCCppCommandStation reference at creation time.
      *
      * @param pCommandStation reference to associated command station object,
@@ -39,31 +40,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     protected HashMap<DCCppListener, Integer> mListenerMasks;
-
-    /**
-     * Static function returning the TrafficController instance to use.
-     *
-     * @return The registered TrafficController instance for general use, if
-     *         need be creating one.
-     */
-    @Deprecated
-    static public DCCppTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * Static function setting this object as the TrafficController instance to
-     * use.
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        if (self == null) {
-            self = this;
-        }
-    }
-
-    static DCCppTrafficController self = null;
 
     // Abstract methods for the DCCppInterface
 
@@ -168,7 +144,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
             highPriorityQueue.put(m);
             highPriorityListeners.put(reply);
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while adding High Priority Message to Queue");
+            log.error("Interrupted while adding High Priority Message to Queue");
         }
     }
 
@@ -181,7 +157,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
                 return highPriorityQueue.take();
             }
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while removing High Priority Message from Queue");
+            log.error("Interrupted while removing High Priority Message from Queue");
         }
         return null;
     }
@@ -195,7 +171,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
                 return highPriorityListeners.take();
             }
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while removing High Priority Message Listener from Queue");
+            log.error("Interrupted while removing High Priority Message Listener from Queue");
         }
         return null;
     }
@@ -264,9 +240,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 
     //    /**
     //     * Get characters from the input source, and file a message.
-    //     * <P>
+    //     * <p>
     //     * Returns only when the message is complete.
-    //     * <P>
+    //     * <p>
     //     * Only used in the Receive thread.
     //     *
     //     * @param msg     message to fill

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -18,8 +19,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import org.apache.commons.lang3.StringEscapeUtils;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -325,9 +326,9 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     public String getValidity() {
-        if (Setup.isPrintTimetableNameEnabled()) {
+        if (Setup.isPrintTrainScheduleNameEnabled()) {
             return String.format(locale, strings.getProperty("ManifestValidityWithSchedule"), getDate(true),
-                    TrainScheduleManager.instance().getScheduleById(train.getId()));
+                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
         } else {
             return String.format(locale, strings.getProperty("ManifestValidity"), getDate(true));
         }

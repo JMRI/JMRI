@@ -6,12 +6,14 @@
     <decVal/>
      <label>Deceleration forward and backward</label>
      <label xml:lang="de">Bremsrampe vorwärts und rückwärts</label>
+     <label xml:lang="ca">Desacceleració davant i darrere</label>
     <tooltip xml:lang="de">&lt;html&gt;Eingestellt wird die Bremszeit aus höchster Fahrstufe in Sekunden,&lt;br&gt;bei kleineren Fahrstufen errechnet der Decoder die Bremsrampe selbstständig.&lt;/html&gt;</tooltip>
   </variable>
   <variable item="Deceleration backward" CV="155" default="0">
     <decVal/>
      <label>Deceleration backward</label>
      <label xml:lang="de">Bremsrampe rückwärts</label>
+     <label xml:lang="ca">Rampa de deseccaleració enrere</label>
      <tooltip xml:lang="de">&lt;html&gt;Ermöglicht unterschiedliche Bremszeiten&lt;br&gt;für vorwärts und rückwärts.&lt;/html&gt;</tooltip>
   </variable>
 </variables>

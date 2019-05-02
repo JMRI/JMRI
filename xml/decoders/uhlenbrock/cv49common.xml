@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved                            -->
-<!-- $Id$             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,40 +38,47 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 	<label>Main Motor Control - load regulation</label>
 	<label xml:lang="de">Motorregelung - Lastregelung</label>
-        <label xml:lang="it">Controllo Motore - Regolazione Carico</label>		
+    <label xml:lang="it">Controllo Motore - Regolazione Carico</label>
+    <label xml:lang="nl">Motorregeling - Lastafhankelijk</label>
   </variable>
   <variable item="Directional Headlights" CV="49" default="0" mask="XVXXXXXX">
 	<enumVal>
 	  <enumChoice choice="normal">
             <choice>normal</choice>
-            <choice xml:lang="de">nicht</choice>					
-            <choice xml:lang="it">normali</choice>	
+            <choice xml:lang="de">nicht</choice>
+            <choice xml:lang="it">normali</choice>
+            <choice xml:lang="nl">normaal</choice>
 	  </enumChoice>
 	  <enumChoice choice="reverse">
             <choice>reverse</choice>
             <choice xml:lang="de">vertauschen</choice>
-            <choice xml:lang="it">invertite</choice>					
+            <choice xml:lang="it">invertite</choice>
+            <choice xml:lang="nl">omgewisseld</choice>
 	  </enumChoice>
 	</enumVal>
 	<label>Lights output swap</label>
-	<label xml:lang="de">Lichtanschlüsse tauschen</label>	
-        <label xml:lang="it">Scambia uscite Luci</label>	
+	<label xml:lang="de">Lichtanschlüsse tauschen</label>
+    <label xml:lang="it">Scambia uscite Luci</label>
+    <label xml:lang="nl">Lichtaansluitingen</label>
   </variable>
   <variable item="Braking condition" CV="49" default="0" mask="VXXXXXXX">
 	<enumVal>
 	  <enumChoice choice="Braking signal only">
             <choice>Braking signal only</choice>
             <choice xml:lang="de">Bremssignal</choice>	
-            <choice xml:lang="it">Solo in Frenata</choice>			
+            <choice xml:lang="it">Solo in Frenata</choice>
+            <choice xml:lang="nl">alleen remsignaal</choice>
 	  </enumChoice>
 	  <enumChoice choice="with analog voltage">
             <choice>with analog voltage</choice>
             <choice xml:lang="de">analoger Spannung</choice>
-            <choice xml:lang="it">con tensione Analogica</choice>				
-	  </enumChoice>
+            <choice xml:lang="it">con tensione Analogica</choice>
+            <choice xml:lang="nl">op analoge spanning</choice>
+      </enumChoice>
 	</enumVal>
 	<label>Braking condition</label>
 	<label xml:lang="de">Bremsen mit</label>
-        <label xml:lang="it">Frenata</label>			
+    <label xml:lang="it">Frenata</label>
+    <label xml:lang="nl">Afremmen</label>
   </variable>
 </variables>

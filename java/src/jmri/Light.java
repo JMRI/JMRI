@@ -1,6 +1,8 @@
 package jmri;
 
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
+
 import jmri.implementation.LightControl;
 
 /**
@@ -61,17 +63,7 @@ import jmri.implementation.LightControl;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends NamedBean {
-
-    /**
-     * State value indicating output intensity is at or above maxIntensity
-     */
-    public static final int ON = 0x02;
-
-    /**
-     * State value indicating output intensity is at or below minIntensity
-     */
-    public static final int OFF = 0x04;
+public interface Light extends DigitalIO, AnalogIO {
 
     /**
      * State value indicating output intensity is less than maxIntensity and
@@ -110,6 +102,47 @@ public interface Light extends NamedBean {
      * request to transition.
      */
     public static final int TRANSITIONING = 0x010;
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF)
+                || (getState() == INTERMEDIATE);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentValue() {
+        // Assume that the value is consistent if the state is consistent.
+        return isConsistentState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void setCommandedState(int s) {
+        setState(s);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getCommandedState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getKnownState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void requestUpdateFromLayout() {
+        // Do nothing
+    }
 
     /**
      * Set the demanded output state. Valid values are ON and OFF. ON
@@ -125,6 +158,7 @@ public interface Light extends NamedBean {
      * @throws IllegalArgumentException if invalid newState provided
      */
     @Override
+    @InvokeOnLayoutThread
     public void setState(int newState);
 
     /**
@@ -186,6 +220,7 @@ public interface Light extends NamedBean {
      *                                  new value is between MaxIntensity and
      *                                  MinIntensity
      */
+    @InvokeOnLayoutThread
     public void setTargetIntensity(double intensity);
 
     /**
@@ -228,6 +263,7 @@ public interface Light extends NamedBean {
      *                                  current value of the minIntensity
      *                                  property
      */
+    @InvokeOnLayoutThread
     public void setMaxIntensity(double intensity);
 
     /**
@@ -255,6 +291,7 @@ public interface Light extends NamedBean {
      *                                  current value of the maxIntensity
      *                                  property
      */
+    @InvokeOnLayoutThread
     public void setMinIntensity(double intensity);
 
     /**
@@ -296,6 +333,7 @@ public interface Light extends NamedBean {
      *                                  minutes is not 0.0
      * @throws IllegalArgumentException if minutes is negative
      */
+    @InvokeOnLayoutThread
     public void setTransitionTime(double minutes);
 
     /**
@@ -317,14 +355,25 @@ public interface Light extends NamedBean {
      */
     public boolean isTransitioning();
 
+    // LightControl information management methods
+     
     /**
-     * LightControl information management methods
+     * Clears (removes) all LightControl objects for this light
      */
-    public void clearLightControls();  // clears all Light Controls for this Light
+    public void clearLightControls();
 
-    public void addLightControl(jmri.implementation.LightControl c); // add a LightControl
+    /** 
+     * Add a LightControl to this Light.
+     * <p>
+     * Duplicates are considered the same, hence not added
+     */
+    public void addLightControl(@Nonnull jmri.implementation.LightControl c);
 
-    public ArrayList<LightControl> getLightControlList(); // return a list of all LightControls
+    /**
+     * @return a list of all LightControls
+     */
+    @Nonnull
+    public ArrayList<LightControl> getLightControlList();
 
     /**
      * Set the Enabled property, which determines whether the control logic
@@ -333,6 +382,7 @@ public interface Light extends NamedBean {
      *
      * @param state true if control logic is enabled; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setEnabled(boolean state);
 
     /**
@@ -347,11 +397,13 @@ public interface Light extends NamedBean {
      * Activates a Light. This method activates each LightControl, setting up a
      * control mechanism, appropriate to its control type.
      */
+    @InvokeOnLayoutThread
     public void activateLight();
 
     /**
      * Deactivates a Light. This method deactivates each LightControl, shutting
      * down its control mechanism.
      */
+    @InvokeOnLayoutThread
     public void deactivateLight();
 }

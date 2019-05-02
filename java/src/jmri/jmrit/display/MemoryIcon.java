@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
+import jmri.Reportable;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -38,9 +39,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
 
-    /**
-     * {@inheritDoc}
-     */
     public MemoryIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
@@ -242,7 +240,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 }
             });
             //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
-            if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
+            if ((InstanceManager.getDefault(jmri.SectionManager.class).getNamedBeanSet().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
                 final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                 if (df != null) {
                     final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
@@ -335,6 +333,17 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         displayState(key);
     }
 
+    /**
+     * Special method to transfer a setAttributes call from the LE version of
+     * MemoryIcon.  This eliminates the need to change references to public.
+     * @since 4.11.6
+     * @param util The LE popup util object.
+     * @param that The current positional object (this).
+     */
+    public void setAttributes(PositionablePopupUtil util, Positionable that) {
+        _editor.setAttributes(util, that);
+    }
+
     protected void displayState(Object key) {
         log.debug("displayState({})", key);
         if (key != null) {
@@ -375,6 +384,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     _icon = false;
                     _text = true;
                     setText(val.toString());
+                    setIcon(null);
+                } else if (val instanceof Reportable) {
+                    _icon = false;
+                    _text = true;
+                    setText(((Reportable)val).toReportString());
                     setIcon(null);
                 } else {
                     log.warn("can't display current value of " + getNameString()

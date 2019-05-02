@@ -57,6 +57,7 @@ public class Station {
      */
     String getName() { return name; }
     
+    @Override
     public String toString() { return "Station "+name; }
     
     /**

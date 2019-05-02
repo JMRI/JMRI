@@ -2,6 +2,7 @@ package jmri.jmrix.dcc4pc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -15,11 +16,11 @@ import purejavacomm.SerialPort;
 /**
  * Converts Stream-based I/O to/from DCC4PC messages. The "Dcc4PcInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a Dcc4PcPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -27,6 +28,9 @@ import purejavacomm.SerialPort;
  */
 public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface {
 
+    /**
+     * Create a new DccPcTrafficController instance.
+     */
     public Dcc4PcTrafficController() {
         super();
         if (log.isDebugEnabled()) {
@@ -101,27 +105,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return Dcc4PcMessage.getExitProgMode();
     }
 
-    /**
-     * static function returning the Dcc4PcTrafficController instance to use.
-     *
-     * @return The registered Dcc4PcTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public Dcc4PcTrafficController instance() {
-        return self;
-    }
-
-    //This can be removed once multi-connection is complete
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
@@ -131,7 +114,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      */
     @Deprecated
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;
 
@@ -213,7 +196,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
@@ -293,7 +276,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     /**
      * Handle each reply when complete.
-     * <P>
+     * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
      */
@@ -304,7 +287,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
         // Create message off the right concrete class
         AbstractMRReply msg = newReply();
-                
+
         // message exists, now fill it
         loadChars(msg, istream);
         if (mLastSentMessage != null) {
@@ -313,7 +296,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             if (mLastSentMessage.isForChildBoard()) {
                 if (log.isDebugEnabled()) {
                     log.debug("This is a message for a child board " + ((Dcc4PcReply) msg).toHexString());
-                    log.debug("Originate " + (mLastMessage).toHexString());
+                    log.debug("Originate " + mLastMessage.toString());
                 }
                 if ((mLastSentMessage.getNumDataElements() - 1) == msg.getElement(1)) {
                     log.debug("message lengths match");
@@ -419,9 +402,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+        } catch (InterruptedException | InvocationTargetException e) {
+            log.error("Unexpected exception in invokeAndWait:", e);
         }
 
         if (log.isDebugEnabled()) {
@@ -431,8 +413,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             // effect on transmit:
             switch (mCurrentState) {
                 case WAITMSGREPLYSTATE: {
-                    // check to see if the response was an error message we want 
-                    // to automatically handle by re-queueing the last sent 
+                    // check to see if the response was an error message we want
+                    // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
                         if (log.isDebugEnabled()) {
@@ -490,8 +472,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
                 default: {
                     replyInDispatch = false;
-                    log.error("reply complete in unexpected state: "
-                            + mCurrentState + " was " + msg.toString());
+                    unexpectedReplyStateError(mCurrentState,msg.toString());
                 }
             }
             // Unsolicited message
@@ -595,7 +576,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     if (readingData) {
                         endTime = endTime + 10;
                     }
-                    //if we have received a packet and a seperate message has been sent to retrieve 
+                    //if we have received a packet and a seperate message has been sent to retrieve
                     //the reply we will add more time to our wait process.
                     if (waitingForMore) {
                         waitingForMore = false;

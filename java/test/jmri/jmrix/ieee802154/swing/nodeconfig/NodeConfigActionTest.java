@@ -36,10 +36,7 @@ public class NodeConfigActionTest {
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         IEEE802154SystemConnectionMemo memo = new IEEE802154SystemConnectionMemo();
-        IEEE802154TrafficController tc = new IEEE802154TrafficController(){
-            @Override
-            public void setInstance() {
-            }
+        new IEEE802154TrafficController(){
             @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
@@ -58,10 +55,7 @@ public class NodeConfigActionTest {
     public void testDefaultCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         IEEE802154SystemConnectionMemo memo = new IEEE802154SystemConnectionMemo();
-        IEEE802154TrafficController tc = new IEEE802154TrafficController(){
-            @Override
-            public void setInstance() {
-            }
+        new IEEE802154TrafficController(){
             @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;

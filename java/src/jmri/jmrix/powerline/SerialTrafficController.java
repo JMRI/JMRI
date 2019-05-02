@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
   */
 abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
+    /**
+     * Create a new TrafficController instance. Simple implementation.
+     */
     public SerialTrafficController() {
         super();
         logDebug = log.isDebugEnabled();
@@ -37,15 +40,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
 
-    }
-
-    /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     */
-    @Deprecated
-    @Override
-    public void setInstance() {
     }
 
     /**

@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
@@ -24,25 +23,27 @@ public class JsonMenuItemTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
+    @SuppressWarnings("null")
     @Test
     public void testContstructor() {
-        JsonMenuItem mi;
         try {
-            mi = new JsonMenuItem(null);
+            new JsonMenuItem(null);
             fail("should have thrown NPE");
         } catch (NullPointerException ex) {
             // passes
         }
         try {
-            mi = new JsonMenuItem(mapper.createObjectNode());
+            new JsonMenuItem(mapper.createObjectNode());
             fail("should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException ex) {
             // passes
@@ -50,7 +51,7 @@ public class JsonMenuItemTest {
         ObjectNode node = mapper.createObjectNode();
         node.put("path", "/");
         try {
-            mi = new JsonMenuItem(node);
+            new JsonMenuItem(node);
         } catch (NullPointerException | IllegalArgumentException ex) {
             fail("should not have thrown exception");
         }

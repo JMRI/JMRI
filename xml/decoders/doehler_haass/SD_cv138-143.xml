@@ -40,41 +40,48 @@
 		<label>Push timer</label>
 		<label xml:lang="fr">Timer pousse</label>
 		<label xml:lang="de">Timer Heranfahren</label>
+		<label xml:lang="ca">Temps d'empenyer</label>
 	</variable>
 	<variable item="Wait timer" CV="139" default="0" tooltip="CV139 (0-250, 1=100ms)" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
 	  <decVal min="0" max="250"/>
 		<label>Wait timer</label>
 		<label xml:lang="fr">Timer attente</label>
 		<label xml:lang="de">Timer Warten</label>
+		<label xml:lang="ca">Espera</label>
 	</variable>
 	<variable item="Away timer" CV="140" default="0" tooltip="CV140 (0-250, 1=100ms)" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
 	  <decVal min="0" max="250"/>
 		<label>Away timer</label>
 		<label xml:lang="fr">Timer rebroussement</label>
 		<label xml:lang="de">Timer Wegfahren</label>
+		<label xml:lang="ca">Temps m`paxim</label>
 	</variable>
 	<variable item="Speedstep for pushing" CV="141" default="12" tooltip="CV141 (0-127)" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
 	  <decVal min="0" max="127"/>
 		<label>Speedstep for pushing</label>
 		<label xml:lang="fr">Cran de vitesse pousse</label>
 		<label xml:lang="de">Fahrstuffe Heranfahren</label>
+		<label xml:lang="ca">Pas de velocitat per a empenyer</label>
 	</variable>
 	<variable item="Speedstep for getting away" CV="142" default="12" tooltip="CV142 (0-127)" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
 	  <decVal min="0" max="127"/>
 		<label>Speedstep for getting away</label>
 		<label xml:lang="fr">Cran de vitesse rebroussement</label>
 		<label xml:lang="de">Fahrstuffe Wegfahren</label>
+		<label xml:lang="ca">Pas de velocitat per a marxar</label>
 	</variable>
 	<variable item="Deactivate auto decoupling and timer" CV="143"  default="0" mask="XVXXXXXX" tooltip="CV143 Bit 6" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
 	  <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	  <label>Deactivate auto decoupling and timer</label>
 	  <label xml:lang="fr">Désattelage et timer désactivés</label>
 	  <label xml:lang="de">Kupplungsablauf und Timer deaktivieren</label>
+	  <label xml:lang="ca">Desenganxament i temporització desactivat</label>
 	</variable>
 	<variable item="Auto decoupling only in shunting speed" CV="143"  default="0" mask="VXXXXXXX" tooltip="CV143 Bit 7" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
 	  <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	  <label>Auto decoupling only in shunting speed</label>
 	  <label xml:lang="fr">Désattelage seulement en vitesse de triage</label>
 	  <label xml:lang="de">Kupplungsablauf nur im Rangiergang</label>
+	  <label xml:lang="ca">Desenganxament només en marxa de maniobres</label>
 	</variable>
 </variables>

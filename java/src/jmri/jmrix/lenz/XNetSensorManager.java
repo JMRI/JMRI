@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the XpressNet specific Sensor implementation.
  * <p>
- * System names are "XSnnn", where nnn is the sensor number without padding.
+ * System names are "XSnnn", where X is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - * jmri.jmrix.lenz.XNetSensor
@@ -129,6 +130,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
@@ -147,8 +149,8 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             // Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+                input = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
@@ -203,7 +205,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

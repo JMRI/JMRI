@@ -99,22 +99,34 @@ public class PortalManager extends AbstractManager<Portal>
         do {
             name = "IP" + Integer.toString(_nextSName++);
         } while (getBySystemName(name) != null);
-        return name;
+        if (log.isDebugEnabled()) log.debug("generateSystemName \"{}\"", name);
+       return name;
     }
 
     /**
      * Method to get an existing Portal. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
-     * @param name - either System name or user name
+     * @param name  either System name or user name
      * @return Portal, if found
      */
     public Portal getPortal(String name) {
+        if (name == null) {
+            return null;
+        }
         Portal portal = getByUserName(name);
         if (portal != null) {
+            if (log.isDebugEnabled()) log.debug("getPortal with User Name \"{}\"", name);
             return portal;
         }
-        return getBySystemName(name);
+        if (name.length() > 2 && name.startsWith("IP")) {
+            portal = getBySystemName(name);
+            if (portal != null) {
+                if (log.isDebugEnabled()) log.debug("getPortal with System Name \"{}\"", name);
+                return portal;
+            }
+        }
+        return null;
     }
 
     public Portal getBySystemName(String name) {

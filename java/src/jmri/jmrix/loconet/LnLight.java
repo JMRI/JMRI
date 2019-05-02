@@ -5,10 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnLight.java
- *
  * Implementation of the Light Object for Loconet
- * <P>
+ * <p>
  * Based in part on SerialLight.java
  *
  * @author Dave Duchamp Copyright (C) 2006
@@ -17,8 +15,12 @@ public class LnLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in LnLightManager
+     * 
+     * @param systemName for the new bean
+     * @param tc the LnTrafficController which handles the messaging
+     * @param mgr the LnLightManager which manages this type of object bean
      */
     public LnLight(String systemName, LnTrafficController tc, LnLightManager mgr) {
         super(systemName);
@@ -30,8 +32,13 @@ public class LnLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in LnLightManager
+     * 
+     * @param systemName for the new bean
+     * @param userName for the new bean
+     * @param tc the LnTrafficController which handles the messaging
+     * @param mgr the LnLightManager which manages this type of object bean
      */
     public LnLight(String systemName, String userName, LnTrafficController tc, LnLightManager mgr) {
         super(systemName, userName);
@@ -79,4 +86,5 @@ public class LnLight extends AbstractLight {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnLight.class);
+
 }

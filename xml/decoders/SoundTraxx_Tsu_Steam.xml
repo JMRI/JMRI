@@ -18,6 +18,7 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="7" lastUpdated="20110818"/>
   <version author="Michael Mosher" version="8" lastUpdated="20130308"/>
   <version author="Alain Le Marchand" version="9" lastUpdated="20140518"/>
+  <version author="Alain Le Marchand" version="10" lastUpdated="20180103"/>
   <!-- This file contains the "retail version" Tsunami definitions for ALL steam locomotives			-->
   <!-- version 5	Rewrite based on the "Soundtraxx_Tsu_(various steam)" series of files			-->
   <!--            by a number of authors.                                     					-->
@@ -32,9 +33,11 @@
   <!-- version 8	Add greater use of external includes                                                    -->
   <!-- version 9	Fixed function mapping for TSU-750 with 2 physical outputs only (no physical FX5 an FX6)-->
   <!--                  Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)     -->
+  <!-- version 10 Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                          -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
-                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
   <!-- Decoder Model information follows -->
   <decoder>
@@ -834,7 +837,7 @@
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
+        </qualifier>
           <!-- begin normal function group 2 -->
           <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -965,7 +968,7 @@
             <label>F8 controls output Brake-Squeal</label>
           </variable>
           <!-- end normal function group 2 -->
-          <!-- begin normal function group 3 -->      
+          <!-- begin normal function group 3 -->
           <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>F9 controls output Dynamo</label>
@@ -1363,7 +1366,7 @@
         </variable>
         <!-- end exchanged function group 3 -->
       </variables>
-      <!-- end exchangeable function groups -->          
+      <!-- end exchangeable function groups -->
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 12" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for the value to enable this feature.">
         <decVal/>
         <label>Analog Whistle Control (0-255)</label>
@@ -1494,15 +1497,12 @@
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Choose whether the locomotive has one or two air pumps">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>

@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.downloader;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +39,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
-        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         panel = new LoaderPane();
         helpTarget="package.jmri.jmrix.loconet.downloader.LoaderFrame";
         title="Firmware Downloader";
@@ -48,6 +47,8 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @After
     public void tearDown() {
+        memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

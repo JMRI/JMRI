@@ -18,7 +18,7 @@ import org.junit.Test;
 public class JMRIClientMenuTest {
 
 
-    private JMRIClientTrafficController tc = null;
+    // private JMRIClientTrafficController tc = null;
     private JMRIClientSystemConnectionMemo m = null;
  
     @Test
@@ -31,13 +31,15 @@ public class JMRIClientMenuTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new JMRIClientTrafficController();
+        // tc = new JMRIClientTrafficController();
         m = new JMRIClientSystemConnectionMemo();
         m.setSystemPrefix("ABC");
 
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

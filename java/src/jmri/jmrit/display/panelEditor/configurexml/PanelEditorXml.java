@@ -76,8 +76,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (RuntimeException e) {
-                    log.error("Error storing panel element: " + e);
-                    e.printStackTrace();
+                    log.error("Error storing panel element", e);
                 }
             }
         }
@@ -202,18 +201,17 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via " + adapterName);
             try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
                 adapter.load(item, panel);
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                        | jmri.configurexml.JmriConfigureXmlException 
-                        | RuntimeException e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+                    | jmri.configurexml.JmriConfigureXmlException
+                    | java.lang.reflect.InvocationTargetException e) {
+                log.error("Exception while loading {}", item.getName(), e);
                 result = false;
-                e.printStackTrace();
             }
         }
         panel.disposeLoadData();     // dispose of url correction data

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Light CVs for Märklin mLD and mSD decoders                             -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2018</year>
+      <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Alain</firstname>
+          <surname>Le Marchand</surname>
+        </personname>
+      </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2018-03-03</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>Creation</revremark>
+      </revision>
+     <revision>
+        <revnumber>2</revnumber>
+        <date>2018-04-02</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>French translation</revremark>
+      </revision>
+    </revhistory>
+    <variable CV="112" mask="XXXXVVVV" item="Mode Front Light" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Front Light Mode   </label>
+        <label xml:lang="de">Licht vorne Modus </label>
+        <label xml:lang="fr">Mode lumière avant        </label>
+    </variable>
+    <variable CV="113" item="Dimmer Front Light" default="255">
+        <decVal/>
+        <label>Front Light Dimmer</label>
+        <label xml:lang="de">Licht vorne Dimmer</label>
+        <label xml:lang="fr">Atténuat. lumière avant  </label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="114" item="Period Front Light" default="20">
+        <decVal/>
+        <label>Front Light Period  </label>
+        <label xml:lang="de">Licht vorne Periode</label>
+        <label xml:lang="fr">Période lumière avant    </label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+    <variable CV="115" mask="XXXXVVVV" item="Mode Rear Light" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Rear Light Mode   </label>
+        <label xml:lang="de">Licht hinten Modus </label>
+        <label xml:lang="fr">Mode lumière arrière      </label>
+    </variable>
+    <variable CV="116" item="Dimmer Rear Light" default="255">
+        <decVal/>
+        <label>Rear Light Dimmer </label>
+        <label xml:lang="de">Licht hinten Dimmer</label>
+        <label xml:lang="fr">Atténuat. lumière arrière</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="117" item="Period Rear Light" default="20">
+        <decVal/>
+        <label>Rear Light Period   </label>
+        <label xml:lang="de">Licht hinten Periode</label>
+        <label xml:lang="fr">Période lumière arrière  </label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+    <variable CV="118" mask="XXXXVVVV" item="Mode Aux 1" default="1" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Aux 1 Mode   </label>
+        <label xml:lang="de">Aux 1 Modus </label>
+        <label xml:lang="fr">Mode Aux 1 </label>
+    </variable>
+    <variable CV="119" item="Dimmer Aux 1" default="255" minOut="3">
+        <decVal/>
+        <label>         Aux 1 Dimmer</label>
+        <label xml:lang="de">         Aux 1 Dimmer</label>
+        <label xml:lang="fr">              Atténuat. Aux 1</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="120" item="Period Aux 1" default="20" minOut="3">
+        <decVal/>
+        <label>         Aux 1 Period  </label>
+        <label xml:lang="de">         Aux 1 Periode</label>
+        <label xml:lang="fr">                Période Aux 1</label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+    <variable CV="121" mask="XXXXVVVV" item="Mode Aux 2" default="1" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Aux 2 Mode   </label>
+        <label xml:lang="de">Aux 2 Modus </label>
+        <label xml:lang="fr">Mode Aux 2 </label>
+    </variable>
+    <variable CV="122" item="Dimmer Aux 2" default="255" minOut="4">
+        <decVal/>
+        <label>         Aux 2 Dimmer</label>
+        <label xml:lang="de">         Aux 2 Dimmer</label>
+        <label xml:lang="fr">              Atténuat. Aux 2</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="123" item="Period Aux 2" default="20" minOut="4">
+        <decVal/>
+        <label>         Aux 2 Period  </label>
+        <label xml:lang="de">         Aux 2 Periode</label>
+        <label xml:lang="fr">                Période Aux 2</label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+    <variable CV="124" mask="XXXXVVVV" item="Mode Aux 3" default="1" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Aux 3 Mode   </label>
+        <label xml:lang="de">Aux 3 Modus </label>
+        <label xml:lang="fr">Mode Aux 3      </label>
+    </variable>
+    <variable CV="125" item="Dimmer Aux 3" default="255" minOut="5">
+        <decVal/>
+        <label>Aux 3 Dimmer</label>
+        <label xml:lang="de">Aux 3 Dimmer</label>
+        <label xml:lang="fr">Atténuat. Aux 3</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="126" item="Period Aux 3" default="20" minOut="5">
+        <decVal/>
+        <label>Aux 3 Period  </label>
+        <label xml:lang="de">Aux 3 Periode</label>
+        <label xml:lang="fr">Période Aux 3   </label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+    <variable CV="127" mask="XXXXVVVV" item="Mode Aux 4" default="1" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Aux 4 Mode   </label>
+        <label xml:lang="de">Aux 4 Modus </label>
+        <label xml:lang="fr">Mode Aux 4      </label>
+    </variable>
+    <variable CV="128" item="Dimmer Aux 4" default="255" minOut="6">
+        <decVal/>
+        <label>Aux 4 Dimmer</label>
+        <label xml:lang="de">Aux 4 Dimmer</label>
+        <label xml:lang="fr">Atténuat. Aux 4</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="126" item="Period Aux 4" default="20" minOut="6">
+        <decVal/>
+        <label>Aux 4 Period  </label>
+        <label xml:lang="de">Aux 4 Periode</label>
+        <label xml:lang="fr">Période Aux 4   </label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+    <variable CV="130" mask="XXXXVVVV" item="Mode Aux 5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Aux 5 Mode   </label>
+        <label xml:lang="de">Aux 5 Modus </label>
+        <label xml:lang="fr">Mode Aux 5      </label>
+    </variable>
+    <variable CV="131" item="Dimmer Aux 5" default="255">
+        <decVal/>
+        <label>Aux 5 Dimmer</label>
+        <label xml:lang="de">Aux 5 Dimmer</label>
+        <label xml:lang="fr">Atténuat. Aux 5</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="132" item="Period Aux 5" default="20">
+        <decVal/>
+        <label>Aux 5 Period  </label>
+        <label xml:lang="de">Aux 5 Periode</label>
+        <label xml:lang="fr">Période Aux 5   </label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+        <tooltip xml:lang="fr">Retard à la commutation allumé/éteint</tooltip>
+    </variable>
+    <variable CV="133" mask="XXXXVVVV" item="Mode Aux 6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_enum_light.xml"/>
+        <label>Aux 6 Mode   </label>
+        <label xml:lang="de">Aux 6 Modus </label>
+        <label xml:lang="fr">Mode Aux 6      </label>
+    </variable>
+    <variable CV="134" item="Dimmer Aux 6" default="255">
+        <decVal/>
+        <label>Aux 6 Dimmer</label>
+        <label xml:lang="de">Aux 6 Dimmer</label>
+        <label xml:lang="fr">Atténuat. Aux 6</label>
+        <tooltip>0 = off / 255 = no dimming</tooltip>
+        <tooltip xml:lang="de">0 = aus / 255 = nicht dimmen</tooltip>
+        <tooltip xml:lang="fr">0 = désactivé / 255 = pas d'atténuation</tooltip>
+    </variable>
+    <variable CV="135" item="Period Aux 6" default="20">
+        <decVal/>
+        <label>Aux 6 Period  </label>
+        <label xml:lang="de">Aux 6 Periode</label>
+        <label xml:lang="fr">Période Aux 6   </label>
+        <tooltip>Blinking frequency of the effect</tooltip>
+        <tooltip xml:lang="de">Blitzfrequenz der Effekte</tooltip>
+        <tooltip xml:lang="fr">Fréquence de clignotement de l'effet</tooltip>
+    </variable>
+</variables>

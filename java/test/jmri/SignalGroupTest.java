@@ -15,7 +15,6 @@ public class SignalGroupTest {
 
     @Test
     public void testSetup() {
-        //apps.tests.Log4JFixture.initLogging();
         // provide 2 turnouts:
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
@@ -31,7 +30,7 @@ public class SignalGroupTest {
         SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
         Assert.assertNotNull("SignalMast is null!", sm);
         // provide a signal group:
-        SignalGroup sg = InstanceManager.getDefault(jmri.SignalGroupManager.class).provideSignalGroup("R12", "SignalGroup12");
+        SignalGroup sg = InstanceManager.getDefault(jmri.SignalGroupManager.class).provideSignalGroup("IF12", "SignalGroup12");
         Assert.assertNotNull("SignalGroup is null!", sg);
         // add the head to the group:
         sg.addSignalHead(sh);

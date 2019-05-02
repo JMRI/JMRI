@@ -73,21 +73,21 @@ import javax.annotation.Nullable;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface Turnout extends NamedBean {
+public interface Turnout extends DigitalIO {
 
     /**
      * Constant representing an "closed" state, either in readback or as a
      * commanded state. Note that it's possible to be both CLOSED and THROWN at
      * the same time on some systems, which should be called INCONSISTENT
      */
-    public static final int CLOSED = 0x02;
+    public static final int CLOSED = DigitalIO.ON;
 
     /**
      * Constant representing an "thrown" state, either in readback or as a
      * commanded state. Note that it's possible to be both CLOSED and THROWN at
      * the same time on some systems, which should be called INCONSISTENT
      */
-    public static final int THROWN = 0x04;
+    public static final int THROWN = DigitalIO.OFF;
 
     /**
      * Constant representing "direct feedback method". In this case, the
@@ -163,41 +163,6 @@ public interface Turnout extends NamedBean {
     public static final int LOCKED = 1;
 
     /**
-     * Query the known state. This is a bound parameter, so you can also
-     * register a listener to be informed of changes. A result is always
-     * returned; if no other feedback method is available, the commanded state
-     * will be used.
-     *
-     * @return the known state
-     */
-    public int getKnownState();
-
-    /**
-     * Change the commanded state, which results in the relevant command(s)
-     * being sent to the hardware. The exception is thrown if there are problems
-     * communicating with the layout hardware.
-     *
-     * @param s the desired state
-     */
-    public void setCommandedState(int s);
-
-    /**
-     * Query the commanded state. This is a bound parameter, so you can also
-     * register a listener to be informed of changes.
-     *
-     * @return the commanded state
-     */
-    public int getCommandedState();
-
-    /**
-     * Show whether state is one you can safely run trains over
-     *
-     * @return true iff state is valid and the known state is the same as
-     *         commanded
-     */
-    public boolean isConsistentState();
-
-    /**
      * Get a representation of the feedback type. This is the OR of possible
      * values: DIRECT, EXACT, etc. The valid combinations depend on the
      * implemented system.
@@ -223,6 +188,7 @@ public interface Turnout extends NamedBean {
      * @param mode the feedback type name
      * @throws IllegalArgumentException if mode is not valid
      */
+    @InvokeOnLayoutThread
     public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException;
 
     /**
@@ -233,6 +199,7 @@ public interface Turnout extends NamedBean {
      * @param mode the feedback type to set
      * @throws IllegalArgumentException if mode is not valid
      */
+    @InvokeOnLayoutThread
     public void setFeedbackMode(int mode) throws IllegalArgumentException;
 
     /**
@@ -277,6 +244,7 @@ public interface Turnout extends NamedBean {
      *
      * @param toper TurnoutOperation subclass instance
      */
+    @InvokeOnLayoutThread
     public void setTurnoutOperation(@Nullable TurnoutOperation toper);
 
     /**
@@ -354,6 +322,7 @@ public interface Turnout extends NamedBean {
      * definition is missing in ONESENSOR and TWOSENSOR feedback, turnout state
      * is set to UNKNOWN.
      */
+    @InvokeOnLayoutThread
     public void setInitialKnownStateFromFeedback();
 
     /**
@@ -368,6 +337,7 @@ public interface Turnout extends NamedBean {
      *
      * @param num the size of the output, currently 1 or 2
      */
+    @InvokeOnLayoutThread
     public void setNumberOutputBits(int num);
 
     /**
@@ -383,6 +353,7 @@ public interface Turnout extends NamedBean {
      * @param num 0 for steady state or the number of time units the control
      *            pulses
      */
+    @InvokeOnLayoutThread
     public void setControlType(int num);
 
     /**
@@ -428,6 +399,7 @@ public interface Turnout extends NamedBean {
      * @param locked         true if locking is enabled for the given type;
      *                       false otherwise
      */
+    @InvokeOnLayoutThread
     public void enableLockOperation(int turnoutLockout, boolean locked);
 
     /**
@@ -461,6 +433,7 @@ public interface Turnout extends NamedBean {
      * @param locked         true if turnout is locked using specified lock
      *                       method; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setLocked(int turnoutLockout, boolean locked);
 
     /**
@@ -475,6 +448,7 @@ public interface Turnout extends NamedBean {
      *
      * @param reportLocked true to report; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setReportLocked(boolean reportLocked);
 
     /**
@@ -506,6 +480,7 @@ public interface Turnout extends NamedBean {
      *
      * @param state true if the outputs are binary; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setBinaryOutput(boolean state);
 
     public float getDivergingLimit();

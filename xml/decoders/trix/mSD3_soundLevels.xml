@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Sound Options CVs for Märklin mSD/3 decoders                           -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2018</year>
+      <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Alain</firstname>
+          <surname>Le Marchand</surname>
+        </personname>
+      </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2018-03-17</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>Creation</revremark>
+      </revision>
+    </revhistory>
+    <variable CV="59" item="Sound Setting 6" default="0">
+        <decVal/>
+        <label>Sound at Change of Direction</label>
+        <label xml:lang="de">Sound bei Richtungswechsel</label>
+        <label xml:lang="fr">Son au changement de sens</label>
+        <tooltip>&lt;html&gt;Volume of Sound at change of direction&lt;br&gt;0 = no sound at change of direction&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Lautstärke Sound bei Richtungswechsel&lt;br&gt;0 = kein Sound bei Richtungswechsel&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;Volume du son au changement de sens&lt;br&gt;0 = pas de son au changement de sens&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="146" item="Sound Setting 3" default="180">
+        <decVal/>
+        <label>Volume of Brake Squealing</label>
+        <label xml:lang="de">Lautstärke Bremsenquietschen</label>
+        <label xml:lang="fr">Volume grincement freins</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.300" item="Sound Setting 4" default="180">
+        <decVal/>
+        <label>Volume of Operating Sounds</label>
+        <label xml:lang="de">Lautstärke Betriebsgeräusch</label>
+        <label xml:lang="fr">Volume bruit d'exploitation</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.301" item="Sound Setting 11" default="180">
+        <decVal/>
+        <label>Sound 1 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 1</label>
+        <label xml:lang="fr">Volume Son 1</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.302" item="Sound Setting 12" default="180">
+        <decVal/>
+        <label>Sound 2 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 2</label>
+        <label xml:lang="fr">Volume Son 2</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.303" item="Sound Setting 13" default="180">
+        <decVal/>
+        <label>Sound 3 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 3</label>
+        <label xml:lang="fr">Volume Son 3</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.304" item="Sound Setting 14" default="180">
+        <decVal/>
+        <label>Sound 4 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 4</label>
+        <label xml:lang="fr">Volume Son 4</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.305" item="Sound Setting 15" default="180">
+        <decVal/>
+        <label>Sound 5 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 5</label>
+        <label xml:lang="fr">Volume Son 5</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.306" item="Sound Setting 16" default="180">
+        <decVal/>
+        <label>Sound 6 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 6</label>
+        <label xml:lang="fr">Volume Son 6</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.307" item="Sound Setting 17" default="180">
+        <decVal/>
+        <label>Sound 7 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 7</label>
+        <label xml:lang="fr">Volume Son 7</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.308" item="Sound Setting 18" default="180">
+        <decVal/>
+        <label>Sound 8 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 8</label>
+        <label xml:lang="fr">Volume Son 8</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.309" item="Sound Setting 19" default="180">
+        <decVal/>
+        <label>Sound 9 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 9</label>
+        <label xml:lang="fr">Volume Son 9</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.310" item="Sound Setting 20" default="180">
+        <decVal/>
+        <label>Sound 10 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 10</label>
+        <label xml:lang="fr">Volume Son 10</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.311" item="Sound Setting 21" default="180">
+        <decVal/>
+        <label>Sound 11 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 11</label>
+        <label xml:lang="fr">Volume Son 11</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.312" item="Sound Setting 22" default="180">
+        <decVal/>
+        <label>Sound 12 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 12</label>
+        <label xml:lang="fr">Volume Son 12</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.313" item="Sound Setting 23" default="180">
+        <decVal/>
+        <label>Sound 13 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 13</label>
+        <label xml:lang="fr">Volume Son 13</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.314" item="Sound Setting 24" default="180">
+        <decVal/>
+        <label>Sound 14 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 14</label>
+        <label xml:lang="fr">Volume Son 14</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.315" item="Sound Setting 25" default="180">
+        <decVal/>
+        <label>Sound 15 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 15</label>
+        <label xml:lang="fr">Volume Son 15</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.316" item="Sound Setting 26" default="180">
+        <decVal/>
+        <label>Sound 16 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 16</label>
+        <label xml:lang="fr">Volume Son 16</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.317" item="Sound Setting 27" default="180">
+        <decVal/>
+        <label>Sound 17 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 17</label>
+        <label xml:lang="fr">Volume Son 17</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.318" item="Sound Setting 28" default="180">
+        <decVal/>
+        <label>Sound 18 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 18</label>
+        <label xml:lang="fr">Volume Son 8</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.319" item="Sound Setting 29" default="180">
+        <decVal/>
+        <label>Sound 19 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 19</label>
+        <label xml:lang="fr">Volume Son 19</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.320" item="Sound Setting 30" default="180">
+        <decVal/>
+        <label>Sound 20 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 20</label>
+        <label xml:lang="fr">Volume Son 20</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.321" item="Sound Setting 31" default="180">
+        <decVal/>
+        <label>Sound 21 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 21</label>
+        <label xml:lang="fr">Volume Son 21</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.322" item="Sound Setting 32" default="180">
+        <decVal/>
+        <label>Sound 22 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 22</label>
+        <label xml:lang="fr">Volume Son22</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.323" item="Sound Setting 33" default="180">
+        <decVal/>
+        <label>Sound 23 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 23</label>
+        <label xml:lang="fr">Volume Son 23</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.324" item="Sound Setting 34" default="180">
+        <decVal/>
+        <label>Sound 24 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 24</label>
+        <label xml:lang="fr">Volume Son 24</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.325" item="Sound Setting 35" default="180">
+        <decVal/>
+        <label>Sound 25 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 25</label>
+        <label xml:lang="fr">Volume Son 25</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.326" item="Sound Setting 36" default="180">
+        <decVal/>
+        <label>Sound 26 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 26</label>
+        <label xml:lang="fr">Volume Son 26</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.327" item="Sound Setting 37" default="180">
+        <decVal/>
+        <label>Sound 27 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 27</label>
+        <label xml:lang="fr">Volume Son 27</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="16.0.328" item="Sound Setting 38" default="180">
+        <decVal/>
+        <label>Sound 28 Volume</label>
+        <label xml:lang="de">Lautstärke Sound 28</label>
+        <label xml:lang="fr">Volume Son 28</label>
+        <tooltip>&lt;html&gt;0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0 = kein Sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;0 = pas de son&lt;/html&gt;</tooltip>
+    </variable>
+</variables>

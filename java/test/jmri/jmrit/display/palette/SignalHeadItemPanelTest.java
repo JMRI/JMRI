@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +21,7 @@ public class SignalHeadItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.signalHeadPickModelInstance(); // N11N
+        PickListModel<jmri.SignalHead> tableModel = PickListModel.signalHeadPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("SignalHead Item Panel Test");
         Editor editor = new EditorScaffold();
         SignalHeadItemPanel t = new SignalHeadItemPanel(df,"IH01","",tableModel,editor);
@@ -35,6 +33,7 @@ public class SignalHeadItemPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

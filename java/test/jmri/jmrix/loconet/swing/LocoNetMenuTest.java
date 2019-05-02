@@ -23,6 +23,7 @@ public class LocoNetMenuTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         LocoNetMenu t = new LocoNetMenu(memo);
         Assert.assertNotNull("exists",t);
+        memo.dispose();
     }
 
     // The minimal setup for log4J

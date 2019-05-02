@@ -93,10 +93,10 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
             }
         }
 
-        // add content here!
-        text.append("Most recent production release: " + productionrelease + "\n");
-        text.append("Most recent test release: " + testrelease + "\n");
-        text.append("You have: " + jmri.Version.name() + "\n"); // cleaner form is getCanonicalVersion()
+        // add content
+        text.append(Bundle.getMessage("MostRecent", productionrelease) + "\n");
+        text.append(Bundle.getMessage("MostRecentTest", testrelease) + "\n");
+        text.append(Bundle.getMessage("YouHaveVersion", jmri.Version.name()) + "\n"); // cleaner form is getCanonicalVersion()
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -150,4 +150,3 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
     private final static Logger log = LoggerFactory.getLogger(CheckForUpdateAction.class);
 
 }
-

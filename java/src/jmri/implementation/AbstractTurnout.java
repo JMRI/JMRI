@@ -1,9 +1,8 @@
 package jmri.implementation;
 
+import java.beans.*;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
-import javax.annotation.CheckReturnValue;
+import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -19,19 +18,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for the Turnout interface.
- * <P>
+ * <p>
  * Implements basic feedback modes:
- * <UL>
- * <LI>NONE feedback, where the KnownState and CommandedState track each other.
- * <LI>ONESENSOR feedback where the state of a single sensor specifies THROWN vs
+ * <ul>
+ * <li>NONE feedback, where the KnownState and CommandedState track each other.
+ * <li>ONESENSOR feedback where the state of a single sensor specifies THROWN vs
  * CLOSED
- * <LI>TWOSENSOR feedback, where one sensor specifies THROWN and another CLOSED.
- * </UL>
+ * <li>TWOSENSOR feedback, where one sensor specifies THROWN and another CLOSED.
+ * </ul>
  * If you want to implement some other feedback, override and modify
  * setCommandedState() here.
- * <P>
+ * <p>
  * Implements the parameter binding support.
- * <P>
+ * <p>
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical turnout on the layout.
  * <p>
@@ -40,14 +39,14 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
-        Turnout, java.beans.PropertyChangeListener {
+        Turnout, PropertyChangeListener {
 
     protected AbstractTurnout(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     protected AbstractTurnout(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -55,8 +54,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return Bundle.getMessage("BeanNameTurnout");
     }
 
-    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+    private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     /**
      * Handle a request to change state, typically by sending a message to the
@@ -83,6 +82,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * This is used when a new commanded state
      * is noticed from another command.
+     *
      * @param s new state
      */
     protected void newCommandedState(int s) {
@@ -101,15 +101,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Public access to changing turnout state. Sets the commanded state and, if
-     * appropriate starts a TurnoutOperator to do its thing. If there is no
+     * appropriate, starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
+     *
      * @param s commanded state to set
      */
     @Override
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
-                (s==Turnout.CLOSED ? closedText : thrownText));
+                (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
@@ -118,15 +119,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
             } else if (_activeFeedbackType == DELAYED) {
-                if (timer == null) {
-                    timer = new Timer("DELAYED turnout feedback", true);
-                }
-                if (lastTimerTask != null) lastTimerTask.cancel();  // in case any running
                 newKnownState(INCONSISTENT);
-                lastTimerTask = new TimerTask() {
-                        public void run () { newKnownState(s); }
-                    };
-                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(s); },
+                         DELAYED_FEEDBACK_INTERVAL );
             }
         } else {
             myOperator.start();
@@ -134,15 +129,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Define duration of delay for DELAYED feedback mode.
+     * Duration in Milliseconds of delay for DELAYED feedback mode.
      * <p>
-     * Defined as "public non-final"
-     * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
+     * Defined as "public non-final" so it can be changed in e.g.
+     * the jython/SetDefaultDelayedTurnoutDelay script.
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
-
-    static Timer timer = null;
-    TimerTask lastTimerTask = null;
 
     @Override
     public int getCommandedState() {
@@ -151,23 +143,23 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Add a newKnownState() for use by implementations.
-     * <P>
+     * <p>
      * Use this to update internal information when a state change is detected
      * <em>outside</em> the Turnout object, e.g. via feedback from sensors on
      * the layout.
-     * <P>
+     * <p>
      * If the layout status of the Turnout is observed to change to THROWN or
      * CLOSED, this also sets the commanded state, because it's assumed that
      * somebody somewhere commanded that move. If it's observed to change to
      * UNKNOWN or INCONSISTENT, that's perhaps either an error or a move in
      * progress, and no change is made to the commanded state.
-     * <P>
+     * <p>
      * This implementation sends a command to the layout for the new state if
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
-     * <P>
-     * This method is intended for general use, e.g. for users to set the KnownState,
-     * so it doesn't appear in the Turnout interface.
+     * <p>
+     * This method is not intended for general use, e.g. for users to set the 
+     * KnownState, so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
      */
@@ -178,6 +170,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             firePropertyChange("KnownState", Integer.valueOf(oldState),
                     Integer.valueOf(_knownState));
         }
+        _knownState = s;
         // if known state has moved to Thrown or Closed,
         // set the commanded state to match
         if ((_knownState == THROWN && _commandedState != THROWN)
@@ -200,7 +193,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * The name pretty much says it.
-     * <P>
+     * <p>
      * Triggers all listeners, etc. For use by the TurnoutOperator classes.
      */
     void setKnownStateToCommanded() {
@@ -209,10 +202,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Implement a shorter name for setCommandedState.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use setCommandedState
      * instead. The is provided to make Jython script access easier to read.
-     * <P>
+     * <p>
      * Note that getState() and setState(int) are not symmetric: getState is the
      * known state, and set state modifies the commanded state.
      * @param s new state
@@ -224,10 +217,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Implement a shorter name for getKnownState.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use getKnownState instead.
      * The is provided to make Jython script access easier to read.
-     * <P>
+     * <p>
      * Note that getState() and setState(int) are not symmetric: getState is the
      * known state, and set state modifies the commanded state.
      * @return current state
@@ -301,6 +294,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         for (int i = 0; i < _validFeedbackNames.length; i++) {
             if (mode.equals(_validFeedbackNames[i])) {
                 setFeedbackMode(_validFeedbackModes[i]);
+                setInitialKnownStateFromFeedback();
                 return;
             }
         }
@@ -342,6 +336,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     @Override
+    public void requestUpdateFromLayout() {
+        if (_activeFeedbackType == ONESENSOR || _activeFeedbackType == TWOSENSOR) {
+            Sensor s1 = getFirstSensor();
+            if (s1 != null) s1.requestUpdateFromLayout();
+        }
+        if (_activeFeedbackType == TWOSENSOR) {
+            Sensor s2 = getSecondSensor();
+            if (s2 != null) s2.requestUpdateFromLayout();
+        }
+    }
+
+    @Override
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
         _inverted = inverted;
@@ -354,16 +360,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             } else if (state == CLOSED) {
                 newKnownState(THROWN);
             }
-
         }
     }
 
     /**
      * Get the turnout inverted state. If true, commands sent to the layout are
      * reversed. Thrown becomes Closed, and Closed becomes Thrown.
-     * <P>
+     * <p>
      * Used in polling loops in system-specific code, so made final to allow
      * optimization.
+     *
      * @return inverted status
      */
     @Override
@@ -388,7 +394,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * state. We simulate a locked turnout by monitoring the known state
      * (turnout feedback is required) and if we detect that the known state has
      * changed, negate it by forcing the turnout to return to the commanded
-     * state. Turnout that have local buttons can also be locked if their
+     * state. Turnouts that have local buttons can also be locked if their
      * decoder supports it.
      *
      * @param turnoutLockout lockout state to monitor. Possible values
@@ -425,11 +431,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Determine if turnout is locked. Returns true if turnout is locked. There
-     * are two types of locks, cab lockout, and pushbutton lockout.
+     * Determine if turnout is locked. Returns. There
+     * are two types of locks: cab lockout, and pushbutton lockout.
      *
      * @param turnoutLockout turnout to check
-     * @return locked state
+     * @return locked state, true if turnout is locked
      */
     @Override
     public boolean getLocked(int turnoutLockout) {
@@ -458,6 +464,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      *
      * @return One of 0 for none
      */
+    @Override
     public int getPossibleLockModes() { return 0; }
 
     /**
@@ -537,7 +544,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /*
-     * Support for turnout automation (see TurnoutOperation and related classes)
+     * Support for turnout automation (see TurnoutOperation and related classes).
      */
     protected TurnoutOperator myOperator;
 
@@ -593,7 +600,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * the corresponding operator. Override this function if you want another way
      * to choose the operation.
      *
-     * @return newly-instantiated TurnoutOPerator, or null if nothing suitable
+     * @return newly-instantiated TurnoutOperator, or null if nothing suitable
      */
     protected TurnoutOperator getTurnoutOperator() {
         TurnoutOperator to = null;
@@ -601,7 +608,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (myTurnoutOperation != null) {
                 to = myTurnoutOperation.getOperator(this);
             } else {
-                TurnoutOperation toper = TurnoutOperationManager.getInstance()
+                TurnoutOperation toper = InstanceManager.getDefault(TurnoutOperationManager.class)
                         .getMatchingOperation(this,
                                 getFeedbackModeForOperation());
                 if (toper != null) {
@@ -660,7 +667,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
-
+        // set initial state
+        setInitialKnownStateFromFeedback();
     }
 
     @Override
@@ -705,6 +713,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
+        // set initial state 
+        setInitialKnownStateFromFeedback();
     }
 
     @Override
@@ -768,7 +778,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate sensor mode.
      */
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getSource() == myTurnoutOperation) {
             operationPropertyChange(evt);
         } else if (evt.getSource() == getFirstSensor()
@@ -777,7 +787,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    protected void sensorPropertyChange(java.beans.PropertyChangeEvent evt) {
+    protected void sensorPropertyChange(PropertyChangeEvent evt) {
         // top level, find the mode
         if (_activeFeedbackType == ONESENSOR) {
             // check for match
@@ -808,15 +818,31 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             int mode = ((Integer) evt.getNewValue()).intValue();
             Sensor s = (Sensor) evt.getSource();
             if ((mode == Sensor.ACTIVE) && (s == getSecondSensor())) {
-                newKnownState(CLOSED);
+                if(getFirstSensor().getKnownState()==Sensor.INACTIVE) {
+                   newKnownState(CLOSED);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else if ((mode == Sensor.INACTIVE) && (s == getSecondSensor())) {
+                if(getFirstSensor().getKnownState()==Sensor.ACTIVE) {
+                   newKnownState(THROWN);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
             } else if ((mode == Sensor.ACTIVE) && (s == getFirstSensor())) {
-                newKnownState(THROWN);
-            } else if (!(((getFirstSensor().getKnownState() == Sensor.ACTIVE) && (getSecondSensor()
-                    .getKnownState() == Sensor.INACTIVE)) || ((getFirstSensor()
-                    .getKnownState() == Sensor.INACTIVE) && (getSecondSensor()
-                    .getKnownState() == Sensor.ACTIVE)))) // INCONSISTENT if sensor has transitioned to an inconsistent state
-            {
-                newKnownState(INCONSISTENT);
+                if(getSecondSensor().getKnownState()==Sensor.INACTIVE) {
+                   newKnownState(THROWN);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else if ((mode == Sensor.INACTIVE) && (s == getFirstSensor())) {
+                if(getSecondSensor().getKnownState()==Sensor.ACTIVE) {
+                   newKnownState(CLOSED);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else {
+                   newKnownState(UNKNOWN);
             }
             // end TWOSENSOR block
         } else // don't need to do anything

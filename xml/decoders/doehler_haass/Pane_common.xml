@@ -20,6 +20,7 @@
                 <text xml:lang="fr">Options d'intensité</text>
                 <text xml:lang="de">Dimmer Optionen</text>
                 <text xml:lang="it">Opzioni Dimmer</text>
+                <text xml:lang="ca">Opcions d'intensitat</text>
               </label>
           </griditem>
           <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
@@ -84,6 +85,7 @@
                 <text xml:lang="fr">Options de temporisation (Auto-off)</text>
                 <text xml:lang="de">Timer Optionen (Auto-off)</text>
                 <text xml:lang="it">Opzioni Temporizzazioni (Auto-off)</text>
+                <text xml:lang="ca">Opcions de temporització (Auto-off)</text>
               </label>
           </griditem>
           <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
@@ -164,6 +166,7 @@
           <text xml:lang="fr">Option de blocage des fonctions</text>
           <text xml:lang="de">Ausschaltfunktionen</text>
           <text xml:lang="it">Opzioni Blocco Funzioni</text>
+          <text xml:lang="ca">Opcions de blocar funció</text>
         </label>
         <label>
           <text> </text>
@@ -173,12 +176,14 @@
           <text xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</text>
           <text xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</text>
           <text xml:lang="it">Blocca un uscita anche se la funzione è attivata</text>
+          <text xml:lang="ca">Bloca una sortida encara ue la funció estigui activa</text>
         </label>
         <label>
           <text>E.g. turn off front lights if the engine is pushing a train</text>
           <text xml:lang="fr">Par exemple, éteindre feux avant si la loco pousse un convoi</text>
           <text xml:lang="de">z.B.: Stirnbeleuchtung aus im Wendezugbetrieb</text>
           <text xml:lang="it">Per es. Spegne le luci anteriori se la loco è in spinta</text>
+          <text xml:lang="ca">Ex: Para llums devanters si la locomotora empenys un tren</text>
         </label>
         <label>
           <text> </text>

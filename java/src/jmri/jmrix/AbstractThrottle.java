@@ -1,6 +1,6 @@
 package jmri.jmrix;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -13,13 +13,11 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
  * original LnThrottleManager implementation.
- * <P>
+ * <p>
  * Note that this implements DccThrottle, not Throttle directly, so it has some
  * DCC-specific content.
  *
@@ -60,6 +58,35 @@ abstract public class AbstractThrottle implements DccThrottle {
     public AbstractThrottle(SystemConnectionMemo memo) {
         active = true;
         adapterMemo = memo;
+	// set defaults for Momentary status.
+	f0Momentary = false;
+        f1Momentary = false;
+        f2Momentary = false;
+        f3Momentary = false;
+        f4Momentary = false;
+        f5Momentary = false;
+        f6Momentary = false;
+        f7Momentary = false;
+        f9Momentary = false;
+        f10Momentary = false;
+        f11Momentary = false;
+        f12Momentary = false;
+        f13Momentary = false;
+        f14Momentary = false;
+        f15Momentary = false;
+        f16Momentary = false;
+        f17Momentary = false;
+        f18Momentary = false;
+        f19Momentary = false;
+        f20Momentary = false;
+        f21Momentary = false;
+        f22Momentary = false;
+        f23Momentary = false;
+        f24Momentary = false;
+        f25Momentary = false;
+        f26Momentary = false;
+        f27Momentary = false;
+        f28Momentary = false;
     }
 
     protected SystemConnectionMemo adapterMemo;
@@ -83,10 +110,35 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setSpeedSetting(float speed) {
+        setSpeedSetting(speed, false, false);
+    }
+
+    /**
+     * setSpeedSetting - Implementations should override this method only if they normally suppress
+     * messages to the system if, as far as JMRI can tell, the new message would make no difference
+     * to the system state (eg. the speed is the same, or effectivly the same, as the existing speed).
+     * Then, the boolean options can affect this behaviour.
+     *
+     * @param speed  the new speed
+     * @param allowDuplicates  don't suppress messages
+     * @param allowDuplicatesOnStop  don't suppress messages if the new speed is 'stop'
+     */
+    @Override
+    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", this.speedSetting, this.speedSetting = speed);
         }
         record(speed);
+    }
+
+    /**
+     * setSpeedSettingAgain - set the speed and don't ever supress the sending of messages to the system
+     *
+     * @param speed  the new speed
+     */
+    @Override
+    public void setSpeedSettingAgain(float speed) {
+        setSpeedSetting(speed, true, true);
     }
 
     /**
@@ -480,20 +532,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     // data members to hold contact with the property listeners
     final private Vector<PropertyChangeListener> listeners = new Vector<>();
 
-    /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
-     */
-    @Deprecated
-    @Override
-    public void dispose() {
-        if (!active) {
-            log.error("Dispose called when not active");
-        }
-        log.warn("Dispose called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
-    }
-
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
@@ -502,32 +540,12 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
 
-    @Deprecated
-    @Override
-    public void dispatch() {
-        if (!active) {
-            log.warn("dispatch called when not active");
-        }
-        log.warn("dispatch called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
-    }
-
     @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
             log.warn("dispatch called when not active");
         }
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
-    }
-
-    @Deprecated
-    @Override
-    public void release() {
-        if (!active) {
-            log.warn("release called when not active");
-        }
-        log.warn("Release called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
     }
 
     @Override
@@ -1361,14 +1379,18 @@ abstract public class AbstractThrottle implements DccThrottle {
         stopClock();
         String currentDurationString = re.getAttribute("OperatingDuration");
         long currentDuration = 0;
+        if (currentDurationString == null) {
+            currentDurationString = "0";
+            log.info("operating duration for {} starts as zero", getLocoAddress());
+        }
         try {
-            currentDuration = Long.valueOf(currentDurationString);
+            currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {
             log.warn("current stored duration is not a valid number \"" + currentDurationString + " \"");
         }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", "" + currentDuration);
-        re.putAttribute("LastOperated", new ISO8601DateFormat().format(new Date()));
+        re.putAttribute("LastOperated", new StdDateFormat().format(new Date()));
         //Only store if the roster entry isn't open.
         if (!re.isOpen()) {
             re.store();
@@ -1434,6 +1456,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottle.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

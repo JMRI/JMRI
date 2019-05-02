@@ -1,13 +1,9 @@
 package jmri.jmrit.symbolicprog;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.JLabel;
 import java.awt.GraphicsEnvironment;
 
@@ -22,21 +18,22 @@ public class CsvImportActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CvTableModel tm = new CvTableModel(new JLabel(), null);
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test Csv Import");
-        CsvImportAction t = new CsvImportAction("Test Action",tm,jf,new JLabel());
+        new CsvImportAction("Test Action",tm,jf,new JLabel());
         jf.dispose();
     } 
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CsvImportActionTest.class);

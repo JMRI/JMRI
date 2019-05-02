@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1">
+    <tableDetails xmlns="http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd">
+        <table xmlns="" name="Test1">
+            <columns>
+                <column hidden="false" name="c0" order="0" width="100"/>
+                <column hidden="false" name="c1" order="1" width="50"/>
+            </columns>
+            <sortOrder>
+                <sortKey column="1" sortOrder="ASCENDING"/>
+            </sortOrder>
+        </table>
+        <table xmlns="" name="Test2">
+            <columns>
+                <column hidden="false" name="c0" order="1" width="75"/>
+                <column hidden="true" name="c1" order="0" width="50"/>
+            </columns>
+            <sortOrder>
+                <sortKey column="0" sortOrder="DESCENDING"/>
+            </sortOrder>
+        </table>
+    </tableDetails>
+</auxiliary-configuration>

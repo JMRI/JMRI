@@ -1,6 +1,5 @@
 package jmri.profile;
 
-import apps.tests.Log4JFixture;
 import javax.swing.JList;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -16,13 +15,13 @@ public class ProfileListCellRendererTest {
     
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
     
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         JUnitUtil.resetProfileManager();
     }
 
@@ -31,7 +30,7 @@ public class ProfileListCellRendererTest {
      */
     @Test
     public void testGetListCellRendererComponent() {
-        JList list = new JList(new ProfileListModel());
+        JList<Profile> list = new JList<>(new ProfileListModel());
         list.setToolTipText(null);
         ProfileListCellRenderer instance = new ProfileListCellRenderer();
         Profile activeProfile = ProfileManager.getDefault().getActiveProfile();

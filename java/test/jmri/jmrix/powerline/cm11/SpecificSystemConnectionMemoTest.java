@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.powerline.SerialMessage;
+import jmri.jmrix.powerline.SerialListener;
 
 /**
  * Tests for SpecificSystemConnectionMemo class.
@@ -23,10 +25,23 @@ public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
    @Override
    @Before
    public void setUp() {
-        JUnitUtil.setUp();
+       JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        scm = new SpecificSystemConnectionMemo();
+       jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+       SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
+       memo.setTrafficController(new SpecificTrafficController(memo){
+          @Override
+          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+       });
+       memo.configureManagers();
+       scm = memo;
    }
 
    @Override

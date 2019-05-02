@@ -4,11 +4,11 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid Lenz XpressNet Connection Types
- * <P>
+ * Return a list of valid SECSI Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
+ *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
@@ -18,7 +18,8 @@ public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.secsi.serialdriver.ConnectionConfig"
+            "jmri.jmrix.secsi.serialdriver.ConnectionConfig",
+            "jmri.jmrix.secsi.simulator.ConnectionConfig"
         };
     }
 

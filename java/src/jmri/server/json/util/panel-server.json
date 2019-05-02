@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-panel-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"panel\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of panel for reference"
+        },
+        "userName": {
+            "type": "string",
+            "description": "Name of panel for display"
+        },
+        "URL": {
+            "type": "string",
+            "description": "URL to access the panel from the JMRI application web server"
+        },
+        "type": {
+            "type": "string",
+            "description": "Type of panel being requested",
+            "enum": ["Switchboard", "Panel", "Control Panel", "Layout"]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "URL", "type"]
+}

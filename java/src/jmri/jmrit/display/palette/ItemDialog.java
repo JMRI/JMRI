@@ -14,21 +14,15 @@ import jmri.util.JmriJFrame;
  */
 public class ItemDialog extends JmriJFrame {
 
-    // protected ItemPanel _parent;
+    protected FamilyItemPanel _parent;
     protected String _type;
     // protected String    _family;
 
-    public ItemDialog(String type, String title) {
-        super(title, true, true);
+    public ItemDialog(String type, String title, FamilyItemPanel parent) {
+        super(title, false, false);
         _type = type;
+        _parent = parent;
     }
-    /*
-     protected void sizeLocate() {
-     setSize(_parent.getSize().width, this.getPreferredSize().height);
-     setLocationRelativeTo(_parent);
-     setVisible(true);
-     pack();
-     }*/
 
     protected String getDialogType() {
         return _type;

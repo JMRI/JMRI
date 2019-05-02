@@ -10,6 +10,10 @@ import jmri.jmrit.beantable.LRouteTableAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 /**
  * Basic Implementation of a LogixManager.
  * <P>
@@ -137,23 +141,16 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             x.setGuiNames();
         }
         // iterate thru all Logixs that exist
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
+        java.util.Iterator<Logix> iter
+                = getNamedBeanSet().iterator();
         while (iter.hasNext()) {
             // get the next Logix
-            String sysName = iter.next();
-            if (sysName == null) {
-                log.error("System name null when activating Logixs");
-                break;
-            }
-            if (sysName.equals(LRouteTableAction.LOGIX_INITIALIZER)) {
+            x = iter.next();
+
+            if (x.getSystemName().equals(LRouteTableAction.LOGIX_INITIALIZER)) {
                 continue;
             }
-            x = getBySystemName(sysName);
-            if (x == null) {
-                log.error("Error getting Logix *" + sysName + "* when activating Logixs");
-                break;
-            }
+
             if (loadDisabled) {
                 // user has requested that Logixs be loaded disabled
                 log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());
@@ -191,6 +188,20 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     @Override
     public Logix getByUserName(String key) {
         return _tuser.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
     }
 
     /**

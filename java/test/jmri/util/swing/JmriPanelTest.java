@@ -23,7 +23,7 @@ public class JmriPanelTest {
 
     @Test
     public void testInitComponents() throws Exception{
-        // for now, just makes ure there isn't an exception.
+        // for now, just make sure there isn't an exception.
         panel.initComponents();
     }
 

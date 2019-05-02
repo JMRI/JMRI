@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+<title>JMRI: ČSD Czechoslovakia signal definition</title>
+
+<!-- Style -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	MEDIA="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	MEDIA="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: ČSD Czechoslovakia signal definition 1962 &ndash; embedded signals and hump yard signals &ndash; Set 2
+</h1>
+
+        <h2>Vložená a spádovištní návěstidla &ndash; Set 2</h2>
+
+<p>
+This directory contains signaling definitions corresponding to the Czechoslovak State Railways valid since 1962.
+<br>
+You can find more information in:<br>
+Czechoslovak State Railways; D1 Signal Aspects Rules; Transport Publishing; 1960 <br>
+Československé státní dráhy; D1 Návěstní předpisy; Dopravní nakladatelství; 1960 <br>
+</p>
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+</p>
+
+<p>
+Signal Mast definitions:
+</p>
+<ul>
+    <li><a href="appearance-entry.xml">Vjezdová návěstidla</a> &ndash; Entry signals
+    <li><a href="appearance-entry_distant.xml">Předvěsti</a> &ndash; Distant signals of entry signals
+    <li><a href="appearance-entry_distant_repeater.xml">Opakovací předvěsti</a> &ndash; Distant signals repeater
+    
+    <li><a href="appearance-embedded.xml">Vložená návěstidla</a> &ndash; Embedded signals
+
+    <li><a href="appearance-exit.xml">Odjezdová návěstidla</a> &ndash; Exit signals
+        
+    <li><a href="appearance-shunting.xml">Seřaďovací návěstidla</a> &ndash; Shunting signals
+    <li><a href="appearance-shunting_repeater.xml">Opakovací seřaďovací návěstidla</a> &ndash; Shunting signals repeater
+    <li><a href="appearance-hump.xml">Spádovištní návěstidla</a> &ndash; Hump yard signals
+    <li><a href="appearance-hump_repeater.xml">Opakovací spádovištní návěstidla</a> &ndash; Hump yard signals repeater
+    
+    <li><a href="appearance-test.xml">Test</a> &ndash; Test
+</ul>
+
+
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,4 +1,3 @@
-
 package jmri.jmrix.can.adapters.loopback;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -42,7 +41,7 @@ public class Bundle extends jmri.jmrix.can.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
     /**
      * Merges user data with a translated string for a given 
@@ -61,7 +60,7 @@ public class Bundle extends jmri.jmrix.can.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object ... subs) {
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
 
     /**
@@ -79,12 +78,12 @@ public class Bundle extends jmri.jmrix.can.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
    
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
-    @Override protected jmri.Bundle getBundle() { return b; }
+    protected static jmri.Bundle getBundle() { return b; }
 
     @Override 
     protected String retry(Locale locale,String key) { 

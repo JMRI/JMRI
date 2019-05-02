@@ -81,7 +81,7 @@ jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
 
       <ul>
         <li>Back to the <a href="index.shtml">Main CAN Network
-        upport Help page</a>.</li>
+        Support Help page</a>.</li>
       </ul><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

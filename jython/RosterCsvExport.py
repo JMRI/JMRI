@@ -17,6 +17,8 @@ import com.csvreader
 from javax.swing import JFileChooser, JOptionPane
 from jmri.jmrit.symbolicprog import CvTableModel
 import java
+import java.awt
+import java.io
 
 # Define some default values
 

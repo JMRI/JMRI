@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-09-07-->
+<!-- Updated by Blorec Herv&#233; 2013-09-07-->
 
 <html lang="fr">
 <head>
@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Acc&egrave;s au r&eacute;seau</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI network access">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -210,18 +210,13 @@
         JMRI</a>.</li>
       </ul>
 
-      <p>Voir aussi le package d'utilitaires <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">
-      jmri.util.zeroconf</a> de Zeroconf/Bonjour pour une
-      utilisation dans JMRI.</p>
-
       <p>Voir aussi le <a href="http://www.dns-sd.org">DNS-SD</a>
       pour plus d'informations sur Zeroconf/Bonjour/"DNS Service
       Discovery" pour la mise en r&eacute;seau.</p>
 
       <p>Voir aussi "man dns-sd" pour de plus d'informations sur
-      l'outil DNS-SD de d&eacute;bogage en ligne de commande. 
-      <!--#include virtual="/Footer" --></p>
+      l'outil DNS-SD de d&eacute;bogage en ligne de commande.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

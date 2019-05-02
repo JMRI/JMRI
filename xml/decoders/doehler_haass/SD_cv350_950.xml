@@ -43,11 +43,13 @@
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Délai max avant son marche arrêt</label>
 	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
+	<label xml:lang="ca">Retard màxim en parada</label>
    </variable>
   <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Délai max avant son marche arrêt</label>
 	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
+	<label xml:lang="ca">Retard màxim en parada</label>
    </variable>
   
   <!-- END SIMILAR CV --> 

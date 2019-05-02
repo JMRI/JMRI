@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistence of layout connections by persisting the RMI objects
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the RMI info.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -115,13 +115,13 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 f.getContentPane().removeAll();
                 f.getContentPane().add(new JLabel("failed, error was " + ex));
                 f.pack();
-                jmri.jmrix.ConnectionStatus.instance().setConnectionState(cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+                jmri.jmrix.ConnectionStatus.instance().setConnectionState(null, cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
                 connected = false;
                 result = false;
             }
 
             if (connected) {
-                jmri.jmrix.ConnectionStatus.instance().setConnectionState(cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_UP);
+                jmri.jmrix.ConnectionStatus.instance().setConnectionState(null, cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_UP);
                 // configure the other instance objects only if connected.
                 client.configureLocalServices();
                 f.setVisible(false);

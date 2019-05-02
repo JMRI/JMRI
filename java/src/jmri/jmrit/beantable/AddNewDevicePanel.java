@@ -35,8 +35,10 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
         p.add(sysNameLabel, c);
+        sysNameLabel.setLabelFor(sysName);
         c.gridy = 1;
         p.add(userNameLabel, c);
+        userNameLabel.setLabelFor(userName);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -50,7 +52,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         // button(s) at bottom of window
         JPanel panelBottom = new JPanel();
         panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
-        // only add a Cancel button when the the OKbutton string is OK (so don't show on Picker Panels)
+        // only add a Cancel button when the OKbutton string is OK (so don't show on Picker Panels)
         if (addButtonLabel.equals("ButtonOK")) {
             panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(cancelListener);

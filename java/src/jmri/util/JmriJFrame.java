@@ -37,16 +37,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JFrame extended for common JMRI use.
- * <P>
+ * <p>
  * We needed a place to refactor common JFrame additions in JMRI code, so this
  * class was created.
- * <P>
+ * <p>
  * Features:
  * <ul>
  * <li>Size limited to the maximum available on the screen, after removing any
  * menu bars (Mac) and taskbars (Windows)
  * <li>Cleanup upon closing the frame: When the frame is closed (WindowClosing
- * event), the dispose() method is invoked to do cleanup. This is inherited from
+ * event), the {@link #dispose()} method is invoked to do cleanup. This is inherited from
  * JFrame itself, so super.dispose() needs to be invoked in the over-loading
  * methods.
  * <li>Maintains a list of existing JmriJFrames
@@ -58,8 +58,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * If you want this behavior, but need to do something when the window is
  * closing, override the {@link #windowClosing(java.awt.event.WindowEvent)}
- * method to do what you want. Also, if you override dispose(), make sure to
- * call super.dispose().
+ * method to do what you want. Also, if you override {@link #dispose()}, make
+ * sure to call super.dispose().
  * <p>
  * If you want the window to just do nothing or just hide, rather than be
  * disposed, when closed, set the DefaultCloseOperation to DO_NOTHING_ON_CLOSE
@@ -76,8 +76,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Creates a JFrame with standard settings, optional save/restore of size
      * and position.
      *
-     * @param saveSize     - Set true to save the last known size
-     * @param savePosition - Set true to save the last known location
+     * @param saveSize      Set true to save the last known size
+     * @param savePosition  Set true to save the last known location
      */
     public JmriJFrame(boolean saveSize, boolean savePosition) {
         super();
@@ -128,7 +128,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Creates a JFrame with with given name plus standard settings, including
      * saving/restoring of size and position.
      *
-     * @param name - Title of the JFrame
+     * @param name  Title of the JFrame
      */
     public JmriJFrame(String name) {
         this(name, true, true);
@@ -138,9 +138,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Creates a JFrame with with given name plus standard settings, including
      * optional save/restore of size and position.
      *
-     * @param name         - Title of the JFrame
-     * @param saveSize     - Set true to save the last knowm size
-     * @param savePosition - Set true to save the last known location
+     * @param name          Title of the JFrame
+     * @param saveSize      Set true to save the last knowm size
+     * @param savePosition  Set true to save the last known location
      */
     public JmriJFrame(String name, boolean saveSize, boolean savePosition) {
         this(saveSize, savePosition);
@@ -165,9 +165,12 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
-    void setFrameLocation() {
+    /**
+      * Reset frame location and size to stored preference value
+      */
+    public void setFrameLocation() {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
-            if (prefsMgr.isWindowPositionSaved(windowFrameRef)) {
+            if (prefsMgr.hasProperties(windowFrameRef)) {
                 Dimension screen = getToolkit().getScreenSize();
                 if ((reuseFrameSavedPosition)
                         && (!((prefsMgr.getWindowLocation(windowFrameRef).getX() >= screen.getWidth()) || (prefsMgr
@@ -217,6 +220,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 initref = initref + ":" + this.getTitle();
             }
         }
+
         int refNo = 1;
         String ref = initref;
         JmriJFrameManager m = getJmriJFrameManager();
@@ -230,9 +234,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
         log.debug("Created windowFrameRef: {}", ref);
         windowFrameRef = ref;
-
     }
 
+    /** {@inheritDoc} */
     @Override
     public void pack() {
         // work around for Linux, sometimes the stored window size is too small
@@ -384,6 +388,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
 
+            /** {@inheritDoc} */
             @Override
             public void actionPerformed(ActionEvent e) {
                 // log.debug("keystroke requested close window ", JmriJFrame.this.getTitle());
@@ -466,6 +471,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         if (closesWindow) {
             setEscapeKeyAction(new AbstractAction() {
 
+                /** {@inheritDoc} */
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,
@@ -491,9 +497,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
+     * {@inheritDoc}
      * Provide a maximum frame size that is limited to what can fit on the
      * screen after toolbars, etc are deducted.
-     * <P>
+     * <p>
      * Some of the methods used here return null pointers on some Java
      * implementations, however, so this will return the superclasses's maximum
      * size if the algorithm used here fails.
@@ -566,6 +573,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
+     * {@inheritDoc}
      * The preferred size must fit on the physical screen, so calculate the
      * lesser of either the preferred size from the layout or the screen size.
      *
@@ -603,23 +611,19 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * <p>
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
-     * <p>
-     * If subClass is null, returns a list of all JmriJFrames.
      *
-     * @param subClass The Class the list should be limited to.
+     * @param type The Class the list should be limited to.
      * @return An ArrayList of Frames.
      */
-    // this probably should use and return a generic type
-    public static List<JmriJFrame> getFrameList(Class<?> subClass) {
-        if (subClass == null) {
-            return JmriJFrame.getFrameList();
-        }
-        List<JmriJFrame> result = new ArrayList<>();
+    @SuppressWarnings("unchecked") // cast in add() checked at run time
+    public static <T extends JmriJFrame> List<T> getFrameList(@Nonnull Class<T> type) {
+        List<T> result = new ArrayList<>();
         JmriJFrameManager m = getJmriJFrameManager();
         synchronized (m) {
-            m.stream().filter((f) -> (subClass.isInstance(f))).forEachOrdered((f) -> {
-                result.add(f);
-            });
+            m.stream().filter((f) -> (type.isInstance(f))).forEachOrdered((f) -> 
+                {
+                    result.add((T)f);
+                });
         }
         return result;
     }
@@ -644,6 +648,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     // handle resizing when first shown
     private boolean mShown = false;
 
+    /** {@inheritDoc} */
     @Override
     public void addNotify() {
         super.addNotify();
@@ -705,6 +710,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
+     * {@inheritDoc}
      * A frame is considered "modified" if it has changes that have not been
      * stored.
      */
@@ -715,11 +721,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         markWindowModified(this.modifiedFlag);
     }
 
-    /**
-     * Get the balue of the modified flag.
-     * <p>
-     * Not a bound parameter
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean getModifiedFlag() {
         return modifiedFlag;
@@ -735,8 +737,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     protected void handleModified() {
         if (getModifiedFlag()) {
             this.setVisible(true);
-            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"), Bundle
-                    .getMessage("WarnChangedTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
+            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"),
+                    Bundle.getMessage("WarnChangedTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
                     javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
                     new String[]{Bundle.getMessage("WarnYesSave"), Bundle.getMessage("WarnNoClose")}, Bundle
                     .getMessage("WarnYesSave"));
@@ -760,39 +762,48 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     // Window methods
+    /** Does nothing in this class */
     @Override
     public void windowOpened(java.awt.event.WindowEvent e) {
     }
 
+    /** Does nothing in this class */
     @Override
     public void windowClosed(java.awt.event.WindowEvent e) {
     }
 
+    /** Does nothing in this class */
     @Override
     public void windowActivated(java.awt.event.WindowEvent e) {
     }
 
+    /** Does nothing in this class */
     @Override
     public void windowDeactivated(java.awt.event.WindowEvent e) {
     }
 
+    /** Does nothing in this class */
     @Override
     public void windowIconified(java.awt.event.WindowEvent e) {
     }
 
+    /** Does nothing in this class */
     @Override
     public void windowDeiconified(java.awt.event.WindowEvent e) {
     }
 
+    /** Does nothing in this class */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         handleModified();
     }
 
+    /** Does nothing in this class */
     @Override
     public void componentHidden(java.awt.event.ComponentEvent e) {
     }
 
+    /** {@inheritDoc} */
     @Override
     public void componentMoved(java.awt.event.ComponentEvent e) {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
@@ -802,6 +813,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         });
     }
 
+    /** {@inheritDoc} */
     @Override
     public void componentResized(java.awt.event.ComponentEvent e) {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
@@ -811,6 +823,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         });
     }
 
+    /** Does nothing in this class */
     @Override
     public void componentShown(java.awt.event.ComponentEvent e) {
     }
@@ -834,8 +847,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     protected boolean reuseFrameSavedSized = true;
 
     /**
+     * {@inheritDoc}
+     * 
      * When window is finally destroyed, remove it from the list of windows.
-     * <P>
+     * <p>
      * Subclasses that over-ride this method must invoke this implementation
      * with super.dispose() right before returning.
      */
@@ -904,6 +919,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     protected HashMap<String, Object> properties = new HashMap<>();
 
+    /** {@inheritDoc} */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
         if (Beans.hasIntrospectedProperty(this, key)) {
@@ -916,6 +932,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getIndexedProperty(String key, int index) {
         if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
@@ -924,7 +941,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return Beans.getIntrospectedIndexedProperty(this, key, index);
     }
 
-    // subclasses should override this method with something more direct and faster
+    /** {@inheritDoc} 
+     * Subclasses should override this method with something more direct and faster
+     */
     @Override
     public void setProperty(String key, Object value) {
         if (Beans.hasIntrospectedProperty(this, key)) {
@@ -934,7 +953,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
-    // subclasses should override this method with something more direct and faster
+    /** {@inheritDoc} 
+     * Subclasses should override this method with something more direct and faster
+     */
     @Override
     public Object getProperty(String key) {
         if (properties.containsKey(key)) {
@@ -943,11 +964,13 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return Beans.getIntrospectedProperty(this, key);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasProperty(String key) {
         return (properties.containsKey(key) || Beans.hasIntrospectedProperty(this, key));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasIndexedProperty(String key) {
         return ((this.properties.containsKey(key) && this.properties.get(key).getClass().isArray())
@@ -956,6 +979,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     protected transient WindowInterface windowInterface = null;
 
+    /** {@inheritDoc} */
     @Override
     public void show(JmriPanel child, JmriAbstractAction action) {
         if (null != windowInterface) {
@@ -963,6 +987,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void show(JmriPanel child, JmriAbstractAction action, Hint hint) {
         if (null != windowInterface) {
@@ -970,6 +995,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean multipleInstances() {
         if (null != windowInterface) {
@@ -986,6 +1012,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return windowInterface;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> getPropertyNames() {
         Set<String> names = new HashSet<>();
@@ -1002,6 +1029,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return allowInFrameServlet;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Frame getFrame() {
         return this;
@@ -1023,4 +1051,5 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class);
+    
 }

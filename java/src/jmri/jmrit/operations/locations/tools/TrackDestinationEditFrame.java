@@ -161,7 +161,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             onlyCarsWithFD.setSelected(_track.isOnlyCarsWithFinalDestinationEnabled());
-            pFD.setVisible(_track.getTrackType().equals(Track.INTERCHANGE));
+            pFD.setVisible(_track.isInterchange());
             enableButtons(true);
         } else {
             enableButtons(false);
@@ -399,7 +399,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 // now determine if there's a train or trains that can move a car from this track to the destinations
                 // need to check all car types, loads, and roads that this track services
                 Car car = new Car();
-                car.setLength(Integer.toString(-RollingStock.COUPLER)); // set car length to net out to zero
+                car.setLength(Integer.toString(-RollingStock.COUPLERS)); // set car length to net out to zero
                 for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
                     if (!_track.acceptsTypeName(type)) {
                         continue;

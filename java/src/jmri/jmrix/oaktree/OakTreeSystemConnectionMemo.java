@@ -17,24 +17,21 @@ import org.slf4j.LoggerFactory;
  */
 public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
 
-    private jmri.jmrix.swing.ComponentFactory cf = null;
-
-    public OakTreeSystemConnectionMemo() {
-        this("O", SerialConnectionTypeList.OAK);
-
-    }
-
     public OakTreeSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
-
         register(); // registers general type
         InstanceManager.store(this, OakTreeSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.oaktree.swing.OakTreeComponentFactory(this),
+        InstanceManager.store(new jmri.jmrix.oaktree.swing.OakTreeComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created OakTreeSystemConnectionMemo");
+    }
+
+    public OakTreeSystemConnectionMemo() {
+        this("O", SerialConnectionTypeList.OAK);
+        log.debug("Created nameless OakTreeSystemConnectionMemo");
     }
 
     private SerialTrafficController tc = null;
@@ -51,10 +48,10 @@ public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Get the traffic controller instance associated with this connection memo.
      */
-    public SerialTrafficController getTrafficController(){
+    public SerialTrafficController getTrafficController() {
         if (tc == null) {
-            setTrafficController(new SerialTrafficController());
-            log.debug("Auto create of SerialTrafficController for initial configuration");
+            setTrafficController(new SerialTrafficController(this));
+            log.debug("Auto create of OakTree SerialTrafficController for initial configuration");
         }
         return tc;
     }
@@ -67,8 +64,13 @@ public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
 
     public void configureManagers(){
         setTurnoutManager(new SerialTurnoutManager(this));
+        InstanceManager.setTurnoutManager(getTurnoutManager());
+
         setLightManager(new SerialLightManager(this));
+        InstanceManager.setLightManager(getLightManager());
+
         setSensorManager(new SerialSensorManager(this));
+        InstanceManager.setSensorManager(getSensorManager());
     }
 
     /**

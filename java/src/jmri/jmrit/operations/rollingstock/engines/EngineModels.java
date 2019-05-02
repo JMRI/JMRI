@@ -13,18 +13,36 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents the various engine models a railroad can have. Each model has a
- * type, horsepower rating and length that is kept here. The program provides
+ * type, horsepower rating, length, and weight that is kept here. The program provides
  * some default models for the user. These values can be overridden by the user.
+ * <ul>
+ * <li>Model Horsepower Length Weight Type</li>
  *
- * Model Horsepower Length Type
- *
- * E8 2250 70 Diesel FT 1350 50 Diesel F3 1500 50 Diesel F7 1500 50 Diesel F9
- * 1750 50 Diesel GP20 2000 56 Diesel GP30 2250 56 Diesel GP35 2500 56 Diesel
- * GP38 2000 59 Diesel GP40 3000 59 Diesel RS1 1000 51 Diesel RS2 1500 52 Diesel
- * RS3 1600 51 Diesel RS11 1800 53 Diesel RS18 1800 52 Diesel RS27 2400 57
- * Diesel RSD4 1600 52 Diesel SD26 2650 61 Diesel SD45 3600 66 Diesel SW1200
- * 1200 45 Diesel SW1500 1500 45 Diesel SW8 800 44 Diesel TRAINMASTER 2400 66
- * Diesel U28B 2800 60 Diesel
+ * <li>E8 2250 70 150 Diesel</li>
+ * <li>FT 1350 50 115 Diesel</li>
+ * <li>F3 1500 50 115 Diesel</li>
+ * <li>F7 1500 50 115 Diesel</li>
+ * <li>F9 1750 50 115 Diesel</li>
+ * <li>GP20 2000 56 120 Diesel</li>
+ * <li>GP30 2250 56 130 Diesel</li>
+ * <li>GP35 2500 56 130 Diesel</li>
+ * <li>GP38 2000 59 125 Diesel</li>
+ * <li>GP40 3000 59 122 Diesel</li>
+ * <li>RS1 1000 51 124 Diesel</li>
+ * <li>RS2 1500 52 115 Diesel</li>
+ * <li>RS3 1600 51 114 Diesel</li>
+ * <li>RS11 1800 53 125 Diesel</li>
+ * <li>RS18 1800 52 118 Diesel</li>
+ * <li>RS27 2400 57 132 Diesel</li>
+ * <li>RSD4 1600 52 179 Diesel</li>
+ * <li>SD26 2650 61 164 Diesel</li>
+ * <li>SD45 3600 66 195 Diesel</li>
+ * <li>SW1200 1200 45 124 Diesel</li>
+ * <li>SW1500 1500 45 124 Diesel</li>
+ * <li>SW8 800 44 115 Diesel</li>
+ * <li>TRAINMASTER 2400 66 188 Diesel</li>
+ * <li>U28B 2800 60 126 Diesel</li>
+ * </ul>
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
@@ -55,7 +73,8 @@ public class EngineModels extends RollingStockAttribute {
      *
      * @return the default instance of this class
      * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
+     *             instead
      */
     @Deprecated
     public static synchronized EngineModels instance() {
@@ -75,7 +94,6 @@ public class EngineModels extends RollingStockAttribute {
         _engineWeightHashTable.clear();
         _engineBunitHashTable.clear();
         super.dispose();
-        loadDefaults();
     }
 
     @Override
@@ -178,6 +196,7 @@ public class EngineModels extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-engines.dtd.
+     * 
      * @param root The common Element for operations-engines.dtd.
      *
      */

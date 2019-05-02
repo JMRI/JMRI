@@ -3,22 +3,24 @@ package jmri.jmrix.loconet;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.List;
 
-public class SlotManagerTest extends TestCase {
+/**
+ * @author B. Milhaupt, Copyright (C) 2018
+ */
 
-    public SlotManagerTest(String s) {
-        super(s);
-    }
+public class SlotManagerTest {
 
     /**
      * Local member to recall when a SlotListener has been invoked.
      */
     private LocoNetSlot testSlot;
 
+    @Test
     public void testGetDirectFunctionAddressOK() {
         LocoNetMessage m1;
 
@@ -53,6 +55,7 @@ public class SlotManagerTest extends TestCase {
                 slotmanager.getDirectFunctionAddress(m1));
     }
 
+    @Test
     public void testGetDirectDccPacketOK() {
         LocoNetMessage m1;
 
@@ -87,6 +90,7 @@ public class SlotManagerTest extends TestCase {
                 slotmanager.getDirectDccPacket(m1));
     }
 
+    @Test
     public void testGetSlotSend() {
         testSlot = null;
         SlotListener p2 = new SlotListener() {
@@ -106,6 +110,7 @@ public class SlotManagerTest extends TestCase {
                 slotmanager.mLocoAddrHash.contains(p2));
     }
 
+    @Test
     public void testGetSlotRcv() {
         testSlot = null;
         SlotListener p2 = new SlotListener() {
@@ -146,21 +151,8 @@ public class SlotManagerTest extends TestCase {
         Assert.assertEquals("returned slot", null, testSlot);
     }
 
+    @Test
     public void testReadCVPaged() throws jmri.ProgrammerException {
-        int CV1 = 12;
-        ProgListener p2 = null;
-        slotmanager.setMode(ProgrammingMode.PAGEMODE);
-        slotmanager.readCV(CV1, p2);
-        Assert.assertEquals("read message",
-                "EF 0E 7C 23 00 00 00 00 00 0B 00 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    // Test names ending with "String" are for the new writeCV(String, ...)
-    // etc methods.  If you remove the older writeCV(int, ...) tests,
-    // you can rename these. Note that not all (int,...) tests may have a
-    // String(String, ...) test defined, in which case you should create those.
-    public void testReadCVPagedString() throws jmri.ProgrammerException {
         String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.setMode(ProgrammingMode.PAGEMODE);
@@ -170,17 +162,8 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVRegister() throws jmri.ProgrammerException {
-        int CV1 = 2;
-        ProgListener p2 = null;
-        slotmanager.setMode(ProgrammingMode.REGISTERMODE);
-        slotmanager.readCV(CV1, p2);
-        Assert.assertEquals("read message",
-                "EF 0E 7C 13 00 00 00 00 00 01 00 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    public void testReadCVRegisterString() throws jmri.ProgrammerException {
         String CV1 = "2";
         ProgListener p2 = null;
         slotmanager.setMode(ProgrammingMode.REGISTERMODE);
@@ -190,41 +173,8 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVDirect() throws jmri.ProgrammerException {
-        log.debug(".... start testReadCVDirect ...");
-        int CV1 = 29;
-        slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        slotmanager.readCV(CV1, lstn);
-        Assert.assertEquals("read message",
-                "EF 0E 7C 2B 00 00 00 00 00 1C 00 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("initial status", -999, status);
-
-        // LACK received back (DCS240 sequence)
-        log.debug("send LACK back");
-        startedShortTimer = false;
-        startedLongTimer = false;
-
-        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
-        JUnitUtil.waitFor(()->{return startedLongTimer;},"startedLongTimer not set");
-        Assert.assertEquals("post-LACK status", -999, status);
-        Assert.assertTrue("started long timer", startedLongTimer);
-        Assert.assertFalse("didn't start short timer", startedShortTimer);
-
-        // read received back (DCS240 sequence)
-        value = 0;
-        log.debug("send E7 reply back");
-        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
-        JUnitUtil.waitFor(()->{return value == 35;},"value == 35 not set");
-        log.debug("checking..");
-        Assert.assertEquals("reply status", 0, status);
-        Assert.assertEquals("reply value", 35, value);
-
-        log.debug(".... end testReadCVDirect ...");
-    }
-
-    public void testReadCVDirectString() throws jmri.ProgrammerException {
         log.debug(".... start testReadCVDirect ...");
         String CV1 = "29";
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -258,8 +208,9 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadCVDirect ...");
     }
 
+    @Test
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.readCVOpsMode(CV1, p2, 4 * 128 + 0x23, true);
         Assert.assertEquals("read message",
@@ -267,8 +218,9 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.readCVOpsMode(CV1, p2, 22, false);
         Assert.assertEquals("read message",
@@ -276,18 +228,8 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVPaged() throws jmri.ProgrammerException {
-        int CV1 = 12;
-        int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.setMode(ProgrammingMode.PAGEMODE);
-        slotmanager.writeCV(CV1, val2, p3);
-        Assert.assertEquals("write message",
-                "EF 0E 7C 63 00 00 00 00 00 0B 22 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    public void testWriteCVPagedString() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
@@ -298,18 +240,8 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVRegister() throws jmri.ProgrammerException {
-        int CV1 = 2;
-        int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.setMode(ProgrammingMode.REGISTERMODE);
-        slotmanager.writeCV(CV1, val2, p3);
-        Assert.assertEquals("write message",
-                "EF 0E 7C 53 00 00 00 00 00 01 22 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    public void testWriteCVRegisterString() throws jmri.ProgrammerException {
         String CV1 = "2";
         int val2 = 34;
         ProgListener p3 = null;
@@ -320,18 +252,8 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVDirect() throws jmri.ProgrammerException {
-        int CV1 = 12;
-        int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        slotmanager.writeCV(CV1, val2, p3);
-        Assert.assertEquals("write message",
-                "EF 0E 7C 6B 00 00 00 00 00 0B 22 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    public void testWriteCVDirectString() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
@@ -342,6 +264,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVDirectStringDCS240() throws jmri.ProgrammerException {
         log.debug(".... start testWriteCVDirectStringDCS240 ...");
         String CV1 = "31";
@@ -379,6 +302,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteCVDirectStringDCS240 ...");
     }
 
+    @Test
     public void testLackLogic() {
         LocoNetMessage m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25});
         Assert.assertTrue("checkLackTaskAccepted(m.getElement(2))", slotmanager.checkLackTaskAccepted(m.getElement(2)));
@@ -386,6 +310,7 @@ public class SlotManagerTest extends TestCase {
         Assert.assertFalse("checkLackAcceptedBlind(m.getElement(2))", slotmanager.checkLackAcceptedBlind(m.getElement(2)));
     }
 
+    @Test
     public void testWriteCVDirectStringDCS240Interrupted() throws jmri.ProgrammerException {
         log.debug(".... start testWriteCVDirectStringDCS240 ...");
         String CV1 = "31";
@@ -431,8 +356,9 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteCVDirectStringDCS240 ...");
     }
 
+    @Test
     public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
         slotmanager.writeCVOpsMode(CV1, val2, p3, 4 * 128 + 0x23, true);
@@ -443,8 +369,9 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVOpsShortAddr() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
         slotmanager.writeCVOpsMode(CV1, val2, p3, 22, false);
@@ -453,6 +380,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteThroughFacade() throws jmri.ProgrammerException {
         log.debug(".... start testWriteThroughFacade ...");
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -568,6 +496,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteThroughFacade ...");
     }
 
+    @Test
     public void testReadThroughFacade() throws jmri.ProgrammerException {
         log.debug(".... start testReadThroughFacade ...");
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -591,8 +520,6 @@ public class SlotManagerTest extends TestCase {
                 = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
-        int val2 = 55;
-
         // Start overall sequence
         pf2.readCV(CV1, lstn);
 
@@ -683,6 +610,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadThroughFacade ...");
     }
 
+    @Test
     public void testReadThroughFacadeFail() throws jmri.ProgrammerException {
         log.debug(".... start testReadThroughFacadeFail ...");
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -706,8 +634,6 @@ public class SlotManagerTest extends TestCase {
                 = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
-        int val2 = 55;
-
         // Start overall sequence
         pf2.readCV(CV1, lstn);
 
@@ -735,17 +661,147 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadThroughFacadeFail ...");
     }
 
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SlotManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testGetProgrammingModes() {
+        List<ProgrammingMode> l = slotmanager.getSupportedModes();
+        Assert.assertEquals("programming mode list length ok", 5, l.size());
+        Assert.assertEquals("programming mode 0", ProgrammingMode.PAGEMODE, l.get(0));
+        Assert.assertEquals("programming mode 1", ProgrammingMode.DIRECTBYTEMODE, l.get(1));
+        Assert.assertEquals("programming mode 2", ProgrammingMode.REGISTERMODE, l.get(2));
+        Assert.assertEquals("programming mode 3", ProgrammingMode.ADDRESSMODE, l.get(3));
+        Assert.assertEquals("programming mode 4", "LOCONETCSOPSWMODE", l.get(4).getStandardName());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SlotManagerTest.class);
-        return suite;
+    @Test
+    public void testSendPacket() {
+        byte msg[] = jmri.NmraPacket.accDecPktOpsMode(1, 4, 53);
+        slotmanager.sendPacket(msg, 1);
+        Assert.assertEquals("nmra packet 1",
+                "ED 0B 7F 50 07 01 70 6C 03 35 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(128, 4, 53);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 2",
+                "ED 0B 7F 51 07 00 50 6C 03 35 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg= jmri.NmraPacket.accDecPktOpsMode(256, 4, 53);
+        slotmanager.sendPacket(msg, 3);
+        Assert.assertEquals("nmra packet 3",
+                "ED 0B 7F 52 07 00 30 6C 03 35 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(1, 37, 53);
+        slotmanager.sendPacket(msg, 4);
+        Assert.assertEquals("nmra packet 4",
+                "ED 0B 7F 53 07 01 70 6C 24 35 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(1, 129, 53);
+        slotmanager.sendPacket(msg, 5);
+        Assert.assertEquals("nmra packet 5",
+                "ED 0B 7F 54 0F 01 70 6C 00 35 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 0);
+        slotmanager.sendPacket(msg, 6);
+        Assert.assertEquals("nmra packet 6",
+                "ED 0B 7F 55 07 01 70 6C 09 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 128);
+        slotmanager.sendPacket(msg, 7);
+        Assert.assertEquals("nmra packet 7",
+                "ED 0B 7F 56 17 01 70 6C 09 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 255);
+        slotmanager.sendPacket(msg, 8);
+        Assert.assertEquals("nmra packet 8",
+                "ED 0B 7F 57 17 01 70 6C 09 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accDecPktOpsMode(511, 255, 0);
+        slotmanager.sendPacket(msg, 9);
+        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Send count' reduced from 9 to 8.");
+        Assert.assertEquals("nmra packet 9",
+                "ED 0B 7F 57 0F 3F 00 6C 7E 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(1, 31);
+        slotmanager.sendPacket(msg, 0);
+        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Send count' of 0 is illegal and is forced to 1.");
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 30 01 01 71 1F 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(2, 30);
+        slotmanager.sendPacket(msg, -1);
+        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Send count' of -1 is illegal and is forced to 1.");
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 30 01 01 73 1E 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(4, 29);
+        slotmanager.sendPacket(msg, 3);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 32 01 01 77 1D 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(8, 27);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 02 77 1B 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(16, 23);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 04 77 17 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(32, 15);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 08 77 0F 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(64, 1);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 10 77 01 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(128, 0);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 20 77 00 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(256, 2);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 00 67 02 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(512, 4);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 00 57 04 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(1024, 8);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 00 37 08 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        msg = jmri.NmraPacket.accSignalDecoderPkt(511, 16);
+        slotmanager.sendPacket(msg, 2);
+        Assert.assertEquals("nmra packet 10",
+                "ED 0B 7F 31 01 00 55 10 00 00 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
     // The minimal setup for log4J
@@ -760,9 +816,9 @@ public class SlotManagerTest extends TestCase {
     ProgListener lstn;
     int releaseTestDelay = 150; // probably needs to be at least 150, see SlotManager.postProgDelay
 
-    @Override
-    protected void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
 
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
@@ -799,11 +855,10 @@ public class SlotManagerTest extends TestCase {
             }
         };
 
-        apps.tests.Log4JFixture.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

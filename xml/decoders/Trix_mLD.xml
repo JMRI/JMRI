@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <!-- version 1: creation -->
+    <!-- version 2: custom motor pane + French labels -->
+    <version author="Alain Le Marchand" version="1" lastUpdated="20180225"/>
+    <version author="Alain Le Marchand" version="2" lastUpdated="20180318"/>
+    <decoder>
+        <family name="Märklin mLD" mfg="Trix Modelleisenbahn" lowVersionID="1" highVersionID="2" comment="Märklin HO Locomotive Decoders - no sound">
+            <model model="60942" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60942" connector="21MTC" comment="Non sound decoder for Märklin HO locomotives, with MTC21 plug">
+                <output name="1" label="LV|Gray" connection="solder">
+                  <label xml:lang="de">LV|Grau</label>
+                  <label xml:lang="fr">LV|Gris</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="solder">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Brown/Red" connection="solder">
+                  <label xml:lang="de">Aux 1|Braun/Rot</label>
+                  <label xml:lang="fr">Aux 1|Marron/Rouge</label>
+                </output>
+                <output name="4" label="Aux 2|Brown/Green" connection="solder">
+                  <label xml:lang="de">Aux 2|Braun/Grün</label>
+                  <label xml:lang="fr">Aux 2|Marron/Vert</label>
+                </output>
+                <output name="5" label="Aux 3|Brown/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Braun/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Marron/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Brown/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Braun/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Marron/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <output name="ABV" label="deactivate">
+                  <label xml:lang="de">ausschalten</label>
+                  <label xml:lang="fr">désactivé</label>
+                </output>
+                <output name="RG" label="Switching">
+                  <label xml:lang="de">Rangiergang</label>
+                  <label xml:lang="fr">Manœuvre</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+            </model>
+            <model model="60962" numOuts="4" numFns="36" maxMotorCurrent="1.1A" productID="60962" connector="Wires/NEM652" comment="Non sound decoder for Märklin HO locomotives, with NEM652 8-pin plug">
+                <output name="1" label="LV|White" connection="wire">
+                  <label xml:lang="de">LV|Weiß</label>
+                  <label xml:lang="fr">LV|Blanc</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="wire">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Green" connection="wire">
+                  <label xml:lang="de">Aux 1|Grün</label>
+                  <label xml:lang="fr">Aux 1|Vert</label>
+                </output>
+                <output name="4" label="Aux 2|Violet" connection="wire">
+                  <label xml:lang="de">Aux 2|Violett</label>
+                  <label xml:lang="fr">Aux 2|Violet</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <output name="ABV" label="deactivate">
+                  <label xml:lang="de">ausschalten</label>
+                  <label xml:lang="fr">désactivé</label>
+                </output>
+                <output name="RG" label="Switching">
+                  <label xml:lang="de">Rangiergang</label>
+                  <label xml:lang="fr">Manœuvre</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+            </model>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">
+                  <text>Headlights</text>
+                  <text xml:lang="de">Spitzensignal</text>
+                  <text xml:lang="fr">Feux</text>
+                </functionlabel>
+                <functionlabel num="3" lockable="true">
+                  <text>Switching</text>
+                  <text xml:lang="de">Rangiergang</text>
+                  <text xml:lang="fr">Manœuvre</text>
+                </functionlabel>
+                <functionlabel num="4" lockable="true">
+                  <text>Deactivate ABV</text>
+                  <text xml:lang="de">ABV ausschalten</text>
+                  <text xml:lang="fr">Désactivation ABV</text>
+                </functionlabel>
+            </functionlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <!--
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+            </capability>
+            -->
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_standardCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_functionmap.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs" CV="8" default="8">
+                <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+                <label xml:lang="de">Decoder-Reset (Werkreset)</label>
+                <label xml:lang="fr">Reset de tous les CVs aux valeurs usine</label>
+            </factReset>
+        </resets>
+    </decoder>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_motorPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_advancedPane.xml"/>
+</decoder-config>

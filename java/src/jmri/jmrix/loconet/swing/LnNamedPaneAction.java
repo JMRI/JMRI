@@ -17,16 +17,41 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author Bob Jacobsen Copyright (C) 2010
-  */
+ */
 public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
+     * <p>
+     * @param s         Human-readable panel name for display by the action
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
+     *                  one, provide a reference. To create a new window
+     *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
+     * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
+     *                  checked at compile time or when the constructor runs, but must be true
+     *                  for the action to be invoked successfully.
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to be used by this object
      */
     public LnNamedPaneAction(String s, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {
         super(s, wi, paneClass);
         this.memo = memo;
     }
+
+
+    /**
+     * Enhanced constructor for placing the pane in various GUIs.
+     * <p>
+     * @param s         Human-readable panel name for display by the action
+     * @param i         Icon for display by the action
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
+     *                  one, provide a reference. To create a new window
+     *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
+     * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
+     *                  checked at compile time or when the constructor runs, but must be true
+     *                  for the action to be invoked successfully.
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to be used by this object
+     */
+
 
     public LnNamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {
         super(s, i, wi, paneClass);
@@ -54,8 +79,6 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
-
     @Override
     public SystemConnectionMemo getSystemConnectionMemo() {
         return this.memo;
@@ -64,7 +87,11 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     @Override
     public void setSystemConnectionMemo(SystemConnectionMemo memo) throws IllegalArgumentException {
         if (LocoNetSystemConnectionMemo.class.isAssignableFrom(memo.getClass())) {
+            if (memo instanceof LocoNetSystemConnectionMemo) {
             this.memo = (LocoNetSystemConnectionMemo) memo;
+            } else {
+                throw new IllegalArgumentException();
+            }
         } else {
             throw new IllegalArgumentException();
         }
@@ -74,5 +101,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
         return new HashSet<>(Arrays.asList(LocoNetSystemConnectionMemo.class));
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
 
 }

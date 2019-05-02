@@ -2,16 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
- * LocoNetConsistTest.java
- *
- * Description:	tests for the jmri.jmrix.loconet.LocoNetConsist class
  *
  * @author	Paul Bender Copyright (C) 2016,2017
  */
@@ -73,9 +66,9 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Ignore("LocoNet CS consists allow any address")
     @Override
     @Test public void checkAddressAllowedBad(){
+        // LocoNet CS consists allow any valid address, so this test is empty
     }
 
     @Test public void checkAddressAllowedGoodAdvanced(){
@@ -92,7 +85,6 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         Assert.assertFalse("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(0,false)));
     }
 
-
     @Test public void checkSizeLimitCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",-1,c.sizeLimit());
@@ -107,10 +99,9 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));
-        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));
+        Assert.assertTrue("Direction in CS Consist", c.getLocoDirection(A));
+        Assert.assertFalse("Direction in CS Consist", c.getLocoDirection(B));
     }
-
 
     // The minimal setup for log4J
     @Before
@@ -120,9 +111,10 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
-        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         ltm = new LnThrottleManager(memo);
         memo.setThrottleManager(ltm);
+        memo.setLnTrafficController(lnis);
 
         try {
         // set slot 3 to address 3
@@ -139,7 +131,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
         } catch(LocoNetException lne) {
-          Assert.fail("failed to add addresses to slot durring setup");
+          Assert.fail("failed to add addresses to slot during setup");
         }
         c = new LocoNetConsist(3,memo);
         ReturnSlotInfo();
@@ -151,6 +143,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     public void tearDown() {
         ltm.dispose();
         c = null;
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -35,9 +35,11 @@
       <a href="./TabbedPreferences.shtml">Preferences Help (v2.9
       and up)</a> or <a href="./AppConfigPanel.shtml">Preferences
       Help (older)</a>. You can also open the help by selecting
-      "Window Help" in the Help menu of the Preferences pane. This
+      "Window Help" in the Help menu of the Preferences pane.</p>
+      <p>This
       is the help\en\package\apps\AppConfixPanelErrorPage.shtml
-      pane <!--#include virtual="/Footer" --></p>
+      pane</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

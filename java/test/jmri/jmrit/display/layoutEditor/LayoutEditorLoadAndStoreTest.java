@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.configurexml.LoadAndStoreTestBase.getFiles;
-
 import java.io.File;
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.util.JUnitUtil;

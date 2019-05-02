@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Traffic Controller interface for communicating with XBee devices directly
  * using the XBee API.
  *
- * @author Paul Bender Copyright (C) 2013,2016
+ * @author Paul Bender Copyright (C) 2013, 2016
  */
 public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, IModemStatusReceiveListener, IDataReceiveListener, XBeeInterface {
 
@@ -43,9 +43,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * <p>
-     * This is a default, null implementation, which must be overridden in an
-     * adapter-specific subclass.
+     * Get a message of zero length.
      */
     @Override
     protected AbstractMRReply newReply() {
@@ -53,7 +51,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Make connection to existing PortController object.
+     * Make connection to an existing PortController object.
      */
     @Override
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
@@ -64,7 +62,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee = new XBeeDevice(xbp);
                xbee.open();
-               xbee.reset(); 
+               xbee.reset();
                try {
                   synchronized(this){
                      wait(2000);
@@ -86,7 +84,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Actually transmits the next message to the port
+     * Actually transmit the next message to the port.
      */
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -118,6 +116,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * should just sleep.
      */
     @Override
+    @SuppressWarnings("deprecation") // until there's a replacement for getPreferedTransmitAddress()
     protected AbstractMRMessage pollMessage() {
         if (numNodes <= 0) {
             return null;
@@ -166,19 +165,20 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Public method to register a node
+     * Register a node.
      */
     @Override
     public void registerNode(jmri.jmrix.AbstractNode node) {
         if(node instanceof XBeeNode) {
            super.registerNode(node);
-           XBeeNode xbnode= (XBeeNode) node;
+           XBeeNode xbnode = (XBeeNode) node;
            xbnode.setTrafficController(this);
         } else {
            throw new java.lang.IllegalArgumentException("Attempt to register node of incorrect type for this connection");
         }
     }
 
+    @SuppressFBWarnings(value="VO_VOLATILE_INCREMENT", justification="synchronized method provides locking")
     public synchronized void deleteNode(XBeeNode node) {
         // find the serial node
         int index = 0;
@@ -201,65 +201,39 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         nodeArray[numNodes] = null;
         // remove this node from the network too.
         getXBee().getNetwork().addRemoteDevice(node.getXBee());
- 
     }
 
-
     // XBee IPacketReceiveListener interface methods
+
     @Override
     public void packetReceived(XBeePacket response) {
-
+	// because of the XBee library architecture, we don't
+	// do anything here with the responses.
         log.debug("packetReceived called with {}",response);
-        dispatchResponse(response);
     }
 
     // XBee IModemStatusReceiveListener interface methods
+
     @Override
     public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
+	// because of the XBee library architecture, we don't
+	// do anything here with the responses.
        log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
     }
 
     // XBee IDataReceiveListener interface methods
+
     @Override
     public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
-       log.debug("dataReceived called with message {} ", xbm);
-    }
-
-
-    private void dispatchResponse(XBeePacket response){
-        XBeeReply reply = new XBeeReply(response);
-
-        // message is complete, dispatch it !!
-        replyInDispatch = true;
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + reply.getNumDataElements()
-                    + " contains " + reply.toString() + " state " + mCurrentState);
-        }
-
-        // forward the message to the registered recipients,
-        // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure proper thread
-        /*Runnable r = new RcvNotifier(reply, mLastSender, this);
-        try {
-            log.debug("invoking dispatch thread");
-            javax.swing.SwingUtilities.invokeAndWait(r);
-            log.debug("dispatch thread complete");
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            log.error("cause:" + e.getCause());
-            e.printStackTrace();
-        }*/
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch thread invoked");
-        }
-
-        replyInDispatch = false;
-        log.debug("Dispatch Complete");
+        // because of the XBee library architecture, we don't
+	// do anything here with the responses.
+        log.debug("dataReceived called with message {} ", xbm);
     }
 
     /*
      * Build a new IEEE802154 Node.
-     * @return new IEEE802154Node.
+     *
+     * @return new IEEE802154Node
      */
     @Override
     public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
@@ -309,7 +283,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Forward a reply to all registered IEEE802154Interface listeners.
+     * Forward a reply to all registered XBeeInterface listeners.
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
@@ -338,7 +312,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
         return (null);
     }
- 
+
    /**
      * Public method to identify an XBeeNode from its RemoteXBeeDevice object.
      *
@@ -365,6 +339,14 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     public XBeeDevice getXBee(){
         return xbee;
+    }
+
+    @Override
+    protected void terminate(){
+       if(xbee!=null) {
+          xbee.close();
+          xbee=null;
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);

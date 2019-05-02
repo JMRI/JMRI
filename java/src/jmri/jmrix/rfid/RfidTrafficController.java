@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class RfidTrafficController extends AbstractMRTrafficController implements RfidInterface {
 
+    /**
+     * Create a new RfidTrafficController instance.
+     */
     public RfidTrafficController() {
         super();
         logDebug = log.isDebugEnabled();
@@ -148,12 +151,6 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
-    }
-
-    @Deprecated
-    @Override
-    protected void setInstance() {
-//        self = this;
     }
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received

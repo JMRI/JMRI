@@ -1,22 +1,18 @@
 package jmri.util;
 
 import java.awt.geom.Point2D;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.python.modules.math;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of MathUtil
  *
  * @author	George Warner Copyright (C) 2017
  */
-public class MathUtilTest extends TestCase {
+public class MathUtilTest {
 
     static final double tolerance = 0.000001;
 
@@ -266,27 +262,13 @@ public class MathUtilTest extends TestCase {
 
     // from here down is testing infrastructure
     @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MathUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static junit.framework.Test suite() {
-        TestSuite suite = new TestSuite(MathUtilTest.class);
-        return suite;
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
     }
 
     //private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class);

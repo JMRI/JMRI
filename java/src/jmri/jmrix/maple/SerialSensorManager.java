@@ -7,34 +7,35 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the specific Sensor implementation.
- * <P>
- * System names are "KSnnnn", where nnnn is the sensor number without padding.
- * <P>
+ * <p>
+ * System names are "KSnnnn", where K is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
+ * <p>
  * Sensors are numbered from 1.
- * <P>
+ * <p>
  * This is a SerialListener to handle the replies to poll messages. Those are
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
-  */
+ */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
     /**
      * Number of sensors per UA in the naming scheme.
-     * <P>
+     * <p>
      * The first UA (node address) uses sensors from 1 to SENSORSPERUA-1, the
      * second from SENSORSPERUA+1 to SENSORSPERUA+(SENSORSPERUA-1), etc.
-     * <P>
+     * <p>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
      */
     static final int SENSORSPERUA = 1000;
 
     MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "M";
+    protected String prefix = "K";
 
     public SerialSensorManager(MapleSystemConnectionMemo memo) {
         super();
@@ -104,10 +105,10 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to normalize a system name.
-     * <P>
-     * Returns a normalized system name if system name has a valid format, else
-     * returns "".
+     * Normalize a system name.
+     * <p>
+     * @return a normalized system name if system name has a valid format, else
+     * return ""
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -115,7 +116,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -142,6 +143,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Method to register any orphan Sensors when a new Serial Node is created
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
         java.util.Iterator<String> iter
@@ -173,8 +175,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             //Address format passed is in the form of sysNode:address or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                sysNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                address = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                sysNode = Integer.parseInt(curAddress.substring(0, seperator));
+                address = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and address format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");

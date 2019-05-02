@@ -19,7 +19,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -28,16 +28,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public String name() {
         return Bundle.getMessage("PiSprogNanoCSTitle");
-    }
-
-    @Override
-    public String getManufacturer() {
-        return adapter.getManufacturer();
-    }
-
-    @Override
-    public void setManufacturer(String manu) {
-        adapter.setManufacturer(manu);
     }
 
     @Override

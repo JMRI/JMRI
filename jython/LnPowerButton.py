@@ -23,6 +23,9 @@ import javax.swing
 # <ARG2> = zone*2 + 16*(3 lower bits of section address)
 # <ARG3> = 0x30 (or 0x10?) 
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 # create the button, and add an action routine to it
 b = javax.swing.JButton("Set On")
 def whenMyButtonClicked(event) :
@@ -44,7 +47,7 @@ def whenMyButtonClicked(event) :
         packet.setElement(2, ((board-1)&0x7F))
         packet.setElement(3, 0x3F)  # F in lower bits means all AR
         packet.setElement(4, 0x10+(on << zone)) # set the control bit for just the channel
-        jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+        jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
         return
         
 b.actionPerformed = whenMyButtonClicked

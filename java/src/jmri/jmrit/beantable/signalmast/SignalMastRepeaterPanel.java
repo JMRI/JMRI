@@ -65,8 +65,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         _RepeaterModel = new SignalMastRepeaterModel();
         JTable _RepeaterTable = new JTable(_RepeaterModel);
 
-        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel);
-        sorter.setComparator(SignalMastRepeaterModel.DIR_COLUMN, new jmri.util.SystemNameComparator());
+        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel); // leave default sorting
         RowSorterUtil.setSortOrder(sorter, SignalMastRepeaterModel.DIR_COLUMN, SortOrder.ASCENDING);
         _RepeaterTable.setRowSorter(sorter);
 
@@ -94,7 +93,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         footer.add(_MasterBox);
         footer.add(new JLabel(Bundle.getMessage("Slave") + " : "));
         footer.add(_SlaveBox);
-        _addRepeater = new JButton(Bundle.getMessage("ButtonAdd"));
+        _addRepeater = new JButton(Bundle.getMessage("AddButtonText"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
             @Override
@@ -127,8 +126,8 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             _addRepeater.setEnabled(false);
             return;
         }
-        java.util.Iterator<String> iter
-                = dsmm.getSystemNameList().iterator();
+        java.util.Iterator<SignalMast> iter
+                = dsmm.getNamedBeanSet().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {
@@ -136,18 +135,15 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         }
         ArrayList<NamedBean> excludeList = new ArrayList<>();
         while (iter.hasNext()) {
-            String mname = iter.next();
-            if (mname != null) {
-                SignalMast s = dsmm.getBySystemName(mname);
-                if (s.getAppearanceMap() != masterMast.getAppearanceMap()) {
-                    excludeList.add(s);
-                } else if (s == masterMast) {
-                    excludeList.add(s);
-                }
+            SignalMast s = iter.next();
+            if (s.getAppearanceMap() != masterMast.getAppearanceMap()) {
+                excludeList.add(s);
+            } else if (s == masterMast) {
+                excludeList.add(s);
             }
         }
         _SlaveBox.excludeItems(excludeList);
-        if (excludeList.size() == dsmm.getSystemNameList().size()) {
+        if (excludeList.size() == dsmm.getNamedBeanSet().size()) {
             _SlaveBox.setEnabled(false);
             _addRepeater.setEnabled(false);
         } else {

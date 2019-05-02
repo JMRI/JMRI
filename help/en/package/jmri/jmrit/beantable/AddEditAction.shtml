@@ -6,12 +6,12 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Add/Edit Actions</title>
+  <title>JMRI: Transit Add/Edit Actions</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help Transit Special Actions">
+  "JMRI help Dispatcher Transit Special Actions">
   <!--#include virtual="/Style" -->
 </head>
 
@@ -20,16 +20,16 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Add/Edit Action</h1>
+      <h1>Transit: Add/Edit Action</h1>
 
       <h2>The Add/Edit Action Window</h2>
 
       <p>Special <b><a href="ViewSpecialActions.shtml">Actions</a></b>
-      are tasks that can be initiated automatically as a train running
-      in automatic mode traverses the layout.<br>
+      are tasks that can be initiated automatically as a Dispatcher
+      Train running in automatic mode traverses the layout.<br>
       The Add Action pane provides for creating
       new Actions:</p>
-      <img src="images/AddEditAction.png" height="309" width="460">
+      <img src="images/AddEditAction.png" width="322" height="247">
       <p>The "Edit" version of this window is the same as the one
       shown above, except the <b>Create New Action</b> button is
       replaced by an <b>Update Action</b> button and the selections
@@ -50,16 +50,15 @@
       needing them is selected. Each data item is supplied with a
       text description (tooltip) that may be summoned by hovering
       the cursor over the item. Each <b>When</b> option is
-      described in more detail in <b><a href=
-      "ViewSpecialActions.shtml#when">Actions</a></b>.</p>
+      described in more detail in the <b><a href=
+      "ViewSpecialActions.shtml#when">Actions</a></b> Help.</p>
 
-      <p>An optional delay, specified in milliseconds, is available
-      for each <b>When</b> option. No delay is the default. If an
-      optional delay time is not entered (or a delay time of zero
-      is entered), the action will be initiated immediately after
-      the <i>when</i> event occurs. If a delay time is specified,
-      the program will wait for the specified time after the
-      <i>when</i> event occurs before initiating the action.</p>
+      <p>Optionally a Delay, specified in milliseconds, can be set
+      with each <b>When</b> option. The default Delay of 0 causes
+      the Action to be be initiated immediately after the <i>when</i>
+      event occurs. If a Delay time greater that 0 is specified,
+      Dispatcher will wait for the specified time after the
+      <i>when</i> event occurs before initiating the Action.</p>
 
       <p>To specify <b>What</b> action is requested, select an
       option in the <b>What:</b> popup menu, and fill in any data

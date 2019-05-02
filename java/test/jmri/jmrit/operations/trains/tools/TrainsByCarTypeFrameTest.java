@@ -1,19 +1,21 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
+import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainsByCarTypeFrameTest {
+public class TrainsByCarTypeFrameTest extends OperationsTestCase{
 
     @Test
     public void testCTor() {
@@ -23,18 +25,31 @@ public class TrainsByCarTypeFrameTest {
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }
+    
+    @Test
+    public void testTrainsByCarTypeFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // confirm that train default accepts Boxcars
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train t = tmanager.newTrain("Test Train Name 2");
+        Assert.assertTrue("accepts Boxcar 1", t.acceptsTypeName("Boxcar"));
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitOperationsUtil.resetOperationsManager();
-        JUnitOperationsUtil.initOperationsData();
-    }
+        TrainsByCarTypeFrame f = new TrainsByCarTypeFrame();
+        f.initComponents("Boxcar");
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        // remove Boxcar from trains
+        JemmyUtil.enterClickAndLeave(f.clearButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
+
+        // now add Boxcar to trains
+        JemmyUtil.enterClickAndLeave(f.setButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
+
+        JUnitUtil.dispose(f);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrameTest.class);

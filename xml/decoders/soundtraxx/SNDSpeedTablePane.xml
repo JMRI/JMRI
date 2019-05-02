@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- version 1 - new pane file for SoundTraxx SoundCar                      -->
+<!--             Created from the generic SpeedTablePane.xml file          -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Speed Table</name>
+  <name xml:lang="ca">Taula de velocitat</name>
+  <name xml:lang="cs">Rychlostní tabulka</name>
+  <name xml:lang="da">Hastigheds Tabel</name>
+  <name xml:lang="de">Geschwindigkeitskennlinie</name>
+  <name xml:lang="fr">Tableau de vitesse</name>
+  <name xml:lang="it">Tabella Velocità</name>
+  <name xml:lang="nl">Snelheidsgrafiek</name>
+  <column>
+    <row>
+      <label>
+        <text>&lt;html&gt;
+          &lt;h1&gt;Usage of Speed Table for Tsunami SoundCar decoder&lt;/h1&gt;
+          &lt;br/&gt;
+          Though this SoundCar decoder is not controlling any motor,
+          &lt;br/&gt;
+          the CVs in this pane are used for synchronizing the clickety clack,
+          &lt;br/&gt;
+          flat spot, wheel noise and flange squeal sound effects.
+          &lt;br/&gt;
+          &lt;br/&gt;
+          Please adjust to same values as your engines for a realistic effect.
+          &lt;br/&gt;
+          &lt;/html&gt;
+        </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
+          <label xml:lang="ca">Selecciona aquest botó per fer servir taula de velocitats</label>
+          <label xml:lang="cs">Pro použití rychlostní tabulky pro řízení rychlosti zvolte toto tlačítko</label>
+          <label xml:lang="fr">Sélectionner ce bouton pour utiliser le tableau de vitesse pour le contrôle de vitesse</label>
+          <label xml:lang="de">Um die Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
+          <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
+          <label xml:lang="nl">Selecteer deze knop om de Snelheidsgrafiek toe te passen</label>
+        </display>
+        <label>
+          <qualifier>
+            <variableref>Speed Table Definition</variableref>
+            <relation>exists</relation>
+            <value>1</value>
+          </qualifier>
+          <text>            To turn off, use Basic Speed Control pane</text>
+          <text xml:lang="ca">            per dishabilitar, Utilitza el panell de control Bàsic</text>
+          <text xml:lang="cs">            pro vypnutí použijte Základní řízení rychlosti</text>
+          <text xml:lang="de">     Zum Ausschalten, die Lasche Geschwindigkeit aktivieren</text>
+          <text xml:lang="fr">       Pour désactiver, utiliser le panneau de contrôle de base de la vitesse</text>
+          <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
+          <text xml:lang="nl">         Om uit te schakelen, het tabblad Snelheid activeren</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table">
+          <tooltip xml:lang="ca">Selecciona taula de velocitats del fabricant o de l'usuari</tooltip>
+          <tooltip xml:lang="cs">Vyberte rychlostní tabulku danou výrobcem nebo uživatelskou tabulku</tooltip>
+          <tooltip xml:lang="de">Die Geschwindigkeitskennlinie des Herstellers oder die des Benutzers verwenden</tooltip>
+          <tooltip xml:lang="de">Selectionner la table des vitesses du constructeur ou la table personnalisée</tooltip>
+          <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
+          <tooltip xml:lang="nl">De Snelheidsgrafiek van de fabrikant of van de gebruiker toepassen</tooltip>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Speed Table" layout="above"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+  <row>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
+        <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enrere</tooltip>
+        <tooltip xml:lang="cs">Jemné nastavení napětí pro směr vpřed</tooltip>
+        <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Vorwärts"</tooltip>
+        <tooltip xml:lang="fr">Réglage fin du niveau de tension de la vitesse avant</tooltip>
+        <tooltip xml:lang="it">Impostazione Fine della tensione motore in Avanti</tooltip>
+        <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Vooruit"</tooltip>
+      </display>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <column>
+      <label>
+        <text>     </text>
+      </label>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
+        <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enrere</tooltip>
+        <tooltip xml:lang="cs">Jemné nastavení napětí pro směr vzad</tooltip>
+        <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Rückwärts"</tooltip>
+        <tooltip xml:lang="fr">Réglage fin du niveau de tension de la vitesse arrière</tooltip>
+        <tooltip xml:lang="it">Impostazione Fine della tensione motore in Indietro</tooltip>
+        <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Achteruit"</tooltip>
+      </display>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+  </row>
+  </column>
+</pane>

@@ -34,10 +34,9 @@
       own</a>.</p>
 
       <dl>
-        <dd>
-          <h3><a href=
-          "./DecoderPro/index.shtml">DecoderPro&reg;</a></h3>
-        </dd>
+        <dt>
+          <a href="./DecoderPro/index.shtml">DecoderPro&reg;</a>
+        </dt>
 
         <dd>A better tool for programming decoders. DecoderPro
         simplifies the job of configuring complicated DCC decoders
@@ -46,10 +45,9 @@
         Open DecoderPro by double clicking its icon in the JMRI
         installation folder.</dd>
 
-        <dd>
-          <h3><a href=
-          "./PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3>
-        </dd>
+        <dt>
+          <a href="./PanelPro/PanelPro.shtml">PanelPro&trade;</a>
+        </dt>
 
         <dd>Operating CRT based CTC control panels that reflect the
         real-time state of your railroad <em>and</em> let you
@@ -57,34 +55,67 @@
         Open PanelPro by double clicking its icon in the JMRI
         installation folder.</dd>
 
-        <dd>
-          <h3><a href=
-          "./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3>
-        </dd>
+        <dt>
+          <a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a>
+        </dt>
 
         <dd>A system for Dispatching, grouping your Roster and
         Throttles.</dd>
 
-        <dd>
-          <h3><a href=
-          "../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3>
-        </dd>
+        <dt>
+          <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>
+        </dt>
 
         <dd>Create Train Manifests that detail the work your train
         crews will perform during an operations session. The
         Manifest lists of car pick up and set outs, shows where the
         cars are located, and provides the cars' destinations.</dd>
 
-        <dd>
-          <h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3>
-        </dd>
+        <dt>
+          <a href="./SoundPro/SoundPro.shtml">SoundPro</a>
+        </dt>
 
         <dd>A set of tools for using Audio with JMRI.<br>
         Open SoundPro by double clicking its icon in the JMRI
         installation folder.</dd>
       </dl>
 
-      <h2>More Tools</h2>
+      <h2>Add-on Applications</h2>
+       Hobbyists have created applications that work with JMRI
+       to provide extra capabilities.
+       
+       <dl>
+        <dt>
+          <a href=
+          "./ManifestCreator/index.shtml">Mainfest Creator</a>
+        </dt>
+
+        <dd>Manifest Creator is an Excel-based
+            add-on to JMRI that can provide
+            train manifests and switch lists
+            in a number of formats.</dd>
+            
+        <dt>
+          <a href=
+          "./TrainCrew/index.shtml">TrainCrew</a>
+        </dt>
+
+        <dd>TrainCrew allows engineers and conductors
+            using wireless throttles to add 
+            realism to their operations.</dd>
+            
+        <dt>
+          <a href=
+          "http://cats4ctc.wikidot.com">CATS</a>
+        </dt>
+
+        <dd>CATS provides a modern dispatching screen for 
+            your model railroad.</dd>
+            
+      </dl>
+
+     
+      <h2>JMRI Tools</h2>
 
       <ul>
         <li>Common <a href="../tools/index.shtml">Tools and

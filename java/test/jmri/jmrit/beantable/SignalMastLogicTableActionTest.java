@@ -1,10 +1,8 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.util.junit.annotations.*;
 
 /**
  *
@@ -29,14 +27,41 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     @Override
     @Test
     public void testIncludeAddButton(){
-         Assert.assertTrue("Default include add button",a.includeAddButton());
+         Assert.assertTrue("Default include add button", a.includeAddButton());
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSignalMastLogic");
+    }
+
+    @Test
+    @Override
+    @Ignore("no add button on signal mast logic table")
+    public void testAddButton() {
+    }
+
+    @Test
+    @Override
+    @Ignore("no add button on signal mast logic table")
+    public void testAddThroughDialog() {
+    }
+
+    @Test
+    @Override
+    @Ignore("no add button on signal mast logic table")
+    @ToDo("re-write parent class test to add signal mast logic then edit")
+    public void testEditButton() {
     }
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new SignalMastLogicTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
+        a = new SignalMastLogicTableAction();
     }
 
     @Override

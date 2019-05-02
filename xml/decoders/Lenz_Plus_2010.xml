@@ -20,7 +20,7 @@
   <version author="Jeff Schmaltz escopetas@comcast.net" version="2" lastUpdated="20130825"/>
   <version author="John A. Stewart alex.stewart@crc.ca" version="1" lastUpdated="20100427"/>
   <!-- 
-Decoder definitions; have recieved decoders with pamphlets dated March 2010. There are 
+Decoder definitions; have received decoders with pamphlets dated March 2010. There are
 many changes over older decoder definitions, thus the start on a new file.
 
 Gold+ Silent-Back EMF DCC Decoder

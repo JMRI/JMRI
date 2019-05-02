@@ -161,10 +161,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
         ToolTip tip = p.getToolTip();
-        String txt = tip.getText();
-        if (txt != null) {
-            Element elem = new Element("tooltip").addContent(txt); // was written as "toolTip" 3.5.1 and before
-            element.addContent(elem);
+        if (tip != null) {
+            String txt = tip.getText();
+            if (txt != null) {
+                Element elem = new Element("tooltip").addContent(txt); // was written as "toolTip" 3.5.1 and before
+                element.addContent(elem);
+            }
         }
         if (p.getDegrees() != 0) {
             element.setAttribute("degrees", "" + p.getDegrees());
@@ -324,6 +326,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         try {
             if (a != null) {
                 util.setFont(new Font(a.getValue(), util.getFontStyle(), util.getFontSize()));
+                // Reset util to the new instance
+                // The setFont process clones the current util instance but the rest of loadTextInfo used the orignal instance.
+                util = l.getPopupUtility();
             }
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }

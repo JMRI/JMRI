@@ -197,10 +197,7 @@
         <label>Rear light active in Consist (MU)</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- TCS has changed how their mapping function works - they now assign a particular output
 	to a control CV, rather than a particular function key like other vendors. The standard
 	mapping table doesn't work; I've created a TCS-specific mapping pane - joe -->

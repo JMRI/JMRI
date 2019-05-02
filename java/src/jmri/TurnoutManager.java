@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,19 +36,22 @@ import javax.annotation.Nullable;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.Turnout
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface TurnoutManager extends Manager<Turnout> {
+public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new turnout. If the name is a valid system name, it will be used for the
-     * new turnout. Otherwise, the makeSystemName method will attempt to turn it
+     * Get the Turnout with the user name, then system name if needed; if that fails, create a
+     * new Turnout. 
+     * If the name is a valid system name, it will be used for the new Turnout.
+     * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
+     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -62,9 +64,14 @@ public interface TurnoutManager extends Manager<Turnout> {
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
+    /** {@inheritDoc} */
+    @Override
+    default public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
+    
     /**
-     * Locate via user name, then system name if needed. If that fails, return
-     * null
+     * Get an existing Turnout or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -73,7 +80,7 @@ public interface TurnoutManager extends Manager<Turnout> {
     public Turnout getTurnout(@Nonnull String name);
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
+     * Get the Turnout with the given system name or return null if no instance
      * already exists.
      *
      * @param systemName the system name
@@ -83,7 +90,7 @@ public interface TurnoutManager extends Manager<Turnout> {
     public Turnout getBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
+     * Get the Turnout with the given user name or return null if no instance
      * already exists.
      *
      * @param userName the user name
@@ -93,7 +100,8 @@ public interface TurnoutManager extends Manager<Turnout> {
     public Turnout getByUserName(@Nonnull String userName);
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return a Turnout with the specified system and user names. 
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Turnout object representing a given physical turnout and
      * therefore only one with a specific system or user name.
@@ -123,16 +131,6 @@ public interface TurnoutManager extends Manager<Turnout> {
      */
     @Nonnull
     public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
-
-    /**
-     * Get a list of all Turnout system names.
-     *
-     * @return the list of names or an empty list if no turnouts have been
-     *         defined
-     */
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
@@ -230,8 +228,8 @@ public interface TurnoutManager extends Manager<Turnout> {
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 address away
-     * from the initial address.
+     * return the next free valid address up to a maximum of 10 addresses away
+     * from the initial address. Used when adding add a range of Turnouts.
      *
      * @param prefix     System prefix used in system name
      * @param curAddress desired hardware address
@@ -258,9 +256,9 @@ public interface TurnoutManager extends Manager<Turnout> {
      */
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public void setDefaultClosedSpeed(String speed) throws JmriException;
+    public void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException;
 
-    public void setDefaultThrownSpeed(String speed) throws JmriException;
+    public void setDefaultThrownSpeed(@Nonnull String speed) throws JmriException;
 
     public String getDefaultThrownSpeed();
 

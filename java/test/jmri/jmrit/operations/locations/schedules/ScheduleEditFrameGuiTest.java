@@ -1,19 +1,17 @@
-//ScheduleEditFrameTest.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -21,7 +19,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
+public class ScheduleEditFrameGuiTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -40,7 +38,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         f.setTitle("Test Schedule Frame");
         f.scheduleNameTextField.setText("Test Schedule A");
         f.commentTextField.setText("Test Comment");
-        enterClickAndLeave(f.addScheduleButton);
+        JemmyUtil.enterClickAndLeave(f.addScheduleButton);
 
         // was the schedule created?
         ScheduleManager m = InstanceManager.getDefault(ScheduleManager.class);
@@ -50,16 +48,16 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         // now add some car types to the schedule
         String carTypes[]=Bundle.getMessage("carTypeNames").split(",");
         f.typeBox.setSelectedItem(carTypes[1]);
-        enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem(carTypes[2]);
-        enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem(carTypes[3]);
-        enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterClickAndLeave(f.addTypeButton);
         // put Tank Food at start of list
         f.typeBox.setSelectedItem(carTypes[4]);
-        enterClickAndLeave(f.addLocAtTop);
-        enterClickAndLeave(f.addTypeButton);
-        enterClickAndLeave(f.saveScheduleButton);
+        JemmyUtil.enterClickAndLeave(f.addLocAtTop);
+        JemmyUtil.enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterClickAndLeave(f.saveScheduleButton);
 
         List<ScheduleItem> list = s.getItemsBySequenceList();
         Assert.assertEquals("number of items", 4, list.size());
@@ -77,9 +75,9 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
            Assert.assertTrue("type " + si.getTypeName() + " in list",flag);
         }
 
-        enterClickAndLeave(f.deleteScheduleButton);
+        JemmyUtil.enterClickAndLeave(f.deleteScheduleButton);
         // Yes to pop up
-        pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 
@@ -130,7 +128,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("First siding name", null, box2.getItemAt(0));
 
         // now add a schedule to siding
-        t.setScheduleId(sch1.getId());
+        t.setSchedule(sch1);
 
         JComboBox<LocationTrackPair> box3 = sm.getSpursByScheduleComboBox(s1);
         LocationTrackPair ltp = box3.getItemAt(0);
@@ -143,38 +141,5 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
         names = sm.getSchedulesByNameList();
         Assert.assertEquals("There should be no schedules", 0, names.size());
-
-    }
-
-    private void loadLocations() {
-        // create 5 locations
-        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-        Location l1 = lManager.newLocation("Test Loc E");
-        l1.setLength(1001);
-        Location l2 = lManager.newLocation("Test Loc D");
-        l2.setLength(1002);
-        Location l3 = lManager.newLocation("Test Loc C");
-        l3.setLength(1003);
-        Location l4 = lManager.newLocation("Test Loc B");
-        l4.setLength(1004);
-        Location l5 = lManager.newLocation("Test Loc A");
-        l5.setLength(1005);
-
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-
-        loadLocations();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 }

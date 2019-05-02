@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
    RfidMenuTest.class,
    RfidComponentFactoryTest.class,
    RfidNamedPaneActionTest.class,
-   RfidPanelTest.class
+   RfidPanelTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.rfid.swing package

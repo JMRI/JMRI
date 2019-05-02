@@ -132,10 +132,10 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
-     * @throws org.jdom2.JDOMException       only when all methods have failed
-     * @throws java.io.FileNotFoundException if file not found
      * @param file File to be parsed. A FileNotFoundException is thrown if it
      *             doesn't exist.
+     * @throws org.jdom2.JDOMException       only when all methods have failed
+     * @throws java.io.FileNotFoundException if file not found
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
      */
@@ -154,9 +154,9 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
+     * @param stream InputStream to be parsed.
      * @throws org.jdom2.JDOMException       only when all methods have failed
      * @throws java.io.FileNotFoundException if file not found
-     * @param stream InputStream to be parsed.
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
      */
@@ -169,9 +169,9 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
+     * @param url URL locating the data file
      * @throws org.jdom2.JDOMException only when all methods have failed
      * @throws FileNotFoundException   if file not found
-     * @param url URL locating the data file
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
      */
@@ -201,84 +201,11 @@ public abstract class XmlFile {
     }
 
     /**
-     * While the various Deprecated methods are present, this provides a warning
-     * against their continued use. JMRI itself stopped using these with JMRI
-     * 4.7.2
-     */
-    protected static void warnDeprecated() {
-        if (warned) {
-            return;
-        }
-        log.warn("Deprecated XmlFile method was used, validation may be ignored; only mentioning once");
-        warned = true;
-    }
-    static protected boolean warned = false;
-
-    /**
-     * @deprecated 4.7.2 use setVerifySchema, setVerifyDTD methods
-     * @param verify true if the XML document should be validated (but this is
-     *               now ignored)
-     * @param stream input containing the XML document
-     * @return the root element of the XML document
-     * @throws org.jdom2.JDOMException if the XML document is invalid
-     * @throws java.io.IOException     if the input cannot be read
-     */
-    @Deprecated
-    protected Element getRoot(boolean verify, InputStream stream) throws JDOMException, IOException {
-        warnDeprecated();
-        return getRoot(stream);
-    }
-
-    /**
-     * Get the root element from an XML document in a Reader.
-     *
-     * Runs through a BufferedReader for increased performance.
-     *
-     *
-     * @param verifySchema true if the XML document should be validated against
-     *                     its schema
-     * @param verifyDTD    true if the XML document should be validated against
-     *                     its DTD
-     * @param reader       input containing the XML document
-     * @return the root element of the XML document
-     * @throws org.jdom2.JDOMException if the XML document is invalid
-     * @throws java.io.IOException     if the input cannot be read
-     * @since 3.1.5
-     * @deprecated 4.7.2 use setVerifySchema, setVerifyDTD methods
-     */
-    @Deprecated
-    protected Element getRoot(boolean verifySchema, boolean verifyDTD, InputStreamReader reader) throws JDOMException, IOException {
-        warnDeprecated();
-        log.trace("getRoot from reader with encoding {}", reader.getEncoding());
-
-        SAXBuilder builder = getBuilder(getValidate());  // argument controls validation
-        Document doc = builder.build(new BufferedReader(reader));
-        doc = processInstructions(doc);  // handle any process instructions
-        // find root
-        return doc.getRootElement();
-    }
-
-    /**
-     * @deprecated 4.7.2 use setVerifySchema, setVerifyDTD methods
-     * @param verify true if the XML document should be validated (but this is
-     *               now ignored)
-     * @param reader input containing the XML document
-     * @return the root element of the XML document
-     * @throws org.jdom2.JDOMException if the XML document is invalid
-     * @throws java.io.IOException     if the input cannot be read
-     */
-    @Deprecated
-    protected Element getRoot(boolean verify, InputStreamReader reader) throws JDOMException, IOException {
-        warnDeprecated();
-        return getRoot(verify, verify, reader);
-    }
-
-    /**
      * Write a File as XML.
      *
-     * @throws FileNotFoundException if file not found
      * @param file File to be created.
      * @param doc  Document to be written out. This should never be null.
+     * @throws FileNotFoundException if file not found
      */
     public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
         // ensure parent directory exists
@@ -745,20 +672,7 @@ public abstract class XmlFile {
         return userFileChooser(filter, suffix1, null);
     }
 
-    /**
-     * @param verify true if validation should be attempted
-     * @return a SAX builder pre-configured to (not) validate XML
-     * @deprecated 4.7.2
-     */
-    @Deprecated
-    public static SAXBuilder getBuilder(boolean verify) {
-        warnDeprecated();
-        if (verify) {
-            return getBuilder(Validate.CheckDtdThenSchema);
-        }
-        return getBuilder(Validate.None);
-    }
-
+    @SuppressWarnings("deprecation") // wait for updated Xerxes before coding substitute for SAXBuilder(String, boolean)
     public static SAXBuilder getBuilder(Validate validate) {  // should really be a Verify enum
         SAXBuilder builder;
 

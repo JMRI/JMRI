@@ -44,10 +44,8 @@ public class WarrantManagerXml //extends XmlFile
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
         WarrantManager manager = (WarrantManager) o;
-        Iterator<String> iter = manager.getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            Warrant warrant = manager.getBySystemName(sname);
+        for (Warrant warrant : manager.getNamedBeanSet()) {
+            String sname = warrant.getSystemName();
             String uname = warrant.getUserName();
             if (log.isDebugEnabled())
                 log.debug("Warrant: sysName= {}, userName= {}", sname, uname);
@@ -59,6 +57,7 @@ public class WarrantManagerXml //extends XmlFile
             }
             if (warrant instanceof SCWarrant) {
                 elem.setAttribute("wtype", "SC");
+                elem.setAttribute("speedFactor", ""+((SCWarrant) warrant).getSpeedFactor());
                 elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
                 elem.setAttribute("forward", ((SCWarrant) warrant).getForward()?"true":"false");
             } else {
@@ -242,6 +241,11 @@ public class WarrantManagerXml //extends XmlFile
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
                 }
+                if (elem.getAttribute("speedFactor") != null) {
+                    try {
+                        ((SCWarrant)warrant).setSpeedFactor(elem.getAttribute("speedFactor").getFloatValue());
+                    } catch (DataConversionException e) {}
+                }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
             }
@@ -249,9 +253,10 @@ public class WarrantManagerXml //extends XmlFile
             for (int k=0; k<orders.size(); k++) {
                 BlockOrder bo = loadBlockOrder(orders.get(k));
                 if (bo==null) {
-                    break;
+                    log.error("Bad BlockOrder in warrant \"{}\".", warrant.getDisplayName());
+                } else {
+                    warrant.addBlockOrder(bo);
                 }
-                warrant.addBlockOrder(bo);
             }
             String c = elem.getChildText("comment");
             if (c != null) {
@@ -267,18 +272,8 @@ public class WarrantManagerXml //extends XmlFile
                 warrant.setAvoidOrder(loadBlockOrder(order));               
             }
 
-            boolean forward =true;
-            List<Element> throttleCmds = elem.getChildren("throttleCommand");
-            if (throttleCmds != null) {
-                for (int k=0; k<throttleCmds.size(); k++) {
-                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
-                    warrant.addThrottleCommand(ts);
-                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                        forward = ts.getValue().toUpperCase().equals("TRUE");
-                    }
-                }                
-            }
             if (SCWa) {
+                boolean forward =true;
                 if (elem.getAttribute("forward") != null) {
                     forward = elem.getAttribute("forward").getValue().equals("true");
                 }
@@ -289,6 +284,29 @@ public class WarrantManagerXml //extends XmlFile
             Element train = elem.getChild("train");
             if (train!=null) {
                 loadTrain(train, warrant);
+            }
+        }
+
+        // A second pass through the warrant list done to load the commands. This is done so that
+        // references made to warrants in commands are fully specified. Due to ThrottleSetting
+        // Ctor using provideWarrant to establish the referenced warrant.
+        warrantList = shared.getChildren("warrant");
+        for (int i=0; i<warrantList.size(); i++) {
+            // boolean forward =true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
+            Element elem = warrantList.get(i);
+            if (elem.getAttribute("systemName") == null) {
+                break;
+            }
+            String sysName = null;
+            if (elem.getAttribute("systemName") != null)
+                sysName = elem.getAttribute("systemName").getValue();
+            Warrant warrant = manager.getBySystemName(sysName);
+            List<Element> throttleCmds = elem.getChildren("throttleCommand");
+            if (throttleCmds != null) {
+                for (int k=0; k<throttleCmds.size(); k++) {
+                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
+                    warrant.addThrottleCommand(ts);
+                }                
             }
         }
         return true;
@@ -335,12 +353,10 @@ public class WarrantManagerXml //extends XmlFile
         List<Element> blocks = elem.getChildren("block");
         if (blocks.size()>1) log.error("More than one block present: {}", blocks.size());
         if (blocks.size()>0) {
-            // sensor
             String name = blocks.get(0).getAttribute("systemName").getValue();
-            try {
-                block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).provideOBlock(name);
-            } catch (IllegalArgumentException ex) {
-                log.error("Unknown Block \"{}\" is null in BlockOrder.", name);
+            block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name);
+            if (block == null) {
+                log.error("No such Block \"{}\" found.", name);
                 return null;
             }
             if (log.isDebugEnabled()) log.debug("Load Block {}.", name);
@@ -350,8 +366,9 @@ public class WarrantManagerXml //extends XmlFile
         }
         Attribute attr = elem.getAttribute("pathName");
         String pathName = null;
-        if (attr != null)
+        if (attr != null) {
             pathName = attr.getValue();
+        }
 
         attr = elem.getAttribute("entryName");
         String entryName = null;

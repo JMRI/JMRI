@@ -19,6 +19,7 @@ import org.junit.runners.Suite;
         SerialTrafficControllerTest.class,
         SerialAddressTest.class,
         jmri.jmrix.grapevine.serialdriver.PackageTest.class,
+        jmri.jmrix.grapevine.simulator.PackageTest.class,
         jmri.jmrix.grapevine.configurexml.PackageTest.class,
         GrapevineMenuTest.class,
         jmri.jmrix.grapevine.serialmon.PackageTest.class,

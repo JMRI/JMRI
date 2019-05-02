@@ -277,9 +277,9 @@ public final class XMLUtil extends Object {
      * entity resolver. For example, consider a file such as this:</p>
      *
      * <pre>
-     * &lt;?<font class="keyword">xml</font> <font class="variable-name">version</font>=<font class="string">"1.0"</font> <font class="variable-name">encoding</font>=<font class="string">"UTF-8"</font>?&gt;
-     * &lt;!<font class="keyword">DOCTYPE</font> <font class="type">root</font> <font class="keyword">PUBLIC</font> <font class="string">"-//NetBeans//DTD Foo 1.0//EN"</font> <font class="string">"http://www.netbeans.org/dtds/foo-1_0.dtd"</font>&gt;
-     * &lt;<font class="function-name">root</font>/&gt;
+     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+     * &lt;!DOCTYPE root PUBLIC "-//NetBeans//DTD Foo 1.0//EN" "http://www.netbeans.org/dtds/foo-1_0.dtd"&gt;
+     * &lt;root/&gt;
      * </pre>
      *
      * <p>
@@ -301,19 +301,19 @@ public final class XMLUtil extends Object {
      * use:</p>
      *
      * <pre>
-     * &lt;<font class="function-name">filesystem</font>&gt;
-     *   &lt;<font class="function-name">folder</font> <font class="variable-name">name</font>=<font class="string">"xml"</font>&gt;
-     *     &lt;<font class="function-name">folder</font> <font class="variable-name">name</font>=<font class="string">"entities"</font>&gt;
-     *       &lt;<font class="function-name">folder</font> <font class="variable-name">name</font>=<font class="string">"NetBeans"</font>&gt;
-     *         &lt;<font class="function-name">file</font> <font class="variable-name">name</font>=<font class="string">"DTD_Foo_1_0"</font>
-     *               <font class="variable-name">url</font>=<font class="string">"resources/foo-1_0.dtd"</font>&gt;
-     *           &lt;<font class="function-name">attr</font> <font class="variable-name">name</font>=<font class="string">"hint.originalPublicID"</font>
-     *                 <font class="variable-name">stringvalue</font>=<font class="string">"-//NetBeans//DTD Foo 1.0//EN"</font>/&gt;
-     *         &lt;/<font class="function-name">file</font>&gt;
-     *       &lt;/<font class="function-name">folder</font>&gt;
-     *     &lt;/<font class="function-name">folder</font>&gt;
-     *   &lt;/<font class="function-name">folder</font>&gt;
-     * &lt;/<font class="function-name">filesystem</font>&gt;
+     * &lt;filesystem&gt;
+     *   &lt;folder name="xml"&gt;
+     *     &lt;folder name="entities"&gt;
+     *       &lt;folder name="NetBeans"&gt;
+     *         &lt;file name="DTD_Foo_1_0"
+     *               url="resources/foo-1_0.dtd"&gt;
+     *           &lt;attr name="hint.originalPublicID"
+     *                 stringvalue="-//NetBeans//DTD Foo 1.0//EN"/&gt;
+     *         &lt;/file&gt;
+     *       &lt;/folder&gt;
+     *     &lt;/folder&gt;
+     *   &lt;/folder&gt;
+     * &lt;/filesystem&gt;
      * </pre>
      *
      * <p>
@@ -339,12 +339,12 @@ public final class XMLUtil extends Object {
      * resolver that does not even bother to load the DTD at all:</p>
      *
      * <pre>
-     * <font class="keyword">public</font> <font class="type">InputSource</font> <font class="function-name">resolveEntity</font>(<font class="type">String</font> <font class="variable-name">pubid</font>, <font class="type">String</font> <font class="variable-name">sysid</font>)
-     *     <font class="keyword">throws</font> <font class="type">SAXException</font>, <font class="type">IOException</font> {
-     *   <font class="keyword">if</font> (pubid.equals(<font class="string">"-//NetBeans//DTD Foo 1.0//EN"</font>)) {
-     *     <font class="keyword">return</font> <font class="keyword">new</font> <font class="type">InputSource</font>(<font class="keyword">new</font> <font class="type">ByteArrayInputStream</font>(<font class="keyword">new</font> <font class="type">byte</font>[0]));
-     *   } <font class="keyword">else</font> {
-     *     <font class="keyword">return</font> EntityCatalog.getDefault().resolveEntity(pubid, sysid);
+     * public InputSource resolveEntity(String pubid, String sysid)
+     *     throws SAXException, IOException {
+     *   if (pubid.equals("-//NetBeans//DTD Foo 1.0//EN")) {
+     *     return new InputSource(new ByteArrayInputStream(new byte[0]));
+     *   } else {
+     *     return EntityCatalog.getDefault().resolveEntity(pubid, sysid);
      *   }
      * }
      * </pre></li>

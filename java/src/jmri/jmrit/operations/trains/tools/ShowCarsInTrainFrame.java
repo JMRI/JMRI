@@ -36,9 +36,6 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
     Train _train = null;
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
-    TrainCommon trainCommon = new TrainCommon();
-
-    JScrollPane carPane;
 
     // labels
     JLabel textTrainName = new JLabel();
@@ -49,14 +46,9 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
     JLabel textInTrain = new JLabel(Bundle.getMessage("InTrain"));
     JLabel textSetOut = new JLabel(Bundle.getMessage("SetOut"));
 
-    // major buttons
-    // radio buttons
-    // text field
-    // combo boxes
     // panels
     JPanel pCars = new JPanel();
 
-    // check boxes
     public ShowCarsInTrainFrame() {
         super();
     }
@@ -66,7 +58,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        carPane = new JScrollPane(pCars);
+        JScrollPane carPane = new JScrollPane(pCars);
         carPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Cars")));
         carPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         // carPane.setPreferredSize(new Dimension(200, 300));
@@ -126,8 +118,6 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         getContentPane().add(pRow12);
         getContentPane().add(textStatus);
 
-        update();
-
         if (_train != null) {
             setTitle(Bundle.getMessage("TitleShowCarsInTrain") + " (" + _train.getName() + ")");
 
@@ -135,15 +125,8 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
             _train.addPropertyChangeListener(this);
         }
 
-        // // build menu
-        // JMenuBar menuBar = new JMenuBar();
-        // JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        // menuBar.add(toolMenu);
-        // setJMenuBar(menuBar);
-        // addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
-        packFrame();
-        setVisible(true);
-
+        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight500));
+        update();
     }
 
     private void update() {
@@ -179,7 +162,9 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                                         car.toString(), car
                                                 .getRouteLocation().getName(),
                                         car.getTrackName(), car.getRouteDestination().getName());
-                                JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.toString()));
+                                JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.getRoadName()) +
+                                        " " +
+                                        TrainCommon.splitString(car.getNumber()));
                                 if (car.getRouteDestination() == rl) {
                                     addItemLeft(pCars, checkBox, 2, i++); // set out
                                 } else if (car.getRouteLocation() == rl && car.getTrack() != null) {
@@ -219,19 +204,6 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                             _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
                             _train.getTrainWeight(rl)});
         }
-    }
-
-    private void packFrame() {
-        setVisible(false);
-        pack();
-        if (getWidth() < 300) {
-            setSize(300, getHeight());
-        }
-        if (getHeight() < Control.panelHeight500) {
-            setSize(getWidth(), Control.panelHeight500);
-        }
-        setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight500));
-        setVisible(true);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package jmri.jmrit.beantable;
 
-import jmri.util.JUnitUtil;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -29,6 +27,7 @@ import org.junit.runners.Suite;
         BeanTablePaneTest.class,
         EnablingCheckboxRendererTest.class,
         IdTagTableActionTest.class,
+        IdTagTableTabActionTest.class,
         LightTableActionTest.class,
         LightTableTabActionTest.class,
         ListedTableActionTest.class,
@@ -36,6 +35,7 @@ import org.junit.runners.Suite;
         MaintenanceTest.class,
         RailComTableActionTest.class,
         ReporterTableActionTest.class,
+        ReporterTableTabActionTest.class,
         SectionTableActionTest.class,
         SensorTableActionTest.class,
         SensorTableTabActionTest.class,

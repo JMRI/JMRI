@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * sends/receives DCCppMessage objects. The connection to a DCCppPortController
  * is via a pair of *Streams, which then carry sequences of characters for
  * transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
@@ -24,21 +24,21 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2015
  *
  * Based on XNetPacketizer by Bob Jacobsen
- *
  */
 public class DCCppPacketizer extends DCCppTrafficController {
 
     public DCCppPacketizer(DCCppCommandStation pCommandStation) {
         super(pCommandStation);
-        // The instance method (from DCCppTrafficController) is deprecated
+        // The instance method (from DCCppTrafficController) is deprecated.
         // But for the moment we need to make sure we set the static
         // self variable, and the instance method does this for us in a
-        // static way (which makes findbugs happy).
+        // static way (which makes spotbugs happy).
         //instance();
-        log.debug("DCCppPacketizer created.");
+        log.debug("DCCppPacketizer created");
     }
 
 // The methods to implement the DCCppInterface
+
     /**
      * Forward a preformatted DCCppMessage to the actual interface.
      *
@@ -47,7 +47,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param m     Message to send
      * @param reply Listener to notify when the reply to the message is received
      */
-    //TODO: Can this method be folded back up into the parent 
+    //TODO: Can this method be folded back up into the parent
     // DCCppTrafficController class?
     @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
@@ -56,7 +56,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
             // why the next line?
             // https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#yield--
             // states "It is rarely appropriate to use this method"
-            java.lang.Thread.yield(); 
+            java.lang.Thread.yield();
         }
     }
 
@@ -67,7 +67,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param m   ignored
      * @return next location in the stream to fill
      */
-    //TODO: Can this method be folded back up into the parent 
+    //TODO: Can this method be folded back up into the parent
     // DCCppTrafficController class?
     @Override
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
@@ -90,7 +90,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param offset the first byte not yet used
      * @param m      the message to check
      */
-    //TODO: Can this method be folded back up into the parent 
+    //TODO: Can this method be folded back up into the parent
     // DCCppTrafficController class?
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
@@ -122,16 +122,16 @@ public class DCCppPacketizer extends DCCppTrafficController {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
      * @param msg     message to fill
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    //TODO: Can this method be folded back up into the parent 
+    //TODO: Can this method be folded back up into the parent
     // DCCppTrafficController class?
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
@@ -170,4 +170,5 @@ public class DCCppPacketizer extends DCCppTrafficController {
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
+
 }

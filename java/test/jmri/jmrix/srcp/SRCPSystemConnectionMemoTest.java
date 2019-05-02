@@ -43,6 +43,12 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
             public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
+            @Override
+            public void transmitLoop(){
+            }
+            @Override
+            public void receiveLoop(){
+            }
         };
         scm = new SRCPSystemConnectionMemo("D", "SRCP", et);
     }

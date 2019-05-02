@@ -12,31 +12,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a swing object, for use by the Ds64TabbedPanel tool, which allows 
  * display and configuration of turnout number and position.
- * <P>
+ * <p>
  * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
  * using values from objects of this type must provide the appropriate transform
  * to create turnout numbering which is suitable for use within LocoNet messaging.
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
+ *
+ * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
  */
 public class SimpleTurnoutStateEntry extends SimpleTurnout {
     private JPanel entryPanel = null;
 
     /**
-     * tracks the "user-friendly" turnout address.
-     * <P>
+     * Tracks the "user-friendly" turnout address.
+     * <p>
      * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
@@ -44,12 +32,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
     public ValidatedTextField addressField = null;
 
     /**
-     * tracks whether the associated turnout is "thrown".
+     * Tracks whether the associated turnout is "thrown".
      */
     public JRadioButton thrownRadioButton;
 
     /**
-     * tracks whether the associated turnout is "closed".
+     * Tracks whether the associated turnout is "closed".
      */
     public JRadioButton closedRadioButton;
 
@@ -63,7 +51,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      * Constructor used when the current address and position are not known.  It
      * is assumed that the turnout address is 1, that the turnout is "closed", and
      * that the turnout is "valid".
-     * <P>
+     * <p>
      * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
@@ -75,7 +63,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
     /**
      * Constructor used when the current address and position are known.  Turnout
      * "validity" is assumed to be "valid".
-     * <P>
+     * <p>
      * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
@@ -85,8 +73,8 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      */
     public SimpleTurnoutStateEntry(Integer address, boolean isClosed) {
         super(address,isClosed);
-        thrownRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextThrown"));
-        closedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextClosed"));
+        thrownRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateThrown"));
+        closedRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateClosed"));
         unusedRadioButton = null;
         addressField = new ValidatedTextField(5, true, 1, 2048, Bundle.getMessage("ErrorTextAddressInvalid"));
         entryPanel = null;
@@ -102,10 +90,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
         thrownRadioButton.addFocusListener(new java.awt.event.FocusListener() {
 
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (thrownRadioButton.isSelected()) {
                     setIsClosed(false);
@@ -115,23 +105,24 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
 
         closedRadioButton.addFocusListener(new java.awt.event.FocusListener() {
 
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (closedRadioButton.isSelected()) {
                     setIsClosed(true);
                 }
             }
         });
-
     }
     
     /**
      * Constructor used when the current address, position, and "validity" 
      * state are known.
-     * <P>
+     * <p>
      * Turnout numbering is the same as seen on a Digitrax throttle display; Tools 
      * using values from objects of this type must provide the appropriate transform
      * to create turnout numbering which is suitable for use within LocoNet messaging.
@@ -142,8 +133,8 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      */
     public SimpleTurnoutStateEntry(Integer address, boolean closed, boolean unused) {
         super(address, closed, unused);
-        thrownRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextThrown"));
-        closedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextClosed"));
+        thrownRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateThrown"));
+        closedRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateClosed"));
         unusedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextUnused"));
         addressField = new ValidatedTextField(5, true, 1, 2048, Bundle.getMessage("ErrorTextAddressInvalid"));
         entryPanel = null;
@@ -165,10 +156,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
         
         thrownRadioButton.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (thrownRadioButton.isSelected()) {
                     setIsClosed(false);
@@ -177,10 +170,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         });
 
         closedRadioButton.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (closedRadioButton.isSelected()) {
                     setIsClosed(true);
@@ -189,10 +184,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         });
 
         unusedRadioButton.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (unusedRadioButton.isSelected()) {
                     setIsUnused();
@@ -264,15 +261,16 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
     }
 
     /**
-     * Retrieves the GUI element which holds a turnout address
+     * Retrieve the GUI element which holds a turnout address
      * @return turnout address
      */
     public ValidatedTextField getAddressField() {
         return addressField;
     }
 
+    @Override
     public void setAddress(Integer addr) {
-        log.debug("simpleturnoutstateentry - setaddress "+addr);
+        log.debug("simpleturnoutstateentry - setaddress {}", addr);
         super.setAddress(addr);
         if (isValid()) {
             addressField.setText(String.valueOf(addr));
@@ -293,6 +291,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         addressField.setLastQueriedValue(String.valueOf(addr));
     }
 
+    @Override
     public void setIsClosed(boolean isclosed) {
         super.setIsClosed(isclosed);
         closedRadioButton.setSelected(getIsClosed());
@@ -304,6 +303,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
             unusedRadioButton.updateUI();
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
 
 }

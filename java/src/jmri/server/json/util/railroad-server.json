@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-railroad-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"railroad\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Railroad name"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

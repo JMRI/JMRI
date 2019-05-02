@@ -15,54 +15,45 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class PacketGenActionTest {
+        
+    private XBeeConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-        InstanceManager.store(m,XBeeConnectionMemo.class);
-
         PacketGenAction t = new PacketGenAction();
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testStringCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-        InstanceManager.store(m,XBeeConnectionMemo.class);
-
         PacketGenAction t = new PacketGenAction("Test Action");
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testStringMemoCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-
-        PacketGenAction t = new PacketGenAction("Test Action",m);
+        PacketGenAction t = new PacketGenAction("Test Action",memo);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testMemoCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-
-        PacketGenAction t = new PacketGenAction(m);
+        PacketGenAction t = new PacketGenAction(memo);
         Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        JUnitUtil.setUp(); 
+        memo = new XBeeConnectionMemo();
+        memo.setTrafficController(new XBeeInterfaceScaffold());
+        InstanceManager.store(memo,XBeeConnectionMemo.class);
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        JUnitUtil.tearDown(); 
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PacketGenActionTest.class);

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice value="0">
+    <choice>Dimmable headlight</choice>
+    <choice xml:lang="it">Luce di testa regolabile</choice>
+    <choice xml:lang="ca">Llum davantera regulable</choice>
+  </enumChoice>
+  <enumChoice value="1">
+    <choice>Dimmable headlight (fade in/out)</choice>
+    <choice xml:lang="it">Luce di testa regolabile (sfumata in/out)</choice>
+    <choice xml:lang="ca">Llum davanetra regulable (fade</choice>
+  </enumChoice>
+  <enumChoice value="2">
+    <choice>Neon Light</choice>
+    <choice xml:lang="it">Neon Light</choice>
+  </enumChoice>
+  <enumChoice value="3">
+    <choice>Defective Neon Light</choice>
+    <choice xml:lang="it">Defective Neon Light</choice>
+    <choice xml:lang="ca">Defective Neon Light</choice>
+  </enumChoice>
+  <enumChoice value="4">
+    <choice>Coupler</choice>
+    <choice xml:lang="it">Coupler</choice>
+    <choice xml:lang="ca">Coupler</choice>
+  </enumChoice>
+  <enumChoice value="5">
+    <choice>Flash light (phase 2)</choice>
+    <choice xml:lang="it">Luce a Flash (fase 2)</choice>
+    <choice xml:lang="ca">Llum amb flash (fase 2)</choice>
+  </enumChoice>
+  <enumChoice value="6">
+    <choice>Single Strobe</choice>
+    <choice xml:lang="it">Singolo Strobe</choice>
+    <choice xml:lang="ca">Estregoscòpica simple</choice>
+  </enumChoice>
+  <enumChoice value="7">
+    <choice>Firebox</choice>
+    <choice xml:lang="it">Fuoco Caldaia</choice>
+    <choice xml:lang="ca">Caixa de focs</choice>
+  </enumChoice>
+</enumVal>

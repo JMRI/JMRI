@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrix.swing.ComponentFactory;
@@ -39,17 +38,19 @@ public class ActiveSystemsMenu extends JMenu {
                 = jmri.InstanceManager.getList(ComponentFactory.class);
 
         for (ComponentFactory memo : list) {
-            JMenu menu = memo.getMenu();
-            if (menu != null) {
-                m.add(menu);
+            try {
+                JMenu menu = memo.getMenu();
+                if (menu != null) {
+                    m.add(menu);
+                }
+            } catch (RuntimeException ex) {
+                log.error("Proceeding after error while trying to create menu for {}", memo.getClass(), ex);
             }
         }
-
     }
 
     /**
-     * Add active systems as submenus inside a single menu entry. Only used in
-     * JmriDemo, which has a huge number of menus.
+     * Add active systems as submenus inside a single menu entry.
      */
     static public void addItems(JMenu m) {
 
@@ -63,13 +64,12 @@ public class ActiveSystemsMenu extends JMenu {
                 m.add(menu);
             }
         }
-
     }
 
     static JMenu getMenu(String className) {
         try {
-            return (JMenu) Class.forName(className).newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            return (JMenu) Class.forName(className).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             log.error("Could not load class {}", className, e);
             return null;
         }

@@ -85,12 +85,11 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     }
 
     @Override
-    public synchronized void message(TamsMessage l) {  // receive a message and log it
-        tm = l;
+    public synchronized void message(TamsMessage tm) {  // receive a message and log it
         if (tm.isBinary()) {
-            nextLine("Binary cmd: " + tm.toString() + "\n", null);
+            logMessage("Binary cmd: ",tm);
         } else {
-            nextLine("ASCII cmd: " + tm.toString() + "\n", null);
+            logMessage("ASCII cmd: ", tm);
         }
     }
 
@@ -104,12 +103,12 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
             raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
         }
         if (l.isUnsolicited()) {
-            nextLine("msg: \"" + l.toString() + "\"\n", raw);
+            logMessage("msg: ",l);
         } else {
             if (tm.isBinary()){
-                nextLine("Binary rep: \"" + l.toString() + "\"\n", raw);
+                logMessage("Binary rep: ", l);
             } else {
-                nextLine("ASCII rep: \"" + l.toString() + "\"\n", raw);
+                logMessage("ASCII rep: " , l);
             }
         }
     }

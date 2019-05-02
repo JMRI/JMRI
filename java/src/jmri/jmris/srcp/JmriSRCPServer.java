@@ -31,7 +31,7 @@ public class JmriSRCPServer extends JmriServer {
     /*
      * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
      */
-    @Deprecated
+    @Deprecated  // will be removed when class is refactored
     synchronized public static JmriServer instance() {
         if (_instance == null) {
             int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));
@@ -57,7 +57,6 @@ public class JmriSRCPServer extends JmriServer {
     }
 
     // Handle communication to a client through inStream and outStream
-    @SuppressWarnings("deprecation")
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes

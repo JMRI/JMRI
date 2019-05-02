@@ -95,6 +95,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         replyLenTextField.setToolTipText("Enter number of expected bytes, will override internal defaults");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(300, 150));
 
         add(jLabel1);
         add(packetTextField);

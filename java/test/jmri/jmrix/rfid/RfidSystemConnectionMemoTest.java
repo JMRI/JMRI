@@ -26,7 +26,45 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Before
     public void setUp(){
         JUnitUtil.setUp();
-        scm=new RfidSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
+        RfidTrafficController tc = new RfidTrafficController(){
+           @Override
+           public void sendInitString(){
+           }
+           @Override
+           public void transmitLoop(){
+           }
+           @Override
+           public void receiveLoop(){
+           }
+        };
+        memo.setRfidTrafficController(tc);
+        RfidSensorManager s = new RfidSensorManager("R"){
+            @Override
+            protected jmri.Sensor createNewSensor(String systemName, String userName){
+               return null;
+            }
+            @Override
+            public void message(RfidMessage m){}
+
+            @Override
+            public void reply(RfidReply m){}
+
+        };
+        RfidReporterManager r = new RfidReporterManager("R"){
+            @Override
+            protected jmri.Reporter createNewReporter(String systemName, String userName){
+               return null;
+            }
+            @Override
+            public void message(RfidMessage m){}
+
+            @Override
+            public void reply(RfidReply m){}
+
+        };
+        memo.configureManagers(s,r);
+        scm = memo;
     }
 
     @Override

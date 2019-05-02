@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -101,7 +102,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     DecimalFormat twoDigits = new DecimalFormat("0.00");
 
     private int waiting = 0;
-    private int clockMode = SYNCMODE_OFF;
+    private final int clockMode = SYNCMODE_OFF;
     private boolean waitingForCmdRead = false;
     private boolean waitingForCmdStop = false;
     private boolean waitingForCmdStart = false;
@@ -126,8 +127,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     //private boolean issueDeferredGetRate = false;
     //private boolean initNeverCalledBefore = true;
 
-    private int nceSyncInitStateCounter = 0; // NCE master sync initialzation state machine
-    private int nceSyncRunStateCounter = 0; // NCE master sync runtime state machine
+    private final int nceSyncInitStateCounter = 0; // NCE master sync initialzation state machine
+    private final int nceSyncRunStateCounter = 0; // NCE master sync runtime state machine
     //private int alarmDisplayStateCounter = 0; // manages the display update from the alarm
 
     Timebase internalClock;
@@ -141,7 +142,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     // TODO: Why does this if statement contain a direct false? FIXME!
-    @SuppressWarnings("unused")
     @Override
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {
@@ -470,6 +470,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueClock1224(boolean mode) {
         byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClock1224(mode);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_CLOCK_SET_REPLY_SIZE);
@@ -510,10 +511,11 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     private void issueClockSetMem(int hh, int mm, int ss) {
-        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(CS_CLOCK_MEM_ADDR + CS_CLOCK_SECONDS, 3);
-        cmd[4] = (byte) ss;
-        cmd[5] = (byte) mm;
-        cmd[6] = (byte) hh;
+        byte[] b = new byte[3];
+        b[0] = (byte) ss;
+        b[1] = (byte) mm;
+        b[2] = (byte) hh;
+        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(CS_CLOCK_MEM_ADDR + CS_CLOCK_SECONDS, b);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_MEM_SET_REPLY_SIZE);
         waiting++;
         waitingForCmdTime = true;
@@ -521,6 +523,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings({"deprecation", "unused"})
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
@@ -532,6 +535,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getNceTime() {
         double nceTime = 0;
         if (lastClockReadPacket != null) {
@@ -544,6 +548,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     @SuppressWarnings({"deprecation", "unused"})
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getIntTime() {
         Date now = internalClock.getTime();
         int ms = (int) (now.getTime() % 1000);

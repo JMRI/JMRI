@@ -33,7 +33,9 @@ abstract public class AbstractDCCppInitializationManager {
             log.debug("Starting DCC++ Initialization Process");
         }
         systemMemo = memo;
-        initThread = new Thread(new DCCppInitializer(this));
+        /* the JMRI DCC++ code doesn't currently initialize based on version,
+	 * so there is no need to start the initThread or the ensuing wait */
+	/*initThread = new Thread(new DCCppInitializer(this));
         
         // Since we can't currently reconfigure the user interface after  
         // initilization, We need to wait for the initilization thread 
@@ -47,7 +49,7 @@ abstract public class AbstractDCCppInitializationManager {
             if (log.isDebugEnabled()) {
                 log.debug("end wait");
             }
-        }
+        }*/
         
         init();
     }
@@ -69,7 +71,7 @@ abstract public class AbstractDCCppInitializationManager {
             
             initTimer = setupInitTimer();
             
-            // Register as an XPressNet Listener
+            // Register as an DCCppListener Listener
             systemMemo.getDCCppTrafficController().addDCCppListener(DCCppInterface.CS_INFO, this);
             
             //Send Information request to the Base Station

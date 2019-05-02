@@ -1,9 +1,9 @@
 package jmri.jmrix.loconet.spjfile;
 
 import jmri.jmrit.Sound;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -11,8 +11,9 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
-public class SpjFileTest extends TestCase {
+public class SpjFileTest {
 
+    @Test
     public void testCreate() {
         new SpjFile(new java.io.File("ac4400.spj"));
     }
@@ -25,16 +26,8 @@ public class SpjFileTest extends TestCase {
             testFile.read();
         }
     }
-
-    // The following is commented out; usually used to split
-    // out a file into several subparts
-/*     public void testWriteSubFile() throws java.io.IOException { */
-    /*          */
-    /*         // and write */
-    /*         testFile = new SpjFile("java/test/jmri/jmrix/loconet/spjfile/test.spj"); */
-    /*         testFile.read(); */
-    /*         testFile.writeSubFiles(); */
-    /*     } */
+    
+    @Test
     public void testPlayWav() throws java.io.IOException {
         loadFile();
 
@@ -45,15 +38,17 @@ public class SpjFileTest extends TestCase {
             if (testFile.headers[i].isWAV()) {
                 byte[] buffer = testFile.headers[i].getByteArray();
                 playSoundBuffer(buffer);
-                return;
+                break;
             }
         }
+        jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
     }
 
     public void playSoundBuffer(byte[] data) {
         Sound.playSoundBuffer(data);
     }
 
+    @Test
     public void testGetMapEntries() throws java.io.IOException {
         loadFile();
 
@@ -62,21 +57,16 @@ public class SpjFileTest extends TestCase {
         Assert.assertEquals("31", "USER_F28", testFile.getMapEntry(31));
     }
 
-    // from here down is testing infrastructure
-    public SpjFileTest(String s) {
-        super(s);
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SpjFileTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SpjFileTest.class);
-        return suite;
-    }
-
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpjFileTest.class);
 }

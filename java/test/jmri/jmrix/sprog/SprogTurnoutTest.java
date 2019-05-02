@@ -6,9 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * <P>
- * Tests for SprogTurnout
- * </P>
+ * Tests for SprogTurnout.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
@@ -34,9 +33,9 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     // The minimal setup for log4J
     @Before
-   @Override
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
@@ -52,8 +51,8 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @After
     public void tearDown() {
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
-
 
 }

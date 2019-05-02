@@ -3,6 +3,8 @@ package jmri.jmris;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
+import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.slf4j.Logger;
@@ -53,10 +55,10 @@ public class JmriConnection {
     }
 
     /**
-     * @deprecated see {@link #getSession() }
+     * @deprecated see {@link #getSession() }  probably in 4.9
      * @return the WebSocket session
      */
-    @Deprecated
+    @Deprecated // probably in 4.9
     public Session getWebSocketConnection() {
         return this.getSession();
     }
@@ -76,12 +78,17 @@ public class JmriConnection {
      * @throws IOException if problem sending message
      */
     public void sendMessage(String message) throws IOException {
+        log.trace("Sending \"{}\"", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.session != null) {
             if (this.session.isOpen()) {
                 try {
-                    this.session.getRemote().sendString(message);
+                    RemoteEndpoint remote = this.session.getRemote();
+                    // The JSON sockets keep an internal state variable and throw an IllegalStateException if more than one thread attempts to do sendString at the same time. This function gets normally called from a mixture of the Layout thread and the WebServer-NN threads.
+                    synchronized(remote) {
+                        remote.sendString(message);
+                    }
                 } catch (WebSocketException ex) {
                     log.debug("Exception sending message", ex);
                     // A WebSocketException is most likely a broken socket,

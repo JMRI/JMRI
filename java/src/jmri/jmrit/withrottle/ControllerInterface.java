@@ -11,4 +11,8 @@ public interface ControllerInterface {
 
     public void sendPacketToDevice(String message);
 
+    public void sendAlertMessage(String message);
+
+    public void sendInfoMessage(String message);
+
 }

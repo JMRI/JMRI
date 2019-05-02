@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -40,7 +39,7 @@
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>FL(f) controls output Headlight</label>
-  <label xml:lang="it">Luci (in avanti) - uscita Luci frontali</label>
+    <label xml:lang="it">Luci (in avanti) - uscita Luci frontali</label>
   </variable>
   <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" minFn="1">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

@@ -1,11 +1,14 @@
 package jmri.jmrix.lenz;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,17 +17,13 @@ import org.slf4j.LoggerFactory;
  * connection.
  *
  * @author Paul Bender (C) 2002-2010
- * @author Giorgio Terdina (C) 2007
  */
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
-    protected boolean isAvailable;  // Flag  stating if the throttle is in 
-    // use or not.
-    protected java.util.TimerTask statusTask; // Timer Task used to 
-    // periodically get 
-    // current status of the 
-    // throttle when throttle 
-    // not available.
+    protected boolean isAvailable;  // Flag  stating if the throttle is in use or not.
+
+    protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
+                                                // status of the throttle when throttle not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the 
     protected XNetTrafficController tc = null;
 
@@ -48,9 +47,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         super(memo);
         tc = controller;
         requestList = new LinkedBlockingQueue<RequestMessage>();
-        if (log.isDebugEnabled()) {
-            log.debug("XNetThrottle constructor");
-        }
+        log.debug("XNetThrottle constructor");
     }
 
     /**
@@ -65,15 +62,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         //       this.isForward=true;
         setIsAvailable(false);
 
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary
-                = f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary
-                = f10Momentary = f11Momentary = f12Momentary = false;
-
         requestList = new LinkedBlockingQueue<RequestMessage>();
         sendStatusInformationRequest();
-        if (log.isDebugEnabled()) {
-            log.debug("XNetThrottle constructor called for address " + address);
-        }
+        log.debug("XNetThrottle constructor called for address {}",address);
     }
 
     /*
@@ -158,13 +149,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup1() {
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
-            return;
-        }
         XNetMessage msg = XNetMessage.getFunctionGroup1SetMomMsg(this.getDccAddress(),
                 f0Momentary, f1Momentary, f2Momentary, f3Momentary, f4Momentary);
         // now, queue the message for sending to the command station
@@ -177,13 +161,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup2() {
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
-            return;
-        }
         XNetMessage msg = XNetMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
                 f5Momentary, f6Momentary, f7Momentary, f8Momentary);
         // now, queue the message for sending to the command station
@@ -196,13 +173,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup3() {
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
-            return;
-        }
         XNetMessage msg = XNetMessage.getFunctionGroup3SetMomMsg(this.getDccAddress(),
                 f9Momentary, f10Momentary, f11Momentary, f12Momentary);
         // now, queue the message for sending to the command station
@@ -218,13 +188,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
             log.info("Functions F13-F28 unavailable in CS software version "
                     + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
-        }
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
             return;
         }
         XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(),
@@ -245,13 +208,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     + tc.getCommandStation().getCommandStationSoftwareVersion());
             return;
         }
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
-            return;
-        }
         XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(),
                 f21Momentary, f22Momentary, f23Momentary, f24Momentary,
                 f25Momentary, f26Momentary, f27Momentary, f28Momentary);
@@ -264,18 +220,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     synchronized public void setSpeedSetting(float speed) {
-        if (log.isDebugEnabled()) {
-            log.debug("set Speed to: " + speed
-                    + " Current step mode is: " + this.speedStepMode);
-        }
+        log.debug("set Speed to: {} Current step mode is: {}",speed,this.speedStepMode);
         super.setSpeedSetting(speed);
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // MultiMaus doesn't support emergency off.  When -1 is
-            // sent, set the speed to 0 instead.
-            if (speed < 0) {
-                speed = 0;
-            }
-        }
         if (speed < 0) {
             /* we're sending an emergency stop to this locomotive only */
             sendEmergencyStop();
@@ -316,7 +262,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Set the speed step value and the related speedIncrement value.
      *
-     * @param Mode - the current speed step mode - default should be 128
+     * @param Mode  the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
     @Override
@@ -376,16 +322,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Send a request to get the status of functions from the command station.
      */
     synchronized protected void sendFunctionStatusInformationRequest() {
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
-            return;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle " + address + " sending request for function momentary status.");
-        }
+        log.debug("Throttle {} sending request for function momentary status.",address);
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
         queueMessage(msg, ( THROTTLEMOMSTATSENT | THROTTLESTATSENT) );
@@ -402,9 +339,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     + tc.getCommandStation().getCommandStationSoftwareVersion());
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle " + address + " sending request for function momentary status.");
-        }
+        log.debug("Throttle {} sending request for function momentary status.",address);
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
         // now, we send the message to the command station
@@ -421,16 +356,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     + tc.getCommandStation().getCommandStationSoftwareVersion());
             return;
         }
-        if (tc.getCommandStation().getCommandStationType() == 0x10) {
-            // if the command station is multimouse, ignore
-            if (log.isDebugEnabled()) {
-                log.debug("Command station does not support Momentary functions");
-            }
-            return;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle " + address + " sending request for function momentary status.");
-        }
+        log.debug("Throttle {} sending request for function momentary status.",address);
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);
         // now, we send the message to the command station
@@ -452,19 +378,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     public void message(XNetReply l) {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
-        }
+        log.debug("Throttle {} - received message {}",getDccAddress(),l.toString() );
         if (requestState == THROTTLEIDLE) {
-            if (log.isDebugEnabled()) {
-                log.debug("Current throttle status is THROTTLEIDLE");
-            }
+            log.trace("Current throttle status is THROTTLEIDLE");
             // We haven't sent anything, but we might be told someone else 
             // has taken over this address
             if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - message is LOCO_INFO_RESPONSE ");
-                }
+                log.trace("Throttle - message is LOCO_INFO_RESPONSE ");
                 if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
@@ -472,32 +392,17 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                             //Set the Is available flag to Throttle.False
                             log.info("Loco " + getDccAddress() + " In use by another device");
                             setIsAvailable(false);
-                            // popup a message box that will trigger a status request
-                            //int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
-                            //if(select==JOptionPane.YES_OPTION)
-                            //{
-                            // Send a request for status
-                            //sendStatusInformationRequest();
-                            //return;
-                            //} else {
-                            // Remove the throttle
-                            // TODO
-                            //}
                         }
                     }
                 }
             }
         } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT
                 || (requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("Current throttle status is THROTTLESPEEDSENT");
-            }
+            log.trace("Current throttle status is THROTTLESPEEDSENT");
             // For a Throttle Command, we're just looking for a return 
             // acknowledgment, Either a Success or Failure message.
             if (l.isOkMessage()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Last Command processed successfully.");
-                }
+                log.trace("Last Command processed successfully.");
                 // Since we received an "ok",  we want to make sure
                 // "isAvailable reflects we are in control
                 setIsAvailable(true);
@@ -505,9 +410,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.debug("Communications error occurred - message received was: " + l);
-            } else if (l.getElement(0) == XNetConstants.CS_INFO
-                    && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+                log.trace("Communications error occurred - message received was: " + l);
+            } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 requestState = THROTTLEIDLE;
@@ -516,21 +420,17 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.debug("Received unhandled response: " + l);
+                log.trace("Received unhandled response: {}" + l.toString());
             }
         } else if ( ( requestState & THROTTLESTATSENT ) == THROTTLESTATSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("Current throttle status is THROTTLESTATSENT");
-            }
+            log.trace("Current throttle status is THROTTLESTATSENT");
             // This throttle has requested status information, so we need 
             // to process those messages. 
             if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
                 if (l.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
                     /* handle information response about F13-F28 Momentary 
                      Status*/
-                    if (log.isDebugEnabled()) {
-                        log.debug("Throttle - message is LOCO_FUNCTION_STATUS_HIGH_MOM");
-                    }
+                    log.trace("Throttle - message is LOCO_FUNCTION_STATUS_HIGH_MOM");
                     int b3 = l.getElement(2);
                     int b4 = l.getElement(3);
                     parseFunctionHighMomentaryInformation(b3, b4);
@@ -538,9 +438,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     requestState = THROTTLEIDLE;
                     sendQueuedMessage();
                 } else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Throttle - message is LOCO_INFO_NORMAL_UNIT");
-                    }
+                    log.trace("Throttle - message is LOCO_INFO_NORMAL_UNIT");
                     /* there is no address sent with this information */
                     int b1 = l.getElement(1);
                     int b2 = l.getElement(2);
@@ -559,9 +457,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     return;
                 }
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - message is LOCO_INFO_MUED_UNIT ");
-                }
+                log.trace("Throttle - message is LOCO_INFO_MUED_UNIT ");
                 /* there is no address sent with this information */
                 int b1 = l.getElement(1);
                 int b2 = l.getElement(2);
@@ -571,9 +467,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 // range 1-99
                 int b5 = l.getElement(5);
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Locomotive " + getDccAddress() + "in consist " + b5);
-                }
+                log.trace("Locomotive {} inconsist {} ",getDccAddress(),b5);
 
                 parseSpeedAndAvailability(b1);
                 parseSpeedAndDirection(b2);
@@ -586,9 +480,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendFunctionStatusInformationRequest();
                 return;
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - message is LOCO_INFO_DH_UNIT ");
-                }
+                log.trace("Throttle - message is LOCO_INFO_DH_UNIT ");
                 /* there is no address sent with this information */
                 int b1 = l.getElement(1);
                 int b2 = l.getElement(2);
@@ -602,8 +494,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
                 if (log.isDebugEnabled()) {
                     int address2 = (b5 == 0x00) ? b6 : ((b5 * 256) & 0xFF00) + (b6 & 0xFF) - 0xC000;
-                    log.debug("Locomotive " + getDccAddress()
-                            + "in Double Header with " + address2);
+                    log.trace("Locomotive {} in Double Header with {}",
+                               getDccAddress(),address2);
                 }
 
                 parseSpeedAndAvailability(b1);
@@ -617,9 +509,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendFunctionStatusInformationRequest();
                 return;
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - message is LOCO_INFO_MU ADDRESS ");
-                }
+                log.trace("Throttle - message is LOCO_INFO_MU ADDRESS ");
                 /* there is no address sent with this information */
                 int b1 = l.getElement(1);
                 int b2 = l.getElement(2);
@@ -634,9 +524,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendFunctionStatusInformationRequest();
                 return;
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - message is LOCO_INFO_RESPONSE ");
-                }
+                log.trace("Throttle - message is LOCO_INFO_RESPONSE ");
                 if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
@@ -672,9 +560,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.debug("Communications error occurred - message received was: " + l);
-            } else if (l.getElement(0) == XNetConstants.CS_INFO
-                    && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+                log.trace("Communications error occurred - message received was: {}",l.toString());
+            } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 if((requestState & THROTTLEMOMSTATSENT) == THROTTLEMOMSTATSENT){
@@ -690,7 +577,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.debug("Received unhandled response: " + l);
+                log.trace("Received unhandled response: {}",l.toString());
             }
         }
         //requestState=THROTTLEIDLE;
@@ -709,9 +596,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString() + " , " + msg.getRetries() + " retries available.");
-        }
+        log.debug("Notified of timeout on message {} , {} retries available.",
+                  msg.toString(),msg.getRetries());
         if (msg.getRetries() > 0) {
             // If the message still has retries available, send it back to 
             // the traffic controller.
@@ -736,15 +622,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             log.info("Loco " + getDccAddress() + " In use by another device");
             setIsAvailable(false);
         } else if ((b1 & 0x08) == 0x00 && !this.isAvailable) {
-            if (log.isDebugEnabled()) {
-                log.debug("Loco Is Available");
-            }
+            log.trace("Loco Is Available");
             setIsAvailable(true);
         }
         if ((b1 & 0x01) == 0x01) {
-            if (log.isDebugEnabled()) {
-                log.debug("Speed Step setting 27");
-            }
+            log.trace("Speed Step setting 27");
             this.speedIncrement = SPEED_STEP_27_INCREMENT;
             if (this.speedStepMode != DccThrottle.SpeedStepMode27) {
                 notifyPropertyChangeListener("SpeedSteps",
@@ -752,9 +634,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                         Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode27));
             }
         } else if ((b1 & 0x02) == 0x02) {
-            if (log.isDebugEnabled()) {
-                log.debug("Speed Step setting 28");
-            }
+            log.trace("Speed Step setting 28");
             this.speedIncrement = SPEED_STEP_28_INCREMENT;
             if (this.speedStepMode != DccThrottle.SpeedStepMode28) {
                 notifyPropertyChangeListener("SpeedSteps",
@@ -762,9 +642,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                         Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode28));
             }
         } else if ((b1 & 0x04) == 0x04) {
-            if (log.isDebugEnabled()) {
-                log.debug("Speed Step setting 128");
-            }
+            log.trace("Speed Step setting 128");
             this.speedIncrement = SPEED_STEP_128_INCREMENT;
             if (this.speedStepMode != DccThrottle.SpeedStepMode128) {
                 notifyPropertyChangeListener("SpeedSteps",
@@ -772,9 +650,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                         Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode128));
             }
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Speed Step setting 14");
-            }
+            log.trace("Speed Step setting 14");
             this.speedIncrement = SPEED_STEP_14_INCREMENT;
             if (this.speedStepMode != DccThrottle.SpeedStepMode14) {
                 notifyPropertyChangeListener("SpeedSteps",
@@ -791,28 +667,20 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         /* the second byte indicates the speed and direction setting */
 
         if ((b2 & 0x80) == 0x80 && this.isForward == false) {
-            if (log.isDebugEnabled()) {
-                log.debug("Throttle - Direction Forward Locomotive:" + address);
-            }
+            log.trace("Throttle - Direction Forward Locomotive: {}",address);
             notifyPropertyChangeListener("IsForward",
                     Boolean.valueOf(this.isForward),
                     Boolean.valueOf(this.isForward = true));
             if (this.isForward == true) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - Changed direction to Forward Locomotive:" + address);
-                }
+                log.trace("Throttle - Changed direction to Forward Locomotive: {}",address);
             }
         } else if ((b2 & 0x80) == 0x00 && this.isForward == true) {
-            if (log.isDebugEnabled()) {
-                log.debug("Throttle - Direction Reverse Locomotive:" + address);
-            }
+            log.trace("Throttle - Direction Reverse Locomotive: {}", address);
             notifyPropertyChangeListener("IsForward",
                     Boolean.valueOf(this.isForward),
                     Boolean.valueOf(this.isForward = false));
             if (this.isForward == false) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - Changed direction to Reverse Locomotive:" + address);
-                }
+                log.trace("Throttle - Changed direction to Reverse Locomotive: {}",address);
             }
         }
 
@@ -892,9 +760,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     protected void parseFunctionInformation(int b3, int b4) {
-        if (log.isDebugEnabled()) {
-            log.debug("Parsing Function F0-F12 status, function bytes: " + b3 + " and " + b4);
-        }
+        log.trace("Parsing Function F0-F12 status, function bytes: {} and {}",
+                  b3,b4);
         /* data byte 3 is the status of F0 F4 F3 F2 F1 */
         if ((b3 & 0x10) == 0x10 && getF0() == false) {
             notifyPropertyChangeListener(Throttle.F0,
@@ -1029,9 +896,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     protected void parseFunctionHighInformation(int b3, int b4) {
-        if (log.isDebugEnabled()) {
-            log.debug("Parsing Function F13-F28 status, function bytes: " + b3 + " and " + b4);
-        }
+        log.trace("Parsing Function F13-F28 status, function bytes: {} and {}",
+                  b3,b4);
         /* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
         if ((b3 & 0x01) == 0x01 && getF13() == false) {
             notifyPropertyChangeListener(Throttle.F13,
@@ -1196,9 +1062,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     protected void parseFunctionMomentaryInformation(int b3, int b4) {
-        if (log.isDebugEnabled()) {
-            log.debug("Parsing Function Momentary status, function bytes: " + b3 + " and " + b4);
-        }
+        log.trace("Parsing Function Momentary status, function bytes: {} and {}",
+                  b3,b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
         if ((b3 & 0x10) == 0x10 && this.f0Momentary == false) {
             notifyPropertyChangeListener(Throttle.F0Momentary,
@@ -1333,9 +1198,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     protected void parseFunctionHighMomentaryInformation(int b3, int b4) {
-        if (log.isDebugEnabled()) {
-            log.debug("Parsing Function F13-F28 Momentary status, function bytes: " + b3 + " and " + b4);
-        }
+        log.trace("Parsing Function F13-F28 Momentary status, function bytes: {} and {}",
+                  b3,b4);
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
 
         if ((b3 & 0x01) == 0x01 && this.f13Momentary == false) {
@@ -1522,11 +1386,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Set up the status timer, and start it.
      */
     protected void startStatusTimer() {
-        if (log.isDebugEnabled()) {
-            log.debug("Status Timer Started");
-        }
+        log.debug("Status Timer Started");
+
         if (statusTask != null) {
             statusTask.cancel();
+            statusTask = null;
         }
         statusTask = new java.util.TimerTask() {
             @Override
@@ -1536,18 +1400,18 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendStatusInformationRequest();
             }
         };
-        new java.util.Timer().schedule(statusTask, statTimeoutValue, statTimeoutValue);
+        
+        jmri.util.TimerUtil.schedule(statusTask, statTimeoutValue, statTimeoutValue);
     }
 
     /**
      * Stop the Status Timer 
      */
     protected void stopStatusTimer() {
-        if (log.isDebugEnabled()) {
-            log.debug("Status Timer Stopped");
-        }
+        log.debug("Status Timer Stopped");
         if (statusTask != null) {
             statusTask.cancel();
+            statusTask = null;
         }
     }
 
@@ -1568,9 +1432,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
         if (requestList.size() != 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("sending message to traffic controller");
-            }
+            log.debug("sending message to traffic controller");
             // if the queue is not empty, remove the first message
             // from the queue, send the message, and set the state machine 
             // to the requried state.
@@ -1584,9 +1446,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 tc.sendXNetMessage(msg.getMsg(), this);
             }
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("message queue empty");
-            }
+            log.debug("message queue empty");
             // if the queue is empty, set the state to idle.
             requestState = THROTTLEIDLE;
         }
@@ -1596,9 +1456,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Queue a message.
      */
     synchronized protected void queueMessage(XNetMessage m, int s) {
-        if (log.isDebugEnabled()) {
-            log.debug("adding message to message queue");
-        }
+        log.debug("adding message to message queue");
         // put the message in the queue
         RequestMessage msg = new RequestMessage(m, s);
         try {

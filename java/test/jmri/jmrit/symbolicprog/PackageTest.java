@@ -19,6 +19,9 @@ import org.junit.runners.Suite;
     HexVariableValueTest.class,
     LongAddrVariableValueTest.class,
     SplitVariableValueTest.class,
+    SplitDateTimeVariableValueTest.class,
+    SplitHexVariableValueTest.class,
+    SplitTextVariableValueTest.class,
     CvValueTest.class,
     CvTableModelTest.class,
     VariableTableModelTest.class,
@@ -62,7 +65,8 @@ import org.junit.runners.Suite;
     PrintActionTest.class,
     PrintCvActionTest.class,
     ShortAddrVariableValueTest.class,
-    FnMapPanelESUTest.class
+    FnMapPanelESUTest.class,
+    CVNameComparatorTest.class
 })
 
 /**

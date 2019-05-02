@@ -8,26 +8,30 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NodeIdentityTest {
 
     @Test
-    public void testCTor() {
-        Assert.assertNotNull("exists",NodeIdentity.identity());
+    public void testNetworkIdentity() {
+        Assert.assertNotNull(NodeIdentity.networkIdentity());
+    }
+
+    @Test
+    public void testStorageIdentity() {
+        Assert.assertNotNull(NodeIdentity.storageIdentity());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetNodeIdentity();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetNodeIdentity();
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(NodeIdentityTest.class);
-
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -90,6 +91,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         return p;
     }
 
+    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     void addToTable() {
         String sysname = _sysNametext.getText();  //N11N
         if (sysname != null && sysname.length() > 1) {
@@ -98,7 +100,15 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
             if (uname != null && uname.trim().length() == 0) {
                 uname = null;
             }
-            jmri.NamedBean bean = model.addBean(sysname, uname);
+            jmri.NamedBean bean = null;
+            try {
+                bean = model.addBean(sysname, uname);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("PickAddFailed", ex.getMessage()),  // NOI18N
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
+            }
             if (bean != null) {
                 int setRow = model.getIndexOf(bean);
                 model.getTable().setRowSelectionInterval(setRow, setRow);

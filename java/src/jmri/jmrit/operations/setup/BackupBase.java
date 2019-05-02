@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import jmri.jmrit.XmlFile;
@@ -49,12 +50,12 @@ public abstract class BackupBase {
     }
 
     // These constitute the set of files for a complete backup set.
-    private String[] _backupSetFileNames = new String[]{"Operations.xml", // NOI18N
+    private final String[] _backupSetFileNames = new String[]{"Operations.xml", // NOI18N
             "OperationsCarRoster.xml", "OperationsEngineRoster.xml", // NOI18N
             "OperationsLocationRoster.xml", "OperationsRouteRoster.xml", // NOI18N
             "OperationsTrainRoster.xml"}; // NOI18N
 
-    private String _demoPanelFileName = "Operations Demo Panel.xml"; // NOI18N
+    private final String _demoPanelFileName = "Operations Demo Panel.xml"; // NOI18N
 
     public String[] getBackupSetFileNames() {
         return _backupSetFileNames.clone();
@@ -131,7 +132,7 @@ public abstract class BackupBase {
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
-        jmri.util.StringUtil.sort(setList);
+        java.util.Arrays.sort(setList);
         return setList;
     }
 
@@ -151,6 +152,7 @@ public abstract class BackupBase {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
         File[] dirs = getBackupRoot().listFiles();
+        Arrays.sort(dirs);
         BackupSet[] sets = new BackupSet[dirs.length];
 
         for (int i = 0; i < dirs.length; i++) {

@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedSet;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -40,14 +42,17 @@ import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.TurnoutIcon;
+import jmri.jmrit.display.palette.FamilyItemPanel;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
+import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +93,7 @@ public class CircuitBuilder {
     private final HashMap<String, PortalIcon> _portalIconMap = new HashMap<>();
 
     // OBlock list to open edit frames
-    private PickListModel _oblockModel;
+    private PickListModel<OBlock> _oblockModel;
     private boolean hasOBlocks = false;
 
     // "Editing Frames" - Called from menu in Main Frame
@@ -103,6 +108,7 @@ public class CircuitBuilder {
     private final JTextField _sysNameBox = new JTextField();
     private final JTextField _userNameBox = new JTextField();
     private OBlock _currentBlock;
+    private int _origStateCurBlk = OBlock.UNOCCUPIED;
     private JDialog _dialog;
     protected ControlPanelEditor _editor;
 
@@ -114,7 +120,6 @@ public class CircuitBuilder {
      * ***************************************************************
      */
     public CircuitBuilder() {
-        // _menuBar = new JMenuBar();
         log.error("CircuitBuilder ctor requires an Editor class");
     }
 
@@ -133,9 +138,8 @@ public class CircuitBuilder {
             _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
             _circuitMap = new HashMap<>();
             OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            String[] sysNames = manager.getSystemNameArray();
-            for (int i = 0; i < sysNames.length; i++) {
-                OBlock block = manager.getBySystemName(sysNames[i]);
+            SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+            for (OBlock block : oblocks) {
                 _circuitMap.put(block, new ArrayList<>());
             }
         }
@@ -281,9 +285,9 @@ public class CircuitBuilder {
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
+            SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+            for (OBlock block : oblocks) {
+            WarrantTableAction.checkPathPortals(block);
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
             JOptionPane.showMessageDialog(_editCircuitFrame,
@@ -488,13 +492,14 @@ public class CircuitBuilder {
                             Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
-                    _currentBlock.setState(OBlock.UNOCCUPIED);
                     // A temporary path "TEST_PATH" is used to display the icons representing a path
                     _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
                     _editor.disableMenus();
                     TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
                     targetPane.setHighlightColor(_editGroupColor);
+                    _origStateCurBlk = _currentBlock.getState();
+                    _currentBlock.setState(OBlock.UNOCCUPIED);
                     _editPathsFrame = new EditCircuitPaths(Bundle.getMessage("OpenPathTitle"), this, _currentBlock);
                 }
             }
@@ -528,6 +533,18 @@ public class CircuitBuilder {
                 _editDirectionFrame.setVisible(true);
             }
             return false;
+        }
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+        if (manager.getObjectCount() == 0) {
+            return true;
+        } else {
+            for (OBlock block : manager.getNamedBeanSet()) {
+                if ((block.getState() & OBlock.ALLOCATED) != 0) {
+                    JOptionPane.showMessageDialog(_editor, Bundle.getMessage("cannotEditCB", block.getWarrant().getDisplayName()),
+                            Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -573,6 +590,7 @@ public class CircuitBuilder {
         mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel p = new JPanel();
         p.add(new JLabel(Bundle.getMessage("selectOBlock")));
+        p.setMaximumSize(new Dimension(300, p.getPreferredSize().height));
         mainPanel.add(p);
 
         _oblockModel = PickListModel.oBlockPickModelInstance();
@@ -640,11 +658,15 @@ public class CircuitBuilder {
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener((ActionEvent a) -> {
             _sysNameBox.setText("");
+/*            if (_currentBlock != null) {
+                _currentBlock.setState(_origStateCurBlk);
+            }*/
             _currentBlock = null;
             _dialog.dispose();
         });
         panel0.add(cancelButton);
         buttonPanel.add(panel0);
+        buttonPanel.setMaximumSize(new Dimension(300, buttonPanel.getPreferredSize().height));
         return buttonPanel;
     }
 
@@ -658,8 +680,9 @@ public class CircuitBuilder {
             }
             _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).createNewOBlock(sysname, uname);
             if (_currentBlock != null) {
+//                _origStateCurBlk = _currentBlock.getState();
                 _circuitMap.put(_currentBlock, new ArrayList<>());
-                retOK = true;
+               retOK = true;
             } else {
                 int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
                         Bundle.getMessage("blockExists"), sysname, uname),
@@ -671,6 +694,7 @@ public class CircuitBuilder {
                         _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysname);
                     }
                     if (_currentBlock != null) {
+//                        _origStateCurBlk = _currentBlock.getState();
                         retOK = true;
                     }
                 }
@@ -690,11 +714,15 @@ public class CircuitBuilder {
         int row = _oblockModel.getTable().getSelectedRow();
         if (row >= 0) {
             row = _oblockModel.getTable().convertRowIndexToModel(row);
-            _currentBlock = (OBlock) _oblockModel.getBeanAt(row);
+            _currentBlock = _oblockModel.getBeanAt(row);
+//            _origStateCurBlk = _currentBlock.getState();
             return true;
         }
         JOptionPane.showMessageDialog(_editor, Bundle.getMessage("selectOBlock"),
                 Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
+        if (_currentBlock != null) {
+//            _currentBlock.setState(_origStateCurBlk);
+        }
         _currentBlock = null;
         return false;
     }
@@ -784,7 +812,10 @@ public class CircuitBuilder {
     }
 
     protected void closePathFrame(OBlock block) {
-        _currentBlock.deAllocate(null);
+        if (_currentBlock != null) {
+            _currentBlock.deAllocate(null);
+            _currentBlock.setState(_origStateCurBlk);
+        }
         _editPathsFrame = null;
         closeCircuitBuilder();
     }
@@ -803,8 +834,8 @@ public class CircuitBuilder {
     }
 
     private void closeCircuitBuilder() {
-        _circuitIcons = null;
         _currentBlock = null;
+        _circuitIcons = null;
         checkCircuits();
         hidePortalIcons();
         _editor.resetEditor();
@@ -827,6 +858,7 @@ public class CircuitBuilder {
         PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
 
         Iterator<Positionable> it = _editor.getContents().iterator();
+        ArrayList<PortalIcon> removeList = new ArrayList<>();
         while (it.hasNext()) {
             Positionable pos = it.next();
             // if (log.isDebugEnabled()) log.debug("class: "+pos.getClass().getName());
@@ -844,16 +876,20 @@ public class CircuitBuilder {
                 Portal portal = portalMgr.getByUserName(name);
                 if (portal == null) {
                     log.error("No Portal for PortalIcon called \"" + name + "\". Discarding icon.");
-                    pIcon.remove();
+                    removeList.add(pIcon);
                 } else {
                     PortalIcon pi = _portalIconMap.get(name);
                     if (pi != null) {
                         log.error("Removing duplicate PortalIcon for Portal \"" + name + "\".");
-                        pi.remove();
+                        removeList.add(pi);
                     }
                     _portalIconMap.put(name, pIcon);
                 }
             }
+        }
+        Iterator<PortalIcon> its = removeList.iterator();
+        while (its.hasNext()) {
+            its.next().remove();
         }
         Iterator<Entry<OBlock, ArrayList<Positionable>>> iters = _circuitMap.entrySet().iterator();
         while (iters.hasNext()) {
@@ -872,11 +908,9 @@ public class CircuitBuilder {
         _convertBlock.clear();
         _badPortalIcon.clear();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        hasOBlocks = (sysNames.length > 0);
-        for (int i = 0; i < sysNames.length; i++) {
-            OBlock block = manager.getBySystemName(sysNames[i]);
-
+        SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+        hasOBlocks = (oblocks.size() > 0);
+        for (OBlock block : oblocks) {
             java.util.List<Portal> list = block.getPortals();
             if (list != null) {
                 Iterator<Portal> iter = list.iterator();
@@ -909,8 +943,8 @@ public class CircuitBuilder {
                 }
             }
         }
-        List<Portal> list = portalMgr.getNamedBeanList();
-        Iterator<Portal> iter = list.iterator();
+        Set<Portal> set = portalMgr.getNamedBeanSet();
+        Iterator<Portal> iter = set.iterator();
         while (iter.hasNext()) {
             Portal portal =  iter.next();
             String name = portal.getName();
@@ -1055,11 +1089,10 @@ public class CircuitBuilder {
      * /********************* convert plain track to indicator track
      * *************
      */
-    IndicatorItemPanel _trackPanel;
+    FamilyItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
-    DisplayFrame _convertFrame;     // must be modal dialog to halt convertIcons loop
-    JDialog _convertDialog;     // must be modal dialog to halt convertIcons loop
+    ConvertFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
 
     /**
      * Check if the block being edited has all its icons converted to indicator
@@ -1137,59 +1170,67 @@ public class CircuitBuilder {
     /**
      * Converts icon to IndicatorTrack
      */
-    private void convertIcon(Positionable pos) {
-        _oldIcon = (PositionableLabel) pos;
+    private void convertIcon(Positionable p) {
+        PositionableLabel pos = (PositionableLabel) p;
+        _oldIcon = pos;
         _editor.highlight(_oldIcon);
         _editor.toFront();
         _editor.repaint();
         if (pos instanceof TurnoutIcon) {
-            makePaletteFrame("IndicatorTO");
-            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
+            _convertFrame = new ConvertFrame("IndicatorTO", pos);
+            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame._paletteFrame, "IndicatorTO", null, null, _editor);
             ActionListener updateAction = (ActionEvent a) -> {
                 convertTO();
             };
-            _trackTOPanel.init(updateAction);
-            _convertDialog.add(_trackTOPanel);
+            initConvertFrame(_trackTOPanel, updateAction);
         } else {
-            makePaletteFrame("IndicatorTrack");
-            _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
+            _convertFrame = new ConvertFrame("IndicatorTrack", pos);
+            _trackPanel = new IndicatorItemPanel(_convertFrame._paletteFrame, "IndicatorTrack", null, _editor);
             ActionListener updateAction = (ActionEvent a) -> {
                 convertSeg();
             };
-            _trackPanel.init(updateAction);
-            _convertDialog.add(_trackPanel);
+            initConvertFrame(_trackPanel, updateAction);
         }
-        _convertDialog.pack();
-        _convertDialog.setVisible(true);
         _editor.repaint();
     }
 
-    private void makePaletteFrame(String title) {
-        jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
-        _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
-                Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
-        _convertFrame = new ConvertFrame(_convertDialog);
 
-        _convertDialog.setLocationRelativeTo(_editor);
-        _convertDialog.toFront();
+    private void initConvertFrame(ItemPanel itemPanel, ActionListener updateAction) {
+        itemPanel.init(updateAction);
+        Dimension dim = itemPanel.getPreferredSize();
+        JScrollPane sp = new JScrollPane(itemPanel);
+        dim = new Dimension(dim.width +25, dim.height + 25);
+        sp.setPreferredSize(dim);
+        _convertFrame._dialog.add(sp);
+        _convertFrame._dialog.pack();
+        _convertFrame._dialog.setVisible(true);
     }
 
     /*
-     * gimmick to get JDialog to re-layout contents and repaint
+     * gimmick to get JDialog to wait until user makes a decision to convert each track icon.
+     * Holding the modal dialog does the trick.
+     * Also does re-layout contents and repaint
      */
-    static class ConvertFrame extends DisplayFrame {
+    class ConvertFrame extends JmriJFrame {
 
         JDialog _dialog;
+        DisplayFrame _paletteFrame;
 
-        ConvertFrame(JDialog dialog) {
+        ConvertFrame(String title, PositionableLabel pos) {
             super(false, false);
-            _dialog = dialog;
+            jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
+            _paletteFrame = pos.makePaletteFrame(title);
+            _dialog = new JDialog(_editor, java.text.MessageFormat.format(
+                    Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
+
+            _dialog.setLocationRelativeTo(_editor);
+            _dialog.toFront();
         }
 
         @Override
-        public void pack() {
-            super.pack();
-            _dialog.pack();
+        public void dispose() {
+            _dialog.dispose();
+            super.dispose();
         }
     }
 
@@ -1224,15 +1265,13 @@ public class CircuitBuilder {
         t.setFamily(_trackPanel.getFamilyName());
 
         HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
-        if (iconMap != null) {
-            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                if (log.isDebugEnabled()) {
-                    log.debug("key= " + entry.getKey());
-                }
-                t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            if (log.isDebugEnabled()) {
+                log.debug("key= " + entry.getKey());
             }
+            t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
         }
         t.setLevel(Editor.TURNOUTS);
         t.setScale(_oldIcon.getScale());
@@ -1258,8 +1297,7 @@ public class CircuitBuilder {
         _oldIcon = null;
         _trackPanel = null;
         _trackTOPanel = null;
-        _convertDialog.dispose();
-        _convertDialog = null;
+        _convertFrame.dispose();
         _convertFrame = null;
     }
 
@@ -1276,6 +1314,9 @@ public class CircuitBuilder {
     private ArrayList<Positionable> makeSelectionGroup(OBlock block, boolean showPortal) {
         ArrayList<Positionable> group = new ArrayList<>();
         List<Positionable> circuitIcons = _circuitMap.get(block);
+        if (circuitIcons == null) {
+            return group;
+        }
         Iterator<Positionable> iter = circuitIcons.iterator();
         while (iter.hasNext()) {
             Positionable p = iter.next();
@@ -1622,8 +1663,9 @@ public class CircuitBuilder {
                         ((PortalIcon) selection).setStatus(PortalIcon.VISIBLE);
                     }
                 }
-                int state = block.getState() | OBlock.ALLOCATED;
-                block.pseudoPropertyChange("state", 0, state);
+                int oldState = block.getState();
+                int newState = oldState | OBlock.ALLOCATED;
+                block.pseudoPropertyChange("state", oldState, newState);
                 _editPathsFrame.updatePath(true);
             }
             _editPathsFrame.toFront();

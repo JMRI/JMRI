@@ -44,6 +44,7 @@
     <label xml:lang="fr">Retour d'info (Railcom)</label>
     <label xml:lang="de">Rückmeldung (RailCom)</label>
     <label xml:lang="it">Ritorno Informazioni (Railcom)</label>
+    <label xml:lang="ca">Retorn d'Informació (Railcom)</label>
   </variable>
   <variable item="Address broadcast" CV="28" mask="XXXXXXXV" tooltip="CV28 Bit 0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -51,6 +52,7 @@
     <label xml:lang="fr">Diffusion d'adresse</label>
     <label xml:lang="de">Loknummerausgabe erlaubt</label>
     <label xml:lang="it">Broadcast Indirizzo</label>
+    <label xml:lang="ca">Adreça de difusió</label>
   </variable>
   <variable item="POM enable" CV="28" mask="XXXXXXVX" tooltip="CV28 Bit 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -58,5 +60,6 @@
     <label xml:lang="fr">POM</label>
     <label xml:lang="de">POM erlaubt</label>
     <label xml:lang="it">Abilitare POM</label>
+    <label xml:lang="ca">Habilitar POM</label>
   </variable>
 </variables>

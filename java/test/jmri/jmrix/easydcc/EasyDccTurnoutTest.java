@@ -19,7 +19,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
         memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         tcis = new EasyDccTrafficControlScaffold(memo);
@@ -45,9 +45,10 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
-    // The minimal setup for log4J
+    // reset objects
     @After
     public void tearDown() {
+        tcis.terminateThreads();
         t.dispose();
         JUnitUtil.tearDown();
     }

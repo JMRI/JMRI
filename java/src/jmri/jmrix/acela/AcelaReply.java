@@ -2,7 +2,7 @@ package jmri.jmrix.acela;
 
 
 /**
- * Contains the data payload of a Acela reply packet
+ * Contains the data payload of an Acela reply packet
  *
  * @author Bob Jacobsen Copyright (C) 2002
  *

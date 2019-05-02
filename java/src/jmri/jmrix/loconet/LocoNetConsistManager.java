@@ -1,6 +1,6 @@
 /**
  * Consist Manager for use with the LocoNetConsist class for the
- * consists it builds
+ * consists it builds.
  *
  * @author Paul Bender Copyright (C) 2011
  */
@@ -23,6 +23,7 @@ public class LocoNetConsistManager extends AbstractConsistManager {
      * consist reader thread, which retrieves consist information from the
      * command station
      *
+     * @param lm the LocoNetSystemConnectionMemo to which this object is related
      */
     public LocoNetConsistManager(LocoNetSystemConnectionMemo lm) {
         super();

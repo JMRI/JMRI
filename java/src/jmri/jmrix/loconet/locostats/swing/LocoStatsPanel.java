@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Panel displaying LocoNet interface status information.
- * <P>
+ * <p>
  * The LocoBuffer family from RR-CirKits and the PRn family from Digitrax use
  * different formats for the status message. This class detects this from the
  * reply contents, and displays different panes depending on which message was
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (C) 2003
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  * @since 2.1.5
+ * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsListener {
 
@@ -161,7 +161,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     /**
      * Configure LocoNet connection
      * 
-     * @param memo - specifies which LocoNet connection is used by this tool
+     * @param memo  specifies which LocoNet connection is used by this tool
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
@@ -305,4 +305,5 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         }
 
     private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class);
+
 }

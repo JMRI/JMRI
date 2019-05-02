@@ -10,14 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class StandaloneSensorManagerTest {
+public class StandaloneSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private StandaloneTrafficController tc = null;
 
+    @Override
+    public String getSystemName(int i) {
+        return "RS" + i;
+    }
+
     @Test
     public void testCTor() {
-        StandaloneSensorManager t = new StandaloneSensorManager(tc,"R");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",l);
     }
 
     // The minimal setup for log4J
@@ -25,6 +29,7 @@ public class StandaloneSensorManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo());
+        l = new StandaloneSensorManager(tc,"R");
     }
 
     @After

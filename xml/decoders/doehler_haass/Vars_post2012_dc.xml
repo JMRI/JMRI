@@ -43,5 +43,6 @@
     <label xml:lang="it">Riduzione velocità in analogico</label>
     <label xml:lang="fr">Réduction vitesse en analogique</label>
     <label xml:lang="de">Geschw.-minderung in Analog</label>
+    <label xml:lang="ca">Reducció de velocitat en CC</label>
   </variable>
 </variables>

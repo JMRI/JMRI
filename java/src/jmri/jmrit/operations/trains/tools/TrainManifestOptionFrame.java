@@ -109,7 +109,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 
         // load fields
         if (_train != null) {
-            railroadNameTextField.setText(_train.getTrainRailroadName());
+            railroadNameTextField.setText(_train.getRailroadName());
             showTimesCheckBox.setSelected(_train.isShowArrivalAndDepartureTimesEnabled());
         }
 
@@ -123,10 +123,10 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 
     private void updateLogoButtons() {
         if (_train != null) {
-            boolean flag = _train.getManifestLogoURL().equals("");
+            boolean flag = _train.getManifestLogoPathName().equals("");
             addLogoButton.setVisible(flag);
             removeLogoButton.setVisible(!flag);
-            logoURL.setText(_train.getManifestLogoURL());
+            logoURL.setText(_train.getManifestLogoPathName());
             pack();
         }
     }
@@ -161,20 +161,20 @@ public class TrainManifestOptionFrame extends OperationsFrame {
             log.debug("add logo button pressed");
             File f = selectFile();
             if (f != null && _train != null) {
-                _train.setManifestLogoURL(FileUtil.getPortableFilename(f));
+                _train.setManifestLogoPathName(FileUtil.getPortableFilename(f));
             }
             updateLogoButtons();
         }
         if (ae.getSource() == removeLogoButton) {
             log.debug("remove logo button pressed");
             if (_train != null) {
-                _train.setManifestLogoURL("");
+                _train.setManifestLogoPathName("");
             }
             updateLogoButtons();
         }
         if (ae.getSource() == saveButton) {
             if (_train != null) {
-                _train.setTrainRailroadName(railroadNameTextField.getText());
+                _train.setRailroadName(railroadNameTextField.getText());
                 _train.setShowArrivalAndDepartureTimes(showTimesCheckBox.isSelected());
                 _train.setModified(true);
             }

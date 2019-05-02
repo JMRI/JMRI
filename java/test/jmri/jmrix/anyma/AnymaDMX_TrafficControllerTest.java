@@ -16,7 +16,9 @@ public class AnymaDMX_TrafficControllerTest {
 
     @Test
     public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor", new AnymaDMX_TrafficController());
+        AnymaDMX_TrafficController atc = new AnymaDMX_TrafficController();
+        Assert.assertNotNull("ConnectionConfig constructor", atc);
+        atc.dispose();
     }
 
     @Before

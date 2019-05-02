@@ -731,10 +731,7 @@
         <decVal/>
         <label>Dimming Brightness</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" default="1" item="Function F0F effect generated">
         <decVal min="1" max="5"/>
@@ -1018,16 +1015,8 @@
         <decVal/>
         <label>Year of Decoder Manufacture</label>
       </variable>
-      <variable CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
-        <decVal max="256"/>
-        <label>Forward Motor Trim</label>
-        <comment>Range 0-256</comment>
-      </variable>
-      <variable CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
-        <decVal max="256"/>
-        <label>Reverse Motor Trim</label>
-        <comment>Range 0-256</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="2">
@@ -1035,6 +1024,7 @@
       </factReset>
     </resets>
   </decoder>
+  <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
   <pane>
     <name>Momentum</name>
     <column>
@@ -1116,14 +1106,6 @@
   <pane>
     <name>TCS</name>
     <column>
-      <display item="Forward Motor Trim"/>
-      <display item="Reverse Motor Trim"/>
-      <label>
-        <text>Values above 128 increase speed.  Values below 128 decrease speed</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
       <label>
         <text> </text>
       </label>

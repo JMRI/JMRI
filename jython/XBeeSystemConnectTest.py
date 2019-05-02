@@ -47,7 +47,7 @@ class XBeeSystemConnectionTest(jmri.jmrit.automat.AbstractAutomaton) :
     #
     # Modify this to do your calculation.
     def handle(self) : 
-	return 0    # only needs to be called once.
+    return 0    # only needs to be called once.
         
 # end of class definition
 

@@ -54,14 +54,6 @@ class ConfigXmlHandleXml implements XmlAdapter {
     }
 
     @Override
-    public void creationErrorEncountered(
-            String description,
-            String systemName,
-            String userName,
-            Exception exception) throws JmriConfigureXmlException {
-    }
-
-    @Override
     public void handleException(
             @Nonnull String description,
             @Nullable String operation,

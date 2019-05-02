@@ -36,6 +36,9 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         this.getSystemConnectionMemo().configureManagers();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;

@@ -1,38 +1,47 @@
 package apps.DispatcherPro;
 
-import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
+import java.io.IOException;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- *
+ * This is more of an acceptance test than a unit test. It confirms that the entire
+ * application can start up and configure itself.
+ * 
  * @author Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2017
  */
-public class DispatcherProTest {
+public class DispatcherProTest extends apps.LaunchJmriAppBase {
+
+    protected void launch(String[] args) {
+        DispatcherPro.main(args);
+    }
+    
+    @Test
+    public void testLaunchLocoNet() throws IOException {
+        runOne("LocoNet_Simulator", "DispatcherPro", "DispatcherPro version");
+    }
 
     @Test
-    @Ignore("Causes Exception")
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DispatcherPro t = new DispatcherPro();
-        Assert.assertNotNull("exists", t);
+    public void testLaunchEasyDcc() throws IOException {
+        runOne("EasyDcc_Simulator", "DispatcherPro", "DispatcherPro version");
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+    @Test
+    public void testLaunchGrapevine() throws IOException {
+        runOne("Grapevine_Simulator", "DispatcherPro", "DispatcherPro version");
+        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
     }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Test
+    public void testLaunchTmcc() throws IOException {
+        runOne("TMCC_Simulator", "DispatcherPro", "DispatcherPro version");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DispatcherProTest.class);
+    @Test
+    public void testLaunchInitLoop() throws IOException {
+        runOne("Prevent_Init_Loop", "DispatcherPro", "DispatcherPro version");
+    }
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -10,75 +11,77 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Provide an Ops Mode Programmer via a wrapper what works with the LocoNet
+ * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
  * SlotManager object.
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2002
+ * @author B. Milhaupt, Copyright (C) 2018
  */
 public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 
-    SlotManager mSlotMgr;
     LocoNetSystemConnectionMemo memo;
     int mAddress;
     boolean mLongAddr;
     ProgListener p;
     boolean doingWrite;
     boolean boardOpSwWriteVal;
-    javax.swing.Timer bdOpSwAccessTimer = null;
+    private javax.swing.Timer bdOpSwAccessTimer = null;
 
-    public LnOpsModeProgrammer(SlotManager pSlotMgr,
-            LocoNetSystemConnectionMemo memo,
+
+    public LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo,
             int pAddress, boolean pLongAddr) {
-        mSlotMgr = pSlotMgr;
         this.memo = memo;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-
         // register to listen
         memo.getLnTrafficController().addLocoNetListener(~0, this);
     }
 
     /**
-     * Forward a write request to an ops-mode write operation
+     * @deprecated 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+     * @param pSlotMgr the slot manager for this programmer
+     * @param memo the memo for this programmer
+     * @param pAddress the decoder address to be programmed
+     * @param pLongAddr true if pAddress represents a DCC "Long" address
+     */
+    @Deprecated // 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+    public LnOpsModeProgrammer(SlotManager pSlotMgr,
+            LocoNetSystemConnectionMemo memo,
+            int pAddress, boolean pLongAddr) {
+        this(memo, pAddress, pLongAddr);
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnOpsModeProgrammer(..)");        
+    }
+
+    /** 
+     * {@inheritDoc}
      */
     @Override
-    @Deprecated
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
-    }
-
-    @Override
-    @Deprecated
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
-    }
-
-    @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        this.p = null;
+    public void writeCV(String CV, int val, ProgListener pL) throws ProgrammerException {
+        p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        LocoNetMessage m;
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            memo.getSlotManager().writeCV(CV, val, pL); // deal with this via service-mode programmer
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
              * Known values:
-             * <UL>
-             * <LI>0x70 112 - PM4
-             * <LI>0x71 113 - BDL16
-             * <LI>0x72 114 - SE8
-             * <LI>0x73 115 - DS64
+             * <ul>
+             * <li>0x70 112 - PM4
+             * <li>0x71 113 - BDL16
+             * <li>0x72 114 - SE8
+             * <li>0x73 115 - DS64
              * </ul>
              */
             if (bdOpSwAccessTimer == null) {
                 initiializeBdOpsAccessTimer();
             }
-            this.p = p;
+            p = pL;
             doingWrite = true;
             // Board programming mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
@@ -87,7 +90,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
 
             // make message
-            LocoNetMessage m = new LocoNetMessage(6);
+            m = new LocoNetMessage(6);
             m.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x72;
             if ((mAddress & 0x80) != 0) {
@@ -108,7 +111,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             bdOpSwAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
-            this.p = p;
+            p = pL;
             doingWrite = true;
             // SV1 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
@@ -116,57 +119,65 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // make message
             int locoIOAddress = mAddress;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
             // force version 1 tag
             m.setElement(4, 0x01);
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
-            this.p = p;
+            p = pL;
             // SV2 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
             // make message
-            LocoNetMessage m = new LocoNetMessage(16);
+            m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), val);
             m.setElement(3, 0x01); // 1 byte write
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
-            writeCV(Integer.parseInt(CV), val, p);
+            memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+    public void readCV(String CV, ProgListener pL) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        String[] parts;
+        LocoNetMessage m;
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
              * Known values:
-             * <UL>
-             * <LI>0x70 112 - PM4
-             * <LI>0x71 113 - BDL16
-             * <LI>0x72 114 - SE8
-             * <LI>0x73 115 - DS64
+             * <ul>
+             * <li>0x70 112 - PM4
+             * <li>0x71 113 - BDL16
+             * <li>0x72 114 - SE8
+             * <li>0x73 115 - DS64
              * </ul>
              */
             if (bdOpSwAccessTimer == null) {
                 initiializeBdOpsAccessTimer();
             }
-            this.p = p;
+            p = pL;
             doingWrite = false;
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
-            String[] parts = CV.split("\\.");
+            parts = CV.split("\\.");
             int typeWord = Integer.parseInt(parts[0]);
             int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
 
             // make message
-            LocoNetMessage m = new LocoNetMessage(6);
+            m = new LocoNetMessage(6);
             m.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x62;
             if ((mAddress & 0x80) != 0) {
@@ -184,64 +195,64 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             bdOpSwAccessTimer.start();
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
-            this.p = p;
+            p = pL;
             doingWrite = false;
             // SV1 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
-
             // make message
             int locoIOAddress = mAddress&0xFF;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
             // force version 1 tag
             m.setElement(4, 0x01);
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
-            this.p = p;
+            p = pL;
             // SV2 mode
-            log.debug("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
             // make message
-            LocoNetMessage m = new LocoNetMessage(16);
+            m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), 0);
             m.setElement(3, 0x02); // 1 byte read
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
-            readCV(Integer.parseInt(CV), p);
+            memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
-    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(""+CV, val, p);
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        this.p = null;
+    public void confirmCV(String CV, int val, ProgListener pL) throws ProgrammerException {
+        p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
-            readCV(CV, p);
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+            readCV(CV, pL);
         }
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
-            log.error("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
-            p.programmingOpReply(0, ProgListener.UnknownError);
+            log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
+            notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
-            mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
+            memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(LocoNetMessage m) {
-
-        log.debug("reply {}",m);
+        log.debug("LocoNet message received: {}", m);
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
 
             // are we reading? If not, ignore
@@ -267,7 +278,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
 
                 return;
             }
@@ -285,7 +296,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             ProgListener temp = p;
             p = null;
-            temp.programmingOpReply(val, code);
+            notifyProgListenerEnd(temp, val, code);
 
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
@@ -324,7 +335,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 }
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
@@ -351,14 +362,14 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
             }
         }
     }
 
     int decodeCvNum(String CV) {
         try {
-            return Integer.valueOf(CV).intValue();
+            return Integer.parseInt(CV);
         } catch (java.lang.NumberFormatException e) {
             return 0;
         }
@@ -410,6 +421,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     // handle mode
     protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public final void setMode(ProgrammingMode m) {
         if (getSupportedModes().contains(m)) {
@@ -420,31 +434,39 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public final ProgrammingMode getMode() {
         return mode;
     }
 
-    /**
-     * Types implemented here.
+    /** 
+     * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(LnProgrammerManager.LOCONETOPSBOARD);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         ret.add(LnProgrammerManager.LOCONETBDOPSWMODE);
+        ret.add(LnProgrammerManager.LOCONETCSOPSWMODE);
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Confirmation mode by programming mode; not that this doesn't
      * yet know whether BDL168 hardware is present to allow DecoderReply
-     * to function; that should be a preference eventually.  See also DCS240...
+     * to function; that should be a preference eventually. See also DCS240...
      *
      * @param addr CV address ignored, as there's no variance with this in LocoNet
-     * @return Depends on programming mode
+     * @return depends on programming mode
      */
     @Nonnull
     @Override
@@ -460,16 +482,17 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      */
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    /**
-     * Add a PropertyChangeListener to the listener list.
-     *
-     * @param listener The PropertyChangeListener to be added
+    /** 
+     * {@inheritDoc}
      */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
@@ -479,47 +502,71 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? Yes, if transponding
-     * hardware is present, but we don't check that here.
+     * hardware is present and regular ops mode, or if in any other mode.
      *
      * @return always true
      */
     @Override
     public boolean getCanRead() {
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return memo.getSlotManager().getTranspondingAvailable(); // only way can be false
         return true;
-    }
+     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead(String addr) {
         return getCanRead();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite() {
         return true;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite(String addr) {
         return getCanWrite() && Integer.parseInt(addr) <= 1024;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String decodeErrorCode(int i) {
-        return mSlotMgr.decodeErrorCode(i);
+        return memo.getSlotManager().decodeErrorCode(i);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
@@ -527,10 +574,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     void initiializeBdOpsAccessTimer() {
         if (bdOpSwAccessTimer == null) {
-            bdOpSwAccessTimer = new javax.swing.Timer(1000, (java.awt.event.ActionEvent e) -> {
+            bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(0, ProgListener.FailedTimeout);
+                notifyProgListenerEnd(temp, 0, ProgListener.FailedTimeout);
             });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);
@@ -538,6 +585,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnOpsModeProgrammer.class);
 
 }

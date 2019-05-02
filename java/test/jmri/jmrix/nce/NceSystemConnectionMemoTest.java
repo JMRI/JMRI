@@ -1,11 +1,7 @@
 package jmri.jmrix.nce;
 
 import jmri.GlobalProgrammerManager;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * JUnit tests for the NceSystemConnectionMemo class
@@ -52,10 +48,18 @@ public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         jmri.util.JUnitUtil.setUp();
         
         scm = memo = new NceSystemConnectionMemo();
-        memo.setNceTrafficController(new NceTrafficController());
+        memo.setNceTrafficController(new NceTrafficController(){
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+        });
+        memo.configureManagers();
     }
 
-    @Override
+    @After
     public void tearDown() {        
         jmri.util.JUnitUtil.tearDown();
     }

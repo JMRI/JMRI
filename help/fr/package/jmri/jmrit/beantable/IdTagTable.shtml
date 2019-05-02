@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated Herv&#233; Blorec le 2013-10-11-->
+<!-- Updated Herv&#233; Blorec le 2013-10-11-->
 
 <html lang="fr">
 <head>
@@ -11,7 +10,7 @@
   <title>JMRI: Id Tag Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Matthew Harris" name="Author">
+  <meta name="author" content="Matthew Harris">
   <meta name="keywords" content="JMRI help Id Tag Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -45,8 +44,8 @@
       <p>Pour plus d'informations sur les &eacute;tiquettes
       d'identification, consultez les <a id="" tag="" href=
       "../../../../html/tools/IdTags.shtml" name="">page d'aide</a>
-      .<br>
-      <!--#include virtual="/Footer" --></p>
+      .</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

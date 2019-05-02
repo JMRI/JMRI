@@ -25,12 +25,6 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         allowUnexpectedReply = true;
     }
 
-    // set the instance variable
-    @Override
-    protected void setInstance() {
-    } // do nothing; do we still need the
-    // instance variable?
-
     /**
      * Implement this to forward a specific message type to a protocol-specific
      * listener interface. This puts the casting into the concrete class.
@@ -160,13 +154,13 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
                         if(!threadStopRequest) {
-                           log.error("retry wait interupted");
+                           log.error("retry wait interrupted");
                         } else {
-                           log.error("retry wait interupted durring thread stop");
+                           log.error("retry wait interrupted during thread stop");
                         }
                     }
                 } else {
-                    log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
+                    log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                 }
             }
         } catch (Exception e) {
@@ -410,8 +404,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                             xmtRunnable.notify();
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }
@@ -460,6 +453,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      *<p>
      * This is intended to be used only by testing subclasses.
      */
+    @Override
     public void terminateThreads() {
         threadStopRequest = true;
         // ensure socket closed to end pending operations

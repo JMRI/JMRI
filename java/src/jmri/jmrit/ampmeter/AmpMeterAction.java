@@ -21,12 +21,17 @@ public class AmpMeterAction extends AbstractAction {
 
     public AmpMeterAction(String s) {
         super(s);
+        // disable ourself if no MultiMeter avaialable
+        if (jmri.InstanceManager.getNullableDefault(jmri.MultiMeter.class) == null) {
+            setEnabled(false);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         AmpMeterFrame f = new AmpMeterFrame();
+        f.initComponents();
         f.setVisible(true);
 
     }

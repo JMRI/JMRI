@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-turnout-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"turnout\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the turnout"
+        },
+        "userName": {
+            "type": ["string", "null"],
+            "description": "User name of the turnout"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the turnout"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the turnout",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "inverted": {
+            "type": "boolean",
+            "description": "true if turnout is inverted; false otherwise"
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the turnout",
+            "enum": [0, 2, 4, 8]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "inverted", "state"]
+}

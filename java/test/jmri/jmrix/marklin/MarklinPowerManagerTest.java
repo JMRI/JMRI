@@ -15,7 +15,7 @@ public class MarklinPowerManagerTest {
     @Test
     public void testCTor() {
         MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        new MarklinSystemConnectionMemo(tc);
         MarklinPowerManager t = new MarklinPowerManager(tc);
         Assert.assertNotNull("exists",t);
     }

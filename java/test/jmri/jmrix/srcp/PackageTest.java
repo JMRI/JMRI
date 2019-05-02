@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
         SRCPPortControllerTest.class,
         SRCPTrafficControllerTest.class,
         SRCPConnectionTypeListTest.class,
+        BundleTest.class,
 })
 
 /**
@@ -34,5 +35,5 @@ import org.junit.runners.Suite;
  *
  * @author	Paul Bender
  */
-public class PackageTest  {
+public class PackageTest {
 }

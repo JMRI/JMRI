@@ -1,7 +1,11 @@
 package jmri.managers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import jmri.JmriException;
 import jmri.Manager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
@@ -43,7 +47,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
 
     @Override
     public SignalMast getSignalMast(String name) {
-        if (name == null || name.length() == 0) {
+        if (Objects.isNull(name) || name.length() == 0) {
             return null;
         }
         SignalMast t = getByUserName(name);
@@ -81,6 +85,30 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return m;
     }
 
+    @Nonnull
+    @Override
+    public SignalMast provideCustomSignalMast(@Nonnull String systemName, Class<? extends
+            SignalMast> mastClass) throws JmriException {
+        SignalMast m = getBySystemName(systemName);
+        if (m != null) {
+            if (!mastClass.isInstance(m)) {
+                throw new JmriException("Could not create signal mast " + systemName + ", because" +
+                        " the system name is already used by a different kind of mast. Expected "
+                        + mastClass.getSimpleName() + ", actual " + m.getClass().getSimpleName()
+                        + ".");
+            }
+            return m;
+        }
+        try {
+            m = mastClass.getConstructor(String.class).newInstance(systemName);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                InvocationTargetException e) {
+            throw new JmriException(e);
+        }
+        register(m);
+        return m;
+    }
+
     @Override
     public SignalMast getBySystemName(String key) {
         return _tsys.get(key);
@@ -96,7 +124,34 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return Bundle.getMessage("BeanNameSignalMast");
     }
 
-    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<SignalMastRepeater>();
+    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();
+
+    /**
+     * Creates or retrieves a signal mast repeater.
+     * @param master the mast for the master of the repeater.
+     * @param slave the mast for the slave of the repeater.
+     * @return newly created (and registered) or existing signal mast repeater.
+     * @throws JmriException if the repeater already exists but the other direction.
+     */
+    public @Nonnull SignalMastRepeater provideRepeater(@Nonnull SignalMast master, @Nonnull SignalMast
+            slave) throws JmriException {
+        SignalMastRepeater rp = null;
+        for (SignalMastRepeater currentRepeater : repeaterList) {
+            if (currentRepeater.getMasterMast() == master && currentRepeater.getSlaveMast() == slave) {
+                rp = currentRepeater;
+            } else if (currentRepeater.getMasterMast() == slave
+                    && currentRepeater.getSlaveMast() == master) {
+                log.error("Signal repeater {}:{} already exists the wrong way", master, slave);
+                throw new jmri.JmriException("Signal mast repeater already exists the wrong way");
+            }
+        }
+        if (rp == null) {
+            rp = new SignalMastRepeater(master, slave);
+            repeaterList.add(rp);
+        }
+        firePropertyChange("repeaterlength", null, null);
+        return rp;
+    }
 
     public void addRepeater(SignalMastRepeater rp) throws jmri.JmriException {
         for (SignalMastRepeater rpeat : repeaterList) {
@@ -128,6 +183,11 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         for (SignalMastRepeater smr : repeaterList) {
             smr.initialise();
         }
+    }
+
+    @Override
+    public SignalMast provide(String name) throws IllegalArgumentException {
+        return provideSignalMast(name);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class);

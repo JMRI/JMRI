@@ -2,8 +2,6 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Reporter;
@@ -119,11 +117,18 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
      * Drive the current state of the display from the state of the Reporter.
      */
     void displayState() {
-        if (reporter.getCurrentReport() != null) {
-            if (reporter.getCurrentReport().equals("")) {
+        Object currentReport = reporter.getCurrentReport();
+        if ( currentReport != null) {
+            String reportString = null;
+            if(currentReport instanceof jmri.Reportable) {
+              reportString = ((jmri.Reportable)currentReport).toReportString();
+            } else {
+              reportString = currentReport.toString();
+            }
+            if (currentReport.equals("")) {
                 setText(Bundle.getMessage("Blank"));
             } else {
-                setText(reporter.getCurrentReport().toString());
+                setText(reportString);
             }
         } else {
             setText(Bundle.getMessage("NoReport"));

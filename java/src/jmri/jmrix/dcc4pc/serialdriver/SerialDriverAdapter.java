@@ -78,8 +78,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return
@@ -88,9 +87,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     public void setHandshake(int mode) {
         try {
             activeSerialPort.setFlowControlMode(mode);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while setting COM port handshake mode trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (UnsupportedCommOperationException ex) {
+            log.error("Unexpected exception while setting COM port handshake mode", ex);
         }
     }
 

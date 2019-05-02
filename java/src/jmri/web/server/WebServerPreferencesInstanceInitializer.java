@@ -46,7 +46,7 @@ public class WebServerPreferencesInstanceInitializer extends AbstractInstanceIni
 
     @Override
     public Set<Class<?>> getInitalizes() {
-        Set set = super.getInitalizes();
+        Set<Class<?>> set = super.getInitalizes();
         set.add(WebServerPreferences.class);
         return set;
     }

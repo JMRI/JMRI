@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html lang="">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
-  <!--  $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-5-->
 
@@ -159,9 +158,7 @@
       ne changent pas pour les crans au-dessus, si un cran
       inf&eacute;rieur est modifi&eacute;.</p>
 
-      <p>Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/symbolicprog/tabedframe/PaneProgFrame.shtml
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
