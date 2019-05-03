@@ -10,7 +10,7 @@ import org.junit.Test;
  * Tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
@@ -18,6 +18,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
 
@@ -30,8 +31,10 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     @Test
+    @SuppressWarnings("all") // suppressing "Comparing identical expressions" for this test only as we want to do runtime test
     public void testLockCoding() {
         Assert.assertTrue(Turnout.CABLOCKOUT != Turnout.PUSHBUTTONLOCKOUT);
+        
         // test for proper bit coding, needed because CABLOCKOUT | PUSHBUTTONLOCKOUT is used for "both"
         Assert.assertTrue( (Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT) == 0);
     }

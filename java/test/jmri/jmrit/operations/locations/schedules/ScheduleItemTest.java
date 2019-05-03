@@ -1,12 +1,8 @@
-//ScheduleItemTest.java
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -23,6 +19,7 @@ public class ScheduleItemTest extends OperationsTestCase {
 
     // test ScheduleItem class
     // test ScheduleItem public constants
+    @Test
     public void testScheduleItemConstants() {
         Assert.assertEquals("Location ScheduleItem Constant COUNT_CHANGED_PROPERTY", "scheduleItemCount",
                 ScheduleItem.COUNT_CHANGED_PROPERTY);
@@ -36,6 +33,7 @@ public class ScheduleItemTest extends OperationsTestCase {
     }
 
     // test ScheduleItem attributes
+    @Test
     public void testScheduleItemAttributes() {
         ScheduleItem ltsi = new ScheduleItem("Test id", "Test Type");
         Assert.assertEquals("Location ScheduleItem id", "Test id", ltsi.getId());
@@ -61,35 +59,5 @@ public class ScheduleItemTest extends OperationsTestCase {
 
         ltsi.setCount(222);
         Assert.assertEquals("Location ScheduleItem set Count", 222, ltsi.getCount());
-    }
-
-    // Ensure minimal setup for log4J
- 
-    @Override
-    @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public ScheduleItemTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ScheduleItemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ScheduleItemTest.class);
-        return suite;
-    }
-
-    @Override
-    @After
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 }

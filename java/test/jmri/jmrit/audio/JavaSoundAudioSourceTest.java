@@ -31,6 +31,7 @@ public class JavaSoundAudioSourceTest {
         jmri.AudioManager am = new DefaultAudioManager();
         jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
         am.init();
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
     }
 
     @After

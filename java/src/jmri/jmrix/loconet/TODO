@@ -1,7 +1,6 @@
-
+To Do for jmri.jmrix.loconet
 
 Is the SlotManager an instance of something more general?
-
 
 SlotManager's handling of the programmer is problematic:
 
@@ -18,5 +17,3 @@ SlotManager's handling of the programmer is problematic:
     returning indications of problems.  What and when, etc.
     
  d) And clean up the mess!  Too many constants, etc.
- 
- 

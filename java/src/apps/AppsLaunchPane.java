@@ -65,14 +65,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
 
     /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
-    }
-
-    /**
      * Prepare the JPanel to contain buttons in the startup GUI. Since it's
      * possible to add buttons via the preferences, this space may have
      * additional buttons appended to it later. The default implementation here
@@ -176,7 +168,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(null, conn.getInfo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);

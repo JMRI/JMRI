@@ -2,30 +2,25 @@ package jmri.jmrix.maple;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SerialReplyTest {
-
-    @Test
-    public void testCTor() {
-        SerialReply t = new SerialReply();
-        Assert.assertNotNull("exists",t);
-    }
+public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = new SerialReply();
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

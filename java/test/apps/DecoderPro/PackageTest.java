@@ -11,10 +11,10 @@ import org.junit.runners.Suite;
    DecoderProPaneTest.class
 })
 /**
- * Invoke complete set of tests for the apps.DecoderPro package
+ * Invoke complete set of tests for the apps.DecoderPro package.
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
- * @author      Paul Bender, Copyright (C) 2016
+ * @author  Paul Bender, Copyright (C) 2016
  */
 public class PackageTest {
 

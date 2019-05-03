@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     JsonSignalMastHttpServiceTest.class,
     JsonSignalMastSocketServiceTest.class,
-    JsonSignalMastServiceFactoryTest.class
+    JsonSignalMastTest.class
 })
 public class PackageTest {
 }

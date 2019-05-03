@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         NceTurnoutTest.class,
+        NceTurnoutManagerTest.class,
         NceSensorManagerTest.class,
         jmri.jmrix.nce.NceAIUTest.class,
         jmri.jmrix.nce.NceProgrammerTest.class,

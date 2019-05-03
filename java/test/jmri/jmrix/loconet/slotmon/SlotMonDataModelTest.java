@@ -22,6 +22,7 @@ public class SlotMonDataModelTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         SlotMonDataModel t = new SlotMonDataModel(1,19,memo);
         Assert.assertNotNull("exists",t);
+        memo.dispose();
     }
 
     // The minimal setup for log4J

@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ResourceBundle;
 import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
@@ -58,6 +59,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
      */
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
     public void configureManagers() {
         while(!configured){
            // wait for the managers to be configured.
@@ -97,11 +99,9 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 
     /*
      * Provides access to the Throttle Manager for this particular connection.
+     * NOTE: Throttle Manager defaults to null
      */
     public ThrottleManager getThrottleManager() {
-        if (throttleManager == null) {
-            throttleManager = new SRCPThrottleManager(this);
-        }
         return throttleManager;
 
     }
@@ -252,6 +252,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Notify passing reply event, not state")
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         log.debug("SimpleNode Reply called with " + n.toString());
         reply(new SRCPReply(n));
@@ -294,7 +295,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                 }
                 configured = true;
                 synchronized(this) {
-                   this.notifyAll(); // wake up any thread that called configureManagers().
+                    this.notifyAll(); // wake up any thread that called configureManagers().
                 }
             }
         }

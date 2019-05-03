@@ -3,36 +3,31 @@ package jmri.jmrix.jmriclient.swing.packetgen;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of PacketGenFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class PacketGenFrameTest {
+public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
-
-    private JMRIClientTrafficController tc = null;
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        PacketGenFrame action = new PacketGenFrame();
-        Assert.assertNotNull("exists", action);
-    }
+    // private JMRIClientTrafficController tc = null;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new JMRIClientTrafficController();
+        // tc = new JMRIClientTrafficController();
+        if(!GraphicsEnvironment.isHeadless()) {
+           frame = new PacketGenFrame();
+        }
     } 
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    @Override
+    public void tearDown() {
+        // tc = null;
+        super.tearDown();
     }
 }

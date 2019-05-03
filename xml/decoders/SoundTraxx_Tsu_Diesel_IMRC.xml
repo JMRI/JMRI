@@ -17,18 +17,21 @@
   <version author="Michael Mosher" version="2" lastUpdated="20111212"/>
   <version author="Michael Mosher" version="3" lastUpdated="20111223"/>
   <version author="Michael Mosher" version="4" lastUpdated="20130220"/>
-  <version author="Alain Le Marchand" version="5" lastUpdated="20140530"/>    
+  <version author="Alain Le Marchand" version="5" lastUpdated="20140530"/>
+  <version author="Alain Le Marchand" version="6" lastUpdated="20180103"/>
   <!-- This file contains the Tsunami definitions for Intermountain OEM diesel locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
   <!-- version 2	Add SD40-2W and use xi:includes to cleanup redundancy						-->
   <!-- version 3	Fix function mapping bug													-->
   <!-- version 4	make more use of extrenal includes -->
   <!-- version 5	Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)     -->
+  <!-- version 6  Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                                -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
-                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
-<!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->	  
+<!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Intermountain OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Intermountain Tsunami diesel decoders">
@@ -595,7 +598,7 @@
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
+        </qualifier>
           <!-- begin normal function group 2 -->
             <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -710,7 +713,7 @@
                 <label>F8 controls output Brakes</label>
             </variable>
             <!-- end normal function group 2 -->
-            <!-- begin normal function group 3 -->    
+            <!-- begin normal function group 3 -->
             <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Dynamics</label>
@@ -945,7 +948,7 @@
                 <label>F12 controls output Brakes</label>
             </variable>
           <!-- end exchanged function group 2 -->
-          <!-- begin exchanged function group 3 -->   
+          <!-- begin exchanged function group 3 -->
             <variable item="F5 controls output 7(alt)" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Dynamics</label>
@@ -1060,7 +1063,7 @@
             </variable>
           <!-- end exchanged function group 3 -->
       </variables>
-      <!-- end exchangeable function groups -->  
+      <!-- end exchangeable function groups -->
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 11" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
         <decVal/>
         <label>Analog Horn Control (0-255)</label>
@@ -1334,15 +1337,12 @@
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

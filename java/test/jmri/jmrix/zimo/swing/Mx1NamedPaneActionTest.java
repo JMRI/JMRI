@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -36,6 +34,8 @@ public class Mx1NamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         Mx1TrafficController tc = new Mx1TrafficController(){
            @Override
            public boolean status(){

@@ -84,10 +84,7 @@ TOKEN :
 
 // Constants and commands used for handshake mode only.
 | < SRCP: <S><R><C><P>>
-| < GO: <G><O>>
 | < VERSION: (["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
-| <PROTOCOLLITTERAL: <P><R><O><T><O><C><O><L>>
-| <CONNECTIONMODELITTERAL: <C><O><N><N><E><C><T><I><O><N><M><O><D><E>>
 
 // Client return codes
 | < INFO: <I><N><F><O>>
@@ -135,7 +132,7 @@ SimpleNode handshakeresponse():{SimpleNode t; SimpleNode s;}
 {
   // this should match any valid response to the client in handshake
   // mode.
-  t=timestamp() ( s=serviceversion() | s=connectionmode() | s=inforesponse() )
+  t=timestamp() ( s=serviceversion() | s=inforesponse() )
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     log.debug("Handshake Response Production: "+jjtThis.jjtGetValue());
@@ -159,16 +156,6 @@ SimpleNode serviceversion():{Token t; Token s;}
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode connectionmode():{Token t;}
-{
-  (( t=<COMMAND> | t=<INFO> ) <EOL> )
-  {
-    log.debug("Connection Mode Production");
-    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -228,17 +215,6 @@ SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
     return jjtThis;
   }
 }
-
-SimpleNode cvno():{SimpleNode s;}
-{
-  ( s=nonzeroaddress())
-  {
-    log.debug("CV Number Production "+ s.jjtGetValue());
-    jjtThis.jjtSetValue(s.jjtGetValue());
-    return jjtThis;
-  }
-}
-
 
 SimpleNode bus():{SimpleNode s;}
 {
@@ -313,17 +289,6 @@ SimpleNode devicegroup():{Token t;}
     log.debug("DeviceGroup Production");
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
-  }
-}
-
-
-SimpleNode go():{Token t;}
-{
-  t=<GO>
-  {
-     log.debug("GO Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
   }
 }
 
@@ -422,56 +387,5 @@ void zeroone() #void:{SimpleNode s;}
      log.debug("ZeroOne Production ");
      //return jjtThis;
   }
-}
-
-SimpleNode delay():{Token t;}
-{
-  // time timeout is a non-zero integer.  It may be negative.
-  t=<DELAY>
-  {
-     log.debug("Delay Production " +t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode timeout():{Token t;}
-{
-  // the timeout is a non-negative integer.
-  address()
-  {
-     log.debug("Timeout Production ");
-     return jjtThis;
-  }
-}
-
-// service mode programming modes
-
-SimpleNode progmode():{SimpleNode s;}
-{
-  // programming mode has 3 possibilities
-  ( s=cvbit() | s=cv() | s=reg() )
-  {
-     log.debug("Programming Mode Production ");
-     return jjtThis;
-  }
-}
-
-
-SimpleNode cv():{}
-{
-  <CV>
-  {return jjtThis;}
-}
-
-SimpleNode cvbit():{}
-{
-  <CVBIT>
-  {return jjtThis;}
-}
-
-SimpleNode reg():{}
-{
-  <REG>
-  {return jjtThis;}
 }
 

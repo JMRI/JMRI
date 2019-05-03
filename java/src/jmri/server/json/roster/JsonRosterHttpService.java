@@ -30,10 +30,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +46,7 @@ import jmri.server.json.JsonHttpService;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonRosterHttpService extends JsonHttpService {
 
@@ -53,11 +55,11 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
                 ObjectNode node = this.mapper.createObjectNode();
-                if (name != null) {
+                if (!name.isEmpty()) {
                     node.put(GROUP, name);
                 }
                 return this.getRoster(locale, node);
@@ -78,7 +80,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER:
                 break;
             case JsonRoster.ROSTER_ENTRY:
-                break;
+                return this.postRosterEntry(locale, name, data);
             case JsonRoster.ROSTER_GROUP:
                 break;
             case JsonRoster.ROSTER_GROUPS:
@@ -90,7 +92,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
             case JsonRoster.ROSTER_ENTRY:
@@ -124,7 +126,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     /**
      * Returns the JSON representation of a roster entry.
-     *
+     * <p>
      * Note that this returns, for images and icons, a URL relative to the root
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
@@ -145,7 +147,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     /**
      * Returns the JSON representation of a roster entry.
-     *
+     * <p>
      * Note that this returns, for images and icons, a URL relative to the root
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
@@ -176,7 +178,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         data.put(DECODER_FAMILY, entry.getDecoderFamily());
         data.put(MODEL, entry.getModel());
         data.put(COMMENT, entry.getComment());
-        data.put(MAX_SPD_PCT, Integer.toString(entry.getMaxSpeedPCT()));
+        data.put(MAX_SPD_PCT, entry.getMaxSpeedPCT());
         data.put(IMAGE, (entry.getImagePath() != null)
                 ? entryPath + IMAGE
                 : null);
@@ -186,7 +188,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         data.put(SHUNTING_FUNCTION, entry.getShuntingFunction());
         data.put(OWNER, entry.getOwner());
         data.put(JsonRoster.DATE_MODIFIED, (entry.getDateModified() != null)
-                ? new ISO8601DateFormat().format(entry.getDateModified())
+                ? new StdDateFormat().format(entry.getDateModified())
                 : null);
         ArrayNode labels = data.putArray(FUNCTION_KEYS);
         for (int i = 0; i <= entry.getMAXFNNUM(); i++) {
@@ -237,6 +239,116 @@ public class JsonRosterHttpService extends JsonHttpService {
         } else {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_GROUP, name));
         }
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case JsonRoster.ROSTER:
+            case JsonRoster.ROSTER_ENTRY:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/roster/" + type + "-server.json",
+                        "jmri/server/json/roster/" + type + "-client.json");
+            case JsonRoster.ROSTER_GROUP:
+            case JsonRoster.ROSTER_GROUPS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/roster/rosterGroup-server.json",
+                        "jmri/server/json/roster/rosterGroup-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
+    }
+
+    /**
+     * Edit an existing roster entry.
+     *
+     * @param locale the locale of the client
+     * @param id     the roster entry id
+     * @param data   the roster entry attributes to be edited
+     * @return the roster entry as edited
+     * @throws jmri.server.json.JsonException if an error needs to be reported
+     *                                        to the user
+     */
+    public JsonNode postRosterEntry(Locale locale, String id, JsonNode data) throws JsonException {
+        RosterEntry entry;
+        try {
+            entry = Roster.getDefault().getEntryForId(id);
+        } catch (NullPointerException ex) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_ENTRY, id));
+        }
+        if (data.path(JsonRoster.ATTRIBUTES).isArray()) {
+            List<String> toKeep = new ArrayList<>();
+            List<String> toRemove = new ArrayList<>();
+            data.path(JsonRoster.ATTRIBUTES).forEach((attribute) -> {
+                String name = attribute.path(NAME).asText();
+                String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
+                toKeep.add(name);
+                entry.putAttribute(name, value);
+            });
+            entry.getAttributes()
+                    .stream()
+                    .filter((name) -> (!toKeep.contains(name) && !name.startsWith(Roster.ROSTER_GROUP_PREFIX)))
+                    .forEachOrdered((name) -> {
+                        toRemove.add(name);
+                    });
+            toRemove.forEach((name) -> {
+                entry.deleteAttribute(name);
+            });
+        }
+        if (data.path(JsonRoster.ROSTER_GROUPS).isArray()) {
+            List<String> toKeep = new ArrayList<>();
+            List<String> toRemove = new ArrayList<>();
+            data.path(JsonRoster.ROSTER_GROUPS).forEach((attribute) -> {
+                String name = attribute.asText();
+                String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
+                toKeep.add(name);
+                entry.putAttribute(name, value);
+            });
+            entry.getGroups().stream().filter((name) -> (!toKeep.contains(Roster.ROSTER_GROUP_PREFIX + name))).forEachOrdered((name) -> {
+                toRemove.add(Roster.ROSTER_GROUP_PREFIX + name);
+            });
+            toRemove.forEach((name) -> {
+                entry.deleteAttribute(name);
+            });
+        }
+        if (data.path(FUNCTION_KEYS).isArray()) {
+            data.path(FUNCTION_KEYS).forEach((functionKey) -> {
+                int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length() - 1));
+                entry.setFunctionLabel(function, functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
+                entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());
+            });
+        }
+        if (data.path(ADDRESS).isTextual()) {
+            entry.setDccAddress(data.path(ADDRESS).asText());
+        }
+        if (data.path(ROAD).isTextual()) {
+            entry.setRoadName(data.path(ROAD).asText());
+        }
+        if (data.path(NUMBER).isTextual()) {
+            entry.setRoadNumber(data.path(NUMBER).asText());
+        }
+        if (data.path(MFG).isTextual()) {
+            entry.setMfg(data.path(MFG).asText());
+        }
+        if (data.path(MODEL).isTextual()) {
+            entry.setModel(data.path(MODEL).asText());
+        }
+        if (!data.path(COMMENT).isMissingNode()) {
+            entry.setComment(data.path(COMMENT).isTextual() ? data.path(COMMENT).asText() : null);
+        }
+        if (data.path(MAX_SPD_PCT).isInt()) {
+            entry.setMaxSpeedPCT(data.path(MAX_SPD_PCT).asInt());
+        }
+        if (!data.path(SHUNTING_FUNCTION).isMissingNode()) {
+            entry.setShuntingFunction(data.path(SHUNTING_FUNCTION).isTextual() ? data.path(SHUNTING_FUNCTION).asText() : null);
+        }
+        if (!data.path(OWNER).isMissingNode()) {
+            entry.setOwner(data.path(OWNER).isTextual() ? data.path(OWNER).asText() : null);
+        }
+        entry.updateFile();
+        return this.getRosterEntry(locale, entry);
     }
 
 }

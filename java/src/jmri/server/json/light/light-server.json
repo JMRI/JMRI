@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-light-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"light\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the light"
+        },
+        "userName": {
+            "type": ["string", "null"],
+            "description": "User name of the light"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the light"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the light",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the light",
+            "enum": [0, 2, 4, 8]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "state"]
+}

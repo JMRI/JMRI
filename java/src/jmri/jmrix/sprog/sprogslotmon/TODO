@@ -1,7 +1,0 @@
-
-
-When SlotMonFrame is closed, it doesn't disconnect from the SlotManager.  Is
-this an error?
-
-Does it leak memory?
-

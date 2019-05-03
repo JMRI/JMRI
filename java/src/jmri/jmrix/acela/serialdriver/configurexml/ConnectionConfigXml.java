@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * SerialDriverAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -326,27 +326,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             tc.initializeAcelaNode(node);
         }
         // Do not let the Acela network poll until we are really ready
-
         ((AcelaSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController().setReallyReadyToPoll(true);
-    }
-
-    /**
-     * Service routine to look through "parameter" child elements to find a
-     * particular parameter value
-     *
-     * @param e    Element containing parameters
-     * @param name name of desired parameter
-     * @return String value
-     */
-    String findParmValue(Element e, String name) {
-        List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i < l.size(); i++) {
-            Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name)) {
-                return n.getTextTrim();
-            }
-        }
-        return null;
     }
 
     @Override

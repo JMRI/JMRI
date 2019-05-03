@@ -34,6 +34,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
@@ -41,6 +42,7 @@ import jmri.Logix;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Route;
+import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
@@ -48,13 +50,12 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a Route Table
+ * Swing action to create and register a Route Table.
  *
  * Based in part on SignalHeadTableAction.java by Bob Jacobsen
  *
@@ -63,15 +64,12 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
- *
  */
-public class RouteTableAction extends AbstractTableAction {
-
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+public class RouteTableAction extends AbstractTableAction<Route> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -80,7 +78,7 @@ public class RouteTableAction extends AbstractTableAction {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
+        if (InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -91,12 +89,12 @@ public class RouteTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Routes
+     * of Routes.
      */
     @Override
     protected void createModel() {
 
-        // late initialization of string "constants" so that TurnoutManager 
+        // late initialization of string "constants" so that TurnoutManager
         // has time to be fully configured
         SET_TO_CLOSED = Bundle.getMessage("Set") + " "
                 + InstanceManager.turnoutManagerInstance().getClosedText();
@@ -115,7 +113,7 @@ public class RouteTableAction extends AbstractTableAction {
             Bundle.getMessage("OnConditionChange")
         };
 
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Route>() {
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int LOCKCOL = ENABLECOL + 1;
             static public final int SETCOL = ENABLECOL + 2;
@@ -186,7 +184,7 @@ public class RouteTableAction extends AbstractTableAction {
                 }
                 // Route lock is available if turnouts are lockable
                 if (col == LOCKCOL) {
-                    Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                    Route r = (Route) getValueAt(row, SYSNAMECOL);
                     return r.canLock();
                 } else {
                     return super.isCellEditable(row, col);
@@ -199,11 +197,11 @@ public class RouteTableAction extends AbstractTableAction {
                     case SETCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
-                        return ((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled();
+                        return ((Route)getValueAt(row, SYSNAMECOL)).getEnabled();
                     case LOCKCOL:
-                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Route r = (Route) getValueAt(row, SYSNAMECOL);
                         if (r.canLock()) {
-                            return ((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getLocked();
+                            return r.getLocked();
                         } else {
                             // this covers the case when route was locked and lockable turnouts were removed from the route
                             r.setLocked(false);
@@ -218,14 +216,14 @@ public class RouteTableAction extends AbstractTableAction {
             public void setValueAt(Object value, int row, int col) {
                 switch (col) {
                     case USERNAMECOL:
-                        //Directly changing the username should only be possible if the username was previously null or ""
+                        // Directly changing the username should only be possible if the username was previously null or ""
                         // check to see if user name already exists
                         if (((String) value).equals("")) {
                             value = null;
                         } else {
-                            NamedBean nB = getByUserName((String) value);
+                            Route nB = getByUserName((String) value);
                             if (nB != null) {
-                                log.error("User Name is not unique " + value);
+                                log.error("User Name is not unique {}", value);
                                 String msg;
                                 msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                                 JOptionPane.showMessageDialog(null, msg,
@@ -234,7 +232,7 @@ public class RouteTableAction extends AbstractTableAction {
                                 return;
                             }
                         }
-                        NamedBean nBean = getBySystemName(sysNameList.get(row));
+                        Route nBean = getBySystemName(sysNameList.get(row));
                         nBean.setUserName((String) value);
                         fireTableRowsUpdated(row, row);
                         break;
@@ -251,7 +249,7 @@ public class RouteTableAction extends AbstractTableAction {
                             @Override
                             public void run() {
                                 addPressed(null);
-                                _systemName.setText((String) getValueAt(row, SYSNAMECOL));
+                                _systemName.setText(((Route) getValueAt(row, SYSNAMECOL)).getSystemName());
                                 editPressed(null); // don't really want to stop Route w/o user action
                             }
                         }
@@ -260,14 +258,14 @@ public class RouteTableAction extends AbstractTableAction {
                         break;
                     case ENABLECOL: {
                         // alternate
-                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Route r = (Route) getValueAt(row, SYSNAMECOL);
                         boolean v = r.getEnabled();
                         r.setEnabled(!v);
                         break;
                     }
                     case LOCKCOL: {
                         // alternate
-                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Route r = (Route) getValueAt(row, SYSNAMECOL);
                         boolean v = r.getLocked();
                         r.setLocked(!v);
                         break;
@@ -292,8 +290,8 @@ public class RouteTableAction extends AbstractTableAction {
              * Deactivate the Route, then use the superclass to delete it.
              */
             @Override
-            void doDelete(NamedBean bean) {
-                ((Route) bean).deActivateRoute();
+            void doDelete(Route bean) {
+                bean.deActivateRoute();
                 super.doDelete(bean);
             }
 
@@ -311,18 +309,18 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
-                return jmri.InstanceManager.getDefault(jmri.RouteManager.class);
+            public RouteManager getManager() {
+                return InstanceManager.getDefault(RouteManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
-                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
+            public Route getBySystemName(String name) {
+                return InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
-                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
+            public Route getByUserName(String name) {
+                return InstanceManager.getDefault(RouteManager.class).getByUserName(name);
             }
 
             @Override
@@ -331,8 +329,8 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
-                ((Route) t).setRoute();
+            public void clickOn(Route t) {
+                t.setRoute();
             }
 
             @Override
@@ -350,7 +348,7 @@ public class RouteTableAction extends AbstractTableAction {
                 return Bundle.getMessage("BeanNameRoute");
             }
 
-            /*Routes do not get references by other parts of the code, we therefore 
+            /*Routes do not get references by other parts of the code, we therefore
              do not need to worry about controlling how the username is changed
              */
             @Override
@@ -374,7 +372,7 @@ public class RouteTableAction extends AbstractTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in sensorMode: " + mode);
+            log.warn("unexpected mode string in sensorMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -390,7 +388,7 @@ public class RouteTableAction extends AbstractTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -448,10 +446,10 @@ public class RouteTableAction extends AbstractTableAction {
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
-    static String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
-    static String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
-    static String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
-    static String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
+    static final String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
+    static final String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
+    static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
+    static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
@@ -465,33 +463,24 @@ public class RouteTableAction extends AbstractTableAction {
 
     @Override
     protected void addPressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        pref = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (editMode) {
             cancelEdit();
         }
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List<String> systemNameList = tm.getSystemNameList();
-        _turnoutList = new ArrayList<>(systemNameList.size());
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            String userName = tm.getBySystemName(systemName).getUserName();
+        _turnoutList = new ArrayList<>();
+        for (Turnout t : tm.getNamedBeanSet()) {
+            String systemName = t.getSystemName();
+            String userName = t.getUserName();
             _turnoutList.add(new RouteTurnout(systemName, userName));
         }
 
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
-        systemNameList = sm.getSystemNameList();
-        _sensorList = new ArrayList<>(systemNameList.size());
-        iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            Sensor s = sm.getBySystemName(systemName);
-            if (s != null) {
-                String userName = s.getUserName();
-                _sensorList.add(new RouteSensor(systemName, userName));
-            } else {
-                log.error("Failed to get sensor {}", systemName);
-            }
+         _sensorList = new ArrayList<>();
+        for (Sensor s : sm.getNamedBeanSet()) {
+            String systemName = s.getSystemName();
+            String userName = s.getUserName();
+            _sensorList.add(new RouteSensor(systemName, userName));
         }
         initializeIncludedList();
 
@@ -577,7 +566,8 @@ public class RouteTableAction extends AbstractTableAction {
             _routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = new JTable(_routeTurnoutModel);
             TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
-            rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
             rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
@@ -631,7 +621,8 @@ public class RouteTableAction extends AbstractTableAction {
             _routeSensorModel = new RouteSensorModel();
             JTable routeSensorTable = new JTable(_routeSensorModel);
             TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
-            rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
             rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
@@ -820,7 +811,7 @@ public class RouteTableAction extends AbstractTableAction {
             pb.add(createButton);
             createButton.addActionListener(this::createPressed);
             createButton.setToolTipText(Bundle.getMessage("TooltipCreateRoute"));
-            // Edit Route button 
+            // Edit Route button
             pb.add(editButton);
             editButton.addActionListener(this::editPressed);
             editButton.setToolTipText(Bundle.getMessage("TooltipEditRoute"));
@@ -898,7 +889,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Initialize list of included turnout positions
+     * Initialize list of included turnout positions.
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<>();
@@ -916,45 +907,50 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Add button.
+     * Respond to the Create button.
      *
      * @param e the action event
      */
     void createPressed(ActionEvent e) {
-
         if (!_autoSystemName.isSelected()) {
             if (!checkNewNamesOK()) {
                 return;
             }
         }
-        updatePressed(e, true);
+        updatePressed(e, true); // close pane after creating
         status2.setText(editInst);
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the route
     }
 
+    /**
+     * Check name for a new Route object using the _systemName field on
+     * the addFrame pane.
+     *
+     * @return whether name entered is allowed
+     */
     boolean checkNewNamesOK() {
-        // Get system name and user name
+        // Get system name and user name from Add Route pane
         String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length() == 0) {
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+            status1.setForeground(Color.red);
             return false;
         }
         Route g;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
             if (g != null) {
-                // Route with this user name already exists
+                // Route already exists
                 status1.setText(Bundle.getMessage("LightError8"));
                 return false;
-            } else {
-                return true;
             }
         }
         // check if a Route with this system name already exists
-        g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+        g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
             status1.setText(Bundle.getMessage("LightError1"));
@@ -963,28 +959,37 @@ public class RouteTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check name and return a new or existing Route object with the name
+     * as entered in the _systemName field on the addFrame pane.
+     *
+     * @return The new/updated Route object
+     */
     Route checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText();
         String uName = _userName.getText();
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
+            log.debug("RouteTableAction checkNamesOK new autogroup");
             // create new Route with auto system name
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+                status1.setForeground(Color.red);
                 return null;
             }
             try {
-                g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
+                sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+                g = InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
             }
         }
         if (g == null) {
             // should never get here
-            log.error("Unknown failure to create Route with System Name: " + sName); //NOI18N
+            log.error("Unknown failure to create Route with System Name: {}", sName); // NOI18N
         } else {
             g.deActivateRoute();
         }
@@ -992,7 +997,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sets the Turnout information for adding or editing.
+     * Set the Turnout information for adding or editing.
      *
      * @param g the route to add the turnout to
      * @return number of turnouts in route
@@ -1000,7 +1005,7 @@ public class RouteTableAction extends AbstractTableAction {
     int setTurnoutInformation(Route g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
             RouteTurnout t = _includedTurnoutList.get(i);
-            g.addOutputTurnout(t.getSysName(), t.getState());
+            g.addOutputTurnout(t.getDisplayName(), t.getState());
         }
         return _includedTurnoutList.size();
     }
@@ -1020,7 +1025,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sets the Sensor, Turnout, and delay control information for adding or
+     * Set the Sensor, Turnout, and delay control information for adding or
      * editing.
      *
      * @param g the route to configure
@@ -1029,22 +1034,22 @@ public class RouteTableAction extends AbstractTableAction {
         // Get sensor control information if any
         if (sensor1.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor1.getSelectedDisplayName(), sensorModeFromBox(sensor1mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor1.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to route '{}'.",
+                        sensor1.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
         if (sensor2.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor2.getSelectedDisplayName(), sensorModeFromBox(sensor2mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor2.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
+                        sensor2.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
         if (sensor3.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor3.getSelectedDisplayName(), sensorModeFromBox(sensor3mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor3.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
+                        sensor3.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
@@ -1082,7 +1087,7 @@ public class RouteTableAction extends AbstractTableAction {
     JFileChooser soundChooser = null;
 
     /**
-     * Set the sound file
+     * Set the sound file.
      */
     void setSoundPressed() {
         if (soundChooser == null) {
@@ -1096,7 +1101,7 @@ public class RouteTableAction extends AbstractTableAction {
             try {
                 soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
             } catch (java.io.IOException e) {
-                log.error("exception setting sound file: " + e);
+                log.error("exception setting sound file: ", e);
             }
         }
     }
@@ -1104,7 +1109,7 @@ public class RouteTableAction extends AbstractTableAction {
     JFileChooser scriptChooser = null;
 
     /**
-     * Set the script file
+     * Set the script file.
      */
     void setScriptPressed() {
         if (scriptChooser == null) {
@@ -1117,23 +1122,23 @@ public class RouteTableAction extends AbstractTableAction {
             try {
                 scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
             } catch (java.io.IOException e) {
-                log.error("exception setting script file: " + e);
+                log.error("exception setting script file: ", e);
             }
         }
     }
 
     /**
-     * Responds to the Edit button.
+     * Respond to the Edit button.
      *
      * @param e the action event
      */
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
-        Route g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        Route g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g == null) {
             sName = _userName.getText();
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("RouteAddStatusErrorNotFound"));
@@ -1226,7 +1231,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         // set up additional Delay
         timeDelay.setValue(g.getRouteCommandDelay());
-        // begin with showing all Turnouts   
+        // begin with showing all Turnouts
         // set up buttons and notes
         status1.setText(updateInst);
         status2.setText(cancelInst);
@@ -1242,10 +1247,10 @@ public class RouteTableAction extends AbstractTableAction {
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("TitleEditRoute"));
         editMode = true;
-    }   // editPressed
+    }
 
     /**
-     * Responds to the Delete button.
+     * Respond to the Delete button.
      *
      * @param e the action event
      */
@@ -1258,7 +1263,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Update button - update to Route Table.
+     * Respond to the Update button - update to Route Table.
      *
      * @param e        the action event
      * @param newRoute true if a new route; false otherwise
@@ -1289,6 +1294,7 @@ public class RouteTableAction extends AbstractTableAction {
         setControlInformation(g);
         curRoute = g;
         finishUpdate();
+        status1.setForeground(Color.gray);
         status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \""
                 + uName + "\" (" + _includedTurnoutList.size() + " "
                 + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
@@ -1297,7 +1303,7 @@ public class RouteTableAction extends AbstractTableAction {
     void finishUpdate() {
         // move to show all Turnouts if not there
         cancelIncludedOnly();
-        // Provide feedback to user 
+        // Provide feedback to user
         // switch GUI back to selection mode
         status2.setText(editInst);
         status2.setVisible(true);
@@ -1344,7 +1350,7 @@ public class RouteTableAction extends AbstractTableAction {
 
 /////////////////////// Export to Logix ////////////////////////////
     /**
-     * Responds to the Export button - export to Logix.
+     * Respond to the Export button - export to Logix.
      *
      * @param e the action event
      */
@@ -1360,7 +1366,7 @@ public class RouteTableAction extends AbstractTableAction {
         if (logix == null) {
             logix = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixSystemName, uName);
             if (logix == null) {
-                log.error("Failed to create Logix " + logixSystemName + ", " + uName);
+                log.error("Failed to create Logix {}, {}", logixSystemName, uName);
                 return;
             }
         }
@@ -1377,7 +1383,7 @@ public class RouteTableAction extends AbstractTableAction {
                 name = rSensor.getSysName();
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, name, rSensor.getState(), ""));
+                    Conditional.Action.SET_SENSOR, name, rSensor.getState(), ""));
         }
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
             RouteTurnout rTurnout = _includedTurnoutList.get(i);
@@ -1386,17 +1392,17 @@ public class RouteTableAction extends AbstractTableAction {
                 name = rTurnout.getSysName();
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_TURNOUT, name, rTurnout.getState(), ""));
+                    Conditional.Action.SET_TURNOUT, name, rTurnout.getState(), ""));
         }
         String file = soundFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
+                    Conditional.Action.PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
         }
         file = scriptFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
+                    Conditional.Action.RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
         }
 
         ///// Construct 'AND' clause from 'VETO' controls ////////
@@ -1476,7 +1482,7 @@ public class RouteTableAction extends AbstractTableAction {
         ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
         //String sensorSystemName = turnoutsAlignedSensor.getText();
         if (turnoutsAlignedSensor.getSelectedBean() != null) {
-            // verify name (logix doesn't use "provideXXX") 
+            // verify name (logix doesn't use "provideXXX")
             //Sensor s = turnoutsAlignedSensor.getSelectedBean();
             /*if (s == null) {
              s = InstanceManager.sensorManagerInstance().getBySystemName(sensorSystemName);
@@ -1496,12 +1502,12 @@ public class RouteTableAction extends AbstractTableAction {
                 // exclude toggled outputs
                 switch (rTurnout.getState()) {
                     case Turnout.CLOSED:
-                        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
-                                Conditional.TYPE_TURNOUT_CLOSED, name, true));
+                        variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
+                                Conditional.Type.TURNOUT_CLOSED, name, true));
                         break;
                     case Turnout.THROWN:
-                        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
-                                Conditional.TYPE_TURNOUT_THROWN, name, true));
+                        variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
+                                Conditional.Type.TURNOUT_THROWN, name, true));
                         break;
                     default:
                         log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, rTurnout.getState()); // NOI18N
@@ -1509,13 +1515,13 @@ public class RouteTableAction extends AbstractTableAction {
             }
             actionList = new ArrayList<>();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
+                    Conditional.Action.SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                    Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
+                    Conditional.Action.SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
 
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             c.setAction(actionList);
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
@@ -1525,22 +1531,22 @@ public class RouteTableAction extends AbstractTableAction {
         ///////////////// Set lock turnout information if there is any //////////////////////////
         if (cLockTurnout.getSelectedBean() != null) {
             String turnoutLockSystemName = cLockTurnout.getSelectedDisplayName();
-            // verify name (logix doesn't use "provideXXX") 
+            // verify name (logix doesn't use "provideXXX")
             cSystemName = logixSystemName + "1L"; // NOI18N
             cUserName = turnoutLockSystemName + "L " + uName; // NOI18N
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
-            int type = Conditional.TYPE_TURNOUT_CLOSED;
+            Conditional.Type conditionalType = Conditional.Type.TURNOUT_CLOSED;
             if (mode == Route.ONTHROWN) {
-                type = Conditional.TYPE_TURNOUT_THROWN;
+                conditionalType = Conditional.Type.TURNOUT_THROWN;
             }
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
-                    type, turnoutLockSystemName, true));
+            variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
+                    conditionalType, turnoutLockSystemName, true));
 
             actionList = new ArrayList<>();
             int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-            type = Turnout.LOCKED;
+            int type = Turnout.LOCKED;
             if (mode == Route.ONCHANGE) {
                 option = Conditional.ACTION_OPTION_ON_CHANGE;
                 type = Route.TOGGLE;
@@ -1551,7 +1557,7 @@ public class RouteTableAction extends AbstractTableAction {
                 if (name == null || name.length() == 0) {
                     name = rTurnout.getSysName();
                 }
-                actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
+                actionList.add(new DefaultConditionalAction(option, Conditional.Action.LOCK_TURNOUT,
                         name, type, ""));
             }
             if (mode != Route.ONCHANGE) {
@@ -1564,7 +1570,7 @@ public class RouteTableAction extends AbstractTableAction {
                     if (name == null || name.length() == 0) {
                         name = rTurnout.getSysName();
                     }
-                    actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
+                    actionList.add(new DefaultConditionalAction(option, Conditional.Action.LOCK_TURNOUT,
                             name, type, ""));
                 }
             }
@@ -1572,14 +1578,14 @@ public class RouteTableAction extends AbstractTableAction {
             // add new Conditionals for action on 'locks'
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             c.setAction(actionList);
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
         }
         logix.activateLogix();
         if (curRoute != null) {
-            jmri.InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
+            InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
             curRoute = null;
         }
         status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + _includedTurnoutList.size()
@@ -1633,13 +1639,13 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
-                // throw without creating any 
+                // throw without creating any
                 throw new IllegalArgumentException("user input no good");
             }
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             c.setAction(cloneActionList(actionList, option));
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
             numConds++;
@@ -1683,13 +1689,13 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
-                // throw without creating any 
+                // throw without creating any
                 throw new IllegalArgumentException("user input no good");
             }
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             c.setAction(cloneActionList(actionList, option));
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
             numConds++;
@@ -1729,35 +1735,35 @@ public class RouteTableAction extends AbstractTableAction {
         if (jmriBox.getSelectedBean() == null /*|| devName.length() == 0*/) {
             return null;
         }
-        int oper = Conditional.OPERATOR_AND;
+        Operator oper = Conditional.Operator.AND;
         int mode = sensorModeFromBox(sensorbox);
         boolean trigger = true;
         boolean negated = false;
-        int type;
+        Conditional.Type type;
         switch (mode) {
             case Route.ONACTIVE:    // route fires if sensor goes active
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_ACTIVE;
+                type = Conditional.Type.SENSOR_ACTIVE;
                 break;
             case Route.ONINACTIVE:  // route fires if sensor goes inactive
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_INACTIVE;
+                type = Conditional.Type.SENSOR_INACTIVE;
                 break;
-            case Route.ONCHANGE:  // route fires if sensor goes active or inactive 
+            case Route.ONCHANGE:  // route fires if sensor goes active or inactive
                 if (makeVeto || !onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_ACTIVE;
+                type = Conditional.Type.SENSOR_ACTIVE;
                 break;
             case Route.VETOACTIVE:  // sensor must be active for route to fire
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_ACTIVE;
+                type = Conditional.Type.SENSOR_ACTIVE;
                 negated = true;
                 trigger = false;
                 break;
@@ -1765,12 +1771,12 @@ public class RouteTableAction extends AbstractTableAction {
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_INACTIVE;
+                type = Conditional.Type.SENSOR_INACTIVE;
                 negated = true;
                 trigger = false;
                 break;
             default:
-                log.error("Control Sensor " + devName + " has bad mode= " + mode);
+                log.error("Control Sensor {} has bad mode= {}", devName, mode);
                 return null;
         }
         return new ConditionalVariable(negated, oper, type, devName, trigger);
@@ -1784,8 +1790,8 @@ public class RouteTableAction extends AbstractTableAction {
         }
         String devName = jmriBox.getSelectedDisplayName();
         int mode = turnoutModeFromBox(box);
-        int oper = Conditional.OPERATOR_AND;
-        int type;
+        Operator oper = Conditional.Operator.AND;
+        Conditional.Type type;
         boolean negated = false;
         boolean trigger = true;
         switch (mode) {
@@ -1793,25 +1799,25 @@ public class RouteTableAction extends AbstractTableAction {
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
                 break;
             case Route.ONTHROWN:  // route fires if turnout goes thrown
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_THROWN;
+                type = Conditional.Type.TURNOUT_THROWN;
                 break;
             case Route.ONCHANGE:    // route fires if turnout goes active or inactive
                 if (makeVeto || !onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
                 break;
             case Route.VETOCLOSED:  // turnout must be closed for route to fire
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
                 trigger = false;
                 negated = true;
                 break;
@@ -1819,12 +1825,12 @@ public class RouteTableAction extends AbstractTableAction {
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_THROWN;
+                type = Conditional.Type.TURNOUT_THROWN;
                 trigger = false;
                 negated = true;
                 break;
             default:
-                log.error("Control Turnout " + devName + " has bad mode= " + mode);
+                log.error("Control Turnout {} has bad mode= {}", devName, mode);
                 return null;
         }
         return new ConditionalVariable(negated, oper, type, devName, trigger);
@@ -1840,7 +1846,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Cancels Add mode.
+     * Cancel Add mode.
      */
     void cancelAdd() {
         curRoute = null;
@@ -1881,7 +1887,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Cancels included Turnouts only option
+     * Cancel included Turnouts only option
      */
     void cancelIncludedOnly() {
         if (!showAll) {
@@ -2093,9 +2099,9 @@ public class RouteTableAction extends AbstractTableAction {
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
 
-    // This group will get runtime updates to system-specific contents at 
+    // This group will get runtime updates to system-specific contents at
     // the start of buildModel() above.  This is done to prevent
-    // invoking the TurnoutManager at class construction time, 
+    // invoking the TurnoutManager at class construction time,
     // when it hasn't been configured yet
     private static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
@@ -2246,7 +2252,8 @@ public class RouteTableAction extends AbstractTableAction {
 
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .setPreferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }
 

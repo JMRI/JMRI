@@ -140,7 +140,7 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on CMRI serial bus (0-127) type - SMINI,
      * USIC_SUSIC,
      */
-    public SerialNode(int address, int type,SerialTrafficController tc) {
+    public SerialNode(int address, int type, SerialTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -1193,8 +1193,8 @@ public class SerialNode extends AbstractNode {
     /**
      * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS.
      *
-     * @param s - Sensor object
-     * @param i - 0 to MAXSENSORS number of sensor's input bit on this node
+     * @param s  Sensor object
+     * @param i  0 to MAXSENSORS number of sensor's input bit on this node
      */
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal

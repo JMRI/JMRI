@@ -1,20 +1,18 @@
 package jmri.jmrix.xpa;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
+import jmri.util.junit.annotations.NotApplicable;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
- * <P>
+ * <p>
  * @author	Paul Bender
  */
 public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private XpaTrafficControlScaffold tc = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
     }
@@ -31,6 +29,15 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
 
     @Override
     protected void hearOff() {
+    }
+
+    @Override
+    protected void sendIdleReply() {
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
+    }
+
+    @Override
+    protected void hearIdle() {
     }
 
     @Override
@@ -53,15 +60,20 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
         return ((tc.outbound.get(index))).toString().equals("ATDT0;");
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
+    }
+
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("no unsolicited changes")
     public void testStateOn() {
     }
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("no unsolicited changes")
     public void testStateOff() {
     }
 
@@ -69,14 +81,14 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new XpaTrafficControlScaffold();
         p = new XpaPowerManager(tc);
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         tc = null;
     }
 

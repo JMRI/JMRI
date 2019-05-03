@@ -49,7 +49,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private int fadeInTime = 1000;
     private int fadeOutTime = 1000;
     private float fadeGain = 1.0f;
-    private float dopplerFactor = 1.0f;
     private long timeOfLastFadeCheck = 0;
     private long timeOfLastPositionCheck = 0;
     private int fading = Audio.FADE_NONE;
@@ -170,7 +169,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         if (!queued) {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
             Audio a = am.getBySystemName(bufferSystemName);
-            if (a.getSubType() == Audio.BUFFER) {
+            if (a != null && a.getSubType() == Audio.BUFFER) {
                 setAssignedBuffer((AudioBuffer) a);
             } else {
                 log.warn("Attempt to assign incorrect object type to buffer - AudioBuffer expected.");
@@ -519,16 +518,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fadeOutTime;
     }
 
-    @Override
-    public void setDopplerFactor(float dopplerFactor) {
-        this.dopplerFactor = dopplerFactor;
-    }
-
-    @Override
-    public float getDopplerFactor() {
-        return this.dopplerFactor;
-    }
-
     /**
      * Used to return the current calculated fade gain for this AudioSource
      *
@@ -843,6 +832,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fading;
     }
 
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
     @Override
     public String toString() {
         return "Pos: " + this.getPosition().toString()
@@ -872,7 +865,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         /**
          * Internal variable to hold the fade direction
          */
-        private int fadeDirection;
+        private final int fadeDirection;
 
         /**
          * Constructor that takes handle to looping AudioSource to monitor

@@ -1,8 +1,11 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 
 /**
@@ -21,16 +24,22 @@ public class Z21XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
     public void setUp() {
         JUnitUtil.setUp();
         LenzCommandStation lcs = new LenzCommandStation();
-        tc = new Z21XNetPacketizer(lcs) {
+        tc= new Z21XNetPacketizer(lcs) {
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
+        try {
+            port = new XNetPortControllerScaffold();
+        } catch (Exception e) {
+            Assert.fail("Error creating test port");
+        }
     }
 
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
     }

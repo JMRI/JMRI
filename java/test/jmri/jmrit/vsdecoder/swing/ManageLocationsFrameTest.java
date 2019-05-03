@@ -2,57 +2,51 @@ package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
-import jmri.ReporterManager;
 import jmri.BlockManager;
-import jmri.jmrit.operations.locations.LocationManager;
+import jmri.InstanceManager;
+import jmri.ReporterManager;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ManageLocationsFrameTest {
+public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Before
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         ListeningSpot s = new ListeningSpot();
         ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
-        String[] reporterNameArray = rmgr.getSystemNameArray();
+        String[] reporterNameArray = rmgr.getSystemNameArray(); // deprecated, but we test until removed
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
+
         Object[][] reporterTable = new Object[reporterNameArray.length][6];
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
-        String[] blockNameArray = bmgr.getSystemNameArray();
+        String[] blockNameArray = bmgr.getSystemNameArray(); // deprecated, but we test until removed
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         Object[][] blockTable = new Object[blockNameArray.length][6];
 
-        LocationManager lmgr = LocationManager.instance();
+        LocationManager lmgr = InstanceManager.getDefault(LocationManager.class);
         List<Location> locations = lmgr.getLocationsByIdList();
         Object[][] opsTable = new Object[locations.size()][6];
 
 
-        ManageLocationsFrame t = new ManageLocationsFrame(s,reporterTable,blockTable,opsTable);
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new ManageLocationsFrame(s,reporterTable,blockTable,opsTable);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrameTest.class.getName());
 
 }

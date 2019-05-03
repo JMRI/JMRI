@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="8" lastUpdated="20180216"/>
   <version author="Phil Grainger (phil.grainger@ca.com)" version="7.1" lastUpdated="20031008"/>
   <!-- Updated to new names by jake@physics.berkeley.edu -->
   <!-- Added CV 23, 24, and function mapping - Bob J -->
@@ -21,6 +22,7 @@
   <!-- version 6 - fix Vstart and leight effects bugs -->
   <!-- version 7 - made speed table selection more generic -->
   <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 8 - Implement Reset properly (Alain Le Marchand) -->
   <!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
   <decoder>
     <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45">
@@ -94,11 +96,6 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
-      </variable>
-      <variable item="Manufacturer ID - Reset" CV="8" default="99">
-        <decVal/>
-        <label>Manufacturer ID - Reset</label>
-        <label xml:lang="de">Manufacturer ID - Reset</label>
       </variable>
       <!-- Deleted all CV 13 references-->
       <!-- CV=19 -->
@@ -281,15 +278,16 @@
         <label>User Private ID #2</label>
         <label xml:lang="de">User Id #2</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs except speed table" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
+      </factReset>
+    </resets>
   </decoder>
   <pane>
     <name>Lenz</name>

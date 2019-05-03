@@ -18,16 +18,19 @@ import javax.annotation.Nonnull;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SensorManager extends Manager<Sensor> {
+public interface SensorManager extends ProvidingManager<Sensor> {
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new sensor: If the name is a valid system name, it will be used for the
-     * new sensor. Otherwise, the makeSystemName method will attempt to turn it
+     * Get the Sensor with the user name, then system name if needed; if that fails, create a
+     * new Sensor. 
+     * If the name is a valid system name, it will be used for the new Sensor.
+     * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
+     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -40,9 +43,14 @@ public interface SensorManager extends Manager<Sensor> {
     @Nonnull
     public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
+    @Override
+    /** {@inheritDoc} */
+    default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
+
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -56,7 +64,8 @@ public interface SensorManager extends Manager<Sensor> {
     public void dispose();
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return a Sensor with the specified system and user names. 
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and
      * therefore only one with a specific system or user name.
@@ -87,18 +96,29 @@ public interface SensorManager extends Manager<Sensor> {
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
+    /**
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via user name.
+     *
+     * @param name User name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getByUserName(@Nonnull String s);
+    public Sensor getByUserName(@Nonnull String name);
 
+    /**
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via system name
+     *
+     * @param name System name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getBySystemName(@Nonnull String s);
-
-    @CheckReturnValue
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
+    public Sensor getBySystemName(@Nonnull String name);
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -124,13 +144,13 @@ public interface SensorManager extends Manager<Sensor> {
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 address away
-     * from the initial address.
+     * return the next free valid address up to a maximum of 10 addresses away
+     * from the initial address. Used when adding a range of Sensors.
      *
-     * @param curAddress - The hardware address of the sensor we wish to add
-     * @param prefix     - The System Prefix used to make up the systemName
+     * @param curAddress The hardware address of the sensor we wish to add
+     * @param prefix     The System Prefix used to make up the systemName
      *                   check.
-     * @return - null if the system name made from prefix and curAddress is in
+     * @return null if the system name made from prefix and curAddress is in
      *         use
      * @throws jmri.JmriException if problem calculating next address
      */
@@ -138,6 +158,17 @@ public interface SensorManager extends Manager<Sensor> {
     @CheckForNull
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
+    /**
+     * Get a system name for a given hardware address and system prefix.
+     *
+     * @param curAddress desired hardware address
+     * @param prefix     system prefix used in system name
+     * @return the complete sensor system name for the prefix and current
+     *         address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
+     */
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
@@ -162,6 +193,7 @@ public interface SensorManager extends Manager<Sensor> {
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
+    @Override
     public String getEntryToolTip();
 
 }

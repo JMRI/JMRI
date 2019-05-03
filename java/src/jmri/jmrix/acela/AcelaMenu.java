@@ -1,6 +1,5 @@
 package jmri.jmrix.acela;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**

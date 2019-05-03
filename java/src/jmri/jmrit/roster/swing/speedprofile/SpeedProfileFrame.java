@@ -52,4 +52,5 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
             spPanel.table.dispose();
         }
     }
+
 }

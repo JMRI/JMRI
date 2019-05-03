@@ -6,7 +6,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
@@ -17,20 +16,8 @@ import org.slf4j.LoggerFactory;
 
 public class RPSItemPanel extends FamilyItemPanel {
 
-    /**
-     * Constructor for plain icons and backgrounds.
-     */
     public RPSItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
-    }
-
-    @Override
-    public void init() {
-        if (!_initialized) {
-            JPanel panel = new JPanel();
-            add(panel);
-            super.init();
-        }
     }
 
     @Override

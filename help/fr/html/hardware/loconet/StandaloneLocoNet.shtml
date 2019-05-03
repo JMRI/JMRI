@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - Standalone LocoNet&reg;</title>
-    <meta content="B. Milhaupt" name="Author">
+    <meta name="author" content="B. Milhaupt">
     <meta name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168  
           DS64 PR3 DCS100 DB150 JMRI LocoBuffer-USB LocoBuffer-II LocoBuffer 
           FastClock ">
@@ -567,7 +567,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 				"Nom de connexion" affect&#233; &#224; la connexion.</p>
 			<p>Lorsque vous utilisez un outil d'un menu d&#233;roulant LocoNet donn&#233;, L'outil 
 				dirigera ses messages LocoNet vers l'interface mat&#233;rielle associ&#233;e
-				Avec le Â«Nom de ConnexionÂ» affich&#233; sous le nom du menu d&#233;roulant.</p>
+				Avec le «Nom de Connexion» affich&#233; sous le nom du menu d&#233;roulant.</p>
 			<p>Par exemple, consid&#233;rer un profil JMRI avec trois connexions LocoNet 
 				actives, nomm&#233;e "LocoNet, "LocoNet2", et "LocoNet3". Si l'on 
 				ouvre l'outil "Configure Command Station" dans le menu "LocoNet2", 
@@ -610,7 +610,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 				de configuration "par D&#233;fauts".Ces r&#233;glages forcent les outils JMRI
 				&#224; <strong>assumer</strong> que certaines op&#233;rations devront &#234;tre dirig&#233;es
 				vers certainex connexions mat&#233;rielles, Sauf si l'outil permet de s&#233;lectionner une 
-				interface sp&#233;cifique &#224; l'aide d'un Â«pr&#233;fixe de connexionÂ» ou d'un autre
+				interface sp&#233;cifique &#224; l'aide d'un «pr&#233;fixe de connexion» ou d'un autre
 				outil m&#233;canisme sp&#233;cifique &#224; un outil.<p>
 			<p>Par exemple, des utilisateurs JMRI auront une connexion PR3 pour la 
 				programmation des d&#233;codeurs mobiles, et d'autres une connexion LocoNet pour
@@ -628,10 +628,10 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 				plus d'une interface mat&#233;rielle LocoNet JMRI se connecte 
 				au m&#234;me LocoNet, le trafic LocoNet visible sur une connexion sera 
 				vu sur les autres connexions mat&#233;rielles LocoNet connect&#233;es.</p>
-			<p> Ã€ titre d'exemple, consid&#233;rez un profil JMRI qui configure trois 
+			<p> À titre d'exemple, consid&#233;rez un profil JMRI qui configure trois 
 				connexions LocoNet actives, avec les noms de connexion "LocoNet", "LocoNet2" 
 				et "LocoNet3". Supposons que la premi&#232;re et la seconde d'entre elles soient 
-				connect&#233;es au m&#234;me LocoNet, tandis que Â«LocoNet3Â» est connect&#233; &#224; un 
+				connect&#233;es au m&#234;me LocoNet, tandis que «LocoNet3» est connect&#233; &#224; un 
 				LocoNet ind&#233;pendant. Si JMRI envoie un message de commande de commutation &#224; LT604, 
 				JMRI "verra" ce message de commande de commutation comme un changement &#224; L2T604 
 				lorsque la seconde interface mat&#233;rielle LocoNet voit le message envoy&#233; 

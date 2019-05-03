@@ -44,8 +44,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private final static int CS_NORMAL_MODE = 0x00;
 
     // information about the last throttle command(s).
-    private int lastLocoAddressHigh = 0;
-    private int lastLocoAddressLow = 0;
     private int currentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
     private int currentSpeedStep = 0;
     private int functionGroup1 = 0;
@@ -204,7 +202,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     // This is the heart of the simulation. It translates an
     // incoming XNetMessage into an outgoing XNetReply.
-    @SuppressWarnings("fallthrough")
     private XNetReply generateReply(XNetMessage m) {
         XNetReply reply = new XNetReply();
         switch (m.getElement(0) & 0xff) {
@@ -238,8 +235,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                lastLocoAddressHigh = m.getElement(2);
-                lastLocoAddressLow = m.getElement(3);
                 switch (m.getElement(1)) {
                     case XNetConstants.LOCO_SPEED_14:
                         currentSpeedStepMode = XNetConstants.LOCO_SPEED_14;
@@ -315,12 +310,13 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply = emergencyStopReply();
                 break;
             case XNetConstants.EMERGENCY_STOP:
-                reply = okReply();
-                break;
             case XNetConstants.EMERGENCY_STOP_XNETV1V2:
                 reply = okReply();
                 break;
             case XNetConstants.ACC_OPER_REQ:
+                // LZ100 and LZV100 respond with an ACC_INFO_RESPONSE.
+                // but XpressNet standard says to no response (which causes
+                // the interface to send an OK reply).
                 reply = okReply();
                 break;
             case XNetConstants.LOCO_STATUS_REQ:
@@ -384,13 +380,31 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setElement(3, 0x00);
                 reply.setParity();
                 break;
+            case XNetConstants.OPS_MODE_PROG_REQ:
+                    int operation = m.getElement(4) & 0xFC;
+                    switch(operation) {
+                         case 0xEC:
+                           log.debug("Write CV in Ops Mode Request Received");
+                           reply = okReply();
+                           break;
+                         case 0xE4:
+                           log.debug("Verify CV in Ops Mode Request Received");
+                           reply = okReply();
+                           break;
+                         case 0xE8:
+                           log.debug("Ops Mode Bit Request Received");
+                           reply = okReply();
+                           break;
+                         default:
+                           reply=notSupportedReply();
+                    }
+                break;
             case XNetConstants.LI101_REQUEST:
             case XNetConstants.CS_SET_POWERMODE:
             //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST
             //and CS_SET_POWERMODE
             //have the same value
             case XNetConstants.PROG_WRITE_REQUEST:
-            case XNetConstants.OPS_MODE_PROG_REQ:
             case XNetConstants.LOCO_DOUBLEHEAD:
             default:
                 reply = notSupportedReply();
@@ -488,12 +502,12 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private XNetMessage loadChars() throws java.io.IOException {

@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
@@ -88,7 +89,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
      */
     protected File selectFile(String directoryName) {
         JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("ExcelProgramFiles"), "xls", "xlsm"); // NOI18N
-        fc.setCurrentDirectory(OperationsManager.getInstance().getFile(directoryName));
+        fc.setCurrentDirectory(InstanceManager.getDefault(OperationsManager.class).getFile(directoryName));
         fc.setDialogTitle(Bundle.getMessage("FindDesiredExcelFile"));
         // when reusing the chooser, make sure new files are included
         fc.rescanCurrentDirectory();

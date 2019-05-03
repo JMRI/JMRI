@@ -1,17 +1,15 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+
+    private LocoNetSystemConnectionMemo memo; 
 
     @Test
     public void testCTor() {
@@ -56,8 +54,9 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
-    @Ignore("Speed steps on LocoNet are off. 1.0F reports back as speed step 124, not 127 as expected.  Speed step for 0.007874016f reports as speed step 12, not 2 as expected.")
     public void testGetSpeed_float() {
+        // set speed step mode to 128.
+        instance.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
         Assert.assertEquals("Full Speed", 127, ((LocoNetThrottle)instance).intSpeed(1.0F));
         float incre = 0.007874016f;
         float speed = incre;
@@ -400,21 +399,34 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
+    /**
+     * Test of getF2Momentary method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetF2Momentary() {
+        boolean expResult = true;
+        boolean result = instance.getF2Momentary();
+        Assert.assertEquals(expResult, result);
+    }
+
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new Ib1ThrottleManager(memo));
-        instance = new Ib1Throttle(new LocoNetSystemConnectionMemo(lnis,slotmanager),new LocoNetSlot(5));
+        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo.setThrottleManager(new Ib1ThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
+        instance = new Ib1Throttle(memo,new LocoNetSlot(5));
     }
 
     @After
     @Override
     public void tearDown() {
+        ((Ib1ThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class)).dispose();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

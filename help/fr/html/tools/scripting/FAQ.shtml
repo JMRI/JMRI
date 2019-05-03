@@ -349,7 +349,7 @@ execfile("filename.py");
 
             <div class="para">
               <pre>
-<code> jmri.InstanceManager.configureManagerInstance (). load(java.io.File ("filename.xml "))</code>
+<code> jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("filename.xml "))</code>
 </pre>
             </div>Cela ressemble &agrave; "filename.xml" dans le
             r&eacute;pertoire du programme JMRI, qui n'est pas un

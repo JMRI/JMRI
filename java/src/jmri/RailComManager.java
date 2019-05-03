@@ -1,6 +1,8 @@
 package jmri;
 
+import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -22,20 +24,4 @@ import javax.annotation.Nonnull;
  * @since 2.99.4
  */
 public interface RailComManager extends IdTagManager {
-
-    /**
-     *
-     * @throws IllegalArgumentException if requested object does not already
-     *                                  exist and the manager cannot create it
-     *                                  due to an illegal name or name that can
-     *                                  not be parsed.
-     */
-    @Override
-    @Nonnull
-    public RailCom provideIdTag(@Nonnull String name) throws IllegalArgumentException;
-
-    @Override
-    @CheckForNull
-    public RailCom getIdTag(@Nonnull String name);
-
 }

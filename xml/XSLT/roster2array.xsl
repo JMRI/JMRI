@@ -4,7 +4,7 @@
 
 <!-- Used by default when the roster file is displayed in a web browser -->
 
-<!-- This file is part of JMRI. Copyright 2007 - 2013. -->
+<!-- This file is part of JMRI. Copyright 2007 - 2018. -->
 <!-- -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under -->
 <!-- the terms of version 2 of the GNU General Public License as published -->
@@ -60,14 +60,13 @@
 				</table>
 				<hr />
 				This page was produced by
-				<A href="http://jmri.org">
-					<IMG src="http://jmri.org/images/logo-jmri.gif"
-						height="31" border="0" alt="JMRI project" />
-				</A>
-				<A href="http://sourceforge.net">
-					<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1"
-						width="88" height="31" border="0" alt="SourceForge Logo" />
-				</A>
+				<a href="http://jmri.org">
+					<img src="http://jmri.org/images/logo-jmri.gif"
+					height="31" border="0" alt="JMRI project" />
+				</a>
+					Site hosted by: <br/>
+					<a href="http://www.tagadab.com/">
+					<img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 
 			</body>
 		</html>
@@ -192,6 +191,5 @@
 			<xsl:value-of select="key" />=<xsl:value-of select="value" /><br></br>
 		</xsl:for-each>
 	</xsl:template>
+
 </xsl:stylesheet>
-
-

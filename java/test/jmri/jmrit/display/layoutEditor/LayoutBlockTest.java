@@ -1,12 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
+import jmri.Block;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of LayoutBlock
@@ -19,6 +18,23 @@ public class LayoutBlockTest {
     public void testCtor() {
         LayoutBlock b = new LayoutBlock("test", "test");
         Assert.assertNotNull("exists", b);
+    }
+
+    @Test
+    public void testBlockRename() {
+        // Create layout block and the related automatic block
+        LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
+        layoutBlock.initializeLayoutBlock();
+        Assert.assertNotNull(layoutBlock);
+        Assert.assertEquals("Test Block", layoutBlock.getUserName());
+
+        // Get the referenced block and change its user name
+        Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
+        Assert.assertNotNull(block);
+        block.setUserName("New Test Block");
+
+        // Verify that the block user name change propagated to the layout block
+        Assert.assertEquals("New Test Block", layoutBlock.getUserName());
     }
 
     // from here down is testing infrastructure

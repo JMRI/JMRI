@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-rosterGroup-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"rosterGroup\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of the rosterGroup"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Number of entries in the rosterGroup"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "length"]
+}

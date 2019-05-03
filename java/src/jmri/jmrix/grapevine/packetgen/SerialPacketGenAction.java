@@ -2,9 +2,9 @@ package jmri.jmrix.grapevine.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialPacketGenFrame object
@@ -15,13 +15,13 @@ public class SerialPacketGenAction extends AbstractAction {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public SerialPacketGenAction(String s,GrapevineSystemConnectionMemo _memo) {
+    public SerialPacketGenAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public SerialPacketGenAction(GrapevineSystemConnectionMemo _memo) {
-        this("Send Grapevine message",_memo);
+        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuSystem")), _memo);
     }
 
     @Override
@@ -34,5 +34,7 @@ public class SerialPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+
 }

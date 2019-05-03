@@ -1,20 +1,13 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.junit.*;
 
 /**
  * Tests for the RpsIcon class.
@@ -25,6 +18,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
 
     private RpsPositionIcon rpsIcon = null;
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -86,15 +80,21 @@ public class RpsPositionIconTest extends PositionableTestBase {
         id = newID;
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
             p = rpsIcon = new RpsPositionIcon(editor);
         }
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        rpsIcon = null;
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);

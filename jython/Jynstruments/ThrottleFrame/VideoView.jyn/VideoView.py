@@ -17,6 +17,9 @@
 #    the StartJMRI shell script in the JMRI application bundle you use (by the end of the file where other lines like that appear)
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout

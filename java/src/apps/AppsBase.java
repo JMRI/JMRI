@@ -1,6 +1,6 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -23,6 +23,7 @@ import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * <dt>preInit<dd>Initialize log4j, invoked from the main()
  * <dt>ctor<dd>
  * </dl>
- * <P>
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  */
@@ -106,24 +106,6 @@ public abstract class AppsBase {
 
         FileUtil.logFilePaths();
 
-        /*
-         * Once all the preferences have been loaded we can initial the
-         * preferences doing it in a thread at this stage means we can let it
-         * work in the background if the file doesn't exist then we do not
-         * initialize it
-         */
-        if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
-            new Thread(() -> {
-                try {
-                    InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                        tp.init();
-                    });
-                } catch (Exception ex) {
-                    log.error("Error initializing preferences window", ex);
-                }
-            }, "Initialize TabbedPreferences").start();
-        }
-
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             new Thread(() -> {
                 try {
@@ -186,7 +168,7 @@ public abstract class AppsBase {
                 // Apps.setConfigFilename() does not reset the system property
                 System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
-                log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
+                log.info("Starting with profile {}", profile.getId());
             } else {
                 log.error("Specify profile to use as command line argument.");
                 log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
@@ -212,10 +194,6 @@ public abstract class AppsBase {
         // install the abstract action model that allows items to be added to the, both
         // CreateButton and Perform Action Model use a common Abstract class
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
-
-        // install preference manager
-        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
-
     }
 
     /**
@@ -263,6 +241,14 @@ public abstract class AppsBase {
             return;
         }
         preferenceFileExists = true;
+
+        // ensure the UserPreferencesManager has loaded. Done on GUI
+        // thread as it can modify GUI objects
+        ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        });
+
+        // now (attempt to) load the config file
         try {
             ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
@@ -297,7 +283,7 @@ public abstract class AppsBase {
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                tp.init();
+                //tp.init();
                 tp.saveContents();
                 InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
                     cm.storePrefs();
@@ -309,7 +295,6 @@ public abstract class AppsBase {
         }
     }
 
-    //abstract protected void addToActionModel();
     private boolean doDeferredLoad(File file) {
         boolean result;
         log.debug("start deferred load from config file {}", file.getName());

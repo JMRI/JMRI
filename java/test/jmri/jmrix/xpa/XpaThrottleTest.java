@@ -3,14 +3,13 @@ package jmri.jmrix.xpa;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class
- * <P>
+ * <p>
  * @author	Paul Bender
  */
 public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {

@@ -5,7 +5,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 /**
  * Editor panel for the SKEME_START macro from the Digitrax sound definition
  * language.
- * <P>
+ * <p>
  * This nests until the next SKEME_START.
  *
  * @author Bob Jacobsen Copyright (C) 2007
@@ -16,4 +16,5 @@ class SkemeStartEditor extends SdfMacroEditor {
         super(inst);
         // No editor needed, leave default message in place.
     }
+
 }

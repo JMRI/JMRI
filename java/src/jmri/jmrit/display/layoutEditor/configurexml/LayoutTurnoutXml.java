@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
@@ -63,7 +64,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         element.setAttribute("yd", "" + coords.getY());
         element.setAttribute("ver", "" + p.getVersion());
         element.setAttribute("class", getClass().getName());
- 
+
         if (!p.getTurnoutName().isEmpty()) {
             element.setAttribute("turnoutname", p.getTurnoutName());
         }
@@ -161,7 +162,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if (!p.getSensorDName().isEmpty()) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
-       return element;
+        return element;
     }
 
     @Override
@@ -210,11 +211,11 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         // get remaining attributes
         Attribute a = element.getAttribute("turnoutname");
         if (a != null) {
-            l.tTurnoutName = a.getValue();
+            l.setTurnout(a.getValue());
         }
         a = element.getAttribute("secondturnoutname");
         if (a != null) {
-            l.tSecondTurnoutName = a.getValue();
+            l.setSecondTurnout(a.getValue());
             try {
                 l.setSecondTurnoutInverted(element.getAttribute("secondturnoutinverted").getBooleanValue());
             } catch (DataConversionException e1) {
@@ -225,19 +226,19 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         a = element.getAttribute("blockname");
         if (a != null) {
-            l.setLayoutBlockByName(a.getValue());
+            l.tBlockAName = a.getValue();
         }
         a = element.getAttribute("blockbname");
         if (a != null) {
-            l.setLayoutBlockBByName(a.getValue());
+            l.tBlockBName = a.getValue();
         }
         a = element.getAttribute("blockcname");
         if (a != null) {
-            l.setLayoutBlockCByName(a.getValue());
+            l.tBlockCName = a.getValue();
         }
         a = element.getAttribute("blockdname");
         if (a != null) {
-            l.setLayoutBlockDByName(a.getValue());
+            l.tBlockDName = a.getValue();
         }
 
         a = element.getAttribute("connectaname");
@@ -256,7 +257,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if (a != null) {
             l.connectDName = a.getValue();
         }
-        
+
         a = element.getAttribute("signala1name");
         if (a != null) {
             l.setSignalA1Name(a.getValue());
@@ -331,7 +332,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
-        if (version==2){
+        if (version == 2) {
             try {
                 x = element.getAttribute("xa").getFloatValue();
                 y = element.getAttribute("ya").getFloatValue();
@@ -356,7 +357,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutturnout c coords attribute");
         }
-        if (version==2){
+        if (version == 2) {
             try {
                 x = element.getAttribute("xd").getFloatValue();
                 y = element.getAttribute("yd").getFloatValue();

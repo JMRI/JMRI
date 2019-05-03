@@ -2,10 +2,7 @@ package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.can.swing.tie.TieToolFrame class
@@ -32,6 +29,7 @@ public class TieToolFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -95,6 +95,7 @@ public class SampleMinimalProgram {
         // and here we're up and running!
     }
 
+    @SuppressWarnings("deprecation") // _Simple_Miniman_Program doesn't need multi-connection support
     protected void codeConfig(String[] args) {
         jmri.jmrix.SerialPortAdapter adapter = jmri.jmrix.lenz.li100.LI100Adapter.instance();
         //jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.nce.serialdriver.SerialDriverAdapter.instance();
@@ -115,12 +116,12 @@ public class SampleMinimalProgram {
         ConfigureManager cm = new JmriConfigurationManager();
 
         // not setting preference file location!
-        InstanceManager.setConfigureManager(cm);
+        InstanceManager.setDefault(ConfigureManager.class, cm);
         // needs an error handler that doesn't invoke swing; send to log4j?
 
         // start web server
         final int port = 12080;
-        WebServerPreferences.getDefault().setPort(port);
+        InstanceManager.getDefault(WebServerPreferences.class).setPort(port);
         try {
             WebServer.getDefault().start();
         } catch (Exception ex) {

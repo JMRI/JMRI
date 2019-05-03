@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Digitrax SPJ files
+ * Table data model for display of Digitrax SPJ files.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dennis Miller Copyright (C) 2006
@@ -40,17 +40,12 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     static public final int NUMCOLUMN = 8;
 
-    static volatile ResourceBundle res = null;   // defer to first use
-
     SpjFile file;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "cache resource at 1st start, threading OK") // NOI18N
     public EditorTableDataModel(SpjFile file) {
         super();
-        if (res == null) {
-            res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
-        }
         this.file = file;
     }
 
@@ -69,17 +64,17 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case HEADERCOL:
-                return res.getString("HeaderHEADERCOL");
+                return Bundle.getMessage("HeaderHEADERCOL");
             case TYPECOL:
-                return res.getString("HeaderTYPECOL");
+                return Bundle.getMessage("HeaderTYPECOL");
             case HANDLECOL:
-                return res.getString("HeaderHANDLECOL");
+                return Bundle.getMessage("HeaderHANDLECOL");
             case MAPCOL:
-                return res.getString("HeaderMAPCOL");
+                return Bundle.getMessage("HeaderMAPCOL");
             case FILENAMECOL:
-                return res.getString("HeaderFILENAMECOL");
+                return Bundle.getMessage("HeaderFILENAMECOL");
             case LENGTHCOL:
-                return res.getString("HeaderLENGTHCOL");
+                return Bundle.getMessage("HeaderLENGTHCOL");
             case PLAYBUTTONCOL:
                 return ""; // no title
             case REPLACEBUTTONCOL:
@@ -147,22 +142,22 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 return Float.valueOf(time);
             case PLAYBUTTONCOL:
                 if (file.getHeader(row + 1).isWAV()) {
-                    return res.getString("ButtonPlay");
+                    return Bundle.getMessage("ButtonPlay");
                 } else if (file.getHeader(row + 1).isTxt()) {
-                    return res.getString("ButtonView");
+                    return Bundle.getMessage("ButtonView");
                 } else if (file.getHeader(row + 1).isMap()) {
-                    return res.getString("ButtonView");
+                    return Bundle.getMessage("ButtonView");
                 } else if (file.getHeader(row + 1).isSDF()) {
-                    return res.getString("ButtonView");
+                    return Bundle.getMessage("ButtonView");
                 } else {
                     return null;
                 }
             case REPLACEBUTTONCOL:
                 if (file.getHeader(row + 1).isWAV()) {
-                    return res.getString("ButtonReplace");
+                    return Bundle.getMessage("ButtonReplace");
                 }
                 if (file.getHeader(row + 1).isSDF()) {
-                    return res.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 } else {
                     return null;
                 }
@@ -280,7 +275,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     void viewSdfButtonPressed(Object value, int row, int col) {
         jmri.jmrix.loconet.sdf.SdfBuffer buff = new jmri.jmrix.loconet.sdf.SdfBuffer(file.getHeader(row + 1).getByteArray());
         String content = buff.toString();
-        JFrame frame = new jmri.util.JmriJFrame(res.getString("TitleSdfView"));
+        JFrame frame = new jmri.util.JmriJFrame(Bundle.getMessage("TitleSdfView"));
         JTextArea text = new JTextArea(content);
         text.setEditable(false);
         text.setFont(new Font("Monospaced", Font.PLAIN, text.getFont().getSize())); // NOI18N
@@ -333,7 +328,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     private JButton checkLabelWidth(JButton now, String name) {
-        JButton b = new JButton(res.getString(name));
+        JButton b = new JButton(Bundle.getMessage(name));
         b.revalidate();
         if (b.getPreferredSize().width > now.getPreferredSize().width) {
             return b;
@@ -343,8 +338,8 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
-     * values
+     * Service method to set up a column so that it will hold a button for it's
+     * values.
      *
      * @param sample Typical button, used for size
      */
@@ -365,7 +360,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Method to self print or print preview the table. Printed in equally sized
+     * Self print - or print preview - the table.
+     * <p>
+     * Printed in equally sized
      * columns across the page with headings and vertical lines between each
      * column. Data is word wrapped within a column. Can handle data as strings,
      * comboboxes or booleans.

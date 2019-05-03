@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * the user for the most part.
  *
  * @author Dave Duchamp Copyright (C) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
 
@@ -167,23 +168,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getLayoutBlock(@Nullable Block block) {
-        LayoutBlock result = null;
-
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during scan of LayoutBlocks");
-            } else {
-                result = getBySystemName(sName);
-                if (result.getBlock() == block) {
-                    break;
-                }
-                result = null;
+        for (LayoutBlock lb : getNamedBeanSet()) {
+             if (lb.getBlock() == block) {
+                return lb;
             }
         }
-        return result;
+        return null;
     }	//getLayoutBlock
 
     @CheckReturnValue
@@ -220,22 +210,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getBlockWithSensorAssigned(@Nullable Sensor s) {
-        LayoutBlock result = null;
-
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during scan of LayoutBlocks");
-            } else {
-                LayoutBlock block = getBySystemName(sName);
-                if (block.getOccupancySensor() == s) {
-                    result = block;
-                    break;
-                }
+        for (LayoutBlock block : getNamedBeanSet()) {
+            if (block.getOccupancySensor() == s) {
+                return block;
             }
         }
-        return result;
+        return null;
     }	//getBlockWithSensorAssigned
 
     /**
@@ -248,23 +228,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @Nullable
     public LayoutBlock getBlockWithMemoryAssigned(Memory m) {
-        LayoutBlock result = null;
-
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during scan of LayoutBlocks");
-            } else {
-                LayoutBlock block = getBySystemName(sName);
-
-                if (block.getMemory() == m) {
-                    result = block;
-                    break;
-                }
+        for (LayoutBlock block : getNamedBeanSet()) {
+            if (block.getMemory() == m) {
+                return block;
             }
         }
-        return result;
+        return null;
     }	//getBlockWithMemoryAssigned
 
     /**
@@ -276,43 +245,25 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     public void initializeLayoutBlockPaths() {
         log.debug("start initializeLayoutBlockPaths");
 
-        //cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
-        java.util.Iterator<String> iter = getSystemNameList().iterator();
-
-        while (iter.hasNext()) {
-            String sName = iter.next();
-
-            if (sName == null) {
-                log.error("System name null during 1st initialization of LayoutBlocks");
-            } else {
-                LayoutBlock b = getBySystemName(sName);
-                log.debug("Calling block '" + sName + "(" + b.getDisplayName() + ")'.initializeLayoutBlock()");
+        // cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
+        for (LayoutBlock b : getNamedBeanSet()) {
+                log.debug("Calling block '{}({})'.initializeLayoutBlock()", b.getSystemName(), b.getDisplayName());
                 b.initializeLayoutBlock();
-            }
         }
 
         //cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
-        badBeanErrors = 0;
-        iter = getSystemNameList().iterator();
-
-        while (iter.hasNext()) {
-            String sName = iter.next();
-
-            if (sName == null) {
-                log.error("System name null during 2nd initialization of LayoutBlocks");
-            } else {
-                LayoutBlock b = getBySystemName(sName);
-                log.debug("Calling block '" + sName + "(" + b.getDisplayName() + ")'.updatePaths()");
+        badBeanErrors = 0; // perhaps incremented via addBadBeanError(), but that's never called?
+        for (LayoutBlock b : getNamedBeanSet()) {
+                log.debug("Calling block '{}({})'.updatePaths()", b.getSystemName(), b.getDisplayName());
 
                 b.updatePaths();
 
                 if (b.getBlock().getValue() != null) {
                     b.getBlock().setValue(null);
                 }
-            }
         }
 
-        if (badBeanErrors > 0) {
+        if (badBeanErrors > 0) { // perhaps incremented via addBadBeanError(), but that's never called?
             JOptionPane.showMessageDialog(null, "" + badBeanErrors + " " + Bundle.getMessage("Warn2"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         }
@@ -325,9 +276,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //special tests for getFacingSignalHead method - comment out next three lines unless using LayoutEditorTests
-//LayoutEditorTests layoutEditorTests = new LayoutEditorTests();
-//layoutEditorTests.runClinicTests();
-//layoutEditorTests.runTestPanel3Tests();
+        //LayoutEditorTests layoutEditorTests = new LayoutEditorTests();
+        //layoutEditorTests.runClinicTests();
+        //layoutEditorTests.runTestPanel3Tests();
+
         initialized = true;
         log.debug("start initializeLayoutBlockRouting");
         initializeLayoutBlockRouting();
@@ -335,11 +287,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }	//initializeLayoutBlockPaths
 
     private boolean initialized = false;
-    private int badBeanErrors = 0;
 
+    // Is this ever called?
     public void addBadBeanError() {
         badBeanErrors++;
     }
+    private int badBeanErrors = 0;
 
     /**
      * Method to return the Signal Head facing into a specified Block from a
@@ -1603,7 +1556,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if ((p != null) && (p.getLinkedEditor() != null)) {
                 return getFacingBean(facingBlock, protectedBlock, p.getLinkedEditor(), T);
             }
-            log.error(
+            log.debug(
                     "Block " + facingBlock.getDisplayName() + " is not connected to Block " + protectedBlock.getDisplayName() + " on panel "
                     + panel.getLayoutName());
 
@@ -1908,7 +1861,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * or SignalHead) is protecting.
      *
      * @param nb    NamedBean
-     * @param panel - panel that this bean is on
+     * @param panel  panel that this bean is on
      * @return The block that the bean object is facing
      */
     @CheckReturnValue
@@ -1944,8 +1897,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * If the panel variable is null, search all LE panels.
      * This was added to support multi panel entry/exit.
-     * @param bean The sensor, mast or head to be located.
-     * @param panel The panel to search.  If null, search all LE panels.
+     * <p>
+     * @param bean  The sensor, mast or head to be located.
+     * @param panel The panel to search. If null, search all LE panels.
      * @return a list of protected layout blocks.
      */
     @Nonnull
@@ -1953,8 +1907,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nullable NamedBean bean,
             @Nullable LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
-                    getLayoutEditorPanelList();
+            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class)
+                    .getLayoutEditorPanelList();
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             for (LayoutEditor p : panels) {
                 protectingBlocks = getProtectingBlocksByBeanByPanel(bean, p);
@@ -2174,7 +2128,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * or SignalHead).
      *
      * @param nb    NamedBean
-     * @param panel - panel that this bean is on
+     * @param panel  panel that this bean is on
      * @return The block that the bean object is facing
      */
     @CheckReturnValue
@@ -2212,8 +2166,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * If the panel variable is null, search all LE panels.
      * This was added to support multi panel entry/exit.
-     * @param bean The sensor, mast or head to be located.
-     * @param panel The panel to search.  Search all LE panels if null.
+     * @param bean  The sensor, mast or head to be located.
+     * @param panel The panel to search. Search all LE panels if null.
      * @return the facing layout block.
      */
     @CheckReturnValue
@@ -2222,7 +2176,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull NamedBean bean,
             LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).
                     getLayoutEditorPanelList();
             LayoutBlock returnBlock = null;
             for (LayoutEditor p : panels) {
@@ -2724,6 +2678,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return result;
     }	//getLayoutBlocksOccupiedByRosterEntry
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutBlockManager.class);
 }

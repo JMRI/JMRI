@@ -56,6 +56,18 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
 
     }
 
+    @Test
+    @Override
+    public void testThrownText(){
+         Assert.assertEquals("thrown text","Thrown (+)",l.getThrownText());
+    }
+
+    @Test
+    @Override
+    public void testClosedText(){
+         Assert.assertEquals("closed text","Closed (-)",l.getClosedText());
+    }
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
@@ -65,6 +77,7 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object

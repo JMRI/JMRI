@@ -5,8 +5,6 @@ import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEADS;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -15,7 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonSignalHeadServiceFactory implements JsonServiceFactory {
+public class JsonSignalHeadServiceFactory implements JsonServiceFactory<JsonSignalHeadHttpService, JsonSignalHeadSocketService> {
 
     @Override
     public String[] getTypes() {
@@ -23,12 +21,12 @@ public class JsonSignalHeadServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonSignalHeadSocketService getSocketService(JsonConnection connection) {
         return new JsonSignalHeadSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonSignalHeadHttpService getHttpService(ObjectMapper mapper) {
         return new JsonSignalHeadHttpService(mapper);
     }
 

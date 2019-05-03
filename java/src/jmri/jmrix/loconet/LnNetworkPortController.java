@@ -26,6 +26,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
 
+    protected boolean mTranspondingAvailable = false;
+
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
@@ -33,6 +35,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,
+        LnCommandStationType.COMMAND_STATION_DCS052,
         LnCommandStationType.COMMAND_STATION_DB150,
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_1,
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,
@@ -53,6 +56,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     *
+     * @param name the name of the command station
      */
     public void setCommandStationType(String name) {
         try {
@@ -65,13 +70,15 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     /**
-     * Set config info from the command station type enum.
+     * Set configcommand station type.
+     *
+     * @param value command station type enum
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {
             return;  // can happen while switching protocols
         }
-        log.debug("setCommandStationType: " + value);
+        log.debug("setCommandStationType: {}", value);
         commandStationType = value;
     }
 
@@ -81,19 +88,32 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     public void setTurnoutHandling(String value) {
-        if (value.equals("One Only") || value.equals("Both")) {
+        if (value.equals("One Only") || value.equals(Bundle.getMessage("HandleOneOnly"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutNoRetry = true;
         }
-        if (value.equals("Spread") || value.equals("Both")) {
+        log.debug("turnout no retry: {}", mTurnoutNoRetry); // NOI18N
+        if (value.equals("Spread") || value.equals(Bundle.getMessage("HandleSpread"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry);
-        log.debug("turnout extra space: " + mTurnoutExtraSpace);
+        log.debug("turnout extra space: {}", mTurnoutExtraSpace); // NOI18N
+    }
+
+    /**
+     * Set whether transponding is available.
+     *
+     * @param value either yes or no
+     */
+    public void setTranspondingAvailable(String value) {
+        // default (most common state) is off, so just check for Yes
+        mTranspondingAvailable = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
+        log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
 
     /**
      * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption3(String value) {

@@ -2,13 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Font;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of LocoIcon
@@ -56,7 +50,7 @@ public class LocoIconTest extends PositionableTestBase {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new EditorScaffold();
            LocoIcon li = new LocoIcon(editor);

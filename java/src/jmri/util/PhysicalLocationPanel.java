@@ -60,8 +60,6 @@ public class PhysicalLocationPanel extends JPanel {
         initComponents(title);
     }
 
-    // FIXME: Why does the if statement in this method include a direct false?
-    @SuppressWarnings("unused")
     private GridBagConstraints setConstraints(int x, int y, boolean fill) {
         GridBagConstraints gbc1 = new GridBagConstraints();
         gbc1.insets = new Insets(2, 2, 2, 2);

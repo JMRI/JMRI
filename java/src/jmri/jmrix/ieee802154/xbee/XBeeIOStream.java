@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
- * This class provides an interface between the XBee messages that are sent 
+ * This class provides an interface between the XBee messages that are sent
  * to and from the serial port connected to an XBee device.
  * Remote devices may be sending messages in transparent mode.
  *
@@ -26,7 +26,7 @@ final public class XBeeIOStream extends AbstractPortController {
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
-    private DataOutputStream outpipe = null;  // data from xbee written hear
+    private DataOutputStream outpipe = null;  // data from xbee written here
     // ends up in pin.
     private DataInputStream inpipe = null; // data read from this pipe is
     // sent to the XBee.
@@ -34,8 +34,7 @@ final public class XBeeIOStream extends AbstractPortController {
     private Thread sinkThread;  // thread reading from the remote xbee
 
     private RemoteXBeeDevice remoteXBee;
-    @SuppressWarnings("unused")
-    private XBeeTrafficController xtc;
+    private final XBeeTrafficController xtc;
 
     public XBeeIOStream(XBeeNode node, XBeeTrafficController tc) {
         super(tc.getAdapterMemo());
@@ -48,23 +47,10 @@ final public class XBeeIOStream extends AbstractPortController {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
-            return;
+            log.error("init (pipe): Exception: {}", e.toString());
         }
 
-
         xtc = tc;
-
-        // start the transmit thread
-        sourceThread = new Thread(new TransmitThread(remoteXBee, tc, inpipe));
-        sourceThread.setName("xbee.XBeeIOStream Transmit thread");
-        sourceThread.start();
-
-        // start the receive thread
-        sinkThread = new Thread(new ReceiveThread(remoteXBee, tc, outpipe));
-        sourceThread.setName("xbee.XBeeIOStream Receive thread");
-        sinkThread.start();
-
     }
 
     // routines defined as abstract in AbstractPortController
@@ -90,6 +76,16 @@ final public class XBeeIOStream extends AbstractPortController {
 
     @Override
     public void configure() {
+        // start the transmit thread
+        sourceThread = new Thread(new TransmitThread(remoteXBee, xtc, inpipe));
+        sourceThread.setName("xbee.XBeeIOStream Transmit thread");
+        sourceThread.start();
+
+        // start the receive thread
+        sinkThread = new Thread(new ReceiveThread(remoteXBee, xtc, outpipe));
+        sinkThread.setName("xbee.XBeeIOStream Receive thread");
+        sinkThread.start();
+
     }
 
     @Override
@@ -113,8 +109,22 @@ final public class XBeeIOStream extends AbstractPortController {
 
     @Override
     public void dispose() {
-        sourceThread=null;
-        sinkThread=null;
+        if (sourceThread != null) {
+            sourceThread.interrupt();
+            sourceThread = null;
+        }
+        if (sinkThread != null) {
+            sinkThread.interrupt();
+            sinkThread = null;
+        }
+        try {
+            pin.close();
+            pout.close();
+            outpipe.close();
+            inpipe.close();
+        } catch (java.io.IOException ioe) {
+            log.debug("IO Exception closing port during dispose call");
+        }
         super.dispose();
     }
 
@@ -138,38 +148,40 @@ final public class XBeeIOStream extends AbstractPortController {
         public void run() { // start a new thread
             // this thread has one task.  It repeatedly reads from the input pipe
             // and sends data to the XBee.
-            if (log.isDebugEnabled()) {
-                log.debug("XBee Transmit Thread Started");
-            }
+            log.debug("XBee Transmit Thread Started");
             for (;;) {
                 // the data we send is required to be a byte array.
                 // The maximum number of values we
                 // can collect is 100.
-                ArrayList<Byte> data = new ArrayList<Byte>();
+                ArrayList<Byte> data = new ArrayList<>();
                 try {
                     do {
-                       log.debug("Attempting byte read");
-                       byte b = pipe.readByte();
-                       log.debug("Read Byte: {}", b);
-                       data.add(data.size(), b);
+                        log.debug("Attempting byte read");
+                        byte b = pipe.readByte();
+                        log.debug("Read Byte: {}", b);
+                        data.add(data.size(), b);
                     } while (data.size() < 100 && pipe.available() > 0);
                 } catch (java.io.IOException e) {
-                   log.error("IOException reading serial data from pipe before sending to XBee");
+                    log.error("IOException reading serial data from pipe before sending to XBee");
                 }
                 byte dataArray[] = new byte[data.size()];
                 int i = 0;
                 for (Byte n : data) {
-                   dataArray[i++] = n;
+                    dataArray[i++] = n;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("XBee Thread received message " + jmri.util.StringUtil.hexStringFromBytes(dataArray));
+                    log.debug("XBee Thread received message {}", jmri.util.StringUtil.hexStringFromBytes(dataArray));
                 }
                 try {
-                   xtc.getXBee().sendData(node,dataArray);
-                } catch(TimeoutException te){
-                  log.error("Timeout sending stream data to node {}.",node);
-                } catch(XBeeException xbe){
-                  log.error("Exception sending stream data to node {}.",node);
+                    xtc.getXBee().sendData(node, dataArray);
+                } catch (TimeoutException te) {
+                    log.error("Timeout sending stream data to node {}.", node);
+                } catch (XBeeException xbe) {
+                    log.error("Exception sending stream data to node {}.", node);
+                } catch (NullPointerException npe) {
+                    if (Thread.interrupted()) {
+                        return;
+                    }
                 }
             }
         }
@@ -178,9 +190,9 @@ final public class XBeeIOStream extends AbstractPortController {
 
     static private class ReceiveThread implements Runnable {
 
-        private RemoteXBeeDevice node = null;
-        private XBeeTrafficController xtc = null;
-        private DataOutputStream pipe = null;
+        private final RemoteXBeeDevice node;
+        private final XBeeTrafficController xtc;
+        private final DataOutputStream pipe;
 
         public ReceiveThread(RemoteXBeeDevice n, XBeeTrafficController tc, DataOutputStream output) {
             node = n;
@@ -190,28 +202,28 @@ final public class XBeeIOStream extends AbstractPortController {
 
         @Override
         public void run() { // start a new thread
-            // this thread has one task.  It repeatedly reads from the XBee 
+            // this thread has one task.  It repeatedly reads from the XBee
             // and writes data to the output pipe
             if (log.isDebugEnabled()) {
                 log.debug("XBee Receive Thread Started");
             }
             for (;;) {
-               try{
-                  com.digi.xbee.api.models.XBeeMessage message = xtc.getXBee().readDataFrom(node,100);
-                  if(message!=null) {
-                     byte data[] = message.getData();
-                     log.debug("Received {}", data);
-                     for (int i = 0; i < data.length; i++) {
-                        pipe.write(data[i]);
-                     }
-                  }
-               } catch (java.io.IOException ioe) {
-                  log.error("IOException writing serial data from XBee to pipe");
-               } catch (java.lang.NullPointerException npe) {
-                  log.error("NullPointerException writing serial data from XBee to pipe");
-                  // this is fatal, return
-                  return;
-               }
+                try {
+                    com.digi.xbee.api.models.XBeeMessage message = xtc.getXBee().readDataFrom(node, 100);
+                    if (message != null) {
+                        byte data[] = message.getData();
+                        log.debug("Received {}", data);
+                        for (int i = 0; i < data.length; i++) {
+                            pipe.write(data[i]);
+                        }
+                    }
+                } catch (java.io.IOException ioe) {
+                    log.error("IOException writing serial data from XBee to pipe");
+                } catch (java.lang.NullPointerException npe) {
+                    log.error("NullPointerException writing serial data from XBee to pipe");
+                    // this is fatal, return
+                    return;
+                }
             }
         }
 
@@ -220,4 +232,3 @@ final public class XBeeIOStream extends AbstractPortController {
     private final static Logger log = LoggerFactory.getLogger(XBeeIOStream.class);
 
 }
-

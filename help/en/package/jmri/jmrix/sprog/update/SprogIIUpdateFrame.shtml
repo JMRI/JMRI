@@ -22,12 +22,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: SPROG II Update Tool</h1>The SPROG II Update Tool
-      lets you load new firmware into an SPROG II.
+      <h1>JMRI: SPROG II Update Tool</h1>
+      <p>The SPROG II Update Tool lets you load new firmware
+      into an SPROG II.</p>
 
-      <p>This is the
-      package/jmri/jmrix/sprog/update/SprogIIUpdateFrame page. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

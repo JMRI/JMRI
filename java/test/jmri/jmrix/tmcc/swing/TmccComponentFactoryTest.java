@@ -2,11 +2,8 @@ package jmri.jmrix.tmcc.swing;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
 /**

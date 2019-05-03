@@ -52,7 +52,7 @@ public class JythonSiglet extends Siglet {
             initialize.invoke(null, (Object[]) null);
 
             // interp = new PythonInterpreter();
-            interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
+            interp = Class.forName("org.python.util.PythonInterpreter").getDeclaredConstructor().newInstance();
 
             // load some general objects
             java.lang.reflect.Method set
@@ -112,8 +112,7 @@ public class JythonSiglet extends Siglet {
             // execute the handle routine in the jython
             exec.invoke(interp, new Object[]{"setOutput()"});
         } catch (Exception e) {
-            log.error("Exception invoking jython command: " + e);
-            e.printStackTrace();
+            log.error("Exception invoking jython command:", e);
         }
     }
 

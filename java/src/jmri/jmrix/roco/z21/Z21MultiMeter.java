@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.MultiMeter;
-import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,17 +13,14 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     private Z21TrafficController tc = null;
     private Z21SystemConnectionMemo _memo = null;
+    private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
-        super(0); // no timer, hardware automatically sends 
-                  // updates when changes detected.
+        super(-1); // no timer, since we already poll for this information. 
         _memo = memo;
         tc = _memo.getTrafficController();
 
         tc.addz21Listener(this);
-
-        //initTimer();
-        initializeHardwareMeter();
 
         log.debug("Z21MultiMeter constructor called");
 
@@ -37,10 +32,18 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override 
     public void enable(){
+        enabled = true;
+        RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
+        cs.setSystemStatusMessagesFlag(true);
+        tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override 
     public void disable(){
+        enabled = false;
+        RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
+        cs.setSystemStatusMessagesFlag(false);
+        tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override
@@ -59,14 +62,13 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override
     protected void requestUpdateFromLayout() {
-        tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        if( enabled ) {
+            tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        }
     }
 
     @Override
     public void initializeHardwareMeter() {
-         RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
-         cs.setSystemStatusMessagesFlag(true);
-         tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override
@@ -83,14 +85,6 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     @Override
     public boolean hasVoltage() {
         return true;
-    }
-
-    /**
-     * Remove references to and from this object, so that it can eventually be
-     * garbage-collected.
-     */
-    @Override
-    public void dispose() {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21MultiMeter.class);

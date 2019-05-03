@@ -32,5 +32,16 @@ public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 
         // pack for display
         pack();
+
+        // setup window closing listener
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                // remove property change listeners
+                if (sigPanel != null) {
+                    sigPanel.dispose();
+                }
+            }
+        });
     }
 }

@@ -91,8 +91,6 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class);
-
     // The minimal setup for log4J
     @Override
     @Before
@@ -110,7 +108,10 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     @After
     public void tearDown() {
         l.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 
+    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class);
+    
 }

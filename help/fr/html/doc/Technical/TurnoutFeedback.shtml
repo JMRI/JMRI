@@ -1,18 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!--UpDated by Herv&#233; Blorec le 2016/08/17-->
+<!--Updated by Herv&#233; Blorec le 2016/08/17-->
 <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Turnout Feedback
-   </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+   </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI Turnout feedback">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=.iso-8859-1">
@@ -23,9 +17,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">

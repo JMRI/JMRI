@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>CVs</name>
-  <name xml:lang="it">CV</name>
-  <name xml:lang="de">CV-Tabelle</name>
   <name xml:lang="ca">Taula-CV</name>
   <name xml:lang="cs">Tabulka CV</name>
+  <name xml:lang="de">CV-Tabelle</name>
+  <name xml:lang="fr">Tableau CVs</name>
+  <name xml:lang="it">CV</name>
   <name xml:lang="nl">CV-tabel</name>
   <column>
     <cvtable/>

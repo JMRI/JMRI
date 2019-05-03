@@ -253,8 +253,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         TurnoutManager mgr = InstanceManager.turnoutManagerInstance();
 
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         TurnoutFilterModel() {
-
             sysNameList = mgr.getSystemNameList();
             mgr.addPropertyChangeListener(this);
         }
@@ -273,7 +273,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     if (t != null) {
                         Object o = t.getProperty("WifiControllable");
                         if (o != null) {
-                            return Boolean.getBoolean(o.toString());
+                            return Boolean.valueOf(o.toString());
                         }
                     }
                     return true;
@@ -337,8 +337,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         RouteManager mgr = InstanceManager.getDefault(jmri.RouteManager.class);
 
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         RouteFilterModel() {
-
             sysNameList = mgr.getSystemNameList();
             mgr.addPropertyChangeListener(this);
         }
@@ -359,7 +359,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     }
                     Object o = rt.getProperty("WifiControllable");
                     if (o != null) {
-                        return Boolean.getBoolean(o.toString());
+                        return Boolean.valueOf(o.toString());
                     }
                     return true;
                 case SNAMECOL:

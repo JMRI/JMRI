@@ -14,7 +14,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * jmri.jmrix.loconet.intellibox package is for the first version of Uhlenbrock
  * Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock is for the
  * Intellibox II and the IB-COM.
- * <P>
+ * <p>
  * Since this is by definition connected to an Intellibox II or IB-COM, the
  * command station prompt is suppressed.
  *
@@ -53,7 +53,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
@@ -92,9 +92,11 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
         configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
 
-        log.info("Found flow control " + activeSerialPort.getFlowControlMode()
+        log.info("Uhlenbrock adapter"
+                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                +activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
+                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     /**

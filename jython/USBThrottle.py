@@ -6,6 +6,7 @@
 
 import jmri
 import java
+import java.beans
 
 #
 # Set the name of the controller you're using

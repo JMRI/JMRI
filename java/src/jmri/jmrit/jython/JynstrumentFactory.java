@@ -85,6 +85,11 @@ public class JynstrumentFactory {
         // must contain a xyz.py file and construct class name from filename (xyz actually) xyz class in xyz.py file in xyz.jin folder
         String[] children = f.list();
         String className = null;
+        if (children == null) {
+            log.error("Didn't find any files in {}", f);
+            return className;
+        }
+        
         String assumedClassName = f.getName().substring(0, f.getName().length() - 4);
         for (int i = 0; i < children.length; i++) {
             if ((children[i]).compareToIgnoreCase(assumedClassName + ".py") == 0) {

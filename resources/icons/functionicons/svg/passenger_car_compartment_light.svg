@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   viewBox="0 0 16.933333 16.933334"
+   version="1.1"
+   id="svg3719"
+   sodipodi:docname="passenger_car_compartment_light.svg"
+   inkscape:export-filename="C:\Users\Konrad\OneDrive\JRMI Icons\passenger_car_rear_lights_off.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs3713" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.0625"
+     inkscape:cx="27.789491"
+     inkscape:cy="32"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="1600"
+     inkscape:window-height="877"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0" />
+  <metadata
+     id="metadata3716">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-280.06665)">
+    <rect
+       style="fill:#668000;stroke:#000000;stroke-width:0.26458332"
+       id="rect7766"
+       width="17.531263"
+       height="9.9734497"
+       x="-0.23917137"
+       y="283.53464"
+       ry="0" />
+    <rect
+       style="fill:#ffff00;stroke:#000000;stroke-width:0.26458332"
+       id="rect7768"
+       width="4.4246707"
+       height="4.305089"
+       x="-0.23917137"
+       y="284.70657" />
+    <rect
+       style="fill:#ffff00;stroke:#000000;stroke-width:0.26458332"
+       id="rect7770"
+       width="6.1706219"
+       height="4.3050847"
+       x="5.5009413"
+       y="284.68265" />
+    <rect
+       style="fill:#ffff00;stroke:#000000;stroke-width:0.26458332"
+       id="rect7772"
+       width="4.2572503"
+       height="4.4007535"
+       x="13.03484"
+       y="284.6109" />
+    <rect
+       style="fill:#999999;stroke:#000000;stroke-width:0.26458332"
+       id="rect7774"
+       width="17.579098"
+       height="1.8177098"
+       x="-0.28700563"
+       y="281.71692" />
+  </g>
+</svg>

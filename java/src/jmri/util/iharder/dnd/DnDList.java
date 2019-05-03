@@ -7,18 +7,13 @@ import org.slf4j.LoggerFactory;
  * An extension of {@link javax.swing.JList} that supports drag and drop to
  * rearrange its contents and to move objects in and out of the list. The
  * objects in the list will be passed either as a String by calling the object's
- * <tt>toString()</tt> object, or if your drag and drop target accepts the
+ * {@code toString()} object, or if your drag and drop target accepts the
  * {@link TransferableObject#DATA_FLAVOR} data flavor then the actual object
  * will be passed.
- *
  * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
- * </p>
- * <p>
- * <em>Original author: Robert Harder, rharder@usa.net</em></p>
  *
- * @author Robert Harder
- * @author rharder@usa.net
+ * @author Robert Harder rharder@usa.net
  * @version 1.1
  */
 public class DnDList<E>
@@ -164,13 +159,9 @@ public class DnDList<E>
             Object obj = null;
             try {
                 obj = transferable.getTransferData(TransferableObject.DATA_FLAVOR);
-            } // end try
-            catch (java.awt.datatransfer.UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } // end catch
-            catch (java.io.IOException e) {
-                e.printStackTrace();
-            }   // end catch
+            } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException e) {
+                log.error("Unable to transfer object", e);
+            }
 
             if (obj != null) {
                 // See where in the list we dropped the element.
@@ -198,7 +189,6 @@ public class DnDList<E>
         }
     }   // end drop
 
-    @SuppressWarnings("unused") // FIXME: Why is this logger hidden way down here and unused?
     private final static Logger log = LoggerFactory.getLogger(DnDList.class);
 
 }   // end class DnDList

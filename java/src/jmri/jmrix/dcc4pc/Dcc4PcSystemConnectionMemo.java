@@ -21,14 +21,14 @@ import jmri.managers.DefaultRailComManager;
 public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public Dcc4PcSystemConnectionMemo(Dcc4PcTrafficController tc) {
-        super("DP", "Dcc4Pc");
+        super("D", "Dcc4Pc");
         this.tc = tc;
         tc.setAdapterMemo(this);
         register();
     }
 
     public Dcc4PcSystemConnectionMemo() {
-        super("DP", "Dcc4Pc");
+        super("D", "Dcc4Pc");
         register(); // registers general type
         InstanceManager.store(this, Dcc4PcSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented

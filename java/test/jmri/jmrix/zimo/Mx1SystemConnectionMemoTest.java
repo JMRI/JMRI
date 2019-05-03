@@ -33,7 +33,9 @@ public class Mx1SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
           }
        };
-       scm = new Mx1SystemConnectionMemo(tc);
+       Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo(tc);
+       memo.configureManagers();
+       scm = memo;
     }
 
     @Override

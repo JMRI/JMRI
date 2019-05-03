@@ -26,12 +26,12 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener {
 
-    JmriTwoStatePropertyListener(String propName, int type, String name, int varType,
+    JmriTwoStatePropertyListener(String propName, int type, String name, Conditional.Type varType,
             Conditional client) {
         super(propName, type, name, varType, client);
     }
 
-    JmriTwoStatePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, int varType,
+    JmriTwoStatePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, Conditional.Type varType,
             Conditional client) {
         super(propName, type, namedBean, varType, client);
     }

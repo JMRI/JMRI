@@ -1,6 +1,5 @@
 package jmri.jmrit.log;
 
-import apps.tests.Log4JFixture;
 import java.util.*;
 import jmri.util.JTextPaneAppender;
 import jmri.util.JUnitUtil;
@@ -29,6 +28,7 @@ public class LogOutputWindowActionTest {
     }
 
     @After
+    @SuppressWarnings("unchecked") // cast required by logging APIs
     public void tearDown() {
         // remove any JTextPaneAppender objects that 
         // have been added to logging
@@ -58,8 +58,8 @@ public class LogOutputWindowActionTest {
             }                        
         }
         
-        jmri.util.JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
 }

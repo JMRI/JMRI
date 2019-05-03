@@ -73,6 +73,7 @@ public class OPathTest {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to OPath
     public void testEquals() {
         Block b1 = new Block("IB1");
 

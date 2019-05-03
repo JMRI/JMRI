@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Bachrus</title>
-  <meta content="Andrew Crosland" name="Author">
+  <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content=
   "Bachrus java model railroad JMRI install windows"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -60,7 +60,8 @@
 
       <p>More information on the Bachrus Speedometer products on
       the <a href="http://www.bachrus.com/speedometer.php">Bachrus
-      website</a>. <!--#include virtual="/Footer" --></p>
+      website</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

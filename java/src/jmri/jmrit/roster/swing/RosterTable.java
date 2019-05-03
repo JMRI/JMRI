@@ -74,8 +74,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataScroll = new JScrollPane(dataTable);
         dataTable.setRowHeight(InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4);
 
-        // Use a "Numeric, if not, Alphanumeric" comparator
-        sorter.setComparator(RosterTableModel.IDCOL, new jmri.util.PreferNumericComparator());
+        sorter.setComparator(RosterTableModel.IDCOL, new jmri.util.AlphanumComparator());
 
         // set initial sort
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
@@ -219,19 +218,6 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         if (this.rosterGroupSource != null) {
             this.rosterGroupSource.addPropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
-    }
-
-    /**
-     * Return the column model used by the table wrapped by this class.
-     *
-     * @return the column model used by this table
-     * @deprecated since 4.5.4 without replacement; there is no longer a special
-     * need to provide the specific subclass of
-     * {@link javax.swing.table.TableColumnModel}.
-     */
-    @Deprecated
-    public XTableColumnModel getXTableColumnModel() {
-        return columnModel;
     }
 
     protected void showTableHeaderPopup(MouseEvent e) {

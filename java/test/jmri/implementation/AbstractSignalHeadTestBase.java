@@ -28,7 +28,8 @@ public abstract class AbstractSignalHeadTestBase {
     }
 
     private boolean validAppearance(int appearance, SignalHead s) {
-        return Arrays.asList(s.getValidStates()).contains(SignalHead.RED);
+        for (int item : s.getValidStates() ) if (item == appearance ) return true;
+        return false;
     }
     
     @Test
@@ -127,6 +128,12 @@ public abstract class AbstractSignalHeadTestBase {
         Assert.assertTrue(! (s.isCleared() && s.isAtStop()));
         Assert.assertTrue(! (s.isAtStop() && s.isShowingRestricting()));
         Assert.assertTrue(! (s.isShowingRestricting() && s.isCleared()));
+    }
+
+    @Test
+    public void testGetBeanType(){
+         SignalHead s = getHeadToTest();
+         Assert.assertEquals("bean type",s.getBeanType(),Bundle.getMessage("BeanNameSignalHead"));
     }
 
 }

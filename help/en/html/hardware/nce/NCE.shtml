@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - NCE</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help NCE"><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -59,8 +59,9 @@
     <li>NCE USB Interface via a USB cable</li>
   </ul>They are shown in the JMRI Preferences Connection pane as
   NCE, NCE via network, and NCE USB Interface,
-  respectively.<a name="limitations" id="limitations"></a>
+  respectively.
 
+  <a name="limitations" id="limitations"></a>
   <h2>Limitations</h2>
 
   <p>A very small number of early (pre-2002) NCE Power Pro
@@ -76,8 +77,8 @@
 
   <h2>Connecting</h2>
 
-  <h3>Settings</h3><a name="AIU" id="AIU"></a> <a name="names" id=
-  "names"></a>
+  <h3>Settings</h3><a name="AIU" id="AIU"></a>
+  <a name="names" id="names"></a>
 
   <h4>AIU (Input) Numbering</h4>
   The NCE "AIU" device allows the NCE
@@ -267,8 +268,9 @@
   <p>For reliable operation, we recommend that you disable "AIU
   broadcast", and set the baud rate to 9,600. These are the normal
   defaults for NCE. Both of these parameters can be found in your
-  NCE user's manual under "Setup Command Station".</p><a name=
-  "vianetwork" id="vianetwork"></a>
+  NCE user's manual under "Setup Command Station".</p>
+
+  <a name="vianetwork" id="vianetwork"></a>
 
   <h3>Power Pro (PowerHouse) via Network</h3>Instead of connecting
   a serial cable from your computer to a Power Pro, you can also
@@ -398,7 +400,7 @@
 
     <li>Restart the program. You should be up and running.</li>
 
-    <li>If not see the <a hhref="#troubleShoot">trouble
+    <li>If not see the <a href="#troubleShoot">trouble
     shooting</a> section below.</li>
   </ul>
 
@@ -453,23 +455,25 @@ limitation when connected to a Power Pro.</p> -->
     <dt>All systems:</dt>
 
     <dd>No Turnout MONITORING, No Clock functions.</dd>
+    <dd>No Ops Mode Signal (Extended Accessory) programming.</dd>
     <!--  <dt>Power Cab and SB3:</dt>
         <dd>Can only access accessory addresses between 1 and 250.</dd> -->
 
-    <dt>SB3:</dt>
+    <dt>SB3 and SB5:</dt>
 
-    <dd>No programming track support, operation mode only.</dd>
+    <dd>No programming track support, Ops Mode programming only.</dd>
 
     <dt>Power Pro:</dt>
 
-    <dd>No loco programming</dd>
+    <dd>No programming of any kind.</dd>
+    <dd>No AIU support.</dd>
 
     <dt>AIU Support:</dt>
 
-    <dd>USB below 7.* version, no AIU support</dd>
+    <dd>USB below 7.* version, no AIU support.</dd>
 
     <dd>USB version 7.* and above, system with version 1.65 and
-    above firmware, AIU supported</dd>
+    above firmware, AIU supported.</dd>
   </dl><a name="troubleShoot" id="troubleShoot"></a>
 
   <h2>Troubleshooting</h2>
@@ -645,8 +649,8 @@ limitation when connected to a Power Pro.</p> -->
   <h3>JMRI Help</h3>
 
   <p>If you are having problems, you should try the <a href=
-  "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-  users</a> Yahoo group to contact other JMRI users that can help
+  "https://groups.io/g/jmriusers">JMRI
+  users</a> group to contact other JMRI users that can help
   you out.</p>
 
   <h3>Third Party info</h3>

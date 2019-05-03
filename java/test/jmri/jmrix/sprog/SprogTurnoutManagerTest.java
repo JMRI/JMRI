@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogTurnoutManager
- * </P>
+ * Tests for SprogTurnoutManager.
  *
  * @author Paul Bender Copyright (C) 2016
  */

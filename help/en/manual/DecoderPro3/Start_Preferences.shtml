@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- NEEDS REWRITE -->
 
-  <title>JMRI: DecodePro Preferences</title><!-- Style -->
+  <title>JMRI: DecodePro Preferences</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,7 +16,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -375,54 +377,42 @@
       <table align="center" border="1" cellpadding="2" cellspacing=
       "1" width="80%" summary="Setting preferences">
         <tbody>
-          <tr>
-            <td rowspan="5" width="51%"><strong>Select your
-            preferred appearance for buttons, menus,
-            etc.</strong></td>
+        <tr>
+          <td rowspan="5" width="51%"><strong>Select your preferred
+            appearance for buttons, menus, etc.</strong></td>
 
-            <td width="49%"><input name="radio" id="radio" value=
-            "radio" checked="checked" type="radio"> Metal</td>
-          </tr>
+          <td width="49%">Metal</td>
+        </tr>
 
-          <tr>
-            <td><input name="radio2" id="radio2" value="radio2"
-            type="radio"> Windows Classic</td>
-          </tr>
+        <tr>
+          <td>Windows Classic</td>
+        </tr>
 
-          <tr>
-            <td><input name="radio3" id="radio3" value="radio3"
-            type="radio"> CDEMotif</td>
-          </tr>
+        <tr>
+          <td>CDE/Motif</td>
+        </tr>
 
-          <tr>
-            <td><input name="radio4" id="radio4" value="radio4"
-            type="radio"> Windows</td>
-          </tr>
+        <tr>
+          <td>Windows</td>
+        </tr>
 
-          <tr>
-            <td><input name="radio5" id="radio5" value="radio5"
-            type="radio"> Nimbus</td>
-          </tr>
+        <tr>
+          <td>Nimbus</td>
+        </tr>
 
           <tr>
             <td><strong>Select font size in points</strong></td>
 
             <td>
-              <form name="form" id="form">
-                <select name="jumpMenu" id="jumpMenu" onchange=
-                "MM_jumpMenu('parent',this,0)">
-                  <option>
-                    12
-                  </option>
-                </select> select font size
-              </form>
+              Select font size [12] points
             </td>
           </tr>
 
           <tr>
-            <td colspan="2"><input name="checkbox2" id="checkbox2"
-            type="checkbox"> Use non-standard release event for
-            mouse click?</td>
+            <td>If you experience clicks not working, select</td>
+            <td><input name="checkbox2" id="checkbox2"
+                       type="checkbox"> Use non-standard release event for mouse
+              click?</td>
           </tr>
         </tbody>
       </table>
@@ -540,7 +530,9 @@
             Index</a></p>
           </blockquote>
         </blockquote>
-      </div><!--#include virtual="/Footer" -->
+      </div>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -27,6 +27,7 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
 
         // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
         if (e instanceof java.lang.ThreadDeath) {
+            log.info("Thread has stopped: {}", t.getName());
             return;
         }
 
@@ -45,9 +46,7 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
 
     static protected String generateStackTrace(Throwable e) {
         StringWriter writer = new StringWriter();
-        try (PrintWriter pw = new PrintWriter(writer)) {
-            e.printStackTrace(pw);
-        }
+        e.printStackTrace(new PrintWriter(writer));
         return writer.toString();
     }
 

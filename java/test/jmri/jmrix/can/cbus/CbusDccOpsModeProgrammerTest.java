@@ -11,22 +11,21 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusDccOpsModeProgrammerTest {
-
-    @Test
-    public void testCTor() {
-        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,new TrafficControllerScaffold());
-        Assert.assertNotNull("exists",t);
-    }
+public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,new TrafficControllerScaffold());
+        programmer = t;
     }
 
     @After
+    @Override
     public void tearDown() {
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

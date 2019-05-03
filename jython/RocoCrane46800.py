@@ -3,18 +3,18 @@
 # The crane DCC addresses are set by the user in the main window
 # This is for the older Roco crane (part number 46800 (DCC))or newer ones where the user has not set CV53 to 2
 # Functions are as follows
-	# Rotating the crane:
-	# F0
-	# LED (GREEN) flashes in single-cycle interval
-	# Raising and lowering the Boom:
-	# F1
-	# LED (GREEN) flashes in two-cycle interval
-	# Raising and lowering the crane hook
-	# F0 F1
-	# LED (GREEN) flashes in three-cycle interval
-	# Additional function Magnet, Bucket or Spotlight
-	# Throttle Rev and 1 speed step = OFF, Fwd and 1 speed step = ON
-	# LED may light up RED
+    # Rotating the crane:
+    # F0
+    # LED (GREEN) flashes in single-cycle interval
+    # Raising and lowering the Boom:
+    # F1
+    # LED (GREEN) flashes in two-cycle interval
+    # Raising and lowering the crane hook
+    # F0 F1
+    # LED (GREEN) flashes in three-cycle interval
+    # Additional function Magnet, Bucket or Spotlight
+    # Throttle Rev and 1 speed step = OFF, Fwd and 1 speed step = ON
+    # LED may light up RED
 #
 # Author: Nelson Allison, copyright 2009
 # With help from Bob Jacobsen
@@ -22,6 +22,7 @@
 
 import jmri
 import java
+import java.awt
 import javax.swing
 
 class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
@@ -32,10 +33,10 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
 
         self.status.text = "Getting throttle"
         Addr = int(self.Address.text)
-	if (Addr > 100) :
-	    long = True
-	else :
-	    long = False
+    if (Addr > 100) :
+        long = True
+    else :
+        long = False
         self.Throttle = self.getThrottle(Addr, long)
         if (self.Throttle == None) :
              print "Couldn't assign throttle!"
@@ -57,7 +58,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.start()
         self.Address.enabled = False
         self.StartButton.enabled = False
-	self.ReleaseButton.enabled = True
+    self.ReleaseButton.enabled = True
         self.AccessoryButton.enabled = True
         self.RotateLeftButton.enabled = True
         self.RotateRightButton.enabled = True
@@ -68,11 +69,11 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         return
 
     def whenReleaseButtonClicked(self,event) :
-	self.Throttle.release()
+    self.Throttle.release(None)
         self.status = javax.swing.JLabel("Enter address & click start")
         self.Address.enabled = True
         self.StartButton.enabled = True
-	self.ReleaseButton.enabled = False
+    self.ReleaseButton.enabled = False
         self.AccessoryButton.enabled = False
         self.RotateLeftButton.enabled = False
         self.RotateRightButton.enabled = False
@@ -80,97 +81,97 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.BoomUpButton.enabled = False
         self.HookDownButton.enabled = False
         self.HookUpButton.enabled = False
-	return
-	
+    return
+    
     def whenAccessoryButtonClicked(self,event) :
         if (self.AccessoryButton.isSelected()) :
             self.Throttle.setF0(False)
-	    self.Throttle.setF1(False)
-	    self.Throttle.setIsForward(True)
-	    self.Throttle.speedSetting = 0.1
-	    self.Throttle.speedSetting = 0.
+        self.Throttle.setF1(False)
+        self.Throttle.setIsForward(True)
+        self.Throttle.speedSetting = 0.1
+        self.Throttle.speedSetting = 0.
             self.status.text = "Accessory on"
         else :
             self.Throttle.setIsForward(False)
-	    self.Throttle.setF0(False)
-	    self.Throttle.setF1(False)
-	    self.Throttle.speedSetting = 0.1
-	    self.Throttle.speedSetting = 0.
+        self.Throttle.setF0(False)
+        self.Throttle.setF1(False)
+        self.Throttle.speedSetting = 0.1
+        self.Throttle.speedSetting = 0.
             self.status.text = "Accessory off"
         return
 
     def startRotateRight(self,event) :
-	self.Throttle.setF1(False)
+    self.Throttle.setF1(False)
         self.Throttle.setF0(True)
-	self.Throttle.setIsForward(True)
-	self.Throttle.speedSetting = 0.5
+    self.Throttle.setIsForward(True)
+    self.Throttle.speedSetting = 0.5
         self.status.text = "Rotating Right"
         return
     def endRotateRight(self,event) :
-	self.Throttle.speedSetting = 0.
+    self.Throttle.speedSetting = 0.
         self.status.text = "Rotation Stopped"
         return
 
     def startRotateLeft(self,event) :
         self.Throttle.setF1(False)
-	self.Throttle.setF0(True)
+    self.Throttle.setF0(True)
         self.Throttle.setIsForward(False)
-	self.Throttle.speedSetting = 0.5
-	self.status.text = "Rotating Left"
+    self.Throttle.speedSetting = 0.5
+    self.status.text = "Rotating Left"
         return
     def endRotateLeft(self,event) :
- 	self.Throttle.speedSetting = 0.
+    self.Throttle.speedSetting = 0.
         self.status.text = "Rotation Stopped"
         return
 
     def startBoomUp(self,event) :
         self.Throttle.setF0(False)
-	self.Throttle.setF1(True)
-	self.Throttle.setIsForward(True)
-	self.Throttle.speedSetting = 0.5
+    self.Throttle.setF1(True)
+    self.Throttle.setIsForward(True)
+    self.Throttle.speedSetting = 0.5
         self.status.text = "Rasing Boom"
         return
     def endBoomUp(self,event) :
-	self.Throttle.speedSetting = 0.
+    self.Throttle.speedSetting = 0.
         self.status.text = "Boom Stopped"
         return
 
     def startBoomDown(self,event) :
         self.Throttle.setF0(False)
-	self.Throttle.setF1(True)
-	self.Throttle.setIsForward(False)
-	self.Throttle.speedSetting = 0.5
+    self.Throttle.setF1(True)
+    self.Throttle.setIsForward(False)
+    self.Throttle.speedSetting = 0.5
         self.status.text = "Lowering Boom"
         return
     def endBoomDown(self,event) :
-	self.Throttle.speedSetting = 0.
+    self.Throttle.speedSetting = 0.
         self.status.text = "Boom Stopped"
         return
-	
+    
     def startHookUp(self,event) :
         self.Throttle.setF0(True)
-	self.Throttle.setF1(True)
-	self.Throttle.setIsForward(True)
-	self.Throttle.speedSetting = 0.5
+    self.Throttle.setF1(True)
+    self.Throttle.setIsForward(True)
+    self.Throttle.speedSetting = 0.5
         self.status.text = "Rasing Hook"
         return
     def endHookUp(self,event) :
-	self.Throttle.speedSetting = 0.
+    self.Throttle.speedSetting = 0.
         self.status.text = "Hook Stopped"
         return
 
     def startHookDown(self,event) :
-	self.Throttle.setF0(True)
-	self.Throttle.setF1(True)
-	self.Throttle.setIsForward(False)
-	self.Throttle.speedSetting = 0.5
+    self.Throttle.setF0(True)
+    self.Throttle.setF1(True)
+    self.Throttle.setIsForward(False)
+    self.Throttle.speedSetting = 0.5
         self.status.text = "Lowering Hook"
         return
     def endHookDown(self,event) :
         self.Throttle.speedSetting = 0.
         self.status.text = "Hook Stopped"
         return
-	
+    
     # routine to show the panel, starting the whole process     
     def setup(self):
         # create a frame to hold the button, set up for nice layout
@@ -183,10 +184,10 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
     # create the buttons
         self.StartButton = javax.swing.JButton("Start")
         self.StartButton.actionPerformed = self.whenStartButtonClicked
-	
-	self.ReleaseButton = javax.swing.JButton("Release")
-	self.ReleaseButton.actionPerformed = self.whenReleaseButtonClicked
-	
+    
+    self.ReleaseButton = javax.swing.JButton("Release")
+    self.ReleaseButton.actionPerformed = self.whenReleaseButtonClicked
+    
         self.AccessoryButton = javax.swing.JToggleButton("Accessory")
         self.AccessoryButton.itemStateChanged = self.whenAccessoryButtonClicked
     
@@ -213,8 +214,8 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.HookUpButton = javax.swing.JButton("Hook Up")
         self.HookUpButton.mousePressed = self.startHookUp
         self.HookUpButton.mouseReleased = self.endHookUp
-	
-	self.ReleaseButton.enabled = False
+    
+    self.ReleaseButton.enabled = False
         self.AccessoryButton.enabled = False
         self.RotateLeftButton.enabled = False
         self.RotateRightButton.enabled = False
@@ -227,35 +228,35 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         self.status = javax.swing.JLabel("Enter address & click start")
         
         # Put contents in frame and display
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         f.contentPane.add(temppanel)
-	
+    
         # put the text field on a line preceded by a label
         temppanel = javax.swing.JPanel()
         temppanel.add(javax.swing.JLabel("Address"))
         temppanel.add(self.Address)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())  
         temppanel.add(self.StartButton)
-	temppanel.add(self.ReleaseButton)
+    temppanel.add(self.ReleaseButton)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.RotateLeftButton)
         temppanel.add(self.RotateRightButton)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.BoomDownButton)
         temppanel.add(self.BoomUpButton)
         f.contentPane.add(temppanel)
-	
+    
         temppanel = javax.swing.JPanel()
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.HookDownButton)
@@ -266,7 +267,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel.setLayout(java.awt.FlowLayout())
         temppanel.add(self.AccessoryButton)
         f.contentPane.add(temppanel)
-	
+    
         f.contentPane.add(self.status)
         f.pack()
         f.show()

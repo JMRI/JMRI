@@ -1,0 +1,73 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-layoutBlock-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"layoutBlock\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the layoutBlock"
+        },
+        "userName": {
+            "type": "string",
+            "description": "User name of the layoutBlock"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the layoutBlock"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the layoutBlock",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the layoutBlock"
+        },
+        "blockColor": {
+            "type": "string",
+            "description": "Color of block on panel"
+        },
+        "trackColor": {
+            "type": "string",
+            "description": "Color of track in block on panel"
+        },
+        "occupiedColor": {
+            "type": "string",
+            "description": "Color of track in block on panel when occupied"
+        },
+        "extraColor": {
+            "type": "string",
+            "description": "Extra color in block on panel"
+        },
+        "useExtraColor": {
+            "type": "boolean",
+            "description": "\"true\" is extra colors are to be used; \"false\" otherwise"
+        },
+        "occupancySensor": {
+            "type": ["string", "null"],
+            "description": "Name of occupancy sensor for block"
+        },
+        "occupiedSense": {
+            "type": "integer",
+            "description": "State of occupancy sensor for block"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "state", "blockColor", "trackColor", "occupiedColor", "extraColor", "useExtraColor", "occupancySensor", "occupiedSense"]
+}

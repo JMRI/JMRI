@@ -30,8 +30,7 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     }
 
     protected void register() {
-        /*log.error("unexpected call to register()");
-         new Exception().printStackTrace();*/
+        //log.error("unexpected call to register()", new Exception());
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(this);

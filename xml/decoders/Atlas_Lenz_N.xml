@@ -13,10 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20180216"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140309"/>
   <version author="Alain Le Marchand" version="1" lastUpdated="20140308"/>
   <!-- Version 1 - Created from Lenz_LE077XF.xml v7.1 - Atlas branded versions of LE062XF and LE063FX (Alain Le Marchand) -->
   <!-- Version 1.1 - Change description for light options to match reality - unclear manual from Atlas - Set default Manufacturer address to 127 = Atlas (Alain Le Marchand) -->
+  <!-- Version 2 - Implement Reset properly (Alain Le Marchand) -->
   <decoder>
     <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="45" highVersionID="45" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf">
       <model model="LE062XF by Lenz (Part #490299)" numOuts="2">
@@ -62,11 +64,6 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
-      </variable>
-      <variable item="Manufacturer ID - Reset" CV="8" default="99">
-        <decVal/>
-        <label>Manufacturer ID - Reset</label>
-        <label xml:lang="it">ID Costruttore</label>
       </variable>
       <!-- Deleted all CV 13 references-->
       <variable CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
@@ -246,15 +243,16 @@
         <label xml:lang="it">F8 controlla Uscita D</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs except speed table" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
+      </factReset>
+    </resets>
   </decoder>
   <pane>
     <name>Lenz</name>

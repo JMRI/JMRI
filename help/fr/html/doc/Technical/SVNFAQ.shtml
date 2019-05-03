@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html> <head>
 <title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Translated by Herv&#232; Blorec 2016-08-1 -->
 <html lang="fr">
 <head>
@@ -10,7 +9,7 @@
 
   <title>
   <!-- Translated by Herv&#233; Blorec 2013-09-08 --></title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code SVN Subversion FAQ">
   <meta http-equiv="Content-Type" content=

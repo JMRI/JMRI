@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogThrottleManager
- * </P>
+ * Tests for SprogThrottleManager.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
@@ -24,7 +23,7 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
 
@@ -37,6 +36,7 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     @After
     public void tearDown() {
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

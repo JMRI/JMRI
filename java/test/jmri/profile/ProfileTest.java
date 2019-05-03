@@ -1,6 +1,5 @@
 package jmri.profile;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
@@ -27,12 +26,12 @@ public class ProfileTest {
 
     @BeforeClass
     public static void setUpClass() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     @Before
@@ -43,6 +42,18 @@ public class ProfileTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testProfileWithExtension() {
+        try {
+            File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
+            Profile instance = new Profile("test", "test", profileFolder);
+            Assert.assertEquals("Name has no extension", "test", instance.getName());
+            Assert.assertEquals("Path name has extension", "test" + Profile.EXTENSION, instance.getPath().getName());
+        } catch (IOException | IllegalArgumentException ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
     /**
      * Test of save method, of class Profile.
      *
@@ -54,7 +65,7 @@ public class ProfileTest {
         Profile instance = new Profile("test", "test", profileFolder);
         instance.setName("saved");
         instance.save();
-        Assert.assertEquals("saved", (new ProfileProperties(profileFolder)).get(Profile.NAME, true));
+        Assert.assertEquals("saved", (new ProfileProperties(instance.getPath())).get(Profile.NAME, true));
     }
 
     /**
@@ -94,7 +105,7 @@ public class ProfileTest {
         try {
             File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
             Profile instance = new Profile("test", "test", profileFolder);
-            String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
+            String id = (new ProfileProperties(instance.getPath())).get(Profile.ID, true);
             Assert.assertEquals(id, instance.getId());
         } catch (IOException | IllegalArgumentException ex) {
             Assert.fail(ex.toString());
@@ -108,8 +119,10 @@ public class ProfileTest {
     public void testGetPath() {
         try {
             File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+            File profileExtFolder = new File(profileFolder.getParentFile(), "test" + Profile.EXTENSION);
             Profile instance = new Profile("test", "test", profileFolder);
-            Assert.assertEquals(profileFolder, instance.getPath());
+            Assert.assertNotEquals(profileFolder, instance.getPath());
+            Assert.assertEquals(profileExtFolder, instance.getPath());
         } catch (IOException | IllegalArgumentException ex) {
             Assert.fail(ex.toString());
         }
@@ -135,7 +148,7 @@ public class ProfileTest {
     @Test
     public void testHashCode() {
         try {
-            File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+            File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
             Profile instance = new Profile("test", "test", profileFolder);
             String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
             Assert.assertEquals(71 * 7 + id.hashCode(), instance.hashCode());
@@ -148,6 +161,7 @@ public class ProfileTest {
      * Test of equals method, of class Profile.
      */
     @Test
+    @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to Profile
     public void testEquals() {
         try {
             File rootFolder = folder.newFolder(Profile.PROFILE);
@@ -156,7 +170,7 @@ public class ProfileTest {
             File profileFolder3 = new File(rootFolder, "test3");
             Profile instance = new Profile("test", "test", profileFolder);
             Profile instance2 = new Profile("test", "test2", profileFolder2);
-            FileUtil.copy(profileFolder, profileFolder3);
+            FileUtil.copy(instance.getPath(), profileFolder3);
             Profile instance3 = new Profile(profileFolder3);
             Assert.assertFalse(instance.equals(null));
             Assert.assertFalse(instance.equals(new String()));
@@ -187,7 +201,7 @@ public class ProfileTest {
     @Test
     public void testGetUniqueId() {
         try {
-            File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+            File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
             Profile instance = new Profile("test", "test", profileFolder);
             String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
             id = id.substring(id.lastIndexOf(".") + 1);
@@ -222,7 +236,7 @@ public class ProfileTest {
     public void testInProfile() {
         try {
             File rootFolder = folder.newFolder(Profile.PROFILE);
-            File profileFolder = new File(rootFolder, "test");
+            File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
             File innerFolder = new File(profileFolder, "test");
             innerFolder.mkdirs();
             File rootFolder2 = folder.newFolder(Profile.PATH);
@@ -241,7 +255,7 @@ public class ProfileTest {
     public void testIsProfile() {
         try {
             File rootFolder = folder.newFolder(Profile.PROFILE);
-            File profileFolder = new File(rootFolder, "test");
+            File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
             new Profile("test", "test", profileFolder);
             File innerFolder = new File(profileFolder, "test");
             innerFolder.mkdirs();
@@ -265,11 +279,12 @@ public class ProfileTest {
             File profileFolder3 = new File(rootFolder, "test3");
             Profile instance = new Profile("test", "test", profileFolder);
             Profile instance2 = new Profile("test", "test2", profileFolder2);
-            FileUtil.copy(profileFolder, profileFolder3);
+            FileUtil.copy(instance.getPath(), profileFolder3);
             Profile instance3 = new Profile(profileFolder3);
-            Assert.assertEquals(-1, instance.compareTo(instance2));
+            // the contract for .compareTo is to return <= -1, 0, >= 1
+            Assert.assertTrue(-1 >= instance.compareTo(instance2));
             Assert.assertEquals(0, instance.compareTo(instance3));
-            Assert.assertEquals(1, instance2.compareTo(instance));
+            Assert.assertTrue(1 <= instance2.compareTo(instance));
         } catch (IOException | IllegalArgumentException ex) {
             Assert.fail(ex.toString());
         }

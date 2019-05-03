@@ -3,10 +3,7 @@ package jmri.jmrit.symbolicprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrit.progsupport.ProgModePane;
 import javax.swing.JLabel;
 
@@ -26,8 +23,8 @@ public class KnownLocoSelPaneTest {
 
     @Test
     public void testBooleanCTor() {
-        JLabel jl = new JLabel("test selector");
-        ProgModePane pmp = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
+        new JLabel("test selector");
+        new ProgModePane(javax.swing.BoxLayout.X_AXIS);
         KnownLocoSelPane t = new KnownLocoSelPane(false);
         Assert.assertNotNull("exists",t);
     }
@@ -35,15 +32,17 @@ public class KnownLocoSelPaneTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.InstanceManager.setDefault(ProgrammerConfigManager.class,new ProgrammerConfigManager());
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPaneTest.class);

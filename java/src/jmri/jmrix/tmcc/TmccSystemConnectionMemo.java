@@ -97,7 +97,6 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Tells which managers this class provides.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -112,13 +111,13 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         }
 
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     /**
      * Provide manager by class.
      */
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
@@ -132,7 +131,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     private ThrottleManager throttleManager;

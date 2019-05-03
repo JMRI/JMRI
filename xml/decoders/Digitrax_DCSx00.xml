@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2015 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License    -->
+<!-- for more details. -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
+                showEmptyPanes="no">
+    <version author="Bob Milhaupt" version="1" lastUpdated="20180106" />
+    <decoder>
+        <family name="Command Stations" mfg="Digitrax">
+            <model model="DCS100"/>
+            <model model="DCS200"/>
+        </family>
+        <programming direct="no" paged="no" register="no" ops="no">
+            <mode>LOCONETCSOPSWMODE</mode>
+        </programming>
+        <variables>
+            <variable CV="csOpSw.01" item="OpSw 1" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw01</label>
+                <tooltip>OpSw01</tooltip>
+            </variable>
+            <variable CV="csOpSw.02" item="OpSw 2" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Command Station *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Booster</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Device acts as a</label>
+                <tooltip>OpSw02</tooltip>
+            </variable>
+            <variable CV="csOpSw.03" item="OpSw 3" default="0"
+                      tooltip="OpSw03">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>AutoReversing Mode is</label>
+                <tooltip>OpSw03</tooltip>
+            </variable>
+            <variable CV="csOpSw.04" item="OpSw 4" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw04</label>
+                <tooltip>OpSw04</tooltip>
+            </variable>
+            <variable CV="csOpSw.05" item="OpSw 5" default="0"
+                      tooltip="OpSw05" include="DCS100">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Does not act as LocoNet Master (not recommended setting!)*</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Acts as a LocoNet Master (Recommended setting!)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>DCS100</label>
+                <tooltip>OpSw05</tooltip>
+            </variable>
+            <variable CV="csOpSw.05" item="OpSw 5" default="0"
+                      tooltip="OpSw05" include="DCS200">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Does not act as LocoNet Master (not recommended setting!)*</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Acts as a LocoNet Master (Recommended setting!)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>DCS200</label>
+                <tooltip>OpSw05</tooltip>
+            </variable>
+            <variable CV="csOpSw.06" item="OpSw 6" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw06</label>
+                <tooltip>OpSw06</tooltip>
+            </variable>
+            <variable CV="csOpSw.07" item="OpSw 7" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw07</label>
+                <tooltip>OpSw07</tooltip>
+            </variable>
+            <variable CV="csOpSw.08" item="OpSw 8" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw08</label>
+                <tooltip>OpSw08</tooltip>
+            </variable>
+            <variable CV="csOpSw.09" item="OpSw 9" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>Basic Motorola Trinary Switch Control mode is </label>
+                <tooltip>OpSw09 (See original command station documentation to determine if this setting is supported)</tooltip>
+            </variable>
+            <variable CV="csOpSw.10" item="OpSw 10" default="0">
+                <qualifier>
+                    <variableref>OpSw 9</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>Expanded Motorola Trinary Switch Range is </label>
+                <tooltip>OpSw10 (See original command station documentation to determine if this setting is supported)</tooltip>
+            </variable>
+            <variable CV="csOpSw.11" item="OpSw 11" default="0">
+                <qualifier>
+                    <variableref>OpSw 9</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice>
+                        <choice>Normal *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Extended</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Motorola Trinary Switch Control Duration is</label>
+                <tooltip>OpSw11 (See original command station documentation to determine if this setting is supported)</tooltip>
+            </variable>
+            <variable CV="csOpSw.12" item="OpSw 12" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>Motorola Trinary Locomotive Control for addresses 1 thru 80 is </label>
+                <tooltip>OpSw12 (See original command station documentation to determine if this setting is supported)</tooltip>
+            </variable>
+            <variable CV="csOpSw.14" item="OpSw 14" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Command Station Slot "Purge"</label>
+                <tooltip>OpSw14</tooltip>
+            </variable>
+            <variable CV="csOpSw.13" item="OpSw 13" default="0">
+                <qualifier>
+                    <variableref>OpSw 14</variableref>
+                    <relation>eq</relation>
+                    <value>0</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice>
+                        <choice>200 seconds *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>600 seconds</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Command Station Slot "Purge" Time</label>
+                <tooltip>OpSw13</tooltip>
+            </variable>
+            <variable CV="csOpSw.15" item="OpSw 15" default="0">
+                <qualifier>
+                    <variableref>OpSw 14</variableref>
+                    <relation>eq</relation>
+                    <value>0</value>
+                </qualifier>
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>"Purge" forces loco speed to 0</label>
+                <tooltip>OpSw15</tooltip>
+            </variable>
+            <variable CV="csOpSw.16" item="OpSw 16" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw16</label>
+                <tooltip>OpSw16</tooltip>
+            </variable>
+            <variable CV="csOpSw.17" item="OpSw 17" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Automatic Advanced Decoder-Assisted consisting is</label>
+                <tooltip>OpSw17</tooltip>
+            </variable>
+            <variable CV="csOpSw.18" item="OpSw 18" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>1/8 second *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>1/2 second</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Short-Circuit Shutdown Time is</label>
+                <tooltip>OpSw18</tooltip>
+            </variable>
+            <variable CV="csOpSw.19" item="OpSw 19" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw19</label>
+                <tooltip>OpSw19</tooltip>
+            </variable>
+            <variable CV="csOpSw.20" item="OpSw 20" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Address 00 (Analog stretching) is</label>
+                <tooltip>OpSw20</tooltip>
+            </variable>
+            <variable CV="csOpSw.21" item="OpSw 21" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            </variable>
+            <variable CV="csOpSw.22" item="OpSw 22" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            </variable>
+            <variable CV="csOpSw.23" item="OpSw 23" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            </variable>
+            <variable item="Default New Loco Mode">
+                <compositeVal>
+                    <compositeChoice choice="128 Speed-steps (t/t/t)*">
+                        <compositeSetting label="OpSw 21" value="0"/>
+                        <compositeSetting label="OpSw 22" value="0"/>
+                        <compositeSetting label="OpSw 23" value="0"/>
+                    </compositeChoice>
+                    <compositeChoice choice="128 Speed-steps (&quot;FX-mode&quot; advanced consisting) (t/t/c)">
+                        <compositeSetting label="OpSw 21" value="0"/>
+                        <compositeSetting label="OpSw 22" value="0"/>
+                        <compositeSetting label="OpSw 23" value="1"/>
+                    </compositeChoice>
+                    <compositeChoice choice="14 Speed-steps (c/t/t)">
+                        <compositeSetting label="OpSw 21" value="1"/>
+                        <compositeSetting label="OpSw 22" value="0"/>
+                        <compositeSetting label="OpSw 23" value="0"/>
+                    </compositeChoice>
+                    <compositeChoice choice="28 Speed-steps (c/c/t)">
+                        <compositeSetting label="OpSw 21" value="1"/>
+                        <compositeSetting label="OpSw 22" value="1"/>
+                        <compositeSetting label="OpSw 23" value="0"/>
+                    </compositeChoice>
+                    <compositeChoice choice="Motorola Trinary (t/c/t)">
+                        <compositeSetting label="OpSw 21" value="0"/>
+                        <compositeSetting label="OpSw 22" value="1"/>
+                        <compositeSetting label="OpSw 23" value="0"/>
+                    </compositeChoice>
+                    <compositeChoice choice="Undefined (c/t/c)">
+                        <compositeSetting label="OpSw 21" value="1"/>
+                        <compositeSetting label="OpSw 22" value="0"/>
+                        <compositeSetting label="OpSw 23" value="1"/>
+                    </compositeChoice>
+                    <compositeChoice choice="Undefined (t/c/c)">
+                        <compositeSetting label="OpSw 21" value="0"/>
+                        <compositeSetting label="OpSw 22" value="1"/>
+                        <compositeSetting label="OpSw 23" value="1"/>
+                    </compositeChoice>
+                    <compositeChoice choice="28 Speed-Steps (&quot;FX-mode&quot; advanced consisting) (c/c/c)">
+                        <compositeSetting label="OpSw 21" value="1"/>
+                        <compositeSetting label="OpSw 22" value="1"/>
+                        <compositeSetting label="OpSw 23" value="1"/>
+                    </compositeChoice>
+                </compositeVal>
+                <label>Global System Loco "Speed-step Mode" Default for New Loco Acquisition</label>
+                <tooltip>OpSw21, OpSw22, OpSw23</tooltip>
+            </variable>
+            <variable CV="csOpSw.24" item="OpSw 24" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw24</label>
+                <tooltip>OpSw24</tooltip>
+            </variable>
+            <variable CV="csOpSw.25" item="OpSw 25" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Aliasing is</label>
+                <tooltip>OpSw25</tooltip>
+            </variable>
+            <variable CV="csOpSw.26" item="OpSw 26" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>Command Station "Routes" are</label>
+                <tooltip>OpSw26</tooltip>
+            </variable>
+            <variable CV="csOpSw.27" item="OpSw 27" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>are forwarded to the DCC Track Signal *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>are not forwarded to the DCC track signal</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Throttle Switch Control Messages</label>
+                <tooltip>OpSw27 - the "Bushby" bit</tooltip>
+            </variable>
+            <variable CV="csOpSw.28" item="OpSw 28" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Switch and Sensor Interrogation Messages at Power-Up are</label>
+                <tooltip>OpSw28</tooltip>
+            </variable>
+            <variable CV="csOpSw.29" item="OpSw 29" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw29</label>
+                <tooltip>OpSw29</tooltip>
+            </variable>
+            <variable CV="csOpSw.30" item="OpSw 30" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw30</label>
+                <tooltip>OpSw30</tooltip>
+            </variable>
+            <variable CV="csOpSw.31" item="OpSw 31" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>At Normal Rate *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>At Slowed Rate if not in Motorola Trinary Mode</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Switch Messages are forwarded to the DCC Track Signal</label>
+                <tooltip>OpSw31</tooltip>
+            </variable>
+            <variable CV="csOpSw.32" item="OpSw 32" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw32</label>
+                <tooltip>OpSw32</tooltip>
+            </variable>
+            <variable CV="csOpSw.33" item="OpSw 33" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>will not restore to prior state at power-on *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>will restore to prior state at power-on</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Track Power</label>
+                <tooltip>OpSw33</tooltip>
+            </variable>
+            <variable CV="csOpSw.34" item="OpSw 34" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Restores to "Idle" state *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Restores to "Run" state if was in "Run" state at power-down</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Track Power</label>
+                <tooltip>OpSw34</tooltip>
+            </variable>
+            <variable CV="csOpSw.35" item="OpSw 35" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw35</label>
+                <tooltip>OpSw35</tooltip>
+            </variable>
+            <variable CV="csOpSw.36" item="OpSw 36" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Normal *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Clear all mobile decoder and consist info (see Note)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>OpSw36</label>
+                <tooltip>OpSw36 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
+            </variable>
+            <variable CV="csOpSw.37" item="OpSw 37" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Normal *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Clear all Command Station "Routes" (see Note)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>OpSw37</label>
+                <tooltip>OpSw37 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
+            </variable>
+            <variable CV="csOpSw.38" item="OpSw 38" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Normal *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Clear the Command Station's Loco "Roster" (see Note)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>OpSw38</label>
+                <tooltip>OpSw38 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
+            </variable>
+            <variable CV="csOpSw.39" item="OpSw 39" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Normal *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Clears all Command Station Internal memory and status (see Note)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>OpSw39</label>
+                <tooltip>OpSw39 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
+            </variable>
+            <variable CV="csOpSw.40" item="OpSw 40" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw40</label>
+                <tooltip>OpSw40</tooltip>
+            </variable>
+            <variable CV="csOpSw.41" item="OpSw 41" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>Click on LocoNet Activity is</label>
+                <tooltip>OpSw41</tooltip>
+            </variable>
+            <variable CV="csOpSw.42" item="OpSw 42" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Beep on Loco "Purge" is </label>
+                <tooltip>OpSw42</tooltip>
+            </variable>
+            <variable CV="csOpSw.43" item="OpSw 43" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>LocoNet Update of Command Station's Track Status is</label>
+                <tooltip>OpSw43</tooltip>
+            </variable>
+            <variable CV="csOpSw.44" item="OpSw 44" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
+                <label>Expand slot count from 22 to 120</label>
+                <tooltip>OpSw42</tooltip>
+            </variable>
+            <variable CV="csOpSw.45" item="OpSw 45" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Command Station Switch State Reply is</label>
+                <tooltip>OpSw45</tooltip>
+            </variable>
+            <variable CV="csOpSw.46" item="OpSw 46" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw46</label>
+                <tooltip>OpSw46</tooltip>
+            </variable>
+            <variable CV="csOpSw.47" item="OpSw 47" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>only used for Programming *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>a "Brake Generator" when not actively programming</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Programming track output is</label>
+                <tooltip>OpSw47</tooltip>
+            </variable>
+            <variable CV="csOpSw.48" item="OpSw 48" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw48</label>
+                <tooltip>OpSw48</tooltip>
+            </variable>
+            <variable CV="csOpSw.49" item="OpSw 49" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw49</label>
+                <tooltip>OpSw49</tooltip>
+            </variable>
+            <variable CV="csOpSw.50" item="OpSw 50" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw50</label>
+                <tooltip>OpSw50</tooltip>
+            </variable>
+            <variable CV="csOpSw.51" item="OpSw 51" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw51</label>
+                <tooltip>OpSw51</tooltip>
+            </variable>
+            <variable CV="csOpSw.52" item="OpSw 52" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw52</label>
+                <tooltip>OpSw52</tooltip>
+            </variable>
+            <variable CV="csOpSw.53" item="OpSw 53" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw53</label>
+                <tooltip>OpSw53</tooltip>
+            </variable>
+            <variable CV="csOpSw.54" item="OpSw 54" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw54</label>
+                <tooltip>OpSw54</tooltip>
+            </variable>
+            <variable CV="csOpSw.55" item="OpSw 55" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw55</label>
+                <tooltip>OpSw55</tooltip>
+            </variable>
+            <variable CV="csOpSw.56" item="OpSw 56" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw56</label>
+                <tooltip>OpSw56</tooltip>
+            </variable>
+            <variable CV="csOpSw.57" item="OpSw 57" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw57</label>
+                <tooltip>OpSw57</tooltip>
+            </variable>
+            <variable CV="csOpSw.58" item="OpSw 58" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw58</label>
+                <tooltip>OpSw58</tooltip>
+            </variable>
+            <variable CV="csOpSw.59" item="OpSw 59" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw59</label>
+                <tooltip>OpSw59</tooltip>
+            </variable>
+            <variable CV="csOpSw.60" item="OpSw 60" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw60</label>
+                <tooltip>OpSw60</tooltip>
+            </variable>
+            <variable CV="csOpSw.61" item="OpSw 61" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw61</label>
+                <tooltip>OpSw61</tooltip>
+            </variable>
+            <variable CV="csOpSw.62" item="OpSw 62" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw62</label>
+                <tooltip>OpSw62</tooltip>
+            </variable>
+            <variable CV="csOpSw.63" item="OpSw 63" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw63</label>
+                <tooltip>OpSw63</tooltip>
+            </variable>
+            <variable CV="csOpSw.64" item="OpSw 64" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw64</label>
+                <tooltip>OpSw64</tooltip>
+            </variable>
+        </variables>
+    </decoder>
+    <pane>
+        <name>Basic</name>
+        <column>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Basic Operating Mode&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 2"/>
+            <display item="OpSw 3"/>
+            <display item="OpSw 5"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Slot "Purging" Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 14"/>
+            <display item="OpSw 13"/>
+            <display item="OpSw 15"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Locomotive and Slot Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 17"/>
+            <display item="OpSw 44"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    New Locomotive Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="Default New Loco Mode"/>
+            <display item="OpSw 25"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Command Station Routes Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 26"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Switch Control Message Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 27"/>
+            <display item="OpSw 28"/>
+            <display item="OpSw 31"/>
+            <display item="OpSw 45"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Command Station Sounds Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 41"/>
+            <display item="OpSw 42"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    LocoNet Track Status Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 43"/>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+                &lt;strong&gt;* - Indicates the "Factory Default" setting
+                &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+        </column>
+    </pane>
+    <pane>
+        <name>Track Outputs Control</name>
+        <column>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Track Output Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 18"/>
+            <display item="OpSw 20"/>
+            <display item="OpSw 33"/>
+            <display item="OpSw 34"/>
+            <separator/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
+                    Programming Track Output Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 47"/>
+        </column>
+    </pane>
+    <pane>
+        <name>Motorola "Trinary" Mode</name>
+        <column>
+            <label>
+                <text>These OpSw settings specifically relate to "Motorola Mode" signalling on the DCC Track Signal</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Motorola Mode for Switch Control&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 9"/>
+            <display item="OpSw 10"/>
+            <display item="OpSw 11"/>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Motorola Mode for Locomotive Control&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 12"/>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+                &lt;strong&gt;* - Indicates the "Factory Default" setting
+                &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;/strong&gt;&lt;h3&gt;NOTE:&lt;/h3&gt;
+                    Some command station versions may not support
+                    "Motorola Mode* Switch and Locomotive&lt;p&gt;
+                    modes.  Consult original device documentation.
+                    &lt;/html&gt;</text>
+            </label>
+        </column>
+    </pane>
+    <pane>
+        <name>Internal Storage Clearing</name>
+        <column>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+                &lt;h2&gt;&lt;strong&gt;Command Station Internal Storage Clearing Functions
+                &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="OpSw 36"/>
+            <display item="OpSw 37"/>
+            <display item="OpSw 38"/>
+            <display item="OpSw 39"/>
+            <label>
+                <text>&lt;html&gt;&lt;/strong&gt;&lt;h3&gt;NOTE:&lt;/h3&gt;
+                    In order for these operations to take effect, it may be necessary to
+                    remove command&lt;p&gt;
+                    station power or briefly place the command station
+                    into "OpSw" mode via its &lt;p&gt;
+                    front-panel switch.&lt;p&gt;
+                    &lt;p&gt;
+                    Note also that JMRI's LocoNet Slot Monitor does not recognize the
+                    Command Station OpSw&lt;p&gt;
+                    operations which can clear the slots.  It is best to shut down
+                    JMRI and re-start after&lt;p&gt;
+                    clearing the Command Station slot table via
+                    OpSw 36 or OpSw39 mechanisms.&lt;/html&gt;</text>
+            </label>
+        </column>
+    </pane>
+    <pane>
+        <name>Reserved OpSws</name>
+        <column>
+            <label>
+                <text>These OpSw ought not be changed from factory default settings.</text>
+            </label>
+            <row>
+                <column>
+                    <display item="OpSw 1"/>
+                    <display item="OpSw 4"/>
+                    <display item="OpSw 6"/>
+                    <display item="OpSw 7"/>
+                    <display item="OpSw 19"/>
+                    <display item="OpSw 29"/>
+                </column>
+                <column>
+                    <display item="OpSw 30"/>
+                    <display item="OpSw 35"/>
+                    <display item="OpSw 46"/>
+                    <display item="OpSw 49"/>
+                    <display item="OpSw 50"/>
+                    <display item="OpSw 51"/>
+                </column>
+                <column>
+                    <display item="OpSw 52"/>
+                    <display item="OpSw 53"/>
+                    <display item="OpSw 54"/>
+                    <display item="OpSw 55"/>
+                    <display item="OpSw 57"/>
+                    <display item="OpSw 58"/>
+                </column>
+                <column>
+                    <display item="OpSw 59"/>
+                    <display item="OpSw 60"/>
+                    <display item="OpSw 61"/>
+                    <display item="OpSw 62"/>
+                    <display item="OpSw 63"/>
+                </column>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>The OpSw settings below cannot be changed by this tool.</text>
+            </label>
+            <row>
+                <column>
+                    <display item="OpSw 8"/>
+                    <display item="OpSw 16"/>
+                </column>
+                <column>
+                    <display item="OpSw 24"/>
+                    <display item="OpSw 32"/>
+                </column>
+                <column>
+                    <display item="OpSw 40"/>
+                    <display item="OpSw 48"/>
+                </column>
+                <column>
+                    <display item="OpSw 56"/>
+                    <display item="OpSw 64"/>
+                </column>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+                &lt;strong&gt;* - Indicates the "Factory Default" setting
+                &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+        </column>
+    </pane>
+    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+        <name>OpSws</name>
+        <column>
+            <row>
+                <cvtable/>
+            </row>
+            <row>
+                <column>
+                    <label>
+                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
+                            the OpSw Number.
+                        </text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text>&lt;html&gt;
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+                    &lt;/html&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </row>
+        </column>
+    </pane>
+    <pane>
+        <name>Notes</name>
+        <column>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on DCS100 and DCS200 OpSw Settings
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+            </label>
+            <label>
+                <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The Command Station should be in "Run" mode when
+                    programming Command Station OpSw settings using this Roster entry.&lt;p&gt;
+                    (There is some evidence that this tool can modify OpSw settings
+                    when the Command Station switch is set for "OpSw" mode, but be &lt;p&gt;
+                    careful if using this mode.)&lt;/li&gt;
+                &lt;p&gt;
+                &lt;li&gt;The documentation for DCS100 and DCS200 OpSw settings
+                    are not very consitent for some OpSws.  Some document versions
+                &lt;p&gt;show certain OpSw settings, while others do not.  It is unclear
+                    whether this reflects actual differences in command station OpSw
+                &lt;p&gt;implementation and/or device operation.&lt;/li&gt;
+                &lt;p&gt;
+                &lt;ul&gt;
+                &lt;li&gt;As an example, the "Chief" and "Chief II" manuals
+                    provide extensive descriptions for "multiprotocol" &lt;p&gt;
+                    operation with decoders which use Motorola "Trinary"
+                    messaging.  "Super Chief" and "Super Chief &lt;p&gt;
+                    Extra" manuals do not have this discussion.  It is unclear
+                    whether "Super Chief"and "Super Chief &lt;p&gt;
+                    Extra" command stations support Motorola "Trinary" operation?&lt;/li&gt;
+                &lt;p&gt;
+                &lt;li&gt;As another example, the values for OpSws 21, 22 and 23
+                    are very inconsistent in various &lt;p&gt;
+                    DCS100 manuals.  Once you have found settings for OpSw21-23 which
+                    work for you, do not &lt;p&gt;
+                    change them.&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;li&gt;When manipulating OpSws 36, 37, 38, and/or 39, for the
+                    purpose of clearing internal storage of slots, routes, etc., it
+                    may be&lt;p&gt;necessary to power-cycle the command station or to place
+                    the command station in "Sleep" mode momentarily before returning&lt;p&gt;
+                    to "Run" mode, after writing the the OpSw to the "C"losed state.
+                    The command station may fail to act upon the request if one of &lt;p&gt;these
+                    operations is not done.&lt;p&gt;
+                &lt;li&gt;Note that JMRI's LocoNet Slot Monitor does not recognize the
+                    Command Station OpSw operations which can clear the slots.  &lt;p&gt;
+                    It is best to shut down JMRI and re-start after clearing the Command
+                    Station slot table using OpSw mechanisms.&lt;/li&gt;
+            &lt;/ul&gt;&lt;/html&gt;</text>
+            </label>
+        </column>
+    </pane>
+    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+        <name>CVs</name>
+        <name xml:lang="it">CV</name>
+        <name xml:lang="de">CV-Tabelle</name>
+        <name xml:lang="ca">Taula-CV</name>
+        <name xml:lang="cs">Tabulka CV</name>
+        <name xml:lang="nl">CV-tabel</name>
+        <column>
+            <label>
+                <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+            </label>
+        </column>
+    </pane>
+</decoder-config>

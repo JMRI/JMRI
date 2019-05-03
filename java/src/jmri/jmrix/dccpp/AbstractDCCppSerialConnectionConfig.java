@@ -2,7 +2,7 @@ package jmri.jmrix.dccpp;
 
 /**
  * Abstract Configuration for a DCC++ Serial Connection
- * <P>
+ * <p>
  *
  * @author Mark Underwood Copyright (C) 2015
   *
@@ -19,7 +19,7 @@ abstract public class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.Abs
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public AbstractDCCppSerialConnectionConfig() {
         super();

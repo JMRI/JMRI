@@ -17,16 +17,19 @@ public class ControlPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame f = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
+        LearnThrottleFrame f = new LearnThrottleFrame(wf);
         ControlPanel t = new ControlPanel(f);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(f);
+        JUnitUtil.dispose(wf);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

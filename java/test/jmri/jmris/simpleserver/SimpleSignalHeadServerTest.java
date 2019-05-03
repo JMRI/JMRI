@@ -1,4 +1,3 @@
-//SimpleSignalHeadServerTest.java
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
@@ -142,7 +141,7 @@ public class SimpleSignalHeadServerTest {
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
+        new SimpleSignalHeadServer(input, output);
         Assert.assertNotNull((jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class)).getSignalHead("IH1"));
     }
 

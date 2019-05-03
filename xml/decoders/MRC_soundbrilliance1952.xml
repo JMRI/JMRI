@@ -165,10 +165,7 @@
         <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
         <label xml:lang="de">Kick Start</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="112" item="Sound Setting 15" tooltip="sets the Sand Dropping Volume [range 0-15]" default="12">
         <decVal max="15"/>
         <label>Sand dropping volume</label>

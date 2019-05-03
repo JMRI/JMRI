@@ -77,64 +77,60 @@ import org.slf4j.LoggerFactory;
  */
 public class NceBinaryCommand {
 
-    public static final int NOOP_CMD = 0x80;            // NCE No Op Command, NCE-USB yes
-    public static final int ASSIGN_CAB_CMD = 0x81;      // NCE Assign loco to cab command, NCE-USB no
-    public static final int READ_CLOCK_CMD = 0x82;      // NCE read clock command, NCE-USB no
-    public static final int STOP_CLOCK_CMD = 0x83;      // NCE stop clock command, NCE-USB no
-    public static final int START_CLOCK_CMD = 0x84;     // NCE start clock command, NCE-USB no
-    public static final int SET_CLOCK_CMD = 0x85;       // NCE set clock command, NCE-USB no
-    public static final int CLOCK_1224_CMD = 0x86;      // NCE change clock 12/24 command, NCE-USB no
-    public static final int CLOCK_RATIO_CMD = 0x87;     // NCE set clock ratio command, NCE-USB no
-    public static final int DEQUEUE_CMD = 0x88;         // NCE dequeue packets based on loco addr, NCE-USB no
-    public static final int ENABLE_TRACK_CMD = 0x89;    // NCE enable track/kill programm track, NCE-USB no
-    public static final int READ_AUI4_CMD = 0x8A;       // NCE read status of AUI yy, returns four bytes, NCE-USB no
-    public static final int DISABLE_TRACK_CMD = 0x89;   // NCE enable program/kill main track, NCE-USB no
-    public static final int DUMMY_CMD = 0x8C;           // NCE Dummy instruction, NCE-USB yes
-    public static final int SPEED_MODE_CMD = 0x8D;      // NCE set speed mode, NCE-USB no
-    public static final int WRITE_N_CMD = 0x8E;         // NCE write up to 16 bytes of memory command, NCE-USB no
-    /**
-     * @deprecated since 4.7.2; use {@link #WRITE_N_CMD} instead
-     */
-    @Deprecated
-    public static final int WRITEn_CMD = WRITE_N_CMD;
-    public static final int READ16_CMD = 0x8F;          // NCE read 16 bytes of memory command, NCE-USB no
-    public static final int DISPLAY3_CMD = 0x90;        // NCE write 16 char to cab display line 3, NCE-USB no
-    public static final int DISPLAY4_CMD = 0x91;        // NCE write 16 char to cab display line 4, NCE-USB no
-    public static final int DISPLAY2_CMD = 0x92;        // NCE write 8 char to cab display line 2 right, NCE-USB no
-    public static final int QUEUE3_TMP_CMD = 0x93;      // NCE queue 3 bytes to temp queue, NCE-USB no
-    public static final int QUEUE4_TMP_CMD = 0x94;      // NCE queue 4 bytes to temp queue, NCE-USB no
-    public static final int QUEUE5_TMP_CMD = 0x95;      // NCE queue 5 bytes to temp queue, NCE-USB no
-    public static final int QUEUE6_TMP_CMD = 0x96;      // NCE queue 6 bytes to temp queue, NCE-USB no
-    public static final int WRITE1_CMD = 0x97;          // NCE write 1 bytes of memory command, NCE-USB no
-    public static final int WRITE2_CMD = 0x98;          // NCE write 2 bytes of memory command, NCE-USB no
-    public static final int WRITE4_CMD = 0x99;          // NCE write 4 bytes of memory command, NCE-USB no
-    public static final int WRITE8_CMD = 0x9A;          // NCE write 8 bytes of memory command, NCE-USB no
-    public static final int READ_AUI2_CMD = 0x9B;       // NCE read status of AUI yy, returns two bytes, NCE-USB >= 1.65
-    public static final int MACRO_CMD = 0x9C;           // NCE execute macro n, NCE-USB yes
-    public static final int READ1_CMD = 0x9D;           // NCE read 1 byte of memory command, NCE-USB no
-    public static final int PGM_TRK_ON_CMD = 0x9E;      // NCE enter program track  command, NCE-USB yes
-    public static final int PGM_TRK_OFF_CMD = 0x9F;     // NCE exit program track  command, NCE-USB yes
-    public static final int PGM_PAGE_WRITE_CMD = 0xA0;  // NCE program track, page mode write command, NCE-USB yes
-    public static final int PGM_PAGE_READ_CMD = 0xA1;   // NCE program track, page mode read command, NCE-USB yes
-    public static final int LOCO_CMD = 0xA2;            // NCE loco control command, NCE-USB yes
-    public static final int QUEUE3_TRK_CMD = 0xA3;      // NCE queue 3 bytes to track queue, NCE-USB no
-    public static final int QUEUE4_TRK_CMD = 0xA4;      // NCE queue 4 bytes to track queue, NCE-USB no
-    public static final int QUEUE5_TRK_CMD = 0xA5;      // NCE queue 5 bytes to track queue, NCE-USB no
-    public static final int PGM_REG_WRITE_CMD = 0xA6;   // NCE program track, register mode write command, NCE-USB yes
-    public static final int PGM_REG_READ_CMD = 0xA7;    // NCE program track, register mode read command, NCE-USB yes
-    public static final int PGM_DIR_WRITE_CMD = 0xA8;   // NCE program track, direct mode write command, NCE-USB yes
-    public static final int PGM_DIR_READ_CMD = 0xA9;    // NCE program track, direct mode read command, NCE-USB yes
-    public static final int SW_REV_CMD = 0xAA;          // NCE get EPROM revision cmd, Reply Format: VV.MM.mm, NCE-USB yes
-    public static final int RESET_SOFT_CMD = 0xAB;      // NCE soft reset command, NCE-USB no
-    public static final int RESET_HARD_CMD = 0xAC;      // NCE hard reset command, NCE-USB no
-    public static final int ACC_CMD = 0xAD;             // NCE accessory command, NCE-USB yes
-    public static final int OPS_PROG_LOCO_CMD = 0xAE;   // NCE ops mode program loco, NCE-USB yes
-    public static final int OPS_PROG_ACCY_CMD = 0xAF;   // NCE ops mode program accessories, NCE-USB yes
-    public static final int FACTORY_TEST_CMD = 0xB0;    // NCE factory test, NCE-USB yes
-    public static final int USB_SET_CAB_CMD = 0xB1;     // NCE set cab address in USB, NCE-USB yes
-    public static final int USB_MEM_POINTER_CMD = 0xB3; // NCE set memory context pointer, NCE-USB >= 1.65
-    public static final int USB_MEM_WRITE_CMD = 0xB4;   // NCE write memory, NCE-USB >= 1.65
-    public static final int USB_MEM_READ_CMD = 0xB5;    // NCE read memory, NCE-USB >= 1.65
+// all commands moved to NceMessage 07/17/2018 DAB
+//    public static final int NOP_CMD = 0x80;            // NCE No Op Command, NCE-USB yes
+//    public static final int ASSIGN_CAB_CMD = 0x81;      // NCE Assign loco to cab command, NCE-USB no
+//    public static final int READ_CLOCK_CMD = 0x82;      // NCE read clock command, NCE-USB no
+//    public static final int STOP_CLOCK_CMD = 0x83;      // NCE stop clock command, NCE-USB no
+//    public static final int START_CLOCK_CMD = 0x84;     // NCE start clock command, NCE-USB no
+//    public static final int SET_CLOCK_CMD = 0x85;       // NCE set clock command, NCE-USB no
+//    public static final int CLOCK_1224_CMD = 0x86;      // NCE change clock 12/24 command, NCE-USB no
+//    public static final int CLOCK_RATIO_CMD = 0x87;     // NCE set clock ratio command, NCE-USB no
+//    public static final int DEQUEUE_CMD = 0x88;         // NCE dequeue packets based on loco addr, NCE-USB no
+//    public static final int ENABLE_TRACK_CMD = 0x89;    // NCE enable track/kill programm track, NCE-USB no
+//    public static final int READ_AUI4_CMD = 0x8A;       // NCE read status of AUI yy, returns four bytes, NCE-USB no
+//    public static final int DISABLE_TRACK_CMD = 0x89;   // NCE enable program/kill main track, NCE-USB no
+//    public static final int DUMMY_CMD = 0x8C;           // NCE Dummy instruction, NCE-USB yes
+//    public static final int SPEED_MODE_CMD = 0x8D;      // NCE set speed mode, NCE-USB no
+//    public static final int WRITE_N_CMD = 0x8E;         // NCE write up to 16 bytes of memory command, NCE-USB no
+//    public static final int READ16_CMD = 0x8F;          // NCE read 16 bytes of memory command, NCE-USB no
+//    public static final int DISPLAY3_CMD = 0x90;        // NCE write 16 char to cab display line 3, NCE-USB no
+//    public static final int DISPLAY4_CMD = 0x91;        // NCE write 16 char to cab display line 4, NCE-USB no
+//    public static final int DISPLAY2_CMD = 0x92;        // NCE write 8 char to cab display line 2 right, NCE-USB no
+//    public static final int QUEUE3_TMP_CMD = 0x93;      // NCE queue 3 bytes to temp queue, NCE-USB no
+//    public static final int QUEUE4_TMP_CMD = 0x94;      // NCE queue 4 bytes to temp queue, NCE-USB no
+//    public static final int QUEUE5_TMP_CMD = 0x95;      // NCE queue 5 bytes to temp queue, NCE-USB no
+//    public static final int QUEUE6_TMP_CMD = 0x96;      // NCE queue 6 bytes to temp queue, NCE-USB no
+//    public static final int WRITE1_CMD = 0x97;          // NCE write 1 bytes of memory command, NCE-USB no
+//    public static final int WRITE2_CMD = 0x98;          // NCE write 2 bytes of memory command, NCE-USB no
+//    public static final int WRITE4_CMD = 0x99;          // NCE write 4 bytes of memory command, NCE-USB no
+//    public static final int WRITE8_CMD = 0x9A;          // NCE write 8 bytes of memory command, NCE-USB no
+//    public static final int READ_AUI2_CMD = 0x9B;       // NCE read status of AUI yy, returns two bytes, NCE-USB >= 1.65
+//    public static final int MACRO_CMD = 0x9C;           // NCE execute macro n, NCE-USB yes
+//    public static final int READ1_CMD = 0x9D;           // NCE read 1 byte of memory command, NCE-USB no
+//    public static final int PGM_TRK_ON_CMD = 0x9E;      // NCE enter program track  command, NCE-USB yes
+//    public static final int PGM_TRK_OFF_CMD = 0x9F;     // NCE exit program track  command, NCE-USB yes
+//    public static final int PGM_PAGE_WRITE_CMD = 0xA0;  // NCE program track, page mode write command, NCE-USB yes
+//    public static final int PGM_PAGE_READ_CMD = 0xA1;   // NCE program track, page mode read command, NCE-USB yes
+//    public static final int LOCO_CMD = 0xA2;            // NCE loco control command, NCE-USB yes
+//    public static final int QUEUE3_TRK_CMD = 0xA3;      // NCE queue 3 bytes to track queue, NCE-USB no
+//    public static final int QUEUE4_TRK_CMD = 0xA4;      // NCE queue 4 bytes to track queue, NCE-USB no
+//    public static final int QUEUE5_TRK_CMD = 0xA5;      // NCE queue 5 bytes to track queue, NCE-USB no
+//    public static final int PGM_REG_WRITE_CMD = 0xA6;   // NCE program track, register mode write command, NCE-USB yes
+//    public static final int PGM_REG_READ_CMD = 0xA7;    // NCE program track, register mode read command, NCE-USB yes
+//    public static final int PGM_DIR_WRITE_CMD = 0xA8;   // NCE program track, direct mode write command, NCE-USB yes
+//    public static final int PGM_DIR_READ_CMD = 0xA9;    // NCE program track, direct mode read command, NCE-USB yes
+//    public static final int SW_REV_CMD = 0xAA;          // NCE get EPROM revision cmd, Reply Format: VV.MM.mm, NCE-USB yes
+//    public static final int RESET_SOFT_CMD = 0xAB;      // NCE soft reset command, NCE-USB no
+//    public static final int RESET_HARD_CMD = 0xAC;      // NCE hard reset command, NCE-USB no
+//    public static final int ACC_CMD = 0xAD;             // NCE accessory command, NCE-USB yes
+//    public static final int OPS_PROG_LOCO_CMD = 0xAE;   // NCE ops mode program loco, NCE-USB yes
+//    public static final int OPS_PROG_ACCY_CMD = 0xAF;   // NCE ops mode program accessories, NCE-USB yes
+//    public static final int FACTORY_TEST_CMD = 0xB0;    // NCE factory test, NCE-USB yes
+//    public static final int USB_SET_CAB_CMD = 0xB1;     // NCE set cab address in USB, NCE-USB yes
+//    public static final int USB_MEM_POINTER_CMD = 0xB3; // NCE set memory context pointer, NCE-USB >= 1.65
+//    public static final int USB_MEM_WRITE_CMD = 0xB4;   // NCE write memory, NCE-USB >= 1.65
+//    public static final int USB_MEM_READ_CMD = 0xB5;    // NCE read memory, NCE-USB >= 1.65
 
     // NCE Command 0xA2 sends speed or function packets to a locomotive
     // 0xA2 sub commands speed and functions
@@ -166,16 +162,6 @@ public class NceBinaryCommand {
             log.error("invalid NCE accessory address " + number);
             return null;
         }
-
-        /* Moved to NceMessageCheck
-         // USB connected to PowerCab or SB3 can only access addresses up to 250
-         if (number > 250
-         && ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) || 
-         (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3))) {
-         log.error("invalid NCE accessory address for USB " + number);
-         return null;
-         }
-         */
         byte op_1;
         if (closed) {
             op_1 = 0x03;
@@ -187,7 +173,7 @@ public class NceBinaryCommand {
         int addr_l = number & 0xFF;
 
         byte[] retVal = new byte[5];
-        retVal[0] = (byte) (ACC_CMD); // NCE accessory command
+        retVal[0] = (byte) (NceMessage.SEND_ACC_SIG_MACRO_CMD); // NCE accessory command
         retVal[1] = (byte) (addr_h);  // high address
         retVal[2] = (byte) (addr_l);  // low address
         retVal[3] = op_1;             // command
@@ -202,12 +188,11 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (READ16_CMD); // read 16 bytes command
+        retVal[0] = (byte) (NceMessage.READ16_CMD); // read 16 bytes command
         retVal[1] = (byte) (addr_h);     // high address
         retVal[2] = (byte) (addr_l);     // low address
 
         return retVal;
-
     }
 
     /**
@@ -222,78 +207,100 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (READ1_CMD); // read 1 byte command
+        retVal[0] = (byte) (NceMessage.READ1_CMD); // read 1 byte command
         retVal[1] = (byte) (addr_h);    // high address
         retVal[2] = (byte) (addr_l);    // low address
 
         return retVal;
-
     }
 
-    public static byte[] accMemoryWriteN(int address, int num) {
+    private final static int BUFFER_SIZE_16 = 16;
+    public static byte[] accMemoryWriteN(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[4 + 16];
-        retVal[0] = (byte) (WRITE_N_CMD); // write n bytes command
-        retVal[1] = (byte) (addr_h);      // high address
-        retVal[2] = (byte) (addr_l);      // low address
-        retVal[3] = (byte) num;           // number of bytes to write
+        byte[] retVal = new byte[4 + BUFFER_SIZE_16];
+        int j = 0;
+        retVal[j++] = (byte) (NceMessage.WRITE_N_CMD); // write n bytes command
+        retVal[j++] = (byte) (addr_h);      // high address
+        retVal[j++] = (byte) (addr_l);      // low address
+        retVal[j++] = (byte) data.length;   // number of bytes to write
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
-
     }
 
-    public static byte[] accMemoryWrite8(int address) {
+    private final static int BUFFER_SIZE_8 = 8;
+    public static byte[] accMemoryWrite8(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[3 + 8];
-        retVal[0] = (byte) (WRITE8_CMD); // write 8 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        byte[] retVal = new byte[3 + BUFFER_SIZE_8];
+        int j = 0;
+        retVal[j++] = (byte) (NceMessage.WRITE8_CMD); // write 8 bytes command
+        retVal[j++] = (byte) (addr_h);     // high address
+        retVal[j++] = (byte) (addr_l);     // low address
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
-
     }
 
-    public static byte[] accMemoryWrite4(int address) {
+    private final static int BUFFER_SIZE_4 = 4;
+    public static byte[] accMemoryWrite4(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[3 + 4];
-        retVal[0] = (byte) (WRITE4_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        byte[] retVal = new byte[3 + BUFFER_SIZE_4];
+        int j = 0;
+        retVal[j++] = (byte) (NceMessage.WRITE4_CMD); // write 4 bytes command
+        retVal[j++] = (byte) (addr_h);     // high address
+        retVal[j++] = (byte) (addr_l);     // low address
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
     }
 
-    public static byte[] accMemoryWrite2(int address) {
+    private final static int BUFFER_SIZE_2 = 2;
+    public static byte[] accMemoryWrite2(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[3 + 2];
-        retVal[0] = (byte) (WRITE2_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        byte[] retVal = new byte[3 + BUFFER_SIZE_2];
+        int j = 0;
+        retVal[j++] = (byte) (NceMessage.WRITE2_CMD); // write 4 bytes command
+        retVal[j++] = (byte) (addr_h);     // high address
+        retVal[j++] = (byte) (addr_l);     // low address
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
     }
 
-    public static byte[] accMemoryWrite1(int address) {
+    public static byte[] accMemoryWrite1(int address, byte data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + 1];
-        retVal[0] = (byte) (WRITE1_CMD); // write 4 bytes command
+        retVal[0] = (byte) (NceMessage.WRITE1_CMD); // write 4 bytes command
         retVal[1] = (byte) (addr_h);     // high address
         retVal[2] = (byte) (addr_l);     // low address
+        retVal[3] = data;
 
         return retVal;
     }
@@ -301,7 +308,7 @@ public class NceBinaryCommand {
     public static byte[] accAiu2Read(int cabId) {
 
         byte[] retVal = new byte[1 + 1];
-        retVal[0] = (byte) (READ_AUI2_CMD); // write 4 bytes command
+        retVal[0] = (byte) (NceMessage.READ_AUI2_CMD); // write 4 bytes command
         retVal[1] = (byte) (cabId);         // cab address
 
         return retVal;
@@ -310,7 +317,7 @@ public class NceBinaryCommand {
     public static byte[] usbSetCabId(int cab) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_SET_CAB_CMD); // read N bytes command
+        retVal[0] = (byte) (NceMessage.USB_SET_CAB_CMD); // read N bytes command
         retVal[1] = (byte) (cab);             // cab number
 
         return retVal;
@@ -319,7 +326,7 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryWrite1(byte data) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_MEM_WRITE_CMD); // write 2 bytes command
+        retVal[0] = (byte) (NceMessage.USB_MEM_WRITE_CMD); // write 2 bytes command
         retVal[1] = (data);                     // data
 
         return retVal;
@@ -328,7 +335,7 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryRead(int num) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_MEM_READ_CMD); // read N bytes command
+        retVal[0] = (byte) (NceMessage.USB_MEM_READ_CMD); // read N bytes command
         retVal[1] = (byte) (num);              // byte count
 
         return retVal;
@@ -337,7 +344,7 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryPointer(int cab, int loc) {
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (USB_MEM_POINTER_CMD); // read N bytes command
+        retVal[0] = (byte) (NceMessage.USB_MEM_POINTER_CMD); // read N bytes command
         retVal[1] = (byte) (cab);                 // cab number
         retVal[2] = (byte) (loc);                 // memory offset
 
@@ -347,7 +354,7 @@ public class NceBinaryCommand {
     public static byte[] accStopClock() {
 
         byte[] retVal = new byte[1];
-        retVal[0] = (byte) (STOP_CLOCK_CMD); // stop clock command
+        retVal[0] = (byte) (NceMessage.STOP_CLOCK_CMD); // stop clock command
 
         return retVal;
     }
@@ -355,7 +362,7 @@ public class NceBinaryCommand {
     public static byte[] accStartClock() {
 
         byte[] retVal = new byte[1];
-        retVal[0] = (byte) (START_CLOCK_CMD); // start clock command
+        retVal[0] = (byte) (NceMessage.START_CLOCK_CMD); // start clock command
 
         return retVal;
     }
@@ -363,7 +370,7 @@ public class NceBinaryCommand {
     public static byte[] accSetClock(int hours, int minutes) {
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (SET_CLOCK_CMD); // set clock command
+        retVal[0] = (byte) (NceMessage.SET_CLOCK_CMD); // set clock command
         retVal[1] = (byte) (hours);         // hours
         retVal[2] = (byte) (minutes);       // minutes
 
@@ -377,7 +384,7 @@ public class NceBinaryCommand {
             bit = 1;
         }
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (CLOCK_1224_CMD); // set clock 12/24 command
+        retVal[0] = (byte) (NceMessage.CLOCK_1224_CMD); // set clock 12/24 command
         retVal[1] = (byte) (bit);            // 12 - 0, 24 - 1
 
         return retVal;
@@ -386,7 +393,7 @@ public class NceBinaryCommand {
     public static byte[] accSetClockRatio(int ratio) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (CLOCK_RATIO_CMD); // set clock command
+        retVal[0] = (byte) (NceMessage.CLOCK_RATIO_CMD); // set clock command
         retVal[1] = (byte) (ratio);           // fast clock ratio
 
         return retVal;
@@ -402,7 +409,7 @@ public class NceBinaryCommand {
         int locoAddr_l = locoAddr & 0xFF;
 
         byte[] retVal = new byte[5];
-        retVal[0] = (byte) (LOCO_CMD);   // NCE Loco command
+        retVal[0] = (byte) (NceMessage.LOCO_CMD);   // NCE Loco command
         retVal[1] = (byte) (locoAddr_h); // loco high address
         retVal[2] = (byte) (locoAddr_l); // loco low address
         retVal[3] = locoSubCmd;          // sub command
@@ -419,7 +426,7 @@ public class NceBinaryCommand {
      */
     public static byte[] getNceEpromRev() {
         byte[] retVal = new byte[1];
-        retVal[0] = (byte) (SW_REV_CMD);
+        retVal[0] = (byte) (NceMessage.SW_REV_CMD);
         return retVal;
     }
 
@@ -440,7 +447,7 @@ public class NceBinaryCommand {
         int cvAddr_h = cvAddr / 256;
         int cvAddr_l = cvAddr & 0xFF;
 
-        retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
+        retVal[0] = (byte) (NceMessage.OPS_PROG_LOCO_CMD); // NCE ops mode loco command
         retVal[1] = (byte) (locoAddr_h);        // loco high address
         retVal[2] = (byte) (locoAddr_l);        // loco low address
         retVal[3] = (byte) (cvAddr_h);          // CV high address
@@ -466,7 +473,7 @@ public class NceBinaryCommand {
         int cvAddr_h = cvAddr / 256;
         int cvAddr_l = cvAddr & 0xFF;
 
-        retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
+        retVal[0] = (byte) (NceMessage.OPS_PROG_ACCY_CMD); // NCE ops mode accy command
         retVal[1] = (byte) (accyAddr_h);        // accy high address
         retVal[2] = (byte) (accyAddr_l);        // accy low address
         retVal[3] = (byte) (cvAddr_h);          // CV high address

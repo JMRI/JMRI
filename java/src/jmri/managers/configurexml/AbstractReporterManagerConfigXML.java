@@ -37,8 +37,9 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         setStoreElementClass(reporters);
         ReporterManager tm = (ReporterManager) o;
         if (tm != null) {
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not reporters to include
             if (!iter.hasNext()) {
@@ -84,7 +85,6 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @param reporters Element containing the Reporter elements to load.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean loadReporters(Element reporters) {
         boolean result = true;
         List<Element> reporterList = reporters.getChildren("reporter");
@@ -92,6 +92,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             log.debug("Found " + reporterList.size() + " reporters");
         }
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
+        tm.setDataListenerMute(true);
 
         for (int i = 0; i < reporterList.size(); i++) {
 
@@ -110,6 +111,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             Reporter r = tm.newReporter(sysName, userName);
             loadCommon(r, reporterList.get(i));
         }
+        tm.setDataListenerMute(false);
         return result;
     }
 

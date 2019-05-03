@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ --> -->
-<!--UpDated Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-08 -->
+<!--Updated Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-08 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Building with Eclipse</title>
-  <meta content="Bob Jacobsen" name="Author">
+	<meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Eclipse">
   <!-- Style -->
   <meta http-equiv="content-type" content=

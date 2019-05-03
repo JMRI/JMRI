@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014, 2018 All rights reserved -->
+<!-- $Id$				-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-02-04</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>for fw 3.08 and above</revremark>
+    </revision>
+   </revhistory>
+  <variable item="Max Speed Braking Section 2" CV="65" default="12">
+    <decVal max="127"/>
+    <label>Max. speed in two-part braking section</label>
+    <label xml:lang="de">Max. Fahrstufe in zweiteiligen Bremsabschnitten</label>
+    <label xml:lang="fr">Vitesse max. en section de freinage 2 parties</label>
+    <tooltip>Only with 2 braking sections (CV60=1) and Diode braking</tooltip>
+    <tooltip xml:lang="de">Nur bei zweiteiligen Bremsabschnitten (CV60=1) und Bremsdiode</tooltip>  
+  </variable>
+</variables>

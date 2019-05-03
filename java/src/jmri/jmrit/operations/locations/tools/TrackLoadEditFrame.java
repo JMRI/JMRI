@@ -261,9 +261,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             // only show ship loads for staging tracks
-            paneShipLoadControls.setVisible(_track.getTrackType().equals(Track.STAGING));
-            paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));
-            pOptions.setVisible(_track.getTrackType().equals(Track.SPUR));
+            paneShipLoadControls.setVisible(_track.isStaging());
+            paneShipLoads.setVisible(_track.isStaging());
+            pOptions.setVisible(_track.isSpur());
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             updateButtons(true);
         } else {
@@ -362,9 +362,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         loadNameExclude.setEnabled(enabled);
         loadAndTypeCheckBox.setEnabled(enabled);
 
+        // enable ship options if any of the three generate loads from staging is selected
+        // or if there are any ship load restrictions for this track
         boolean en = enabled
                 && (_track.isAddCustomLoadsAnyStagingTrackEnabled() || _track.isAddCustomLoadsAnySpurEnabled() || _track
-                .isAddCustomLoadsEnabled());
+                .isAddCustomLoadsEnabled() || !_track.getShipLoadOption().equals(Track.ALL_LOADS));
 
         shipLoadNameAll.setEnabled(en);
         shipLoadNameInclude.setEnabled(en);

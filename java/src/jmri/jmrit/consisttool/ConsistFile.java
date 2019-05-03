@@ -39,7 +39,6 @@ public class ConsistFile extends XmlFile {
         consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
         // set the location to a subdirectory of the defined roster
         // directory
-        setFileLocation(Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist");
     }
 
     /**
@@ -47,7 +46,6 @@ public class ConsistFile extends XmlFile {
      *
      * @param consist a JDOM element containing a consist
      */
-    @SuppressWarnings("unchecked")
     private void consistFromXml(Element consist) {
         Attribute type, cnumber, isCLong, cID;
         Consist newConsist;
@@ -228,7 +226,6 @@ public class ConsistFile extends XmlFile {
      * @throws org.jdom2.JDOMException if unable to parse consists
      * @throws java.io.IOException     if unable to read file
      */
-    @SuppressWarnings("unchecked")
     public void readFile(String fileName) throws JDOMException, IOException {
         if (checkFile(fileName)) {
             Element root = rootFromName(fileName);
@@ -298,12 +295,9 @@ public class ConsistFile extends XmlFile {
             if (!checkFile(fileName)) {
                 //The file does not exist, create it before writing
                 File file = new File(fileName);
+                // verify the directory exists.
                 File parentDir = file.getParentFile();
-                if (!parentDir.exists()) {
-                    if (!parentDir.mkdir()) {
-                        throw (new IOException());
-                    }
-                }
+                FileUtil.createDirectory(parentDir);
                 if (!file.createNewFile()) {
                     throw (new IOException());
                 }
@@ -319,11 +313,12 @@ public class ConsistFile extends XmlFile {
      * Defines the preferences subdirectory in which LocoFiles are kept by
      * default.
      */
-    // TODO: move this logic to getFileLocation, so it can match the roster,
-    // which is not always in the UserFiles location, and can change
-    static private String fileLocation = FileUtil.getUserFilesPath() + "roster" + File.separator + "consist";
+    static private String fileLocation = null;
 
     static public String getFileLocation() {
+        if( fileLocation == null) {
+           fileLocation = Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist" + File.separator;
+        }
         return fileLocation;
     }
 

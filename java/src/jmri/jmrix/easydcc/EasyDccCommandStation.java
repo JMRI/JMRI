@@ -23,7 +23,7 @@ public class EasyDccCommandStation implements CommandStation {
      * @param repeats Number of times to repeat the transmission, capped at 9
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (repeats > 9) {
             repeats = 9;
@@ -54,6 +54,7 @@ public class EasyDccCommandStation implements CommandStation {
 
         memo.getTrafficController().sendEasyDccMessage(m, null);
 
+        return true;
     }
 
     EasyDccSystemConnectionMemo memo = null;

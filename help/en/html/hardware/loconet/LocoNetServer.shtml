@@ -8,7 +8,7 @@
 
   <title>JMRI Hardware Support - Multiple Computers to LocoNet&reg;
   via JMRI LocoNet Server</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
   <!-- Style -->

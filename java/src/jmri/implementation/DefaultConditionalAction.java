@@ -24,11 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ConditionalAction.java
- *
  * The consequent of the antecedent of the conditional proposition. The data for
  * the action to be taken when a Conditional calculates to True
- * <P>
+ * <p>
  * This is in the implementations package because of a Swing dependence via the
  * times. Java 1.5 or Java 1.6 might make it possible to break that, which will
  * simplify things.
@@ -39,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditionalAction implements ConditionalAction {
 
     private int _option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-    private int _type = Conditional.ACTION_NONE;
+    private Conditional.Action _type = Conditional.Action.NONE;
     private String _deviceName = " ";
     private int _actionData = 0;
     private String _actionString = "";
@@ -51,13 +49,13 @@ public class DefaultConditionalAction implements ConditionalAction {
     private boolean _indirectAction = false;
     private Sound _sound = null;
 
-    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     public DefaultConditionalAction() {
     }
 
-    public DefaultConditionalAction(int option, int type, String name, int actionData, String actionStr) {
+    public DefaultConditionalAction(int option, Conditional.Action type, String name, int actionData, String actionStr) {
         _option = option;
         _type = type;
         _deviceName = name;
@@ -118,16 +116,15 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     @Override
     public int hashCode() {
-        int hash = _option * 1000 + _type * 1000 * 1000 + _actionData;
+        int hash = _option * 1000 + _type.getIntValue() * 1000 * 1000 + _actionData;
         if (_deviceName != null) {
             hash += _deviceName.hashCode();
         }
-
         return hash;
     }
 
     /**
-     * If this is an indirect reference return the Memory bean
+     * If this is an indirect reference, return the Memory bean.
      *
      */
     private Memory getIndirectBean(String devName) {
@@ -138,7 +135,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 _indirectAction = true;
                 return m;
             }
-            log.error("\"" + devName + "\" invalid indirect memory name in action " + _actionString + " of type " + _type);
+            log.error("\"{}\" invalid indirect memory name in action {} of type {}", devName, _actionString, _type);
         } else {
             _indirectAction = false;
         }
@@ -146,108 +143,116 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Return the device bean that will do the action
+     * Return the device bean that will do the action.
      *
      */
     private NamedBean getActionBean(String devName) {
         NamedBean bean = null;
         try {
-            switch (Conditional.ACTION_TO_ITEM[_type]) {
-                case Conditional.ITEM_TYPE_SENSOR:
+            switch (_type.getItemType()) {
+                case SENSOR:
                     try {
                         bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid sensor name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid sensor name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_TURNOUT:
+                case TURNOUT:
                     try {
                         bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid turnout name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid turnout name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_MEMORY:
+                case MEMORY:
                     try {
                         bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid memory name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid memory name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_LIGHT:
+                case LIGHT:
                     try {
                         bean = InstanceManager.lightManagerInstance().getLight(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid light name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid light name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_SIGNALMAST:
+                case SIGNALMAST:
                     try {
                         bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid signal mast name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid signal mast name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_SIGNALHEAD:
+                case SIGNALHEAD:
                     try {
                         bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid signal head name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid signal head name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_WARRANT:
+                case WARRANT:
                     try {
                         bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid Warrant name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid Warrant name= \"{}\" in conditional action", devName);
                     }
                     break;
-                case Conditional.ITEM_TYPE_OBLOCK:
+                case OBLOCK:
                     try {
                         bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid OBlock name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid OBlock name= \"{}\" in conditional action", devName);
+                    }
+                    break;
+                case ENTRYEXIT:
+                    try {
+                        bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
+                        log.error("invalid NX name= \"{}\" in conditional action", devName);
                     }
                     break;
                 default:
-                    if (getType() == Conditional.ACTION_TRIGGER_ROUTE) {
+                    if (getType() == Conditional.Action.TRIGGER_ROUTE) {
                         try {
                             bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
                         } catch (IllegalArgumentException e) {
                             bean = null;
-                            log.error("invalid Route name= \"" + _deviceName + "\" in conditional action");
+                            log.error("invalid Route name= \"{}\" in conditional action", devName);
                         }
                     }
             }
         } catch (java.lang.NumberFormatException ex) {
-            //Can be considered normal if the logixs are loaded prior to any other beans
+            // ingonred, can be considered normal if the logixs are loaded prior to any other beans
         }
         return bean;
     }
 
     /**
-     * The consequent device or element type
+     * The consequent device or element type.
      */
     @Override
-    public int getType() {
+    public Conditional.Action getType() {
         return _type;
     }
 
     @Override
-    public void setType(int type) {
+    public void setType(Conditional.Action type) {
         _type = type;
     }
 
     /**
-     * Sets type from user's name for it
+     * Set type from user name for it.
      */
     @Override
     public void setType(String type) {
@@ -255,7 +260,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Name of the device or element that is effected
+     * Name of the device or element that is affected.
      */
     @Override
     public String getDeviceName() {
@@ -311,7 +316,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Options on when action is taken
+     * Options on when action is taken.
      */
     @Override
     public int getOption() {
@@ -324,7 +329,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Integer data for action
+     * Integer data for action.
      */
     @Override
     public int getActionData() {
@@ -337,7 +342,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Sets action data from user's name for it
+     * Set action data from user name for it.
      */
     @Override
     public void setActionData(String actionData) {
@@ -345,7 +350,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * String data for action
+     * String data for action.
      */
     @Override
     public String getActionString() {
@@ -361,7 +366,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * get timer for delays and other timed events
+     * Get timer for delays and other timed events.
      */
     @Override
     public Timer getTimer() {
@@ -369,7 +374,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * set timer for delays and other timed events
+     * Set timer for delays and other timed events.
      */
     @Override
     public void setTimer(Timer timer) {
@@ -387,7 +392,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             _timer.start();
             _timerActive = true;
         } else {
-            log.error("timer is null for " + _deviceName + " of type " + getTypeString());
+            log.error("timer is null for {] of type {}", _deviceName, getTypeString());
         }
     }
 
@@ -400,7 +405,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * set listener for delays and other timed events
+     * Set listener for delays and other timed events.
      */
     @Override
     public ActionListener getListener() {
@@ -416,7 +421,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * get Sound file
+     * Get Sound file.
      */
     @Override
     public Sound getSound() {
@@ -432,19 +437,20 @@ public class DefaultConditionalAction implements ConditionalAction {
         _sound = sound;
     }
 
-    /**
+    /*
      * ** Methods that return user interface strings ****
      */
+
     /**
-     * return String name of this consequent type
+     * @return name of this consequent type
      */
     @Override
     public String getTypeString() {
-        return getActionTypeString(_type);
+        return _type.toString();
     }
 
     /**
-     * return String name of the option for this consequent type
+     * @return name of the option for this consequent type
      */
     @Override
     public String getOptionString(boolean type) {
@@ -457,11 +463,11 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Convert Variable Type to Text String
+     * Convert Variable Type to Text String.
      *
-     * @param t the type
-     * @return a human readable description of the type or an empty String
-     */
+     * @.param t the Action type
+     * @.return a human readable description of the type or an empty String
+     *./
     public static String getItemTypeString(int t) {
         switch (t) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -482,12 +488,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (Bundle.getMessage("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                return (Bundle.getMessage("EntryExit"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:
                 return (Bundle.getMessage("BeanNameAudio"));
             case Conditional.ITEM_TYPE_SCRIPT:
-                return (rbx.getString("Script"));
+                return (Bundle.getMessage("Script"));
             case Conditional.ITEM_TYPE_OTHER:
                 return (rbx.getString("Other"));
             default:
@@ -496,13 +504,13 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
         return "";
     }
-
+*/
     /**
-     * Convert Consequent Type to Text String.
+     * Convert Consequent Type to text String.
      *
-     * @param t the type
-     * @return a human readable description of the type or an empty String
-     */
+     * @.param t the Action type
+     * @.return a human readable description of the type or an empty String
+     *./
     public static String getActionTypeString(int t) {
         switch (t) {
             case Conditional.ACTION_NONE:
@@ -605,14 +613,20 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("ActionSetBlockOutOfService"));
             case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
                 return (rbx.getString("ActionBlockInService"));
+            case Conditional.ACTION_SET_NXPAIR_ENABLED:
+                return (rbx.getString("ActionNXPairEnabled"));
+            case Conditional.ACTION_SET_NXPAIR_DISABLED:
+                return (rbx.getString("ActionNXPairDisabled"));
+            case Conditional.ACTION_SET_NXPAIR_SEGMENT:
+                return (rbx.getString("ActionNXPairSegment"));
             default:
                 // fall through
                 break;
         }
-        log.warn("Unexpected parameter to getActionTypeString(" + t + ")");
+        log.warn("Unexpected parameter to getActionTypeString({})", t);
         return ("");
     }
-
+*/
     /**
      * Convert consequent option to String.
      *
@@ -644,7 +658,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 // fall through
                 break;
         }
-        log.warn("Unexpected parameter to getOptionString(" + opt + ")");
+        log.warn("Unexpected parameter to getOptionString({})", opt);
         return "";
     }
 
@@ -654,16 +668,16 @@ public class DefaultConditionalAction implements ConditionalAction {
      * @param str the string to get the type for
      * @return the type or 0 if str is not a recognized action
      */
-    public static int stringToActionType(String str) {
+    public static Conditional.Action stringToActionType(String str) {
         if (str != null) {
-            for (int i = 1; i <= Conditional.NUM_ACTION_TYPES; i++) {
-                if (str.equals(getActionTypeString(i))) {
-                    return (i);
+            for (Conditional.Action action : Conditional.Action.values()) {
+                if (str.equals(action.toString())) {
+                    return action;
                 }
             }
         }
-        log.warn("Unexpected parameter to stringToActionType(" + str + ")");
-        return 0;
+        log.warn("Unexpected parameter to stringToActionType({})", str);
+        return Conditional.Action.NONE;
     }
 
     /**
@@ -730,56 +744,56 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
         // empty strings can occur frequently with types that have no integer data
         if (str.length() > 0) {
-            log.warn("Unexpected parameter to stringToActionData(" + str + ")");
+            log.warn("Unexpected parameter to stringToActionData({})", str);
         }
         return -1;
     }
 
-    public static String getActionDataString(int t, int data) {
+    public static String getActionDataString(Conditional.Action t, int data) {
         switch (t) {
-            case Conditional.ACTION_SET_TURNOUT:
-            case Conditional.ACTION_DELAYED_TURNOUT:
-            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+            case SET_TURNOUT:
+            case DELAYED_TURNOUT:
+            case RESET_DELAYED_TURNOUT:
                 if (data == Turnout.CLOSED) {
                     return (Bundle.getMessage("TurnoutStateClosed"));
                 } else if (data == Turnout.THROWN) {
                     return (Bundle.getMessage("TurnoutStateThrown"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
-            case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+            case SET_SIGNAL_APPEARANCE:
                 return DefaultSignalHead.getDefaultStateName(data);
-            case Conditional.ACTION_SET_SENSOR:
-            case Conditional.ACTION_DELAYED_SENSOR:
-            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+            case SET_SENSOR:
+            case DELAYED_SENSOR:
+            case RESET_DELAYED_SENSOR:
                 if (data == Sensor.ACTIVE) {
                     return (Bundle.getMessage("SensorStateActive"));
                 } else if (data == Sensor.INACTIVE) {
                     return (Bundle.getMessage("SensorStateInactive"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
-            case Conditional.ACTION_SET_LIGHT:
+            case SET_LIGHT:
                 if (data == Light.ON) {
                     return (rbx.getString("LightOn"));
                 } else if (data == Light.OFF) {
                     return (rbx.getString("LightOff"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
-            case Conditional.ACTION_LOCK_TURNOUT:
+            case LOCK_TURNOUT:
                 if (data == Turnout.UNLOCKED) {
                     return (rbx.getString("TurnoutUnlock"));
                 } else if (data == Turnout.LOCKED) {
                     return (rbx.getString("TurnoutLock"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
-            case Conditional.ACTION_CONTROL_AUDIO:
+            case CONTROL_AUDIO:
                 switch (data) {
                     case Audio.CMD_PLAY:
                         return (rbx.getString("AudioSourcePlay"));
@@ -806,7 +820,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         break;
                 }
                 break;
-            case Conditional.ACTION_CONTROL_TRAIN:
+            case CONTROL_TRAIN:
                 if (data == Warrant.HALT) {
                     return (rbx.getString("WarrantHalt"));
                 } else if (data == Warrant.RESUME) {
@@ -826,55 +840,60 @@ public class DefaultConditionalAction implements ConditionalAction {
         String str = getOptionString(triggerType) + ", " + getTypeString();
         if (_deviceName.length() > 0) {
             switch (_type) {
-                case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-                case Conditional.ACTION_SET_SIGNAL_HELD:
-                case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-                case Conditional.ACTION_SET_SIGNAL_DARK:
-                case Conditional.ACTION_SET_SIGNAL_LIT:
-                case Conditional.ACTION_TRIGGER_ROUTE:
-                case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-                case Conditional.ACTION_SET_MEMORY:
-                case Conditional.ACTION_ENABLE_LOGIX:
-                case Conditional.ACTION_DISABLE_LOGIX:
-                case Conditional.ACTION_COPY_MEMORY:
-                case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
-                case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
-                case Conditional.ACTION_SET_SIGNALMAST_HELD:
-                case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
-                case Conditional.ACTION_SET_SIGNALMAST_DARK:
-                case Conditional.ACTION_SET_SIGNALMAST_LIT:
-                case Conditional.ACTION_SET_BLOCK_ERROR:
-                case Conditional.ACTION_CLEAR_BLOCK_ERROR:
-                case Conditional.ACTION_DEALLOCATE_BLOCK:
-                case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
-                case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
+                case CANCEL_TURNOUT_TIMERS:
+                case SET_SIGNAL_HELD:
+                case CLEAR_SIGNAL_HELD:
+                case SET_SIGNAL_DARK:
+                case SET_SIGNAL_LIT:
+                case TRIGGER_ROUTE:
+                case CANCEL_SENSOR_TIMERS:
+                case SET_MEMORY:
+                case ENABLE_LOGIX:
+                case DISABLE_LOGIX:
+                case COPY_MEMORY:
+                case SET_LIGHT_INTENSITY:
+                case SET_LIGHT_TRANSITION_TIME:
+                case ALLOCATE_WARRANT_ROUTE:
+                case DEALLOCATE_WARRANT_ROUTE:
+                case SET_SIGNALMAST_HELD:
+                case CLEAR_SIGNALMAST_HELD:
+                case SET_SIGNALMAST_DARK:
+                case SET_SIGNALMAST_LIT:
+                case SET_BLOCK_ERROR:
+                case CLEAR_BLOCK_ERROR:
+                case DEALLOCATE_BLOCK:
+                case SET_BLOCK_OUT_OF_SERVICE:
+                case SET_BLOCK_IN_SERVICE:
                     str = str + ", \"" + _deviceName + "\".";
                     break;
-                case Conditional.ACTION_SET_ROUTE_TURNOUTS:
-                case Conditional.ACTION_AUTO_RUN_WARRANT:
-                case Conditional.ACTION_MANUAL_RUN_WARRANT:
+                case SET_NXPAIR_ENABLED:
+                case SET_NXPAIR_DISABLED:
+                case SET_NXPAIR_SEGMENT:
+                    str = str + ", \"" + getBean().getUserName() + "\".";
+                    break;
+                case SET_ROUTE_TURNOUTS:
+                case AUTO_RUN_WARRANT:
+                case MANUAL_RUN_WARRANT:
                     str = str + " " + rbx.getString("onWarrant") + ", \"" + _deviceName + "\".";
                     break;
-                case Conditional.ACTION_SET_SENSOR:
-                case Conditional.ACTION_SET_TURNOUT:
-                case Conditional.ACTION_SET_LIGHT:
-                case Conditional.ACTION_LOCK_TURNOUT:
-                case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-                case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                case Conditional.ACTION_DELAYED_TURNOUT:
-                case Conditional.ACTION_DELAYED_SENSOR:
-                case Conditional.ACTION_CONTROL_AUDIO:
+                case SET_SENSOR:
+                case SET_TURNOUT:
+                case SET_LIGHT:
+                case LOCK_TURNOUT:
+                case RESET_DELAYED_SENSOR:
+                case SET_SIGNAL_APPEARANCE:
+                case RESET_DELAYED_TURNOUT:
+                case DELAYED_TURNOUT:
+                case DELAYED_SENSOR:
+                case CONTROL_AUDIO:
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + getActionDataString();
                     break;
-                case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
+                case SET_SIGNALMAST_ASPECT:
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + _actionString;
                     break;
-                case Conditional.ACTION_CONTROL_TRAIN:
+                case CONTROL_TRAIN:
                     str = str + " " + rbx.getString("onWarrant") + " \"" + _deviceName + "\" "
                             + rbx.getString("to") + " " + getActionDataString();
                     break;
@@ -884,18 +903,18 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
         if (_actionString.length() > 0) {
             switch (_type) {
-                case Conditional.ACTION_SET_MEMORY:
-                case Conditional.ACTION_COPY_MEMORY:
+                case SET_MEMORY:
+                case COPY_MEMORY:
                     str = str + " " + rbx.getString("to") + " " + _actionString + ".";
                     break;
-                case Conditional.ACTION_PLAY_SOUND:
-                case Conditional.ACTION_RUN_SCRIPT:
+                case PLAY_SOUND:
+                case RUN_SCRIPT:
                     str = str + " " + rbx.getString("FromFile") + " " + _actionString + ".";
                     break;
-                case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                case Conditional.ACTION_DELAYED_TURNOUT:
-                case Conditional.ACTION_DELAYED_SENSOR:
+                case RESET_DELAYED_TURNOUT:
+                case RESET_DELAYED_SENSOR:
+                case DELAYED_TURNOUT:
+                case DELAYED_SENSOR:
                     str = str + rbx.getString("After") + " ";
                     try {
                         Float.parseFloat(_actionString);
@@ -905,8 +924,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                                 + " " + rbx.getString("Seconds") + ".";
                     }
                     break;
-                case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                case SET_LIGHT_TRANSITION_TIME:
+                case SET_LIGHT_INTENSITY:
                     try {
                         //int t = Integer.parseInt(_actionString);
                         str = str + " " + rbx.getString("to") + " " + _actionString + ".";
@@ -915,16 +934,16 @@ public class DefaultConditionalAction implements ConditionalAction {
                                 + rbx.getString("ValueInMemory") + ".";
                     }
                     break;
-                case Conditional.ACTION_JYTHON_COMMAND:
+                case JYTHON_COMMAND:
                     str = str + " " + rbx.getString("ExecJythonCmd") + " " + _actionString + ".";
                     break;
-                case Conditional.ACTION_SET_TRAIN_ID:
-                case Conditional.ACTION_SET_TRAIN_NAME:
-                case Conditional.ACTION_THROTTLE_FACTOR:
+                case SET_TRAIN_ID:
+                case SET_TRAIN_NAME:
+                case THROTTLE_FACTOR:
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onWarrant")
                             + " \"" + _deviceName + "\".";
                     break;
-                case Conditional.ACTION_SET_BLOCK_VALUE:
+                case SET_BLOCK_VALUE:
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onBlock")
                             + " \"" + _deviceName + "\".";
                     break;
@@ -933,11 +952,11 @@ public class DefaultConditionalAction implements ConditionalAction {
             }
         }
         switch (_type) {
-            case Conditional.ACTION_SET_LIGHT_INTENSITY:
-            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+            case SET_LIGHT_INTENSITY:
+            case SET_LIGHT_TRANSITION_TIME:
                 str = str + " " + rbx.getString("to") + " " + _actionData + ".";
                 break;
-            case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+            case SET_FAST_CLOCK_TIME:
                 str = str + " " + rbx.getString("to") + " "
                         + LogixTableAction.formatTime(_actionData / 60, _actionData - ((_actionData / 60) * 60));
                 break;
@@ -948,4 +967,5 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalAction.class);
+
 }

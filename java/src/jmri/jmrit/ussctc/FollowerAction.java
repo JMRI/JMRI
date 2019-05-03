@@ -22,7 +22,7 @@ public class FollowerAction extends jmri.util.JmriJFrameAction {
      */
     @Override
     public String getName() {
-        return "jmri.jmrit.ussctc.FollowerFrame";
+        return "jmri.jmrit.ussctc.FollowerFrame"; // NOI18N
     }
 
 }

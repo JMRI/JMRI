@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.List;
+import java.util.*;
 import java.util.MissingResourceException;
 import java.util.stream.IntStream;
 import javax.swing.ButtonGroup;
@@ -19,13 +19,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
-import org.jdom2.Attribute;
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,7 +128,7 @@ public class FnMapPanelESU extends JPanel {
      * Number of items per block
      */
     final int[] outBlockLength = new int[]{36, 16, 16, 24};
-    final int MAX_ITEMS = IntStream.of(outBlockLength).sum();
+    final int MAX_ITEMS = IntStream.of(outBlockLength).sum(); // total of entries
     /**
      * Number of bits per block item
      */
@@ -433,7 +432,7 @@ public class FnMapPanelESU extends JPanel {
                                 varComp = (JComponent) (_varModel.getRep(iVar, ""));
                             }
                             VariableValue var = _varModel.getVariable(iVar);
-                            varComp.setToolTipText(PaneProgPane.addCvDescription((Bundle.getMessage("FnMapESURow") + " " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
+                            varComp.setToolTipText(CvUtil.addCvDescription((Bundle.getMessage("FnMapESURow") + " " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
                             if (cvObject == null) {
                                 cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             }
@@ -748,6 +747,15 @@ public class FnMapPanelESU extends JPanel {
             log.debug("configOutputs was given a null model");
             return;
         }
+        Element family = null;
+        Parent parent = model.getParent();
+        if (parent != null && parent instanceof Element) {
+            family = (Element) parent;
+        } else {
+            log.debug("configOutputs found an invalid parent family");
+            return;
+        }
+
         // get numOuts, numFns or leave the defaults
         Attribute a = model.getAttribute("numOuts");
         try {
@@ -781,11 +789,16 @@ public class FnMapPanelESU extends JPanel {
         }
 
         // take all "output" children
-        List<Element> elemList = model.getChildren("output");
+        List<Element> elemList = new ArrayList<>();
+        addOutputElements(family.getChildren(), elemList);
+        addOutputElements(model.getChildren(), elemList);
+                
         log.debug("output scan starting with {} elements", elemList.size());
+        
         for (int i = 0; i < elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
+            log.debug("output element name: {} value: {}", e.getAttributeValue("name"), e.getAttributeValue("label"));
             // if this a number, or a character name?
             try {
                 int outputNum = Integer.parseInt(name);
@@ -808,6 +821,18 @@ public class FnMapPanelESU extends JPanel {
                 }
             }
         }
+    }
+
+    void addOutputElements(List<Element> input, List<Element> accumulate) {
+      for (Element elem : input) {
+        if (elem.getName().equals("outputs")) {
+          log.debug(" found outputs element of size {}", elem.getChildren().size());
+          addOutputElements(elem.getChildren(), accumulate);
+        } else if (elem.getName().equals("output")) {
+          log.debug("adding output element name: {} value: {}", elem.getAttributeValue("name"), elem.getAttributeValue("label"));
+          accumulate.add(elem);
+        }
+      }
     }
 
     // split and load labels
@@ -837,7 +862,14 @@ public class FnMapPanelESU extends JPanel {
      * clean up at end
      */
     public void dispose() {
-        removeAll();
+        _varModel = null; // kills GC cycles during test
+        for (int i = 0; i<rowButton.length; i++) rowButton[i] = null;
+        for (int i = 0; i < summaryLine.length; i++) {
+            for (int j = 0; j < summaryLine[i].length; j++) {
+                summaryLine[i][j] = null;
+            }
+        }
+        removeAll();  // JPanel call
     }
 
     // initialize logging

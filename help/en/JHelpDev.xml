@@ -8,7 +8,7 @@ JmriHelp_en
   </project>
   <projectdir>.</projectdir>
   <startpage>
-index.html
+index.shtml
   </startpage>
   <popupicon>
 images/popup.gif

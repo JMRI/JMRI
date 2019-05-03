@@ -1,8 +1,5 @@
 package jmri.jmrit.nixieclock;
 
-import jmri.util.JUnitUtil;
-
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

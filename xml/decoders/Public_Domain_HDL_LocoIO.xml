@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
-<!-- $Id: 0NMRA_registers.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018, 2019 All rights reserved    -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,95 +11,1637 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2015</year>
+      <year>2018</year>
+      <year>2019</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+          <personname>
+              <firstname>Bob</firstname>
+              <surname>Jacobsen</surname>
+          </personname>
+      </author>
+      <author>
+          <personname>
+              <firstname>Egbert</firstname>
+              <surname>Broerse</surname>
+          </personname>
+      </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+          <revnumber>1</revnumber>
+          <date>2015-08-12</date>
+          <authorinitials>BJ</authorinitials>
+          <revremark>Initial version, test only</revremark>
+      </revision>
+      <revision>
+          <revnumber>2</revnumber>
+          <date>2018-04-26</date>
+          <authorinitials>EB</authorinitials>
+          <revremark>Added Board and Ports panes, manual entry, still experimental</revremark>
+      </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>2019-04-10</date>
+        <authorinitials>EB</authorinitials>
+        <revremark>Use compositeVal type values (ports 1-5 for now), updated decoder schema, add LocoServo,
+            add LocoIO (PIC) versions up to 1.54, only show supported options by model (VersionID not in CV7),
+            Opcode (only for port 1 for now)
+        </revremark>
+      </revision>
+  </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
-  <!-- version 1 - test only -->
+  <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
+  <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
+
   <decoder>
-    <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY">
-      <model model="Basic LocoIO"/>
+    <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
+      <model model="HDL LocoIO v1.54" productID="154"/>
+      <!--filtering model specific options relies on new exclude/include support in compositeValType-->
+      <model model="HDL LocoIO v1.53" productID="153"/>
+        <!--Docs: 1.50-1.52 users should update to 1.53, same options-->
+      <model model="HDL LocoIO v1.49" productID="149"/>
+      <model model="HDL LocoIO v1.48" productID="148"/>
+        <!--Docs: 1.47 users should update to 1.48, same options-->
+      <model model="HDL LocoIO v1.46" productID="146"/>
+      <model model="HDL LocoIO v1.45" productID="145"/>
+      <model model="HDL LocoIO v1.44" productID="144"/>
+        <!--Docs: 1.43 users should update to 1.44, same options-->
+      <model model="HDL LocoIO v1.42" productID="142"/>
+      <model model="HDL LocoIO v1.41" productID="141"/>
+      <model model="HDL LocoIO v1.40" productID="140"/>
+      <model model="HDL LocoIO v1.39" productID="139"/>
+
+      <model model="HDL LocoServo v1.06" productID="106"/>
+      <model model="HDL LocoServo v1.05" productID="105"/>
+      <model model="HDL LocoServo v1.04" productID="104"/>
+      <model model="HDL LocoServo v1.03" productID="103"/>
+      <model model="HDL LocoServo v1.02" productID="102"/>
+      <model model="HDL LocoServo v1.01" productID="101">
+        <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
+      </model>
+
+      <model model="HDL LocoBooster v3" productID="003">
+        <!--LocoBooster only allows config of ports 1-4 (and special ports 5-6)-->
+      </model>
+      <model model="HDL LocoBooster v4" productID="004">
+        <!--LocoBooster v4 and up support Opcode2 on ports 1-6 -->
+      </model>
+      <model model="Original LocoIO" productID="135"/>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV1MODE</mode>
     </programming>
     <variables>
 
+      <variable CV="100" readOnly="yes" item="Decoder Version">
+          <decVal/>
+          <label>PIC Version: </label>
+          <label xml:lang="it">Versione PIC: </label>
+          <label xml:lang="fr">Version PIC: </label>
+          <label xml:lang="de">PIC Version: </label>
+          <label xml:lang="nl">PIC-versie: </label>
+      </variable>
+
+      <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139">
+          <decVal min="0" max="15"/>
+          <label>Blink Rate:</label>
+          <label xml:lang="de">Blinkgeschw.:</label>
+          <label xml:lang="nl">Knippertempo:</label>
+          <tooltip>Choose from 0=none to 15=fast</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXVXXXX" item="Board Active High" default="0" include="135,139,140">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>All Block Detection ports Active High:</label>
+        <tooltip>Default: unselected = Active Low</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0" exclude="101,102,103,104,105,106">
+        <enumVal>
+          <enumChoice choice="0" value="0" exclude="101,102,103,104,105,106">
+              <choice>Normal Ports</choice>
+              <choice xml:lang="de">Normal</choice>
+              <choice xml:lang="nl">Normaal</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Board Port type:</label>
+        <tooltip>How the ports on this board should operate</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="2" include="101,102,103,104,105,106">
+        <enumVal>
+            <enumChoice choice="2" value="2">
+                <choice>2-Position Servos</choice>
+                <choice xml:lang="nl">2-Positie Servo's</choice>
+            </enumChoice>
+            <enumChoice choice="3" value="3">
+                <choice>4-Position Servos</choice>
+                <choice xml:lang="nl">4-Positie Servo's</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Board Port type:</label>
+        <tooltip>How servo ports 5-12 on this board should operate</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0" exclude="135,139">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Alternate code:</label>
+        <tooltip>Button sends alternating code, default: unselected = fixed code</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Port Refresh:</label>
+        <tooltip>Refresh Ports, default: unselected = off</tooltip>
+      </variable>
+
      <!-- This sets a single JMRI-style composite address in two CVs -->
-      <variable CV="1" comment="Board SV address" item="Short Address" default="81">
+      <variable CV="1" item="Short Address" comment="Board SV address" default="81">
         <splitVal highCV="2" factor="1" offset="-256" default="1"/>
-        <label>Board Address (14 bit)</label>
+        <label>Board Address (14 bit):</label>
         <tooltip>This provides the full address by combining the LocoIO Address upper and LocoIO Subaddress lower parts</tooltip>
       </variable>
 
       <!-- This repurposes the UserID fields on the Basic pane to show -->
-      <!-- the indivdual address bytes                                 -->
+      <!-- the individual address bytes.                               -->
       <!-- Note defaults must be present both locations and agree      -->
-      <variable item="User Id #1" CV="1" default="81">
+      <variable item="User Id #2" CV="1" default="1"> <!-- only editable in v1.46 and higher, how to hide? -->
         <decVal max="127"/>
-            <label>LocoIO SubAddress (7-bit low)</label>
-            <tooltip>Message DSTL byte</tooltip>
+            <label>/ SubAddress (7-bit low):</label>
+            <tooltip>Message DSTL byte (only editable in v1.46 and higher)</tooltip>
       </variable>
-      <variable item="User Id #2" CV="2" default="1">
+
+      <variable item="User Id #1" CV="2" default="81">
         <decVal min="1" max="127"/>
-            <label>LocoIO Address (7-bit high)</label>
-            <tooltip>Message DSTH byte</tooltip>
+        <label>LocoIO Address (7-bit high):</label>
+        <tooltip>Message DSTH byte</tooltip>
       </variable>
 
-      <variable CV="3" item="Advanced Group 1 Option 1" default="192">
-        <enumVal>
-          <enumChoice value="15">
-            <choice>Input from a toggle switch</choice>
-          </enumChoice>
-          <enumChoice value="47">
-            <choice>Input from an active low push button</choice>
-          </enumChoice>
-          <enumChoice value="111">
-            <choice>Input from an active high push button</choice>
-          </enumChoice>
-          <enumChoice value="192">
-            <choice>Output from 0xC0 command</choice>
-          </enumChoice>
-          <enumChoice value="128">
-            <choice>Output from 0x80 command</choice>
-          </enumChoice>
-        </enumVal>
-        <label>RB7 Configuration</label>
-      </variable>
-      <variable CV="4" item="Advanced Group 1 Option 2" default="1">
-        <hexVal/>
-        <label>RB7 Value 1 (hex)</label>
-      </variable>
-      <variable CV="5" item="Advanced Group 1 Option 3" default="0">
-        <hexVal/>
-        <label>RB7 Value 2 (hex)</label>
+      <!-- Per Port config SVs, handled like CVs, reverse engineered values from HDL LocoIOConfig rev 2019 -->
+
+      <!-- Port 1 -->
+      <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
+        <!-- CV4 ignores bit 8 in port address -->
+        <splitVal highCV="5" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address (dec):</label>
+        <label xml:lang="nl">Adres (dec):</label>
+        <tooltip>Port 1 DCC Address (0-2047)</tooltip>
       </variable>
 
+      <variable item="Port1 Config" CV="3" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Config, filled by ComboBox</tooltip>
+      </variable>
 
+      <variable item="Port1 Value2" CV="5" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Value2, filled by ComboBox</tooltip>
+      </variable>
 
+      <variable item="Port1 Old Block" CV="4" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
+      </variable>
 
-      <variable item="Dummy 10" CV="10">
+      <variable item="Port1 LowAddress" CV="4" mask="XVVVVVVV">
         <decVal/>
+        <label>Low:</label>
+        <tooltip>Port 1 Value1 = (Address MINUS 1) &amp; 127</tooltip>
       </variable>
-      <variable item="Dummy 11" CV="11">
+
+      <variable item="Port1 HiAddress" mask="XXXXVVVV" CV="5">
         <decVal/>
+        <label>Hi:</label>
+        <tooltip>Port 1 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
-      <variable item="Dummy 12" CV="12">
+
+      <variable item="Port1 Type" tooltip="Port 1 Config and Value2">
+        <compositeVal>
+          <!--Input types-->
+          <compositeChoice choice="Input Toggle switch">
+            <choice>Input: Toggle switch</choice>
+            <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
+            <compositeSetting label="Port1 Config" value="15"/>
+            <compositeSetting label="Port1 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Toggle switch - Indirect</choice>
+            <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
+            <compositeSetting label="Port1 Config" value="7"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu" include="135,139,140">
+            <choice>Input: Occupancy</choice>
+            <compositeSetting label="Port1 Config" value="15"/>
+            <compositeSetting label="Port1 Old Block" value="1"/> <!-- special case: set Value1 bit 7=1 -->
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low" exclude="135,139,140">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port1 Config" value="31"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port1 Config" value="27"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
+            <choice>Input: Occupancy - active High</choice>
+            <compositeSetting label="Port1 Config" value="95"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active High Delayed</choice>
+            <compositeSetting label="Port1 Config" value="91"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Push High Direct">
+            <choice>Input: Push button - active High </choice>
+            <compositeSetting label="Port1 Config" value="111"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High Indirect</choice>
+            <compositeSetting label="Port1 Config" value="103"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct">
+            <choice>Input: Push button - active Low </choice>
+            <compositeSetting label="Port1 Config" value="47"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low Indirect</choice>
+            <compositeSetting label="Port1 Config" value="39"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
+            <choice>Input: Feedback - Normal</choice>
+            <compositeSetting label="Port1 Config" value="23"/>
+            <compositeSetting label="Port1 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 1</choice>
+            <compositeSetting label="Port1 Config" value="55"/>
+            <compositeSetting label="Port1 Value2" value="7"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 2</choice>
+            <compositeSetting label="Port1 Config" value="55"/>
+            <compositeSetting label="Port1 Value2" value="6"/>
+          </compositeChoice>
+
+          <!--Outputs types-->
+
+          <compositeChoice choice="Output Pulse 1" include="135,139,140,141">
+            <choice>Output: Pulse 1</choice>
+            <compositeSetting label="Port1 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port1 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2" include="135,139,140,141">
+            <choice>Output: Pulse 2</choice>
+            <compositeSetting label="Port1 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Soft Reset</choice>
+            <compositeSetting label="Port1 Config" value="136"/>
+            <compositeSetting label="Port1 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Soft Reset</choice>
+            <compositeSetting label="Port1 Config" value="136"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Hard Reset</choice>
+            <compositeSetting label="Port1 Config" value="140"/>
+            <compositeSetting label="Port1 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Hard Reset</choice>
+            <compositeSetting label="Port1 Config" value="140"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 1 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port1 Config" value="129"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off">
+            <choice>Output: Fixed 1 - Off</choice>
+            <compositeSetting label="Port1 Config" value="128"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="145"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="144"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way" exclude="135">
+            <choice>Output: Fixed 1 - On - 4-Way</choice>
+            <compositeSetting label="Port1 Config" value="161"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way">
+            <choice>Output: Fixed 1 - Off - 4-Way</choice>
+            <compositeSetting label="Port1 Config" value="160"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="177"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="176"/>
+            <compositeSetting label="Port1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 2 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port1 Config" value="129"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off">
+            <choice>Output: Fixed 2 - Off</choice>
+            <compositeSetting label="Port1 Config" value="128"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="145"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="144"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way" exclude="135">
+            <choice>Output: Fixed 2 - On - 4-Way</choice>
+            <compositeSetting label="Port1 Config" value="161"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way">
+            <choice>Output: Fixed 2 - Off - 4-Way</choice>
+            <compositeSetting label="Port1 Config" value="160"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="177"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port1 Config" value="176"/>
+            <compositeSetting label="Port1 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Block">
+            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice xml:lang="nl">Output: Bezetmelder (0xC0 commando)</choice>
+            <compositeSetting label="Port1 Config" value="192"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Block Blink" exclude="135,139">
+            <choice>Output: Block Detector - Blinking</choice>
+            <choice xml:lang="nl">Output: Bezetmelder - knipperend</choice>
+            <compositeSetting label="Port1 Config" value="208"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Pforte nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port1 Config" value="0"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+
+      <!--Port1 Opcode1-->
+      <variable item="Port1 Opcode1 Address" CV="52" mask="XVVVVVVV">
+        <splitVal highCV="53" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 Opcode1 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode1 Config" CV="51" default="0">
         <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Opcode1 Config, filled by ComboBox</tooltip>
       </variable>
-      <variable item="Dummy 13" CV="13">
+
+      <variable item="Port1 Opcode1 Value2" CV="53" mask="VVVVXXXX" default="0">
         <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Opcode1 Value2, filled by ComboBox</tooltip>
       </variable>
-      <variable item="Dummy 14" CV="14">
+
+      <variable item="Port1 Opcode1 Type" tooltip="Port 1 Opcode1 Config and Value2">
+        <compositeVal>
+        <!--Opcode1 Output types, limited set of options-->
+          <compositeChoice choice="Opcode1 Off" exclude="135,139,140,141,142,144,145,146,148">
+            <choice>Off</choice>
+            <choice xml:lang="de">inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Direct">
+            <choice>Contact1 Direct</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Indirect">
+            <choice>Contact1 Indirect</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Direct">
+            <choice>Contact2 Direct</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Indirect">
+            <choice>Contact2 Indirect</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Opcode1:</label>
+      </variable>
+
+      <!--Port1 Opcode2-->
+      <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+        <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 Opcode2 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port1 Opcode2 Config" CV="125" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 1 Opcode2 Config, filled by ComboBox</tooltip>
       </variable>
-      <variable item="Dummy 15" CV="15">
+
+      <variable item="Port1 Opcode2 Value2" CV="127" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 1 Opcode2 Value2, filled by ComboBox</tooltip>
       </variable>
-      <variable item="Dummy 16" CV="16">
+
+      <variable item="Port1 Opcode2 Type" tooltip="Port 1 Opcode1 Config and Value2" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+        <compositeVal>
+          <!--Opcode2 Output types, limited set of options-->
+          <compositeChoice choice="Opcode2 Off">
+            <choice>Off</choice>
+            <choice xml:lang="de">inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Direct">
+            <choice>Contact1 Direct</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact1 Indirect">
+            <choice>Contact1 Indirect</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Direct">
+            <choice>Contact2 Direct</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="176"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Contact2 Indirect">
+            <choice>Contact2 Indirect</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="177"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Opcode2:</label>
+      </variable>
+
+      <!-- Port 2 -->
+      <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
+        <!-- CV4 ignores bit 8 in port address -->
+        <splitVal highCV="8" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address (dec):</label>
+        <label xml:lang="nl">Adres (dec):</label>
+        <tooltip>Port 2 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port2 Config" CV="6" default="0">
         <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 2 Config, filled by ComboBox</tooltip>
       </variable>
-      <variable item="Dummy 17" CV="17">
+
+      <variable item="Port2 Value2" CV="8" mask="VVVVXXXX" default="0">
         <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 2 Value2, filled by ComboBox</tooltip>
       </variable>
+
+      <variable item="Port2 Old Block" CV="7" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
+      </variable>
+
+      <variable item="Port2 LowAddress" CV="7" mask="XVVVVVVV">
+        <decVal/>
+        <label>Low:</label>
+        <tooltip>Port 2 Value1 = (Address MINUS 1) &amp; 127</tooltip>
+      </variable>
+
+      <variable item="Port2 HiAddress" mask="XXXXVVVV" CV="8">
+        <decVal/>
+        <label>Hi:</label>
+        <tooltip>Port 2 Value2 = (Address MINUS 1) MOD 128</tooltip>
+      </variable>
+
+      <variable item="Port2 Type" tooltip="Port 2 Config and Value2">
+        <compositeVal>
+          <!--Input types-->
+          <compositeChoice choice="Input Toggle switch">
+            <choice>Input: Toggle switch</choice>
+            <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
+            <compositeSetting label="Port2 Config" value="15"/>
+            <compositeSetting label="Port2 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Toggle switch - Indirect</choice>
+            <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
+            <compositeSetting label="Port2 Config" value="7"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu" include="135,139,140">
+            <choice>Input: Occupancy</choice>
+            <compositeSetting label="Port2 Config" value="15"/>
+            <compositeSetting label="Port2 Old Block" value="1"/> <!-- special case: set Value1 bit 7=1 -->
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low" exclude="135,139,140">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port2 Config" value="31"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port2 Config" value="27"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
+            <choice>Input: Occupancy - active High</choice>
+            <compositeSetting label="Port2 Config" value="95"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active High Delayed</choice>
+            <compositeSetting label="Port2 Config" value="91"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Push High Direct">
+            <choice>Input: Push button - active High </choice>
+            <compositeSetting label="Port2 Config" value="111"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High Indirect</choice>
+            <compositeSetting label="Port2 Config" value="103"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct">
+            <choice>Input: Push button - active Low </choice>
+            <compositeSetting label="Port2 Config" value="47"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low Indirect</choice>
+            <compositeSetting label="Port2 Config" value="39"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
+            <choice>Input: Feedback - Normal</choice>
+            <compositeSetting label="Port2 Config" value="23"/>
+            <compositeSetting label="Port2 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 1</choice>
+            <compositeSetting label="Port2 Config" value="55"/>
+            <compositeSetting label="Port2 Value2" value="7"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 2</choice>
+            <compositeSetting label="Port2 Config" value="55"/>
+            <compositeSetting label="Port2 Value2" value="6"/>
+          </compositeChoice>
+
+          <!--Outputs types-->
+
+          <compositeChoice choice="Output Pulse 1" include="135,139,140,141">
+            <choice>Output: Pulse 1</choice>
+            <compositeSetting label="Port2 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port2 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2" include="135,139,140,141">
+            <choice>Output: Pulse 2</choice>
+            <compositeSetting label="Port2 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Soft Reset</choice>
+            <compositeSetting label="Port2 Config" value="136"/>
+            <compositeSetting label="Port2 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Soft Reset</choice>
+            <compositeSetting label="Port2 Config" value="136"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Hard Reset</choice>
+            <compositeSetting label="Port2 Config" value="140"/>
+            <compositeSetting label="Port2 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Hard Reset</choice>
+            <compositeSetting label="Port2 Config" value="140"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 1 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port2 Config" value="129"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off">
+            <choice>Output: Fixed 1 - Off</choice>
+            <compositeSetting label="Port2 Config" value="128"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="145"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="144"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way" exclude="135">
+            <choice>Output: Fixed 1 - On - 4-Way</choice>
+            <compositeSetting label="Port2 Config" value="161"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way">
+            <choice>Output: Fixed 1 - Off - 4-Way</choice>
+            <compositeSetting label="Port2 Config" value="160"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="177"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="176"/>
+            <compositeSetting label="Port2 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 2 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port2 Config" value="129"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off">
+            <choice>Output: Fixed 2 - Off</choice>
+            <compositeSetting label="Port2 Config" value="128"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="145"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="144"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way" exclude="135">
+            <choice>Output: Fixed 2 - On - 4-Way</choice>
+            <compositeSetting label="Port2 Config" value="161"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way">
+            <choice>Output: Fixed 2 - Off - 4-Way</choice>
+            <compositeSetting label="Port2 Config" value="160"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="177"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port2 Config" value="176"/>
+            <compositeSetting label="Port2 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Block">
+            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice xml:lang="nl">Output: Bezetmelder (0xC0 commando)</choice>
+            <compositeSetting label="Port2 Config" value="192"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Block Blink" exclude="135,139">
+            <choice>Output: Block Detector - Blinking</choice>
+            <choice xml:lang="nl">Output: Bezetmelder - knipperend</choice>
+            <compositeSetting label="Port2 Config" value="208"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
+              <choice>Port Not In Use</choice>
+              <choice xml:lang="de">Pforte nicht benutzt</choice>
+              <choice xml:lang="nl">Poort niet in gebruik</choice>
+              <compositeSetting label="Port2 Config" value="0"/>
+              <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+
+      <!-- TODO copy and adjust Port2 Opcode1-2 from Port1-->
+
+      <!--Port 3 -->
+      <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
+        <!-- CV4 ignores bit 8 in port address -->
+        <splitVal highCV="11" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address (dec):</label>
+        <label xml:lang="nl">Adres (dec):</label>
+        <tooltip>Port 3 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port3 Config" CV="9" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 3 Config, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port3 Value2" CV="11" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 3 Value2, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port3 Old Block" CV="10" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
+      </variable>
+
+      <variable item="Port3 LowAddress" CV="10" mask="XVVVVVVV">
+        <decVal/>
+        <label>Low:</label>
+        <tooltip>Port 3 Value1 = (Address MINUS 1) &amp; 127</tooltip>
+      </variable>
+
+      <variable item="Port3 HiAddress" mask="XXXXVVVV" CV="11">
+        <decVal/>
+        <label>Hi:</label>
+        <tooltip>Port 3 Value2 = (Address MINUS 1) MOD 128</tooltip>
+      </variable>
+
+      <variable item="Port3 Type" tooltip="Port 3 Config and Value2">
+        <compositeVal>
+          <!--Input types-->
+          <compositeChoice choice="Input Toggle switch">
+            <choice>Input: Toggle switch</choice>
+            <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
+            <compositeSetting label="Port3 Config" value="15"/>
+            <compositeSetting label="Port3 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Toggle switch - Indirect</choice>
+            <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
+            <compositeSetting label="Port3 Config" value="7"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu" include="135,139,140">
+            <choice>Input: Occupancy</choice>
+            <compositeSetting label="Port3 Config" value="15"/>
+            <compositeSetting label="Port3 Old Block" value="1"/> <!-- special case: set Value1 bit 7=1 -->
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low" exclude="135,139,140">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port3 Config" value="31"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port3 Config" value="27"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
+            <choice>Input: Occupancy - active High</choice>
+            <compositeSetting label="Port3 Config" value="95"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active High Delayed</choice>
+            <compositeSetting label="Port3 Config" value="91"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Push High Direct">
+            <choice>Input: Push button - active High </choice>
+            <compositeSetting label="Port3 Config" value="111"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High Indirect</choice>
+            <compositeSetting label="Port3 Config" value="103"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct">
+            <choice>Input: Push button - active Low </choice>
+            <compositeSetting label="Port3 Config" value="47"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low Indirect</choice>
+            <compositeSetting label="Port3 Config" value="39"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
+            <choice>Input: Feedback - Normal</choice>
+            <compositeSetting label="Port3 Config" value="23"/>
+            <compositeSetting label="Port3 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 1</choice>
+            <compositeSetting label="Port3 Config" value="55"/>
+            <compositeSetting label="Port3 Value2" value="7"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 2</choice>
+            <compositeSetting label="Port3 Config" value="55"/>
+            <compositeSetting label="Port3 Value2" value="6"/>
+          </compositeChoice>
+
+          <!--Outputs types-->
+
+          <compositeChoice choice="Output Pulse 1" include="135,139,140,141">
+            <choice>Output: Pulse 1</choice>
+            <compositeSetting label="Port3 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port3 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2" include="135,139,140,141">
+            <choice>Output: Pulse 2</choice>
+            <compositeSetting label="Port3 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Soft Reset</choice>
+            <compositeSetting label="Port3 Config" value="136"/>
+            <compositeSetting label="Port3 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Soft Reset</choice>
+            <compositeSetting label="Port3 Config" value="136"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Hard Reset</choice>
+            <compositeSetting label="Port3 Config" value="140"/>
+            <compositeSetting label="Port3 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Hard Reset</choice>
+            <compositeSetting label="Port3 Config" value="140"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 1 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port3 Config" value="129"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off">
+            <choice>Output: Fixed 1 - Off</choice>
+            <compositeSetting label="Port3 Config" value="128"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="145"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="144"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way" exclude="135">
+            <choice>Output: Fixed 1 - On - 4-Way</choice>
+            <compositeSetting label="Port3 Config" value="161"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way">
+            <choice>Output: Fixed 1 - Off - 4-Way</choice>
+            <compositeSetting label="Port3 Config" value="160"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="177"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="176"/>
+            <compositeSetting label="Port3 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 2 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port3 Config" value="129"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off">
+            <choice>Output: Fixed 2 - Off</choice>
+            <compositeSetting label="Port3 Config" value="128"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="145"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="144"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way" exclude="135">
+            <choice>Output: Fixed 2 - On - 4-Way</choice>
+            <compositeSetting label="Port3 Config" value="161"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way">
+            <choice>Output: Fixed 2 - Off - 4-Way</choice>
+            <compositeSetting label="Port3 Config" value="160"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="177"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port3 Config" value="176"/>
+            <compositeSetting label="Port3 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Block">
+            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice xml:lang="nl">Output: Bezetmelder (0xC0 commando)</choice>
+            <compositeSetting label="Port3 Config" value="192"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Block Blink" exclude="135,139">
+            <choice>Output: Block Detector - Blinking</choice>
+            <choice xml:lang="nl">Output: Bezetmelder - knipperend</choice>
+            <compositeSetting label="Port3 Config" value="208"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
+              <choice>Port Not In Use</choice>
+              <choice xml:lang="de">Pforte nicht benutzt</choice>
+              <choice xml:lang="nl">Poort niet in gebruik</choice>
+              <compositeSetting label="Port3 Config" value="0"/>
+              <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+      
+      <!-- Port 4 -->
+      <variable item="Port4 Address" CV="13" mask="XVVVVVVV">
+        <!-- CV4 ignores bit 8 in port address -->
+        <splitVal highCV="14" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address (dec):</label>
+        <label xml:lang="nl">Adres (dec):</label>
+        <tooltip>Port 4 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port4 Config" CV="12" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 4 Config, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port4 Value2" CV="14" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 4 Value2, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port4 Old Block" CV="13" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
+      </variable>
+
+      <variable item="Port4 LowAddress" CV="13" mask="XVVVVVVV">
+        <decVal/>
+        <label>Low:</label>
+        <tooltip>Port 4 Value1 = (Address MINUS 1) &amp; 127</tooltip>
+      </variable>
+
+      <variable item="Port4 HiAddress" mask="XXXXVVVV" CV="14">
+        <decVal/>
+        <label>Hi:</label>
+        <tooltip>Port 4 Value2 = (Address MINUS 1) MOD 128</tooltip>
+      </variable>
+
+      <variable item="Port4 Type" tooltip="Port 4 Config and Value2">
+        <compositeVal>
+          <!--Input types-->
+          <compositeChoice choice="Input Toggle switch">
+            <choice>Input: Toggle switch</choice>
+            <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
+            <compositeSetting label="Port4 Config" value="15"/>
+            <compositeSetting label="Port4 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Toggle switch - Indirect</choice>
+            <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
+            <compositeSetting label="Port4 Config" value="7"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu" include="135,139,140">
+            <choice>Input: Occupancy</choice>
+            <compositeSetting label="Port4 Config" value="15"/>
+            <compositeSetting label="Port4 Old Block" value="1"/> <!-- special case: set Value1 bit 7=1 -->
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low" exclude="135,139,140">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port4 Config" value="31"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port4 Config" value="27"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High" exclude="135,139,140">
+            <choice>Input: Occupancy - active High</choice>
+            <compositeSetting label="Port4 Config" value="95"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
+            <choice>Input: Occupancy - active High Delayed</choice>
+            <compositeSetting label="Port4 Config" value="91"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Push High Direct">
+            <choice>Input: Push button - active High </choice>
+            <compositeSetting label="Port4 Config" value="111"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High Indirect</choice>
+            <compositeSetting label="Port4 Config" value="103"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct">
+            <choice>Input: Push button - active Low </choice>
+            <compositeSetting label="Port4 Config" value="47"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low Indirect</choice>
+            <compositeSetting label="Port4 Config" value="39"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
+            <choice>Input: Feedback - Normal</choice>
+            <compositeSetting label="Port4 Config" value="23"/>
+            <compositeSetting label="Port4 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 1</choice>
+            <compositeSetting label="Port4 Config" value="55"/>
+            <compositeSetting label="Port4 Value2" value="7"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+            <choice>Input: Feedback - Contact 2</choice>
+            <compositeSetting label="Port4 Config" value="55"/>
+            <compositeSetting label="Port4 Value2" value="6"/>
+          </compositeChoice>
+
+          <!--Outputs types-->
+
+          <compositeChoice choice="Output Pulse 1" include="135,139,140,141">
+            <choice>Output: Pulse 1</choice>
+            <compositeSetting label="Port4 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port4 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2" include="135,139,140,141">
+            <choice>Output: Pulse 2</choice>
+            <compositeSetting label="Port4 Config" value="136"/> <!-- have to check -->
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Soft Reset</choice>
+            <compositeSetting label="Port4 Config" value="136"/>
+            <compositeSetting label="Port4 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Soft Reset</choice>
+            <compositeSetting label="Port4 Config" value="136"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 1 - Hard Reset</choice>
+            <compositeSetting label="Port4 Config" value="140"/>
+            <compositeSetting label="Port4 Value2" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
+            <choice>Output: Pulse 2 - Hard Reset</choice>
+            <compositeSetting label="Port4 Config" value="140"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 1 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port4 Config" value="129"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off">
+            <choice>Output: Fixed 1 - Off</choice>
+            <compositeSetting label="Port4 Config" value="128"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="145"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="144"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way" exclude="135">
+            <choice>Output: Fixed 1 - On - 4-Way</choice>
+            <compositeSetting label="Port4 Config" value="161"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way">
+            <choice>Output: Fixed 1 - Off - 4-Way</choice>
+            <compositeSetting label="Port4 Config" value="160"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="177"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 1 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 1 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="176"/>
+            <compositeSetting label="Port4 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Fixed 2 On" exclude="135">
+            <choice>Output: Fixed 1 - On</choice>
+            <compositeSetting label="Port4 Config" value="129"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off">
+            <choice>Output: Fixed 2 - Off</choice>
+            <compositeSetting label="Port4 Config" value="128"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="145"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="144"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way" exclude="135">
+            <choice>Output: Fixed 2 - On - 4-Way</choice>
+            <compositeSetting label="Port4 Config" value="161"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way">
+            <choice>Output: Fixed 2 - Off - 4-Way</choice>
+            <compositeSetting label="Port4 Config" value="160"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 On 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - On - 4-Way - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="177"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Fixed 2 Off 4Way Blink" exclude="135,139">
+            <choice>Output: Fixed 2 - Off - 4-Way - Blinking</choice>
+            <compositeSetting label="Port4 Config" value="176"/>
+            <compositeSetting label="Port4 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Output Block">
+            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice xml:lang="nl">Output: Bezetmelder (0xC0 commando)</choice>
+            <compositeSetting label="Port4 Config" value="192"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+          <compositeChoice choice="Output Block Blink" exclude="135,139">
+            <choice>Output: Block Detector - Blinking</choice>
+            <choice xml:lang="nl">Output: Bezetmelder - knipperend</choice>
+            <compositeSetting label="Port4 Config" value="208"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
+              <choice>Port Not In Use</choice>
+              <choice xml:lang="de">Pforte nicht benutzt</choice>
+              <choice xml:lang="nl">Poort niet in gebruik</choice>
+              <compositeSetting label="Port4 Config" value="0"/>
+              <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+
+      <!-- Port 5 -->
+      <variable item="Port5 Address" CV="16" mask="XVVVVVVV">
+        <!-- CV4 ignores bit 8 in port address -->
+        <splitVal highCV="17" factor="1" offset="1" upperMask="XXXXVVVV" min="0" max="2048"/>
+        <label>Address (dec):</label>
+        <label xml:lang="nl">Adres (dec):</label>
+        <tooltip>Port 5 DCC Address (0-2047)</tooltip>
+      </variable>
+
+      <variable item="Port5 Config" CV="15" default="0">
+        <decVal/>
+        <label>Config:</label>
+        <tooltip>Port 5 Config, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port5 Value2" CV="17" mask="VVVVXXXX" default="0">
+        <decVal/>
+        <label>Value 2:</label>
+        <tooltip>Port 5 Value2, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port5 Old Block" CV="16" mask="VXXXXXXX" default="0" include="135,139,140">
+        <decVal/>
+        <!-- only used up to version 1.40. Later versions set active high/low per port-->
+      </variable>
+
+      <variable item="Port5 LowAddress" CV="16" mask="XVVVVVVV">
+        <decVal/>
+        <label>Low:</label>
+        <tooltip>Port 4 Value1 = (Address MINUS 1) &amp; 127</tooltip>
+      </variable>
+
+      <variable item="Port5 HiAddress" mask="XXXXVVVV" CV="17">
+        <decVal/>
+        <label>Hi:</label>
+        <tooltip>Port 5 Value2 = (Address MINUS 1) MOD 128</tooltip>
+      </variable>
+
+      <variable item="Port5 Type" tooltip="Port 5 Config and Value2">
+        <compositeVal>
+          <compositeChoiceGroup exclude="003,004,101,102,103,104,105,106">
+            <!--inputs and most output types not available on LocoServo boards ports 5-12 and LocoBooster ports 5-6-->
+            <!--Input types-->
+            <compositeChoice choice="Input Toggle switch">
+              <choice>Input: Toggle switch</choice>
+              <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
+              <compositeSetting label="Port5 Config" value="15"/>
+              <compositeSetting label="Port5 Value2" value="1"/> <!--CV value via mask = 16 as per documentation-->
+            </compositeChoice>
+            <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
+              <choice>Input: Toggle switch - Indirect</choice>
+              <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
+              <compositeSetting label="Port5 Config" value="7"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Input Occu" include="135,139,140">
+              <choice>Input: Occupancy</choice>
+              <compositeSetting label="Port5 Config" value="15"/>
+              <compositeSetting label="Port5 Old Block" value="1"/> <!-- special case: set Value1 bit 7=1 -->
+            </compositeChoice>
+            <compositeChoice choice="Input Occu Low" exclude="135,139,140">
+              <choice>Input: Occupancy - active Low</choice>
+              <compositeSetting label="Port5 Config" value="31"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
+              <choice>Input: Occupancy - active Low Delayed</choice>
+              <compositeSetting label="Port5 Config" value="27"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Occu High" exclude="135,139,140">
+              <choice>Input: Occupancy - active High</choice>
+              <compositeSetting label="Port5 Config" value="95"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
+              <choice>Input: Occupancy - active High Delayed</choice>
+              <compositeSetting label="Port5 Config" value="91"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Input Push High Direct">
+              <choice>Input: Push button - active High </choice>
+              <compositeSetting label="Port5 Config" value="111"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
+              <choice>Input: Push button - active High Indirect</choice>
+              <compositeSetting label="Port5 Config" value="103"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Push Low Direct">
+              <choice>Input: Push button - active Low </choice>
+              <compositeSetting label="Port5 Config" value="47"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
+              <choice>Input: Push button - active Low Indirect</choice>
+              <compositeSetting label="Port5 Config" value="39"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
+              <choice>Input: Feedback - Normal</choice>
+              <compositeSetting label="Port5 Config" value="23"/>
+              <compositeSetting label="Port5 Value2" value="7"/> <!--CV value via mask = 112 as per documentation-->
+            </compositeChoice>
+            <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+              <choice>Input: Feedback - Contact 1</choice>
+              <compositeSetting label="Port5 Config" value="55"/>
+              <compositeSetting label="Port5 Value2" value="7"/>
+            </compositeChoice>
+            <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
+              <choice>Input: Feedback - Contact 2</choice>
+              <compositeSetting label="Port5 Config" value="55"/>
+              <compositeSetting label="Port5 Value2" value="6"/>
+            </compositeChoice>
+
+            <!--Outputs types-->
+
+            <compositeChoice choice="Output Pulse 1" include="135,139,140,141">
+              <choice>Output: Pulse 1</choice>
+              <compositeSetting label="Port5 Config" value="136"/> <!-- have to check -->
+              <compositeSetting label="Port5 Value2" value="2"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Pulse 2" include="135,139,140,141">
+              <choice>Output: Pulse 2</choice>
+              <compositeSetting label="Port5 Config" value="136"/> <!-- have to check -->
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
+              <choice>Output: Pulse 1 - Soft Reset</choice>
+              <compositeSetting label="Port5 Config" value="136"/>
+              <compositeSetting label="Port5 Value2" value="2"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
+              <choice>Output: Pulse 2 - Soft Reset</choice>
+              <compositeSetting label="Port5 Config" value="136"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
+              <choice>Output: Pulse 1 - Hard Reset</choice>
+              <compositeSetting label="Port5 Config" value="140"/>
+              <compositeSetting label="Port5 Value2" value="2"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
+              <choice>Output: Pulse 2 - Hard Reset</choice>
+              <compositeSetting label="Port5 Config" value="140"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Output Fixed 1 On" exclude="135">
+              <choice>Output: Fixed 1 - On</choice>
+              <compositeSetting label="Port5 Config" value="129"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 Off">
+              <choice>Output: Fixed 1 - Off</choice>
+              <compositeSetting label="Port5 Config" value="128"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 On Blink" exclude="135,139">
+              <choice>Output: Fixed 1 - On - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="145"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 Off Blink" exclude="135,139">
+              <choice>Output: Fixed 1 - Off - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="144"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 On 4Way" exclude="135">
+              <choice>Output: Fixed 1 - On - 4-Way</choice>
+              <compositeSetting label="Port5 Config" value="161"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 Off 4Way">
+              <choice>Output: Fixed 1 - Off - 4-Way</choice>
+              <compositeSetting label="Port5 Config" value="160"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 On 4Way Blink" exclude="135,139">
+              <choice>Output: Fixed 1 - On - 4-Way - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="177"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 1 Off 4Way Blink" exclude="135,139">
+              <choice>Output: Fixed 1 - Off - 4-Way - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="176"/>
+              <compositeSetting label="Port5 Value2" value="1"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Output Fixed 2 On" exclude="135">
+              <choice>Output: Fixed 1 - On</choice>
+              <compositeSetting label="Port5 Config" value="129"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 Off">
+              <choice>Output: Fixed 2 - Off</choice>
+              <compositeSetting label="Port5 Config" value="128"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 On Blink" exclude="135,139">
+              <choice>Output: Fixed 2 - On - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="145"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 Off Blink" exclude="135,139">
+              <choice>Output: Fixed 2 - Off - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="144"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 On 4Way" exclude="135">
+              <choice>Output: Fixed 2 - On - 4-Way</choice>
+              <compositeSetting label="Port5 Config" value="161"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 Off 4Way">
+              <choice>Output: Fixed 2 - Off - 4-Way</choice>
+              <compositeSetting label="Port5 Config" value="160"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 On 4Way Blink" exclude="135,139">
+              <choice>Output: Fixed 2 - On - 4-Way - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="177"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Fixed 2 Off 4Way Blink" exclude="135,139">
+              <choice>Output: Fixed 2 - Off - 4-Way - Blinking</choice>
+              <compositeSetting label="Port5 Config" value="176"/>
+              <compositeSetting label="Port5 Value2" value="3"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Output Block">
+              <choice>Output: Block Detector (0xC0 command)</choice>
+              <choice xml:lang="nl">Output: Bezetmelder (0xC0 commando)</choice>
+              <compositeSetting label="Port5 Config" value="192"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+            <compositeChoice choice="Output Block Blink" exclude="101,102,103,104,105,106,135,139">
+              <choice>Output: Block Detector - Blinking</choice>
+              <choice xml:lang="nl">Output: Bezetmelder - knipperend</choice>
+              <compositeSetting label="Port5 Config" value="208"/>
+              <compositeSetting label="Port5 Value2" value="0"/>
+            </compositeChoice>
+
+          </compositeChoiceGroup>
+
+          <!--next output type only available in ports 5-8 on LocoServo-->
+          <compositeChoice choice="Output Servo" include="101,102,103,104,105,106">
+            <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
+            <choice>Output: Servo 1 (2/4 pos on tab LocoIO)</choice>
+            <choice xml:lang="nl">Output: Servo (2/4 pos. op tab LocoIO)</choice>
+            <compositeSetting label="Port5 Config" value="128"/>
+            <compositeSetting label="Port5 Value2" value="1"/>
+          </compositeChoice>
+
+          <!--next output type fixed for ports 5-6 on LocoBooster-->
+          <compositeChoice choice="Output Servo" include="003,004">
+            <!-- Booster values are identical to Input Occu Active Low, differentiated by PIC version -->
+            <choice>Feedback of Booster Input</choice>
+            <choice xml:lang="nl">Feedback van Booster Ingang</choice>
+            <compositeSetting label="Port5 Config" value="31"/>
+            <compositeSetting label="Port5 Value2" value="1"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Port Not In Use" exclude="003,004,135,139,140,141,142,144,145,146,148">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Pforte nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port5 Config" value="0"/>
+            <compositeSetting label="Port5 Value2" value="0"/>
+          </compositeChoice>
+
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+      </variable>
+
+      <!--Servo 1 variables-->
+      <variable item="Port5 Pos1" CV="101" default="1" include="101,102,103,104,105,106">
+        <decVal min="1" max="127"/>
+        <label>  Pos1:</label>
+        <tooltip>Servo position #1 (1-127)</tooltip>
+      </variable>
+      <variable item="Port5 Pos2" CV="102" default="127" include="101,102,103,104,105,106">
+        <decVal min="1" max="127"/>
+        <label>  Pos2:</label>
+        <tooltip>Servo position #2 (1-127)</tooltip>
+      </variable>
+      <variable item="Port5 Speed" CV="103" default="1" include="101,102,103,104,105,106">
+        <decVal min="1" max="7"/>
+        <label>Speed:</label>
+        <tooltip>Servo speed (1 fast - 7 slow, 4-5 = continuous)</tooltip>
+      </variable>
+
+      <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 6 - 16 -->
+
       <variable item="Dummy 18" CV="18">
         <decVal/>
       </variable>
@@ -200,15 +1741,8 @@
       <variable item="Dummy 50" CV="50">
         <decVal/>
       </variable>
-      <variable item="Dummy 51" CV="51">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 52" CV="52">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 53" CV="53">
-        <decVal/>
-      </variable>
+
+      <!--Opcode1 SV51-SV98-->
       <variable item="Dummy 54" CV="54">
         <decVal/>
       </variable>
@@ -344,21 +1878,10 @@
       <variable item="Dummy 98" CV="98">
         <decVal/>
       </variable>
-      <variable item="Dummy 99" CV="99">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 100" CV="100">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 101" CV="101">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 102" CV="102">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 103" CV="103">
-        <decVal/>
-      </variable>
+
+      <!--CV100/SV100 was already defined above-->
+
+      <!--8*3 Servo settings SV 101-124 -->
       <variable item="Dummy 104" CV="104">
         <decVal/>
       </variable>
@@ -422,15 +1945,8 @@
       <variable item="Dummy 124" CV="124">
         <decVal/>
       </variable>
-      <variable item="Dummy 125" CV="125">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 126" CV="126">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 127" CV="127">
-        <decVal/>
-      </variable>
+
+      <!--Opcode2 SV125-SV175-->
       <variable item="Dummy 128" CV="128">
         <decVal/>
       </variable>
@@ -575,247 +2091,519 @@
       <variable item="Dummy 175" CV="175">
         <decVal/>
       </variable>
-      <variable item="Dummy 176" CV="176">
-        <decVal/>
-      </variable>
+
       <variable item="Dummy 177" CV="177">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 178" CV="178">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 179" CV="179">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 180" CV="180">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 181" CV="181">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 182" CV="182">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 183" CV="183">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 184" CV="184">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 185" CV="185">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 186" CV="186">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 187" CV="187">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 188" CV="188">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 189" CV="189">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 190" CV="190">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 191" CV="191">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 192" CV="192">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 193" CV="193">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 194" CV="194">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 195" CV="195">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 196" CV="196">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 197" CV="197">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 198" CV="198">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 199" CV="199">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 200" CV="200">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 201" CV="201">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 202" CV="202">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 203" CV="203">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 204" CV="204">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 205" CV="205">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 206" CV="206">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 207" CV="207">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 208" CV="208">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 209" CV="209">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 210" CV="210">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 211" CV="211">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 212" CV="212">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 213" CV="213">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 214" CV="214">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 215" CV="215">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 216" CV="216">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 217" CV="217">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 218" CV="218">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 219" CV="219">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 220" CV="220">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 221" CV="221">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 222" CV="222">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 223" CV="223">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 224" CV="224">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 225" CV="225">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 226" CV="226">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 227" CV="227">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 228" CV="228">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 229" CV="229">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 230" CV="230">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 231" CV="231">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 232" CV="232">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 233" CV="233">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 234" CV="234">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 235" CV="235">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 236" CV="236">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 237" CV="237">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 238" CV="238">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 239" CV="239">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 240" CV="240">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 241" CV="241">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 242" CV="242">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 243" CV="243">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 244" CV="244">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 245" CV="245">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 246" CV="246">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 247" CV="247">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 248" CV="248">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 249" CV="249">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 250" CV="250">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 251" CV="251">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 252" CV="252">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 253" CV="253">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 254" CV="254">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 255" CV="255">
         <decVal/>
       </variable>
 
     </variables>
   </decoder>
+
+  <!-- LocoIO GUI Panes -->
+
+  <!-- Board Settings Pane -->
+    <pane>
+        <name>LocoIO</name>
+      <column>
+        <label>
+            <text>LocoIO Board Settings</text>
+        </label>
+        <display item="Decoder Version"/>
+
+        <row>
+            <display item="Blink Rate"/>
+            <display item="Blink Rate" format="hslider" label=""/>
+        </row>
+        <display item="Action Mode"/>
+
+        <display item="Alternate Mode" format="checkbox"/>
+        <display item="Port Refresh" format="checkbox"/>
+        <display item="Board Active High" format="checkbox"/>
+
+      </column>
+    </pane>
+
+  <!-- Per Port Config Pane -->
+  <pane>
+    <name>Ports</name>
+    <name xml:lang="nl">Poorten</name>
+      <column>
+        <row>
+          <label>
+            <text>&lt;html&gt;Max port address: 2048 (7 x 128 + 127 + 1). Port address is stored as (CV2 * 128) + CV1 + 1.&lt;br/&gt;
+              Use the combo box to enter values defining the port operation mode in Config and Value 2 fields.&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;Hoogste poortadres: 2048 (7 x 128 + 127 + 1). Poortadres bestaat uit (CV2 * 128) + CV1 + 1.&lt;br/&gt;
+              Selecteer in de keuzelijst het type poort. Dit vult Config- en Value 2-velden.&lt;/html&gt;</text>
+          </label>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Port 1&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 1&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Port1 Address"/>
+              <display item="Port1 HiAddress"/>
+              <display item="Port1 LowAddress"/>
+            </row>
+            <display item="Port1 Type"/>
+            <row>
+              <display item="Port1 Config"/>
+              <display item="Port1 Value2"/>
+              <!--<display item="Port1 Old Block"/>-->
+            </row>
+          </column>
+          <column>
+            <!--Opcode 1 2 option-->
+            <display item="Port1 Opcode1 Type"/>
+            <display item="Port1 Opcode1 Address"/>
+            <display item="Port1 Opcode1 Config"/>
+            <display item="Port1 Opcode1 Value2"/>
+          </column>
+          <column>
+            <display item="Port1 Opcode2 Type"/>
+            <display item="Port1 Opcode2 Address"/>
+            <display item="Port1 Opcode2 Config"/>
+            <display item="Port1 Opcode2 Value2"/>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Port 2&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 2&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Port2 Address"/>
+              <display item="Port2 HiAddress"/>
+              <display item="Port2 LowAddress"/>
+            </row>
+            <display item="Port2 Type"/>
+            <row>
+              <display item="Port2 Config"/>
+              <display item="Port2 Value2"/>
+              <!--<display item="Port2 Old Block"/>-->
+            </row>
+          </column>
+          <column>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>Opcode1/2: To Do</text>
+            </label>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Port 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 3&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Port3 Address"/>
+              <display item="Port3 HiAddress"/>
+              <display item="Port3 LowAddress"/>
+            </row>
+            <display item="Port3 Type"/>
+            <row>
+              <display item="Port3 Config"/>
+              <display item="Port3 Value2"/>
+              <!--<display item="Port3 Old Block"/>-->
+            </row>
+          </column>
+          <column>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>Opcode1/2: To Do</text>
+            </label>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Port 4&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 4&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Port4 Address"/>
+              <display item="Port4 HiAddress"/>
+              <display item="Port4 LowAddress"/>
+            </row>
+            <display item="Port4 Type"/>
+            <row>
+              <display item="Port4 Config"/>
+              <display item="Port4 Value2"/>
+              <!--<display item="Port4 Old Block"/>-->
+            </row>
+          </column>
+          <column>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>Opcode1/2: To Do</text>
+            </label>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Port 5&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 5&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Port5 Address"/>
+              <display item="Port5 HiAddress"/>
+              <display item="Port5 LowAddress"/>
+            </row>
+            <display item="Port5 Type"/>
+            <row>
+              <display item="Port5 Config"/>
+              <display item="Port5 Value2"/>
+              <!--<display item="Port5 Old Block"/>-->
+            </row>
+          </column>
+          <column>
+            <row>
+              <display item="Port5 Pos1" layout="left" format="hslider"/>
+              <display item="Port5 Pos1" layout="left" label=""/>
+            </row>
+            <row>
+              <display item="Port5 Pos2" layout="left" format="hslider"/>
+              <display item="Port5 Pos2" layout="left" label=""/>
+            </row>
+            <row>
+              <display item="Port5 Speed" layout="left" format="hslider"/>
+              <display item="Port5 Speed" layout="left" label=""/>
+            </row>
+            <!--Opcode 1 2 option-->
+            <label>
+              <text>Opcode1/2: To Do</text>
+            </label>
+          </column>
+        </row>
+        <separator/>
+      </column>
+    </pane>
+
+  <!-- LocoIO Valid Values Reference (static info) -->
+  <pane>
+    <name>Cheat Sheet</name>
+    <name xml:lang="nl">Spiekblad</name>
+    <column>
+      <row>
+      <label>
+        <text>&lt;html&gt;&lt;strong&gt;What values to enter on the Ports tab?&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Kies een rij en vul de waarden in op tab Poorten&lt;/strong&gt;&lt;/html&gt;</text>
+      </label>
+      </row>
+
+      <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Port Mode&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poortfunctie&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              Input: Toggle Switch - Indirect&lt;br/&gt;
+              Input: Toggle Switch&lt;br/&gt;
+              Input: Switch Point Feedback - Normal&lt;br/&gt;
+              Input: Block Detect - Active Low - Delayed&lt;br/&gt;
+              Input: Block Detect - Active Low&lt;br/&gt;
+              Input: Push Button - Active Low - Indirect&lt;br/&gt;
+              Input: Push Button - Active Low&lt;br/&gt;
+              Input: Switch Point Feedback - Contact 2&lt;br/&gt;
+              Input: Switch Point Feedback - Contact 1&lt;br/&gt;
+              Input: Block Detect - Active High - Delayed&lt;br/&gt;
+              Input: Block Detect - Active High&lt;br/&gt;
+              Input: Push Button - Active High - Indirect&lt;br/&gt;
+              Input: Push Button - Active High&lt;br/&gt;
+              &lt;br/&gt;
+              Output: Servo&lt;br/&gt;
+              Output: Fixed - 1 - Off&lt;br/&gt;
+              Output: Fixed - 2 - Off&lt;br/&gt;
+              Output: Fixed - 1 - On&lt;br/&gt;
+              Output: Fixed - 2 - On&lt;br/&gt;
+              Output: Pulse - 2 - Soft Reset&lt;br/&gt;
+              Output: Pulse - 1 - Soft Reset&lt;br/&gt;
+              Output: Pulse - 2 - Hard Reset&lt;br/&gt;
+              Output: Pulse - 1 - Hard Reset&lt;br/&gt;
+              Output: Fixed - 1 - Off - Blink&lt;br/&gt;
+              Output: Fixed - 2 - Off - Blink&lt;br/&gt;
+              Output: Fixed - 1 - On - Blink&lt;br/&gt;
+              Output: Fixed - 2 - On - Blink&lt;br/&gt;
+              Output: Fixed - 1 - Off - 4-Way&lt;br/&gt;
+              Output: Fixed - 1 - Off - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 2 - Off - 4-Way&lt;br/&gt;
+              Output: Fixed - 2 - Off - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 1 - On - 4-Way&lt;br/&gt;
+              Output: Fixed - 1 - On - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 2 - On - 4-Way&lt;br/&gt;
+              Output: Fixed - 2 - On - 4-Way - Blink&lt;br/&gt;
+              Output: Occupancy&lt;br/&gt;
+              Output: Occupancy - Blink&lt;br/&gt;
+              Port Not In Use&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Config&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              7&lt;br/&gt;
+              15&lt;br/&gt;
+              23&lt;br/&gt;
+              27&lt;br/&gt;
+              31&lt;br/&gt;
+              39&lt;br/&gt;
+              47&lt;br/&gt;
+              55&lt;br/&gt;
+              55&lt;br/&gt;
+              91&lt;br/&gt;
+              95&lt;br/&gt;
+              103&lt;br/&gt;
+              111&lt;br/&gt;
+              &lt;br/&gt;
+              128&lt;br/&gt;
+              128&lt;br/&gt;
+              128&lt;br/&gt;
+              129&lt;br/&gt;
+              129&lt;br/&gt;
+              136&lt;br/&gt;
+              136&lt;br/&gt;
+              140&lt;br/&gt;
+              140&lt;br/&gt;
+              144&lt;br/&gt;
+              144&lt;br/&gt;
+              145&lt;br/&gt;
+              145&lt;br/&gt;
+              160&lt;br/&gt;
+              176&lt;br/&gt;
+              160&lt;br/&gt;
+              176&lt;br/&gt;
+              161&lt;br/&gt;
+              177&lt;br/&gt;
+              161&lt;br/&gt;
+              177&lt;br/&gt;
+              192&lt;br/&gt;
+              208&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Value1&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              Address&lt;br/&gt;
+              Address&lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Value2&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              112&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              96&lt;br/&gt;
+              112&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              0&lt;br/&gt;
+              32&lt;br/&gt;
+              0&lt;br/&gt;
+              32&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              48&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Since&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vanaf&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              v1.43&lt;br/&gt;
+              Original&lt;br/&gt;
+              v1.44&lt;br/&gt;
+              v1.54&lt;br/&gt;
+              v1.41&lt;br/&gt;
+              v1.43&lt;br/&gt;
+              v1.41&lt;br/&gt;
+              v1.45&lt;br/&gt;
+              v1.45&lt;br/&gt;
+              v1.54&lt;br/&gt;
+              v1.41&lt;br/&gt;
+              v1.43&lt;br/&gt;
+              v1.41&lt;br/&gt;
+              &lt;br/&gt;
+              v1.01&lt;br/&gt;
+              Original&lt;br/&gt;
+              Original&lt;br/&gt;
+              v1.39&lt;br/&gt;
+              v1.39&lt;br/&gt;
+              v1.42&lt;br/&gt;
+              v1.42&lt;br/&gt;
+              v1.42&lt;br/&gt;
+              v1.42&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              Original&lt;br/&gt;
+              v1.40&lt;br/&gt;
+              v1.49&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+      </row>
+    </column>
+  </pane>
+
+  <pane>
+      <name>ReadMe</name>
+      <name xml:lang="de">Lese Mich</name>
+      <name xml:lang="fr">Lisez Moi</name>
+      <name xml:lang="nl">Lees Mij</name>
+      <column>
+          <label>
+              <text>&lt;html&gt;&lt;h1&gt;Information about HDL LocoIO Boards&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Information bzw. HDL LocoIO Einheiten&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Modules LocoIO HDL&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Informatie over HDL LocoIO Modules&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+          <separator/>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.11 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.11 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.11 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.11 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+        <separator/>
+          <label>
+              <text>&lt;html&gt;&lt;h3&gt;TEST for SV Programming Ops Mode addressing (LOCONETSV1MODE), no Reading?&lt;/h3&gt;&lt;br&gt;
+                You have to select your PIC version and model when creating a roster entry.&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Experimenteller SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), nicht Lesen?&lt;/h3&gt;&lt;br&gt;
+                Manueller Modell- u. Versionsauswahl erforderlich&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;TEST voor SV's Programmeren via POM (LOCONETSV1MODE), niet Uitlezen?&lt;/h3&gt;&lt;br&gt;
+                Kies handmatig het type en PIC-versie bij het aanmaken van een Loc-definitie.&lt;/html&gt;</text>
+          </label>
+          <label>
+              <text>&lt;html&gt;
+                  As an alternative for the HDL Windows LocoIO Config program, follow these steps:&lt;br/&gt;
+                  &lt;br/&gt;
+                  Be careful to first disconnect all other LocoIO devices before changing a board's (sub)address (Broadcast).&lt;br/&gt;
+                  &lt;br/&gt;
+                  Step 1: Connect power and LocoNet to the unit.&lt;br/&gt;
+                  Step 2: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;
+                  Step 3: Set desired options and click "Write to decoder".&lt;br/&gt;
+                  Step 4: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
+                  &lt;br/&gt;
+                  &lt;/html&gt;</text>
+          </label>
+          <label>
+              <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="http://users.telenet.be/deloof"&gt;users.telenet.be/deloof&lt;/a&gt;/&lt;html&gt;</text>
+          </label>
+      </column>
+  </pane>
+
 </decoder-config>

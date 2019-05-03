@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -15,11 +16,15 @@ import org.junit.Test;
  */
 public class DrawEllipseTest {
 
+    EditorScaffold editor;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null);
+        frame.pack();
+        frame.setVisible(true);
+        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null, frame, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -28,8 +33,10 @@ public class DrawEllipseTest {
     public void testCTorEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
+        frame.pack();
+        frame.setVisible(true);
         PositionableEllipse ps =  new PositionableEllipse(frame);
-        DrawRectangle t = new DrawRoundRect("editShape", "Ellipse", ps);
+        DrawEllipse t = new DrawEllipse("editShape", "Ellipse", ps, frame, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -39,10 +46,14 @@ public class DrawEllipseTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        editor = new EditorScaffold();
     }
 
     @After
     public void tearDown() {
+        editor = null;
         jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         JUnitUtil.tearDown();
     }

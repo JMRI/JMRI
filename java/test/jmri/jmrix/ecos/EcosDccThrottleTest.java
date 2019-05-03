@@ -2,14 +2,8 @@ package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  *
@@ -49,6 +43,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Ignore("needs response to see change?")
+    @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
     public void testSetSpeedSetting() {
         float speed = 1.0F;
         instance.setSpeedSetting(speed);
@@ -390,6 +385,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeClass
     public static void earlySetup(){
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tc = new EcosInterfaceScaffold();
     }

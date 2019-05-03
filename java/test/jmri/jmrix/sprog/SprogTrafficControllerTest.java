@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogTrafficController
- * </P>
+ * Tests for SprogTrafficController.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogTrafficControllerTest {
@@ -19,6 +18,7 @@ public class SprogTrafficControllerTest {
        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
        SprogTrafficController tc = new SprogTrafficController(m);
        Assert.assertNotNull(tc);
+       tc.dispose();
    }
 
     // The minimal setup for log4J
@@ -31,6 +31,5 @@ public class SprogTrafficControllerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

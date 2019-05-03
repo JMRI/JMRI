@@ -11,19 +11,21 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
  * PR2 connection.
- * <P>
+ * <p>
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in
  * LocoNet is an int with values from 0 to 127.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2006
  */
 public class Pr2Throttle extends AbstractThrottle {
 
-    private int addr;
+    private final int addr;
     DccLocoAddress address;
 
     /**
      * Constructor
+     * @param memo a LocoNetSystemConnectionMemo to associate with this throttle
+     * @param address a DccLocoAddress to associate with this throttle
      */
     public Pr2Throttle(LocoNetSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -34,7 +36,8 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     /**
-     * Convert a LocoNet speed integer to a float speed value
+     * Convert a LocoNet speed integer to a float speed value.
+     *
      * @param lSpeed loconet speed value
      * @return speed as float 0-&gt;1.0
      */
@@ -61,23 +64,31 @@ public class Pr2Throttle extends AbstractThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation does not support 128 speed steps.
+     */
     @Override
+    // This is a specific implementation for the PR2 that seems to 
+    // return different values from the super class.  Not sure whether
+    // that's required by the hardware or not.  If so, please edit this comment
+    // to confirm.  If not, this should use the superclass implementation after
+    // checking for available modes.
     protected int intSpeed(float fSpeed) {
-        int speed = super.intSpeed(fSpeed);
-        if (speed <= 0) {
-            return speed; // return idle and emergency stop
-        }
+        if (fSpeed< 0.) return 1;  // what the parent class does
         switch (this.getSpeedStepMode()) {
             case DccThrottle.SpeedStepMode28:
             case DccThrottle.SpeedStepMode28Mot:
                 return (int) ((fSpeed * 28) * 4) + 12;
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
+                
             default:
+                // includes the 128 case
                 log.warn("Unhandled speed step mode: {}", this.getSpeedStepMode());
-                break;
+                return super.intSpeed(fSpeed);
         }
-        return speed;
     }
 
     public void writeData() {
@@ -142,7 +153,7 @@ public class Pr2Throttle extends AbstractThrottle {
         }
 
         LocoNetMessage l = new LocoNetMessage(21);
-        l.setOpCode(LnConstants.OPC_WR_SL_DATA_EXP);
+        l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
         int i = 1;
         l.setElement(i++, 21);      // length
         l.setElement(i++, 0);       // EXP_MAST
@@ -160,7 +171,6 @@ public class Pr2Throttle extends AbstractThrottle {
         // rest are zero
 
         ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
-        //LnTrafficController.instance().sendLocoNetMessage(l);
     }
 
     /**
@@ -181,6 +191,9 @@ public class Pr2Throttle extends AbstractThrottle {
         writeData();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendFunctionGroup3() {
         writeData();
@@ -188,7 +201,7 @@ public class Pr2Throttle extends AbstractThrottle {
 
     /**
      * Set the speed.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -224,41 +237,24 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     /**
-     * Release the loco from this throttle, then clean up the object.
+     * {@inheritDoc}
      */
-    @Override
-    public void release() {
-        dispose();
-    }
-
-    /**
-     * Dispatch the loco from this throttle, then clean up the object.
-     */
-    @Override
-    public void dispatch() {
-        dispose();
-    }
-
     @Override
     public String toString() {
         return getLocoAddress().toString();
     }
 
     /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
+     * {@inheritDoc}
      */
-    @Override
-    public void dispose() {
-        log.debug("dispose");
-        super.dispose();
-    }
-
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void throttleDispose() {
         finishRecord();

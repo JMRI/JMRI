@@ -21,7 +21,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SortOrder;
 import jmri.ConfigureManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -102,12 +101,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private boolean dirty = false;
     private boolean loading = false;
     private boolean allowSave;
-    private ArrayList<String> simplePreferenceList = new ArrayList<>();
+    private final ArrayList<String> simplePreferenceList = new ArrayList<>();
     //sessionList is used for messages to be suppressed for the current JMRI session only
-    private ArrayList<String> sessionPreferenceList = new ArrayList<>();
+    private final ArrayList<String> sessionPreferenceList = new ArrayList<>();
     protected final HashMap<String, String> comboBoxLastSelection = new HashMap<>();
     private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
-    private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
+    private final HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
 
     public JmriUserPreferencesManager() {
@@ -272,7 +271,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     /**
-     * Used to surpress messages for a perticular session, the information is
+     * Used to surpress messages for a particular session, the information is
      * not stored, can not be changed via the GUI.
      * <p>
      * This can be used to help prevent over loading the user with repetitive
@@ -617,8 +616,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Class<?> cl = Class.forName(strClass);
             Object t;
             try {
-                t = cl.newInstance();
-            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
+                t = cl.getDeclaredConstructor().newInstance();
+            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
                 log.error("setClassDescription({}) failed in newInstance", strClass, ex);
                 return;
             }
@@ -821,14 +820,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.savePreferencesState();
     }
 
-    @Override
-    @Deprecated
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
-            manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
-        });
-    }
-
     public String getClassDescription() {
         return "Preference Manager";
     }
@@ -850,19 +841,23 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     public final void readUserPreferences() {
+        log.trace("starting readUserPreferences");
         this.allowSave = false;
         this.loading = true;
         File perNodeConfig = null;
         try {
-            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.identity() + "/" + Profile.UI_CONFIG); // NOI18N
+            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.storageIdentity() + "/" + Profile.UI_CONFIG); // NOI18N
             if (!perNodeConfig.canRead()) {
                 perNodeConfig = null;
+                log.trace("    sharedConfig can't be read");
             }
         } catch (FileNotFoundException ex) {
             // ignore - this only means that sharedConfig does not exist.
+            log.trace("    FileNotFoundException: sharedConfig does not exist");
         }
         if (perNodeConfig != null) {
             file = perNodeConfig;
+            log.debug("  start perNodeConfig file: {}", file.getPath());
             this.readComboBoxLastSelections();
             this.readPreferencesState();
             this.readSimplePreferenceState();
@@ -887,10 +882,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 }
             } catch (FileNotFoundException ex) {
                 // ignore - this only means that UserPrefsProfileConfig.xml does not exist.
+                log.debug("UserPrefsProfileConfig.xml does not exist");
             }
         }
         this.loading = false;
         this.allowSave = true;
+        log.trace("  ending readUserPreferences");
     }
 
     private void readComboBoxLastSelections() {

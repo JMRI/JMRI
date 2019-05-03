@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Info/3 pane for Märklin mLD and mSD/3 decoders                         -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Information</name>
+  <name xml:lang="it">Informazioni</name>
+  <column>
+    <separator/>
+    <label>
+      <text>Märklin Decoder Information</text>
+      <text xml:lang="fr">Information Décodeur Märklin</text>
+      <text xml:lang="it">Informazioni Decoder Märklin</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Manufacturer Maerklin"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <label>
+        <text>Decoder Type </text>
+        <text xml:lang="de">Decoder-Typ </text>
+        <text xml:lang="fr">Type Décodeur </text>
+        <text xml:lang="it">Tipo di Decoder </text>
+      </label>
+      <display item="Decoder Type Byte 1" label=""/>
+      <display item="Decoder Type Byte 2" label=""/>
+      <display item="Decoder Type Byte 3" label=""/>
+      <display item="Decoder Type Byte 4" label=""/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Firmware Type"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <label>
+        <text>Firmware Version </text>
+        <text xml:lang="de">Firmware-Version </text>
+        <text xml:lang="fr">Version du Firmware </text>
+        <text xml:lang="it">Versione del Firmware </text>
+      </label>
+      <display item="Firmware Version Byte 1" label=""/>
+      <label><text>.</text></label>
+      <display item="Firmware Version Byte 2" label=""/>
+      <label><text>.</text></label>
+      <display item="Firmware Version Byte 3" label=""/>
+      <label><text>.</text></label>
+      <display item="Firmware Version Byte 4" label=""/>
+    </row>
+  </column>
+</pane>

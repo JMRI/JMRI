@@ -165,17 +165,21 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape hideOnSensor attribute");
         }
+        ps.setHide(hide);
 
-        int changeLevel = -1;
+        int changeLevel = 2;
         try {
             changeLevel = getInt(element, "changeLevelOnSensor");
         } catch (Exception e) {
             log.error("failed to get changeLevel attribute ex= {}", e.getMessage());
         }
+        ps.setChangeLevel(changeLevel);
+
         try {
             a = element.getAttribute("controlSensor");
             if (a != null) {
-                ps.setControlSensor(a.getValue(), hide, changeLevel);
+                ps.setControlSensor(a.getValue());
+                ps.setListener();
             }
         } catch (NullPointerException e) {
             log.error("incorrect information for controlSensor of PositionableShape");

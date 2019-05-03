@@ -38,6 +38,7 @@
     <label>Product ID: </label>
     <label xml:lang="fr">ID produit: </label>
     <label xml:lang="de">Decoderkennzeichen: </label>
+    <label xml:lang="ca">ID de producte: </label>
   </variable>
   <!-- Using JMRI item "Advanced Group 1" since identification CVs for SUSI are not standard.-->
   <variable CV="900" tooltip="CV900" readOnly="yes" item="Advanced Group 1 Option 1">
@@ -46,6 +47,7 @@
     <label xml:lang="it">ID Costruttore: </label>
     <label xml:lang="fr">ID constructeur: </label>
     <label xml:lang="de">ID Hersteller: </label>
+    <label xml:lang="ca">ID de Fabricant: </label>
   </variable>
   <variable CV="902" tooltip="CV902" readOnly="yes" item="Advanced Group 1 Option 2">
     <decVal/>
@@ -53,23 +55,27 @@
     <label xml:lang="it">Versione Decoder Costruttore: </label>
     <label xml:lang="fr">Version décodeur: </label>
     <label xml:lang="de">Versionsnummer: </label>
+    <label xml:lang="ca">Número de versió: </label>
   </variable>
   <variable CV="903" tooltip="CV903" readOnly="yes" item="Advanced Group 1 Option 3">
     <decVal/>
     <label>Version date (MMY): </label>
     <label xml:lang="fr">Date version décodeur (MMY): </label>
     <label xml:lang="de">Datum Versionsnummer (MMY): </label>
+    <label xml:lang="ca">Data de la versió del descodificador (DMA): </label>
   </variable>
   <variable CV="904" tooltip="CV904" readOnly="yes" item="Advanced Group 1 Option 4">
     <decVal/>
     <label>Revision No: </label>
     <label xml:lang="fr">Révision décodeur: </label>
     <label xml:lang="de">Revisionsnummer: </label>
+    <label xml:lang="ca">Révisió del descodificador</label>
   </variable>
   <variable CV="905" tooltip="CV905" readOnly="yes" item="Advanced Group 1 Option 5">
     <decVal/>
     <label>Revision Date (MMY): </label>
     <label xml:lang="fr">Date révision décodeur (MMY): </label>
     <label xml:lang="de">Revisionsnummer Datum (MMY): </label>
+    <label xml:lang="ca">Data revisió del decoder (DMA): </label>
   </variable>
 </variables>

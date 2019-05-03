@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-time-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"time\"",
+    "properties": {
+        "time": {
+            "type": "string",
+            "description": "Reported time in ISO 8601 format"
+        },
+        "rate": {
+            "type": "number",
+            "description": "Fast clock rate"
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the fast clock",
+            "enum": [0, 2, 4]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["time", "rate", "state"]
+}

@@ -328,8 +328,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                /* First, send the ops mode programing command to enter
-                 programing mode */
+                /* First, send the ops mode programming command to enter
+                 programming mode */
                 try {
                     opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
@@ -344,7 +344,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteVolt"));
 
-                /* Next, send the ops mode programing command for the voltage 
+                /* Next, send the ops mode programming command for the voltage
                  we want */
                 try {
                     opsProg.writeCV("7", validVoltageValues[voltBox.getSelectedIndex()], progListener);
@@ -377,8 +377,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                /* First, send the ops mode programing command to enter
-                 programing mode */
+                /* First, send the ops mode programming command to enter
+                 programming mode */
                 try {
                     opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
@@ -393,7 +393,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug("Current Status: {}" + Bundle.getMessage("LV102StatusWriteELine"));
 
-                /* Next, send the ops mode programing command for the E line 
+                /* Next, send the ops mode programming command for the E line
                  Status we want */
                 try {
                     opsProg.writeCV("7", validELineStatusValues[eLineBox.getSelectedIndex()], progListener);
@@ -427,8 +427,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                /* First, send the ops mode programing command to enter
-                 programing mode */
+                /* First, send the ops mode programming command to enter
+                 programming mode */
                 try {
                     opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
@@ -443,7 +443,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteRailCom"));
 
-                /* Next, send the ops mode programing command for the RailComm
+                /* Next, send the ops mode programming command for the RailComm
                  Status we want */
                 try {
                     opsProg.writeCV("7", validRailComStatusValues[railComBox.getSelectedIndex()], progListener);
@@ -476,8 +476,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                /* First, send the ops mode programing command to enter
-                 programing mode */
+                /* First, send the ops mode programming command to enter
+                 programming mode */
                 try {
                     opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
@@ -492,7 +492,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteRailComMode"));
 
-                /* Next, send the ops mode programing command for the RailCom Mode
+                /* Next, send the ops mode programming command for the RailCom Mode
                  Status we want */
                 try {
                     opsProg.writeCV("7", validRailComModeValues[railComModeBox.getSelectedIndex()], progListener);
@@ -525,8 +525,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                /* First, send the ops mode programing command to enter
-                 programing mode */
+                /* First, send the ops mode programming command to enter
+                 programming mode */
                 try {
                     opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
@@ -541,7 +541,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteRailComMode"));
 
-                /* Next, send the ops mode programing command for the RailCom 
+                /* Next, send the ops mode programming command for the RailCom
                  Timing we want */
                 try {
                     opsProg.writeCV("7", validRailComTimingValues[railComTimingBox.getSelectedIndex()], progListener);

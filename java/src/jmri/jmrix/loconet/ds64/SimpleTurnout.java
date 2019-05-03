@@ -1,4 +1,3 @@
-// simpleTurnout.java
 package jmri.jmrix.loconet.ds64;
 
 import org.slf4j.Logger;
@@ -7,27 +6,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a simple object to track a turnout number and the position of that
  * turnout.
- * <P>
+ * <p>
  * Turnout numbering is the same as seen on a Digitrax throttle display; Tools
  * using values from objects of this type must provide the appropriate transform
  * to create turnout numbering which is suitable for use within LocoNet messaging.
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
- * <P>
- * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015
- * @version	$Revision: 0 $
+ *
+ * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015
  */
-
 public class SimpleTurnout {
     private Integer address;
     private boolean isClosed;
@@ -45,7 +30,7 @@ public class SimpleTurnout {
 
     /**
      * Constructor used when the turnout address and position are known.
-     * <P>
+     * <p>
      * Validity state is assumed to be "valid".
      *
      * @param addr turnout address
@@ -72,8 +57,9 @@ public class SimpleTurnout {
     }
 
     /**
-     * Returns the "validity" state of the simpleTurnout object.  This "validity"
+     * Get the "validity" state of the simpleTurnout object.  This "validity"
      * state does not necessarily reflect the "validity" state of a physical turnout.
+     *
      * @return true if the address is valid
      */
     public boolean isValid() {
@@ -87,12 +73,12 @@ public class SimpleTurnout {
     /**
      * Sets the turnout address of the simpleTurnout object.
      *
-     * @param addr - address value
+     * @param addr  address value
      */
     public void setAddress(Integer addr) {
         address = addr;
         if (isValid() == false) {
-            log.debug("simpleTurnout says "+addr+" is invalid therefore unused");
+            log.debug("simpleTurnout says {} is invalid therefore unused", addr);
             isUnused = true;
             isClosed = true;
         }
@@ -113,7 +99,7 @@ public class SimpleTurnout {
      * This position does not necessarily reflect the actual position of an associated
      * physical turnout.
      *
-     * @param isclosed - true if the object is to be marked as closed.
+     * @param isclosed  true if the object is to be marked as closed.
      */
     public void setIsClosed(boolean isclosed) {
         isClosed = isclosed;
@@ -137,7 +123,7 @@ public class SimpleTurnout {
      * @return true if turnout is "unused", else false
      */
     public boolean getIsUnused() {
-        log.debug("simple turnout isunused returns "+isUnused);
+        log.debug("simple turnout isunused returns {}", isUnused);
         return isUnused;
     }
 

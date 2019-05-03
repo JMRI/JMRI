@@ -375,7 +375,7 @@
       <icon url="program:resources/PanelPro.gif" degrees="0" scale="0.75">
         <rotation>0</rotation>
       </icon>
-      <url>url:http://jmri.sourceforge.net/</url>
+      <url>url:http://jmri.org/</url>
     </linkinglabel>
     <linkinglabel x="491" y="466" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Google" size="16" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="0" greenBack="204" blueBack="204" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="204" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
       <tooltip>Text Label</tooltip>

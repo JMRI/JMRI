@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,11 +17,13 @@
 <!-- 	Valid for 731x0, 734x0, 764x0 families (non exhaustive list)        -->
 <!-- 																		-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Uhlenbrock</name>
   <column>
     <separator/>
     <label>
       <text>Uhlenbrock configuration</text>
-      <text xml:lang="de">Uhlenbrock Konfiguration</text>		
+      <text xml:lang="de">Uhlenbrock Konfiguration</text>
+      <text xml:lang="nl">Uhlenbrock Configuratie</text>
     </label>
     <label>
       <text> </text>
@@ -44,14 +45,17 @@
       <text> </text>
     </label>
       <display item="Digital format"/>
+      <display item="Selectrix Operation" format="checkbox"/>
+      <display item="Mfx Operation" format="checkbox"/>
       <display item="Motorola address 2"/>	  
     <label>
       <text> </text>
     </label>
     <separator/>
     <label>
-      <text>Braking parameters</text>
-      <text xml:lang="de">Bremsparameter</text>
+      <text>Braking</text>
+      <text xml:lang="de">Bremsen</text>
+      <text xml:lang="nl">Remmen</text>
     </label>
     <label>
       <text> </text>
@@ -59,43 +63,99 @@
     <display item="Braking condition"/>
     <display item="Braking End"/>
     <display item="End braking speed"/>
-    </column>
-    <column>
+    <display item="Marklin Brake Mode"/>
+    <display item="ABC stop with asymmetrical DCC"/>
+      <!-- CVs 97-98 -->
+    <display item="ABC Braking Value" format="hslider"/> <!--IntelliDrive2-->
+    <display item="ABC Slow Speed" format="hslider"/>    <!--IntelliDrive2-->
+      <group exclude="76560">
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>Constant Distance</text>
+            <text xml:lang="de">Konstanter Bremsweg</text>
+            <text xml:lang="nl">Vaste Remweg</text>
+        </label>
+      </group>
+          <display item="Constant Brakedist Threshold"/>
+          <display item="Constant Brakedist 1"/>
+          <display item="Constant Brakedist 2"/>
+          <display item="Constant Brakedist Max"/>
+          <display item="Constant Brakedist Rest"/>
+          <display item="Constant Brakedist Trigger"/>
+  </column>
+  <column>
+      <label>
+        <text>Coupling</text>
+        <text xml:lang="de">Kupplungen</text>
+        <text xml:lang="nl">Elektr. koppeling</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Coupling option 1"/>
       <display item="Coupling option 2"/>
       <display item="Coupling option 3"/>
       <display item="Coupling option 4"/>
       <display item="Coupling option 5"/>
       <display item="Coupling option 6"/>
+      <display item="Coupling option 7" format="checkbox"/>
+      <display item="Coupling option 8" format="checkbox"/>
+      <display item="Coupling option 9" format="checkbox"/>
+      <display item="Coupling option 10" format="checkbox"/>
+      <display item="Coupling option 11" format="checkbox"/>
+      <display item="Coupling option 12" format="checkbox"/>
+      <display item="Coupling option 13" format="checkbox"/>
+      <display item="Coupling option 14" format="checkbox"/>
     <label>
       <text> </text>
-    </label>  
-      <display item="Smoke generator option 1" format="checkbox"/>
+    </label>
+      <label>
+        <text>Smoke Generator</text>
+        <text xml:lang="de">Rauchgenerator</text>
+        <text xml:lang="nl">Rookgenerator</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Smoke generator option 1"/>
       <display item="Smoke generator option 2" format="checkbox"/>
       <display item="Smoke generator option 3"/>
       <display item="Smoke generator option 4"/>
       <display item="Smoke generator option 5"/>
-      <display item="Smoke generator option 6"/>  
-    </column>
-    <column>
+      <display item="Smoke generator option 6"/>
+      <display item="Smoke generator option 7"/>
+  </column>
+  <column>
       <separator/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Outputs monitoring off 1" format="checkbox"/>
       <display item="Outputs monitoring off 2" format="checkbox"/>
       <display item="Outputs monitoring off 3" format="checkbox"/>
-    <label>
-      <text> </text>
-    </label>
+      <display item="Cv51 bit2"/>
+      <display item="Cv51 bit7"/>
+      <display item="Cv51 bit3" format="checkbox"/>
+      <display item="Cv51 bit6" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
       <separator/>		  
       <label>
         <text>Errors or Information (Read-Only)</text>
         <text xml:lang="de">Fehler oder Information (Read-Only)</text>
         <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
+        <text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
       </label>
     <label>
       <text> </text>
     </label>
       <display item="Shutdown Temperature"/>	  
       <display item="Short circuit supervision"/>
+      <display item="Function Outputs Short Constant"/>
+      <display item="Motor Output Short Constant"/>
       <display item="Lights Short circuit supervision"/>
       <display item="Short circuit supervision 1" format="checkbox"/>
       <display item="Short circuit supervision 2" format="checkbox"/>
@@ -106,6 +166,99 @@
     </label>
       <display item="Offset Register"/>
       <display item="Page Register"/>
+      <label>
+          <text> </text>
+      </label>
+      <group exclude="76560"> <!-- only for IntelliDrive2 2017 and later-->
+          <label>
+              <text>PWM</text>
+          </label>
+          <row>
+            <display item="PWM Duration" format="hslider"/>
+          </row>
+          <row>
+            <display item="PWM Wait" format="hslider"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A0"/>
+              <display item="PWM Cross on A0" format="checkbox"/>
+          </row>
+          <row>
+            <display item="PWM Modulation on A1"/>
+            <display item="PWM Cross on A1" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A2"/>
+              <display item="PWM Cross on A2" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A3"/>
+              <display item="PWM Cross on A3" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A4"/>
+              <display item="PWM Cross on A4" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A5"/>
+              <display item="PWM Cross on A5" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A6"/>
+              <display item="PWM Cross on A6" format="checkbox"/>
+          </row>
+          <row>
+              <display item="PWM Modulation on A7"/>
+              <display item="PWM Cross on A7" format="checkbox"/>
+          </row>
+          <label><text>      </text></label>
+          <!-- BEGIN - PWM Phase Grid -->
+          <grid gridy="2" weightx="1" ipadx="1">
+              <!-- BEGIN - Row 1 (headers)-->
+              <group exclude="73115">
+                  <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>AUX0</text></label></griditem>
+                  <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX1</text></label></griditem>
+                  <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
+              </group>
+              <group exclude="73105,73115,73145,73405,73415">
+                  <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
+                  <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
+              </group>
+              <group exclude="73105,73115,73145,73405,73415">
+                  <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
+                  <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
+                  <griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>
+              </group>
+              <!-- BEGIN - Row 2 (checkboxes)-->
+              <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+                  <display item="PWM Phase A0" format="checkbox">
+                      <label>Flip PWM Phase:</label>
+                      <label xml:lang="de">PWM Phase 180:</label>
+                      <label xml:lang="nl">PWM Fase omkeren:</label>
+                  </display>
+              </griditem>
+              <griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A1" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A2" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="3" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A3" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="4" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A4" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="5" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A5" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="6" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A6" format="checkbox" label=""/>
+              </griditem>
+              <griditem gridx="7" gridy="1" gridwidth="1" anchor="CENTER">
+                  <display item="PWM Phase A7" format="checkbox" label=""/>
+              </griditem>
+          </grid>
+      </group>
   </column>
-  <name>Uhlenbrock</name>
 </pane>

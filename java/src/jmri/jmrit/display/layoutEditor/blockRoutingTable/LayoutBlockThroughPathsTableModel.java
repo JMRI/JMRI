@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutBlockThroughPathsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     public static final int SOURCECOL = 0;
     static final int DESTINATIONCOL = 1;
     static final int ACTIVECOL = 2;

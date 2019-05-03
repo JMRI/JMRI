@@ -29,13 +29,13 @@ public class SerialAddress {
      * Public static method to parse a TMCC system name and return the Serial
      * Address.
      * <p>
-     * Note: Accessory addresses are numbered from 0 - 511.
-     * The B-pattern is not applicable to TMCC, was copied from NCE and better removed.
+     * Note: Accessory addresses are numbered from 0 - 511. The B-pattern is not
+     * applicable to TMCC, was copied from NCE and better removed.
      *
      * @param systemName normal turnout name
-     * @param prefix system connection prefix from memo
-     * @return node part 0-127, return '-1' if illegal systemName format or if the
-     * node is not found
+     * @param prefix     system connection prefix from memo
+     * @return node part 0-127, return '-1' if illegal systemName format or if
+     *         the node is not found
      */
     public static int getNodeAddressFromSystemName(String systemName, String prefix) {
         int offset = prefix.length();
@@ -55,7 +55,7 @@ public class SerialAddress {
         int ua;
         if (noB) {
             // This is a TTnnxxx address
-            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(offset + 1));
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -69,7 +69,7 @@ public class SerialAddress {
             } else {
                 try {
                     ua = Integer.parseInt(s);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.error("illegal character in TMCC system name: {}", systemName);
                     return (-1);
                 }
@@ -82,9 +82,11 @@ public class SerialAddress {
     static final int MAXTURNOUTADDRESS = 511; // same for outputs
 
     /**
-     * Public static method to parse a Lionel TMCC system name.
-     * Note: Bits are numbered from 1.
+     * Public static method to parse a Lionel TMCC system name. Note: Bits are
+     * numbered from 1.
      *
+     * @param systemName name to parse
+     * @param prefix     the connection prefix
      * @return the hardware address number, return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -102,13 +104,13 @@ public class SerialAddress {
                 k = i + 1;
             }
         }
-        int n = 0;
+        int n;
         if (k == 0) {
             // here if 'B' not found, name must be CLnnxxx format
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
-            } catch (Exception e) {
+                num = Integer.parseInt(systemName.substring(offset + 1));
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in number field of system name: {}", systemName);
                 return (0);
             }
@@ -122,7 +124,7 @@ public class SerialAddress {
             // This is a CLnnBxxxx address
             try {
                 n = Integer.parseInt(systemName.substring(k));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.warn("illegal character in bit number field system name: {}", systemName);
                 return (0);
             }
@@ -131,12 +133,12 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format.
-     * Logging of handled cases no higher than WARN.
+     * Public static method to validate system name format. Logging of handled
+     * cases no higher than WARN.
      *
      * @param systemName name to test
-     * @param type S, L, T for either sensor, light, turnout
-     * @param prefix system connection prefix from memo
+     * @param type       S, L, T for either sensor, light, turnout
+     * @param prefix     system connection prefix from memo
      * @return VALID if system name has a valid format, else returns INVALID
      */
     public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
@@ -164,8 +166,8 @@ public class SerialAddress {
             // This is a TTnnnxxx address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
-            } catch (Exception e) {
+                num = Integer.parseInt(systemName.substring(offset + 1));
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in number field system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -185,8 +187,8 @@ public class SerialAddress {
             }
             int num;
             try {
-                num = Integer.valueOf(s).intValue();
-            } catch (Exception e) {
+                num = Integer.parseInt(s);
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in node address field of system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -197,7 +199,7 @@ public class SerialAddress {
             // validate the bit number field
             try {
                 num = Integer.parseInt(systemName.substring(k));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in bit number field of system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -213,28 +215,23 @@ public class SerialAddress {
      * Public static method to validate system name for configuration.
      *
      * @param systemName name to test
-     * @param type S, L, T sensor, light, turnout
-     * @param prefix system connection prefix from memo
+     * @param type       S, L, T sensor, light, turnout
+     * @param prefix     system connection prefix from memo
      * @return true if valid name
      */
     public static boolean validSystemNameConfig(String systemName, char type, String prefix) {
-        if (validSystemNameFormat(systemName, type, prefix) != NameValidity.VALID) {
-            // No point in trying if a valid system name format is not present
-            return false;
-        }
-
-        // System name has passed all tests
-        return true;
+        return validSystemNameFormat(systemName, type, prefix) == NameValidity.VALID;
     }
 
     /**
      * Public static method to convert one format system name for the alternate
      * format. If the supplied system name does not have a valid format, or if
      * there is no representation in the alternate naming scheme, an empty
-     * string is returned.
-     * TODO remove this method. Not needed, as the B-format is not supported on TMCC
+     * string is returned. TODO remove this method. Not needed, as the B-format
+     * is not supported on TMCC
      *
      * @param systemName name to convert
+     * @param prefix     the connection prefix
      * @return alternate form if valid, empty if not
      */
     public static String convertSystemNameToAlternate(String systemName, String prefix) {
@@ -244,7 +241,7 @@ public class SerialAddress {
             // No point in trying if a valid system name format is not present
             return "";
         }
-        String altName = "";
+        String altName;
         // check for the presence of a 'B' to differentiate the two address formats
         String s = "";
         int k = 0;
@@ -258,14 +255,14 @@ public class SerialAddress {
         }
         if (noB) {
             // This is a TTnnnxxx address
-            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(offset + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             altName = systemName.substring(0, offset + 1) + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);
         } else {
             // This is a TTnnnBxxxx address
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k));
             if (bitNum > 999) {
                 // bit number is out-of-range for a CLnnnxxx address
@@ -287,7 +284,7 @@ public class SerialAddress {
      * as the input name.
      *
      * @param systemName name to convert
-     * @param prefix system connection prefix from memo
+     * @param prefix     system connection prefix from memo
      * @return normalized form of systemName
      */
     public static String normalizeSystemName(String systemName, String prefix) {
@@ -298,7 +295,7 @@ public class SerialAddress {
             log.debug("System Name invalid");
             return "";
         }
-        String nName = "";
+        String nName;
         // check for the presence of a 'B' to differentiate the two address formats
         String s = "";
         int k = 0;
@@ -312,14 +309,14 @@ public class SerialAddress {
         }
         if (noB) {
             // This is a TTnnnxxx address
-            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(offset + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             nName = systemName.substring(0, offset + 1) + Integer.toString((nAddress * 1000) + bitNum);
         } else {
             // This is a TTnnnBxxxx address, this is not valid for TMCC, only numbers
             log.debug("B System Name");
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             nName = systemName.substring(0, offset + 1) + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);
@@ -329,8 +326,8 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to construct a TMCC system name from type
-     * character, node address, and bit number.
+     * Public static method to construct a TMCC system name from type character,
+     * node address, and bit number.
      * <p>
      * This routine returns a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
      * format if the bit number is 1 - 999. If the bit number is 1000 - 2048,
@@ -341,29 +338,30 @@ public class SerialAddress {
      * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
      * message is logged and the null string "" is returned.
      *
-     * @param type S, L, T for sensor, light, turnout (TMCC only supports Turnouts)
+     * @param type     S, L, T for sensor, light, turnout (TMCC only supports
+     *                 Turnouts)
      * @param nAddress node value 0-127
-     * @param bitNum bit within node 1-2048
-     * @param prefix system connection prefix from memo
+     * @param bitNum   bit within node 1-2048
+     * @param prefix   system connection prefix from memo
      * @return formated system name or empty string when invalid
      */
     public static String makeSystemName(String type, int nAddress, int bitNum, String prefix) {
         String nName = "";
         // check the type character
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
-            // here if an illegal type character 
+            // here if an illegal type character
             log.error("illegal type character proposed for system name");
             return (nName);
         }
         // check the node address
         if ((nAddress < 0) || (nAddress > 127)) {
-            // here if an illegal node address 
+            // here if an illegal node address
             log.error("illegal node adddress proposed for system name");
             return (nName);
         }
         // check the bit number
         if ((bitNum < 1) || (bitNum > 2048)) {
-            // here if an illegal bit number 
+            // here if an illegal bit number
             log.error("illegal bit number proposed for system name");
             return (nName);
         }

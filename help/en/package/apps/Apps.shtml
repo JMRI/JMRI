@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Preferences Window</title>
-  <meta content="Bob Jacobsen" name="author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -89,8 +89,8 @@
         </li>
       </ul>
 
-      <p>This is the apps.Apps.shtml help page 
-      <!--#include virtual="/Footer" --></p>
+      <p>This is the apps.Apps.shtml help page</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

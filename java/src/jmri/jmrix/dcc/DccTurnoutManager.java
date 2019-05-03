@@ -3,9 +3,10 @@ package jmri.jmrix.dcc;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for DCC-only systems
- * <P>
- * System names are "BTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for DCC-only systems.
+ * <p>
+ * System names are "BTnnn", where B is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2014
  */
@@ -22,7 +23,7 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        int addr = Integer.parseInt(systemName.substring(2)); // fixed length prefix, so (2) is OK here
         t = new DccTurnout(addr);
         t.setUserName(userName);
 

@@ -15,6 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -49,6 +50,7 @@ import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
@@ -60,6 +62,8 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +73,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class TurnoutTableAction extends AbstractTableAction {
+public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     /**
      * Create an action with a specific title.
@@ -123,15 +127,18 @@ public class TurnoutTableAction extends AbstractTableAction {
     String pushbutText = "Pushbutton only";
     String noneText = "None";
 
-    private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
-    private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
+    private java.util.Vector<String> speedListClosed = new java.util.Vector<>();
+    private java.util.Vector<String> speedListThrown = new java.util.Vector<>();
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
     protected JTable table;
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setManager(Manager man) {
+    public void setManager(@Nonnull Manager<Turnout> man) {
         turnManager = (TurnoutManager) man;
     }
 
@@ -148,6 +155,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     static public final int LOCKDECCOL = LOCKOPRCOL + 1;
     static public final int STRAIGHTCOL = LOCKDECCOL + 1;
     static public final int DIVERGCOL = STRAIGHTCOL + 1;
+    static public final int FORGETCOL = DIVERGCOL + 1;
+    static public final int QUERYCOL = FORGETCOL + 1;
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
@@ -165,11 +174,11 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         // create the data model object that drives the table
         // note that this is a class creation, and very long
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Turnout>() {
 
             @Override
             public int getColumnCount() {
-                return DIVERGCOL + 1;
+                return QUERYCOL + getPropertyColumnCount() + 1;
             }
 
             @Override
@@ -198,6 +207,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return Bundle.getMessage("ThrownSpeed");
                 } else if (col == STRAIGHTCOL) {
                     return Bundle.getMessage("ClosedSpeed");
+                } else if (col == FORGETCOL) {
+                    return Bundle.getMessage("StateForgetHeader");
+                } else if (col == QUERYCOL) {
+                    return Bundle.getMessage("StateQueryHeader");
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -233,6 +246,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return JComboBox.class;
                 } else if (col == STRAIGHTCOL) {
                     return JComboBox.class;
+                } else if (col == FORGETCOL) {
+                    return JButton.class;
+                } else if (col == QUERYCOL) {
+                    return JButton.class;
                 } else if (col == VALUECOL && _graphicState) {
                     return JLabel.class; // use an image to show turnout state
                 } else {
@@ -269,6 +286,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                         return new JTextField(14).getPreferredSize().width;
                     case STRAIGHTCOL:
                         return new JTextField(14).getPreferredSize().width;
+                    case FORGETCOL:
+                        return new JButton(Bundle.getMessage("StateForgetButton")).getPreferredSize().width;
+                    case QUERYCOL:
+                        return new JButton(Bundle.getMessage("StateQueryButton")).getPreferredSize().width;
                     default:
                         super.getPreferredWidth(col);
                 }
@@ -308,6 +329,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == STRAIGHTCOL) {
                     return true;
                 } else if (col == EDITCOL) {
+                    return true;
+                } else if (col == FORGETCOL) {
+                    return true;
+                } else if (col == QUERYCOL) {
                     return true;
                 } else {
                     return super.isCellEditable(row, col);
@@ -435,7 +460,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                     c.setSelectedItem(speed);
                     return c;
                     // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
-                    //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as classic bean state text button
+                    //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as
+                    // classic bean state text button
+                } else if (col == FORGETCOL) {
+                    return Bundle.getMessage("StateForgetButton");
+                } else if (col == QUERYCOL) {
+                    return Bundle.getMessage("StateQueryButton");
                 }
                 return super.getValueAt(row, col);
             }
@@ -541,6 +571,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                         speedListThrown.add(speed);
                     }
                     fireTableRowsUpdated(row, row);
+                } else if (col == FORGETCOL) {
+                    t.setCommandedState(Turnout.UNKNOWN);
+                } else if (col == QUERYCOL) {
+                    t.setCommandedState(Turnout.UNKNOWN);
+                    t.requestUpdateFromLayout();
                 } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
                     clickOn(t);
                     fireTableRowsUpdated(row, row);
@@ -567,17 +602,17 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Turnout> getManager() {
                 return turnManager;
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Turnout getBySystemName(String name) {
                 return turnManager.getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Turnout getByUserName(String name) {
                 return InstanceManager.getDefault(TurnoutManager.class).getByUserName(name);
             }
 
@@ -587,12 +622,12 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
-                int state = ((Turnout) t).getCommandedState();
+            public void clickOn(Turnout t) {
+                int state = t.getCommandedState();
                 if (state == Turnout.CLOSED) {
-                    ((Turnout) t).setCommandedState(Turnout.THROWN);
+                    t.setCommandedState(Turnout.THROWN);
                 } else {
-                    ((Turnout) t).setCommandedState(Turnout.CLOSED);
+                    t.setCommandedState(Turnout.CLOSED);
                 }
             }
 
@@ -627,6 +662,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(LOCKDECCOL);
                 columnModel.setColumnVisible(column, false);
+                column = columnModel.getColumnByModelIndex(FORGETCOL);
+                columnModel.setColumnVisible(column, false);
+                column = columnModel.getColumnByModelIndex(QUERYCOL);
+                columnModel.setColumnVisible(column, false);
 
                 super.configureTable(table);
             }
@@ -651,9 +690,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             public void comboBoxAction(ActionEvent e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Combobox change");
-                }
+                log.debug("Combobox change");
                 if (table != null && table.getCellEditor() != null) {
                     table.getCellEditor().stopCellEditing();
                 }
@@ -729,77 +766,108 @@ public class TurnoutTableAction extends AbstractTableAction {
 
                     TableCellRenderer getRenderer(int row, int column) {
                         TableCellRenderer retval = null;
+                        Turnout t = (Turnout) getModel().getValueAt(row, SYSNAMECOL);
+                        java.util.Objects.requireNonNull(t, "SYSNAMECOL column content must be nonnull");
                         if (column == SENSOR1COL) {
-                            retval = rendererMapSensor1.get(getModel().getValueAt(row, SYSNAMECOL));
+                            retval = rendererMapSensor1.get(t);
                         } else if (column == SENSOR2COL) {
-                            retval = rendererMapSensor2.get(getModel().getValueAt(row, SYSNAMECOL));
+                            retval = rendererMapSensor2.get(t);
                         } else {
                             return null;
                         }
 
                         if (retval == null) {
-                            Turnout t = turnManager.getBySystemName((String) getModel().getValueAt(row, SYSNAMECOL));
-                            if (t == null) {
-                                return null;
-                            }
-                            retval = new BeanBoxRenderer();
                             if (column == SENSOR1COL) {
-                                ((JmriBeanComboBox) retval).setSelectedBean(t.getFirstSensor());
-                                rendererMapSensor1.put(getModel().getValueAt(row, SYSNAMECOL), retval);
+                                loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
+                                retval = rendererMapSensor1.get(t);
                             } else {
-                                ((JmriBeanComboBox) retval).setSelectedBean(t.getSecondSensor());
-                                rendererMapSensor2.put(getModel().getValueAt(row, SYSNAMECOL), retval);
+                                loadRenderEditMaps(rendererMapSensor2, editorMapSensor2, t, t.getSecondSensor());
+                                retval = rendererMapSensor1.get(t);
                             }
                         }
+                        log.debug("fetched for Turnout \"{}\" renderer {}", t, retval);
                         return retval;
                     }
-                    Hashtable<Object, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
-                    Hashtable<Object, TableCellRenderer> rendererMapSensor2 = new Hashtable<>();
 
                     TableCellEditor getEditor(int row, int column) {
                         TableCellEditor retval = null;
+                        Turnout t = (Turnout) getModel().getValueAt(row, SYSNAMECOL);
+                        java.util.Objects.requireNonNull(t, "SYSNAMECOL column content must be nonnull");
                         switch (column) {
                             case SENSOR1COL:
-                                retval = editorMapSensor1.get(getModel().getValueAt(row, SYSNAMECOL));
+                                retval = editorMapSensor1.get(t);
                                 break;
                             case SENSOR2COL:
-                                retval = editorMapSensor2.get(getModel().getValueAt(row, SYSNAMECOL));
+                                retval = editorMapSensor2.get(t);
                                 break;
                             default:
                                 return null;
                         }
                         if (retval == null) {
-                            Turnout t = turnManager.getBySystemName((String) getModel().getValueAt(row, SYSNAMECOL));
-                            if (t == null) {
-                                return null;
-                            }
-                            JmriBeanComboBox c;
                             if (column == SENSOR1COL) {
-                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getFirstSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                                retval = new BeanComboBoxEditor(c);
-                                editorMapSensor1.put(getModel().getValueAt(row, SYSNAMECOL), retval);
+                                loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
+                                retval = editorMapSensor1.get(t);
                             } else { //Must be two
-                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getSecondSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                                retval = new BeanComboBoxEditor(c);
-                                editorMapSensor2.put(getModel().getValueAt(row, SYSNAMECOL), retval);
+                                loadRenderEditMaps(rendererMapSensor2, editorMapSensor2, t, t.getSecondSensor());
+                                retval = editorMapSensor2.get(t);
                             }
-                            c.setFirstItemBlank(true);
                         }
+                        log.debug("fetched for Turnout \"{}\" editor {}", t, retval);
                         return retval;
                     }
-                    Hashtable<Object, TableCellEditor> editorMapSensor1 = new Hashtable<>();
-                    Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<>();
+
+                    protected void loadRenderEditMaps(Hashtable<Turnout, TableCellRenderer> r, Hashtable<Turnout, TableCellEditor> e,
+                            Turnout t, Sensor s) {
+                        JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), s, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        c.setFirstItemBlank(true);
+
+                        TableCellRenderer renderer = new BeanBoxRenderer();
+                        ((JmriBeanComboBox) renderer).setSelectedBean(s);
+                        r.put(t, renderer);
+
+                        TableCellEditor editor = new BeanComboBoxEditor(c);
+                        e.put(t, editor);
+                        log.debug("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
+                    }
+
+                    Hashtable<Turnout, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
+                    Hashtable<Turnout, TableCellEditor> editorMapSensor1 = new Hashtable<>();
+
+                    Hashtable<Turnout, TableCellRenderer> rendererMapSensor2 = new Hashtable<>();
+                    Hashtable<Turnout, TableCellEditor> editorMapSensor2 = new Hashtable<>();
                 };
+            }
+
+            @Override
+            protected void setColumnIdentities(JTable table) {
+                super.setColumnIdentities(table);
+                Enumeration<TableColumn> columns;
+                if (table.getColumnModel() instanceof XTableColumnModel) {
+                    columns = ((XTableColumnModel) table.getColumnModel()).getColumns(false);
+                } else {
+                    columns = table.getColumnModel().getColumns();
+                }
+                while (columns.hasMoreElements()) {
+                    TableColumn column = columns.nextElement();
+                    switch (column.getModelIndex()) {
+                        case FORGETCOL:
+                            column.setIdentifier("ForgetState");
+                            break;
+                        case QUERYCOL:
+                            column.setIdentifier("QueryState");
+                            break;
+                        default:
+                        // use existing value
+                    }
+                }
             }
 
             /**
              * Visualize state in table as a graphic, customized for Turnouts (4
              * states). Renderer and Editor are identical, as the cell contents
              * are not actually edited, only used to toggle state using
-             * {@link #clickOn(NamedBean)}.
+             * {@link #clickOn(Turnout)}.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
@@ -844,14 +912,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
                     }
-                    if (value.equals(closedText) && offIcon != null) {
-                        label = new JLabel(offIcon);
-                        label.setVerticalAlignment(JLabel.BOTTOM);
-                        log.debug("offIcon set");
-                    } else if (value.equals(thrownText) && onIcon != null) {
+                    if (value.equals(closedText) && onIcon != null) {
                         label = new JLabel(onIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("onIcon set");
+                    } else if (value.equals(thrownText) && offIcon != null) {
+                        label = new JLabel(offIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("offIcon set");
                     } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
                         label = new JLabel("X", JLabel.CENTER); // centered text alignment
                         label.setForeground(Color.red);
@@ -926,11 +994,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         m.fireTableDataChanged();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTurnoutTable"));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
@@ -941,17 +1015,20 @@ public class TurnoutTableAction extends AbstractTableAction {
     CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     // initially allow any 20 char string, updated to prefixBox selection by canAddRange()
     JTextField userNameTextField = new JTextField(40);
-    JComboBox<String> prefixBox = new JComboBox<String>();
+    JComboBox<String> prefixBox = new JComboBox<>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAdd = new JSpinner(rangeSpinner);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
     PropertyChangeListener colorChangeListener;
-    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -972,7 +1049,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     cancelPressed(e);
                 }
             };
-            ActionListener rangeListener = new ActionListener() { // add range box turned on/off
+            ActionListener rangeListener = new ActionListener() { // add rangeBox box turned on/off
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
@@ -982,9 +1059,9 @@ public class TurnoutTableAction extends AbstractTableAction {
              duplicate usernames in multiple classes */
             if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
-                List<Manager<Turnout>> managerList = proxy.getManagerList();
-                for (int x = 0; x < managerList.size(); x++) {
-                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
+                List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
+                for (Manager<Turnout> turnout : managerList) {
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(turnout.getSystemPrefix());
                     Boolean addToPrefix = true;
                     // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -1009,6 +1086,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             addButton.addActionListener(createListener);
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {
@@ -1023,7 +1101,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
-                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
+                    numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
@@ -1031,9 +1109,9 @@ public class TurnoutTableAction extends AbstractTableAction {
         addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N
-        // reset statusBar text
-        statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
-        statusBar.setForeground(Color.gray);
+        // reset statusBarLabel text
+        statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
+        statusBarLabel.setForeground(Color.gray);
 
         addFrame.pack();
         addFrame.setVisible(true);
@@ -1074,23 +1152,24 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Add the content and make the appropriate selection to a combox box for a
+     * Add the content and make the appropriate selection to a combo box for a
      * turnout's automation choices.
      *
      * @param t  turnout
      * @param cb the JComboBox
      */
     public static void updateAutomationBox(Turnout t, JComboBox<String> cb) {
-        TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
+        TurnoutOperation[] ops = InstanceManager.getDefault(TurnoutOperationManager.class).getTurnoutOperations();
         cb.removeAllItems();
         Vector<String> strings = new Vector<String>(20);
         Vector<String> defStrings = new Vector<String>(20);
         log.debug("opsCombo start {}", ops.length);
         for (int i = 0; i < ops.length; ++i) {
             if (log.isDebugEnabled()) {
-                log.debug("isDef " + ops[i].isDefinitive()
-                        + " mFMM " + ops[i].matchFeedbackMode(t.getFeedbackMode())
-                        + " isNonce " + ops[i].isNonce());
+                log.debug("isDef {} mFMM {} isNonce {}",
+                        ops[i].isDefinitive(),
+                        ops[i].matchFeedbackMode(t.getFeedbackMode()),
+                        ops[i].isNonce());
             }
             if (!ops[i].isDefinitive()
                     && ops[i].matchFeedbackMode(t.getFeedbackMode())
@@ -1148,7 +1227,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 break;
             default:  // named operation
                 t.setInhibitOperation(false);
-                t.setTurnoutOperation(TurnoutOperationManager.getInstance().
+                t.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
                         getOperation(((String) cb.getSelectedItem())));
                 break;
         }
@@ -1165,7 +1244,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         beanEdit.actionPerformed(null);
     }
 
-    private static boolean editingOps = false;
+    private static java.util.concurrent.atomic.AtomicBoolean editingOps = new java.util.concurrent.atomic.AtomicBoolean(false);
 
     /**
      * Pop up a TurnoutOperationConfig for the turnout.
@@ -1174,11 +1253,10 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param box JComboBox that triggered the edit
      */
     protected void editTurnoutOperation(Turnout t, JComboBox<String> box) {
-        if (!editingOps) { // don't open a second edit ops pane
-            editingOps = true;
+        if (!editingOps.getAndSet(true)) { // don't open a second edit ops pane
             TurnoutOperation op = t.getTurnoutOperation();
             if (op == null) {
-                TurnoutOperation proto = TurnoutOperationManager.getInstance().getMatchingOperationAlways(t);
+                TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(t);
                 if (proto != null) {
                     op = proto.makeNonce(t);
                     t.setTurnoutOperation(op);
@@ -1231,7 +1309,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String newName = JOptionPane.showInputDialog(Bundle.getMessage("NameParameterSetting"));
-                        if (newName != null && !newName.equals("")) {
+                        if (newName != null && !newName.isEmpty()) {
                             if (!myOp.rename(newName)) {
                                 JOptionPane.showMessageDialog(self, Bundle.getMessage("TurnoutErrorDuplicate"),
                                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1253,7 +1331,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             myOp = null;
                         }
                         self.setVisible(false);
-                        editingOps = false;
+                        editingOps.set(false);
                     }
                 });
                 JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -1261,7 +1339,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         self.setVisible(false);
-                        editingOps = false;
+                        editingOps.set(false);
                     }
                 });
                 buttonBox.add(Box.createHorizontalGlue());
@@ -1275,7 +1353,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 this.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        editingOps = false; // reset Editmarker
+                        editingOps.set(false);
                     }
                 });
             } else {
@@ -1361,12 +1439,13 @@ public class TurnoutTableAction extends AbstractTableAction {
     JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
     JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
     JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
+    JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
     /**
      * Add the check boxes to show/hide extra columns to the Turnout table
      * frame.
      * <p>
-     * Keep contents synchrinized with
+     * Keep contents synchronized with
      * {@link #addToPanel(AbstractTableTabAction)}
      *
      * @param f a Turnout table frame
@@ -1374,12 +1453,12 @@ public class TurnoutTableAction extends AbstractTableAction {
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(doAutomationBox, this.getClass().getName());
-        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+                InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
         f.addToBottomBox(showFeedbackBox, this.getClass().getName());
@@ -1406,6 +1485,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 showTurnoutSpeedChanged();
             }
         });
+        f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showStateForgetAndQueryChanged();
+            }
+        });
+        showStateForgetAndQueryChanged();
     }
 
     /**
@@ -1417,19 +1505,19 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param f a Turnout table action
      */
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<Turnout> f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             systemPrefix = "All"; // NOI18N
         }
 
         f.addToBottomBox(doAutomationBox, systemPrefix);
-        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+                InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
         f.addToBottomBox(showFeedbackBox, systemPrefix);
@@ -1456,6 +1544,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 showTurnoutSpeedChanged();
             }
         });
+        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showStateForgetAndQueryChanged();
+            }
+        });
+        showStateForgetAndQueryChanged();
     }
 
     void showFeedbackChanged() {
@@ -1494,10 +1591,20 @@ public class TurnoutTableAction extends AbstractTableAction {
         columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
 
+    public void showStateForgetAndQueryChanged() {
+        boolean showStateForgetAndQuery = showStateForgetAndQueryBox.isSelected();
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+
+        TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
+        columnModel.setColumnVisible(column, showStateForgetAndQuery);
+        column = columnModel.getColumnByModelIndex(QUERYCOL);
+        columnModel.setColumnVisible(column, showStateForgetAndQuery);
+    }
+
     /**
-     * Insert a table specific Operations menu. Account for the Window and Help
+     * Insert table specific Automation and Speeds menus. Account for the Window and Help
      * menus, which are already added to the menu bar as part of the creation of
-     * the JFrame, by adding the Operations menu 2 places earlier unless the
+     * the JFrame, by adding the Automation menu 2 places earlier unless the
      * table is part of the ListedTableFrame, that adds the Help menu later on.
      *
      * @param f the JFrame of this table
@@ -1519,7 +1626,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         if (menuAbsent) { // create it
             int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
             int offset = 1;
-            log.debug("setMenuBar number of menu items = " + pos);
+            log.debug("setMenuBar number of menu items = {}", pos);
             for (int i = 0; i <= pos; i++) {
                 if (menuBar.getComponent(i) instanceof JMenu) {
                     if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
@@ -1559,7 +1666,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to Create new item pressed on Add Turnout pane
+     * Respond to Create new item pressed on Add Turnout pane.
      *
      * @param e the click event
      */
@@ -1567,8 +1674,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         int numberOfTurnouts = 1;
 
-        if (range.isSelected()) {
-            numberOfTurnouts = (Integer) numberToAdd.getValue();
+        if (rangeBox.isSelected()) {
+            numberOfTurnouts = (Integer) numberToAddSpinner.getValue();
         }
         if (numberOfTurnouts >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
@@ -1581,21 +1688,29 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
-        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
+        String curAddress = hardwareAddressTextField.getText(); // N11N
         // initial check for empty entry
         if (curAddress.length() < 1) {
-            statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
-            statusBar.setForeground(Color.red);
+            statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
+            statusBarLabel.setForeground(Color.red);
             hardwareAddressTextField.setBackground(Color.red);
             return;
         } else {
             hardwareAddressTextField.setBackground(Color.white);
         }
 
+        String uName = userNameTextField.getText().trim(); // N11N
+        if ((uName != null) && uName.isEmpty()) {
+            uName = null;
+        }
+
         // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = null;
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        
+        @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification="false positive")
+        String lastSuccessfulAddress;
+        
         int iType = 0;
         int iNum = 1;
         boolean useLastBit = false;
@@ -1607,15 +1722,15 @@ public class TurnoutTableAction extends AbstractTableAction {
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
-                // directly add to statusBar (but never called?)
-                statusBar.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
-                statusBar.setForeground(Color.red);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
                 return;
             }
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setForeground(Color.red);
                 // The next address returned an error, therefore we stop this attempt and go to the next address.
                 break;
             }
@@ -1630,7 +1745,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     getBySystemName(testSN);
             if (testLight != null) {
                 // Address (number part) is already used as a Light
-                log.warn("Requested Turnout " + sName + " uses same address as Light " + testSN);
+                log.warn("Requested Turnout {} uses same address as Light {}", sName, testSN);
                 if (!noWarn) {
                     int selectedValue = JOptionPane.showOptionDialog(addFrame,
                             Bundle.getMessage("TurnoutWarn1", sName, testSN)
@@ -1639,10 +1754,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                             new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                                 Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                     if (selectedValue == 1) {
-                        // Show error message in statusBar
+                        // Show error message in statusBarLabel
                         errorMessage = Bundle.getMessage("WarningOverlappingAddress", sName);
-                        statusBar.setText(errorMessage);
-                        statusBar.setForeground(Color.gray);
+                        statusBarLabel.setText(errorMessage);
+                        statusBarLabel.setForeground(Color.gray);
                         return;   // return without creating if "No" response
                     }
                     if (selectedValue == 2) {
@@ -1655,7 +1770,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             // Ask about two bit turnout control if appropriate (eg. MERG)
             if (!useLastBit) {
                 iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
-                if ((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (range.isSelected())) {
+                if ((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (rangeBox.isSelected())) {
                     // Add a pop up here asking if the user wishes to use the same value for all
                     if (JOptionPane.showConfirmDialog(addFrame,
                             Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
@@ -1669,10 +1784,10 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             if (iNum == 0) {
                 // User specified more bits, but bits are not available - return without creating
-                // Display message in statusBar
+                // Display message in statusBarLabel
                 errorMessage = Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress);
-                statusBar.setText(errorMessage);
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
                 return;
             } else {
 
@@ -1683,33 +1798,31 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName); // displays message dialog to the user
-                    // add to statusBar as well
+                    // add to statusBarLabel as well
                     errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                    statusBar.setText(errorMessage);
-                    statusBar.setForeground(Color.red);
+                    statusBarLabel.setText(errorMessage);
+                    statusBarLabel.setForeground(Color.red);
                     return; // without creating
                 }
-                String user = userNameTextField.getText().trim(); // N11N
-                if ((x != 0) && user != null && !user.equals("")) {
-                    user = user + ":" + x; // add :x to user name starting with 2nd item
-                }
-                if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user) == null)) {
-                    t.setUserName(user);
-                } else if (user != null && !user.equals("") && InstanceManager.turnoutManagerInstance().getByUserName(user) != null
-                        && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
-                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user),
-                                    getClassName(), "duplicateUserName", false, true);
+                if ((uName != null) && !uName.isEmpty()) {
+                    if (InstanceManager.turnoutManagerInstance().getByUserName(uName) == null) {
+                        t.setUserName(uName);
+                    } else if (!p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showErrorMessage(Bundle.getMessage("ErrorTitle"), 
+                                        Bundle.getMessage("ErrorDuplicateUserName", uName),
+                                        getClassName(), "duplicateUserName", false, true);
+                    }
                 }
 
                 t.setNumberOutputBits(iNum);
                 // Ask about the type of turnout control if appropriate
                 if (!useLastType) {
                     iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
-                    if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
+                    if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (rangeBox.isSelected())) {
                         if (JOptionPane.showConfirmDialog(addFrame,
                                 Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
-                                JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the user wishes to use the same value for all
+                                JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the uName wishes to use the same value for all
                         {
                             useLastType = true;
                         }
@@ -1719,27 +1832,31 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
                 t.setControlType(iType);
 
-                // add first and last names to statusMessage user feedback string
+                // add first and last names to statusMessage uName feedback string
                 if (x == 0 || x == numberOfTurnouts - 1) {
-                    statusMessage = statusMessage + " " + sName + " (" + user + ")";
+                    statusMessage = statusMessage + " " + sName + " (" + uName + ")";
                 }
                 if (x == numberOfTurnouts - 2) {
                     statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
                 }
-                // only mention first and last of range added
+                // only mention first and last of rangeBox added
             }
-            // end of for loop creating range of Turnouts
+            if ((uName != null) && !uName.isEmpty()) {
+                uName = nextName(uName);
+            }
+
+            // end of for loop creating rangeBox of Turnouts
         }
-        // provide feedback to user
+        // provide feedback to uName
         if (errorMessage == null) {
-            statusBar.setText(statusMessage);
-            statusBar.setForeground(Color.gray);
+            statusBarLabel.setText(statusMessage);
+            statusBarLabel.setForeground(Color.gray);
         } else {
-            statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
+            statusBarLabel.setText(errorMessage);
+            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
         }
 
-        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
+        p.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -1749,38 +1866,41 @@ public class TurnoutTableAction extends AbstractTableAction {
     private String addEntryToolTip;
 
     /**
-     * Activate Add a range option if manager accepts adding more than 1 Turnout
-     * and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     * Activate Add a rangeBox option if manager accepts adding more than 1
+     * Turnout and set a manager specific tooltip on the AddNewHardwareDevice
+     * pane.
      */
     private void canAddRange(ActionEvent e) {
-        range.setEnabled(false);
+        rangeBox.setEnabled(false);
         log.debug("T Add box disabled");
-        range.setSelected(false);
+        rangeBox.setSelected(false);
         connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, use default tooltip
             connectionChoice = "TBD";
         }
-        if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
-            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
-            List<Manager<Turnout>> managerList = proxy.getManagerList();
+        if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
+            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
+            List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (int x = 0; x < managerList.size(); x++) {
-                jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
+            for (Manager<Turnout> turnout : managerList) {
+                jmri.TurnoutManager mgr = (jmri.TurnoutManager) turnout;
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
-                    range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
-                    log.debug("T Add box enabled1");
+                    rangeBox.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
+                    log.debug("T Add box 1");
                     // get tooltip from ProxyTurnoutManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     break;
                 }
             }
         } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
-            range.setEnabled(true);
+            rangeBox.setEnabled(true);
             log.debug("T Add box enabled2");
             // get tooltip from turnout manager
             addEntryToolTip = turnManager.getEntryToolTip();
-            log.debug("TurnoutManager tip");
+        }
+        else {
+            log.warn("Unable to set tooltip or Range Allowed Box");
         }
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"
@@ -1802,24 +1922,34 @@ public class TurnoutTableAction extends AbstractTableAction {
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         }
-        // provide feedback to user
-        statusBar.setText(Bundle.getMessage("WarningInvalidRange"));
-        statusBar.setForeground(Color.red);
+        // provide feedback to uName
+        statusBarLabel.setText(Bundle.getMessage("WarningInvalidRange"));
+        statusBarLabel.setForeground(Color.red);
     }
 
     private boolean noWarn = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleTurnoutTable");
@@ -1913,7 +2043,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             if (fld == null) {
                 return false;
             }
-            value = getText().trim();
+            value = getText();
             if ((value.length() < 1) && (allow0Length == false)) {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {

@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-consist-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"consist\"",
+    "properties": {
+        "address": {
+            "type": "integer",
+            "description": "Throttle address of consist"
+        },
+        "isLongAddress": {
+            "type": "boolean",
+            "description": "true if address is long, false if short"
+        },
+        "type": {
+            "type": "integer",
+            "description": "Type of consist, 0 for advanced, 1 for command station",
+            "enum": [0, 1]
+        },
+        "id": {
+            "type": "string",
+            "description": "Id for consist"
+        },
+        "sizeLimit": {
+            "type": "integer",
+            "description": "Maximum number of locomotives constist can contain"
+        },
+        "engines": {
+            "type": "array",
+            "description": "Locomotives in the consist",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "integer",
+                        "description": "Throttle address of locomotive"
+                    },
+                    "isLongAddress": {
+                        "type": "boolean",
+                        "description": "true if address is long, false if short"
+                    },
+                    "forward": {
+                        "type": "boolean",
+                        "description": "true if locomotive forward direction is consist forward direction; false otherwise"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "description": "position of locomotive in consist"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["address", "isLongAddress", "forward", "position"]
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": ["address", "isLongAddress", "type", "id", "sizeLimit", "engines"]
+}

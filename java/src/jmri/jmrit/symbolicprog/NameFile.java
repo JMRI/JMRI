@@ -53,6 +53,7 @@ public class NameFile extends XmlFile {
      */
     @Deprecated
     public synchronized static NameFile instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(NameFile.class);
     }
 
@@ -149,7 +150,7 @@ public class NameFile extends XmlFile {
 
         @Override
         public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
+            Set<Class<?>> set = super.getInitalizes();
             set.add(NameFile.class);
             return set;
         }

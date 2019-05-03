@@ -5,6 +5,7 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANEL;
+import static jmri.server.json.JSON.PANEL_PANEL;
 import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.URL;
@@ -15,10 +16,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.Container;
+import java.awt.Frame;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -41,11 +45,12 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 import jmri.web.server.WebServerPreferences;
 
 /**
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2016, 2017, 2018
  */
 public class JsonUtilHttpService extends JsonHttpService {
 
@@ -54,10 +59,11 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    // use @Nullable to override @Nonnull specified in superclass
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.HELLO:
-                return this.getHello(locale, JsonServerPreferences.getDefault().getHeartbeatInterval());
+                return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval());
             case JSON.METADATA:
                 if (name == null) {
                     return this.getMetadata(locale);
@@ -85,7 +91,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale);
@@ -97,7 +103,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getConfigProfiles(locale);
             default:
                 ArrayNode array = this.mapper.createArrayNode();
-                JsonNode node = this.doGet(type, null, locale);
+                JsonNode node = this.doGet(type, null, data, locale);
                 if (node.isArray()) {
                     array.addAll((ArrayNode) node);
                 } else {
@@ -108,9 +114,10 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doPost(String type, String name,
+    // Use @Nullable to override non-null requirement of superclass
+    public JsonNode doPost(String type, @Nullable String name,
             JsonNode data, Locale locale) throws JsonException {
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     /**
@@ -128,8 +135,8 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.JMRI, jmri.Version.name());
         data.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailroadName());
-        data.put(JSON.NODE, NodeIdentity.identity());
+        data.put(JSON.RAILROAD, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName());
+        data.put(JSON.NODE, NodeIdentity.networkIdentity());
         data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
         return root;
     }
@@ -185,8 +192,8 @@ public class JsonUtilHttpService extends JsonHttpService {
      *                                        networking protocol.
      */
     public JsonNode getNetworkService(Locale locale, String name) throws JsonException {
-        for (ZeroConfService service : ZeroConfService.allServices()) {
-            if (service.type().equals(name)) {
+        for (ZeroConfService service : InstanceManager.getDefault(ZeroConfServiceManager.class).allServices()) {
+            if (service.getType().equals(name)) {
                 return this.getNetworkService(service);
             }
         }
@@ -196,13 +203,13 @@ public class JsonUtilHttpService extends JsonHttpService {
     private JsonNode getNetworkService(ZeroConfService service) {
         ObjectNode ns = mapper.createObjectNode().put(JSON.TYPE, JSON.NETWORK_SERVICE);
         ObjectNode data = ns.putObject(JSON.DATA);
-        data.put(JSON.NAME, service.name());
-        data.put(JSON.PORT, service.serviceInfo().getPort());
-        data.put(JSON.TYPE, service.type());
-        Enumeration<String> pe = service.serviceInfo().getPropertyNames();
+        data.put(JSON.NAME, service.getName());
+        data.put(JSON.PORT, service.getServiceInfo().getPort());
+        data.put(JSON.TYPE, service.getType());
+        Enumeration<String> pe = service.getServiceInfo().getPropertyNames();
         while (pe.hasMoreElements()) {
             String pn = pe.nextElement();
-            data.put(pn, service.serviceInfo().getPropertyString(pn));
+            data.put(pn, service.getServiceInfo().getPropertyString(pn));
         }
         return ns;
     }
@@ -214,7 +221,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     public ArrayNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        ZeroConfService.allServices().stream().forEach((service) -> {
+        InstanceManager.getDefault(ZeroConfServiceManager.class).allServices().stream().forEach((service) -> {
             root.add(this.getNetworkService(service));
         });
         return root;
@@ -232,12 +239,12 @@ public class JsonUtilHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, JSON.NODE);
         ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JSON.NODE, NodeIdentity.identity());
+        data.put(JSON.NODE, NodeIdentity.networkIdentity());
         ArrayNode nodes = mapper.createArrayNode();
         NodeIdentity.formerIdentities().stream().forEach((node) -> {
             nodes.add(node);
         });
-        data.put(JSON.FORMER_NODES, nodes);
+        data.set(JSON.FORMER_NODES, nodes);
         return root;
     }
 
@@ -245,9 +252,9 @@ public class JsonUtilHttpService extends JsonHttpService {
         if (editor.getAllowInFrameServlet()) {
             Container container = editor.getTargetPanel().getTopLevelAncestor();
             if (container instanceof JmriJFrame) {
-                String title = ((JmriJFrame) container).getTitle();
-                if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
-                    String type = PANEL;
+                String title = ((Frame) container).getTitle();
+                if (!title.isEmpty() && !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames()).contains(title)) {
+                    String type = PANEL_PANEL;
                     String name = "Panel";
                     if (editor instanceof ControlPanelEditor) {
                         type = CONTROL_PANEL;
@@ -312,7 +319,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, JSON.RAILROAD);
         ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailroadName());
+        data.put(JSON.NAME, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName());
         return root;
     }
 
@@ -406,4 +413,64 @@ public class JsonUtilHttpService extends JsonHttpService {
         return new DccLocoAddress(number, isLong);
     }
 
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        try {
+            switch (type) {
+                case JSON.CONFIG_PROFILE:
+                case JSON.CONFIG_PROFILES:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/configProfile-server.json",
+                            "jmri/server/json/util/configProfile-client.json");
+                case JSON.NETWORK_SERVICE:
+                case JSON.NETWORK_SERVICES:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/networkService-server.json",
+                            "jmri/server/json/util/networkService-client.json");
+                case JSON.PANEL:
+                case JSON.PANELS:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/panel-server.json",
+                            "jmri/server/json/util/panel-client.json");
+                case JSON.SYSTEM_CONNECTION:
+                case JSON.SYSTEM_CONNECTIONS:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/systemConnection-server.json",
+                            "jmri/server/json/util/systemConnection-client.json");
+                case JsonException.ERROR:
+                case JSON.PONG:
+                    if (server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/" + type + "-server.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
+                    }
+                case JSON.LOCALE:
+                case JSON.PING:
+                    if (!server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/" + type + "-client.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAServerType", type));
+                    }
+                case JSON.GOODBYE:
+                case JSON.HELLO:
+                case JSON.METADATA:
+                case JSON.NODE:
+                case JSON.RAILROAD:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/" + type + "-server.json",
+                            "jmri/server/json/util/" + type + "-client.json");
+                default:
+                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+            }
+        } catch (IOException ex) {
+            throw new JsonException(500, ex);
+        }
+    }
 }

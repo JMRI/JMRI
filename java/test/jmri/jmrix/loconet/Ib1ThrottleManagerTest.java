@@ -1,10 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  *
@@ -12,20 +10,26 @@ import org.junit.Test;
  */
 public class Ib1ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
+    private LocoNetSystemConnectionMemo memo;
+
     @Test
-    public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+    @Override
+    @Ignore("parent class test requires further setup")
+    @ToDo("complete initialization and remove this overriden method so that the parent class test can run")
+    public void testGetThrottleInfo() {
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new LocoNetSystemConnectionMemo();
         tm = new Ib1ThrottleManager(new LocoNetSystemConnectionMemo());
     }
 
     @After
     public void tearDown() {
+        ((Ib1ThrottleManager)tm).dispose();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -178,11 +178,11 @@
 
       <h3>Speed Profiling</h3>
 
-      <p>The tool is designed to create a profile of a loco at
-      various speed steps to help with the automatic running of a
-      loco within JMRI. Primarily to help with the principle of
-      getting a loco to stop within a specific distance from a
-      known throttle setting.</p>
+      <p>The Speed Profiling tool is designed to create a profile
+      of a loco at various speed steps to help with the automatic
+      running of a loco within JMRI. Primary goal is to help with the
+      principle of getting a loco to stop within a specific distance
+      from a known throttle setting.</p>
 
       <p>The tool works on the principle of timing a loco over a
       known distance at a given speed step, in both the forward and
@@ -271,6 +271,7 @@
         "Main_Panels.shtml">Next</a></p>
 
         <p><a href="index.shtml#Main">Back to Index</a></p>
+
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

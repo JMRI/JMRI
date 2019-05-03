@@ -118,12 +118,14 @@ public interface XmlAdapter {
      * {@link #handleException(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Exception)}
      * instead
      */
-    @Deprecated
-    public void creationErrorEncountered(
+    @Deprecated // 4.7.2
+    public default void creationErrorEncountered(
             String description,
             String systemName,
             String userName,
-            Exception exception) throws JmriConfigureXmlException;
+            Exception exception) throws JmriConfigureXmlException {
+        this.handleException(description, null, systemName, userName, exception);
+    }
 
     /**
      * Provide a simple handler for errors.

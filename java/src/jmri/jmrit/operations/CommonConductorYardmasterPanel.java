@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
-    protected static final String Tab = "     "; // used to space out headers
+    protected static final String Tab = "    "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
     protected Location _location = null;
@@ -73,9 +73,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JLabel textStatus = new JLabel();
 
     // major buttons
-    protected JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
-    protected JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
-    protected JButton modifyButton = new JButton(Bundle.getMessage("Modify")); // see setModifyButtonText()
+    public JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    public JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    public JButton modifyButton = new JButton(Bundle.getMessage("Modify")); // see setModifyButtonText()
     protected JButton moveButton = new JButton(Bundle.getMessage("Move"));
 
     // text panes

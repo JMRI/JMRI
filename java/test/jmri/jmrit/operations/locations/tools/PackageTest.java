@@ -5,9 +5,16 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        AlternateTrackFrameTest.class,
+        AlternateTrackActionTest.class,
         BundleTest.class,
-        PoolTrackGuiTest.class,
+        ChangeTrackFrameTest.class,
+        ChangeTracksFrameTest.class,
+        ChangeTracksTypeActionTest.class,
+        ChangeTrackTypeActionTest.class,      
         EditCarTypeActionTest.class,
+        ExportLocationsRosterActionTest.class,
+        ExportLocationsTest.class,
         LocationCopyActionTest.class,
         LocationCopyFrameTest.class,
         LocationTrackBlockingOrderActionTest.class,
@@ -17,26 +24,22 @@ import org.junit.runners.Suite;
         LocationsByCarTypeFrameTest.class,
         ModifyLocationsActionTest.class,
         ModifyLocationsCarLoadsActionTest.class,
+        PoolTrackGuiTest.class,
         ShowTrackMovesActionTest.class,
         ShowTrainsServingLocationFrameTest.class,
         TrackDestinationEditFrameTest.class,
         TrackLoadEditFrameTest.class,
         TrackRoadEditFrameTest.class,
-        AlternateTrackFrameTest.class,
-        AlternateTrackActionTest.class,
-        ChangeTrackFrameTest.class,
-        ChangeTrackTypeActionTest.class,
         IgnoreUsedTrackActionTest.class,
         IgnoreUsedTrackFrameTest.class,
         PoolTrackFrameTest.class,
         PoolTrackActionTest.class,
         TrackDestinationEditActionTest.class,
-        TrackLoadEditActionTest.class, 
+        TrackLoadEditActionTest.class,
         TrackRoadEditActionTest.class,
         TrackEditCommentsActionTest.class,
         TrackEditCommentsFrameTest.class,
-        ChangeTracksFrameTest.class,
-        ChangeTracksTypeActionTest.class,
+
         TrackCopyActionTest.class,
         TrackCopyFrameTest.class,
         ShowCarsByLocationActionTest.class,
@@ -51,7 +54,7 @@ import org.junit.runners.Suite;
 /**
  * Tests for the jmrit.operations.locations package
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
-public class PackageTest  {
+public class PackageTest {
 }

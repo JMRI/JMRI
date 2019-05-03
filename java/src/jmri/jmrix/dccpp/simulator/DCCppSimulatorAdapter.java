@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009-2010
  * @author Mark Underwood, Copyright (C) 2015
  *
- * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
+ * Based on {@link jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter}
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
@@ -62,7 +62,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
             return;
         }
         // Zero out the CV table.
@@ -102,20 +102,16 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     @Override
     public boolean okToSend() {
         if (checkBuffer) {
-            if (log.isDebugEnabled()) {
-                log.debug("Buffer Empty: " + outputBufferEmpty);
-            }
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("No Flow Control or Buffer Check");
-            }
+            log.debug("No Flow Control or Buffer Check");
             return (true);
         }
     }
 
     /**
-     * set up all of the other objects to operate with a DCCppSimulator
+     * Set up all of the other objects to operate with a DCCppSimulator
      * connected to this port
      */
     @Override
@@ -135,24 +131,34 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
     // base class methods for the DCCppSimulatorPortController interface
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return (pout != null && pin != null);
@@ -160,7 +166,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /**
      * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * it's fixed.
      *
      * @return null
      */
@@ -182,24 +188,22 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
-        if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread Started");
-        }
+        log.debug("Simulator Thread Started");
 
         rgen = new Random();
 
-        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
             if (log.isDebugEnabled()) {
-                log.debug("Simulator Thread received message " + m.toString());
+                log.debug("Simulator Thread received message {}", m.toString());
             }
             DCCppReply r = generateReply(m);
             // If generateReply() returns null, do nothing. No reply to send.
             if (r != null) {
                 writeReply(r);
                 if (log.isDebugEnabled()) {
-                    log.debug("Simulator Thread sent Reply" + r.toString());
+                    log.debug("Simulator Thread sent Reply {}", r.toString());
                 }
             }
 
@@ -219,7 +223,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             msg = loadChars();
         } catch (java.io.IOException e) {
             // should do something meaningful here.
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
 
         }
         setOutputBufferEmpty(true);
@@ -228,7 +232,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
-    @SuppressWarnings("fallthrough")
     private DCCppReply generateReply(DCCppMessage msg) {
         String s, r;
         Pattern p;
@@ -256,10 +259,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.error("Malformed pattern syntax! ");
                     return (null);
                 } catch (IllegalStateException e) {
-                    log.error("Group called before match operation executed string= " + s);
+                    log.error("Group called before match operation executed string= {}", s);
                     return (null);
                 } catch (IndexOutOfBoundsException e) {
-                    log.error("Index out of bounds string= " + s);
+                    log.error("Index out of bounds string= {}", s);
                     return (null);
                 }
                 break;
@@ -296,7 +299,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.debug("Output List Message");
                     r = "Y 1 2 3 4"; // Totally fake, but the right number of arguments.
                 } else {
-                    log.error("Invalid Output Command: {}{", msg.toString());
+                    log.error("Invalid Output Command: {}", msg.toString());
                     r = "Y 1 2";
                 }
                 //reply = DCCppReplyParser.parseReply(r);
@@ -341,13 +344,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
-                    log.error("Malformed pattern syntax! ");
+                    log.error("Malformed pattern syntax!");
                     return (null);
                 } catch (IllegalStateException e) {
-                    log.error("Group called before match operation executed string= " + s);
+                    log.error("Group called before match operation executed string= {}", s);
                     return (null);
                 } catch (IndexOutOfBoundsException e) {
-                    log.error("Index out of bounds string= " + s);
+                    log.error("Index out of bounds string= {}", s);
                     return (null);
                 }
                 break;
@@ -377,13 +380,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
-                    log.error("Malformed pattern syntax! ");
+                    log.error("Malformed pattern syntax!");
                     return (null);
                 } catch (IllegalStateException e) {
-                    log.error("Group called before match operation executed string= " + s);
+                    log.error("Group called before match operation executed string= {}", s);
                     return (null);
                 } catch (IndexOutOfBoundsException e) {
-                    log.error("Index out of bounds string= " + s);
+                    log.error("Index out of bounds string= {}", s);
                     return (null);
                 }
                 break;
@@ -413,13 +416,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
-                    log.error("Malformed pattern syntax! ");
+                    log.error("Malformed pattern syntax!");
                     return (null);
                 } catch (IllegalStateException e) {
-                    log.error("Group called before match operation executed string= " + s);
+                    log.error("Group called before match operation executed string= {}", s);
                     return (null);
                 } catch (IndexOutOfBoundsException e) {
-                    log.error("Index out of bounds string= " + s);
+                    log.error("Index out of bounds string= {}", s);
                     return (null);
                 }
                 break;
@@ -472,19 +475,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
           DCCppReply r = new DCCppReply(s);
           writeReply(r);
           if (log.isDebugEnabled()) {
-          log.debug("Simulator Thread sent Reply" + r.toString());
+          log.debug("Simulator Thread sent Reply {}", r.toString());
           }
         */
 
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         writeReply(r);
         if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread sent Reply" + r.toString());
+            log.debug("Simulator Thread sent Reply {}", r.toString());
         }
         r = DCCppReply.parseDCCppReply("N0: SERIAL");
         writeReply(r);
         if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread sent Reply" + r.toString());
+            log.debug("Simulator Thread sent Reply {}", r.toString());
         }
 
         // Generate the other messages too...
@@ -502,7 +505,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         DCCppReply r = DCCppReply.parseDCCppReply(reply);
         writeReply(r);
         if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread sent Reply" + r.toString());
+            log.debug("Simulator Thread sent Reply {}", r.toString());
         }
     }
 
@@ -517,18 +520,18 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             }
             outpipe.writeByte((byte) '>');
         } catch (java.io.IOException ex) {
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private DCCppMessage loadChars() throws java.io.IOException {
@@ -545,7 +548,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 log.debug("Found starting < ");
                 break; // A bit redundant with setting the loop condition true (false)
             } else {
-                char1 = readByteProtected(inpipe);
+                // drop next character before repeating
+                readByteProtected(inpipe);
             }
         }
         // Now, suck in the rest of the message...
@@ -573,7 +577,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be

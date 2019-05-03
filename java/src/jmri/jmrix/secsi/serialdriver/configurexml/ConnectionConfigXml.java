@@ -14,7 +14,7 @@ import org.jdom2.Element;
  * SerialDriverAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -58,9 +58,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
+    @Override
     protected void getInstance() {
-        if(adapter == null ) {
-           adapter = new SerialDriverAdapter();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
         }
     }
 
@@ -80,34 +85,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
     }
 
-    /**
-     * Service routine to look through "parameter" child elements to find a
-     * particular parameter value
-     *
-     * @param e    Element containing parameters
-     * @param name name of desired parameter
-     * @return String value
-     */
-    String findParmValue(Element e, String name) {
-        List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i < l.size(); i++) {
-            Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name)) {
-                return n.getTextTrim();
-            }
-        }
-        return null;
-    }
-
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    @Override
-    protected void getInstance(Object object) {
-        adapter = ((ConnectionConfig) object).getAdapter();
-    }
-
 
 }

@@ -31,16 +31,18 @@
 
 <hr>
 <p>
-View the full list of <a href="../../html/hardware/index.shtml">DCC systems that work with the <em.current</em> version of JMRI</a>.
+View the full list of <a href="../../html/hardware/index.shtml">DCC systems that work with the current version of
+    JMRI</a>.</p>
 
 <p>
 Depending on the specifics of your system and computer, an additional hardware
-interface may be required.
+interface may be required.</p>
 
 <hr>
 <div align="right">
 <p><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
-<p><a href="index.shtml#GettingStarted">Back to Index</a></div>
+<p><a href="index.shtml#GettingStarted">Back to Index</a>
+</div>
 
 <!--#include virtual="/Footer" -->
 </div>

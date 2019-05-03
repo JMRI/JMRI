@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Xml Schema Usage</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml schema usage">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -15,22 +15,23 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-  <!--#include virtual="/Style" -->
-</head><!--#include virtual="/Header" -->
+  <!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JMRI: XML Schema Usage</h1>JMRI uses XML for a number of
+      <h1>JMRI: XML Schema Usage</h1>
+      <p>JMRI uses XML for a number of
       purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for
       configuration and panel information, and to create parts of
       the web site from other files. This page describes how we
       specify the content of those files using <a href=
       "http://www.w3schools.com/schema/schema_intro.asp">XML
-      schema</a>.
+          schema</a>.</p>
 
       <p>For examples (not a tutorial!) on the structure of our
       schema, see the <a href="XmlSchemaExamples.shtml">examples
@@ -229,7 +230,7 @@
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
 </code>
 </pre><code>xmllint</code> can't check schema files themselves,
-unfortunately, because their schema isn't something it can handle.
+      unfortunately, because their schema isn't something it can handle.
 
       <p>Your schema docs should point to our standard stylesheet
       in their head matter:</p>
@@ -238,8 +239,8 @@ unfortunately, because their schema isn't something it can handle.
 &lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
 </code>
 </pre>Stylesheets turn XML code, like this schema, into a
-human-readable form when the XML is parsed and displayed by a
-browser. For an example of that, click on this link to the
+      human-readable form when the XML is parsed and displayed by a
+      browser. For an example of that, click on this link to the
       <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
       schema file. Our standard stylesheet is pretty basic. It just
       shows basic structure. If anybody knows of a better
@@ -255,10 +256,9 @@ browser. For an example of that, click on this link to the
         file against the schema.
 
           <p>That's done by having a SchemaTest class in your
-          test-tree package (see e.g. <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/SchemaTest.java"
-          target=
-          "_blank">test/jmri/configurexml/SchemaTest.java</a> for
+          test-tree package (see e.g. 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/SchemaTest.java">
+            test/jmri/configurexml/SchemaTest.java</a> for
           an example) that checks all the XML files kept there. If
           that's in place, just put a copy of a (new) typical XML
           file in the existing "verify" subdirectory.</p>
@@ -291,10 +291,9 @@ browser. For an example of that, click on this link to the
         errors).
 
           <p>That's done by having a LoadAndStoreTest class in your
-          test-tree package (see e.g. <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/LoadAndStoreTest.java"
-          target=
-          "_blank">test/jmri/configurexml/LoadAndStoreTest.java</a>
+          test-tree package (see e.g. 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/LoadAndStoreTest.java">
+            test/jmri/configurexml/LoadAndStoreTest.java</a>
           for an example) that checks all the XML files kept there.
           If that's in place, just put a copy of a (new) typical
           XML file in the existing "load" subdirectory.</p>
@@ -596,7 +595,9 @@ browser. For an example of that, click on this link to the
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
 </code>
-</pre><!--#include virtual="/Footer" -->
+</pre>
+
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

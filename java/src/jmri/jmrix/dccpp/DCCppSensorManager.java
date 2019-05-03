@@ -7,22 +7,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the DCC++ specific Sensor implementation.
- *
- * System names are "DCCppSnnn", where nnn is the sensor number without padding.
+ * Implement Sensor Manager for DCC++ systems.
+ * <p>
+ * System names are "DSnnn", where D is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
+    protected DCCppTrafficController tc = null;
+    protected String prefix = null;
+
+    /**
+     * Create an new DCC++ SensorManager.
+     * Has to register for DCC++ events.
+     *
+     * @param controller the TrafficController to connect the SensorManager to
+     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     */
+    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
+        tc = controller;
+        tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        this.prefix = prefix;
+        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
+        // then Send the version request to the controller
+        tc.sendDCCppMessage(msg, this);
+    }
+
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
-
-    protected DCCppTrafficController tc = null;
 
     @Deprecated
     static public DCCppSensorManager instance() {
@@ -39,24 +56,11 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     // DCCpp specific methods
 
-    /**
-     * Ctor
-     * Has to register for DCC++ events.
-     */
-    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
-        tc = controller;
-        tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
-        this.prefix = prefix;
-        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
-        // Then Send the version request to the controller
-        tc.sendDCCppMessage(msg, this);
-    }
-
     @Override
     public Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Can't convert " +  // NOI18N
                     systemName.substring(getSystemPrefix().length() + 1) +
@@ -73,7 +77,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     public void message(DCCppReply l) {
         int addr = -1;  // -1 flags that no sensor address was found in reply
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isSensorDefReply()) {
             addr = l.getSensorDefNumInt();
@@ -137,8 +141,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             // Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+                input = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningAddressAsNumber"),
@@ -208,8 +212,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         // name must be in the DCCppSnnnnn format (DCCPP prefix is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+            num = Integer.parseInt(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length()));
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
@@ -225,7 +229,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return VALID if system name has a valid format, else returns INVALID
      */
@@ -235,7 +239,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

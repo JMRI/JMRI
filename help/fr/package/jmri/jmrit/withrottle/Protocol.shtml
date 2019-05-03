@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
-  <!--  $Id$ -->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-3-->
 
   <title>JMRI: WiFi Throttle Communications Protocol</title>
@@ -95,9 +94,7 @@
       est momentan&eacute;, et il g&egrave;re en
       cons&eacute;quence</p>
 
-      <p>Ceci est la page d'aide
-      help/en/package/jmri/jmrit/withrottle/Protocol.shtml 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

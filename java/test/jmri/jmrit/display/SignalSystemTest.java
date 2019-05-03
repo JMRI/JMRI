@@ -13,8 +13,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test signal system via a specific layout file
@@ -151,11 +149,11 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:UP-2008:SL-3L2($0249)", "Approach Restricting");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0250)", "Approach");
 
+        final int numErrorMessages = 19;
         // clean up messages from file
-        jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
-        jmri.util.JUnitAppender.clearBacklog();
-        jmri.util.JUnitAppender.verifyNoBacklog();
-        log.info("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
+        for (int i=0; i < numErrorMessages; i++) {
+            jmri.util.JUnitAppender.assertErrorMessageStartsWith("No facing block found for source mast IF$vsm:BNSF-1996:SL-");
+        }
     }
 
     void checkAspect(String mastName, String aspect) {
@@ -174,6 +172,7 @@ public class SignalSystemTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         JUnitUtil.initInternalTurnoutManager();
@@ -186,5 +185,5 @@ public class SignalSystemTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(SignalSystemTest.class);
+    
 }

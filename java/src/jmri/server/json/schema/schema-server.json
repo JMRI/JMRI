@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-schema-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"schema\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of type for which schema was requested"
+        },
+        "server": {
+            "type": "boolean",
+            "description": "True if schema is for message from server, false is schema is for message from client"
+        },
+        "schema": {
+            "$ref": "http://json-schema.org/draft-04/schema#",
+            "description": "A JSON Schema for the type of message requested"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "server", "schema"]
+}

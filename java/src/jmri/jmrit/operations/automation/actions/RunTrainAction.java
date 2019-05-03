@@ -53,13 +53,13 @@ public class RunTrainAction extends Action {
             // this can wait thread
             if (!InstanceManager.getDefault(TrainCustomSwitchList.class).checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel switch list program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        "Timeout waiting for excel switch list program to complete previous operation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
             // this can wait thread
             if (!InstanceManager.getDefault(TrainCustomManifest.class).checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        "Timeout waiting for excel manifest program to complete previous operation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
             if (InstanceManager.getDefault(TrainCustomManifest.class).doesCommonFileExist()) {
@@ -72,7 +72,7 @@ public class RunTrainAction extends Action {
                     status = InstanceManager.getDefault(TrainCustomManifest.class).waitForProcessToComplete(); // wait for process to complete or timeout
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error("Thread unexpectedly interrupted", e);
                 }
                 if (!status) {
                     log.warn("Timeout when creating custom manifest for train ({})", train.getName());
@@ -84,7 +84,7 @@ public class RunTrainAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 
     private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class);

@@ -117,6 +117,24 @@
       <a href="Conventions.shtml">naming conventions</a> used in the example, in case
       you find that these will save you some work on the setup.
       
+      <p>
+      This tools log information to several JMRI Memory objects, which 
+      in turn can be placed onto panels as MemoryIcons.
+      <dl>
+        <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>
+        <dd>What the code line is doing</dd>
+
+        <dt>IMUSS CTC:SIGNALHEADSECTION:1:TIME</dt>
+        <dd>Whether time is running</dd>
+
+        <dt>IMUSS CTC:LOCK:1:LOG</dt>
+        <dd>Whether any locks are showing as locked</dd>
+        
+      </dl>
+      
+      The "1" in those can change if there's more than one set of objects, 
+      i.e. if more than one code line is being modelled.
+      
       <h3>Standalone Tools</h3>
 
       These can be created from the USS menu under Tools in 
@@ -144,7 +162,6 @@
         the section has been unlocked.</dd>
 
       </dl>
-      
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

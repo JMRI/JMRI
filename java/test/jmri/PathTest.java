@@ -1,17 +1,21 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Path class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
-public class PathTest extends TestCase {
+public class PathTest {
 
+    @Test
     @SuppressWarnings("all")
     public void testCreate() {
         Path p = new Path();
@@ -23,10 +27,11 @@ public class PathTest extends TestCase {
 
     }
 
+    @Test
     public void testLoad() {
         Path p = new Path();
 
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -35,8 +40,9 @@ public class PathTest extends TestCase {
         p.setBlock(b);
     }
 
+    @Test
     public void testEquals() {
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
         Turnout s1 = sm.provideTurnout("IT12");
         Turnout s2 = sm.provideTurnout("IT14");
         
@@ -71,6 +77,7 @@ public class PathTest extends TestCase {
         assertFalse(p1.equals(p2));
     }
     
+    @Test
     public void testBlockRetrieve() {
         Path p = new Path();
 
@@ -81,10 +88,11 @@ public class PathTest extends TestCase {
                 p.getBlock().getSystemName());
     }
 
+    @Test
     public void testCheck() throws JmriException {
         Path p = new Path();
 
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -96,6 +104,7 @@ public class PathTest extends TestCase {
 
     }
 
+    @Test
     public void testShortPathCheck() {
         Path p = new Path();
         // no elements; always true
@@ -103,6 +112,7 @@ public class PathTest extends TestCase {
 
     }
 
+    @Test
     public void testFormat() {
         //Path p = new Path();
         // default direction
@@ -126,26 +136,17 @@ public class PathTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public PathTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PathTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PathTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

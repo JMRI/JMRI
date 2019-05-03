@@ -9,7 +9,7 @@
   <title>JMRI: User Message Preferences</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Kevin Dickerson" name="Author">
+  <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="User Message Preferences">
   <!--#include virtual="/Style" -->
 </head>

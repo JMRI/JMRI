@@ -24,38 +24,21 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version of the the NW color light, search light, and semaphore signals.</revremark>
     </revision>
+	
+	<revision>
+        <revnumber>1.1</revnumber>
+        <date>2018-11-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Corrected the operation of the Wabash dwarf, removing aspects it was not able to display.</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>N&amp;W 1981</aspecttable>
-  <name>Color Light 2 Arm Absolute Dwarf Signal with Lunar Aspect</name>
+  <name>Wabash Dwarf Signal with Lunar Aspect</name>
   <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
   <description>Appearances for N&amp;W two arm color light, search light, and semaphore absolute dwarf signals.</description>
 
   <appearances>
-
-    <appearance>
-      <aspectname>Clear</aspectname>
-      <show>green</show>
-      <show>red</show>
-      <reference>Page 60</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-low-absolute/rule-281.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Approach Diverging</aspectname>
-      <show>yellow</show>
-      <show>green</show>
-      <reference>Page 61</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-low-absolute/rule-282.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Advance Approach</aspectname>
-      <show>yellow</show>
-      <show>yellow</show>
-      <reference>Page 61</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-low-absolute/rule-282-A.gif</imagelink>
-    </appearance>
 
     <appearance>
       <aspectname>Diverging Clear</aspectname>
@@ -82,22 +65,6 @@
     </appearance>
 
     <appearance>
-      <aspectname>Slow Approach</aspectname>
-      <show>yellow</show>
-      <show>red</show>
-      <reference>Page 65</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-low-absolute/rule-288.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>yellow</show>
-      <reference>Page 65</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-low-absolute/rule-290.gif</imagelink>
-    </appearance>
-
-    <appearance>
       <aspectname>Stop and Stay</aspectname>
       <show>red</show>
       <show>red</show>
@@ -113,10 +80,6 @@
       <aspect>Stop and Stay</aspect>
     </danger>
 
-    <permissive>
-      <aspect>Restricting</aspect>
-    </permissive>
-
     <held>
       <aspect>Stop and Stay</aspect>
     </held>
@@ -127,76 +90,63 @@
 
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
-      <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Diverging</advancedAspect>
-      <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
-      <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
-      <ourAspect>Approach Diverging</ourAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Approach Diverging</advancedAspect>
-      <ourAspect>Approach Diverging</ourAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Advance Approach</ourAspect>
-      <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
-      <ourAspect>Approach Diverging</ourAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
-      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
-      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
-      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
-      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Stay</advancedAspect>
-      <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Diverging Approach</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
   </aspectMappings>
 

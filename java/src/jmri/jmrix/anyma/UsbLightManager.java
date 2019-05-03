@@ -7,11 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for anyma dmx usb systems
- * <P>
- * System names are "DXLnnn", where nnn is the channel number without padding.
- * <P>
- * @author George Warner Copyright (c) 2017
+ * Implement light manager for anyma dmx usb systems.
+ * <p>
+ * System names are "DLnnn", where D is the user configurable system prefix,
+ * nnn is the channel number without padding.
+ *
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class UsbLightManager extends AbstractLightManager {

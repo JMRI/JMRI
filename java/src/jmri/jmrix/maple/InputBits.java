@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting input from Maple HMI's
- * <P>
+ * <p>
  * All of the Maple HMI panels are configured with the same input bits. As each
  * HMI is polled, the results are ORed together in an input array that is
  * initialized to all 0 when a polling cycle is initiated. That way, if a bit is
@@ -168,8 +168,8 @@ public class InputBits {
     /**
      * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS.
      *
-     * @param s - Sensor object
-     * @param i - 0 to MAXSENSORS number of sensor's input bit on this node
+     * @param s  Sensor object
+     * @param i  0 to MAXSENSORS number of sensor's input bit on this node
      */
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal

@@ -2,10 +2,8 @@ package jmri.jmrix.roco.z21;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.jmrix.lenz.XNetConsistManager;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetLightManager;
-import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.jmrix.lenz.XNetSensorManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -38,18 +36,13 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
 
         InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
-        systemMemo.setProgrammerManager(new XNetProgrammerManager(new Z21XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
+        systemMemo.setProgrammerManager(new Z21XNetProgrammerManager(new Z21XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+            jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
         }
-        /* the "raw" Command Station only works on systems that support
-         Ops Mode Programming */
-        systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-        InstanceManager.setCommandStation(systemMemo.getCommandStation());
-        systemMemo.setConsistManager(new XNetConsistManager(systemMemo));
         systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));

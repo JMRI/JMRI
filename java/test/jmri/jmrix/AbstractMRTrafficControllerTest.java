@@ -8,6 +8,7 @@ import org.junit.Test;
 
 /**
  * Tests for AbstractMRTrafficController.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class AbstractMRTrafficControllerTest {
@@ -55,11 +56,10 @@ public class AbstractMRTrafficControllerTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRTrafficController(){
-           @Override
-           protected void setInstance() {}
+
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
@@ -82,7 +82,7 @@ public class AbstractMRTrafficControllerTest {
 
     @After
     public void tearDown(){
-       tc = null;
+        tc = null;
         JUnitUtil.tearDown(); 
     }
 

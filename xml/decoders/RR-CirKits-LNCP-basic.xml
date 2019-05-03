@@ -27,13 +27,14 @@
     <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode">
       <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes">
+    <programming direct="no" paged="yes" register="no" ops="no">
       <capability>
         <name>Indexed CV access</name>
         <parameter name="PI">32</parameter>
         <parameter name="SI">00</parameter> <!-- not used, but needs to be specified -->
         <parameter name="cvFirst">true</parameter> <!-- 257.1 is write 1 to PICV, then access CV 257 -->
       </capability>
+      <mode>LOCONETOPSBOARD</mode>
     </programming>
     <variables>
       <!--		<variable label="Address" CV="9" item="Extended Address"  -->

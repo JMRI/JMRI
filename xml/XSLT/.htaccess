@@ -1,0 +1,6 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+RewriteRule "index.html" "/xml/XSLT/index.shtml" [R=302,L]
+RewriteRule "CSVindex.html" "/xml/XSLT/CSVindex.shtml" [R=302,L]

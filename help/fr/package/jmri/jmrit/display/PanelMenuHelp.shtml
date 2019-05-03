@@ -7,7 +7,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Panels Menu</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -82,9 +81,7 @@
         commandes de script ici.</li>
       </ul>
 
-      <p>Ceci est la page d'aide
-      help/en/package/jmri/jmrit.display.PanelMenuHelp. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

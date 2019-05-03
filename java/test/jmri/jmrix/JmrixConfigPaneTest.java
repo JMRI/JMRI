@@ -13,8 +13,8 @@ import org.junit.Test;
 public class JmrixConfigPaneTest {
 
     @Test
-    public void testCTor() {
-        JmrixConfigPane t = JmrixConfigPane.instance(1);
+    public void testCreateNew() {
+        JmrixConfigPane t = JmrixConfigPane.createNewPanel();
         Assert.assertNotNull("exists",t);
     }
 

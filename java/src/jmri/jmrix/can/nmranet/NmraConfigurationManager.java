@@ -35,7 +35,6 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return false; // nothing, by default
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {

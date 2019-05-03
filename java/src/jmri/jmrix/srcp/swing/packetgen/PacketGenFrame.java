@@ -19,12 +19,10 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    private SRCPSystemConnectionMemo _memo = null;
     private SRCPTrafficController tc = null;
 
     public PacketGenFrame(SRCPSystemConnectionMemo memo) {
         super();
-        _memo = memo;
         tc = memo.getTrafficController();
     }
 

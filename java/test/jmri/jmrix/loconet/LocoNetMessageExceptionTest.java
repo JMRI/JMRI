@@ -10,7 +10,7 @@ import org.junit.Test;
  * Tests for LocoNetMessageException class.
  *
  * @author Paul Bender Copyright (C) 2016
- **/
+ */
 
 public class LocoNetMessageExceptionTest {
 

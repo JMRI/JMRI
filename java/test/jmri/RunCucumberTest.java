@@ -30,12 +30,13 @@ public class RunCucumberTest {
    
    @BeforeClass
    public static void beforeTests(){
-      apps.tests.Log4JFixture.setUp();
+     jmri.util.JUnitUtil.setUp();
    }
 
    @AfterClass
    public static void afterTests(){
-      apps.tests.Log4JFixture.tearDown();
+      jmri.util.web.BrowserFactory.CloseAllDriver();
+      jmri.util.JUnitUtil.tearDown();
    }
 
 }

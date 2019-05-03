@@ -21,8 +21,8 @@ import jmri.util.FileUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Provide GUI to configure the Default File Locations
- * <P>
+ * Provide GUI to configure the Default File Locations.
+ * <p>
  * Provides GUI configuration for the default file locations by displaying
  * textfields for the user to directly enter in their own path or a Set button
  * is provided so that the user can select the path.
@@ -183,4 +183,5 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
             }
         }
     }
+
 }

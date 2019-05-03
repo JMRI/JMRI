@@ -69,12 +69,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         public SerialListenerScaffold() {
             rcvdReply = null;
-            rcvdMsg = null;
         }
 
         @Override
         public void message(SerialMessage m) {
-            rcvdMsg = m;
         }
 
         @Override
@@ -83,8 +81,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         }
     }
     private SerialReply rcvdReply;
-    private SerialMessage rcvdMsg;
-
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
@@ -142,11 +138,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new SerialTrafficController();
     }
 
@@ -154,7 +149,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @After
     public void tearDown() {
         rcvdReply = null;
-        rcvdMsg = null;
         JUnitUtil.tearDown();
     }
 

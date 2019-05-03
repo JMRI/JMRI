@@ -2,30 +2,36 @@ package jmri.jmris.simpleserver.parser;
 
 import java.io.StringReader;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the {@link jmri.jmris.simpleserver.parser.JmriServerParser} class.
  *
  * @author Paul Bender
  */
-public class JmriServerParserTest extends TestCase {
+public class JmriServerParserTest {
 
+    @Test
     public void testParseFailure() {
         boolean exceptionOccured = false;
-        String code = "POWER SET\n\r";
+        String code = "ON POWER\n\r";
         JmriServerParser p = new JmriServerParser(new StringReader(code));
         try {
             p.command();
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertTrue(exceptionOccured);
+        jmri.util.JUnitAppender.assertErrorMessage("Recovery after Parse Exception");
+        // the parser now recovers from a parse exception by skipping
+        // to the end of the line, so the exception should not occur.
+        Assert.assertFalse(exceptionOccured);
     }
 
     // test valid power commands.
+    @Test
     public void testSetPowerOn() {
         boolean exceptionOccured = false;
         String code = "POWER ON\n\r";
@@ -35,9 +41,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSetPowerOff() {
         boolean exceptionOccured = false;
         String code = "POWER OFF\n\r";
@@ -47,9 +54,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetPower() {
         boolean exceptionOccured = false;
         String code = "POWER\n\r";
@@ -59,11 +67,12 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
    // test valid Turnout related commands
    
+    @Test
     public void testTurnoutProduction() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1 THROWN\n\r";
@@ -73,9 +82,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testTurnoutDeviceProduction() {
         boolean exceptionOccured = false;
         String code = "IT1\n\r";
@@ -86,9 +96,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSetTurnoutThrown() {
         boolean exceptionOccured = false;
         String code = "TURNOUTIT1 THROWN\n\r";
@@ -98,9 +109,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testTurnoutCmdClosed() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1 CLOSED\n\r";
@@ -110,9 +122,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSetTurnoutClosed() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1 CLOSED\n\r";
@@ -122,10 +135,11 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
  
-   public void testGetTurnoutCmdStatus() {
+    @Test
+    public void testGetTurnoutCmdStatus() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1\n\r";
         JmriServerParser p = new JmriServerParser(new StringReader(code));
@@ -134,9 +148,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetTurnoutStatus() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1\n\r";
@@ -146,11 +161,12 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
-   // test valid Light related commands
+    // test valid Light related commands
    
+    @Test
     public void testLightProduction() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1 ON\n\r";
@@ -160,9 +176,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testLightDeviceProduction() {
         boolean exceptionOccured = false;
         String code = "IL1\n\r";
@@ -173,9 +190,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSetLightOn() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1 ON\n\r";
@@ -185,9 +203,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testLightCmdOff() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1 OFF\n\r";
@@ -197,9 +216,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSetLightOff() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1 OFF\n\r";
@@ -209,9 +229,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetLightCmdStatus() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1\n\r";
@@ -221,9 +242,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetLightStatus() {
         boolean exceptionOccured = false;
         String code = "LIGHT IL1\n\r";
@@ -233,11 +255,12 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
-   // test valid Reporter related commands
+    // test valid Reporter related commands
    
+    @Test
     public void testReporterProduction() {
         boolean exceptionOccured = false;
         String code = "REPORTER IR1\n\r";
@@ -247,9 +270,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testReporterDeviceProduction() {
         boolean exceptionOccured = false;
         String code = "IR1\n\r";
@@ -260,9 +284,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetReporterCmd() {
         boolean exceptionOccured = false;
         String code = "REPORTER IR1\n\r";
@@ -272,9 +297,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetReporterStatus() {
         boolean exceptionOccured = false;
         String code = "REPORTER IR1\n\r";
@@ -284,11 +310,12 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
-   // test valid Sensor related commands
+    // test valid Sensor related commands
    
+    @Test
     public void testSensorProduction() {
         boolean exceptionOccured = false;
         String code = "Sensor IS1\n\r";
@@ -298,9 +325,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSensorDeviceProduction() {
         boolean exceptionOccured = false;
         String code = "IS1\n\r";
@@ -311,9 +339,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testSensorCmd() {
         boolean exceptionOccured = false;
         String code = "Sensor IS1\n\r";
@@ -323,9 +352,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetSensorStatus() {
         boolean exceptionOccured = false;
         String code = "Sensor IS1\n\r";
@@ -335,11 +365,12 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
 
-// test operations related commands.
+    // test operations related commands.
+    @Test
     public void testGetOperationsTrains() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAINS\n\r";
@@ -349,9 +380,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetOperationsLocations() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS LOCATIONS\n\r";
@@ -361,9 +393,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testGetTrainLocation() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINLOCATION\n\r";
@@ -373,8 +406,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testSetTrainLocation() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINLOCATION=ABCD\n\r";
@@ -384,8 +419,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testGetTrainWeight() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINWEIGHT\n\r";
@@ -395,8 +432,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testGetTrainCars() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINCARS\n\r";
@@ -406,8 +445,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testGetTrainLeadLoco() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINLEADLOCO\n\r";
@@ -417,8 +458,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testGetTrainCaboose() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINCABOOSE\n\r";
@@ -428,8 +471,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testGetTrainStatus() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TRAIN=ABC1234 , TRAINSTATUS\n\r";
@@ -439,8 +484,10 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
+
+    @Test
     public void testGetTerminanteTrain() {
         boolean exceptionOccured = false;
         String code = "OPERATIONS TERMINATE TRAIN=ABC1234\n\r";
@@ -450,32 +497,16 @@ public class JmriServerParserTest extends TestCase {
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
-    // Main entry point
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JmriServerParserTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JmriServerParserTest.class);
-        return suite;
-
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

@@ -1,9 +1,10 @@
 package jmri.jmrix.can;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.CanMessage class
@@ -12,6 +13,7 @@ import org.junit.Assert;
  */
 public class CanMessageTest extends CanMRCommonTestBase {
 
+    @Test
     public void testCopyCtor() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setExtended(true);
@@ -21,6 +23,7 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("header", m2.getHeader() == 0x12);
     }
 
+    @Test
     public void testEqualsOp() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setExtended(true);
@@ -37,6 +40,8 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
 
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsReply() {
         CanMessage m1 = new CanMessage(0, 0x12);
         m1.setExtended(true);
@@ -56,6 +61,8 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
 
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsData() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setNumDataElements(2);
@@ -71,20 +78,42 @@ public class CanMessageTest extends CanMRCommonTestBase {
         m3.setNumDataElements(2);
         m3.setElement(0, 0x01);
         m3.setElement(1, 0x82);
+        
+        CanMessage m4 = new CanMessage(0x12);
+        m4.setNumDataElements(1);
+        m4.setElement(0, 0x07);        
 
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+        Assert.assertTrue("not equals null", !m1.equals(null));
+        Assert.assertTrue("not equals string value", !m1.equals("[12] 81 12"));
+        Assert.assertTrue("not equals diff ele length", !m1.equals(m4));
     }
 
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
+    public void testMessageFromReply() {
+        CanReply r = new CanReply(0x55);
+        r.setNumDataElements(2);
+        r.setHeader(0x55);
+        r.setElement(0, 0x01);
+        r.setElement(1, 0x82);
+        
+        CanMessage m = new CanMessage(r);
+        Assert.assertTrue("Header 0x55", m.getHeader() == 0x55);
+        Assert.assertTrue("2 Elements", m.getNumDataElements() == 2);
+        Assert.assertTrue("equals same", m.equals(r));
+    }
+
+    @Test
     public void testHeaderAccessors() {
-        CanMessage m = new CanMessage(0x555);
-
-        Assert.assertTrue("Header 0x555", m.getHeader() == 0x555);
-
+        CanMessage m = new CanMessage(0x55);
+        Assert.assertTrue("Header 0x55", m.getHeader() == 0x55);
     }
 
+    @Test
     public void testRtrBit() {
         CanMessage m = new CanMessage(0x12);
         Assert.assertTrue("not rtr at start", !m.isRtr());
@@ -94,6 +123,7 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("rtr unset", !m.isRtr());
     }
 
+    @Test
     public void testStdExt() {
         CanMessage m = new CanMessage(0x12);
         Assert.assertTrue("std at start", !m.isExtended());
@@ -103,6 +133,7 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("std at end", !m.isExtended());
     }
 
+    @Test
     public void testDataElements() {
         CanMessage m = new CanMessage(0x12);
 
@@ -125,34 +156,41 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("3 Element 2", m.getElement(2) == 0x83);
     }
 
-    // from here down is testing infrastructure
-    public CanMessageTest(String s) {
-        super(s);
+    @Test
+    @Override
+    public void testToString() {
+        CanMessage m = new CanMessage(0x12);
+        m.setNumDataElements(3);
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x02);
+        m.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "[12] 81 02 83",m.toString());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", CanMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(CanMessageTest.class);
-        return suite;
+    @Test
+    @Override
+    public void testToMonitorString() {
+        CanMessage m = new CanMessage(0x12);
+        m.setNumDataElements(3);
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x02);
+        m.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "(12) 81 02 83",m.toMonitorString());
     }
 
     // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() {
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         new TrafficControllerScaffold();
-        apps.tests.Log4JFixture.setUp();
+        m = new CanMessage(0x12);
     }
 
+    @After
     @Override
-    protected void tearDown() {
+    public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 }

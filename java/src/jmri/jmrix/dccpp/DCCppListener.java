@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp;
 /**
  * DCCppListener provides the call-back interface for notification when a new
  * DCC++ message arrives from the layout.
- * <P>
+ * <p>
  * Note that the DCCppListener implementation cannot assume that messages will be
  * returned in any particular thread. We may eventually revisit this, as
  * returning messages in the Swing GUI thread would result in some
@@ -38,8 +38,8 @@ public interface DCCppListener extends jmri.jmrix.AbstractMRListener {
     public void message(DCCppMessage msg);
 
     /**
-     * Member function invoked by an DCCppInterface implementation to notify * a
-     * sender that an outgoing message timed out and was dropped from the *
+     * Member function invoked by an DCCppInterface implementation to notify a
+     * sender that an outgoing message timed out and was dropped from the
      * queue.
      */
     public void notifyTimeout(DCCppMessage msg);

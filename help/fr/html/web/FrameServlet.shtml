@@ -74,9 +74,10 @@
           nous sommes engag&eacute;s &agrave; le faire fonctionner,
           cependant,simplement entrer en contact avec les
           d&eacute;veloppeurs JMRI si vous rencontrez des
-          probl&egrave;mes. <!--#include virtual="/Footer" --></p>
+          probl&egrave;mes.</p>
         </li>
       </ul>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

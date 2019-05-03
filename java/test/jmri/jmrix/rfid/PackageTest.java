@@ -30,14 +30,16 @@ import org.junit.runners.Suite;
      TimeoutRfidReporterTest.class,
      jmri.jmrix.rfid.swing.PackageTest.class,
      RfidNetworkPortControllerTest.class,
-     RfidPortControllerTest.class
+     RfidPortControllerTest.class,
+     BundleTest.class,
+     RfidStreamConnectionConfigTest.class,
 })
 
 /**
  * tests for the jmri.jmrix.rfid package
  *
  * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author  Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
 

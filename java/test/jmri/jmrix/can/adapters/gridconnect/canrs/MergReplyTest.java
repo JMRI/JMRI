@@ -2,19 +2,20 @@ package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergReply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class MergReplyTest extends TestCase {
+public class MergReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // :S1260N12345678;
+    @Test
     public void testOne() {
 
         MergReply g = new MergReply(":S1260N12345678;");
@@ -32,6 +33,7 @@ public class MergReplyTest extends TestCase {
     }
 
     // :XF00DN;
+    @Test
     public void testTwo() {
 
         MergReply g = new MergReply(":XF00DN;");
@@ -44,6 +46,7 @@ public class MergReplyTest extends TestCase {
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
 
+    @Test
     public void testThree() {
 
         MergReply g = new MergReply(":X123R12345678;");
@@ -60,6 +63,7 @@ public class MergReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
+    @Test
     public void testThreeAlt() {
 
         MergReply g = new MergReply(":X0000123R12345678;");
@@ -76,6 +80,7 @@ public class MergReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
+    @Test
     public void testThreeBis() {
 
         MergReply g = new MergReply(":X000123R12345678;");
@@ -92,6 +97,7 @@ public class MergReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
+    @Test
     public void testFour() {
 
         MergReply g = new MergReply(":XFFE3FFFFR63;");
@@ -103,25 +109,6 @@ public class MergReplyTest extends TestCase {
         Assert.assertEquals("header", unMungeExtHeader(0xFFE3FFFF), r.getHeader());
         Assert.assertEquals("num elements", 1, r.getNumDataElements());
         Assert.assertEquals("el 1", 0x63, r.getElement(0));
-    }
-
-    // from here down is testing infrastructure
-    public MergReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", MergReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(MergReplyTest.class);
-        return suite;
     }
 
     // Left shift a standard header from CBUS specific format
@@ -136,12 +123,15 @@ public class MergReplyTest extends TestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        m = new MergReply(":S1260N12345678;");
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 }

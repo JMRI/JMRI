@@ -24,6 +24,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     boolean direction;
     int currentSpeed;
     private boolean doNotAddToRoster = false;
+    public static int MFX_DCCAddressOffset = 20000;
 
     public EcosLocoAddress(int dCCAddress) {
         _dccAddress = dCCAddress;

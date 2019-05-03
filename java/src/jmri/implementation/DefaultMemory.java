@@ -28,7 +28,7 @@ public class DefaultMemory extends AbstractMemory {
     @Override
     public int getState() {
         try {
-            return Integer.valueOf(getValue().toString()).intValue();
+            return Integer.parseInt(getValue().toString());
         } catch (java.lang.NumberFormatException ex1) {
             return -1;
         } catch (java.lang.NullPointerException ex2) {

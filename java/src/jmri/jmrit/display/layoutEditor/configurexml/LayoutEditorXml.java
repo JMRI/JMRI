@@ -13,8 +13,10 @@ import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutShape;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
+import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -79,14 +82,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("mainlinetrackwidth", "" + p.getMainlineTrackWidth());
         panel.setAttribute("xscale", Float.toString((float) p.getXScale()));
         panel.setAttribute("yscale", Float.toString((float) p.getYScale()));
-        panel.setAttribute("sidetrackwidth", "" + p.getSideTrackWidth());
+        panel.setAttribute("sidetrackwidth", "" + p.getSidelineTrackWidth());
         panel.setAttribute("defaulttrackcolor", p.getDefaultTrackColor());
         panel.setAttribute("defaultoccupiedtrackcolor", p.getDefaultOccupiedTrackColor());
         panel.setAttribute("defaultalternativetrackcolor", p.getDefaultAlternativeTrackColor());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
         panel.setAttribute("turnoutcirclecolor", p.getTurnoutCircleColor());
         panel.setAttribute("turnoutcirclesize", "" + p.getTurnoutCircleSize());
-        panel.setAttribute("turnoutdrawunselectedleg", (p.getTurnoutDrawUnselectedLeg() ? "yes" : "no"));
+        panel.setAttribute("turnoutdrawunselectedleg", (p.isTurnoutDrawUnselectedLeg() ? "yes" : "no"));
         panel.setAttribute("turnoutbx", Float.toString((float) p.getTurnoutBX()));
         panel.setAttribute("turnoutcx", Float.toString((float) p.getTurnoutCX()));
         panel.setAttribute("turnoutwid", Float.toString((float) p.getTurnoutWid()));
@@ -105,6 +108,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
+
+        // store layout track drawing options
+        try {
+            LayoutTrackDrawingOptions ltdo = p.getLayoutTrackDrawingOptions();
+            Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(ltdo);
+            if (e != null) {
+                panel.addContent(e);
+            }
+        } catch (Exception e) {
+            log.error("Error storing contents element: " + e);
+        }
 
         // note: moving zoom attribute into per-window user preference
         //panel.setAttribute("zoom", Double.toString(p.getZoom()));
@@ -174,6 +188,19 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 log.error("Error storing layoutturnout element: " + e);
             }
         }
+        
+        // include Layout Shapes
+        for (LayoutShape ls : p.getLayoutShapes()) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(ls);
+                if (e != null) {
+                    panel.addContent(e);
+                }
+            } catch (Exception e) {
+                log.error("Error storing layout shape element: " + e);
+            }
+        }
+
         return panel;
     }   // store
 
@@ -281,11 +308,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // create the objects
         panel.setMainlineTrackWidth(mainlinetrackwidth);
-        panel.setSideTrackWidth(sidetrackwidth);
+        panel.setSidelineTrackWidth(sidetrackwidth);
         panel.setXScale(xScale);
         panel.setYScale(yScale);
 
-        String defaultColor = ColorUtil.ColorBlack;
+        String defaultColor = ColorUtil.ColorDarkGray;
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
             defaultColor = a.getValue();
         }
@@ -499,29 +526,32 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         for (Element item : shared.getChildren()) {
             // get the class, hence the adapter object to do loading
             String adapterName = item.getAttribute("class").getValue();
+            adapterName = jmri.configurexml.ConfigXmlManager.currentClassName(adapterName);
 
             if (log.isDebugEnabled()) {
                 String id = "<null>";
                 try {
-                    id = item.getAttribute("ident").getValue();
+                    id = item.getAttribute("name").getValue();
                     log.debug("Load " + id + " for [" + panel.getName() + "] via " + adapterName);
-                } catch (Exception e) {
+                } catch (NullPointerException e) {
                     log.debug("Load layout object for [" + panel.getName() + "] via " + adapterName);
+                } catch (RuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
                 }
             }
             try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
                 adapter.load(item, panel);
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
                     | jmri.configurexml.JmriConfigureXmlException
-                    | RuntimeException e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
+                    | java.lang.reflect.InvocationTargetException e) {
+                log.error("Exception while loading {}", item.getName(), e);
                 result = false;
-                e.printStackTrace();
             }
         }
         panel.disposeLoadData();     // dispose of url correction data
@@ -577,7 +607,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             cm.registerUser(panel);
         }
         //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
-        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
+        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getNamedBeanSet().size() > 0) {
             try {
                 boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);

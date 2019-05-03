@@ -27,8 +27,8 @@ public class PickSinglePanelDemo implements ListSelectionListener {
         demo.start();
     }
 
-    PickListModel tableModel;
-    PickSinglePanel panel;
+    PickListModel<Sensor> tableModel;
+    PickSinglePanel<Sensor> panel;
 
     void start() {
         SensorManager m = InstanceManager.getDefault(SensorManager.class);

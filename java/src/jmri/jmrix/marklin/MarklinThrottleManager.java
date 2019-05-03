@@ -9,11 +9,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * MarklinDCC implementation of a ThrottleManager.
- * <P>
- * Based on early NCE code.
- *
- *
- * Based on work by Bob Jacobsen
+ * <p>
+ * Based on early NCE code and on work by Bob Jacobsen.
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */

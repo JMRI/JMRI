@@ -44,6 +44,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridx = 0;
         c.gridy = 1;
         p.add(sysAddressLabel, c);
+        sysAddressLabel.setLabelFor(sysAddress);
         c.gridy = 2;
         p.add(userNameLabel, c);
         c.gridx = 2;
@@ -99,16 +100,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
                     }
                 });
         prefixBox.addActionListener(rangeListener);
-
-        /* System.out.println(jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class));
-         java.util.List<jmri.jmrix.SystemConnectionMemo> list 
-         = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-         if (list != null) {
-         for (jmri.jmrix.SystemConnectionMemo memo : list) {
-         System.out.println(memo.getUserName());
-         //if (menu != null) m.add(menu);
-         }
-         }*/
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {

@@ -5,7 +5,6 @@ import javax.swing.BoxLayout;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
  * Frame for user input of EasyDCC messages.

@@ -33,6 +33,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
@@ -49,7 +50,7 @@ import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse i18n 2016
  *
  */
-public class LRouteTableAction extends AbstractTableAction {
+public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
@@ -97,7 +98,7 @@ public class LRouteTableAction extends AbstractTableAction {
         m = new LBeanTableDataModel();
     }
 
-    class LBeanTableDataModel extends BeanTableDataModel {
+    class LBeanTableDataModel extends BeanTableDataModel<Logix> {
 
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
@@ -108,6 +109,7 @@ public class LRouteTableAction extends AbstractTableAction {
          * Override to filter out the LRoutes from the rest of Logix.
          */
         @Override
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         protected synchronized void updateNameList() {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
@@ -200,8 +202,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 case ENABLECOL:
-                    return ((Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL))).getEnabled();
+                    return ((Logix) getValueAt(row, SYSNAMECOL)).getEnabled();
                 default:
                     return super.getValueAt(row, col);
             }
@@ -212,13 +213,12 @@ public class LRouteTableAction extends AbstractTableAction {
             switch (col) {
                 case EDITCOL:
                     // set up to edit
-                    String sName = (String) getValueAt(row, SYSNAMECOL);
+                    String sName = ((Logix) getValueAt(row, SYSNAMECOL)).getSystemName();
                     editPressed(sName);
                     break;
                 case ENABLECOL:
                     // alternate
-                    Logix x = (Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL));
+                    Logix x = (Logix) getValueAt(row, SYSNAMECOL);
                     boolean v = x.getEnabled();
                     x.setEnabled(!v);
                     break;
@@ -234,12 +234,11 @@ public class LRouteTableAction extends AbstractTableAction {
          * Deactivate the Logix and remove its conditionals.
          */
         @Override
-        void doDelete(NamedBean bean) {
-            if (bean != null) {
-                Logix l = (Logix) bean;
-                l.deActivateLogix();
+        void doDelete(Logix logix) {
+            if (logix != null) {
+                logix.deActivateLogix();
                 // delete the Logix and all its Conditionals
-                _logixManager.deleteLogix(l);
+                _logixManager.deleteLogix(logix);
             }
         }
 
@@ -253,17 +252,17 @@ public class LRouteTableAction extends AbstractTableAction {
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Logix> getManager() {
             return _logixManager;
         }
 
         @Override
-        public NamedBean getBySystemName(String name) {
+        public Logix getBySystemName(String name) {
             return _logixManager.getBySystemName(name);
         }
 
         @Override
-        public NamedBean getByUserName(String name) {
+        public Logix getByUserName(String name) {
             return _logixManager.getByUserName(name);
         }
 
@@ -284,7 +283,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         // Not needed - here for interface compatibility
         @Override
-        public void clickOn(NamedBean t) {
+        public void clickOn(Logix t) {
         }
 
         @Override
@@ -387,7 +386,7 @@ public class LRouteTableAction extends AbstractTableAction {
         //TreeSet <RouteInputElement>inputTS = new TreeSet<RouteInputElement>();
         //TreeSet <RouteOutputElement>outputTS = new TreeSet<RouteOutputElement>();
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        tm.getNamedBeanList().forEach((nb) -> {
+        tm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputTurnout(systemName, userName));
@@ -396,7 +395,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         TreeSet<AlignElement> alignTS = new TreeSet<>(new RouteElementComparator());
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
-        sm.getNamedBeanList().forEach((nb) -> {
+        sm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputSensor(systemName, userName));
@@ -405,14 +404,14 @@ public class LRouteTableAction extends AbstractTableAction {
         });
 
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
-        lm.getNamedBeanList().forEach((nb) -> {
+        lm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
         });
         jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        shm.getNamedBeanList().forEach((nb) -> {
+        shm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputSignal(systemName, userName));
@@ -572,32 +571,32 @@ public class LRouteTableAction extends AbstractTableAction {
     void getControlsAndActions(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
         if (c != null) {
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             boolean onChange = false;
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 int type;
                 switch (action.getType()) {
-                    case Conditional.ACTION_SET_SENSOR:
+                    case SET_SENSOR:
                         type = SENSOR_TYPE;
                         break;
-                    case Conditional.ACTION_SET_TURNOUT:
+                    case SET_TURNOUT:
                         type = TURNOUT_TYPE;
                         break;
-                    case Conditional.ACTION_SET_LIGHT:
+                    case SET_LIGHT:
                         type = LIGHT_TYPE;
                         break;
-                    case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-                    case Conditional.ACTION_SET_SIGNAL_HELD:
-                    case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-                    case Conditional.ACTION_SET_SIGNAL_DARK:
-                    case Conditional.ACTION_SET_SIGNAL_LIT:
+                    case SET_SIGNAL_APPEARANCE:
+                    case SET_SIGNAL_HELD:
+                    case CLEAR_SIGNAL_HELD:
+                    case SET_SIGNAL_DARK:
+                    case SET_SIGNAL_LIT:
                         type = SIGNAL_TYPE;
                         break;
-                    case Conditional.ACTION_RUN_SCRIPT:
+                    case RUN_SCRIPT:
                         scriptFile.setText(action.getActionString());
                         continue;
-                    case Conditional.ACTION_PLAY_SOUND:
+                    case PLAY_SOUND:
                         soundFile.setText(action.getActionString());
                         continue;
                     default:
@@ -632,46 +631,46 @@ public class LRouteTableAction extends AbstractTableAction {
                     }
                 }
             }
-            ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
-                int testState = variable.getType();
+                Conditional.Type testState = variable.getType();
                 //boolean negated = variable.isNegated();
                 int type;
                 switch (testState) {
-                    case Conditional.TYPE_SENSOR_ACTIVE:
+                    case SENSOR_ACTIVE:
                         type = SENSOR_TYPE;
                         //if (negated) testState = Conditional.TYPE_SENSOR_INACTIVE;
                         break;
-                    case Conditional.TYPE_SENSOR_INACTIVE:
+                    case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
                         //if (negated) testState = Conditional.TYPE_SENSOR_ACTIVE;
                         break;
-                    case Conditional.TYPE_TURNOUT_CLOSED:
+                    case TURNOUT_CLOSED:
                         type = TURNOUT_TYPE;
                         //if (negated) testState = Conditional.TYPE_TURNOUT_THROWN;
                         break;
-                    case Conditional.TYPE_TURNOUT_THROWN:
+                    case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
                         //if (negated) testState = Conditional.TYPE_TURNOUT_CLOSED;
                         break;
-                    case Conditional.TYPE_LIGHT_ON:
+                    case LIGHT_ON:
                         type = LIGHT_TYPE;
                         //if (negated) testState = Conditional.TYPE_LIGHT_OFF;
                         break;
-                    case Conditional.TYPE_LIGHT_OFF:
+                    case LIGHT_OFF:
                         type = LIGHT_TYPE;
                         //if (negated) testState = Conditional.TYPE_LIGHT_ON;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_HELD:
                         type = SIGNAL_TYPE;
                         break;
                     default:
@@ -683,12 +682,13 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                         continue;
                 }
-                int opern = variable.getOpern();
-                if (k != 0 && (opern == Conditional.OPERATOR_AND || opern == Conditional.OPERATOR_AND_NOT)) {
+                int testStateInt = testState.getIntValue();
+                Operator opern = variable.getOpern();
+                if (k != 0 && (opern == Conditional.Operator.AND)) {
                     // guess this is a VETO
-                    testState += VETO;
+                    testStateInt += VETO;
                 } else if (onChange) {
-                    testState = Route.ONCHANGE;
+                    testStateInt = Route.ONCHANGE;
                 }
                 String name = variable.getName();
                 String key = type + name;
@@ -705,7 +705,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     }
                 } else {
                     elt.setIncluded(true);
-                    elt.setState(testState);
+                    elt.setState(testStateInt);
                 }
             }
         }
@@ -720,10 +720,10 @@ public class LRouteTableAction extends AbstractTableAction {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
         if (c != null) {
             AlignElement element = null;
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
-                if (action.getType() != Conditional.ACTION_SET_SENSOR) {
+                if (action.getType() != Conditional.Action.SET_SENSOR) {
                     JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn1"),
                                     new Object[]{action.toString(), c.getSystemName()}),
@@ -754,34 +754,34 @@ public class LRouteTableAction extends AbstractTableAction {
             }
             // the action elements are identified in getControlsAndActions().
             //  Just identify the type of sensing
-            ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             int atype = 0;
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
-                int testState = variable.getType();
+                Conditional.Type testState = variable.getType();
                 int type;
                 switch (testState) {
-                    case Conditional.TYPE_SENSOR_ACTIVE:
-                    case Conditional.TYPE_SENSOR_INACTIVE:
+                    case SENSOR_ACTIVE:
+                    case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
                         break;
-                    case Conditional.TYPE_TURNOUT_CLOSED:
-                    case Conditional.TYPE_TURNOUT_THROWN:
+                    case TURNOUT_CLOSED:
+                    case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
                         break;
-                    case Conditional.TYPE_LIGHT_ON:
-                    case Conditional.TYPE_LIGHT_OFF:
+                    case LIGHT_ON:
+                    case LIGHT_OFF:
                         type = LIGHT_TYPE;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_HELD:
                         type = SIGNAL_TYPE;
                         break;
                     default:
@@ -818,7 +818,7 @@ public class LRouteTableAction extends AbstractTableAction {
             _lock = true;
             // Verify conditional is what we think it is
             ArrayList<RouteOutputElement> tList = makeTurnoutLockList();
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             if (actionList.size() != tList.size()) {
                 JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn1"),
@@ -828,7 +828,7 @@ public class LRouteTableAction extends AbstractTableAction {
             }
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
-                if (action.getType() != Conditional.ACTION_LOCK_TURNOUT) {
+                if (action.getType() != Conditional.Action.LOCK_TURNOUT) {
                     JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn2"),
                                     new Object[]{action.getDeviceName(), c.getSystemName()}),
@@ -1440,22 +1440,22 @@ public class LRouteTableAction extends AbstractTableAction {
                 name = elt.getSysName();
             }
             int state = elt.getState();    // actionData
-            int actionType = 0;
+            Conditional.Action actionType = Conditional.Action.NONE;
             String params = "";
             switch (elt.getType()) {
                 case SENSOR_TYPE:
-                    actionType = Conditional.ACTION_SET_SENSOR;
+                    actionType = Conditional.Action.SET_SENSOR;
                     break;
                 case TURNOUT_TYPE:
-                    actionType = Conditional.ACTION_SET_TURNOUT;
+                    actionType = Conditional.Action.SET_TURNOUT;
                     break;
                 case LIGHT_TYPE:
-                    actionType = Conditional.ACTION_SET_LIGHT;
+                    actionType = Conditional.Action.SET_LIGHT;
                     break;
                 case SIGNAL_TYPE:
-                    actionType = Conditional.ACTION_SET_SIGNAL_APPEARANCE;
+                    actionType = Conditional.Action.SET_SIGNAL_APPEARANCE;
                     if (state > OFFSET) {
-                        actionType = state & ~OFFSET;
+                        actionType = Conditional.Action.getOperatorFromIntValue(state & ~OFFSET);
                     }
                     break;
                 default:
@@ -1467,12 +1467,12 @@ public class LRouteTableAction extends AbstractTableAction {
         String file = scriptFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_RUN_SCRIPT, "", -1, file));
+                    Conditional.Action.RUN_SCRIPT, "", -1, file));
         }
         file = soundFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_PLAY_SOUND, "", -1, file));
+                    Conditional.Action.PLAY_SOUND, "", -1, file));
         }
         ArrayList<ConditionalAction> onChangeList = cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE);
 
@@ -1486,13 +1486,14 @@ public class LRouteTableAction extends AbstractTableAction {
                     name = elt.getSysName();
                 }
                 //int opern = newRouteType ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
-                int opern = Conditional.OPERATOR_AND;
+                Operator opern = Conditional.Operator.AND;
                 if (i == 0) {
-                    opern = Conditional.OPERATOR_NONE;
+                    opern = Conditional.Operator.NONE;
                 }
                 int state = elt.getState();
                 if (VETO < state) {
-                    vetoList.add(new ConditionalVariable(true, opern, (state & ~VETO), name, _newRouteType));
+                    vetoList.add(new ConditionalVariable(true, opern,
+                            Conditional.Type.getOperatorFromIntValue(state & ~VETO), name, _newRouteType));
                 }
             }
         }
@@ -1507,9 +1508,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 if (name == null || name.length() == 0) {
                     name = elt.getSysName();
                 }
-                int opern = _newRouteType ? Conditional.OPERATOR_OR : Conditional.OPERATOR_AND;
+                Operator opern = _newRouteType ? Conditional.Operator.OR : Conditional.Operator.AND;
                 if (i == 0) {
-                    opern = Conditional.OPERATOR_NONE;
+                    opern = Conditional.Operator.NONE;
                 }
                 int type = elt.getState();
                 if (VETO > type) {
@@ -1530,9 +1531,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             default:
                                 log.debug("updatePressed: Unknown state variable type " + elt.getType());
                         }
-                        twoTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
+                        twoTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     } else {
-                        oneTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
+                        oneTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     }
                 }
             }
@@ -1543,8 +1544,8 @@ public class LRouteTableAction extends AbstractTableAction {
                 return;
             }
         } else {
-            oneTriggerList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
-                    Conditional.TYPE_NONE, LOGIX_INITIALIZER, true));
+            oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
+                    Conditional.Type.NONE, LOGIX_INITIALIZER, true));
         }
         if (log.isDebugEnabled()) {
             log.debug("actionList.size()= " + actionList.size() + ", oneTriggerList.size()= " + oneTriggerList.size()
@@ -1621,13 +1622,13 @@ public class LRouteTableAction extends AbstractTableAction {
                 name = sensor.getSysName();
             }
             aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, name, Sensor.ACTIVE, ""));
+                    Conditional.Action.SET_SENSOR, name, Sensor.ACTIVE, ""));
             aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                    Conditional.ACTION_SET_SENSOR, name, Sensor.INACTIVE, ""));
+                    Conditional.Action.SET_SENSOR, name, Sensor.INACTIVE, ""));
             int alignType = sensor.getState();
             for (int k = 0; k < _includedOutputList.size(); k++) {
                 RouteOutputElement elt = _includedOutputList.get(k);
-                int varType = 0;
+                Conditional.Type varType = Conditional.Type.NONE;
                 boolean add = (ALL_TYPE == alignType);
                 switch (elt.getType()) {
                     case SENSOR_TYPE:
@@ -1636,10 +1637,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                         switch (elt.getState()) {
                             case Sensor.INACTIVE:
-                                varType = Conditional.TYPE_SENSOR_INACTIVE;
+                                varType = Conditional.Type.SENSOR_INACTIVE;
                                 break;
                             case Sensor.ACTIVE:
-                                varType = Conditional.TYPE_SENSOR_ACTIVE;
+                                varType = Conditional.Type.SENSOR_ACTIVE;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1655,10 +1656,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                         switch (elt.getState()) {
                             case Turnout.CLOSED:
-                                varType = Conditional.TYPE_TURNOUT_CLOSED;
+                                varType = Conditional.Type.TURNOUT_CLOSED;
                                 break;
                             case Turnout.THROWN:
-                                varType = Conditional.TYPE_TURNOUT_THROWN;
+                                varType = Conditional.Type.TURNOUT_THROWN;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1674,10 +1675,10 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                         switch (elt.getState()) {
                             case Light.ON:
-                                varType = Conditional.TYPE_LIGHT_ON;
+                                varType = Conditional.Type.LIGHT_ON;
                                 break;
                             case Light.OFF:
-                                varType = Conditional.TYPE_LIGHT_OFF;
+                                varType = Conditional.Type.LIGHT_OFF;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1693,37 +1694,37 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                         switch (elt.getState()) {
                             case SignalHead.DARK:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SignalHead.RED:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_RED;
+                                varType = Conditional.Type.SIGNAL_HEAD_RED;
                                 break;
                             case SignalHead.FLASHRED:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHRED;
                                 break;
                             case SignalHead.YELLOW:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+                                varType = Conditional.Type.SIGNAL_HEAD_YELLOW;
                                 break;
                             case SignalHead.FLASHYELLOW:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
                                 break;
                             case SignalHead.GREEN:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_GREEN;
+                                varType = Conditional.Type.SIGNAL_HEAD_GREEN;
                                 break;
                             case SignalHead.FLASHGREEN:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
                                 break;
                             case SET_SIGNAL_HELD:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_HELD;
+                                varType = Conditional.Type.SIGNAL_HEAD_HELD;
                                 break;
                             case CLEAR_SIGNAL_HELD:
                                 add = false;    // don't know how to test for this
                                 break;
                             case SET_SIGNAL_DARK:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SET_SIGNAL_LIT:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                                varType = Conditional.Type.SIGNAL_HEAD_LIT;
                                 break;
                             default:
                                 log.warn("Unexpected state {} from elt.getState() in SIGNAL_TYPE", elt.getState());
@@ -1738,7 +1739,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     if (eltName == null || eltName.length() == 0) {
                         eltName = elt.getSysName();
                     }
-                    vList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+                    vList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                             varType, eltName, true));
                 }
             }
@@ -1752,7 +1753,6 @@ public class LRouteTableAction extends AbstractTableAction {
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////
-        numConds = 1;
         if (_lock) {
             ArrayList<ConditionalAction> aList = new ArrayList<>();
             for (int k = 0; k < _includedOutputList.size(); k++) {
@@ -1768,13 +1768,13 @@ public class LRouteTableAction extends AbstractTableAction {
                     eltName = elt.getSysName();
                 }
                 aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                        Conditional.ACTION_LOCK_TURNOUT,
+                        Conditional.Action.LOCK_TURNOUT,
                         eltName, Turnout.LOCKED, ""));
                 aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                        Conditional.ACTION_LOCK_TURNOUT,
+                        Conditional.Action.LOCK_TURNOUT,
                         eltName, Turnout.UNLOCKED, ""));
             }
-            numConds = makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList,
+            makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList,
                     vetoList, logix, sName, uName, "L");
         }
         log.debug("Conditionals added= " + logix.getNumConditionals());
@@ -1877,7 +1877,10 @@ public class LRouteTableAction extends AbstractTableAction {
         //int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
         //c.setAction(cloneActionList(actionList, option));
         c.setAction(actionList);
-        int logicType = _newRouteType ? Conditional.MIXED : Conditional.ALL_AND;
+        Conditional.AntecedentOperator logicType =
+                _newRouteType
+                ? Conditional.AntecedentOperator.MIXED
+                : Conditional.AntecedentOperator.ALL_AND;
         c.setLogicType(logicType, antecedent.toString());
         logix.addConditional(cSystemName, 0);
         log.debug("Conditional added: SysName= \"" + cSystemName + "\"");
@@ -1926,7 +1929,7 @@ public class LRouteTableAction extends AbstractTableAction {
         c.setStateVariables(triggerList);
         //c.setAction(cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE));
         c.setAction(actionList);
-        c.setLogicType(Conditional.ALL_AND, "");
+        c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         logix.addConditional(cSystemName, 0);
         log.debug("Conditional added: SysName= \"" + cSystemName + "\"");
         c.calculate(true, null);
@@ -2436,7 +2439,7 @@ public class LRouteTableAction extends AbstractTableAction {
     private static final String SET_TO_INACTIVE = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("SensorStateInactive")); // rbx.getString("xSetInactive");
     private static final String SET_TO_CLOSED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateClosed")); //rbx.getString("xSetClosed");
     private static final String SET_TO_THROWN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateThrown")); //rbx.getString("xSetThrown");
-    private static final String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle")); //rbx.getString("xSetToggle");
+    private static final String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle"));
     private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOn")); //rbx.getString("xSetLightOn");
     private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOff")); //rbx.getString("xSetLightOff");
     private static final String SET_TO_DARK = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateDark")); //rbx.getString("xSetDark");
@@ -2468,22 +2471,40 @@ public class LRouteTableAction extends AbstractTableAction {
     /**
      * Sorts RouteElement
      */
-    public static class RouteElementComparator extends SystemNameComparator {
-
+    public static class RouteElementComparator implements java.util.Comparator<RouteElement> {
+        // RouteElement objects aren't really NamedBeans, as they don't inherit
+        // so we have to create our own comparator object here.  This assumes they
+        // the do have a named-bean-like system name format.
         RouteElementComparator() {
         }
 
+        static jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+    
         @Override
-        public int compare(Object o1, Object o2) {
-            return super.compare(((RouteElement) o1).getSysName(), ((RouteElement) o2).getSysName());
+        public int compare(RouteElement e1, RouteElement e2) {
+            String s1 = e1.getSysName();
+            String s2 = e2.getSysName();
+            
+            int p1len = Manager.getSystemPrefixLength(s1);
+            int p2len = Manager.getSystemPrefixLength(s2);
+
+            int comp = ac.compare(s1.substring(0, p1len), s2.substring(0, p2len));
+            if (comp != 0) return comp;
+
+            char c1 = s1.charAt(p1len);
+            char c2 = s2.charAt(p2len);
+           
+            if (c1 == c2) return ac.compare(s1.substring(p1len+1), s2.substring(p2len+1));
+            else return (c1 > c2) ? +1 : -1 ;
         }
+        
     }
 
     /**
      * Base class for all the output (ConditionalAction) and input
      * (ConditionalVariable) elements
      */
-    class RouteElement {
+    static class RouteElement {
 
         String _sysName;
         String _userName;

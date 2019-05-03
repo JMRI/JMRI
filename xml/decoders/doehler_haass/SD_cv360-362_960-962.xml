@@ -49,11 +49,13 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 	<label xml:lang="fr">Protection mémoire flash</label>
 	<label xml:lang="de">Schreibschutz Flash-ROM</label>
+	<label xml:lang="ca">Protecció de la memòria flash</label>
   </variable>
   <variable label="Flash-ROM protection" CV="960" tooltip="CV960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="Combo sound decoders,SH10A_1.00">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 	<label xml:lang="fr">Protection mémoire flash</label>
 	<label xml:lang="de">Schreibschutz Flash-ROM</label>
+	<label xml:lang="ca">Protecció de la memòria flash</label>
   </variable>
   <!-- END SIMILAR CV --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
@@ -61,11 +63,13 @@
 	<decVal min="0" max="14"/>
 	<label xml:lang="fr">Seuil ZVS</label>
 	<label xml:lang="de">Schwellenwert ZVS</label>
+	<label xml:lang="ca">Límit ZVS</label>
    </variable>
   <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,SH10A_1.00">
 	<decVal min="0" max="14"/>
 	<label xml:lang="fr">Seuil ZVS</label>
 	<label xml:lang="de">Schwellenwert ZVS</label>
+	<label xml:lang="ca">Límit ZVS</label>
    </variable>
   <!-- END SIMILAR CV --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
@@ -73,11 +77,13 @@
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+	<label xml:lang="ca">Sortida de fum al pas 127</label>
    </variable>
    <variable label="Smoke puffs at speed 127" CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="Combo sound decoders,SH10A_1.00">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+	<label xml:lang="ca">Sortida de fum al pas 127</label>
    </variable>
    <!-- END SIMILAR CV --> 
 </variables>

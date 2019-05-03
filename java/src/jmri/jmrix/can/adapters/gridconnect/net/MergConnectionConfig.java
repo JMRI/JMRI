@@ -7,15 +7,18 @@ import java.util.ResourceBundle;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * 
+ *
  */
 public class MergConnectionConfig extends ConnectionConfig {
 
     public final static String NAME = "CAN via MERG Network Interface";
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public MergConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
@@ -27,7 +30,7 @@ public class MergConnectionConfig extends ConnectionConfig {
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection configuration without a preexisting adapter.
      */
     public MergConnectionConfig() {
         super();

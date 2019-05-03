@@ -1,4 +1,3 @@
-//NceConnectionStatus.java
 package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
@@ -124,13 +123,13 @@ public class NceConnectionStatus implements NceListener {
         }
 
         if (epromState == CHECK_OK) {
-            ConnectionStatus.instance().setConnectionState(tc.getPortName(), ConnectionStatus.CONNECTION_UP);
+            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(), ConnectionStatus.CONNECTION_UP);
             epromState = NORMAL_STATE;
             return null;
         }
 
         if (epromState != INIT_STATE) {
-            ConnectionStatus.instance().setConnectionState(tc.getPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
 
         // no response from command station?
@@ -182,7 +181,7 @@ public class NceConnectionStatus implements NceListener {
                         + " contact NCE if you want to use MONITORING feedback ", "Warning",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            ConnectionStatus.instance().setConnectionState(tc.getPortName(), ConnectionStatus.CONNECTION_UP);
+            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(), ConnectionStatus.CONNECTION_UP);
             epromState = NORMAL_STATE;
             return null;
         }
@@ -314,7 +313,7 @@ public class NceConnectionStatus implements NceListener {
             }
 
             // Check that layout connection is correct
-            // PowerHouse? 4 cases for PH, 1999, 2004, 2007, & 2012
+            // PowerPro? 4 cases for PH, 1999, 2004, 2007, & 2012
             if (VV == VV_1999 || (VV == VV_2004 && MM == MM_2004) || (VV == VV_2007 && MM == MM_2007)
                     || (VV == VV_2012 && MM == MM_2012)) // make sure system connection is not NCE USB
             {
@@ -335,7 +334,7 @@ public class NceConnectionStatus implements NceListener {
                     log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
                     epromState = ERROR6_STATE;
                 }
-                if (mm == mm_USB_V6_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                if (mm == mm_USB_V6_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERPRO) {
                     log.error("System Connection is incorrect, detected USB connected to a Power Pro");
                     epromState = ERROR7_STATE;
                 }
@@ -351,7 +350,7 @@ public class NceConnectionStatus implements NceListener {
                     log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
                     epromState = ERROR6_STATE;
                 }
-                if (mm == mm_USB_V7_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                if (mm == mm_USB_V7_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERPRO) {
                     log.error("System Connection is incorrect, detected USB connected to a Power Pro");
                     epromState = ERROR7_STATE;
                 }

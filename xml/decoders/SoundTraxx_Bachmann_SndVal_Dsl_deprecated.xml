@@ -1627,10 +1627,7 @@
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>

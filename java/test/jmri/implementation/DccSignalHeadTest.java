@@ -166,9 +166,10 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         CommandStation c = new CommandStation() {
             @Override
-            public void sendPacket(byte[] packet, int repeats) {
+            public boolean sendPacket(byte[] packet, int repeats) {
                 lastSentPacket = packet;
                 sentPacketCount++;
+                return true;
             }
 
             @Override

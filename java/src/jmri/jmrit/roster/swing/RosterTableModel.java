@@ -43,7 +43,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     static final int OWNERCOL = 8;
     static final int DATEUPDATECOL = 9;
     public static final int PROTOCOL = 10;
-    int NUMCOL = PROTOCOL + 1;
+    private int NUMCOL = PROTOCOL + 1;
     private String rosterGroup = null;
     boolean editable = false;
 

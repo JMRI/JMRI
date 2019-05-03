@@ -4,7 +4,6 @@ import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
  * Frame displaying (and logging) EasyDCC command messages.

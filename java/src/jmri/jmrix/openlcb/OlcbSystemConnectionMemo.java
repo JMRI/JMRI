@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import org.openlcb.OlcbInterface;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -45,6 +47,9 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.ThrottleManager.class)) {
+            return true;
+        }
         return super.provides(type);
     }
 
@@ -67,6 +72,9 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
+        if (T.equals(jmri.ThrottleManager.class)) {
+            return (T) getThrottleManager();
+        }
         if (T.equals(OlcbInterface.class)) {
             return (T) getInterface();
         }
@@ -85,11 +93,12 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
+        InstanceManager.store(getThrottleManager(), jmri.ThrottleManager.class);
 
     }
 
@@ -119,6 +128,18 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
             turnoutManager = new OlcbTurnoutManager(this);
         }
         return turnoutManager;
+    }
+
+    protected OlcbThrottleManager throttleManager;
+
+    public OlcbThrottleManager getThrottleManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (throttleManager == null) {
+            throttleManager = new OlcbThrottleManager();
+        }
+        return throttleManager;
     }
 
     protected OlcbSensorManager sensorManager;
@@ -160,6 +181,31 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (sensorManager != null) {
             InstanceManager.deregister(sensorManager, OlcbSensorManager.class);
         }
+        if (throttleManager != null) {
+            InstanceManager.deregister(throttleManager, OlcbThrottleManager.class);
+        }
         super.dispose();
+    }
+
+    /**
+     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
+     * 
+     * This is a common implementation for OpenLCB Sensors and Turnouts
+     * of the comparison method.
+     */
+    @CheckReturnValue
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+        
+        // extract addresses
+        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
+        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
+
+        // compare on content
+        for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+            int c = array1[i].compare(array2[i]);
+            if (c != 0) return c;
+        }
+        // check for different length (shorter sorts first)
+        return Integer.signum(array1.length - array2.length);
     }
 }

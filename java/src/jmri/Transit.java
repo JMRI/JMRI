@@ -563,7 +563,7 @@ public class Transit extends AbstractNamedBean {
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT",
-            justification = "FindBugs doesn't see that toBeRemoved is being read by the forEach clause")
+            justification = "SpotBugs doesn't see that toBeRemoved is being read by the forEach clause")
     public void removeTemporarySections() {
         ArrayList<TransitSection> toBeRemoved = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {

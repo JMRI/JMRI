@@ -11,17 +11,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide tools for reading, writing and accessing Digitrax SPJ files.
- * <P>
+ * <p>
  * Maintains several representations:
- * <UL>
- * <LI>A byte array of the SDF contents after assembly. This is not complete, as
- * it can't contain information like contents, labels, etc. Nor can it
- * distinguish certain options with identical values (e.g. several constants
- * that boil down to a zero value)
- * <LI>An array of nested SdfMacro objects. These contain more detailed
- * representations of the macro source, in the limit containing the entire
- * thing.
- * </UL>
+ * <ul>
+ *   <li>A byte array of the SDF contents after assembly. This is not complete, as
+ *   it can't contain information like contents, labels, etc. Nor can it
+ *   distinguish certain options with identical values (e.g. several constants
+ *   that boil down to a zero value)
+ *   <li>An array of nested SdfMacro objects. These contain more detailed
+ *   representations of the macro source, in the limit containing the entire
+ *   thing.
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008, 2010
  */

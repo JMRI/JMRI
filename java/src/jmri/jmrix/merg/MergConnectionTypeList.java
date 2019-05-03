@@ -33,4 +33,5 @@ public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public String[] getManufacturers() {
         return new String[]{MERG};
     }
+
 }

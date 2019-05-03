@@ -2,14 +2,11 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * MemorySpinnerIconTest.java
@@ -33,6 +30,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
         Assert.assertNotNull("exists",p);
     }
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -53,11 +51,15 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
 
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue("4");
+        Memory im1 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM1");
+        Assert.assertNotNull(im1);
+        im1.setValue("4");
 
         toi1.setMemory("IM2");
         toi2.setMemory("IM2");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(10);
+        Memory im2 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM2");
+        Assert.assertNotNull(im2);
+        im2.setValue(10);
 
         tos3 = new MemorySpinnerIcon(editor);
         jf.getContentPane().add(tos3);
@@ -65,8 +67,8 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
         jf.getContentPane().add(toi3);
         tos3.setMemory("IM1");
         toi3.setMemory("IM2");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue(11.58F);
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(0.89);
+        im1.setValue(11.58F);
+        im2.setValue(0.89);
         tos1.setMemory("IM1");
         Assert.assertEquals("Spinner 1", "12", tos1.getValue());
         tos2.setMemory("IM2");
@@ -84,13 +86,25 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
             p=tos1 = new MemorySpinnerIcon(editor);
             tos1.setMemory("IM1");
         }
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        tos1 = null;
+        tos2 = null;
+        tos3 = null;
+        toi1 = null;
+        toi2 = null;
+        toi3 = null;
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

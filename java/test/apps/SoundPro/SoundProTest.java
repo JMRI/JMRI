@@ -1,38 +1,48 @@
 package apps.SoundPro;
 
-import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
+import java.io.IOException;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- *
+ * This is more of an acceptance test than a unit test. It confirms that the entire
+ * application can start up and configure itself.
+ * 
  * @author Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2017
  */
-public class SoundProTest {
+public class SoundProTest extends apps.LaunchJmriAppBase {
+
+    protected void launch(String[] args) {
+        SoundPro.main(args);
+    }
+    
+    @Test
+    public void testLaunchLocoNet() throws IOException {
+        runOne("LocoNet_Simulator", "SoundPro", "SoundPro version");
+    }
 
     @Test
-    @Ignore("generates exception")
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SoundPro t = new SoundPro();
-        Assert.assertNotNull("exists", t);
+    public void testLaunchEasyDcc() throws IOException {
+        runOne("EasyDcc_Simulator", "SoundPro", "SoundPro version");
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+    @Test
+    public void testLaunchGrapevine() throws IOException {
+        runOne("Grapevine_Simulator", "SoundPro", "SoundPro version");
+        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
     }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Test
+    public void testLaunchTmcc() throws IOException {
+        runOne("TMCC_Simulator", "SoundPro", "SoundPro version");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SoundProTest.class);
+    @Test
+    public void testLaunchInitLoop() throws IOException {
+        runOne("Prevent_Init_Loop", "SoundPro", "SoundPro version");
+    }
+    
 }

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Operations-Settings</title><!-- Style -->
+  <title>Operations-Settings</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -226,8 +228,8 @@
 
           <tr>
             <td style="width: 30%;">
-              <span name="options" id="options" style=
-              "font-weight: bold;">Options</span><br>
+              <span style=
+              "font-weight: bold;"><a name="options" id="options"></a>Options</span><br>
               <input name="checkbox3" id="checkbox3" checked=
               "checked" type="checkbox"> <strong>Add Operations
               Menu to Main Menu</strong><br>
@@ -337,7 +339,9 @@
         <p><a href="Ops_Locations.shtml">Next</a></p>
 
         <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -11,11 +11,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
-import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
@@ -30,6 +30,9 @@ import org.slf4j.LoggerFactory;
 /**
  * JComboBox variant for showing and selecting JMRI NamedBeans from a specific
  * manager.
+ * <p>
+ * This class could definitely benefit from beng made generic on "E extends NamedBean"
+ * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean}" method.
  */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
@@ -64,7 +67,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         //fires when drop down list item is selected
         addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                JmriBeanComboBox cb = (JmriBeanComboBox) event.getSource();
                 validateText();
             }
         });
@@ -142,7 +144,14 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @return the display list used by this combo box
      */
     public String[] getDisplayList() {
-        ArrayList<String> nameList = new ArrayList<>(Arrays.asList(_manager.getSystemNameArray()));
+        // working through names in this code is slow, as is making a list and
+        // then removing items.  Should be completely rewritten to use the
+        // native Manager interfaces
+        
+        ArrayList<String> nameList = new ArrayList<>();
+        for (Object obj : _manager.getNamedBeanSet()) {
+            nameList.add( ((NamedBean)obj).getSystemName());
+        }
 
         exclude.stream().filter((bean) -> (bean != null)).forEachOrdered((bean) -> {
             nameList.remove(bean.getSystemName());
@@ -339,7 +348,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     /**
      * Set the display order of the combobox.
      *
-     * @param inDisplayOrder - the desired display order for this combobox
+     * @param inDisplayOrder  the desired display order for this combobox
      */
     public void setDisplayOrder(DisplayOptions inDisplayOrder) {
         if (_displayOrder != inDisplayOrder) {
@@ -481,6 +490,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @return the selected bean or null if no selection
      */
+    @SuppressWarnings("unchecked")  // Uses Manager instead of Manager<E> and List<NamedBean>
+                                    // instead of List<E>, which can only really be made
+                                    // safe and efficient with the class being generic
     public NamedBean getNamedBean() {
         NamedBean result;
 
@@ -513,9 +525,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                 if (found) {    //if we found it there then...
                     //walk the namedBeanList...
-                    List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
+                    Set<NamedBean> namedBeanSet = uDaManager.getNamedBeanSet();
 
-                    for (NamedBean namedBean : namedBeanList) {
+                    for (NamedBean namedBean : namedBeanSet) {
                         //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
                         String uname = namedBean.getUserName();
                         String sname = namedBean.getSystemName();
@@ -738,12 +750,14 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      */
     private EnabledComboBoxRenderer _enableRenderer = null;
 
+    @SuppressWarnings("unchecked")  // EnabledComboBoxRenderer from BasicComboBoxRenderer is
+                                    // a ListCellRenderer not a ListCellRenderer<? super String>
     private EnabledComboBoxRenderer getEnabledComboBoxRenderer() {
         if (_enableRenderer == null) {
             _enableRenderer = new EnabledComboBoxRenderer();
             setRenderer(_enableRenderer);
             ListSelectionModel lsm = _enableRenderer.getEnabledItems();
-            lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
+            lsm.addSelectionInterval(0, _manager.getNamedBeanSet().size());
         }
         return _enableRenderer;
     }

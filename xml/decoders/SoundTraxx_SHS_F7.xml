@@ -752,10 +752,7 @@
         <decVal/>
         <label>Reverse Trim</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- Sound section -->
       <variable CV="113" mask="XXXXXXXV" item="Sound Option 5" default="0">
         <enumVal>

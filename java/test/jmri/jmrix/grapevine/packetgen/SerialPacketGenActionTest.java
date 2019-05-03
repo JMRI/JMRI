@@ -20,15 +20,15 @@ public class SerialPacketGenActionTest {
     @Test
     public void testCTor() {
         SerialPacketGenAction t = new SerialPacketGenAction(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
     }
 

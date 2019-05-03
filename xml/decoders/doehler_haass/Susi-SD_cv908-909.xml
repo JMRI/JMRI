@@ -32,14 +32,18 @@
       <revremark>Creation</revremark>
     </revision>
   </revhistory>
-  <variable label="AUX1 Mapping" CV="908" tooltip="CV908" default="0"  exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05,SH10A_1.06">
+  <variable item="AUX1 Mapping" CV="908" tooltip="CV908" default="0"  exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05,SH10A_1.06">
 	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map-aux.xml"/>
+	<label>Mapping AUX 1</label>
 	<label xml:lang="fr">Mapping AUX 1</label>
 	<label xml:lang="de">Funktionszuordnung AUX 1</label>
+	<label xml:lang="ca">Mapejat AUX 1</label>
   </variable>
-  <variable label="AUX2 Mapping" CV="909" tooltip="CV909" default="0"  exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05,SH10A_1.06">
+  <variable item="AUX2 Mapping" CV="909" tooltip="CV909" default="0"  exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05,SH10A_1.06">
 	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map-aux.xml"/>
+	<label>Mapping AUX 2</label>
 	<label xml:lang="fr">Mapping AUX 2</label>
-	<label xml:lang="de">Funktionszuordnung AUX 2</label>
+  <label xml:lang="de">Funktionszuordnung AUX 2</label>
+	<label xml:lang="ca">Mapejat AUX 2</label>
   </variable>
 </variables>

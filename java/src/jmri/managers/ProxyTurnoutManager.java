@@ -3,15 +3,14 @@ package jmri.managers;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import jmri.Manager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
+import javax.annotation.Nonnull;
+
+import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a TurnoutManager that can serves as a proxy for multiple
+ * Implementation of a TurnoutManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
@@ -33,7 +32,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     public void addManager(Manager<Turnout> m) {
         super.addManager(m);
-        TurnoutOperationManager.getInstance().loadOperationTypes();
+        InstanceManager.getDefault(TurnoutOperationManager.class).loadOperationTypes();
     }
 
     /**
@@ -55,6 +54,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     public Turnout provideTurnout(String name) throws IllegalArgumentException {
         return super.provideNamedBean(name);
     }
+
+    @Override
+    /** {@inheritDoc} */
+    public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -297,7 +300,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

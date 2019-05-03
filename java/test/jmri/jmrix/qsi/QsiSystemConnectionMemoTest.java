@@ -24,7 +24,7 @@ public class QsiSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       QsiTrafficController tc = new QsiTrafficControlScaffold();
+       new QsiTrafficControlScaffold();
        scm = new QsiSystemConnectionMemo();
     }
 

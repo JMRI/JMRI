@@ -21,7 +21,7 @@
     <variable item="Aspect{$index} In Use" CV="{$CV1}" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/InUse.xml"/>
     </variable>
-    <variable item="Aspect{$index} Addr Mode" CV="{$CV1}" mask="XVXXXXXX" default="0">
+    <variable item="Aspect{$index} Addr Mode" CV="{$CV1}" mask="XVVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/AddrMode.xml"/>
     </variable>
 
@@ -68,8 +68,8 @@
     <variables>
         <qualifier>
             <variableref>Aspect<xsl:value-of select="$index"/> Addr Mode</variableref>
-            <relation>eq</relation>
-            <value>0</value>
+            <relation>le</relation>
+            <value>1</value>
         </qualifier>
         <variable item="Aspect{$index} Signal Aspect" CV="{$CV3 +1}" mask="VVVVVXXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/tvd/SignalAspectSelect.xml"/>
@@ -79,13 +79,26 @@
         <qualifier>
             <variableref>Aspect<xsl:value-of select="$index"/> Addr Mode</variableref>
             <relation>eq</relation>
-            <value>1</value>
+            <value>2</value>
         </qualifier>
         <variable item="Aspect{$index} TO Group" CV="{$CV3 +1}" mask="VVVVXXXX">
             <xi:include href="http://jmri.org/xml/decoders/tvd/TurnoutGroupSelect.xml"/>
         </variable>
         <variable item="Aspect{$index} TO Sense" CV="{$CV3 +1}" mask="XXXXVXXX">
             <xi:include href="http://jmri.org/xml/decoders/tvd/TurnoutSense.xml"/>
+        </variable>
+    </variables>
+    <variables>
+        <qualifier>
+            <variableref>Aspect<xsl:value-of select="$index"/> Addr Mode</variableref>
+            <relation>eq</relation>
+            <value>3</value>
+        </qualifier>
+        <variable item="Aspect{$index} SEN Group" CV="{$CV3 +1}" mask="VVVVXXXX">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/TurnoutGroupSelect.xml"/>
+        </variable>
+        <variable item="Aspect{$index} SEN Sense" CV="{$CV3 +1}" mask="XXXXVXXX">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/SensorSense.xml"/>
         </variable>
     </variables>
 </xsl:template>
@@ -386,6 +399,9 @@
         <variable item="GPIO{$index +1} Sensitivity" CV="{$CV3}" mask="XXXVVVVV" default="8">
             <xi:include href="http://jmri.org/xml/decoders/tvd/DetSensitivity.xml"/>
         </variable>
+        <variable item="GPIO{$index +1} Range" CV="{$CV3}" mask="XXVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/DetRange.xml"/>
+        </variable>
     </variables>
     <variable item="Non-TVD Det GPIO{$index +1} Qual" CV="1" mask="XXXXXXXX">
         <enumVal>
@@ -653,6 +669,10 @@
             <tooltip>CT Detector or IR Detector</tooltip>
             <label>Detector</label>
         </display>
+        <display item="GPIO{$io} Range">
+            <tooltip>Low or High current range</tooltip>
+            <label>Range</label>
+        </display>
         <display item="GPIO{$io} Sensitivity">
             <tooltip>0-least sensitive, 31-most sensitive</tooltip>
             <label>Sensitivity</label>
@@ -680,20 +700,6 @@
             <tooltip>Swaps LED drive so panel matches turnout</tooltip>
             <label>LED Drive</label>
         </display>
-        <label label=" ">
-            <qualifier>
-                <variableref>GPIO<xsl:value-of select="$io"/> Type</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-            </qualifier>
-        </label>
-        <label label=" ">
-            <qualifier>
-                <variableref>GPIO<xsl:value-of select="$io"/> Type</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-            </qualifier>
-        </label>
         <label label=" "/>	
         <xsl:if test="4 = $numGroup">
             <display item="One Choice Enum" format="onradiobutton" layout="right">
@@ -1138,6 +1144,14 @@
             <tooltip>Turnout Closed or Thrown</tooltip>
             <label>Action</label>
         </display>
+        <display item="Aspect{$aspect} SEN Group">
+            <tooltip>Sensor Group (mast)</tooltip>
+            <label>Group</label>
+        </display>
+        <display item="Aspect{$aspect} SEN Sense">
+            <tooltip>Sensor Hi or Lo</tooltip>
+            <label>Action</label>
+        </display>
         <label label= " "/>
         <display item="Aspect{$aspect} LED1 Out">
             <tooltip>Select LED 1-16</tooltip>
@@ -1233,7 +1247,7 @@
  <!--install panes -->
  <xsl:template match="label[text='Decoder Transform File Version: x.xx']">
     <label>
-        <text>Decoder Transform File Version: 1.01</text>
+        <text>Decoder Transform File Version: 1.03</text>
     </label>
  </xsl:template>
 

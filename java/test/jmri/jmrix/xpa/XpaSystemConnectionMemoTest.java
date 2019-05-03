@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaSystemConnectionMemo class
- * <P>
+ * <p>
  * @author	Paul Bender
  */
 public class XpaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
@@ -44,7 +44,10 @@ public class XpaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new XpaSystemConnectionMemo();
+        XpaTrafficController tc = new XpaTrafficControlScaffold();
+        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(tc);
+        scm = memo;
     }
 
     @Override

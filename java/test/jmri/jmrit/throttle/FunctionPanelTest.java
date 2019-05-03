@@ -22,9 +22,19 @@ public class FunctionPanelTest {
         Assert.assertNotNull("exists", frame);
     }
 
+    @Test
+    public void testGetFunctionButtons(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        FunctionPanel frame = new FunctionPanel(); // not a panel despite class name
+        FunctionButton fba[] = frame.getFunctionButtons();
+	Assert.assertNotNull("Function Button Array exists",fba);
+	Assert.assertEquals("Function Button Array has right length",29,fba.length);
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

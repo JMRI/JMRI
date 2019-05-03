@@ -1,11 +1,5 @@
 package jmri.util.swing.sdi;
 
-import java.awt.GraphicsEnvironment;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.swing.ButtonTestAction;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

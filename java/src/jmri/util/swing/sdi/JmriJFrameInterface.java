@@ -36,7 +36,7 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
         }
 
         // create frame
-        frame = new jmri.util.JmriJFrame();
+        frame = new jmri.util.JmriJFrame(child.getClass().getName());
 
         // cache if single instance
         if (!child.isMultipleInstances()) {

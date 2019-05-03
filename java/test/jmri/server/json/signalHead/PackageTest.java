@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     JsonSignalHeadHttpServiceTest.class,
     JsonSignalHeadSocketServiceTest.class,
-    JsonSignalHeadServiceFactoryTest.class
+    JsonSignalHeadTest.class
 })
 public class PackageTest {
 }

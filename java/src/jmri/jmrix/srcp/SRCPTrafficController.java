@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -16,11 +17,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from SRCP messages. The "SRCPInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SRCPPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -31,6 +32,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     protected SRCPSystemConnectionMemo _memo = null;
 
+    /**
+     * Create a new SRCPTrafficController instance.
+     */
     public SRCPTrafficController() {
         super();
         if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
@@ -98,9 +102,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 Runnable r = new SRCPRcvNotifier(e, mLastSender, this);
                 try {
                     javax.swing.SwingUtilities.invokeAndWait(r);
-                } catch (Exception ex) {
-                    log.error("Unexpected exception in invokeAndWait:" + ex);
-                    ex.printStackTrace();
+                } catch (InterruptedException | InvocationTargetException ex) {
+                    log.error("Unexpected exception in invokeAndWait:", ex);
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("dispatch thread invoked");
@@ -113,8 +116,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 SRCPClientVisitor v = new SRCPClientVisitor();
                 e.jjtAccept(v, _memo);
 
-                // we need to re-write the switch below so that it uses the 
-                // SimpleNode values instead of the reply message.            
+                // we need to re-write the switch below so that it uses the
+                // SimpleNode values instead of the reply message.
                 //SRCPReply msg = new SRCPReply((SimpleNode)e.jjtGetChild(1));
                 switch (mCurrentState) {
                     case WAITMSGREPLYSTATE: {
@@ -132,7 +135,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         mCurrentMode = PROGRAMINGMODE;
                         replyInDispatch = false;
 
-                        // check to see if we need to delay to allow decoders 
+                        // check to see if we need to delay to allow decoders
                         // to become responsive
                         int warmUpDelay = enterProgModeDelayTime();
                         if (warmUpDelay != 0) {
@@ -179,8 +182,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                                 xmtRunnable.notify();
                             }
                         } else {
-                            log.error("reply complete in unexpected state: "
-                                    + mCurrentState + " was " + e.toString());
+                            unexpectedReplyStateError(mCurrentState,e.toString());
                         }
                     }
                 }
@@ -249,33 +251,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         return SRCPMessage.getExitProgMode(1);
     }
 
-    /**
-     * static function returning the SRCPTrafficController instance to use.
-     *
-     * @return The registered SRCPTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SRCPTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SRCP TrafficController object");
-            }
-            self = new SRCPTrafficController();
-        }
-        return self;
-    }
-
-    static volatile protected SRCPTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
-    }
-
     @Override
     protected AbstractMRReply newReply() {
         return new SRCPReply();
@@ -306,6 +281,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector<AbstractMRListener> v;
         synchronized (this) {
+            // FIXME: unnecessary synchronized; the Vector IS already thread-safe.
             v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
@@ -321,8 +297,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     forwardReply(client, r);
                 }
             } catch (Exception ex) {
-                log.warn("notify: During reply dispatch to " + client + "\nException " + ex);
-                ex.printStackTrace();
+                log.warn("notify: During reply dispatch to {}", client, ex);
             }
             // forward to the last listener who send a message
             // this is done _second_ so monitoring can have already stored the reply
@@ -362,12 +337,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         // the server will send a reply of "101 INFO 0 SESSION <id>.
         // but we aren't going to wait for the reply.
         return true;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public String name() {
-        return this.getName();
     }
 
     @Override

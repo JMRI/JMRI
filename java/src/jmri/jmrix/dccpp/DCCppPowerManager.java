@@ -13,6 +13,9 @@ package jmri.jmrix.dccpp;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+
+import java.beans.PropertyChangeListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +88,30 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         pcs.removePropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
     DCCppTrafficController tc = null;
 
     // to listen for Broadcast messages related to track power.
@@ -92,7 +119,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     @Override
     public void message(DCCppReply m) {
         if (log.isDebugEnabled()) {
-            log.debug("Message recieved: " + m.toString());
+            log.debug("Message received: " + m.toString());
         }
         if (m.isPowerReply()) {
             if (m.getPowerBool()) {

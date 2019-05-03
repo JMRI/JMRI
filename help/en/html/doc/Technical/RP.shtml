@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Recommended Practices</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code standards recommendation Swing">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -25,15 +25,16 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JMRI: Recommended Practices</h1>This is page of
-      miscellaneous info and pointers for JMRI developers.
+      <h1>JMRI Code: Recommended Practices</h1>
+      <p>This page contains miscellaneous info and pointers for JMRI
+      developers.</p>
 
       <h2>Class Library Preferences</h2>
 
@@ -51,7 +52,7 @@
         Before JMRI 4.7.5, we used the RXTX and
         SerialIO libraries for this, but these were then removed.</li>
 
-        <li>Take a few moments to learn about the the different
+        <li>Take a few moments to learn about the different
         types of <a href=
         "https://docs.oracle.com/javase/tutorial/collections/intro/">
         Java collections</a> that are available (
@@ -60,9 +61,21 @@
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
         etc) in the 
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
-        Not everything needs to be an array! A 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
+        Not everything needs to be an array! Only use a 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
+        when there's a specific reason for it such as compatibility with an existing API;
+        they're slow and memory-intensive compared to e.g. an 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+        A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
         can be a good default solution to holding data that won't ever contain 'null'.
+        Consider using a
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
+        for data that's best kept in some sorted order; there's are very few good reasons for
+        sorting data during normal running in JMRI.  If you also need random access (e.g. 
+        "The 5th element") consider 
+        <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">IndexedTreeSet</a>
+        and
+        <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">IndexedTreeMap</a>
         </li>
 
         <li>JMRI uses <a href=
@@ -79,16 +92,53 @@
         this page</a> from the Java Tutorial.</li>
 
         <li>If you need to use comma-separated variable (CSV)
-        files, please use the <a href=
-        "http://javacsv.sourceforge.net/">javacsv API</a> if
+        files, please use the <a href="http://javacsv.sourceforge.net/">javacsv API</a> if
         possible. We are already using that in a number of places,
         and will probably use it in more. If that doesn't provide
         enough functionality, we might eventually move to the
-        <a href=
-        "http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">
-        opencsv API</a>, but since we only want to use one, the
+        <a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, 
+        but since we only want to use one, the
         conversion will be a lot of work.</li>
       </ul>
+
+      <a id="collections" name="collections"></a>
+      <h2>Collections</h2>
+        Take a few moments to learn about the different
+        types of <a href=
+        "https://docs.oracle.com/javase/tutorial/collections/intro/">
+        Java collections</a> that are available (
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
+        etc) in the 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
+        
+        
+        <ul>
+        <li>
+        Please don't use fixed-size arrays for holding variable sized data in objects.
+        That generally ends up wasting huge amounts of space at runtime, and we 
+        try to keep the JMRI memory footprint small when we can.
+        
+        <li>
+        Only use a 
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
+            when there's a specific reason for it such as compatibility with an existing API;
+            they're slow and memory-intensive compared to e.g. an 
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+        <li>
+            A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
+            can be a good default solution to holding data that won't ever contain 'null'.
+       <li> 
+            Consider using a
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
+            for data that's best kept in some sorted order; there's are very few good reasons for
+            sorting data during normal running in JMRI.  If you also need random access (e.g. 
+            "The 5th element") consider 
+            <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">IndexedTreeSet</a>
+            and
+            <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">IndexedTreeMap</a>
+        </ul>
 
       <h2>Code Format</h2>The <a href=
       "http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">
@@ -105,23 +155,87 @@
       the <a href="Logging.shtml">logger reference</a> at the
       bottom of each file.</p>
 
+      <a id="deprecating" name="deprecating"></a>
       <h2>Deprecating Code</h2>
       As development proceeds, sometimes
       old ways of doing things have to be replaced by new ways. In
       many cases, you can just change all the using code in our
-      repository, and move forward. For general interfaces that
+      repository, and move forward. 
+      For general interfaces that
       might be used externally to JMRI, such as in scripts and
-      CATS, it can be good to leave the old interface in place for
+      CATS, we prefer to leave the old interface in place for
       a while, marking it as "deprecated" so that people can
-      discover that it will eventually go away. After a suitable
-      number of release cycles, the deprecated interface can then
-      be removed.
+      discover that it will eventually go away. 
+      (The current list of those is available as
+      <a href="http://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
+      The sequence is then:
+      <ul>
+        <li>Write the new methods.
+        <li>Mark the old methods with @deprecated and @Deprecated. The 
+            associated comment should tell people where to find the replacement (see below).
+            <p>Note that if you mark an interface or super-class (i.e. abstract) 
+                class or method
+                as deprecated, you should also mark all implementations of it as
+                deprecated.  That way, they won't themselves show as deprecations to fix,
+                but code that uses them will.
 
+        <li>Start generating warnings for users
+            (especially scripting users) by adding:
+<pre style="font-family: monospace;">
+            jmri.util.Log4JUtil.deprecationWarning(log, "myMethod()");
+</pre>
+            to the start of each method.
+            This will put a warning in the log if that method 
+            is used during normal operation.
+            <p>
+            If you have tests for that method (you should!) you may need to
+            modify the direct tests of the deprecated method; see
+            the 
+            <a href="JUNit.shtml#deprecationWarning">instructions on the JUnit page</a>.
+
+        <a href="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
+            <img src="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY" align="right" width="250" height="100">
+        </a>
+        <li>As soon as you can, remove all JMRI uses of these deprecated classes and/or methods
+            until the deprecations report is clean. 
+            (Until you do this, warnings will be showing up in the logs)
+            You can either compile locally
+            with <code>ci-compile-deprecations</code> to check this, or look at the
+            <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">Jenkins CI report</a>
+            (click the Types tab) to check the JMRI/JMRI master branch.
+        <li><strong>Don't forget to migrate the Jython sample scripts!</strong>
+        <li>Wait an appropriate length of time; the more visible the class or method,
+            the longer to wait.  Things that were in scripts should wait at least two
+            production releases.
+            
+        <li>Remove the deprecated methods and their tests.
+        </ul>
+        
       <p>Note that a deprecated interface is meant to still work.
       Deprecated should only mean that you can't count on the
       deprecated interface working in the future, so that it would
       be good to code away from it while it's still working.</p>
 
+      <p>There are two forms of marking something as deprecated
+      (Javadoc tag and Annotation), and both allow you to add
+      additional information. A nice discussion of the
+      technicalities is <a href=
+      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
+      here</a>. We strongly recommend using both of them like this:</p>
+<pre style="font-family: monospace;">
+/**
+ * (Other Javadoc comments)
+ * @deprecated As of 2.7.8, use {@ link #foo()} instead
+ */
+@Deprecated // 2.7.8
+</pre>
+        where the line contains the version in which the deprecation
+        is applied. That lets you easily know how long ago it was
+        deprecated. (There's a better way to do this in Java 9, but
+        JMRI still has to compile under Java 8 so please don't use that; see the 
+        <a href="TechRoadMap.shtml">release roadmap</a>
+        for background)
+        
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of
       build.xml:</p>
@@ -130,27 +244,37 @@
 </pre>
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
-
-      <p>There are two forms of marking something as deprecated
-      (Javadoc tag and Annotation), and both allow you to add
-      additional information. A nice discussion of the
-      technicalities is <a href=
-      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
-      here</a>. We use them this way:</p>
-<pre style="font-family: monospace;">
-* @deprecated 2.7.8<br>
-@Deprecated // 2.7.8<br>
-</pre>
-        where the line contains the version in which the deprecation
-        is applied. That lets you easily know how long ago it was
-        deprecated. 
-
+    
+    <a id="exception" name="exception"></a>
     <h2>Exceptions</h2>
     
-    <a href="">FindBugs</a>
-    will object to
-    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastSuccessfulBuild/findbugsResult/type.-1293684328/">code like this</a>:
+    <h3>Throwing Exceptions</h3>
 
+    When checking inputs (i.e. for valid parameter values) and you find a problem, what should you do?
+    <ul>
+    <li>You can throw an unchecked exception. IllegalArgumentException is a great example:
+        Most of the time it doesn't really have to be thought about. It's rare to
+        explicitly try/catch for it.
+        When an IllegalArgumentException (or whatever) is thrown, it works up to some high-level handler, 
+        where there will be some default handling (usually just logging) it, 
+        and the various libraries will get a chance to clean things up.
+
+    <li>You can thrown a checked exception, i.e. a JmriException subclass or 
+        some on-target Java checked exception class. 
+        This forces all writers of method-using code to think about how to handle problems.  
+        They might wrap with a try-catch or just declare it to go upward, but they have to think about it.
+
+    <li>Don't use error codes or other "check the return value" approaches.  
+        They just make it likely there will be invisible problems that bite people in complicated ways 
+        (because you can ignore them, leaving junk behind)
+        
+    </ul>
+    
+    Generally, JMRI developers tend to throw an unchecked exception, i.e. IllegalArgumentException
+    or similar.
+    
+    <h3>Catching Exceptions</h3>
+    SpotBugs will object to code like this:
 <pre style="font-family: monospace;">
   try {
      // do something here
@@ -158,11 +282,11 @@
   }
 </pre>
 with a 
-<a href="http://findbugs.sourceforge.net/bugDescriptions.html#REC_CATCH_EXCEPTION"><code>REC_CATCH_EXCEPTION</code></a>
+<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#rec-exception-is-caught-when-exception-is-not-thrown-rec-catch-exception"><code>REC_CATCH_EXCEPTION</code></a>
 and/or a 
-<a href="http://findbugs.sourceforge.net/bugDescriptions.html#DE_MIGHT_IGNORE"><code>DE_MIGHT_IGNORE</code></a>
+<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-ignore-exception-de-might-ignore"><code>DE_MIGHT_IGNORE</code></a>
 (less often 
-<a href="http://findbugs.sourceforge.net/bugDescriptions.html#DE_MIGHT_DROP"><code>DE_MIGHT_DROP</code></a>).
+<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-drop-exception-de-might-drop"><code>DE_MIGHT_DROP</code></a>).
 This is an example of two problems:
 <ul>
 <li>Catching <code>Exception</code> instead of more specific types
@@ -249,7 +373,7 @@ you should add an annotation so that others know why it's OK and don't have to w
 </pre>
 </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

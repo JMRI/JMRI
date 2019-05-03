@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Monitor SPROG Slots</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help monitor sprog slots">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -25,9 +25,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Monitor SPROG Slots</h1>This is the
+      <h1>Monitor SPROG Slots</h1>
+
+      <p>This is the
       help/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame help
-      page <!--#include virtual="/Footer" -->
+      page.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

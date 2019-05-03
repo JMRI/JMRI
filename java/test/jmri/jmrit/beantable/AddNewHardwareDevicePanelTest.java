@@ -3,17 +3,13 @@ package jmri.jmrit.beantable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -47,7 +43,8 @@ public class AddNewHardwareDevicePanelTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
@@ -55,7 +52,8 @@ public class AddNewHardwareDevicePanelTest {
     public void tearDown() {
 
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);

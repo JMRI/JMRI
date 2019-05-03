@@ -28,7 +28,7 @@
 
 <mapID target="html.apps.DecoderPro.NetworkFiles" url="html/apps/DecoderPro/NetworkFiles.shtml"/>
 
-<mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
+<mapID target="html.doc.Technical.SpotBugs" url="html/doc/Technical/FindBugs.shtml"/>
 
 <mapID target="html.apps.SignalPro.index" url="html/apps/SignalPro/index.shtml"/>
 

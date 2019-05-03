@@ -40,7 +40,6 @@ public class XpaMessage implements jmri.jmrix.Message {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public XpaMessage(XpaMessage m) {
         if (m == null) {
             log.error("copy ctor of null message");

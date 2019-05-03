@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.util.Enumeration;
+import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
@@ -11,20 +12,23 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base implementation of the SensorManager interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.SENSORS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'S';
     }
 
+    /** {@inheritDoc} */
     @Override
     public Sensor provideSensor(String name) {
         Sensor t = getSensor(name);
@@ -41,6 +45,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Sensor getSensor(String name) {
         Sensor t = getByUserName(name);
@@ -59,11 +64,13 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Sensor getBeanBySystemName(String key) {
         return this.getBySystemName(key);
     }
     
+    /** {@inheritDoc} */
     @Override
     public Sensor getBySystemName(String key) {
         if (isNumber(key)) {
@@ -73,30 +80,35 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return _tsys.get(name);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
     @Override
-    protected Sensor getInstanceBySystemName(String systemName) {
-        return getBySystemName(systemName);
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Sensor getByUserName(String key) {
         return _tuser.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
-        log.debug(" newSensor(\"{}\", \"{}\"", sysName, userName);
+        log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
         String systemName = normalizeSystemName(sysName);
-        if (log.isDebugEnabled()) {
-            log.debug("newSensor:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("systemName null in newSensor");
-        }
+        log.debug("    normalized name: \"{}\"", systemName);
+
+        java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with "+systemName);
+
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
@@ -138,6 +150,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return s;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSensor");
@@ -152,9 +165,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     abstract protected Sensor createNewSensor(String systemName, String userName);
 
     /**
-     * Requests status of all layout sensors under this Sensor Manager. This
-     * method may be invoked whenever the status of sensors needs to be updated
-     * from the layout, for example, when an XML configuration file is read in.
+     * {@inheritDoc}
      * Note that this null implementation only needs be implemented in
      * system-specific Sensor Managers where readout of sensor status from the
      * layout is possible.
@@ -163,19 +174,13 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     public void updateAll() {
     }
 
-    /**
-     * A method that determines if it is possible to add a range of sensors in
-     * numerical order eg 10 to 30, primarily used to enable/disable the add
-     * range box in the add sensor panel.
-     *
-     * @param systemName configured system connection name
-     * @return false as default, unless overridden by implementations as supported
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
@@ -187,6 +192,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return prefix + typeLetter() + curAddress;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         // If the hardware address passed does not already exist then this can
@@ -236,50 +242,52 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     protected long sensorDebounceGoingActive = 0L;
     protected long sensorDebounceGoingInActive = 0L;
 
+    /** {@inheritDoc} */
     @Override
     public long getDefaultSensorDebounceGoingActive() {
         return sensorDebounceGoingActive;
     }
 
+    /** {@inheritDoc} */
     @Override
     public long getDefaultSensorDebounceGoingInActive() {
         return sensorDebounceGoingInActive;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void setDefaultSensorDebounceGoingActive(long timer) {
-        if (timer == sensorDebounceGoingActive) {
+    public void setDefaultSensorDebounceGoingActive(long time) {
+        if (time == sensorDebounceGoingActive) {
             return;
         }
-        sensorDebounceGoingActive = timer;
+        sensorDebounceGoingActive = time;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = _tsys.get(en.nextElement());
             if (sen.getUseDefaultTimerSettings()) {
-                sen.setSensorDebounceGoingActiveTimer(timer);
+                sen.setSensorDebounceGoingActiveTimer(time);
             }
         }
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void setDefaultSensorDebounceGoingInActive(long timer) {
-        if (timer == sensorDebounceGoingInActive) {
+    public void setDefaultSensorDebounceGoingInActive(long time) {
+        if (time == sensorDebounceGoingInActive) {
             return;
         }
-        sensorDebounceGoingInActive = timer;
+        sensorDebounceGoingInActive = time;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = _tsys.get(en.nextElement());
             if (sen.getUseDefaultTimerSettings()) {
-                sen.setSensorDebounceGoingInActiveTimer(timer);
+                sen.setSensorDebounceGoingInActiveTimer(time);
             }
         }
     }
 
     /**
-     * Do the sensor objects provided by this manager support configuring
-     * an internal pullup or pull down resistor?
-     * <p>
+     * {@inheritDoc}
      * This default implementation always returns false.
      *
      * @return true if pull up/pull down configuration is supported.
@@ -289,9 +297,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
        return false;
     }
 
-    /**
-     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help

@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Sound Levels pane for Märklin mSD/3 decoders                           -->
+
+<!-- v1: creation from mSD_SoundLevelsPane
+        (2018-03-17 Alain Le Marchand)                                      -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Sound Levels</name>
+  <name xml:lang="ca">Volum de so</name>
+  <name xml:lang="cs">Hladiny zvuku</name>
+  <name xml:lang="da">Lydstyrker</name>
+  <name xml:lang="de">Sound Lautstärke</name>
+  <name xml:lang="fr">Volume des Sons</name>
+  <name xml:lang="it">Livelli dei Suoni</name>
+  <name xml:lang="nl">Geluidvolume</name>
+  <row>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 1" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 1" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 2" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 2" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 3" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 3" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 4" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 4" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 5" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 5" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 6" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 6" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 7" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 7" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 8" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 8" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 9" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 9" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Sound Setting 10" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Sound Setting 10" layout="above" format="hslider"/>
+      </row>
+    </column>
+  </row>
+  <row>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <grid ipadx="10" ipady="0">
+        <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="0" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="1"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 11" layout="above" label=""/>
+          <display item="Sound Setting 11" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="2"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 12" layout="above" label=""/>
+          <display item="Sound Setting 12" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="3"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 13" layout="above" label=""/>
+          <display item="Sound Setting 13" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="4"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 14" layout="above" label=""/>
+          <display item="Sound Setting 14" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="5"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 15" layout="above" label=""/>
+          <display item="Sound Setting 15" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="6"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 16" layout="above" label=""/>
+          <display item="Sound Setting 16" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="7"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 17" layout="above" label=""/>
+          <display item="Sound Setting 17" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="8"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 18" layout="above" label=""/>
+          <display item="Sound Setting 18" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="9"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 19" layout="above" label=""/>
+          <display item="Sound Setting 19" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="10"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 20" layout="above" label=""/>
+          <display item="Sound Setting 20" layout="above" label="" format="hslider"/>
+        </griditem>
+      </grid>
+    </column>
+  </row>
+  <row>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <grid ipadx="10" ipady="0">
+        <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="0" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="11"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 21" layout="above" label=""/>
+          <display item="Sound Setting 21" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="12"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 22" layout="above" label=""/>
+          <display item="Sound Setting 22" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="13"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 23" layout="above" label=""/>
+          <display item="Sound Setting 23" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="14"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 24" layout="above" label=""/>
+          <display item="Sound Setting 24" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="15"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 25" layout="above" label=""/>
+          <display item="Sound Setting 25" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="16"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 26" layout="above" label=""/>
+          <display item="Sound Setting 26" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="17"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 27" layout="above" label=""/>
+          <display item="Sound Setting 27" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="18"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 28" layout="above" label=""/>
+          <display item="Sound Setting 28" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="19"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 29" layout="above" label=""/>
+          <display item="Sound Setting 29" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="20"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 30" layout="above" label=""/>
+          <display item="Sound Setting 30" layout="above" label="" format="hslider"/>
+        </griditem>
+      </grid>
+    </column>
+  </row>
+  <row>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <grid ipadx="10" ipady="0">
+        <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="0" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="21"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 31" layout="above" label=""/>
+          <display item="Sound Setting 31" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="22"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 32" layout="above" label=""/>
+          <display item="Sound Setting 32" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="23"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 33" layout="above" label=""/>
+          <display item="Sound Setting 33" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="24"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 34" layout="above" label=""/>
+          <display item="Sound Setting 34" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="25"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 35" layout="above" label=""/>
+          <display item="Sound Setting 35" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="26"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 36" layout="above" label=""/>
+          <display item="Sound Setting 36" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="27"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 37" layout="above" label=""/>
+          <display item="Sound Setting 37" layout="above" label="" format="hslider"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE" anchor="CENTER">
+          <label>
+            <text>Volume of </text>
+            <text xml:lang="de">Lautstärke </text>
+            <text xml:lang="fr">Volume </text>
+          </label>
+          <soundlabel num="28"/>
+        </griditem>
+        <griditem gridx="0" gridy="RELATIVE">
+          <display item="Sound Setting 38" layout="above" label=""/>
+          <display item="Sound Setting 38" layout="above" label="" format="hslider"/>
+        </griditem>
+      </grid>
+    </column>
+  </row>
+</pane>

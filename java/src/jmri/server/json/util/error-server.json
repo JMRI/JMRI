@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-error-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"error\"",
+    "properties": {
+        "code": {
+            "type": "integer",
+            "description": "Error code"
+        },
+        "message": {
+            "type": "string",
+            "description": "Error message for display"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["code", "message"]
+}

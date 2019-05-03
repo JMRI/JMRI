@@ -18,13 +18,15 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
+
 /**
- * Display Speed Profile
+ * Display Speed Profile.
  *
  * @author  Pete Cressman Copyright (C) 2015
  */
@@ -50,7 +52,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         super(false, true);
         speedProfile = sp;
         rosterId = id;
-        anomalies = jmri.jmrit.logix.MergePrompt.validateSpeedProfile(speedProfile, rosterId);
+        anomalies = jmri.jmrit.logix.MergePrompt.validateSpeedProfile(speedProfile);
         hasAnomaly = (anomalies !=null && anomalies.size() > 0);
         setTitle(Bundle.getMessage("SpeedTable", rosterId));
         getContentPane().setLayout(new BorderLayout(15,15));
@@ -60,13 +62,16 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         SpeedTableModel model = new SpeedTableModel(speedProfile);
         JTable table = new JTable(model);
         table.addKeyListener(new KeyListener() {
+            @Override
             public void keyTyped(KeyEvent ke) {
                 char ch = ke.getKeyChar(); 
                 if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
                     deleteRow(table);
                 }
             }
+            @Override
             public void keyPressed(KeyEvent e) {}
+            @Override
             public void keyReleased(KeyEvent e) {}
         });
         
@@ -116,17 +121,18 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         switch(interp) {
             case SignalSpeedMap.SPEED_MPH:
                 mph.setSelected(true);
-                str = "scale";
+                str = "scale"; // NOI18N
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 kph.setSelected(true);
-                str = "scale";
+                str = "scale"; // NOI18N
                 break;
             default:
                 mm.setSelected(true);
-                str = "track";
+                str = "track"; // NOI18N
         }
         JPanel topPanel = new JPanel();
+        topPanel.setBorder( new EmptyBorder( 0, 8, 8, 8 ) ); // keep text away from edges of pane
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.PAGE_AXIS));
         description = new JLabel(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
         description.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -173,8 +179,8 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 model.speedArray.remove(entry);
                 speedProfile.deleteStep(entry.getKey());
                 model.fireTableDataChanged();
-//                re.updateFile();
-//                Roster.getDefault().writeRoster();
+                // re.updateFile();
+                // Roster.getDefault().writeRoster();
             }
         }
     }
@@ -188,10 +194,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         switch(interp) {
             case SignalSpeedMap.SPEED_MPH:
             case SignalSpeedMap.SPEED_KMPH:
-                str = "scale";
+                str = "scale"; // NOI18N
                 break;
             default:
-                str = "track";
+                str = "track"; // NOI18N
         }
         description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
         model.fireTableDataChanged();
@@ -233,7 +239,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         static final int REVERSE_FACTOR_COL = 5;
         static final int NUMCOLS = 6;
         
-        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
+        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<>();
         
         SpeedTableModel(RosterSpeedProfile sp) {
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();

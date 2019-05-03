@@ -21,6 +21,13 @@ public class JoalAudioBufferTest {
         Assert.assertNotNull("exists", l);
     }
 
+    @Test(expected = java.lang.NullPointerException.class )
+    public void testCtorFail() {
+        Assume.assumeTrue(null == JoalAudioFactory.getAL());
+        JoalAudioBuffer l = new JoalAudioBuffer("test");
+        Assert.assertNotNull("exists", l);
+    }
+
     @Test
     public void testC2Stringtor() {
         Assume.assumeNotNull(JoalAudioFactory.getAL());
@@ -34,6 +41,7 @@ public class JoalAudioBufferTest {
         jmri.AudioManager am = new DefaultAudioManager();
         jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
         am.init();
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
     }
 
     @After

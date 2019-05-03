@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated  by Blorec Herv&#233; le 2016-08-29-->
+<!-- Updated  by Blorec Herv&#233; le 2016-08-29-->
 <html lang="fr">
 <head>
-  <TITLE>
+  <title>
  	JMRI: LRoute Documentation
   </title>
 
-  <meta content="Pete Cressman" name="Author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 <!-- Style -->

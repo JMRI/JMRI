@@ -18,8 +18,8 @@ public class DrawRoundRect extends DrawRectangle {
 
     JTextField _radiusText;
 
-    public DrawRoundRect(String which, String title, PositionableShape ps) {
-        super(which, title, ps);
+    public DrawRoundRect(String which, String title, PositionableShape ps, Editor ed, boolean create) {
+        super(which, title, ps, ed, create);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DrawRoundRect extends DrawRectangle {
         _radiusText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_radiusText);
         _radiusText.addActionListener((ActionEvent e) -> {
-            shape.setCornerRadius(Integer.parseInt(_radiusText.getText()));
+            shape.setCornerRadius(getInteger(_radiusText, shape.getCornerRadius()));
             updateShape();
         });
         _radiusText.addMouseMotionListener(new MouseMotionListener() {
@@ -45,7 +45,7 @@ public class DrawRoundRect extends DrawRectangle {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                shape.setCornerRadius(Integer.parseInt(_radiusText.getText()));
+                shape.setCornerRadius(getInteger(_radiusText, shape.getCornerRadius()));
                 updateShape();
             }
         });
@@ -56,17 +56,12 @@ public class DrawRoundRect extends DrawRectangle {
     }
 
     @Override
-    protected void makeFigure(MouseEvent event, Editor ed) {
-        Rectangle r = ed.getSelectRect();
+    protected PositionableShape makeFigure(Rectangle r, Editor ed) {
         if (r != null) {
             RoundRectangle2D.Double rr = new RoundRectangle2D.Double(0, 0, r.width, r.height, 40, 40);
             _shape = new PositionableRoundRect(ed, rr);
-            _shape.setLocation(r.x, r.y);
-            _shape.updateSize();
-            _shape.setEditFrame(this);
-            setDisplayParams();
-            ed.putItem(_shape);
         }
+        return _shape;
     }
 
 }

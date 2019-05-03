@@ -1,5 +1,6 @@
 package jmri.jmrix.mrc.swing;
 
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 
@@ -19,14 +20,8 @@ public class MrcMenu extends JMenu {
      * @param memo sytem connection memo
      */
     // Need to Sort out the MRC server menu items;
-    public MrcMenu(MrcSystemConnectionMemo memo) {
+    public MrcMenu(@Nonnull MrcSystemConnectionMemo memo) {
         super();
-
-        // memo can not be null!
-        if (memo == null) {
-            new Exception().printStackTrace();
-            return;
-        }
 
         setText(memo.getUserName());
 

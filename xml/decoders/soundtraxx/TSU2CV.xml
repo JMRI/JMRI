@@ -16,6 +16,7 @@
 <!--                                                                        -->
 <!-- version 1 - initial file (Michael Mosher 2016-05-26)                   -->
 <!-- version 1.1 - update for electric (Alain Le Marchand 2016-06-04)       -->
+<!-- version 1.2 - update for electric (Alain Le Marchand 2018-02-18)       -->
 <!--                                                                        -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <variable CV="64" item="Master Brightness" default="255" tooltip="Adjust the brightness level of all lighting outputs">
@@ -46,11 +47,11 @@
         <decVal/>
         <label>Sander Valve Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="296,297,298,299"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Fuel Loading Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="296,297,298,299"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
         <decVal/>
         <label>Electrical Arcing</label>
     </variable>
@@ -155,31 +156,31 @@
         <decVal/>
         <label>Coupler Alt Volume</label>
     </variable>
-    <variable CV="2.299" mask="VVVVVVVV" item="Alt Sound Setting 11" default="50" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.299" mask="VVVVVVVV" item="Alt Sound Setting 12" default="50" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Independent Brake Apply Alt Volume</label>
     </variable>
-    <variable CV="2.300" mask="VVVVVVVV" item="Alt Sound Setting 12" default="35" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.300" mask="VVVVVVVV" item="Alt Sound Setting 13" default="35" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Independent Brake Release Alt Volume</label>
     </variable>
-    <variable CV="2.308" mask="VVVVVVVV" item="Alt Sound Setting 20" default="35" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.308" mask="VVVVVVVV" item="Alt Sound Setting 21" default="35" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>E-Brake App Alt Volume</label>
     </variable>
-    <variable CV="2.309" mask="VVVVVVVV" item="Alt Sound Setting 21" default="75" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.309" mask="VVVVVVVV" item="Alt Sound Setting 22" default="75" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Glad Hand Release Alt Volume</label>
     </variable>
-    <variable CV="2.310" mask="VVVVVVVV" item="Alt Sound Setting 22" default="96" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.310" mask="VVVVVVVV" item="Alt Sound Setting 23" default="96" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>All Aboard!/Coach Doors Alt Volume</label>
     </variable>
-    <variable CV="2.317" mask="VVVVVVVV" item="Alt Sound Setting 29" default="25" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.317" mask="VVVVVVVV" item="Alt Sound Setting 30" default="25" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Wrenches Alt Volume</label>
     </variable>
-    <variable CV="2.320" mask="VVVVVVVV" item="Alt Sound Setting 32" default="30" tooltip="Set the alternate volume levels of each sound effect">
+    <variable CV="2.320" mask="VVVVVVVV" item="Alt Sound Setting 33" default="30" tooltip="Set the alternate volume levels of each sound effect">
         <decVal/>
         <label>Cab Chatter Alt Volume</label>
     </variable>

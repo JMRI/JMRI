@@ -8,13 +8,18 @@ import org.junit.runners.Suite;
         CanConverterTest.class,
         OlcbAddressTest.class,
         OpenLcbLocoAddressTest.class,
+        OlcbClockControlTest.class,
+        OlcbLightManagerTest.class,
         OlcbSensorManagerTest.class,
+        OlcbSignalMastTest.class,
         OlcbProgrammerTest.class,
         OlcbProgrammerManagerTest.class,
+        OlcbLightTest.class,
         OlcbSensorTest.class,
         OlcbSystemConnectionMemoTest.class,
         OlcbTurnoutManagerTest.class,
         OlcbTurnoutTest.class,
+        OlcbTurnoutInheritedTest.class,
         OlcbThrottleTest.class,
         OlcbThrottleManagerTest.class,
         BundleTest.class,
@@ -24,7 +29,8 @@ import org.junit.runners.Suite;
         OlcbConnectionTypeListTest.class,
         OlcbConstantsTest.class,
         OlcbConfigurationManagerTest.class,
-        OpenLcbMenuTest.class
+        OpenLcbMenuTest.class,
+        OlcbUtilsTest.class,
 })
 
 

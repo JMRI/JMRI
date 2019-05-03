@@ -6,7 +6,7 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
 /**
- * Create a new PanelPro start window
+ * Create a new PanelPro start window.
  *
  * @author Bob Jacobsen (C) 2014
  */
@@ -53,4 +53,5 @@ public class PanelProAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
+
 }

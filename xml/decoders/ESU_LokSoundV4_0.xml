@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- made from the ESU_LokSound_Select.file -->
     <!-- ver1 new file -->
     <!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
@@ -60,6 +60,8 @@
     <version author="Dave Heap" version="19" lastUpdated="20170819"/>
     <!-- ver20 added German translation for functionlabels-->
     <version author="Ronald Kuhn" version="20" lastUpdated="20171217"/>
+    <!-- ver21 added Dynamic Brake deceleration rate -->
+    <version author="Dave Heap" version="21" lastUpdated="20180102"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
@@ -153,6 +155,7 @@
                 <decVal/>
                 <label>Sound Configuration Number</label>
                 <label xml:lang="de">Gewählte Soundkonfiguration</label>
+                <label xml:lang="ca">Número configurqació de so</label>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>

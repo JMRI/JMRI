@@ -2,10 +2,8 @@ package jmri;
 
 import java.util.Hashtable;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 
 /**
  * Tests for the jmri.SignalMastLogic class
@@ -24,11 +22,11 @@ public class SignalMastLogicTest {
         Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
         Sensor is2 = InstanceManager.sensorManagerInstance().provideSensor("IS2");
         // provide 3 virtual signal masts:
-        SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
+        SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
         Assert.assertNotNull("SignalMast is null!", sm1);
         SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
         Assert.assertNotNull("SignalMast is null!", sm2);
-        SignalMast sm3 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
+        SignalMast sm3 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0003)");
         Assert.assertNotNull("SignalMast is null!", sm3);
         // provide a signal mast logic:
         SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);
@@ -81,10 +79,50 @@ public class SignalMastLogicTest {
         sml.dispose();
     }
 
+    /**
+     * Check that you can rename the SignalMast user names
+     */
+    @Test
+    public void testRename() {
+        // provide 2 virtual signal masts:
+        SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
+        Assert.assertNotNull("SignalMast is null!", sm1);
+        SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
+        Assert.assertNotNull("SignalMast is null!", sm2);
+
+        // Change logic delay from 500ms to 1:
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).setSignalLogicDelay(1);
+
+        // provide a signal mast logic:
+        SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);
+        sml.setDestinationMast(sm2);
+        Assert.assertNotNull("SignalMastLogic is null!", sml);
+
+        sml.initialise();
+        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Medium Approach"); }, "sm1 aspect (1)" );
+        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Stop"); }, "sm2 aspect (1)" );
+        
+        sm2.setAspect("Clear");
+        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Clear"); }, "sm1 aspect (2)" );
+        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Clear"); }, "sm2 aspect (2)" );
+
+        // rename the masts
+        sm1.setUserName("new name 1");
+        sm2.setUserName("new name 2");
+
+        sm2.setAspect("Stop");
+        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Medium Approach"); }, "sm1 aspect (3)" );
+        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Stop"); }, "sm2 aspect (3)" );
+
+        // clean up
+        sml.dispose();
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
@@ -93,4 +131,5 @@ public class SignalMastLogicTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

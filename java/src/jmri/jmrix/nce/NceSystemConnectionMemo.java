@@ -63,7 +63,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void setNceTrafficController(NceTrafficController tc) {
         nceTrafficController = tc;
         if (tc != null) {
-            tc.setSystemConnectionMemo(this);
+            tc.setAdapterMemo(this);
         }
     }
 
@@ -91,13 +91,12 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureCommandStation(int val) {
         getNceTrafficController().setCommandOptions(val);
-        jmri.InstanceManager.setCommandStation(nceTrafficController);
+        jmri.InstanceManager.store(nceTrafficController, jmri.CommandStation.class);
     }
 
     /**
-     * Tells which managers this class provides.
+     * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -138,9 +137,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provide manager by class
+     * {@inheritDoc}
      */
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
@@ -191,8 +190,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Configure the common managers for NCE connections. This puts the common
      * manager config in one place.
      */
-    @SuppressWarnings("deprecation")
     public void configureManagers() {
+        log.trace("configureManagers() with: {} ", getNceUsbSystem());
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
 
@@ -208,24 +207,24 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.nce.NceThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
 
-        if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
-                // don't set a service mode programmer
-            }
-        } else {
-            if (getProgrammerManager().isAddressedModePossible()) {
-                InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
-            }
-            if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-                InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-            }
+        // non-USB case
+        if (getProgrammerManager().isAddressedModePossible()) {
+            log.trace("store AddressedProgrammerManager");
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            log.trace("store GlobalProgrammerManager");
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());
-        InstanceManager.addClockControl(clockManager);
+        // make sure InstanceManager knows about that
+        InstanceManager.store(clockManager, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, clockManager);
 
         setConsistManager(new jmri.jmrix.nce.NceConsistManager(this));
 
+        log.trace("configureManagers() end");
     }
 
     public NcePowerManager getPowerManager() {
@@ -252,11 +251,17 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return clockManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         nceTrafficController = null;
@@ -286,4 +291,5 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemo.class);
 }

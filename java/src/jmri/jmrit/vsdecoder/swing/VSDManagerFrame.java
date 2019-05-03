@@ -56,11 +56,9 @@ import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.JmriJFrame;
-import jmri.util.WindowMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("serial")
 public class VSDManagerFrame extends JmriJFrame {
 
     public static enum PropertyChangeID {

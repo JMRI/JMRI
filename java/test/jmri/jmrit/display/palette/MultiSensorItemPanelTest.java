@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +21,7 @@ public class MultiSensorItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        PickListModel<jmri.Sensor> tableModel = PickListModel.sensorPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("MultiSensor Item Panel Test");
         Editor editor = new EditorScaffold();
         MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);

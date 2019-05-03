@@ -16,6 +16,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>9</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Tooltips instead of comments</revremark>
+    </revision>
+    <revision>
       <revnumber>8</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -48,11 +54,11 @@
     <label xml:lang="fr">Adresse décodeur</label>
     <label xml:lang="de">Basisadresse</label>
     <label xml:lang="nl">Basisadres</label>
-    <comment xml:lang="cs">Krátká adresa</comment>
-    <comment xml:lang="it">Indirizzo Corto</comment>
-    <comment xml:lang="fr">Adresse courte</comment>
-    <comment xml:lang="de">Kurze Adresse</comment>
-    <comment xml:lang="nl">Kort Adres</comment>
-    <comment xml:lang="de">Kurze Adresse</comment>
+    <tooltip xml:lang="cs">Krátká adresa</tooltip>
+    <tooltip xml:lang="it">Indirizzo Corto</tooltip>
+    <tooltip xml:lang="fr">Adresse courte</tooltip>
+    <tooltip xml:lang="de">Kurze Adresse</tooltip>
+    <tooltip xml:lang="nl">Kort Adres</tooltip>
+    <tooltip xml:lang="de">Kurze Adresse</tooltip>
   </variable>
 </variables>

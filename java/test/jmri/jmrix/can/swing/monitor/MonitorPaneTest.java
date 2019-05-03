@@ -68,6 +68,7 @@ public class MonitorPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 

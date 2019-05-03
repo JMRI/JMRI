@@ -97,9 +97,9 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         return null; // nothing, by default
     }
 
-    private SerialTurnoutManager turnoutManager;
-    private SerialLightManager lightManager;
-    private SerialSensorManager sensorManager;
+    protected SerialTurnoutManager turnoutManager;
+    protected SerialLightManager lightManager;
+    protected SerialSensorManager sensorManager;
 
     /**
      * Configure the common managers for Powerline connections. This puts the

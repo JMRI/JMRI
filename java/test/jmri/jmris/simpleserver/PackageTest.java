@@ -1,4 +1,3 @@
-//SimpleServerTest.java
 package jmri.jmris.simpleserver;
 
 import org.junit.runner.RunWith;
@@ -7,7 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    SimpleServerTest.class,
-   jmri.jmris.simpleserver.parser.JmriServerParserTests.class,
+   jmri.jmris.simpleserver.parser.PackageTest.class,
    SimpleTurnoutServerTest.class,
    SimplePowerServerTest.class,
    SimpleReporterServerTest.class,

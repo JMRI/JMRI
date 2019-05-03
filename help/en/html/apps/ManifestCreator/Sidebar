@@ -1,0 +1,19 @@
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for html/apps/TrainCrew page(s) -->
+
+<hr class="hide">
+<div id="side"> <!-- Block of text on left side of page -->
+<div style="text-align: center">JMRI&reg; is...</div>
+<dl class="toc">
+
+    <dt><h3>Mainfest Creator Links</h3></dt>
+    <dd>
+    <ul>
+    <li><a href="http://manifestcreator.weebly.com">Manifest Creator homepage</a></li>
+    </ul>
+    </dd>
+    
+</dl>
+
+	</div> <!-- closes #side -->
+<!-- /Sidebar -->

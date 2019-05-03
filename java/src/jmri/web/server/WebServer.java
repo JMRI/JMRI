@@ -37,14 +37,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An HTTP server that handles requests for HTTPServlets.
- *
+ * <p>
  * This server loads HttpServlets registered as
  * {@link javax.servlet.http.HttpServlet} service providers and annotated with
  * the {@link javax.servlet.annotation.WebServlet} annotation. It also loads the
  * registered {@link jmri.server.web.spi.WebServerConfiguration} objects to get
  * configuration for file handling, redirection, and denial of access to
  * resources.
- *
+ * <p>
  * When there is a conflict over how a path should be handled, denials take
  * precedence, followed by servlets, redirections, and lastly direct access to
  * files.
@@ -68,7 +68,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
      * Create a WebServer instance with the default preferences.
      */
     public WebServer() {
-        this(WebServerPreferences.getDefault());
+        this(InstanceManager.getDefault(WebServerPreferences.class));
     }
 
     /**
@@ -76,7 +76,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
      *
      * @param preferences the preferences
      */
-    protected WebServer(WebServerPreferences preferences) {
+    public WebServer(WebServerPreferences preferences) {
         QueuedThreadPool threadPool = new QueuedThreadPool();
         threadPool.setName("WebServer");
         threadPool.setMaxThreads(1000);
@@ -97,12 +97,22 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         });
     }
 
-
     /**
-     * Start the web server.
+     * Start the web server. Calls {@link #start(boolean)} with {@code true}.
      */
     @Override
     public void start() {
+        this.start(true);
+    }
+
+    /**
+     * Start the web server.
+     *
+     * @param autoLoad true to load all registered
+     *                 {@link WebServerConfiguration}s and {@link HttpServlet}s;
+     *                 false otherwise
+     */
+    public void start(boolean autoLoad) {
         if (!server.isRunning()) {
             ServerConnector connector = new ServerConnector(server);
             connector.setIdleTimeout(5 * 60 * 1000); // 5 minutes
@@ -139,7 +149,8 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     /**
      * Stop the server.
      *
-     * @throws Exception if there is an error stopping the server; defined by Jetty superclass
+     * @throws Exception if there is an error stopping the server; defined by
+     *                   Jetty superclass
      */
     @Override
     public void stop() throws Exception {
@@ -280,7 +291,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     /**
      * Register a {@link javax.servlet.http.HttpServlet } that is annotated with
      * the {@link javax.servlet.annotation.WebServlet } annotation.
-     *
+     * <p>
      * This method calls
      * {@link #registerServlet(java.lang.Class, javax.servlet.http.HttpServlet)}
      * with a null HttpServlet.
@@ -294,11 +305,11 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     /**
      * Register a {@link javax.servlet.http.HttpServlet } that is annotated with
      * the {@link javax.servlet.annotation.WebServlet } annotation.
-     *
+     * <p>
      * Registration reads the WebServlet annotation to get the list of paths the
      * servlet should handle and creates instances of the Servlet to handle each
      * path.
-     *
+     * <p>
      * Note that all HttpServlets registered using this mechanism must have a
      * default constructor.
      *
@@ -354,12 +365,14 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarted(LifeCycle lc) {
-        HashMap<String, String> properties = new HashMap<>();
-        properties.put("path", "/"); // NOI18N
-        properties.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
-        log.info("Starting ZeroConfService _http._tcp.local for Web Server with properties {}", properties);
-        zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), properties); // NOI18N
-        zeroConfService.publish();
+        if (this.preferences.isUseZeroConf()) {
+            HashMap<String, String> properties = new HashMap<>();
+            properties.put("path", "/"); // NOI18N
+            properties.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
+            log.info("Starting ZeroConfService _http._tcp.local for Web Server with properties {}", properties);
+            zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), properties); // NOI18N
+            zeroConfService.publish();
+        }
         log.debug("Web Server finished starting");
     }
 

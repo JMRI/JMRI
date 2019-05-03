@@ -19,7 +19,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
     /**
      * Enhanced constructor for placing the pane in various GUIs
      * @param s         Human-readable panel name for display by the action
-     * @param wi        Window into which to install the new panel. If you want it to be put into a existing 
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
      *                  one, provide a reference. To create a new window
      *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
      * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
@@ -50,8 +50,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
             ((PowerlinePanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
+            log.warn("could not init pane class: {}", paneClass, ex);
         }
 
         return p;

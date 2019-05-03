@@ -1,19 +1,25 @@
 package jmri.managers;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for the jmri.managers.InternalTurnoutManager class.
+ * Tests for the jmri.managers.DefaultSignalSystemManager class.
  *
  * @author	Bob Jacobsen Copyright 2009
  */
-public class DefaultSignalSystemManagerTest extends TestCase {
+public class DefaultSignalSystemManagerTest {
 
+    @Test
     public void testGetListOfNames() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
         java.util.List<String> l = d.getListOfNames();
@@ -22,6 +28,7 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         Assert.assertTrue(l.contains("SPTCO-1960"));
     }
 
+    @Test
     public void testSearchOrder() throws Exception {
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
@@ -36,17 +43,27 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         }
     }
 
+    @Test
     public void testLoadBasicAspects() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
         d.makeBean("basic");
     }
 
+    @Test
     public void testLoad() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+
+        // Remove all beans in the manager
+        Set<SignalSystem> set = new HashSet<>(d.getNamedBeanSet());
+        set.forEach((b) -> {
+            d.deregister(b);
+        });
+
         d.load();
         Assert.assertTrue(d.getSystemNameList().size() >= 2);
     }
 
+    @Test
     public void testUniqueNames() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
         java.util.List<String> l = d.getListOfNames();
@@ -59,6 +76,7 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         }
     }
 
+    @Test
     public void testUniqueSystemNames() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
         java.util.List<String> l = d.getListOfNames();
@@ -73,6 +91,7 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         }
     }
 
+    @Test
     public void testUniqueUserNames() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
         java.util.List<String> l = d.getListOfNames();
@@ -87,31 +106,13 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public DefaultSignalSystemManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DefaultSignalSystemManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultSignalSystemManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

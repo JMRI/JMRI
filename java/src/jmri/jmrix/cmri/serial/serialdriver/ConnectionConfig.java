@@ -16,6 +16,8 @@ import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
+    public final static String NAME = "Serial";
+
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
@@ -25,10 +27,15 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
+    }
+
+    @Override
+    public String name() {
+        return NAME;
     }
 
     JButton b;
@@ -38,8 +45,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
         setInstance();
         b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
-//        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
-        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo())); //c2
+        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
@@ -50,11 +56,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
-    }
-
-    @Override
-    public String name() {
-        return "Serial";
     }
 
     @Override

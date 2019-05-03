@@ -29,7 +29,7 @@ public class WiThrottlesListModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -37,6 +37,9 @@ public class WiThrottlesListModel extends AbstractTableModel {
         return deviceList.size();
     }
 
+    /**
+     * Added column LabelRosterId since 4.15.4. 
+     */
     @Override
     public String getColumnName(int col) {
         String title;
@@ -47,6 +50,10 @@ public class WiThrottlesListModel extends AbstractTableModel {
             }
             case 1: {
                 title = rb.getString("LabelAddress");
+                break;
+            }
+            case 2: {
+                title = rb.getString("LabelRosterId");
                 break;
             }
             default: {
@@ -68,8 +75,10 @@ public class WiThrottlesListModel extends AbstractTableModel {
         }
         if (col == 0) {
             return deviceList.get(row).getName();
-        } else {
+        } else if (col == 1) {
             return deviceList.get(row).getCurrentAddressString();
+        } else {
+            return deviceList.get(row).getCurrentRosterIdString();
         }
     }
 

@@ -28,11 +28,11 @@ import org.slf4j.LoggerFactory;
  */
 public class Portal extends jmri.implementation.AbstractNamedBean {
 
-    private ArrayList<OPath> _fromPaths = new ArrayList<OPath>();
+    private final ArrayList<OPath> _fromPaths = new ArrayList<>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
     private float _fromSignalOffset;           // adjustment distance for speed change
-    private ArrayList<OPath> _toPaths = new ArrayList<OPath>();
+    private final ArrayList<OPath> _toPaths = new ArrayList<>();
     private OBlock _toBlock;
     private NamedBean _toSignal;            // may be either SignalHead or SignalMast
     private float _toSignalOffset;             // adjustment distance for speed change
@@ -504,7 +504,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug("Signal \"{}\" has speed notch= {} from appearance \"{}\".",
+            log.debug("SignalHead \"{}\" has speed notch= {} from appearance \"{}\".",
                     signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         }
         return speed;
@@ -625,6 +625,10 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     @Override
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
     public String toString() {
         StringBuilder sb = new StringBuilder("Portal \"");
         sb.append(getUserName());

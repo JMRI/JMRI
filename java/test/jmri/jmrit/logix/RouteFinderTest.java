@@ -32,6 +32,7 @@ public class RouteFinderTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After
@@ -39,6 +40,6 @@ public class RouteFinderTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteFinderTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RouteFinderTest.class.getName());
 
 }

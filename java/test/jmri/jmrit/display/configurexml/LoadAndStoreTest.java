@@ -1,7 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import static jmri.configurexml.LoadAndStoreTestBase.getFiles;
-
 import java.io.File;
 import org.junit.runners.Parameterized;
 

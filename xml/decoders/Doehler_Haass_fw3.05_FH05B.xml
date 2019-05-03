@@ -72,6 +72,7 @@
       <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
       <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
       <label xml:lang="de">Zurücksetzen aller CV auf Werkseinstellungen</label>
+      <label xml:lang="ca">Reset a valors de fàbrica</label>
       </factReset>
     </resets>
   </decoder>

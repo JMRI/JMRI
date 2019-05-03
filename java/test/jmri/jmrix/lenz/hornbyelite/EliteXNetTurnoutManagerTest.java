@@ -68,15 +68,8 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
 
     @Test
     public void testAsAbstractFactory() {
-        lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        // create and register the manager object
-        EliteXNetTurnoutManager l = new EliteXNetTurnoutManager(lnis, "X");
-        jmri.InstanceManager.setTurnoutManager(l);
-
         // ask for a Turnout, and check type
-        TurnoutManager t = jmri.InstanceManager.turnoutManagerInstance();
-
-        Turnout o = t.newTurnout("XT21", "my name");
+        Turnout o = l.newTurnout("XT21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
@@ -85,15 +78,27 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("XT21"));
+            log.debug("by system name: " + l.getBySystemName("XT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != t.getBySystemName("XT21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("XT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
+    }
+
+    @Test
+    @Override
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    @Override
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
     }
 
     @After

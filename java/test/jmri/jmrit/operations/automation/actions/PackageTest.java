@@ -1,8 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import jmri.util.JUnitUtil;
-
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -10,8 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         BundleTest.class,
         ActionCodesTest.class,
-        ActivateTimetableActionTest.class,
-        ApplyTimetableActionTest.class,
+        ActivateTrainScheduleActionTest.class,
+        ApplyTrainScheduleActionTest.class,
         BuildTrainActionTest.class,
         BuildTrainIfSelectedActionTest.class,
         DeselectTrainActionTest.class,

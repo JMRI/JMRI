@@ -28,6 +28,7 @@ public class PrintDecoderListActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

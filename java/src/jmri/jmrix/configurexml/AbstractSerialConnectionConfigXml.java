@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base (and partial implementation) for classes persisting the status
  * of serial port adapters.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -24,7 +24,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
     /**
      * Default implementation for storing the static contents of the serial port
-     * implementation
+     * implementation.
      *
      * @param object Object to store, of type AbstractSerialConnectionConfig
      * @return Element containing the complete info
@@ -64,7 +64,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     /**
-     * Customizable method if you need to add anything more
+     * Customizable method if you need to add anything more.
      *
      * @param e Element being created, update as needed
      */
@@ -76,6 +76,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
+        log.info("Starting to connect for \"{}\"", adapter.getSystemConnectionMemo()!=null ? adapter.getSystemConnectionMemo().getUserName() : "(Unknown Connection)");
+        
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
@@ -110,7 +112,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     /**
-     * Update static data from XML file
+     * Update static data from XML file.
      *
      * @param element Top level Element to unpack.
      */

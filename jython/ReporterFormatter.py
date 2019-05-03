@@ -10,6 +10,7 @@
 
 import jmri
 import java
+import java.beans
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses them to keep track of the decoders
@@ -20,22 +21,30 @@ class ReporterFormatter(java.beans.PropertyChangeListener):
     if (event.propertyName == "currentReport") :
       # new report, format and store
       self.report = event.newValue
-      self.value = self.format(self.report)
+      if (isinstance(self.report,jmri.Reportable)) :
+         # use the IdTag information from 4.15.3+
+         self.value = self.format(self.report.toReportString())
+      elif (self.report != None ) :
+         # use the text format from pre 4.15.3
+         self.value = self.format(self.report)
+      else :
+         self.value = ""
       self.memory.setValue(self.value)
     return 
 
   def start(self, reporterName, memoryName) :
     # connect the object to the reporter, and start to work
-    self.memory = jmri.InstanceManager.memoryManagerInstance().provideMemory(memoryName)
-    jmri.InstanceManager.reporterManagerInstance().provideReporter(reporterName).addPropertyChangeListener(self)
+    self.memory = memories.provideMemory(memoryName)
+    reporters.provideReporter(reporterName).addPropertyChangeListener(self)
     self.content = []
     self.memory.setValue("")
+    self.reporterName = reporterName
     return
 
   def stop(self) :
     # Cease operation.  
     # You can call start() again if desired.
-    jmri.InstanceManager.reporterManagerInstance().getReporter(reporterName).removePropertyChangeListener(self)
+    reporters.getReporter(self.reporterName).removePropertyChangeListener(self)
     return
     
   def format(self, inputString) :
@@ -78,65 +87,18 @@ class ReporterFormatter(java.beans.PropertyChangeListener):
 #########################################################
 
 # Below here is an example of the use of this class.
-# Modify if to use names appropriate for your layout.
-m = ReporterFormatter()
-m.start("LR145", "IM145")
+# Modify if to use names appropriate for your layout and
+# execute it from your own scripts after doing execfile("jython/ReporterFormatter.py")
+#
+# m = ReporterFormatter()
+# m.start("LR145", "IM145")
+#
 # At this point, messages from LocoNet reporter LR145 are being sent to memory IM145
 # To stop this, you can later say
 # m.stop()
 
-# Do a couple more as examples
-m = ReporterFormatter()
-m.start("LR146", "IM146")
-
-m = ReporterFormatter()
-m.start("LR147", "IM147")
-
 
 #########################################################
 
-# Define some test routines. 
-# These don't do anything until invoked by hand to test the routine.
-# 
-# Example msg: D0 20 0B 7D 03 FF - lower byte 1 and byte 2 are reporter 12, 
-# 3,4 are loco address (3=7D short)
-# 20 vs 00 in 2nd byte shows enter/exit
-def test3enter() :  # 3 enters
-    packet = jmri.jmrix.loconet.LocoNetMessage(6)
-    packet.setElement(0, 0xD0)
-    packet.setElement(1, 0x21)
-    packet.setElement(2, 0x11)
-    packet.setElement(3, 0x7D)
-    packet.setElement(4, 0x03)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
-    return
-    
-def test257enter() :  # 257 enters
-    packet = jmri.jmrix.loconet.LocoNetMessage(6)
-    packet.setElement(0, 0xD0)
-    packet.setElement(1, 0x21)
-    packet.setElement(2, 0x11)
-    packet.setElement(3, 0x02)
-    packet.setElement(4, 0x01)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
-    return
-    
-def test257exit() :  # 257 exits
-    packet = jmri.jmrix.loconet.LocoNetMessage(6)
-    packet.setElement(0, 0xD0)
-    packet.setElement(1, 0x01)
-    packet.setElement(2, 0x11)
-    packet.setElement(3, 0x02)
-    packet.setElement(4, 0x01)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
-    return
-    
-def test3exit() :  # 3 exits
-    packet = jmri.jmrix.loconet.LocoNetMessage(6)
-    packet.setElement(0, 0xD0)
-    packet.setElement(1, 0x01)
-    packet.setElement(2, 0x11)
-    packet.setElement(3, 0x7D)
-    packet.setElement(4, 0x03)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
-    return
+# See jython/test/ReporterFormatterTest.py for test code and sample LocoNet sequences
+

@@ -1,22 +1,16 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Source {
 
-    JMenu entryExitPopUp = null;
     JMenuItem clear = null;
     JMenuItem cancel = null;
     JMenuItem editCancel = null;
@@ -61,71 +55,6 @@ public class Source {
         point.setSource(this);
         sourceSignal = point.getSignal();
         pd = point;
-        createPopUpMenu();   // LE only supports markers for view mode context menus.
-// Functionality has been replaced by re-selecting the route which also includes stacking.
-    }
-
-    //ArrayList<LayoutBlock> protectingBlocks;
-    void createPopUpMenu() {
-        if (entryExitPopUp != null) {
-            return;
-        }
-        entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));  // NOI18N
-        editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));  // NOI18N
-        editClear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelClearInterlockFromSource(EntryExitPairs.CLEARROUTE);
-            }
-        });
-        entryExitPopUp.add(editClear);
-        editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));  // NOI18N
-        editCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelClearInterlockFromSource(EntryExitPairs.CANCELROUTE);
-            }
-        });
-        entryExitPopUp.add(editCancel);
-
-        editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));  // NOI18N
-        editOneClick.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ManuallySetRoute(pd);
-            }
-        });
-        entryExitPopUp.add(editOneClick);
-
-        clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));  // NOI18N
-        clear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelClearInterlockFromSource(EntryExitPairs.CLEARROUTE);
-            }
-        });
-
-        cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));  // NOI18N
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelClearInterlockFromSource(EntryExitPairs.CANCELROUTE);
-            }
-        });
-
-        oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));  // NOI18N
-        oneClick.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ManuallySetRoute(pd);
-            }
-        });
-
-        pd.getPanel().addToPopUpMenu(pd.getSensor(), entryExitPopUp, jmri.jmrit.display.Editor.EDITPOPUPONLY);
-        pd.getPanel().addToPopUpMenu(pd.getSensor(), clear, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
-        pd.getPanel().addToPopUpMenu(pd.getSensor(), cancel, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
-        pd.getPanel().addToPopUpMenu(pd.getSensor(), oneClick, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
-        setMenuEnabled(false);
     }
 
     void cancelClearInterlockFromSource(int cancelClear) {
@@ -327,5 +256,5 @@ public class Source {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Source.class);
+    // private final static Logger log = LoggerFactory.getLogger(Source.class);
 }

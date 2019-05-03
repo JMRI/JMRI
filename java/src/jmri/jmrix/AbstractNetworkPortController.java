@@ -10,15 +10,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Enables basic setup of a network client interface for a jmrix implementation.
  *
- *
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Based upon work originally done by Paul Bender Copyright (C) 2009
  * @see jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter {
 
-    // the host name and port number identify what we are
-    // talking to.
+    // the host name and port number identify what we are talking to.
     protected String m_HostName = null;
     private String m_HostAddress = null;  // Internal IP address for  ZeroConf
     // configured clients.
@@ -54,28 +52,28 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
         } catch (IOException e) {
-            log.error("error opening network connection: ", e);
+            log.error("Error opening network connection: {}", e.getMessage()); // nothing to help user in full exception
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        getUserName(), m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
             throw (e);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
-                    m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
+                    getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
         } else if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    m_HostName, ConnectionStatus.CONNECTION_UP);
+                    getUserName(), m_HostName, ConnectionStatus.CONNECTION_UP);
         }
     }
 
     /**
-     * Query the status of this connection. If all OK, at least as far as is
-     * known, return true
+     * Query the status of this connection, at least as far as is
+     * known.
      *
      * @return true if connection is open
      */
@@ -144,11 +142,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     /**
-     * Returns the connection name for the network connection in the format of
+     * Return the connection name for the network connection in the format of
      * ip_address:port
      *
      * @return ip_address:port
-     *
      */
     @Override
     public String getCurrentPortName() {
@@ -173,7 +170,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * Set whether or not this adapter should be
      * configured automatically via MDNS.
      * Note: Default implementation ignores the parameter.
-     * @param autoconfig boolean value.
+     *
+     * @param autoconfig boolean value
      */
     @Override
     public void setMdnsConfigure(boolean autoconfig) {
@@ -183,7 +181,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * Get whether or not this adapter is configured
      * to use autoconfiguration via MDNS
      * Default implemntation always returns false.
-     * @return true if configured using MDNS.
+     *
+     * @return true if configured using MDNS
      */
     @Override
     public boolean getMdnsConfigure() {
@@ -191,7 +190,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     /*
-     * set the server's host name and port
+     * Set the server's host name and port
      * using mdns autoconfiguration.
      * Default implementation does nothing.
      */
@@ -225,16 +224,19 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        getUserName(), m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
         }
         try {
@@ -245,6 +247,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -256,10 +261,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             log.error("getOutputStream exception:", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        getUserName(), m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
         }
         return null;
@@ -272,8 +277,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     //private boolean allowConnectionRecovery = false;
     /**
-     * This is called when a connection is initially lost. It closes the client
-     * side socket connection, resets the open flag and attempts a reconnection.
+     * Close the client side socket connection, reset the open flag and attempt
+     * a reconnection. Called when a connection is initially lost.
      */
     @Override
     public void recover() {
@@ -299,7 +304,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         ReconnectWait thread = new ReconnectWait();
-        thread.setName("Connection Recovery " + getHostName());
+        thread.setName("Connection Recovery " + getCurrentPortName() );
         thread.start();
         try {
             thread.join();
@@ -354,8 +359,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     }
                     connect();
                 } catch (IOException ex) {
-                    log.error("restart failed", ex);
-                    return;
+                    log.trace("restart failed", ex); // main warning to log.error done within connect();
+                    // if returned on exception stops thread and connection attempts
                 }
                 
                 reply = !opened;

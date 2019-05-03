@@ -9,6 +9,7 @@
       <label xml:lang="fr">Comp.charge off/on</label>
       <label xml:lang="it">Compens.BEMF off/on</label>
       <label xml:lang="de">Lastregelung aus/ein</label>
+      <label xml:lang="ca">Compens.BEMF off/on</label>
     </display>
   </column>
   <column>
@@ -23,6 +24,7 @@
     </label>
     <display item="Controlref" layout="right" tooltip="If the motor does not reach max speed then reduce this parameter">
       <tooltip xml:lang="it">Se il motore non raggiunge la velocità massima, ridurre questo parametro</tooltip>
+      <tooltip xml:lang="ca">Si el motor no aconsegeuix la velocitat màxima, reduir aquest valor</tooltip>
     </display>
     <label>
       <text> </text>

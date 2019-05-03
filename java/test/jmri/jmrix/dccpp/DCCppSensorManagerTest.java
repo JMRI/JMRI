@@ -111,6 +111,10 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
     @After
     public void tearDown() {
         l.dispose();
+        l = null;
+        xnis = null;
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

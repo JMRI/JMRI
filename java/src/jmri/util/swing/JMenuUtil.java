@@ -1,7 +1,5 @@
 package jmri.util.swing;
 
-import static jmri.util.swing.GuiUtilBase.rootFromName;
-
 import java.awt.Container;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -81,7 +79,7 @@ public class JMenuUtil extends GuiUtilBase {
                     if (!(SystemType.isMacOSX()
                             && UIManager.getLookAndFeel().isNativeLookAndFeel()
                             && ((child.getChild("adapter") != null
-                            && child.getChild("adapter").getText().equals("apps.gui3.TabbedPreferencesAction"))
+                            && child.getChild("adapter").getText().equals("apps.gui3.tabbedpreferences.TabbedPreferencesAction"))
                             || (child.getChild("current") != null
                             && child.getChild("current").getText().equals("quit"))))) {
                         if (addSep) {

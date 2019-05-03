@@ -22,7 +22,6 @@ public abstract class DCCppTableModel extends AbstractTableModel {
     private int _dirtyCol = 0;
     private int _newCol = 0;
     private int _deleteCol = 0;
-    private int _numCols = 0;
     protected int _lastDataCol = 0;
 
     public DCCppTableModel(int dc, int nc, int delc, int numc) {
@@ -30,7 +29,6 @@ public abstract class DCCppTableModel extends AbstractTableModel {
         _dirtyCol = dc;
         _newCol = nc;
         _deleteCol = delc;
-        _numCols = numc;
         _lastDataCol = numc - 4;
         rowData = new ArrayList<>();
         deletedData = new ArrayList<>();
@@ -101,7 +99,7 @@ public abstract class DCCppTableModel extends AbstractTableModel {
 
     public void insertData(List<Object> v, boolean isnew) {
         if (!rowData.contains(v)) {
-            v.add("Delete");
+            v.add(Bundle.getMessage("ColumnDelete"));
             v.add(isnew); // is new
             v.add(false); // is dirty (no)
             v.add(false); // is marked for delete (of course not)

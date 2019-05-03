@@ -8,8 +8,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,19 +17,19 @@ public class DefaultListCellEditorTest {
 
     @Test
     public void testCTorCheckBox() {
-        DefaultListCellEditor t = new DefaultListCellEditor(new JCheckBox());
+        DefaultListCellEditor<String> t = new DefaultListCellEditor<String>(new JCheckBox());
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testCTorComboBox() {
-        DefaultListCellEditor t = new DefaultListCellEditor(new JComboBox());
+        DefaultListCellEditor<String> t = new DefaultListCellEditor<String>(new JComboBox<String>());
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testCTorTextField() {
-        DefaultListCellEditor t = new DefaultListCellEditor(new JTextField());
+        DefaultListCellEditor<String> t = new DefaultListCellEditor<String>(new JTextField());
         Assert.assertNotNull("exists",t);
     }
 

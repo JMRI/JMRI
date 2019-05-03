@@ -7,6 +7,10 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - RFID Readers</title><!-- Style -->
+  
+      <meta name="keywords" content=
+  "JMRI hardware rfid readers">
+  
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -51,13 +55,15 @@
 
       <p>JMRI also supports up to 8 individual readers connected
       via a Concentrator. Right now, the only supported
-      Concentrator is that from MERG, and then only for readers
+      Concentrator is that from <a href="../can/cbus/Details.shtml#c7">MERG</a>, and then only for readers
       using the CORE-ID protocol.<br>
+      
       Select "MERG Concentrator" for the "Adapter" on the
-      Connections tab in the JMRI Preferences. <a name="connecting"
-      id="connecting"></a></p>
+      Connections tab in the JMRI Preferences. </p>
 
-      <h2>Connecting</h2>
+      <h2><a name="connecting"
+      id="connecting">Connecting</a></h2>
+      
 
       <h3>Wiring</h3>
 
@@ -71,7 +77,7 @@
 
       <h3>Settings</h3><a href="RFID_Preferences.png"><img src=
       "RFID_Preferences.png" align="right" height="220" width=
-      "430"></a>
+      "430" alt="JMRI RFID Preferences"></a>
 
       <p>You configure JMRI's connection to your RFID hardware in
       JMRI's Preferences.<br>
@@ -169,7 +175,10 @@
 
         <li>The pop-up menu on the icon will let you change the
         formatting.</li>
-      </ul><!--#include virtual="/Footer" -->
+        
+      </ul>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

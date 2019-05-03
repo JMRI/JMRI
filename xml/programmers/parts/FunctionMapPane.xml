@@ -2,20 +2,22 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
-  <name xml:lang="it">Mappa Funzioni</name>
-  <name xml:lang="de">Funktionszuordnung</name>
-  <name xml:lang="da">Funktions Indstillinger</name>
   <name xml:lang="cs">Přiřazení funkcí</name>
+  <name xml:lang="da">Funktions Indstillinger</name>
+  <name xml:lang="de">Funktionszuordnung</name>
+  <name xml:lang="fr">Carte des Fonctions</name>
+  <name xml:lang="it">Mappa Funzioni</name>
   <name xml:lang="nl">Funktietoewijzing</name>
   <column>
     <row>
       <column>
         <label>
           <text>Use this sheet to determine which functions will control which outputs</text>
-          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
-          <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
-		  <text xml:lang="ca">Usa aquesta pestanya per establir quina funció controla cada sortida</text>
+          <text xml:lang="ca">Usa aquesta pestanya per establir quina funció controla cada sortida</text>
           <text xml:lang="cs">Použijte tento list pro určení která funkce bude řídit který výstup</text>
+          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
+          <text xml:lang="fr">Utiliser cette feuille pour déterminer quelles fonctions contrôlent quelles entrées</text>
+          <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
           <text xml:lang="nl">Stel per uitgang de aanstuurfunctie in</text>
         </label>
         <label>

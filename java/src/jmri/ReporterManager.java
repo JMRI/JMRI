@@ -1,8 +1,6 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -38,13 +36,15 @@ import javax.annotation.Nonnull;
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
-public interface ReporterManager extends Manager<Reporter> {
+public interface ReporterManager extends ProvidingManager<Reporter> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
      * new Reporter. If the name is a valid system name, it will be used for the
      * new Reporter. Otherwise, the makeSystemName method will attempt to turn
      * it into a valid system name.
+     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -56,6 +56,10 @@ public interface ReporterManager extends Manager<Reporter> {
      */
     @Nonnull public
     Reporter provideReporter(@Nonnull String name);
+
+    @Override
+    /** {@inheritDoc} */
+    default public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -130,16 +134,6 @@ public interface ReporterManager extends Manager<Reporter> {
     Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
-     * Get a list of all Reporter system names.
-     *
-     * @return a list of reporter system names or an empty list if there are no
-     *         reporters
-     */
-    @Nonnull public
-    @Override
-    List<String> getSystemNameList();
-
-    /**
      * Determine if it is possible to add a range of reporters in numerical
      * order.
      *
@@ -150,7 +144,7 @@ public interface ReporterManager extends Manager<Reporter> {
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 address away
+     * return the next free valid address up to a maximum of 10 addresses away
      * from the initial address.
      *
      * @param prefix     system prefix used to make up the systemName
@@ -160,8 +154,9 @@ public interface ReporterManager extends Manager<Reporter> {
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
+    @Override
     public String getEntryToolTip();
 
 }

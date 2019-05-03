@@ -1,10 +1,8 @@
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.ToDo;
+import org.junit.*;
 
 /**
  * Tests for ConnectionConfig class.
@@ -12,22 +10,26 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class ConnectionConfigTest {
+public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
-   }
+    @Test
+    @Ignore("parent class test is unreliable on appveyor due to serial port identification")
+    @ToDo("find and correct the reason why the test fails on appveyor for this class")
+    public void testGetInfo(){
+    }
 
    @Before
    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new ConnectionConfig();
+        cc.setManufacturer("Lawicell");
    }
 
    @After
    public void tearDown(){
+        cc=null;
         JUnitUtil.tearDown();
    }
 

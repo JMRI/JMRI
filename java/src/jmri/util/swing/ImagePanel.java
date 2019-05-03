@@ -1,10 +1,6 @@
 package jmri.util.swing;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -24,8 +20,9 @@ public class ImagePanel extends JPanel {
 
     /**
      * Set background images for ImagePanel.
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
-     * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
+     * For specifics, 
+     * see the setupPanel() private method in {@link jmri.jmrit.catalog.PreviewDialog}
+     * and the makeButtonPanel() private method in {@link jmri.jmrit.catalog.CatalogPanel}
      *
      * @param img Image to load as background
      */
@@ -44,7 +41,7 @@ public class ImagePanel extends JPanel {
             imgWidth = back.getWidth(this);
             imgHeight = back.getHeight(this);
             double frameRatio = (double) getWidth() / (double) getHeight();
-            double imgRatio = imgWidth / imgHeight;
+            double imgRatio = (double) imgWidth / (double) imgHeight;
             log.debug("ratios: fr {} - img {}", frameRatio, imgRatio);
 
             // maintain squares on non square panels, enlarge to fill full frame
@@ -55,18 +52,14 @@ public class ImagePanel extends JPanel {
                 // keep full imgWidth
                 imgHeight = (int) (imgWidth / frameRatio); // clip height
             }
-            // clip part op back image
+            // clip part of back image
             clip = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
             clip = back.getSubimage(0, 0, Math.min(imgWidth, back.getWidth(this)),
-                    Math.min(imgHeight, back.getWidth(this))); // catch clip size error on change to different pane
+                    Math.min(imgHeight, back.getHeight(this))); // catch clip size error on change to different pane
 
             g.drawImage(clip, 0, 0, getWidth(), getHeight(), this);
         }
     }
-
-    //private void update() {
-    //    repaint();
-    //}
 
     private static final Logger log = LoggerFactory.getLogger(ImagePanel.class);
 

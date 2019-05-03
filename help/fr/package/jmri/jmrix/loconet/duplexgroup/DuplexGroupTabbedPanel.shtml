@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Duplex Network Configuration Tool</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="B. Milhaupt" name="Author">
+  <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI configure LocoNet UR92">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -704,8 +701,8 @@
       Tool</a> allows reading and writing the LocoNet ID number</p>
 
       <p>Support for this software tool is available through the
-      <a href="http://groups.yahoo.com/group/jmriusers/">JMRI User
-      forum at Yahoo Groups</a>. Digitrax does <b>NOT</b> provide
+      <a href="https://groups.io/g/jmriusers">JMRI User
+      forum at Groups.io</a>. Digitrax does <b>NOT</b> provide
       support for this tool.</p>
 
       <p>The <a href="http://www.digitrax.com">Digitrax web

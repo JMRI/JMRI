@@ -15,8 +15,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * to their liking.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
- * 
+ *
  */
 public class TrainManifest extends TrainCommon {
 
@@ -50,8 +50,8 @@ public class TrainManifest extends TrainCommon {
 
         try {
             // build header
-            if (!train.getTrainRailroadName().equals(Train.NONE)) {
-                newLine(fileOut, train.getTrainRailroadName());
+            if (!train.getRailroadName().equals(Train.NONE)) {
+                newLine(fileOut, train.getRailroadName());
             } else {
                 newLine(fileOut, Setup.getRailroadName());
             }
@@ -62,9 +62,8 @@ public class TrainManifest extends TrainCommon {
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
 
-            if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                        InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
+            if (Setup.isPrintTrainScheduleNameEnabled()) {
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
@@ -138,7 +137,7 @@ public class TrainManifest extends TrainCommon {
                         }
                         // add route location comment
                         if (!rl.getComment().trim().equals(RouteLocation.NONE)) {
-                            newLine(fileOut, rl.getComment());
+                            newLine(fileOut, rl.getFormatedColorComment());
                         }
 
                         // add location comment
@@ -237,7 +236,7 @@ public class TrainManifest extends TrainCommon {
                             if (rl.getComment().trim().length() > 0) {
                                 s = MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringNoScheduledWorkWithRouteComment(),
-                                        new Object[]{routeLocationName, rl.getComment(), train.getName(),
+                                        new Object[]{routeLocationName, rl.getFormatedColorComment(), train.getName(),
                                                 train.getDescription()});
                             }
                         }
@@ -282,7 +281,7 @@ public class TrainManifest extends TrainCommon {
             newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[]{
                     Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()}));
             newLine(fileOut, messageFormatText);
-            e.printStackTrace();
+            log.error("Illegal argument", e);
         }
 
         fileOut.flush();

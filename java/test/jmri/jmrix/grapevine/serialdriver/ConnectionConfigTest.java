@@ -10,24 +10,21 @@ import org.junit.Test;
  * Tests for ConnectionConfig class.
  *
  * @author Paul Bender Copyright (C) 2016
- **/
+ */
 
-public class ConnectionConfigTest {
-
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
-   }
+public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before
    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new ConnectionConfig();
    }
 
    @After
    public void tearDown(){
+        cc=null;
         JUnitUtil.tearDown();
    }
 

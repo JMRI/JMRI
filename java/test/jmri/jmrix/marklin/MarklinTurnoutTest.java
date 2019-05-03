@@ -15,7 +15,7 @@ public class MarklinTurnoutTest {
     @Test
     public void testCTor() {
         MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        new MarklinSystemConnectionMemo(tc);
         MarklinTurnout t = new MarklinTurnout(1,"MC",tc);
         Assert.assertNotNull("exists",t);
     }

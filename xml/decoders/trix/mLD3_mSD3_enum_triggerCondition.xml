@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Trigger condition enum for Märklin mLD/3 and mSD/3 decoders            -->
+
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice value="0">
+    <choice>High level</choice>
+    <choice xml:lang="de">Hochpegel</choice>
+    <choice xml:lang="fr">Niveau Haut</choice>
+  </enumChoice>
+  <enumChoice value="1">
+    <choice>Low level</choice>
+    <choice xml:lang="de">Niedriger Pegel</choice>
+    <choice xml:lang="fr">Niveau Bas</choice>
+  </enumChoice>
+  <enumChoice value="2">
+    <choice>Rising Edge</choice>
+    <choice xml:lang="de">Steigende Flanke</choice>
+    <choice xml:lang="fr">Front Montant</choice>
+  </enumChoice>
+  <enumChoice value="3">
+    <choice>Falling Edge</choice>
+    <choice xml:lang="de">Fallende Flanke</choice>
+    <choice xml:lang="fr">Front Descendant</choice>
+  </enumChoice>  
+</enumVal>

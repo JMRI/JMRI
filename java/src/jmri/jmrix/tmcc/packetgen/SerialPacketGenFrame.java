@@ -5,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JSeparator;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
-import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.StringUtil;
 

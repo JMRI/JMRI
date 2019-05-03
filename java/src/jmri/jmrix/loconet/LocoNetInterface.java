@@ -2,21 +2,21 @@ package jmri.jmrix.loconet;
 
 /**
  * LocoNetInterface defines the general connection to a LocoNet layout.
- * <P>
+ * <p>
  * Use this interface to send messages to a LocoNet layout. Classes implementing
  * the LocoNetListener interface can register here to receive incoming LocoNet
  * messages as events.
- * <P>
- * The jmri.jrmix.loconet.LnTrafficManager provides the first implementation of
+ * <p>
+ * The jmri.jrmix.loconet.LnTrafficController provides the first implementation of
  * this interface.
- * <P>
+ * <p>
  * How do you locate an implemenation of this interface? That's an interesting
  * question. This is inherently LocoNet specific, so it would be inappropriate
  * to put it in the jmri.InterfaceManager. And Java interfaces can't have static
  * members, so we can't provide an implementation() member. For now, we use a
  * static implementation member in the LnTrafficManager implementation to locate
  * _any_ implementation; this clearly needs to be improved.
- * <P>
+ * <p>
  * LocoNetListener implementations registering for traffic updates cannot assume
  * that messages will be returned in any particular thread. See the
  * LocoNetListener doc for more background.
@@ -37,13 +37,13 @@ public interface LocoNetInterface {
 
     /**
      * Request notification of things happening on the LocoNet.
-     * <P>
+     * <p>
      * The same listener can register multiple times with different masks.
      * (Multiple registrations with a single mask value are equivalent to a
      * single registration) Mask values are defined as class constants. Note
      * that these are bit masks, and should be OR'd, not added, if multiple
      * values are desired.
-     * <P>
+     * <p>
      * The event notification contains the received message as source, not this
      * object, so that we can notify of an incoming message to multiple places
      * and then move on.
@@ -102,5 +102,19 @@ public interface LocoNetInterface {
      * power
      */
     public static final int POWER = 16;
+
+    /**
+     * Set the system connection memo associated with this connection.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m);
+
+    /**
+     * Get the system connection memo associated with this connection.
+     *
+     * @return the associated systemConnectionMemo object
+     */
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo();
 
 }

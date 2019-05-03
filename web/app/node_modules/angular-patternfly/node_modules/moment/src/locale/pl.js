@@ -29,7 +29,9 @@ function translate(number, withoutSuffix, key) {
 
 export default moment.defineLocale('pl', {
     months : function (momentToFormat, format) {
-        if (format === '') {
+        if (!momentToFormat) {
+            return monthsNominative;
+        } else if (format === '') {
             // Hack: if format empty we know this is used to generate
             // RegExp by moment. Give then back both valid forms of months
             // in RegExp ready format.
@@ -42,7 +44,7 @@ export default moment.defineLocale('pl', {
     },
     monthsShort : 'sty_lut_mar_kwi_maj_cze_lip_sie_wrz_paź_lis_gru'.split('_'),
     weekdays : 'niedziela_poniedziałek_wtorek_środa_czwartek_piątek_sobota'.split('_'),
-    weekdaysShort : 'nie_pon_wt_śr_czw_pt_sb'.split('_'),
+    weekdaysShort : 'ndz_pon_wt_śr_czw_pt_sob'.split('_'),
     weekdaysMin : 'Nd_Pn_Wt_Śr_Cz_Pt_So'.split('_'),
     longDateFormat : {
         LT : 'HH:mm',
@@ -55,7 +57,24 @@ export default moment.defineLocale('pl', {
     calendar : {
         sameDay: '[Dziś o] LT',
         nextDay: '[Jutro o] LT',
-        nextWeek: '[W] dddd [o] LT',
+        nextWeek: function () {
+            switch (this.day()) {
+                case 0:
+                    return '[W niedzielę o] LT';
+
+                case 2:
+                    return '[We wtorek o] LT';
+
+                case 3:
+                    return '[W środę o] LT';
+
+                case 6:
+                    return '[W sobotę o] LT';
+
+                default:
+                    return '[W] dddd [o] LT';
+            }
+        },
         lastDay: '[Wczoraj o] LT',
         lastWeek: function () {
             switch (this.day()) {
@@ -86,7 +105,7 @@ export default moment.defineLocale('pl', {
         y : 'rok',
         yy : translate
     },
-    ordinalParse: /\d{1,2}\./,
+    dayOfMonthOrdinalParse: /\d{1,2}\./,
     ordinal : '%d.',
     week : {
         dow : 1, // Monday is the first day of the week.

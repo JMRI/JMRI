@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -196,11 +195,7 @@
         <label>Page Register</label>
       </variable>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <pane>
     <column>

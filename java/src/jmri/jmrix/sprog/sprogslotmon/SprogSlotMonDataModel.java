@@ -35,6 +35,22 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     /**
+     * Check the requested number of slots against limits and return a valid slot
+     * count.
+     * 
+     * @return validated number of slots
+     */
+    public static int getSlotCount() {
+        int numSlots = SprogConstants.MAX_SLOTS;
+        if (numSlots < SprogConstants.MIN_SLOTS) {
+            numSlots = SprogConstants.MIN_SLOTS;
+        } else if (numSlots > SprogConstants.SLOTS_LIMIT) {
+            numSlots = SprogConstants.SLOTS_LIMIT;
+        }
+        return numSlots;
+    }
+    
+    /**
      * Return the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed.
      * <p>
@@ -43,7 +59,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
      */
     @Override
     public int getRowCount() {
-        int nMax = SprogConstants.MAX_SLOTS;
+        int nMax = getSlotCount();
         if (_allSlots) {
             // will show the entire set, so don't bother counting
             return nMax;
@@ -89,6 +105,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SLOTCOLUMN:
+                return Integer.class;
             case ADDRCOLUMN:
             case SPDCOLUMN:
             case STATCOLUMN:
@@ -354,7 +371,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         int slotNum;
         int n = -1;   // need to find a used slot to have the 0th one!
         int nMin = 0;
-        int nMax = SprogConstants.MAX_SLOTS;
+        int nMax = getSlotCount();
         for (slotNum = nMin; slotNum < nMax; slotNum++) {
             SprogSlot s = _memo.getCommandStation().slot(slotNum);
             if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) {

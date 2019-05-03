@@ -4,38 +4,40 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of SprogSlotMonFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SprogSlotMonFrameTest {
+public class SprogSlotMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    SprogSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SprogSlotMonFrame action = new SprogSlotMonFrame(memo);
-        Assert.assertNotNull("exists", action);
-        action.dispose();
-    }
+    private SprogTrafficControlScaffold stcs = null;
+    private SprogSystemConnectionMemo m = null;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        memo = new jmri.jmrix.sprog.SprogSystemConnectionMemo();
-        memo.setSprogTrafficController(new SprogTrafficControlScaffold(memo));
-        memo.setSprogMode(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
-        memo.configureCommandStation();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        m = new jmri.jmrix.sprog.SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        stcs = new SprogTrafficControlScaffold(m);
+        m.setSprogTrafficController(stcs);
+        m.configureCommandStation();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new SprogSlotMonFrame(m);
+	}
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {
+        m.getSlotThread().interrupt();
+        stcs.dispose();
+        super.tearDown();
+    }
 }
+
+

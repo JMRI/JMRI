@@ -1,0 +1,1348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Function Map CVs for Märklin mLD/3 and mSD/3 decoders                  -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-04-01</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2018-04-21</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Minor fixes after user feedback</revremark>
+    </revision>
+  </revhistory>
+
+  <variable CV="33" item="Read First Line" readOnly="yes">
+      <decVal/>
+      <label>First Available Line :</label>
+      <label xml:lang="de">Erste verfügbare Zeile :</label>
+      <label xml:lang="fr">Première ligne disponible :</label>
+      <tooltip>&lt;html&gt;
+                CV 33 indicates the first available line among the 80 possible ones.&lt;br&gt;
+                If a new mapping is created, this CV can be left empty.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;
+                In CV 33 wird eingetragen, welche der 80 mögliche&lt;br&gt;
+                Zeilen eingelesen werden soll.&lt;br&gt;
+                Wird ein neues Mapping angelegt, kann diese CV leer bleiben.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="fr">&lt;html&gt;
+                Dans le CV 33, il est indiqué quelle ligne parmi les 80&lt;br&gt;
+                possibles est disponible en lecture.&lt;br&gt;
+                Si un nouveau mappage est créé, ce CV peut rester vide.
+                &lt;/html&gt;</tooltip>
+  </variable>
+  <variable CV="34" item="Trigger" writeOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+      <label>Trigger</label>
+      <label xml:lang="de">Auslöser</label>
+      <label xml:lang="fr">Déclencheur</label>
+  </variable>
+  <variable CV="35" mask="XXXXVVXX" item="Trigger Movement" writeOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+      <label>Movement</label>
+      <label xml:lang="de">Bewegung</label>
+      <label xml:lang="fr">Mouvement</label>
+      <tooltip>&lt;html&gt;
+                This CV can be left blank.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;
+                Diese CV kann leer bleiben.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="fr">&lt;html&gt;
+                Ce CV peut être laissé vide.
+                &lt;/html&gt;</tooltip>
+  </variable>
+  <variable CV="35" mask="XXVVXXXX" item="Trigger Direction" writeOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+      <label>Direction</label>
+      <label xml:lang="de">Richtung</label>
+      <label xml:lang="fr">Direction</label>
+      <tooltip>&lt;html&gt;
+                This CV can be left blank.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;
+                Diese CV kann leer bleiben.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="fr">&lt;html&gt;
+                Ce CV peut être laissé vide.
+                &lt;/html&gt;</tooltip>
+  </variable>
+  <variable CV="35" mask="VVXXXXXX" item="Trigger Condition" writeOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+      <label>Condition</label>
+      <label xml:lang="de">Bedingung</label>
+      <label xml:lang="fr">Condition</label>
+      <tooltip>&lt;html&gt;
+                This CV can be left blank.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;
+                Diese CV kann leer bleiben.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="fr">&lt;html&gt;
+                Ce CV peut être laissé vide.
+                &lt;/html&gt;</tooltip>
+  </variable>
+  <variable CV="36" item="Function Mapping" writeOnly="yes" default="80">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+      <label>Function</label>
+      <label xml:lang="de">Funktion</label>
+      <label xml:lang="fr">Fonction</label>
+  </variable>
+  <variable CV="37" item="Write Line" writeOnly="yes">
+      <decVal/>
+      <label>Write Line</label>
+      <label xml:lang="de">Zeile schreiben</label>
+      <label xml:lang="fr">Ligne d'écriture</label>
+      <tooltip>&lt;html&gt;
+                In CV 37 is indicated in which line the currently created&lt;br&gt;
+                Mapping should be entered. Should the specified line be already occupied&lt;br&gt;
+                then it will be overwritten with the new settings.&lt;br&gt;
+                A newly created mapping is only valid if it is written in a line.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;
+                In CV 37 wird angegeben, in welche Zeile das aktuell angelegte&lt;br&gt;
+                Mapping eingetragen werden soll. Wird hier eine schon belegte&lt;br&gt;
+                Zeile angegeben, so wird diese durch die neuen Einstellungen&lt;br&gt;
+                überschrieben. Ein neu angelegtes Mapping ist erst gültig, wenn es&lt;br&gt;
+                in eine Zeile geschrieben wurde.
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="fr">&lt;html&gt;
+                Dans le CV37 est spécifié l’emplacement où la ligne de mappage&lt;br&gt;
+                actuellement évaluée doit être enregistrée.&lt;br&gt;
+                Si une ligne y est déjà, elle sera écrasée par les nouveaux paramètres.&lt;br&gt;
+                Un mappage nouvellement créé n’est valable que s’il a été écrit dans une ligne.
+                &lt;/html&gt;</tooltip>
+  </variable>
+
+  <variable CV="17.0.260" item="Trigger 0" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.261" mask="XXXXVVXX" item="Trigger Movement 0" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.261" mask="XXVVXXXX" item="Trigger Direction 0" readOnly="yes" default="1">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.261" mask="VVXXXXXX" item="Trigger Condition 0" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.262" item="Function Mapping 0" readOnly="yes" default="80">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.263" item="Trigger 1" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.264" mask="XXXXVVXX" item="Trigger Movement 1" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.264" mask="XXVVXXXX" item="Trigger Direction 1" readOnly="yes" default="2">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.264" mask="VVXXXXXX" item="Trigger Condition 1" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.265" item="Function Mapping 1" readOnly="yes" default="81">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.266" item="Trigger 2" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.267" mask="XXXXVVXX" item="Trigger Movement 2" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.267" mask="XXVVXXXX" item="Trigger Direction 2" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.267" mask="VVXXXXXX" item="Trigger Condition 2" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.268" item="Function Mapping 2" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.269" item="Trigger 3" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.270" mask="XXXXVVXX" item="Trigger Movement 3" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.270" mask="XXVVXXXX" item="Trigger Direction 3" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.270" mask="VVXXXXXX" item="Trigger Condition 3" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.271" item="Function Mapping 3" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.272" item="Trigger 4" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.273" mask="XXXXVVXX" item="Trigger Movement 4" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.273" mask="XXVVXXXX" item="Trigger Direction 4" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.273" mask="VVXXXXXX" item="Trigger Condition 4" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.274" item="Function Mapping 4" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+   <variable CV="17.0.275" item="Trigger 5" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.276" mask="XXXXVVXX" item="Trigger Movement 5" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.276" mask="XXVVXXXX" item="Trigger Direction 5" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.276" mask="VVXXXXXX" item="Trigger Condition 5" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.277" item="Function Mapping 5" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.278" item="Trigger 6" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.279" mask="XXXXVVXX" item="Trigger Movement 6" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.279" mask="XXVVXXXX" item="Trigger Direction 6" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.279" mask="VVXXXXXX" item="Trigger Condition 6" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.280" item="Function Mapping 6" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.281" item="Trigger 7" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.282" mask="XXXXVVXX" item="Trigger Movement 7" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.282" mask="XXVVXXXX" item="Trigger Direction 7" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.282" mask="VVXXXXXX" item="Trigger Condition 7" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.283" item="Function Mapping 7" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.284" item="Trigger 8" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.285" mask="XXXXVVXX" item="Trigger Movement 8" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.285" mask="XXVVXXXX" item="Trigger Direction 8" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.285" mask="VVXXXXXX" item="Trigger Condition 8" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.286" item="Function Mapping 8" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.287" item="Trigger 9" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.288" mask="XXXXVVXX" item="Trigger Movement 9" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.288" mask="XXVVXXXX" item="Trigger Direction 9" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.288" mask="VVXXXXXX" item="Trigger Condition 9" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.289" item="Function Mapping 9" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.290" item="Trigger 10" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.291" mask="XXXXVVXX" item="Trigger Movement 10" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.291" mask="XXVVXXXX" item="Trigger Direction 10" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.291" mask="VVXXXXXX" item="Trigger Condition 10" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.292" item="Function Mapping 10" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.293" item="Trigger 11" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.294" mask="XXXXVVXX" item="Trigger Movement 11" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.294" mask="XXVVXXXX" item="Trigger Direction 11" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.294" mask="VVXXXXXX" item="Trigger Condition 11" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.295" item="Function Mapping 11" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.296" item="Trigger 12" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.297" mask="XXXXVVXX" item="Trigger Movement 12" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.297" mask="XXVVXXXX" item="Trigger Direction 12" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.297" mask="VVXXXXXX" item="Trigger Condition 12" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.298" item="Function Mapping 12" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.299" item="Trigger 13" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.300" mask="XXXXVVXX" item="Trigger Movement 13" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.300" mask="XXVVXXXX" item="Trigger Direction 13" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.300" mask="VVXXXXXX" item="Trigger Condition 13" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.301" item="Function Mapping 13" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.302" item="Trigger 14" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.303" mask="XXXXVVXX" item="Trigger Movement 14" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.303" mask="XXVVXXXX" item="Trigger Direction 14" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.303" mask="VVXXXXXX" item="Trigger Condition 14" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.304" item="Function Mapping 14" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.305" item="Trigger 15" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.306" mask="XXXXVVXX" item="Trigger Movement 15" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.306" mask="XXVVXXXX" item="Trigger Direction 15" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.306" mask="VVXXXXXX" item="Trigger Condition 15" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.307" item="Function Mapping 15" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.308" item="Trigger 16" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.309" mask="XXXXVVXX" item="Trigger Movement 16" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.309" mask="XXVVXXXX" item="Trigger Direction 16" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.309" mask="VVXXXXXX" item="Trigger Condition 16" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.310" item="Function Mapping 16" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.311" item="Trigger 17" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.312" mask="XXXXVVXX" item="Trigger Movement 17" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.312" mask="XXVVXXXX" item="Trigger Direction 17" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.312" mask="VVXXXXXX" item="Trigger Condition 17" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.313" item="Function Mapping 17" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.314" item="Trigger 18" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.315" mask="XXXXVVXX" item="Trigger Movement 18" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.315" mask="XXVVXXXX" item="Trigger Direction 18" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.315" mask="VVXXXXXX" item="Trigger Condition 18" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.316" item="Function Mapping 18" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.317" item="Trigger 19" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.318" mask="XXXXVVXX" item="Trigger Movement 19" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.318" mask="XXVVXXXX" item="Trigger Direction 19" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.318" mask="VVXXXXXX" item="Trigger Condition 19" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.319" item="Function Mapping 19" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.320" item="Trigger 20" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.321" mask="XXXXVVXX" item="Trigger Movement 20" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.321" mask="XXVVXXXX" item="Trigger Direction 20" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.321" mask="VVXXXXXX" item="Trigger Condition 20" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.322" item="Function Mapping 20" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.323" item="Trigger 21" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.324" mask="XXXXVVXX" item="Trigger Movement 21" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.324" mask="XXVVXXXX" item="Trigger Direction 21" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.324" mask="VVXXXXXX" item="Trigger Condition 21" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.325" item="Function Mapping 21" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.326" item="Trigger 22" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.327" mask="XXXXVVXX" item="Trigger Movement 22" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.327" mask="XXVVXXXX" item="Trigger Direction 22" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.327" mask="VVXXXXXX" item="Trigger Condition 22" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.328" item="Function Mapping 22" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.329" item="Trigger 23" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.330" mask="XXXXVVXX" item="Trigger Movement 23" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.330" mask="XXVVXXXX" item="Trigger Direction 23" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.330" mask="VVXXXXXX" item="Trigger Condition 23" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.331" item="Function Mapping 23" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.332" item="Trigger 24" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.333" mask="XXXXVVXX" item="Trigger Movement 24" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.333" mask="XXVVXXXX" item="Trigger Direction 24" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.333" mask="VVXXXXXX" item="Trigger Condition 24" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.334" item="Function Mapping 24" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.335" item="Trigger 25" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.336" mask="XXXXVVXX" item="Trigger Movement 25" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.336" mask="XXVVXXXX" item="Trigger Direction 25" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.336" mask="VVXXXXXX" item="Trigger Condition 25" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.337" item="Function Mapping 25" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.338" item="Trigger 26" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.339" mask="XXXXVVXX" item="Trigger Movement 26" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.339" mask="XXVVXXXX" item="Trigger Direction 26" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.339" mask="VVXXXXXX" item="Trigger Condition 26" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.340" item="Function Mapping 26" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.341" item="Trigger 27" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.342" mask="XXXXVVXX" item="Trigger Movement 27" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.342" mask="XXVVXXXX" item="Trigger Direction 27" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.342" mask="VVXXXXXX" item="Trigger Condition 27" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.343" item="Function Mapping 27" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.344" item="Trigger 28" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.345" mask="XXXXVVXX" item="Trigger Movement 28" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.345" mask="XXVVXXXX" item="Trigger Direction 28" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.345" mask="VVXXXXXX" item="Trigger Condition 28" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.346" item="Function Mapping 28" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.347" item="Trigger 29" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.348" mask="XXXXVVXX" item="Trigger Movement 29" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.348" mask="XXVVXXXX" item="Trigger Direction 29" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.348" mask="VVXXXXXX" item="Trigger Condition 29" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.349" item="Function Mapping 29" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.350" item="Trigger 30" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.351" mask="XXXXVVXX" item="Trigger Movement 30" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.351" mask="XXVVXXXX" item="Trigger Direction 30" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.351" mask="VVXXXXXX" item="Trigger Condition 30" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.352" item="Function Mapping 30" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.353" item="Trigger 31" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.354" mask="XXXXVVXX" item="Trigger Movement 31" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.354" mask="XXVVXXXX" item="Trigger Direction 31" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.354" mask="VVXXXXXX" item="Trigger Condition 31" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.355" item="Function Mapping 31" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.356" item="Trigger 32" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.357" mask="XXXXVVXX" item="Trigger Movement 32" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.357" mask="XXVVXXXX" item="Trigger Direction 32" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.357" mask="VVXXXXXX" item="Trigger Condition 32" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.358" item="Function Mapping 32" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.359" item="Trigger 33" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.360" mask="XXXXVVXX" item="Trigger Movement 33" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.360" mask="XXVVXXXX" item="Trigger Direction 33" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.360" mask="VVXXXXXX" item="Trigger Condition 33" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.361" item="Function Mapping 33" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.362" item="Trigger 34" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.363" mask="XXXXVVXX" item="Trigger Movement 34" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.363" mask="XXVVXXXX" item="Trigger Direction 34" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.363" mask="VVXXXXXX" item="Trigger Condition 34" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.364" item="Function Mapping 34" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.365" item="Trigger 35" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.366" mask="XXXXVVXX" item="Trigger Movement 35" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.366" mask="XXVVXXXX" item="Trigger Direction 35" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.366" mask="VVXXXXXX" item="Trigger Condition 35" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.367" item="Function Mapping 35" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.368" item="Trigger 36" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.369" mask="XXXXVVXX" item="Trigger Movement 36" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.369" mask="XXVVXXXX" item="Trigger Direction 36" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.369" mask="VVXXXXXX" item="Trigger Condition 36" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.370" item="Function Mapping 36" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.371" item="Trigger 37" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.372" mask="XXXXVVXX" item="Trigger Movement 37" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.372" mask="XXVVXXXX" item="Trigger Direction 37" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.372" mask="VVXXXXXX" item="Trigger Condition 37" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.373" item="Function Mapping 37" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.374" item="Trigger 38" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.375" mask="XXXXVVXX" item="Trigger Movement 38" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.375" mask="XXVVXXXX" item="Trigger Direction 38" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.375" mask="VVXXXXXX" item="Trigger Condition 38" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.376" item="Function Mapping 38" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.377" item="Trigger 39" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.378" mask="XXXXVVXX" item="Trigger Movement 39" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.378" mask="XXVVXXXX" item="Trigger Direction 39" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.378" mask="VVXXXXXX" item="Trigger Condition 39" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.379" item="Function Mapping 39" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.380" item="Trigger 40" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.381" mask="XXXXVVXX" item="Trigger Movement 40" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.381" mask="XXVVXXXX" item="Trigger Direction 40" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.381" mask="VVXXXXXX" item="Trigger Condition 40" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.382" item="Function Mapping 40" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.383" item="Trigger 41" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.384" mask="XXXXVVXX" item="Trigger Movement 41" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.384" mask="XXVVXXXX" item="Trigger Direction 41" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.384" mask="VVXXXXXX" item="Trigger Condition 41" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.385" item="Function Mapping 41" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.386" item="Trigger 42" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.387" mask="XXXXVVXX" item="Trigger Movement 42" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.387" mask="XXVVXXXX" item="Trigger Direction 42" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.387" mask="VVXXXXXX" item="Trigger Condition 42" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.388" item="Function Mapping 42" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.389" item="Trigger 43" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.390" mask="XXXXVVXX" item="Trigger Movement 43" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.390" mask="XXVVXXXX" item="Trigger Direction 43" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.390" mask="VVXXXXXX" item="Trigger Condition 43" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.391" item="Function Mapping 43" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.392" item="Trigger 44" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.393" mask="XXXXVVXX" item="Trigger Movement 44" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.393" mask="XXVVXXXX" item="Trigger Direction 44" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.393" mask="VVXXXXXX" item="Trigger Condition 44" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.394" item="Function Mapping 44" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.395" item="Trigger 45" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.396" mask="XXXXVVXX" item="Trigger Movement 45" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.396" mask="XXVVXXXX" item="Trigger Direction 45" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.396" mask="VVXXXXXX" item="Trigger Condition 45" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.397" item="Function Mapping 45" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.398" item="Trigger 46" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.399" mask="XXXXVVXX" item="Trigger Movement 46" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.399" mask="XXVVXXXX" item="Trigger Direction 46" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.399" mask="VVXXXXXX" item="Trigger Condition 46" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.400" item="Function Mapping 46" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.401" item="Trigger 47" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.402" mask="XXXXVVXX" item="Trigger Movement 47" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.402" mask="XXVVXXXX" item="Trigger Direction 47" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.402" mask="VVXXXXXX" item="Trigger Condition 47" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.403" item="Function Mapping 47" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.404" item="Trigger 48" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.405" mask="XXXXVVXX" item="Trigger Movement 48" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.405" mask="XXVVXXXX" item="Trigger Direction 48" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.405" mask="VVXXXXXX" item="Trigger Condition 48" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.406" item="Function Mapping 48" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.407" item="Trigger 49" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.408" mask="XXXXVVXX" item="Trigger Movement 49" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.408" mask="XXVVXXXX" item="Trigger Direction 49" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.408" mask="VVXXXXXX" item="Trigger Condition 49" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.409" item="Function Mapping 49" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.410" item="Trigger 50" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.411" mask="XXXXVVXX" item="Trigger Movement 50" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.411" mask="XXVVXXXX" item="Trigger Direction 50" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.411" mask="VVXXXXXX" item="Trigger Condition 50" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.412" item="Function Mapping 50" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.413" item="Trigger 51" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.414" mask="XXXXVVXX" item="Trigger Movement 51" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.414" mask="XXVVXXXX" item="Trigger Direction 51" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.414" mask="VVXXXXXX" item="Trigger Condition 51" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.415" item="Function Mapping 51" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.416" item="Trigger 52" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.417" mask="XXXXVVXX" item="Trigger Movement 52" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.417" mask="XXVVXXXX" item="Trigger Direction 52" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.417" mask="VVXXXXXX" item="Trigger Condition 52" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.418" item="Function Mapping 52" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.419" item="Trigger 53" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.420" mask="XXXXVVXX" item="Trigger Movement 53" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.420" mask="XXVVXXXX" item="Trigger Direction 53" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.420" mask="VVXXXXXX" item="Trigger Condition 53" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.421" item="Function Mapping 53" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.422" item="Trigger 54" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.423" mask="XXXXVVXX" item="Trigger Movement 54" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.423" mask="XXVVXXXX" item="Trigger Direction 54" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.423" mask="VVXXXXXX" item="Trigger Condition 54" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.424" item="Function Mapping 54" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.425" item="Trigger 55" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.426" mask="XXXXVVXX" item="Trigger Movement 55" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.426" mask="XXVVXXXX" item="Trigger Direction 55" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.426" mask="VVXXXXXX" item="Trigger Condition 55" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.427" item="Function Mapping 55" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.428" item="Trigger 56" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.429" mask="XXXXVVXX" item="Trigger Movement 56" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.429" mask="XXVVXXXX" item="Trigger Direction 56" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.429" mask="VVXXXXXX" item="Trigger Condition 56" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.430" item="Function Mapping 56" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.431" item="Trigger 57" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.432" mask="XXXXVVXX" item="Trigger Movement 57" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.432" mask="XXVVXXXX" item="Trigger Direction 57" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.432" mask="VVXXXXXX" item="Trigger Condition 57" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.433" item="Function Mapping 57" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.434" item="Trigger 58" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.435" mask="XXXXVVXX" item="Trigger Movement 58" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.435" mask="XXVVXXXX" item="Trigger Direction 58" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.435" mask="VVXXXXXX" item="Trigger Condition 58" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.436" item="Function Mapping 58" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.437" item="Trigger 59" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.438" mask="XXXXVVXX" item="Trigger Movement 59" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.438" mask="XXVVXXXX" item="Trigger Direction 59" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.438" mask="VVXXXXXX" item="Trigger Condition 59" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.439" item="Function Mapping 59" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.440" item="Trigger 60" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.441" mask="XXXXVVXX" item="Trigger Movement 60" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.441" mask="XXVVXXXX" item="Trigger Direction 60" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.441" mask="VVXXXXXX" item="Trigger Condition 60" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.442" item="Function Mapping 60" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.443" item="Trigger 61" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.444" mask="XXXXVVXX" item="Trigger Movement 61" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.444" mask="XXVVXXXX" item="Trigger Direction 61" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.444" mask="VVXXXXXX" item="Trigger Condition 61" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.445" item="Function Mapping 61" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.446" item="Trigger 62" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.447" mask="XXXXVVXX" item="Trigger Movement 62" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.447" mask="XXVVXXXX" item="Trigger Direction 62" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.447" mask="VVXXXXXX" item="Trigger Condition 62" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.448" item="Function Mapping 62" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.449" item="Trigger 63" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.450" mask="XXXXVVXX" item="Trigger Movement 63" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.450" mask="XXVVXXXX" item="Trigger Direction 63" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.450" mask="VVXXXXXX" item="Trigger Condition 63" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.451" item="Function Mapping 63" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.452" item="Trigger 64" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.453" mask="XXXXVVXX" item="Trigger Movement 64" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.453" mask="XXVVXXXX" item="Trigger Direction 64" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.453" mask="VVXXXXXX" item="Trigger Condition 64" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.454" item="Function Mapping 64" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.455" item="Trigger 65" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.456" mask="XXXXVVXX" item="Trigger Movement 65" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.456" mask="XXVVXXXX" item="Trigger Direction 65" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.456" mask="VVXXXXXX" item="Trigger Condition 65" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.457" item="Function Mapping 65" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.458" item="Trigger 66" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.459" mask="XXXXVVXX" item="Trigger Movement 66" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.459" mask="XXVVXXXX" item="Trigger Direction 66" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.459" mask="VVXXXXXX" item="Trigger Condition 66" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.460" item="Function Mapping 66" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.461" item="Trigger 67" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.462" mask="XXXXVVXX" item="Trigger Movement 67" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.462" mask="XXVVXXXX" item="Trigger Direction 67" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.462" mask="VVXXXXXX" item="Trigger Condition 67" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.463" item="Function Mapping 67" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.464" item="Trigger 68" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.465" mask="XXXXVVXX" item="Trigger Movement 68" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.465" mask="XXVVXXXX" item="Trigger Direction 68" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.465" mask="VVXXXXXX" item="Trigger Condition 68" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.466" item="Function Mapping 68" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.467" item="Trigger 69" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.468" mask="XXXXVVXX" item="Trigger Movement 69" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.468" mask="XXVVXXXX" item="Trigger Direction 69" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.468" mask="VVXXXXXX" item="Trigger Condition 69" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.469" item="Function Mapping 69" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.470" item="Trigger 70" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.471" mask="XXXXVVXX" item="Trigger Movement 70" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.471" mask="XXVVXXXX" item="Trigger Direction 70" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.471" mask="VVXXXXXX" item="Trigger Condition 70" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.472" item="Function Mapping 70" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.473" item="Trigger 71" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.474" mask="XXXXVVXX" item="Trigger Movement 71" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.474" mask="XXVVXXXX" item="Trigger Direction 71" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.474" mask="VVXXXXXX" item="Trigger Condition 71" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.475" item="Function Mapping 71" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.476" item="Trigger 72" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.477" mask="XXXXVVXX" item="Trigger Movement 72" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.477" mask="XXVVXXXX" item="Trigger Direction 72" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.477" mask="VVXXXXXX" item="Trigger Condition 72" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.478" item="Function Mapping 72" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.479" item="Trigger 73" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.480" mask="XXXXVVXX" item="Trigger Movement 73" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.480" mask="XXVVXXXX" item="Trigger Direction 73" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.480" mask="VVXXXXXX" item="Trigger Condition 73" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.481" item="Function Mapping 73" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.482" item="Trigger 74" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.483" mask="XXXXVVXX" item="Trigger Movement 74" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.483" mask="XXVVXXXX" item="Trigger Direction 74" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.483" mask="VVXXXXXX" item="Trigger Condition 74" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.484" item="Function Mapping 74" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.485" item="Trigger 75" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.486" mask="XXXXVVXX" item="Trigger Movement 75" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.486" mask="XXVVXXXX" item="Trigger Direction 75" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.486" mask="VVXXXXXX" item="Trigger Condition 75" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.487" item="Function Mapping 75" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.488" item="Trigger 76" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.489" mask="XXXXVVXX" item="Trigger Movement 76" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.489" mask="XXVVXXXX" item="Trigger Direction 76" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.489" mask="VVXXXXXX" item="Trigger Condition 76" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.490" item="Function Mapping 76" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.491" item="Trigger 77" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.492" mask="XXXXVVXX" item="Trigger Movement 77" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.492" mask="XXVVXXXX" item="Trigger Direction 77" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.492" mask="VVXXXXXX" item="Trigger Condition 77" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.493" item="Function Mapping 77" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.494" item="Trigger 78" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.495" mask="XXXXVVXX" item="Trigger Movement 78" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.495" mask="XXVVXXXX" item="Trigger Direction 78" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.495" mask="VVXXXXXX" item="Trigger Condition 78" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.496" item="Function Mapping 78" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+  <variable CV="17.0.497" item="Trigger 79" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggers.xml"/>
+  </variable>
+  <variable CV="17.0.498" mask="XXXXVVXX" item="Trigger Movement 79" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_stopRun.xml"/>
+  </variable>
+  <variable CV="17.0.498" mask="XXVVXXXX" item="Trigger Direction 79" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_fwdRev.xml"/>
+  </variable>
+  <variable CV="17.0.498" mask="VVXXXXXX" item="Trigger Condition 79" readOnly="yes" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_triggerCondition.xml"/>
+  </variable>
+  <variable CV="17.0.499" item="Function Mapping 79" readOnly="yes" default="255">
+      <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_enum_events.xml"/>
+  </variable>
+ </variables>

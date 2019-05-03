@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp.simulator;
 /**
  * Handle configuring a DCC++ layout connection via a DCCppSimulator
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link DCCppSimulatorAdapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -25,7 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>ČSD 1962 vložená a spádovištní návěstidla</name>
+  <date>1962</date>
+  <reference>Československé státní dráhy; ČSD D1 Návěstní předpisy Dopravní nakladatelství; 1960</reference>
+  <reference>Czechoslovak State Railways; D1 Signal Aspects Rules; Transport Publishing; 1960</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-11-27</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Test set</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+  
+<!-- ČSD -->
+
+    <aspect>
+      <name>Stůj</name>
+      <title>Stop</title>
+      <indication>Stop</indication>
+      <description>One red light</description>
+      <reference>Aspect 24</reference>
+      <comment>Stůj</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Volno</name>
+      <title>Clear</title>
+      <indication>Proceed</indication>
+      <description>One green light</description>
+      <reference>Aspect 8</reference>
+      <comment>Volno</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Výstraha</name>
+      <title>Caution</title>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <description>One yellow light</description>
+      <reference>Aspect 20</reference>
+      <comment>Výstraha</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Očekávej 40</name>
+      <title>Expect 40 km/h</title>
+      <indication>Proceed preparing to 40 km/h at next signal</indication>
+      <description>One yellow light flashing</description>
+      <reference>Aspect 16</reference>
+      <comment>Očekávejte rychlost 40 km/h</comment>
+      <speed>Normal</speed>
+      <speed2>40 km/h</speed2>
+      <route>Normal</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Odjezdové návěstidlo dovoluje jízdu</name>
+      <title>Exit signal mast permit departure</title>
+      <indication>Exit signal mast permit departure, speed depend on main or diverging rail</indication>
+      <description>One white light slowly flashing</description>
+      <reference>Aspect 201</reference>
+      <comment>Odjezdové návěstidlo dovoluje jízdu</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Stůj s modrou</name>
+      <title>Stop with blue</title>
+      <indication>Stop for train and shunting</indication>
+      <description>One red light with blue light</description>
+      <reference>Aspect 24</reference>
+      <comment>Stůj</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Rychlost 40 a výstraha</name>
+      <title>Slowly 40 km/h proceed preparing to stop at next signal</title>
+      <indication>Proceed slowly 40 km/h and preparing to stop at next signal</indication>
+      <description>Lower light yellow, upper light yellow</description>
+      <reference>Aspect 23</reference>
+      <comment>Rychlost 40 km/h a výstraha</comment>
+      <speed>40 km/h</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Sunout zakázáno opakovaná</name>
+      <title>Stop to push repeated</title>
+      <indication>Pushing to hump is forbidden, repeated signal mast</indication>
+      <description>Blue light</description>
+      <reference>Aspect 109</reference>
+      <comment>Sunout zakázáno opakovaná</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>15</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Sunout zakázáno</name>
+      <title>Stop to push</title>
+      <indication>Pushing to hump is forbidden</indication>
+      <description>Red light</description>
+      <reference>Aspect 109</reference>
+      <comment>Sunout zakázáno</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>16</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Sunout pomalu</name>
+      <title>Push to hump slowly</title>
+      <indication>Push to hump yard slowly</indication>
+      <description>Lower light white, upper light white</description>
+      <reference>Aspect 110</reference>
+      <comment>Sunout pomalu</comment>
+      <speed>Push slowly</speed>
+      <speed2>Push slowly</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Sunout rychleji</name>
+      <title>Push to hump speedily</title>
+      <indication>Push to hump yard speedily</indication>
+      <description>Upper light white</description>
+      <reference>Aspect 111</reference>
+      <comment>Sunout rychleji</comment>
+      <speed>Push speedily</speed>
+      <speed2>Push speedily</speed2>
+      <route>Either</route>
+      <dccAspect>18</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Zpět</name>
+      <title>Reverse on hump</title>
+      <indication>Reverse on hump</indication>
+      <description>Red light with white letter Z</description>
+      <reference>Aspect 112</reference>
+      <comment>Zpět</comment>
+      <speed>Reverse</speed>
+      <speed2>Reverse</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Zpět opakovaná</name>
+      <title>Reverse on hump repeated</title>
+      <indication>Reverse on hump repeated</indication>
+      <description>Blue light with white letter Z</description>
+      <reference>Aspect 112</reference>
+      <comment>Zpět opakovaná</comment>
+      <speed>Reverse</speed>
+      <speed2>Reverse</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Opakovaná volno</name>
+      <title>Clear repeated</title>
+      <indication>Proceed, next signal on insufficient break distance</indication>
+      <description>One green light with white light</description>
+      <reference>Aspect 25</reference>
+      <comment>Opakovaná volno</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Opakovaná výstraha</name>
+      <title>Caution repeated</title>
+      <indication>Proceed preparing to stop at next signal, next signal on insufficient break distance</indication>
+      <description>One yellow light with white light</description>
+      <reference>Aspect 26</reference>
+      <comment>Opakovaná výstraha</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>22</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Opakovaná očekávej 40</name>
+      <title>Expect 40 km/h repeated</title>
+      <indication>Proceed preparing to 40 km/h at next signal, next signal on insufficient break distance</indication>
+      <description>One yellow light flashing with white light</description>
+      <reference>Aspect 27</reference>
+      <comment>Opakovaná očekávejte rychlost 40 km/h</comment>
+      <speed>Normal</speed>
+      <speed2>40 km/h</speed2>
+      <route>Normal</route>
+      <dccAspect>23</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Posun zakázán opakovaná</name>
+      <title>Shunting forbidden</title>
+      <indication>Associated signal mast shows shunting not allowed</indication>
+      <description>Dark</description>
+      <reference>Aspect 107</reference>
+      <comment>Kmenové seřaďovací návěstidlo ukazuje posun zakázán</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Na spádovišti se neposunuje</name>
+      <title>Hump yard not operate</title>
+      <indication>Hump yard not operate</indication>
+      <description>Dark</description>
+      <reference>Aspect 107</reference>
+      <comment>Na spádovišti se neposunuje</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Posun zakázán</name>
+      <title>Shunting forbidden</title>
+      <indication>Shunting not allowed</indication>
+      <description>One blue light</description>
+      <reference>Aspect 107</reference>
+      <comment>Posun zakázán</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>27</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Posun dovolen</name>
+      <title>Shunting allowed</title>
+      <indication>Shunting allowed</indication>
+      <description>One white light</description>
+      <reference>Aspect 108</reference>
+      <comment>Posun dovolen</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>28</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Posun dovolen - nezabezpečený</name>
+      <title>Shunting allowed, not secured</title>
+      <indication>Shunting allowed</indication>
+      <description>One white light with red light</description>
+      <reference>Aspect 108</reference>
+      <comment>Posun dovolen - nezabezpečený</comment>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>29</dccAspect>
+    </aspect>
+
+    <aspect>
+      <name>Opatrně na přivolávací návěst vložená návěstidla</name>
+      <title>Calling-on signal for embedded signals</title>
+      <indication>Proceed slow, being prepared to stop</indication>
+      <description>One white light</description>
+      <reference>Aspect 203</reference>
+      <comment>Opatrně na přivolávací návěst</comment>
+      <speed>Slowly</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+
+  </aspects>
+
+  <imagetypes>
+	<imagetype type="prototype"/>
+	
+	<imagetype type="AŽD žzčb"/>
+        <imagetype type="AŽD z"/>
+        <imagetype type="AŽD b"/>
+	
+	<imagetype type="ESP žzčb"/>
+        <imagetype type="ESP z"/>
+        <imagetype type="ESP b"/>
+	
+  </imagetypes>
+
+  <appearancefiles>
+
+    <appearancefile href="appearance-entry.xml"/>
+    <appearancefile href="appearance-entry_distant.xml"/>
+    <appearancefile href="appearance-entry_distant_repeater.xml"/>
+    
+    <appearancefile href="appearance-embedded.xml"/>
+    
+    <appearancefile href="appearance-exit.xml"/>
+
+    <appearancefile href="appearance-shunting.xml"/>
+    <appearancefile href="appearance-shunting_repeater.xml"/>
+    <appearancefile href="appearance-hump.xml"/>
+    <appearancefile href="appearance-hump_repeater.xml"/>
+
+    <appearancefile href="appearance-test.xml"/>
+
+  </appearancefiles>
+
+</aspecttable>

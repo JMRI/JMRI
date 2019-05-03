@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="7" lastUpdated="20180206"/>
   <version author="Alain Le Marchand" version="6.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="5" lastUpdated="20080502"/>
@@ -28,12 +29,35 @@
   <!-- version 6  New family for all MRC HO scale: "Sound Decoders"          -->
   <!--            File MRC_soundbrilliance1630.xml renamed MRC_sound1630.xml -->
   <!-- version 6.1: Bell Ring Rate (CV54) on Sound pane                      -->
+  <!-- version 7: Update according to 0001630 steam.pdf of Nov. 2015 + add functions labels  -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1630 - HO Scale - Steam" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <!-- note only F0 to F12 are NMRA compatible -->
         <size length="48" width="17" height="7.5" units="mm"/>
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight/Sound on/off</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Air release</functionlabel>
+        <functionlabel num="4" lockable="false">Coupling</functionlabel>
+        <functionlabel num="5" lockable="false">Brake squeal/release</functionlabel> <!-- Brake squeal (moving) and brake release (idle)-->
+        <functionlabel num="6" lockable="true">Conductor (idle)/Rail click (moving)</functionlabel>
+        <functionlabel num="7" lockable="false">Fire box</functionlabel>
+        <functionlabel num="8" lockable="false">Air Exhaust</functionlabel>
+        <functionlabel num="9" lockable="false">Flange squeal</functionlabel>
+        <functionlabel num="10" lockable="false">Water filling</functionlabel>
+        <functionlabel num="11" lockable="false">Blower hiss</functionlabel>
+        <functionlabel num="12" lockable="true">Chuff on/off (drifting)</functionlabel>
+        <functionlabel num="13" lockable="false">Coal auger</functionlabel>
+        <functionlabel num="14" lockable="false">Coupler fire</functionlabel>
+        <functionlabel num="15" lockable="false">Sand drop</functionlabel>
+        <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+        <functionlabel num="17" lockable="false">Short air release</functionlabel>
+        <functionlabel num="18" lockable="false">Injector</functionlabel>
+        <functionlabel num="19" lockable="false">Whistle type select</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -88,24 +112,74 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
-      <variable CV="49" mask="XXXXXXXV" default="1" item="Sound Option 4">
+      <variable CV="49" mask="XXXXXXXV" default="1" item="Sound Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound On/Off</label>
       </variable>
-      <variable CV="50" item="Sound Option 1" default="5" comment="Range 0-18">
-        <decVal max="18"/>
+      <variable CV="50" item="Sound Option 2" default="0" comment="Range 0-11">
+        <enumVal>
+          <enumChoice>
+            <choice>Type 1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 2</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 3</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 4</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 5</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 6</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 7</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 8</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 9</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 10</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 11</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 12</choice>
+          </enumChoice>
+        </enumVal>
         <label>Whistle Type</label>
-        <comment>Range 0-18</comment>
+        <tooltip>Range 0-11</tooltip>
       </variable>
       <variable CV="51" item="Sound Setting 1" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Whistle Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="52" item="Sound Option 2" default="3" comment="Range 0-6">
-        <decVal max="6"/>
+      <variable CV="52" item="Sound Option 3" default="3" comment="Range 0-3">
+        <enumVal>
+          <enumChoice>
+            <choice>Type 1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 2</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 3</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 4</choice>
+          </enumChoice>
+        </enumVal>
         <label>Bell Type</label>
-        <comment>Range 0-6</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="53" item="Sound Setting 2" default="3" comment="Range 0-3">
         <decVal max="3"/>
@@ -115,12 +189,37 @@
       <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
-        <comment>Range 0-50</comment>
+        <tooltip>Range 0-50</tooltip>
       </variable>
-      <variable CV="55" item="Sound Option 3" default="3" comment="Range 0-3">
-        <decVal max="3"/>
+      <variable CV="55" item="Sound Option 4" default="0" comment="Range 0-7">
+        <enumVal>
+          <enumChoice>
+            <choice>Single Chuff 1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Single Chuff 2</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Single Chuff 3</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Single Chuff 4</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Double Chuff 1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Double Chuff 2</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Double Chuff 3</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Double Chuff 4</choice>
+          </enumChoice>
+        </enumVal>
         <label>Chuff type</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-7</tooltip>
       </variable>
       <variable CV="56" item="Sound Setting 4" default="3" comment="Range 0-3">
         <decVal max="3"/>
@@ -144,7 +243,7 @@
       </variable>
       <variable CV="60" item="Sound Setting 8" default="3" comment="Range 0-3">
         <decVal max="3"/>
-        <label>Fire box door volume</label>
+        <label>Random noise volume</label>
         <comment>Range 0-3</comment>
       </variable>
       <variable CV="61" item="Sound Setting 9" default="3" comment="Range 0-3">
@@ -157,14 +256,27 @@
         <label>Coupling Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="63" item="Sound Setting 11" default="3" comment="Range 0-3">
-        <decVal max="3"/>
-        <label>Air Pump Volume</label>
-        <comment>Range 0-3</comment>
+      <variable CV="63" item="Sound Option 7" default="0" comment="Range 0-3">
+        <enumVal>
+          <enumChoice>
+            <choice>Type 1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 2</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 3</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Type 4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Air Pump Type</label>
+        <tooltip>Range 0-3</tooltip>
       </variable>
-      <variable CV="64" item="Sound Setting 12" default="3" comment="Range 0-3">
+      <variable CV="64" item="Sound Setting 11" default="3" comment="Range 0-3">
         <decVal max="3"/>
-        <label>Rail clack volume</label>
+        <label>Air Pump volume</label>
         <comment>Range 0-3</comment>
       </variable>
       <variable CV="105" item="User Id #1" default="0">
@@ -180,13 +292,24 @@
         <label>Conductor volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable item="Global lighting option 2" CV="113" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <variable CV="113" item="Global lighting option 2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Directional light enable</label>
+        <tooltip>Enabled(0)=two lights directional, Disabled(1)=not directional</tooltip>
       </variable>
-      <variable item="Sound Option 5" CV="114" default="3" comment="Range 0-3">
+      <variable CV="114" item="Global lighting option 3" default="3" comment="Range 0-12">
+        <decVal max="12"/>
+        <label>Fire Light Brightness</label>
+        <tooltip>Range 0-12</tooltip>
+      </variable>
+      <variable CV="115" item="Sound Option 5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Auto Brake Squeal</label>
+        <tooltip>0=disabled, 1=enabled</tooltip>
+      </variable>
+      <variable CV="117" item="Sound Setting 12" default="3" comment="Range 0-3">
         <decVal max="3"/>
-        <label>Air pump type</label>
+        <label>Wheel rail clack volume</label>
         <comment>Range 0-3</comment>
       </variable>
       <variable CV="118" item="Sound Setting 14" default="3" comment="Range 0-3">
@@ -199,20 +322,15 @@
         <label>Coupling Fire Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="120" item="Sound Setting 16" default="0" comment="Range 0-30">
+      <variable CV="120" item="Sound Group 3 Option 3" default="0" comment="Range 0-30">
         <decVal max="30"/>
         <label>Chuff Rate</label>
-        <comment>Range 0-30</comment>
+        <tooltip>Range 0-30</tooltip>
       </variable>
-      <variable CV="121" item="Sound Setting 17" default="0" comment="Range 0-5">
+      <variable CV="121" item="Sound Group 3 Option 4" default="0" comment="Range 0-5">
         <decVal max="5"/>
         <label>Chuff Start Point</label>
-        <comment>Range 0-5</comment>
-      </variable>
-      <variable CV="122" item="Sound Option 6" default="0" comment="Range 0-5">
-        <decVal max="5"/>
-        <label>Double chuff enable</label>
-        <comment>Range 0-5</comment>
+        <tooltip>Range 0-5</tooltip>
       </variable>
       <variable CV="123" item="EMF Static Config" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

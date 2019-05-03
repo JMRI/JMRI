@@ -3,7 +3,6 @@ package jmri.jmrix.tmcc.serialmon;
 import jmri.jmrix.tmcc.SerialListener;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
-import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
 /**

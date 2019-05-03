@@ -12,4 +12,4 @@ import jmri.util.JmriJFrame as JmriJFrame
 Apps.ynstrument("jython/Jynstruments/Launchers/Throttles.jyn")
 Apps.ynstrument("jython/Jynstruments/Launchers/DecoderPro.jyn")
 
-#JmriJFrame.getFrame("JmriDemo").pack()
+#JmriJFrame.getFrame("PanelPro").pack()

@@ -3,10 +3,12 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.util.Date;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
+import jmri.IdTag;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.RailCom;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class RailComTableAction extends AbstractTableAction {
+public class RailComTableAction extends AbstractTableAction<IdTag> {
 
     /**
      * Create an action with a specific title.
@@ -36,12 +38,11 @@ public class RailComTableAction extends AbstractTableAction {
     public RailComTableAction(String actionName) {
         super(actionName);
 
-        // disable ourself if there is no primary RailComm manager available
-        if (InstanceManager.getNullableDefault(RailComManager.class) == null) {
-            setEnabled(false);
-        }
         includeAddButton = false;
     }
+
+    @Nonnull
+    protected RailComManager tagManager = InstanceManager.getDefault(jmri.RailComManager.class);
 
     public RailComTableAction() {
         this("Rail Com Table");
@@ -53,7 +54,7 @@ public class RailComTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<IdTag>() {
 
             static public final int VALUECOL = 0;
             public static final int WHERECOL = VALUECOL + 1;
@@ -72,39 +73,30 @@ public class RailComTableAction extends AbstractTableAction {
 
             @Override
             public String getValue(String name) {
-                RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
+                RailCom tag = (RailCom) tagManager.getBySystemName(name);
                 if (tag == null) {
                     return "?";
                 }
-                Object t = tag.getTagID();
-                if (t != null) {
-                    return t.toString();
-                } else {
-                    return "";
-                }
+                return tag.getTagID();
             }
 
             @Override
-            public Manager getManager() {
-                RailComManager m = InstanceManager.getDefault(RailComManager.class);
-                if (!m.isInitialised()) {
-                    m.init();
-                }
-                return m;
+            public RailComManager getManager() {
+                return tagManager;
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
-                return InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
+            public RailCom getBySystemName(String name) {
+                return (RailCom) tagManager.getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
-                return InstanceManager.getDefault(RailComManager.class).getByUserName(name);
+            public RailCom getByUserName(String name) {
+                return (RailCom) tagManager.getByUserName(name);
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(IdTag t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
@@ -112,7 +104,7 @@ public class RailComTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == CLEARCOL) {
-                    RailCom t = (RailCom) getBySystemName(sysNameList.get(row));
+                    RailCom t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
                         log.debug("Clear where & when last seen for " + t.getSystemName());
                     }
@@ -185,13 +177,13 @@ public class RailComTableAction extends AbstractTableAction {
 
             @Override
             public Object getValueAt(int row, int col) {
-                RailCom t = (RailCom) getBySystemName(sysNameList.get(row));
+                RailCom t = getBySystemName(sysNameList.get(row));
                 if (t == null) {
                     return null;
                 }
                 switch (col) {
                     case VALUECOL:
-                        return t.getTagID() + " " + t.getAddressTypeAsString();
+                        return t.getLocoAddress().toString();
                     case WHERECOL:
                         Reporter r;
                         return (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null);
@@ -315,7 +307,7 @@ public class RailComTableAction extends AbstractTableAction {
     }
 
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<IdTag> f) {
         log.debug("Added CheckBox in addToPanel method");
     }
 

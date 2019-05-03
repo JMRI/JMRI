@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -27,10 +26,12 @@ public class VSDConfigDialogTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         jmri.util.JUnitUtil.tearDown();
     }
 

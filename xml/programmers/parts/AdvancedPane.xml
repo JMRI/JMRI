@@ -2,24 +2,27 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Advanced</name>
   <name xml:lang="ca">Avançat</name>
-  <name xml:lang="it">Avanzato</name>
-  <name xml:lang="de">Erweitert</name>
-  <name xml:lang="da">Avanceret</name>
   <name xml:lang="cs">Pokročilý</name>
+  <name xml:lang="da">Avanceret</name>
+  <name xml:lang="de">Erweitert</name>
+  <name xml:lang="fr">Avancé</name>
+  <name xml:lang="it">Avanzato</name>
   <name xml:lang="nl">Uitgebreid</name>
   <column>
     <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
-      <tooltip xml:lang="it">Abilita Riconoscimento Avanzato</tooltip>
-      <tooltip xml:lang="de">Erweitertes Acknowledgment einschalten</tooltip>
-	  <tooltip xml:lang="ca">Habilita Reconeixement Avançat</tooltip>
+      <tooltip xml:lang="ca">Habilita Reconeixement Avançat</tooltip>
       <tooltip xml:lang="cs">Povolit pokročilé potvrzování</tooltip>
+      <tooltip xml:lang="de">Erweitertes Acknowledgment einschalten</tooltip>
+      <tooltip xml:lang="fr">Activer Accusé Réception avancé</tooltip>
+      <tooltip xml:lang="it">Abilita Riconoscimento Avanzato</tooltip>
       <tooltip xml:lang="nl">Uitgebreide bevestiging inschakelen</tooltip>
     </display>
     <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it">
-      <tooltip xml:lang="it">Il tempo massimo che il Decoder mantiene la sua velocità senza ricevere un pacchetto dati valido indirizzato a lui</tooltip>
-      <tooltip xml:lang="de">Längste Zeitspanne über die der Dekoder seine Geschwindigkeit beibehält, ohne ein an ihn adressiertes gültiges Paket zu empfangen</tooltip>
       <tooltip xml:lang="ca">El temps màxim que el descodificador mantindrà la velocitat sense rebre un paquet vàlid</tooltip>
       <tooltip xml:lang="cs">Maximální doba po kterou bude dekodér udržovat jeho rychlost dokud nedostane pro nej určený platný paket</tooltip>
+      <tooltip xml:lang="de">Längste Zeitspanne über die der Dekoder seine Geschwindigkeit beibehält, ohne ein an ihn adressiertes gültiges Paket zu empfangen</tooltip>
+      <tooltip xml:lang="fr">&lt;html&gt;Période de temps maximum durant laquelle le décodeur maintiendra sa vitesse&lt;br&gt; en l'absence de réception d'un paquet valide qui lui est adressé.&lt;br&gt;</tooltip>
+      <tooltip xml:lang="it">Il tempo massimo che il Decoder mantiene la sua velocità senza ricevere un pacchetto dati valido indirizzato a lui</tooltip>
       <tooltip xml:lang="nl">Max. periode dat de Decoder de snelheid aanhoudt zonder ontvangst van een geldige instructie op zijn adres</tooltip>
     </display>
   </column>

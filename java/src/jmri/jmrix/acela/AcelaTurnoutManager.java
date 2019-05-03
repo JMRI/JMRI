@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Acela systems
  * <p>
- * System names are "ATnnn", where nnn is the bit number without padding.
+ * System names are "ATnnn", where A is the user configurable system prefix,
+ * nnn is the bit number without padding.
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
@@ -80,6 +81,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
@@ -100,6 +102,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * @return a normalized system name if system name has a valid format, else
      * return "" (empty string)
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }

@@ -106,11 +106,11 @@ public class MrcPackets {
     public static final int LOCODBLCONTROLCODE = 221;
     static final int[] LOCODBLCONTROL = new int[]{LOCODBLCONTROLCODE, 0, LOCODBLCONTROLCODE, 0}; //Reply indicates that another throttle also has controll of the loco
 
-    public static final int GOODCMDRECIEVEDCODE = 85;
-    static final int[] GOODCMDRECIEVED = new int[]{GOODCMDRECIEVEDCODE, 0, GOODCMDRECIEVEDCODE, 0};
+    public static final int GOODCMDRECEIVEDCODE = 85;
+    static final int[] GOODCMDRECEIVED = new int[]{GOODCMDRECEIVEDCODE, 0, GOODCMDRECEIVEDCODE, 0};
 
-    public static final int BADCMDRECIEVEDCODE = 238; //Or unable to read from decoder
-    static final int[] BADCMDRECIEVED = new int[]{BADCMDRECIEVEDCODE, 0, BADCMDRECIEVEDCODE, 0};
+    public static final int BADCMDRECEIVEDCODE = 238; //Or unable to read from decoder
+    static final int[] BADCMDRECEIVED = new int[]{BADCMDRECEIVEDCODE, 0, BADCMDRECEIVEDCODE, 0};
 
     public static final int POWERONCMD = 130;
     static final int[] POWERON = new int[]{POWERONCMD, 0, POWERONCMD, 0, POWERONCMD, 0, POWERONCMD, 0};
@@ -367,10 +367,10 @@ public class MrcPackets {
                     txt.append(Bundle.getMessage("MrcPacketsReadCvValue")); // NOI18N
                     txt.append(Integer.toString(m.value()));
                     break;
-                case BADCMDRECIEVEDCODE:
+                case BADCMDRECEIVEDCODE:
                     txt.append(Bundle.getMessage("MrcPacketBadCmdAck")); // NOI18N
                     break;
-                case GOODCMDRECIEVEDCODE:
+                case GOODCMDRECEIVEDCODE:
                     txt.append(Bundle.getMessage("MrcPacketGoodCmdAck")); // NOI18N
                     break;
                 case PROGCMDSENTCODE:

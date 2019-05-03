@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: RPS Icon</title><!-- Style -->
+  <title>JMRI: RPS Icon</title>
+  <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,7 +16,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -93,9 +95,8 @@
 
       <p>Don't forget to save your panel!</p>
 
-      <h2><a id="popup" name="popup">Popup Menu</a></h2><a id=
-      "popup" name="popup">The popup menu for an RPS icon
-      contains:</a>
+      <h2><a id="popup" name="popup">Popup Menu</a></h2>
+      <p>The popup menu for an RPS icon contains:</p>
 
       <dl>
         <dt>RPS Position Readout</dt>
@@ -170,13 +171,13 @@
       </dl>
 
       <h2><a id="filter" name="filter">Filtering and Multiple
-      Locomotives</a></h2><a id="filter" name="filter">We're still
+      Locomotives</a></h2>We're still
       trying to figure out how best to configure multiple icons on
       a panel. A single icon, with no special settings, will hop
       around as readings come in. It will go to the position of one
       reading, and then move directly to the position of the next
       reading, which might come from another locomotive
-      transmitter.</a>
+      transmitter.
 
       <p>If you want to have multiple icons, each showing the
       position of a single locomotive, you can configure filters on
@@ -274,8 +275,11 @@
         to the location of any icon file you'd like. For example,
         you can change them to a (small) photo of a locomotive, or
         to an image with the train number.</li>
-      </ul>A nice graphical interface for this is coming, but it's
-      not here yet. <!--#include virtual="/Footer" -->
+      </ul>
+      <p>A nice graphical interface for this is coming, but it's
+      not here yet.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

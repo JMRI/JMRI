@@ -1,6 +1,5 @@
 package jmri.jmrit.withrottle;
 
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * listen() has to run in a separate thread.
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
+ * @author Paul Bender Copyright (C) 2018
  */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
@@ -33,9 +33,12 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     boolean isListen = true;
     ServerSocket socket = null;
     final private ArrayList<DeviceServer> deviceList = new ArrayList<>();
+    final private ArrayList<DeviceListener> deviceListenerList = new ArrayList<>();
+    private int threadNumber = 1;
 
     FacelessServer() {
         createServerThread();
+        setShutDownTask();
     } // End of constructor
 
     @Override
@@ -50,13 +53,13 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
 
         port = socket.getLocalPort();
-        if (log.isDebugEnabled()) {
-            log.debug("WiThrottle listening on TCP port: " + port);
-        }
+        log.debug("WiThrottle listening on TCP port: {}", port);
 
         service = ZeroConfService.create("_withrottle._tcp.local.", port);
         service.addEventListener(this);
         service.publish();
+
+        addDeviceListener(this);
 
         while (isListen) { //Create DeviceServer threads
             DeviceServer device;
@@ -64,9 +67,12 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
                 log.info("Creating new WiThrottle DeviceServer(socket) on port {}, waiting for incoming connection...", port);
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
-                Thread t = new Thread(device);
-                device.addDeviceListener(this);
-                log.debug("Starting DeviceListener thread");
+                String threadName = "DeviceServer-" + threadNumber++;  // NOI18N
+                Thread t = new Thread(device, threadName);
+                for (DeviceListener dl : deviceListenerList) {
+                    device.addDeviceListener(dl);
+                }
+                log.debug("Starting thread '{}'", threadName);  // NOI18N
                 t.start();
             } catch (IOException e3) {
                 if (isListen) {
@@ -77,6 +83,40 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 
         }
 
+    }
+
+    // package protected getters
+    ZeroConfService getZeroConfService() {
+        return service;
+    }
+
+    int getPort() {
+        return port;
+    }
+
+    /**
+     * Add a device listener that will be added for each new device connection
+     *
+     * @param dl the device listener to add
+     */
+    @Override
+    public void addDeviceListener(DeviceListener dl) {
+        if (!deviceListenerList.contains(dl)) {
+            deviceListenerList.add(dl);
+        }
+    }
+
+    /**
+     * Remove a device listener from the list that will be added for each new
+     * device connection
+     *
+     * @param dl the device listener to remove
+     */
+    @Override
+    public void removeDeviceListener(DeviceListener dl) {
+        if (deviceListenerList.contains(dl)) {
+            deviceListenerList.remove(dl);
+        }
     }
 
     @Override
@@ -112,7 +152,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             for (DeviceServer listDevice : deviceList) {
                 if (device != listDevice && device.getUDID().equals(listDevice.getUDID())) {
                     //  If in here, array contains duplicate of a device
-                    log.debug("Has duplicate of device, clearing old one.");
+                    log.debug("Has duplicate of device '{}', clearing old one.", listDevice.getUDID());
                     listDevice.closeThrottles();
                     break;
                 }
@@ -120,42 +160,26 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
     }
 
-    @Override
-    public String getSelectedRosterGroup() {
-//        return rosterGroupSelector.getSelectedRosterGroup();
-        return null;
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName,
-            PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName,
-            PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
+    public ArrayList<DeviceServer> getDeviceList() {
+        return deviceList;
     }
 
     @Override
     public void notifyDeviceAddressChanged(DeviceServer device) {
         // TODO Auto-generated method stub
 
+    }
+
+    private String rosterGroup = null;
+
+    @Override
+    public void setSelectedRosterGroup(String group) {
+        rosterGroup = group;
+    }
+
+    @Override
+    public String getSelectedRosterGroup() {
+        return rosterGroup;
     }
 
     @Override
@@ -165,15 +189,61 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     @Override
     public void servicePublished(ZeroConfServiceEvent se) {
         try {
-            InetAddress addr = se.getDNS().getInetAddress();
-            // most addresses are Inet6Address objects,
-            if (!addr.isLoopbackAddress()) {
-                log.info("Published ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
-            }
+            log.info("Published ZeroConf service for '{}' on {}:{}", se.getService().getKey(), se.getAddress().getHostAddress(), port); // NOI18N
         } catch (NullPointerException ex) {
             log.error("NPE in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
+        }
+    }
+
+    // package protected method to disable the server.
+    void disableServer() {
+        isListen = false;
+        stopDevices();
+        try {
+            socket.close();
+            log.debug("closed socket in ServerThread");
+            service.stop();
+        } catch (NullPointerException ex) {
+            log.debug("NPE while attempting to close socket, ignored");
         } catch (IOException ex) {
-            log.error("IOException in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
+            log.error("socket in ServerThread won't close");
+        }
+    }
+
+    // Clear out the deviceList array and close each device thread
+    private void stopDevices() {
+        DeviceServer device;
+        int cnt = 0;
+        if (deviceList.size() > 0) {
+            do {
+                device = deviceList.get(0);
+                if (device != null) {
+                    device.closeThrottles(); //Tell device to stop its throttles,
+                    device.closeSocket();   //close its sockets
+                    //close() will throw read error and it will be caught
+                    //and drop the thread.
+                    cnt++;
+                    if (cnt > 200) {
+                        break;
+                    }
+                }
+            } while (!deviceList.isEmpty());
+        }
+        deviceList.clear();
+    }
+
+    private jmri.implementation.AbstractShutDownTask task = null;
+
+    private void setShutDownTask() {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            task = new jmri.implementation.AbstractShutDownTask("WiThrottle Server ShutdownTask") {
+                @Override
+                public boolean execute() {
+                    disableServer();
+                    return true;
+                }
+            };
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
         }
     }
 

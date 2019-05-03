@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-hello-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"hello\"",
+    "properties": {
+        "JMRI": {
+            "type": "string",
+            "description": "JMRI version"
+        },
+        "json": {
+            "type": "string",
+            "description": "JSON protocol version"
+        },
+        "heartbeat": {
+            "type": "integer",
+            "description": "Frequency, in milliseconds, in which the JSON client must send a message to maintain a connection"
+        },
+        "railroad": {
+            "type": "string",
+            "description": "The name of the railroad"
+        },
+        "node": {
+            "type": "string",
+            "description": "The current node identity"
+        },
+        "activeProfile": {
+            "type": ["string", "null"],
+            "description": "The name of the current profile or null if no profile is active"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["JMRI", "json", "heartbeat", "railroad", "node", "activeProfile"]
+}

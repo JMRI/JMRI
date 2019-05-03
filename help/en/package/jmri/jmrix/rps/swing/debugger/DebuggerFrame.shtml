@@ -25,11 +25,11 @@
       <h1>JMRI: RPS Debugger</h1><a href=
       "../../../../../../html/hardware/rps/images/Debugger.jpg"><img src="../../../../../../html/hardware/rps/images/Debugger.jpg"
       height="262" width="168" alt="RPS Receiver Control window"
-      align="right"></a><br>
-      The debugger window lets you look at information as it moves
+      align="right"></a>
+      <p>The debugger window lets you look at information as it moves
       through the <a href=
       "../../../../../../html/hardware/rps/index.shtml">RPS
-      system</a>.
+      system</a>.</p>
 
       <p>The upper left part displays the time value from each
       active receiver every time a reading is taken.</p>
@@ -64,7 +64,8 @@
       name will be written to that file, and the menu choice will
       change to "Stop CSV Export...". Select that menu choice to
       stop the logging and ensure that the last lines have been
-      written out. <!--#include virtual="/Footer" --></p>
+      written out.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,8 +1,7 @@
 package jmri.jmrix.loconet;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,29 +13,9 @@ import org.slf4j.LoggerFactory;
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     @Override
-    @Before
-    public void setUp() {
-        // prepare an interface
-        lnis = new LocoNetInterfaceScaffold();
-
-        // outwait any pending delayed sends
-        try {
-            synchronized (this) {
-                this.wait(LnTurnout.METERINTERVAL + 25);
-            }
-        } catch (InterruptedException e) {
-        }
-
-        // create object under test
-        t = new LnTurnout("L", 21, lnis);
-    }
-
-    @Override
     public int numListeners() {
         return lnis.numListeners();
     }
-
-    LocoNetInterfaceScaffold lnis;
 
     /**
      * Check that last two messages correspond to closed/on, then closed/off.
@@ -127,7 +106,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testLnTurnoutExactFeedback() {
         LocoNetMessage m;
         // prepare a specific test
-        t = new LnTurnout("L", 21, lnis); // note different address; we have traces for this address
         t.setBinaryOutput(true);
         t.setCommandedState(jmri.Turnout.CLOSED);
         t.setFeedbackMode(jmri.Turnout.EXACT);
@@ -136,6 +114,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("KnownState after set CLOSED is UNKNOWN", jmri.Turnout.UNKNOWN, t.getKnownState());
 
         // notify the Ln of first feedback - AUX is thrown, so moved off 
+        log.debug("notify of 1st feedback");
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -146,6 +125,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("KnownState after AUX report THROWN is INCONSISTENT", jmri.Turnout.INCONSISTENT, t.getKnownState());
 
         // notify the Ln of second feedback - SWITCH is closed, so moved on
+        log.debug("notify of 2nd feedback");
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -260,7 +240,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     // test that only one message is sent when binaryOutput is set
     @Test
     public void testBasicSet() throws InterruptedException {
-        t = new LnTurnout("L", 121, lnis);
         t.setBinaryOutput(true);
         t.setCommandedState(jmri.Turnout.THROWN);
 
@@ -272,8 +251,38 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         // check for messages
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 78 10 00");  // THROWN/ON loconet message
+                "B0 14 10 00");  // THROWN/ON loconet message
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
+
+    LocoNetInterfaceScaffold lnis;
+    LocoNetSystemConnectionMemo memo;
+
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        // prepare an interface
+        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
+
+        // outwait any pending delayed sends
+        try {
+            synchronized (this) {
+                this.wait(LnTurnout.METERINTERVAL + 25);
+            }
+        } catch (InterruptedException e) {
+        }
+
+        // create object under test
+        t = new LnTurnout("L", 21, lnis);
+    }
+
+    @After
+    public void tearDown(){
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class);

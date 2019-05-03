@@ -94,6 +94,7 @@ public class WebServerPreferences extends PreferencesBean {
     public static final String ReadonlyPower = READONLY_POWER;
     public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
     public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
+    public static final String USE_ZERO_CONF = "useZeroConf"; // NOI18N
 
     // initial defaults if prefs not found
     private int clickDelay = 1;
@@ -108,6 +109,7 @@ public class WebServerPreferences extends PreferencesBean {
     private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
     private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
+    private boolean useZeroConf = true;
 
     public WebServerPreferences(String fileName) {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -189,6 +191,7 @@ public class WebServerPreferences extends PreferencesBean {
             // so do nothing.
         }
         this.port = sharedPreferences.getInt(PORT, this.port);
+        this.useZeroConf = sharedPreferences.getBoolean(USE_ZERO_CONF, this.useZeroConf);
         this.setIsDirty(false);
     }
 
@@ -305,6 +308,7 @@ public class WebServerPreferences extends PreferencesBean {
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putInt(PORT, this.getPort());
+        sharedPreferences.putBoolean(USE_ZERO_CONF, this.isUseZeroConf());
         sharedPreferences.putInt(CLICK_DELAY, this.getClickDelay());
         sharedPreferences.putInt(REFRESH_DELAY, this.getRefreshDelay());
         sharedPreferences.putBoolean(USE_AJAX, this.isUseAjax());
@@ -383,6 +387,17 @@ public class WebServerPreferences extends PreferencesBean {
         }
     }
 
+    public boolean isUseZeroConf() {
+        return useZeroConf;
+    }
+
+    public void setUseZeroConf(boolean value) {
+        boolean old = this.useZeroConf;
+        if (old != value) {
+            this.useZeroConf = value;
+            this.firePropertyChange(USE_ZERO_CONF, old, value);
+        }
+    }
     public boolean allowRemoteConfig() {
         return this.allowRemoteConfig;
     }
@@ -441,15 +456,6 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     /**
-     * @return the railroadName
-     * @deprecated since 4.9.1; use {@link #getRailroadName()} instead
-     */
-    @Deprecated
-    public String getRailRoadName() {
-        return this.getRailroadName();
-    }
-
-    /**
      * Set the railroad name.
      *
      * @param railroadName the railroadName to set
@@ -464,16 +470,6 @@ public class WebServerPreferences extends PreferencesBean {
             }
             this.firePropertyChange(RAILROAD_NAME, old, this.railroadName);
         }
-    }
-
-    /**
-     * @param railroadName the railroadName to set
-     * @deprecated since 4.9.1; use {@link #setRailroadName(java.lang.String)}
-     * instead
-     */
-    @Deprecated
-    public void setRailRoadName(String railroadName) {
-        this.setRailroadName(railroadName);
     }
 
     /**

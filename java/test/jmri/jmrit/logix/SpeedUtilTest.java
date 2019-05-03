@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,7 +16,7 @@ public class SpeedUtilTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Warrant warrant = new Warrant("IW0", "AllTestWarrant");
+        new Warrant("IW0", "AllTestWarrant");
         SpeedUtil t = new SpeedUtil(null);
         Assert.assertNotNull("exists",t);
     }
@@ -26,14 +24,16 @@ public class SpeedUtilTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SpeedUtilTest.class);

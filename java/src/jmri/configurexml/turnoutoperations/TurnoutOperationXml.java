@@ -37,12 +37,12 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
             log.debug("loadOperation for class {}", className);
             try {
                 Class<?> adapterClass = Class.forName(className);
-                TurnoutOperationXml adapter = (TurnoutOperationXml) adapterClass.newInstance();
+                TurnoutOperationXml adapter = (TurnoutOperationXml) adapterClass.getDeclaredConstructor().newInstance();
                 result = adapter.loadOne(e);
                 if (result.getName().charAt(0) == '*') {
                     result.setNonce(true);
                 }
-            } catch (ClassNotFoundException | InstantiationException e1) {
+            } catch (ClassNotFoundException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e1) {
                 log.error("while creating TurnoutOperation", e1);
                 return null;
             } catch (IllegalAccessException e2) {
@@ -85,18 +85,18 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      */
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
-        String[] fullOpNameComponents = jmri.util.StringUtil.split(op.getClass().getName(), ".");
+        String[] fullOpNameComponents = op.getClass().getName().split("\\.");
         log.debug("getAdapter found class name {}", op.getClass().getName());
         String[] myNameComponents
                 = new String[]{"jmri", "configurexml", "turnoutoperations", "TurnoutOperationXml"};
         myNameComponents[myNameComponents.length - 1]
                 = fullOpNameComponents[fullOpNameComponents.length - 1];
-        String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
+        String fullConfigName = String.join(".", myNameComponents) + "Xml";
         log.debug("getAdapter looks for {}", fullConfigName);
         try {
             Class<?> configClass = Class.forName(fullConfigName);
-            adapter = (TurnoutOperationXml) configClass.newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            adapter = (TurnoutOperationXml) configClass.getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             log.error("exception in getAdapter", e);
         }
         if (adapter == null) {

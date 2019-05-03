@@ -19,10 +19,10 @@ b = javax.swing.JCheckBox("Local Control Disabled")
 def whenMyButtonClicked(event) :
         if (event.getSource().isSelected()) :
             programmer = addressedProgrammers.getAddressedProgrammer(True, 2041)
-            programmer.writeCV(514, 0, None)  
+            programmer.writeCV("514", 0, None)  
         else :
             programmer = addressedProgrammers.getAddressedProgrammer(True, 2041)
-            programmer.writeCV(514, 85, None)  
+            programmer.writeCV("514", 85, None)  
         return
 b.actionPerformed = whenMyButtonClicked
 

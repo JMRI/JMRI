@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for EasyDcc systems.
  * <p>
- * System names are "ETnnn", where nnn is the turnout number
- * without padding, E is user configurable.
+ * System names are "ETnnn", where E is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager implements EasyDccListener {
 
     EasyDccSystemConnectionMemo _memo = null;
@@ -23,6 +23,11 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         log.debug("EasyDCC Turnout Manager null");
     }
 
+    /**
+     * Create an new EasyDCC TurnoutManager.
+     *
+     * @param memo the SystemConnectionMemo for this connection (contains the prefix string needed to parse names)
+     */
     public EasyDccTurnoutManager(EasyDccSystemConnectionMemo memo) {
         _memo = memo;
         prefix = memo.getSystemPrefix();
@@ -41,7 +46,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new EasyDccTurnout(prefix, addr, _memo);
         t.setUserName(userName);
 
@@ -77,8 +82,8 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         // name must be in the ETnnnnn format (E is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+            num = Integer.parseInt(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length()));
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
@@ -104,7 +109,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

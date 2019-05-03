@@ -2,9 +2,7 @@ package jmri.jmrix.nce.consist;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -17,6 +15,8 @@ public class NceConsistEditPanelTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         panel = new NceConsistEditPanel();
         helpTarget="package.jmri.jmrix.nce.consist.NceConsistEditFrame";
         title="NCE_: Edit NCE Consist";
