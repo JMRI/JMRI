@@ -263,7 +263,7 @@
      This opens a picklist for you to select a circuit OBlock to edit. Selecting a row and pressing
      the <b>Show OBlock</b> button opens the <b>Add/Edit Path</b> window.
      The track circuit will be highlighted in blue and the portal icons
-     shown with a red circle and highlighted in blue.</li>
+     shown with a red circle and highlighted in blue.
 
     <h4>Path Editing mode</h4>
     Use this window is to create and edit the paths in the track circuit.
