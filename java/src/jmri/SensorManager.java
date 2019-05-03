@@ -145,7 +145,7 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     /**
      * Determine if the address supplied is valid and free, if not then it shall
      * return the next free valid address up to a maximum of 10 addresses away
-     * from the initial address. Used when adding add a range of Sensors.
+     * from the initial address. Used when adding a range of Sensors.
      *
      * @param curAddress The hardware address of the sensor we wish to add
      * @param prefix     The System Prefix used to make up the systemName

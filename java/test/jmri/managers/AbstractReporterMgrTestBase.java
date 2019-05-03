@@ -6,7 +6,7 @@ import jmri.ReporterManager;
 import org.junit.*;
 
 /**
- * Abstract Base Class for LightManager tests in specific jmrix packages. This
+ * Abstract Base Class for ReporterManager tests in specific jmrix packages. This
  * is not itself a test class, e.g. should not be added to a suite. Instead,
  * this forms the base for test classes, including providing some common tests
  *
@@ -59,7 +59,6 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
     }
-
 
     @Test
     public void testReporterProvideReporter() {
@@ -187,7 +186,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     }
 
     /**
-     * Number of light to test. Made a separate method so it can be overridden
+     * Number of Reporter to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
     protected String getNameToTest1() {
@@ -197,4 +196,5 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     protected String getNameToTest2() {
         return "2";
     }
+
 }
