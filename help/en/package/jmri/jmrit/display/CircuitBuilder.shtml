@@ -24,7 +24,7 @@
 
     <h1>Circuit Builder</h1>
 
-    <span class="since">Since 2.12</span><br>
+    <p><span class="since">Since 2.12</span><br>
     The <b>Circuit Builder</b> is a view of a <b>Control Panel Editor</b>
     panel. It is a graphical way to create track circuits that are implemented in JMRI
     by <a href="../logix/OBlockTable.shtml">OBlocks, Portals and OPaths</a>. The
@@ -86,7 +86,7 @@
     <h2>The Circuit Builder Menu</h2>
 
     The menu has the following menu items: Except for the items "Add Detector Circuit" and "Error Checks", 
-    the menu item will first ask you to select an OBlock from a pick list.</p>
+    the menu item will first ask you to select an OBlock from a pick list.
     <ul>
      <li><b>Add Detector Circuit</b> - Create an OBlock track circuit and assign the icons that display it.
             You will be prompted for the system and user names to create a new OBlock.  Then
@@ -160,7 +160,7 @@
      sensors for occupancy detection and error indication.  OBlock user names can be changed or have
      a track circuit OBlock. The length of block can be entered as either inches or centimeters.
      deleted.  Finally, the circuit track icons can be upgraded to be Indicator Track icons.
-    </p><p>
+    <p>
      In this mode, mouse clicks on a track icon in the basic window frame toggles selection of the track.
      Select the icons you want to use to display the track circuit.
      The icons for a track circuit typically are, but need not be contiguous.
@@ -191,7 +191,7 @@
         may need to be rotated and repositioned.</li>
         <li>The <b>Done</b> button completes the creation and editing of the track circuit.</li>
     </ul>
-
+   </p><p>
      When exiting the Edit Circuit window the OBlock is checked for any possible deficiencies. If
      any are detected you will be prompted and given the option to return to the window or 
      continue to close it.
@@ -210,7 +210,7 @@
     blocks it connects.  That is, the icon should overlap a track icon representing each of 
     the two blocks. In this mode, only portal icons can be repositioned.
     No other panel items can be moved or selected.
-    </p><p>
+    <p>
     To create a new portal type in a name for it in the <b>Portal Name</b> text field. Then
     drag the red circle portal icon to the panel. Place it so that it intersects with 
     a track icon representing the OBlock you selected to open the window. The OBlock circuit 
@@ -252,7 +252,7 @@
         <li>To delete a portal, select it from the list and press the <b>Delete Portal</b> button.</li>
         <li>The <b>Done</b> button completes the creation and/or editing of Portals.</li>
     </ul>
-
+   </p><p>
     When exiting the Add/Edit Portal window the Portal is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.
@@ -268,7 +268,7 @@
     <h4>Path Editing mode</h4>
     Use this window is to create and edit the paths in the track circuit.
     In this mode, no panel items can be moved or selected.
-    </p><p>
+    <p>
     To create a new OPath, first press the <b>Clear Selection</b> button. Then type a name for the
     path into the <b>Path Name</b> text field. Now select all
     the track icons that mark the route. Selected route icons change their color to green. 
@@ -305,7 +305,7 @@
         	inches or centimeter units.</li>
         <li>To delete a path, select it from the list and press the <b>Delete Path</b> button.</li>
     </ul>
-
+   </p><p>
     When exiting the Add/Edit Path window the Path is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.</p>
@@ -321,7 +321,7 @@
     Use this window set the direction of the portal icon when it is being used to show the direction
     of travel of a warrant. Portal icons must exist in oder to have direction arrows when a 
     warrant is allocated.
-    </p><p>
+    <p>
     To set the direction, either select a portal icon or select a portal from the 
     "Portals into and out of circuit ..." list. A green arrow will replace the red circle on
      the highlighted portal icon. To have the arrow display the correct direction the arrow
