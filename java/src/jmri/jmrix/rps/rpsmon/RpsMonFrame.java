@@ -8,7 +8,7 @@ import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) RPS messages
+ * Frame displaying (and logging) RPS messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
@@ -59,4 +59,5 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         }
         nextLine(m.toString() + "\n", raw);
     }
+
 }

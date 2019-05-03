@@ -317,6 +317,8 @@
                         <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
+                        <!-- exclude since intentionally waits forever -->
+                        <exclude>jmri.util.TestWaitsForever</exclude>
                     </excludes>
                     <systemPropertyVariables>
                         <jmri.path.program>${basedir}</jmri.path.program>

@@ -10,22 +10,49 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class RpsReporterManagerTest {
+public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
+
+    @Override
+    public String getSystemName(String i) {
+        return l.getSystemPrefix() + "R" + i;
+    }
+
+    @Override
+    protected String getNameToTest1() {
+        return "(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
+    }
+
+    @Override
+    protected String getNameToTest2() {
+        return "(0,1,0);(1,0,1);(0,1,0);(0,1,0)";
+    }
+
+    @Override
+    public void testReporterProvideByNumber() {} // not possible on RPS
+
+    @Override
+    public void testRegisterDuplicateSystemName() {} // not possible in this form on RPS
 
     @Test
     public void testCTor() {
-        RpsReporterManager t = new RpsReporterManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", l);
+    }
+
+    @Test
+    public void testGetSystemPrefix() {
+        Assert.assertEquals("R", l.getSystemPrefix());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new RpsReporterManager(new RpsSystemConnectionMemo());
     }
 
     @After
     public void tearDown() {
+        l.dispose();
         JUnitUtil.tearDown();
     }
 

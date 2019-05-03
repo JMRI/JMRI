@@ -154,7 +154,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
-        log.debug("validated system name {}",newAddress);
+        log.debug("validated system name {}", newAddress);
     }
 
     /**
