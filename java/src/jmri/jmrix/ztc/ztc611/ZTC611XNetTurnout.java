@@ -7,7 +7,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * connections. See XNetTurnout for further documentation.
  *
  * @author Paul Bender Copyright (C) 2008,2017
-  */
+ */
 public class ZTC611XNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
     public ZTC611XNetTurnout(String prefix, int pNumber, XNetTrafficController tc) {  // a human-readable turnout number must be specified!

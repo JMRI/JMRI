@@ -108,7 +108,7 @@ class LocoTest(jmri.jmrit.automat.AbstractAutomaton) :
 
         # done!
         self.status.text = "Done"
-        self.throttle.release()
+        self.throttle.release(None)
         #re-enable button
         self.startButton.enabled = True
         # and stop
