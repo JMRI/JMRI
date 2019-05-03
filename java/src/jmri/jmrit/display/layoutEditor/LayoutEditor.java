@@ -2817,7 +2817,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
-     * @return 
+     * @return LayoutTrackDrawingOptions object
      */
     @Nonnull
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
@@ -2836,7 +2836,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /** 
      * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
-     * @param ltdo 
+     * @param ltdo LayoutTrackDrawingOptions object
      */
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
