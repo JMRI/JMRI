@@ -191,7 +191,7 @@
         may need to be rotated and repositioned.</li>
         <li>The <b>Done</b> button completes the creation and editing of the track circuit.</li>
     </ul>
-   </p><p>
+
      When exiting the Edit Circuit window the OBlock is checked for any possible deficiencies. If
      any are detected you will be prompted and given the option to return to the window or 
      continue to close it.
@@ -252,7 +252,7 @@
         <li>To delete a portal, select it from the list and press the <b>Delete Portal</b> button.</li>
         <li>The <b>Done</b> button completes the creation and/or editing of Portals.</li>
     </ul>
-   </p><p>
+
     When exiting the Add/Edit Portal window the Portal is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.
@@ -305,10 +305,11 @@
         	inches or centimeter units.</li>
         <li>To delete a path, select it from the list and press the <b>Delete Path</b> button.</li>
     </ul>
-   </p><p>
+
     When exiting the Add/Edit Path window the Path is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
-    continue to close it.</p>
+    continue to close it.
+    </p>
 
     <h3>Portals - Edit Portal Direction Icons</h3>
      From the <b>Circuit Builder</b> menu select the <b>Edit Portal Direction Icons</b> menu item.
