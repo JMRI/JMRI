@@ -1,6 +1,8 @@
 package jmri.server.json.layoutblock;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -89,19 +91,19 @@ public class JsonLayoutBlockSocketServiceTest {
         // test POSTs
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"userName\":\"LayoutBlock2\"}"),
-                JSON.GET, Locale.ENGLISH);
+                JSON.POST, Locale.ENGLISH);
         // onMessage causes a listener to be added to requested LayoutBlocks if not already listening
         Assert.assertEquals("LayoutBlock has 2 listeners", 2, lb.getPropertyChangeListeners().length);
         Assert.assertEquals("LayoutBlock user name is changed", "LayoutBlock2", lb.getUserName());
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":\"this is a comment\"}"),
-                JSON.GET, Locale.ENGLISH);
+                JSON.POST, Locale.ENGLISH);
         Assert.assertEquals("LayoutBlock has comment", "this is a comment", lb.getComment());
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":null}"),
-                JSON.GET, Locale.ENGLISH);
+                JSON.POST, Locale.ENGLISH);
         Assert.assertNull("LayoutBlock has no comment", lb.getComment());
-        // test PUTSs
+        // test PUTs
         try {
             instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                     instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"userName\":\"LayoutBlock2\"}"),
@@ -119,7 +121,6 @@ public class JsonLayoutBlockSocketServiceTest {
      *
      * @throws java.lang.Exception on unexpected errors
      */
-    @SuppressWarnings("null")
     @Test
     public void testOnList() throws Exception {
         LayoutBlockManager manager = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -130,7 +131,7 @@ public class JsonLayoutBlockSocketServiceTest {
         Assert.assertNotNull("LayoutBlock2 is created", lb2);
         Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
-        instance.onList(JsonLayoutBlock.LAYOUTBLOCK, null, Locale.ENGLISH);
+        instance.onList(JsonLayoutBlock.LAYOUTBLOCK, NullNode.getInstance(), Locale.ENGLISH);
         // onList should not add a listener to all LayoutBlocks
         Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
