@@ -239,7 +239,7 @@
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel_alternative.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8+.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>

@@ -185,7 +185,7 @@
         <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
       <!-- Begin sound-only variables -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version37.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV356.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV357-CV365sound_version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV366-CV371sound.xml"/>
@@ -207,7 +207,7 @@
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel_alternative.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8+.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>
