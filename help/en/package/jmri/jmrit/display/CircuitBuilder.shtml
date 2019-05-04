@@ -77,10 +77,11 @@
     <h3>Portal Icons</h3>
     When not in one of the CircuitBuilder editing modes, portal icons are usually invisible. The only
     situation in normal panel operation where they may be visible is when a warrant is allocated. 
-    In this case it is a direction
-    arrow indicating the direction of travel of the warranted train.  However, they are a necessity
+    In this case there may be direction arrows
+    indicating the direction of travel of the warranted train.  However, they are a necessity
     for CircuitBuilder to be able to define Portals and OPaths. In such editing modes the icon is
-    usually a red circle that may be dragged or selected. <b>Note:</b> <i>It is important that every
+    usually a red circle that may be dragged or selected. <b>Note:</b> <i>It is important 
+    for defining paths that every
     block depicted on the panel have <b>all</b> its portals represented by a portal icon.</i> 
 
     <h2>The Circuit Builder Menu</h2>
