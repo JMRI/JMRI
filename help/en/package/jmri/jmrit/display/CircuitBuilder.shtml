@@ -196,7 +196,7 @@
      When exiting the Edit Circuit window the OBlock is checked for any possible deficiencies. If
      any are detected you will be prompted and given the option to return to the window or 
      continue to close it.
-    </p>
+    
 
     <h3>Portals - Add/Edit Circuit Portals</h3>
      From the <b>Circuit Builder</b> menu select the <b>Add/Edit Circuit Portals</b> menu item.
@@ -257,7 +257,7 @@
     When exiting the Add/Edit Portal window the Portal is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.
-    </p>
+    
 
     <h3>Paths - Add/Edit Circuit Paths</h3>
      From the <b>Circuit Builder</b> menu select the <b>Add/Edit Circuit Paths</b> menu item.
@@ -310,7 +310,7 @@
     When exiting the Add/Edit Path window the Path is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.
-    </p>
+    
 
     <h3>Portals - Edit Portal Direction Icons</h3>
      From the <b>Circuit Builder</b> menu select the <b>Edit Portal Direction Icons</b> menu item.
