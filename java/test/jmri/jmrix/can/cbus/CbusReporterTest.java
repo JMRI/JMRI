@@ -22,7 +22,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        r = new CbusReporter(1,new TrafficControllerScaffold(),"Test");
+        r = new CbusReporter(1, new TrafficControllerScaffold(), "Test");
     }
 
     @After

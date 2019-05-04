@@ -220,6 +220,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     @Override
     public String getNameString() {
+        Portal p = getPortal();
+        if (p == null) return "No Portal Defined";
         return getPortal().getDescription();
     }
 

@@ -1,4 +1,4 @@
-package jmri.jmrix.rps;
+package jmri.jmrix.rps.serial;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.Bundle {
+public class Bundle extends jmri.jmrix.rps.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.rps.RpsBundle"; // NOI18N
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -76,6 +76,7 @@ public class Bundle extends jmri.jmrix.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return getBundle().handleGetMessage(locale, key, subs);
     }
+
 
     private final static Bundle b = new Bundle();
 

@@ -280,7 +280,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
             statusText = "setting outputs for Function Key F" + str(self.dirCount) + " in Reverse Direction"
         else:
             # end of operations, release the throttle...
-            self.throttle.release()
+            self.throttle.release(None)
         self.status.text = statusText
         return
 
