@@ -3,7 +3,7 @@ package jmri.server.json;
 /**
  * Common and utility constants used in the JMRI JSON protocol.
  * <p>
- * <strong>Note<strong> any documented use of a constant is not the exclusive or
+ * <strong>Note</strong> any documented use of a constant is not the exclusive or
  * sole use of the constant. Review the JSON schemas for all uses of any given
  * constant.
  * 

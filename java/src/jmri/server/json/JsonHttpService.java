@@ -21,8 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  * It is recommended that this class be as lightweight as possible, by relying
  * either on a helper stored in the InstanceManager, or a helper with static
  * methods.
+ *
+ * <h2>Message ID Handling</h2>
  * <p>
- * <h2>Message ID Handling</h2> A message ID from a client is a positive integer
+ * A message ID from a client is a positive integer
  * greater than zero, to be passed back unchanged to the client so the client
  * can track direct responses to requests (this is not needed in the RESTful
  * API, but is available in the RESTful API). The Message ID (or zero if none)
