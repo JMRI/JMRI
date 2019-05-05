@@ -55,6 +55,9 @@ public class CbusReporter extends AbstractReporter implements CanListener {
 
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         log.debug("CbusReporter: message " + m.getOpCode());
         if (m.getOpCode() == CbusConstants.CBUS_DDES) {
             RFIDReport(m);
@@ -63,6 +66,9 @@ public class CbusReporter extends AbstractReporter implements CanListener {
 
     @Override
     public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         log.debug("CbusReporter: reply " + m.getOpCode());
         if (m.getOpCode() == CbusConstants.CBUS_DDES || m.getOpCode() == CbusConstants.CBUS_ACDAT) {
             int addr = (m.getElement(1) << 8) + m.getElement(2);
