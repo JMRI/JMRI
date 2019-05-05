@@ -161,6 +161,30 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         }
     }
 
+    /**
+     * Validate a JSON data object against the schema for JSON messages and data.
+     *
+     * @param type    the type of data object
+     * @param data    the data object to validate
+     * @param server  true if message is from the JSON server; false otherwise
+     * @param locale  the locale for any exceptions that need to be reported to
+     *                clients
+     * @param id      the id to be included with any exceptions reported to
+     *                clients
+     * @throws JsonException if the message does not validate
+     */
+    public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull Locale locale, int id) throws JsonException {
+        log.trace("validateData(\"{}\", \"{}\", \"{}\", \"{}\", ...)", type, data, server, locale);
+        HashMap<String, JsonSchema> map = server ? this.serverSchemas : this.clientSchemas;
+        if (data.isArray()) {
+            for (JsonNode item : data) {
+                validateData(type, item, server, locale, id);
+            }
+        } else {
+            validateJsonNode(data, type, server, locale, map, id);
+        }
+    }
+
     private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map, int id) throws JsonException {
         log.trace("validateJsonNode(\"{}\", \"{}\", \"{}\", ...)", node, type, server);
         Set<ValidationMessage> errors = null;
