@@ -14,9 +14,13 @@ public class CbusTableEvent extends CbusEvent {
     private int _canid;
     private String _comment;
     private int _sesson;
+    private int _toton;
     private int _sessoff;
+    private int _totoff;
     private int _sessin;
+    private int _totin;
     private int _sessout;
+    private int _totout;
     private String _stlonstring;
     private String _stloffstring;
     private Date _timestamp;
@@ -112,9 +116,16 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Number of times event on for current session
-     */    
+     */
     protected int getSessionOn(){
         return _sesson;
+    }
+    
+    /**
+     * Number of times event on all sessions
+     */
+    protected int getTotalOn(){
+        return _toton;
     }
 
     /**
@@ -125,10 +136,24 @@ public class CbusTableEvent extends CbusEvent {
     }
     
     /**
+     * Number of times event off all sessions
+     */
+    protected int getTotalOff(){
+        return _totoff;
+    }
+    
+    /**
      * Number of times event heard coming in to JMRI this session
      */
     protected int getSessionIn(){
         return _sessin;
+    }
+    
+    /**
+     * Number of times event heard coming in to JMRI all sessions
+     */
+    protected int getTotalIn(){
+        return _totin;
     }
 
     /**
@@ -139,10 +164,46 @@ public class CbusTableEvent extends CbusEvent {
     }
     
     /**
+     * Number of times event heard being sent from JMRI all sessions
+     */
+    protected int getTotalOut(){
+        return _totout;
+    }
+    
+    /**
+     * Set Total In Events
+     */
+    protected void setTotalOn(int newVal) {
+        _toton = newVal;
+    }
+    
+    /**
+     * Set Total Off Events
+     */
+    protected void setTotalOff(int newVal) {
+        _totoff = newVal;
+    }
+    
+    /**
+     * Set Total Inward Events
+     */
+    protected void setTotalIn( int newVal) {
+        _totin = newVal;
+    }
+    
+    /**
+     * Set Total Outward Events
+     */
+    protected void setTotalOut( int newVal ){
+        _totout = newVal;
+    }
+    
+    /**
      * Increase session count for on events
      */
     protected void bumpSessionOn(){
         _sesson++;
+        _toton++;
     }
 
     /**
@@ -150,6 +211,7 @@ public class CbusTableEvent extends CbusEvent {
      */
     protected void bumpSessionOff(){
         _sessoff++;
+        _totoff++;
     }
     
     /**
@@ -157,13 +219,25 @@ public class CbusTableEvent extends CbusEvent {
      */
     protected void bumpSessionIn(){
         _sessin++;
+        _totin++;
     }    
 
     /**
      * Increase session count for outbound events
-     */    
+     */
     protected void bumpSessionOut(){
         _sessout++;
+        _totout++;
+    }
+    
+    /**
+     * Reset on, off, in and out session counts to 0
+     */
+    protected void resetSessionTotals(){
+        _sesson = 0;
+        _sessoff = 0;
+        _sessin = 0;
+        _sessout = 0;
     }
 
 }
