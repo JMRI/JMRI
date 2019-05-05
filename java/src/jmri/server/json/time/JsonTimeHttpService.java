@@ -4,7 +4,7 @@ import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.RATE;
 import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
+import static jmri.server.json.JSON.TIME;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -21,13 +21,13 @@ public class JsonTimeHttpServiceTest extends JsonHttpServiceTestBase<JsonTimeHtt
     @Test
     public void doGetList() throws JsonException {
         Timebase manager = InstanceManager.getDefault(Timebase.class);
-        JsonNode array = service.doGetList(JsonTimeServiceFactory.TIME, NullNode.getInstance(), locale, 0);
+        JsonNode array = service.doGetList(JSON.TIME, NullNode.getInstance(), locale, 0);
         validate(array);
         assertEquals("One element in array", 1, array.size());
         assertTrue("First element is a JSON object", array.get(0).isObject());
-        assertEquals("JSON object type is \"time\"", JsonTimeServiceFactory.TIME,
+        assertEquals("JSON object type is \"time\"", JSON.TIME,
                 array.get(0).path(JSON.TYPE).asText());
-        assertTrue("time property", array.get(0).path(JSON.DATA).path(JsonTimeServiceFactory.TIME).isTextual());
+        assertTrue("time property", array.get(0).path(JSON.DATA).path(JSON.TIME).isTextual());
         assertEquals("rate property", manager.getRate(), array.get(0).path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         assertEquals("running state", JSON.ON, array.get(0).path(JSON.DATA).path(JSON.STATE).asInt());
     }

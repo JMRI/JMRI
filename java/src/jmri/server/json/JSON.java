@@ -799,6 +799,12 @@ public final class JSON {
      * @since 5.0.0
      */
     public static final String RFID = "rfid"; // NOI18N
+    /**
+     * {@value #TIME}
+     * 
+     * @since 5.0.0
+     */
+    public static final String TIME = "time"; // NOI18N
 
     /* ZeroConf support */
     /**
