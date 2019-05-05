@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.Application;
 import jmri.Disposable;
 import jmri.IdTag;
 import jmri.IdTagManager;
@@ -105,6 +104,11 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Override
     public String getSystemPrefix() {
         return "I";
+    }
+
+    @Override
+    public IdTag provide(String name) throws IllegalArgumentException {
+        return provideIdTag(name);
     }
 
     @Override

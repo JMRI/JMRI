@@ -112,7 +112,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public void dispose();
 
     /**
-     * Get the count of managed objects
+     * Get the count of managed objects.
+     * 
+     * @return the number of managed objects
      */
     @CheckReturnValue
     public int getObjectCount();
@@ -552,12 +554,16 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
 
     /**
      * Register a {@link ManagerDataListener} to hear about 
-     * adding or removing items from the list of NamedBeans
+     * adding or removing items from the list of NamedBeans.
+     * 
+     * @param e the data listener to add
      */
     public void addDataListener(ManagerDataListener<E> e);
     
     /**
-     * Unregister a previously-added {@link ManagerDataListener}
+     * Unregister a previously-added {@link ManagerDataListener}.
+     * 
+     * @param e the data listener to remove
      */
     public void removeDataListener(ManagerDataListener<E> e);
 
@@ -570,13 +576,17 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * manager is not required to mute and (2) if present, 
      * its' temporary, in the sense that the manager must do
      * a cumulative notification when done.
+     * 
+     * @param muted true if notifications should be suppressed; false otherwise
      */
     public default void setDataListenerMute(boolean muted) {}
 
 
     /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
-     * without introducing a Swing dependency into core JMRI
+     * without introducing a Swing dependency into core JMRI.
+     * 
+     * @param <E> the type to support listening for
      * @since JMRI 4.11.4
      */
     interface ManagerDataListener<E extends NamedBean> {
@@ -601,7 +611,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Defines an event that encapsulates changes to a list.
      * <p>
      * Intended to be equivalent to {@link javax.swing.event.ListDataEvent}
-     * without introducing a Swing dependency into core JMRI
+     * without introducing a Swing dependency into core JMRI.
+     * 
+     * @param <E> the type to support in the event
      * @since JMRI 4.11.4
      */
     @javax.annotation.concurrent.Immutable
