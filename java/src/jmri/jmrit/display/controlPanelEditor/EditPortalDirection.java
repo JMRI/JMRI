@@ -56,15 +56,12 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        javax.swing.border.Border padding = BorderFactory.createEmptyBorder(10, 5, 4, 5);
+        contentPane.setBorder(padding);
 
-        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-        contentPane.add(makePortalPanel());
-        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
+        contentPane.add(new JScrollPane(makePortalPanel()));
+        setContentPane(contentPane);
 
-        JPanel border = new JPanel();
-        border.setLayout(new java.awt.BorderLayout(10, 10));
-        border.add(contentPane);
-        setContentPane(new JScrollPane(border));
         pack();
         if (_loc.x < 0) {
             setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
@@ -132,14 +129,20 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
     private JPanel makePortalPanel() {
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
+        portalPanel.add(panel);
+
         _portalList = new PortalList(_homeBlock);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
 
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
         JLabel l = new JLabel(Bundle.getMessage("PortalDirection1", _homeBlock.getDisplayName()));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
@@ -161,7 +164,6 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
 
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(makeArrowPanel());
         portalPanel.add(panel);
 
@@ -169,6 +171,11 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
 
         portalPanel.add(makeDoneButtonPanel());
         return portalPanel;
+    }
+
+    protected void clearListSelection() {
+        _portalList.clearSelection();
+        _parent._editor.highlight(null);
     }
 
     /**

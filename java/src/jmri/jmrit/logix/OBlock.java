@@ -835,7 +835,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void removePath(Path path) {
-        if (!getSystemName().equals(path.getBlock().getSystemName())) {
+        jmri.Block block = path.getBlock();
+        if (block != null && !getSystemName().equals(block.getSystemName())) {
             return;
         }
 //        if (log.isDebugEnabled()) log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
@@ -970,7 +971,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             Portal portal = iter.next();
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
-            opBlock.removePortal(portal);
+            if (opBlock != null) {
+                opBlock.removePortal(portal);
+            }
             portal.dispose();
         }
         _portals.clear();
