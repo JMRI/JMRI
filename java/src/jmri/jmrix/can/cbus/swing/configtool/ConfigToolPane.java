@@ -235,6 +235,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     @Override
     public void reply(jmri.jmrix.can.CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( ( _filterFrame!=null ) && ( _filterFrame.filter(m) ) ) {
             return;
         }
@@ -252,6 +255,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     @Override
     public void message(jmri.jmrix.can.CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( ( _filterFrame!=null ) && ( _filterFrame.filter(m)) ) {
             return;
         }
