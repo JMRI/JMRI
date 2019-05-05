@@ -118,10 +118,13 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
      *
      */
     public void setNumber(String number) {
-        String old = _number;
+        String oldNumber = _number;
         _number = number;
-        if (!old.equals(number)) {
-            setDirtyAndFirePropertyChange("rolling stock number", old, number); // NOI18N
+        if (!oldNumber.equals(number)) {
+            pcs.firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
+            String oldId = _id;
+            _id = createId(_road, number);
+            setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
         }
     }
 
@@ -133,7 +136,10 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         String old = _road;
         _road = road;
         if (!old.equals(road)) {
-            setDirtyAndFirePropertyChange("rolling stock road", old, road); // NOI18N
+            pcs.firePropertyChange("rolling stock road", old, road); // NOI18N
+            String oldId = _id;
+            _id = createId(road, _number);
+            setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
         }
     }
 
@@ -408,11 +414,10 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
      * Sets rolling stock location on the layout
      *
      * @param location The Location.
-     *
-     * @param track (yard, spur, staging, or interchange track)
-     *
+     * @param track    (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
-     *         acceptable, or "length" if the rolling stock length didn't fit.
+     *         acceptable, "road" if rolling stock road isn't acceptable, or
+     *         "length" if the rolling stock length didn't fit.
      */
     public String setLocation(Location location, Track track) {
         return setLocation(location, track, !FORCE); // don't force
@@ -422,10 +427,9 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
      * Sets rolling stock location on the layout
      *
      * @param location The Location.
-     *
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true place rolling stock ignore track length, type,
-     *            {@literal &} road
+     * @param track    (yard, spur, staging, or interchange track)
+     * @param force    when true place rolling stock ignore track length, type,
+     *                     and road
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, "road" if rolling stock road isn't acceptable, or
      *         "length" if the rolling stock length didn't fit.
