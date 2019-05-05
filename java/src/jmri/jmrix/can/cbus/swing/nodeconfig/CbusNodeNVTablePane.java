@@ -63,6 +63,10 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
         pane1 = null;
         
+        if ( nodeNvTable == null ){
+            return;
+        }
+        
         TableColumnModel tableModel = nodeNvTable.getColumnModel();
         
 

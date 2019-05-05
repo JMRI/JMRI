@@ -207,7 +207,7 @@ public class CbusEventHighlightPanel extends JPanel {
 
     }
         
-    public void setoptions(){    
+    private void setoptions(){    
         
         int nn = 0;
         int ev = 0;
