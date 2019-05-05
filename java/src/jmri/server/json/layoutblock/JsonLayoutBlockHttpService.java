@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -50,7 +51,11 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             data.put(TRACK_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockTrackColor()));
             data.put(OCCUPIED_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockOccupiedColor()));
             data.put(EXTRA_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockExtraColor()));
-            data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensor() != null ? layoutBlock.getOccupancySensorName() : null);
+            if (layoutBlock.getOccupancySensor() != null) {
+                data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensor().getSystemName());
+            } else {
+                data.putNull(OCCUPANCY_SENSOR);
+            }
             data.put(OCCUPIED_SENSE, layoutBlock.getOccupiedSense());
         }
         return root;
