@@ -1246,6 +1246,9 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         if ((a = e.getAttribute(Xml.ROAD_NAME)) != null) {
             _road = a.getValue();
         }
+        if (_id == null || !_id.equals(createId(_road, _number))) {
+            _id = createId(_road, _number);
+        }
         if ((a = e.getAttribute(Xml.TYPE)) != null) {
             _type = a.getValue();
         }
