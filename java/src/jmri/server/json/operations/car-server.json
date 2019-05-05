@@ -8,13 +8,13 @@
             "type": "string",
             "description": "Operations id for car"
         },
-        "number": {
-            "type": "string",
-            "description": "The car number"
-        },
         "road": {
             "type": "string",
             "description": "The car owning railroad"
+        },
+        "number": {
+            "type": "string",
+            "description": "The car number"
         },
         "type": {
             "type": "string",
@@ -91,14 +91,14 @@
         },
         "destination": {
             "type": [
-                "string",
+                "object",
                 "null"
             ],
             "description": "the current destination of the car"
         },
         "finalDestination": {
             "type": [
-                "string",
+                "object",
                 "null"
             ],
             "description": "the final destination of the car"
@@ -113,13 +113,21 @@
         "status": {
             "type": "string",
             "description": "The status symbol of the car"
+        },
+        "outOfService": {
+            "type": "boolean",
+            "description": "True if out of service; false otherwise"
+        },
+        "rename": {
+            "type": "string",
+            "description": "Old name of car if road or number has changed"
         }
     },
     "additionalProperties": false,
     "required": [
         "name",
-        "number",
         "road",
+        "number",
         "type",
         "length",
         "load",
@@ -135,6 +143,7 @@
         "utility",
         "destination",
         "finalDestination",
+        "outOfService",
         "returnWhenEmpty"
     ]
 }

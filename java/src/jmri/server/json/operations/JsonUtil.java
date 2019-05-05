@@ -19,6 +19,7 @@ import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
+import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
 import static jmri.server.json.operations.JsonOperations.TRACK;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -126,7 +127,18 @@ public class JsonUtil {
      * @return the JSON representation of car
      */
     public ObjectNode getCar(@Nonnull Car car, Locale locale) {
-        ObjectNode data = this.getRollingStock(car, locale);
+        return getCar(car, getRollingStock(car, locale), locale);
+    }
+
+    /**
+     * Get a JSON representation of a Car.
+     *
+     * @param car    the Car
+     * @param data the JSON data from {@link #getRollingStock(RollingStock, Locale)}
+     * @param locale the client's locale
+     * @return the JSON representation of car
+     */
+    public ObjectNode getCar(@Nonnull Car car, @Nonnull ObjectNode data, Locale locale) {
         data.put(JSON.LOAD, car.getLoadName()); // NOI18N
         data.put(JSON.HAZARDOUS, car.isHazardous());
         data.put(JsonOperations.CABOOSE, car.isCaboose());
@@ -218,7 +230,7 @@ public class JsonUtil {
         return node;
     }
 
-    private ObjectNode getRollingStock(@Nonnull RollingStock rs, Locale locale) {
+    public ObjectNode getRollingStock(@Nonnull RollingStock rs, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
         node.put(NAME, rs.getId());
         node.put(NUMBER, TrainCommon.splitString(rs.getNumber()));
@@ -231,6 +243,7 @@ public class JsonUtil {
         node.put(COLOR, rs.getColor());
         node.put(OWNER, rs.getOwner());
         node.put(COMMENT, rs.getComment());
+        node.put(OUT_OF_SERVICE, rs.isOutOfService());
         if (rs.getTrack() != null) {
             node.set(LOCATION, this.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation(), locale));
         } else if (rs.getLocation() != null) {

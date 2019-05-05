@@ -2,6 +2,10 @@ package jmri.server.json;
 
 /**
  * Common and utility constants used in the JMRI JSON protocol.
+ * <p>
+ * <strong>Note<strong> any documented use of a constant is not the exclusive or
+ * sole use of the constant. Review the JSON schemas for all uses of any given
+ * constant.
  * 
  * @author Randall Wood (C) 2013, 2014, 2016, 2018, 2019
  */
@@ -126,24 +130,28 @@ public final class JSON {
     /**
      * {@value #NODE}
      * <p>
+     * 
      * @since 1.1
      */
     public static final String NODE = "node"; // NOI18N
     /**
      * {@value #ACTIVE_PROFILE}
      * <p>
+     * 
      * @since 3.0
      */
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     /**
      * {@value #FORMER_NODES}
      * <p>
+     * 
      * @since 1.1
      */
     public static final String FORMER_NODES = "formerNodes"; // NOI18N
     /**
      * {@value #LOCALE}
      * <p>
+     * 
      * @since 1.1
      */
     public static final String LOCALE = "locale"; // NOI18N
@@ -623,7 +631,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
- /* Common state */
+    /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>
@@ -775,6 +783,12 @@ public final class JSON {
     public static final String CONFLICT = "conflict"; // NOI18N
     /**
      * {@value #RENAME}
+     * <p>
+     * In a message from a client, carries the new name for the object in the
+     * message; note that some services may bar changing the name of an object,
+     * while other services will change the name based on other values. In a
+     * message from the server, carries the old name for a recently renamed
+     * object in the message.
      * 
      * @since 5.0.0
      */
