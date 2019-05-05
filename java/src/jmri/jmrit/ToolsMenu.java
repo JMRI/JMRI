@@ -117,17 +117,16 @@ public class ToolsMenu extends JMenu {
 
         add(new JSeparator());
         // more complex multi-window tools
+        add(new jmri.jmrit.operations.OperationsMenu());
         add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
         add(new jmri.jmrit.timetable.swing.TimeTableAction(Bundle.getMessage("MenuItemTimeTable")));
-        // CTC menu item
+        // CTC menu item with submenus
         JMenu ctcMenu = new JMenu(Bundle.getMessage("MenuCTC"));
         ctcMenu.add(new jmri.jmrit.ctc.editor.CtcEditorAction(Bundle.getMessage("MenuItemCTCEditor")));
         ctcMenu.add(new jmri.jmrit.ctc.CtcRunAction(Bundle.getMessage("MenuItemCTCMain")));
         add(ctcMenu);
         // US&S CTC subsystem tools
         add(new jmri.jmrit.ussctc.ToolsMenu());
-        // operations menu
-        add(new jmri.jmrit.operations.OperationsMenu());
         // add cab signals
         add(new jmri.jmrit.cabsignals.CabSignalAction());
 
