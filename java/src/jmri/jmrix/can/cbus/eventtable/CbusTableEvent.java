@@ -171,7 +171,7 @@ public class CbusTableEvent extends CbusEvent {
     }
     
     /**
-     * Set Total In Events
+     * Set Total On Events
      */
     protected void setTotalOn(int newVal) {
         _toton = newVal;
