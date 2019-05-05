@@ -265,10 +265,9 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     
     @Override
     public String getTitle() {
-        return Bundle.getMessage("MenuItemCabSignalPane");
+        return Bundle.getMessage("CabSignalPaneTitle");
     }
 
-    
     public CabSignalPane() {
         super();
         cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class);
@@ -395,7 +394,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         cabSignalManager = null;
         super.dispose();
     }
-
 
     // Cab Signal List Listener interface
 
