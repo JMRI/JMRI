@@ -1,6 +1,7 @@
 package jmri.jmrix.ztc.ztc611;
 
 import jmri.Turnout;
+import jmri.jmrix.lenz.XNetAddress;
 
 /**
  * Implement turnout manager - Specific to ZTC ZTC611
@@ -19,8 +20,12 @@ public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager
     // XNet-specific methods
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(2));
-        Turnout t = new ZTC611XNetTurnout(prefix, addr, tc);
+        // check if the output bit is available
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        if (bitNum == -1) {
+            return (null);
+        }
+        Turnout t = new ZTC611XNetTurnout(prefix, bitNum, tc);
         t.setUserName(userName);
         return t;
     }

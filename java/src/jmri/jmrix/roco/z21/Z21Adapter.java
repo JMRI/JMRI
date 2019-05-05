@@ -118,7 +118,9 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     @Override
     public void dispose(){
        super.dispose();
-       socket.close();
+       if(opened) {
+          socket.close();
+       }
        opened = false;
        allowConnectionRecovery = false; // disposing of the object should 
                                         // result in not allowing reconnection.

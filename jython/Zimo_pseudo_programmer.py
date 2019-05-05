@@ -95,7 +95,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
         # we need to quit and clear down tidily...
         self.hideShowRadios(False)
         self.hideShowOpsButton(False)
-        self.throttle.release()
+        self.throttle.release(None)
         self.address.enabled = True
         self.startButton.enabled = True
         self.box.enabled = True

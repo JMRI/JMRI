@@ -99,7 +99,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(service.doGetList(type, locale));
+        this.connection.sendMessage(service.doGetList(type, data, locale));
         this.listen();
     }
 

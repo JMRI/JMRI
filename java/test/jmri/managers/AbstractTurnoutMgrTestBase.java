@@ -128,6 +128,17 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
     }
 
     @Test
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
+
+
+    @Test
     public void testSetAndGetOutputInterval() {
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
         Assert.assertEquals("default outputInterval", 250, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager

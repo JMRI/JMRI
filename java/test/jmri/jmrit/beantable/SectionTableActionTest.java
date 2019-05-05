@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -58,21 +59,23 @@ public class SectionTableActionTest extends AbstractTableActionBase {
 
         // find the "Add... " button and press it.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	    //Enter 1 in the text field labeled "System Name:"
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("1");
+	    //press the "Add Selected Block" button to add the only defined block
+	    jmri.util.swing.JemmyUtil.pressButton(jf,ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
 	    //and press create
 	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        jmri.util.JUnitAppender.suppressWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     @Test
     @Override
-    @Ignore("needs further setup")
-    @ToDo("need to add at least one block to the section before we can create")
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -80,25 +83,35 @@ public class SectionTableActionTest extends AbstractTableActionBase {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+	    jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "System Name:"
+	    //Enter 1 in the text field labeled "System Name:"
 	   
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("1");
-	//and press create
-	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+	    //press the "Add Selected Block" button to add the only defined block
+	    jmri.util.swing.JemmyUtil.pressButton(jf,ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
+	    //and press create
+	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        jmri.util.JUnitAppender.suppressWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
 
-	// find the "Edit" button and press it.  This may be in the table body.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonEdit"));
-        JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JFrameOperator jfo = new JFrameOperator(f);
+
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0,BeanTableDataModel.NUMCOLUMN+2);
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+	    jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
-	JUnitUtil.dispose(f1);
+	    JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
+    @Override
+    public String getEditFrameName(){
+        return "Edit Section";
+    }
 
     // The minimal setup for log4J
     @Override

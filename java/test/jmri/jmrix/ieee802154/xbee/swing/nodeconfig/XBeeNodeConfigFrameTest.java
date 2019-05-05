@@ -5,45 +5,23 @@ import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of XBeeNodeConfigFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class XBeeNodeConfigFrameTest {
+public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private XBeeConnectionMemo m = null;
     private XBeeTrafficController tc = null;
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        XBeeNodeConfigFrame action = new XBeeNodeConfigFrame(tc);
-        Assert.assertNotNull("exists", action);
-        action.dispose();
-    }
-
-    @Test
-    public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        XBeeNodeConfigFrame t = new XBeeNodeConfigFrame(tc);
-        // for now, just makes ure there isn't an exception.
-        t.initComponents();
-        t.dispose();
-    }
 
     @Test
     public void testGetTitle(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        XBeeNodeConfigFrame t = new XBeeNodeConfigFrame(tc);
-        t.initComponents();
-        Assert.assertEquals("title","Configure XBee Nodes",t.getTitle());
-        t.dispose();
+        frame.initComponents();
+        Assert.assertEquals("title","Configure XBee Nodes",frame.getTitle());
     }
 
     @Before
@@ -55,11 +33,15 @@ public class XBeeNodeConfigFrameTest {
         m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new XBeeNodeConfigFrame(tc);
+        }
     }
 
     @After
     public void tearDown() {        
         tc = null;
-        JUnitUtil.tearDown();
+        m = null;
+        super.tearDown();
     }
 }

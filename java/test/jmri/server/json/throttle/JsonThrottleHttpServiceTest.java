@@ -23,7 +23,7 @@ public class JsonThrottleHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doGet(JsonThrottle.THROTTLE, "", Locale.ENGLISH);
+            service.doGet(JsonThrottle.THROTTLE, "", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -62,7 +62,7 @@ public class JsonThrottleHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonThrottleHttpService service = new JsonThrottleHttpService(mapper);
         try {
-            service.doGetList(JsonThrottle.THROTTLE, Locale.ENGLISH);
+            service.doGetList(JsonThrottle.THROTTLE, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());

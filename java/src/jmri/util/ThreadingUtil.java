@@ -312,12 +312,17 @@ public class ThreadingUtil {
 
                 java.lang.management.MonitorInfo[] monitors = threadInfo.getLockedMonitors();
                 for (java.lang.management.MonitorInfo mon : monitors) {
-                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame()); // yes, warn - for re-enable later
+                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame(), Log4JUtil.shortenStacktrace(new Exception("traceback"))); // yes, warn - for re-enable later
                 }
 
                 java.lang.management.LockInfo[] locks = threadInfo.getLockedSynchronizers();
                 for (java.lang.management.LockInfo lock : locks) {
-                    log.warn("Thread was holding lock {} from {}", lock);  // yes, warn - for re-enable later
+                    // certain locks are part of routine Java API operations
+                    if (lock.toString().startsWith("java.util.concurrent.ThreadPoolExecutor$Worker") ) {
+                        log.debug("Thread was holding java lock {}", lock, Log4JUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
+                    } else {
+                        log.warn("Thread was holding lock {}", lock, Log4JUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
+                    }
                 }
             } catch (RuntimeException ex) {
                 // just record exceptions for later pick up during debugging

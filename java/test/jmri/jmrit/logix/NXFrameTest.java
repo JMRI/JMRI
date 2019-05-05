@@ -232,7 +232,7 @@ public class NXFrameTest {
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
         block = _OBlockMgr.getOBlock("OB10");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route, _OBlockMgr).getDisplayName());
 
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
 
@@ -286,7 +286,7 @@ public class NXFrameTest {
         String[] route = {"OB3", "OB4", "OB5", "OB10", "OB0", "OB1", "OB2", "OB3"};
         OBlock block = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route, _OBlockMgr).getDisplayName());
 
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
 
@@ -341,7 +341,7 @@ public class NXFrameTest {
         String[] route1 = {"OB1", "OB6", "OB3"};
         OBlock block = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route1).getDisplayName());
+        Assert.assertEquals("Train in block OB3", block.getSensor().getDisplayName(), runtimes(route1,_OBlockMgr).getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -359,7 +359,7 @@ public class NXFrameTest {
         String[] route2 = {"OB3", "OB7", "OB5"};
         block = _OBlockMgr.getOBlock("OB5");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route2).getDisplayName());
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route2, _OBlockMgr).getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -374,13 +374,14 @@ public class NXFrameTest {
      * <p>Works through a list of OBlocks, gets its sensor,
      * activates it, then inactivates the previous OBlock sensor.
      * Leaves last sensor ACTIVE to show the train stopped there.
-     * @param route Array of detection sensors of the route
+     * @param route Array of OBlock names of the route
+     * @param mgr OBLock manager
      * @return active end sensor
-     * @throws Exception
+     * @throws Exception exception thrown
      */
-    private Sensor runtimes(String[] route) throws Exception {
+    protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
-        OBlock block = _OBlockMgr.getOBlock(route[0]);
+        OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
         for (int i = 1; i < route.length; i++) {
             OBlock blk = block;
@@ -388,11 +389,10 @@ public class NXFrameTest {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
-            }, "Train occupies block "+i+" of "+route.length);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
-//            jmri.util.JUnitUtil.releaseThread(this, 100);
+            }, "Train occupies block "+i+" ("+blk.getDisplayName()+") of "+route.length);
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
-            block = _OBlockMgr.getOBlock(route[i]);
+            block = mgr.getOBlock(route[i]);
             Sensor nextSensor;
             boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
             if (!dark) {
@@ -401,30 +401,23 @@ public class NXFrameTest {
                     try {
                         nextSensor.setState(Sensor.ACTIVE);
                     } catch (jmri.JmriException e) {
-                        Assert.fail("Unexpected Exception: " + e);
-                    }
-                });
-//                jmri.util.JUnitUtil.releaseThread(this, 100);
-                jmri.util.ThreadingUtil.runOnLayout(() -> {
-                    try {
-                        nextSensor.setState(Sensor.ACTIVE);
-                    } catch (jmri.JmriException e) {
-                        Assert.fail("Unexpected Exception: " + e);
+                        Assert.fail("Set "+nextSensor.getDisplayName()+" ACTIVE Exception: " + e);
                     }
                 });
                 new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
-//                jmri.util.JUnitUtil.releaseThread(this, 100);
             } else {
                 nextSensor = null;
             }
-            final Sensor tsensor = sensor;
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
-                try {
-                    tsensor.setState(Sensor.INACTIVE);
-                } catch (jmri.JmriException e) {
-                    Assert.fail("Unexpected Exception: " + e);
-                }
-            });
+            if (sensor != null) {
+                final Sensor tsensor = sensor;
+                jmri.util.ThreadingUtil.runOnLayout(() -> {
+                    try {
+                        tsensor.setState(Sensor.INACTIVE);
+                    } catch (jmri.JmriException e) {
+                        Assert.fail("Set "+tsensor.getDisplayName()+" INACTIVE Exception: " + e);
+                    }
+                });
+            }
             if (!dark) {
                 sensor = nextSensor;
             }

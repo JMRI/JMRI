@@ -14,14 +14,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusEventHighlightFrameTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusEventHighlightFrame pane = new CbusEventHighlightFrame();
-        Assert.assertNotNull("exists", pane);
-    }
+public class CbusEventHighlightFrameTest extends jmri.util.JmriJFrameTestBase{
 
     @Test
     public void testPaneCtor() {
@@ -32,12 +25,19 @@ public class CbusEventHighlightFrameTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new CbusEventHighlightFrame();
+        }
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {
+        super.tearDown();    
+    }
 
 
 }

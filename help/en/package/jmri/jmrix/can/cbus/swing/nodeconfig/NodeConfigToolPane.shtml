@@ -293,37 +293,50 @@
       
       </div>
       
-    <h3><a name="fcuimport" id="fcuimport">Restore a Node from FCU xml file</a></h3>
+    <h3><a name="fcuimport" id="fcuimport">MERG FCU xml file - Restore Node / Import CBUS Event and Node Names</a></h3>
     <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus_node_restore_from_fcu_661x619.png"
       width="661" height="619" alt="MERG CBUS Node Setup" align="right">
       
-      <p>Open the restore window via the Node Manager File Menu > Restore Node from FCU xml</p>
+      <ul>
+      <li>Restore Node NV's and Events</li>
+      <li>Import Node Names to the main Node Manager</li>
+      <li>Import Event Names to the <a href="../eventtable/EventTablePane.shtml">JMRI CBUS Event Table</a></li>
+      </ul>
       
-      <p>Select an FCU xml file from the button at top of the screen.</p>
+        <p>Open the restore window via the Node Manager File Menu > Restore Node from FCU xml</p>
       
-      <p>Nodes within the file will appear in the top table.</p>
-      <p>There are tabs for viewing the information on the selected node, 
-      node variables and node events in the centre of the window.</p>
+        <p>Select an FCU xml file from the button at top of the screen.</p>
       
-      <p>Restore options are towards the bottom of the screen.</p>
-      
-      <p>Nodes from the main Node Table are listed toward the bottom left of the restore screen.</p>
-      
-      <p>Both NV and event transfer can be independently selected.</p>
-      
-      <p>There is also an option to clear any existing events on the node.</p>
+        <p>Nodes within the file will appear in the top table.</p>
+        <p>There are tabs for viewing the information on the selected node, 
+            node variables and node events in the centre of the window.</p>
 
+
+        <p>If the JMRI CBUS Event Table is running, the button to import event names will be enabled.
+        <br>An event name will be added to an existing event table entry if it has no event name.</p>
       
+        <p>Node names are imported to the main node table, updating the node name if unset.
+        <br>If a node number is not present in the table, 
+        a new row will be created enabling the node name 
+        to be used within other JMRI CBUS applications.</p>
+        
+        <p>Restore options are towards the bottom of the screen.</p>
       
-      <p>When a matching FCU node and a node table node have both been selected, 
-      the Update Node button will become active.  </p>
+        <p>Nodes from the main Node Table are listed toward the bottom left of the restore screen.</p>
       
-      <p>The donor node and the target node require the same amount of NVs or Event Variables.</p>
+        <p>Both NV and event transfer can be independently selected.</p>
       
-      <p>Once clicked, there's a confirmation popup
-      confirming the options which are set.</p>
+        <p>There is also an option to clear any existing events on the node.</p>
+        
+        <p>When a matching FCU node and a node table node have both been selected, 
+        the Update Node button will become active.  </p>
       
+        <p>The donor node and the target node require the same amount of NVs or Event Variables.</p>
+      
+        <p>Once clicked, there's a confirmation popup
+        confirming the options which are set.</p>
+        
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-teach-from-fcu-file-confirm-278x215.png"
       width="278" height="215" alt="MERG CBUS Confirm write restore" >
       
@@ -340,46 +353,64 @@
       
       
       
-    <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
+    <h3><a name="opc" id="opc">Sent Operation Codes</a></h3>
     <div>
       <ul>
-      <li>NERD - Sent when requesting node events.</li>
-      <li>RQEVN - Sent when node selected prior to building event list.</li>
-      <li>NVSET - Sent when editing NV's.</li>
-      <li>NVRD - Sent when NV window selected in get node variable loop.</li>
-      <li>RQNP - Sent on refresh node list to identify any nodes already in setup mode.
-                Also sent in response to a node requesting a node number.</li>
-      <li>QNN - Sent when refreshing node list.</li>
-      <li>RQNPN - Sent when node selected to receive node parameter total, also sent to get each node parameter.</li>
-      <li>REVAL - Sent when node event window selected, to request each event value.</li>
       <li>EVULN - Sent when deleting an event, also sent when editing an event.</li>
       <li>EVLRN - Sent to teach an event variable.</li>
+      <li>NERD - Sent when requesting node events.</li>
       <li>NNLRN - Sent to request node enter learn mode, prior to deleting an event or teaching an event.</li>
+      <li>NVSET - Sent when editing NV's.</li>
+      <li>NVRD - Sent when NV window selected in get node variable loop.</li>
+      <li>QNN - Sent when refreshing node list.</li>
+      <li>REVAL - Sent when node event window selected, to request each event value.</li>
+      <li>RQEVN - Sent when node selected prior to building event list.</li>
+      <li>RQMN - Request Module Name - Sent to request module name when in setup mode.</li>
+      <li>RQNP - Sent on refresh node list to identify any nodes already in setup mode.
+                Also sent in response to a node requesting a node number.</li>
+      <li>RQNPN - Sent when node selected to receive node parameter total, also sent to get each node parameter.</li>
       <li>SNN - Sent to allocate a node number following user choosing number.</li>
       </ul>
       
-      <p>Received OPCS must from an external CBUS connection.  
-      Messages sent from other JMRI components will be ingnored by this tool. </p>
+      <h4>Received Operation Codes</h4>
       
       <ul>
-      <li>RQNN - Constant listener for node number requests.</li>
-      <li>NNREL - Constant listener for node number release.</li>
+      <li>CANID - Listener to set node to a specific CAN ID.</li>
+      <li>CMDERR - Constant listener with extra functionality
+                <ul>
+                <li>When waiting for unlearn event response </li>
+                <li>When waiting for a response to setting event </li> 
+                <li>When waiting for a response to setting NV </li>
+                </ul>
+                </li>
+      <li>ENRSP - Listener when waiting for node event list.</li>
+      <li>ENUM - Listener to auto reset CAN ID.</li>
+      <li>EVLRN - Listener to teach event in learn mode.</li>
+      <li>EVLRNI - Listener to modify event in learn mode by index ( Node must have a valid index ).</li>
+      <li>EVULN - Listener to remove event in learn mode.</li>
+      <li>NEVAL - Listen when waiting for an event variable.</li>
       <li>NNACK - Listener when waiting for a SNN response.</li>
+      <li>NNCLR - Listener to clear all Node events</li>
+      <li>NNLRN - Listener for when node enters Learn Mode</li>
+      <li>NNREL - Constant listener for node number release
+            <br>Node will be removed from Node manager table as any previous data cannot be relied on.</li>
+      <li>NNULN - Listener for when node exits Learn Mode</li>
+      <li>NVANS - Listener when waiting for node NV's.</li>
+      <li>NVSET - Listener for node set single NV.</li>
+      <li>NUMEV - Listener when waiting for number of node events.</li>
       <li>PARAMS - Listener for setup mode on node list refresh, 
                 listener when an RQNP has been sent.</li>
-      <li>WRACK - Listener when waiting for unlearn event response, 
-                listener when waiting for a response to setting event, 
-                listener when waiting for a response to setting NV.</li>
-      <li>CMDERR - Listener when waiting for unlearn event response, 
-                listener when waiting for a response to setting event, 
-                listener when waiting for a response to setting NV. 
-            <br>Generic error message, numeric response value not translated at present.</li>
-      <li>PNN - Listener when refreshing node list.</li>
-      <li>NVANS - Listener when waiting for node NV's.</li>
-      <li>NUMEV - Listener when waiting for number of node events.</li>
       <li>PARAN - Listener when waiting for node ( which is not in setup ) parameters.</li>
-      <li>ENRSP - Listener when waiting for node event list.</li>
-      <li>NEVAL - Listen when waiting for an event variable.</li>
+      <li>PNN - Update from Node - Can create a new Node Manager table row.</li>
+      <li>RQNN - Constant listener for node number requests.</li>
+      <li>STAT - Update from Command Station - Can create a new Node Manager table row.</li>
+      <li>WRACK - 
+                <ul>
+                <li>Listener when waiting for unlearn event response</li>
+                <li>Listener when waiting for a response to setting event</li>
+                <li>Listener when waiting for a response to setting NV</li>
+                </ul>
+                </li>
       </ul>
       
       <p>All nodes are referred to by both Manufacturer and Node Type.</p>

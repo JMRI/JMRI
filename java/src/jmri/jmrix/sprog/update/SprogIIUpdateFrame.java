@@ -47,7 +47,7 @@ public class SprogIIUpdateFrame
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
-        if (sv.sprogType.isSprog() == false) {
+        if (sv!=null && sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
             if (log.isDebugEnabled()) {
                 log.debug("SPROG not found - looking for bootloader");
@@ -57,7 +57,7 @@ public class SprogIIUpdateFrame
             requestBoot();
         } else {
             // Check that it's not a V4
-            if (sv.sprogType.sprogType > SprogType.SPROGV4) {
+            if (sv!=null && sv.sprogType.sprogType > SprogType.SPROGV4) {
                 statusBar.setText(Bundle.getMessage("StatusFoundX", sv.toString()));
                 blockLen = sv.sprogType.getBlockLen();
                 // Put SPROG in boot mode

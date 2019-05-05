@@ -3,11 +3,13 @@ package jmri.jmrit.display.switchboardEditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -71,7 +73,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private IconSwitch beanSymbol;
     private String beanManuPrefix;
     private char beanTypeChar;
-    private float opac = 0.5f;
+    private float dim = 100f; // to dim unconnected symbols
     private SwitchboardEditor _editor;
 
     /**
@@ -249,7 +251,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         beanButton.setEnabled(false);
                         break;
                     default:
-                        beanIcon.setOpacity(opac);
+                        beanIcon.setOpacity(dim);
                 }
             }
         } else {
@@ -351,7 +353,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * Get text to display on this switch on Switchboard and in Web Server panel when attached
      * object is Active.
      *
-     * @return text to show on active state (differs per type of objects)
+     * @return text to show on active state (differs per type of object)
      */
     public String getActiveText() {
         // fetch bean specific abbreviation
@@ -982,6 +984,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private String tag = "tag";
         private int labelX = 16;
         private int labelY = 53;
+        private float ropScale = 1f;
+        private float ropOffset = 0f;
+        private RescaleOp rop;
 
         /**
          * Create an icon from 2 alternating png images.
@@ -1000,8 +1005,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
         }
 
-        protected void setOpacity(float opac) {
-            //this.opacity = opac; // not functional, use alfa instead
+        public void setOpacity(float offset) {
+            ropOffset = offset;
+            rop = new RescaleOp(ropScale, ropOffset, null);
         }
 
         protected void showSwitchIcon(int stateIndex) {
@@ -1053,9 +1059,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(image, 0, 0, null);
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.drawImage(image, rop, 0, 0); // dim switch if unconnected TODO scale image to fit panel?
+            //g.drawImage(image, 0, 0, null);
             g.setFont(getFont());
-            g.setColor(_editor.getDefaultTextColorAsColor());
+            if (ropOffset > 0f) {
+                g.setColor(Color.GRAY); // dimmed
+            } else {
+                g.setColor(_editor.getDefaultTextColorAsColor());
+            }
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
         }
 

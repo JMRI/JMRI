@@ -92,7 +92,7 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
       
         saveNvButton = new JButton(("Save"));
         saveNvButton.setToolTipText(("Update Node"));
-        resetNvButton = new JButton(("Reset"));
+        resetNvButton = new JButton(Bundle.getMessage("Reset"));
         resetNvButton.setToolTipText(("Reset table New NV values"));
         setSaveCancelButtonsActive ( false );
         
@@ -134,7 +134,7 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         validate();
         repaint();
         
-        setTitle(title());
+        setTitle(getTitle());
         setVisible(true);
         
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -214,9 +214,14 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         
     }
     
-    private String title() {
-        String title = "Edit NVs " + nodeModel.getNodeNumberName( _nodeNum );
-        return title;
+    @Override
+    public String getTitle() {
+        if ( nodeModel != null ) {
+            return "Edit NVs " + nodeModel.getNodeNumberName( _nodeNum );
+        }
+        else {
+            return("Edit NVs");
+        }
     }
     
     public void setSaveCancelButtonsActive ( Boolean newstate ) {
@@ -227,6 +232,16 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
     @Override
     public void tableChanged(TableModelEvent e) {
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
+    }
+    
+    @Override
+    public void dispose(){
+        if ( nodeNVModel !=null ) {
+            nodeNVModel.removeTableModelListener(this);
+            nodeNVModel.dispose();
+        }
+        
+        super.dispose();
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrame.class);
