@@ -458,15 +458,75 @@ abstract public class AbstractThrottle implements DccThrottle {
     public boolean getF28Momentary() {
         return f28Momentary;
     }
+    
+    /**
+     * Notify listeners that a Throttle has disconnected
+     * and is no longer available for use.
+     * <p>
+     * For when throttles have been stolen or encounter hardware 
+     * error, and a normal release / dispose is not possible.
+     *
+     */
+    protected void notifyThrottleDisconnect() {
+        notifyPropertyChangeListener("ThrottleConnected", true, false ); // NOI18N
+    }
+    
+    private boolean _dispatchEnabled = InstanceManager.throttleManagerInstance().hasDispatchFunction();
+    private boolean _releaseEnabled = true;
+    
+    
+    /**
+     * Notify listeners that a Throttle has Dispatch enabled or disabled.
+     * <p>
+     * For systems where dispatch availability is variable.
+     * <p>
+     * Does not notify if existing value is unchanged.
+     *
+     * @param newVal true if Dispatch enabled, else false
+     *
+     */
+    protected void notifyThrottleDispatchEnabled( boolean newVal ) {
+        if ( newVal == _dispatchEnabled ) {
+            return;
+        }
+        else {
+            notifyPropertyChangeListener("DispatchEnabled", _dispatchEnabled, newVal ); // NOI18N
+            _dispatchEnabled = newVal;
+        }
+    }
+    
+    /**
+     * Notify listeners that a Throttle has Release enabled or disabled.
+     * <p>
+     * For systems where release availability is variable.
+     * <p>
+     * Does not notify if existing value is unchanged.
+     *
+     * @param newVal true if Release enabled, else false
+     *
+     */
+    protected void notifyThrottleReleaseEnabled( boolean newVal ) {
+        if ( newVal == _releaseEnabled ) {
+            return;
+        }
+        else {
+            notifyPropertyChangeListener("ReleaseEnabled", _releaseEnabled, newVal ); // NOI18N
+            _releaseEnabled = newVal;
+        }
+    }
 
-    // register for notification if any of the properties change
+    /**
+     * Remove notification listener
+     * @param l the propertychangelistener instance
+     *
+     */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
-        log.debug("Removing property change " + l);
+        log.debug("Removing property change {}", l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
-        log.debug("remove listeners size is " + listeners.size());
+        log.debug("remove listeners size is {}", listeners.size());
         if ((listeners.isEmpty())) {
             log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
@@ -487,14 +547,19 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * Register for notification if any of the properties change
+     * @param l the propertychangelistener instance
+     *
+     */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
-        log.debug("listeners added " + l);
+        log.debug("listeners added {}", l);
         // add only if not already registered
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
-        log.debug("listeners size is " + listeners.size());
+        log.debug("listeners size is {}", listeners.size());
     }
 
     /**
@@ -511,11 +576,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         synchronized (this) {
             v = (Vector<PropertyChangeListener>) listeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " listeners about property "
-                    + property);
-        }
+        log.debug("notify {} listeners about property {}",v.size(),property);
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -532,6 +593,12 @@ abstract public class AbstractThrottle implements DccThrottle {
     // data members to hold contact with the property listeners
     final private Vector<PropertyChangeListener> listeners = new Vector<>();
 
+    /**
+     * Call from a ThrottleListener to dispose of the throttle instance
+     * 
+     * @param l the propertychangelistener instance
+     *
+     */
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
@@ -1313,10 +1380,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setSpeedStepMode(int Mode) {
-        if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode
-                    + " Current mode is: " + this.speedStepMode);
-        }
+        log.debug("Speed Step Mode Change from:{} to Mode:{}",this.speedStepMode,Mode);
         if (speedStepMode != Mode) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
@@ -1395,7 +1459,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if (!re.isOpen()) {
             re.store();
         } else {
-            log.warn("Roster Entry " + re.getId() + " running time not saved as entry is already open for editing");
+            log.warn("Roster Entry {} running time not saved as entry is already open for editing",re.getId());
         }
         re = null;
     }
