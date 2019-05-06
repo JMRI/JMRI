@@ -1,10 +1,15 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.ThrottleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -417,22 +422,37 @@ public class CbusThrottle extends AbstractThrottle {
             this.speedSetting = -1.f;
         }
 
-        int new_spd = intSpeed(speed);
-        if (this.isForward) {
-            new_spd = new_spd | 0x80;
-        }
-        log.debug("Sending speed/dir for speed: {}",new_spd);
-        // reset timeout
-        mRefreshTimer.stop();
-        mRefreshTimer.setRepeats(true);
-        mRefreshTimer.start();
-        if (cs != null ) {
-            cs.setSpeedDir(_handle, new_spd);
-        }
+        
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
+            
+            int new_spd = intSpeed(speed);
+            if (this.isForward) {
+                new_spd = new_spd | 0x80;
+            }
+            log.debug("Sending speed/dir for speed: {}",new_spd);
+            // reset timeout
+            mRefreshTimer.stop();
+            mRefreshTimer.setRepeats(true);
+            mRefreshTimer.start();
+            if (cs != null ) {
+                cs.setSpeedDir(_handle, new_spd);
+            }    
+            
+            
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            record(this.speedSetting); // float
+            
+            if ( this.speedSetting <= 0 ) {
+                notifyThrottleReleaseEnabled(true);
+                notifyThrottleDispatchEnabled(false);
+            }
+            else {
+                notifyThrottleDispatchEnabled(true);
+                notifyThrottleReleaseEnabled(false);
+            }
+            
         }
-        record(speed);
+        
     }
 
     /**
@@ -443,6 +463,28 @@ public class CbusThrottle extends AbstractThrottle {
      * @param speed integer speed value
      */
     public void updateSpeedSetting(int speed) {
+        
+        
+        
+        // as we may be asking the steal / share question, starting throttle preferences
+        // so that each ThrottleListener does not have to start a new ThrottlesPreferences
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+            
+            
+            log.info("new tp created");
+            
+        } else {
+            
+            log.info("tp found");
+            
+        }
+        
+        
+        
+        log.debug("Updated speed/dir for speed:{}",speed);
+        
         float oldSpeed = this.speedSetting;
         this.speedSetting = floatSpeed(speed);
         if (speed < 0) {
@@ -457,6 +499,19 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            
+            
+            
+            if ( this.speedSetting <= 0 ) {
+                notifyThrottleReleaseEnabled(true);
+                notifyThrottleDispatchEnabled(false);
+            }
+            else {
+                notifyThrottleDispatchEnabled(true);
+                notifyThrottleReleaseEnabled(false);
+            }
+            
+            
         }
     }
 
@@ -503,21 +558,75 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Received a session not present error form command station saying the
-     * session has timed out. This code is the same as throttleDispose() without
-     * releasing the session that would trigger a KLOC message to the command
-     * station.
+     * Release session from a command station
+     * ie throttle with clean full dispose called from releaseThrottle
      */
-    public void throttleTimedOut() {
-        _handle = -1;
-
-        // stop timeout
-        mRefreshTimer.stop();
-
-        mRefreshTimer = null;
-        cs = null;
-
+    public void releaseFromCommandStation(){
+        if ( cs != null ) {
+            cs.releaseSession(_handle);
+        }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+   
+    
+    /**
+     * Remove notification listener
+     *
+     * Check if The Abstract implementation defaults to attempt a steal when all listeners are removed ????
+     *
+     * @param l the propertychangelistener instance
+     *
+     */
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        log.debug("Removing property change {}", l);
+        if (getListeners().contains(l)) {
+            getListeners().removeElement(l);
+        }
+        log.debug("remove listeners size is {}", getListeners().size());
+        if ((getListeners().isEmpty())) {
+            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
+            jmri.InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
+                @Override
+                public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+                }
+
+                @Override
+                public void notifyThrottleFound(DccThrottle t) {
+                }
+    
+                @Override
+                public void notifyStealThrottleRequired(LocoAddress address){
+                    // this is an automatically stealing impelementation.
+                    jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                }
+            });
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Dispose when finished with this object. After this, further usage of this
@@ -526,18 +635,20 @@ public class CbusThrottle extends AbstractThrottle {
     @Override
     public void throttleDispose() {
         log.debug("dispose");
-
+        
+        finishRecord();
+        
+        notifyThrottleDisconnect();
+        
         // stop timeout
         if ( mRefreshTimer != null ) {
             mRefreshTimer.stop();
         }
-        if ( cs != null ) {
-            cs.releaseSession(_handle);
-        }
-        _handle = -1;
-        cs = null;
+
         mRefreshTimer = null;
-        finishRecord();
+        cs = null;
+        _handle = -1;
+        
     }
 
     javax.swing.Timer mRefreshTimer = null;
