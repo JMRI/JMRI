@@ -99,9 +99,6 @@
       <systemName>IM404</systemName>
       <userName>Test Memory Access 4</userName>
     </memory>
-    <memory>
-      <systemName>IM</systemName>
-    </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
