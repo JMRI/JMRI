@@ -173,7 +173,7 @@
       <p>A typical system name for a reporter would be 
         <code>MR123</code> or <code>MR1234</code> ( no event On or Off ) .</p>
       <p>The DDES and ACDAT OPC's are used for reporter data.</p>
-      <p>When a DDES or ACDAT OPC is heard on the network, 
+      <p>When an incoming DDES or ACDAT OPC is heard on the network, 
         JMRI will look for a reporter matching the device or node number in the Reporter Table.</p>
       
       <p>If a reporter exists, the <a href="../../../tools/IdTags.shtml">ID tag</a> 

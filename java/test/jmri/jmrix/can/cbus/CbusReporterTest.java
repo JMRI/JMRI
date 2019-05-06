@@ -75,7 +75,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         Assert.assertEquals("r4 tag gone",IdTag.UNSEEN,r4.getState());
         Assert.assertEquals("r4 report unset",null,r4.getCurrentReport());
         
-        CanMessage m2 = new CanMessage(tcis.getCanid());
+        CanReply m2 = new CanReply(tcis.getCanid());
         m2.setNumDataElements(8);
         m2.setElement(0, CbusConstants.CBUS_ACDAT);
         m2.setElement(1, 0x00); // ev hi
@@ -86,8 +86,8 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m2.setElement(6, 0x30); // tag4
         m2.setElement(7, 0xAB); // tag5
         
-        r4.message(m2);
-        r5.message(m2);
+        r4.reply(m2);
+        r5.reply(m2);
         
         Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.SEEN,r4.getState());
         Assert.assertNotNull("r4 report set CBUS_ACDAT",r4.getCurrentReport());
@@ -97,22 +97,40 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m2.setElement(2, 0x05); // ev lo
         
         m2.setExtended(true);
-        r5.message(m2);
+        r5.reply(m2);
         Assert.assertEquals("r5 state unset extended",IdTag.UNSEEN,r5.getState());
         
         m2.setExtended(false);
         m2.setRtr(true);
-        r5.message(m2);
+        r5.reply(m2);
         Assert.assertEquals("r5 state unset rtr",IdTag.UNSEEN,r5.getState());
         
         m2.setRtr(false);
         m2.setElement(0, 0x05); // random OPC not related to reporters
-        r5.message(m2);
+        r5.reply(m2);
         Assert.assertEquals("r5 state unset random opc",IdTag.UNSEEN,r5.getState());
         
         m2.setElement(0, CbusConstants.CBUS_DDES); // put it back
-        r5.message(m2);
+        r5.reply(m2);
         Assert.assertEquals("r5 state set ok after incorrect msgs",IdTag.SEEN,r5.getState());
+        
+        Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.UNSEEN,r4.getState());
+        
+        CanMessage m3 = new CanMessage(tcis.getCanid());
+        m3.setNumDataElements(8);
+        m3.setElement(0, CbusConstants.CBUS_ACDAT);
+        m3.setElement(1, 0x00); // ev hi
+        m3.setElement(2, 0x04); // ev lo
+        m3.setElement(3, 0x30); // tag1
+        m3.setElement(4, 0x39); // tag2
+        m3.setElement(5, 0x31); // tag3
+        m3.setElement(6, 0x30); // tag4
+        m3.setElement(7, 0xAB); // tag5
+        
+        r4.message(m3);
+        
+        Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.UNSEEN,r4.getState());
+        
         
         r.dispose();
     }

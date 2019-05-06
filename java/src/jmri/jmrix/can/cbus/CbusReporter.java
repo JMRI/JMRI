@@ -46,24 +46,43 @@ public class CbusReporter extends AbstractReporter implements CanListener {
 
     private int state = UNKNOWN;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setState(int s) {
         state = s;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getState() {
         return state;
     }
 
+    /**
+     * {@inheritDoc}
+     * Unused to prevent RfID writes being mistaken for RfID reads by a DDES
+     */
     @Override
     public void message(CanMessage m) {
-        RFIDReport( m );
     }
 
+    /**
+     * {@inheritDoc}
+     * Reporters can respond to ACDAT or DDES OPC's
+     */
     @Override
     public void reply(CanReply m) {
-        RFIDReport( new CanMessage(m) );
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
+        if ( m.getOpCode() != CbusConstants.CBUS_DDES && m.getOpCode() != CbusConstants.CBUS_ACDAT) {
+            return;
+        }
+        RFIDReport(m);
     }
 
     public void clear() {
@@ -72,13 +91,7 @@ public class CbusReporter extends AbstractReporter implements CanListener {
         setState(IdTag.UNSEEN);
     }
 
-    private void RFIDReport(CanMessage m) {
-        if ( m.isExtended() || m.isRtr() ) {
-            return;
-        }
-        if ( m.getOpCode() != CbusConstants.CBUS_DDES && m.getOpCode() != CbusConstants.CBUS_ACDAT) {
-            return;
-        }
+    private void RFIDReport(CanReply m) {
         int addr = (m.getElement(1) << 8) + m.getElement(2);
         if (addr == _number) {
             log.debug("CBusReporter found for addr:{}", addr);
