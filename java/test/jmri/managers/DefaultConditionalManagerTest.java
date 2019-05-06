@@ -17,16 +17,16 @@ import jmri.Logix;
  *
  * @author	Bob Jacobsen Copyright (C) 2015
  */
-public class DefaultConditionalManagerTest {
+public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.ConditionalManager,jmri.Conditional> {
 
     @Test
     public void testCtor() {
-        new DefaultConditionalManager();
+        Assert.assertNotNull("exists",l);
     }
 
     @Test
     public void testCreate() {
-        ConditionalManager m = new DefaultConditionalManager();
+        ConditionalManager m = l;
 
         Conditional c1 = m.createNewConditional("IX01C01", "");        
         Conditional c2 = m.createNewConditional("IX01C02", "");
@@ -37,7 +37,7 @@ public class DefaultConditionalManagerTest {
 
     @Test
     public void testUserNameOverlap() {
-        ConditionalManager m = new DefaultConditionalManager();
+        ConditionalManager m = l;
 
         Conditional c1 = m.createNewConditional("IX02C01", "Foo");        
         Conditional c2 = m.createNewConditional("IX02C02", "Foo");
@@ -64,10 +64,12 @@ public class DefaultConditionalManagerTest {
         Logix x2 = new jmri.implementation.DefaultLogix("IX02");
         assertNotNull("Logix x2 is null!", x2);
         InstanceManager.getDefault(jmri.LogixManager.class).register(x2);
+        l = new DefaultConditionalManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        l = null;
         jmri.util.JUnitUtil.tearDown();
     }
 }
