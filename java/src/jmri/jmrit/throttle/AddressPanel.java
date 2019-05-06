@@ -689,5 +689,16 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 notifyThrottleDisposed();
             }
         }
+        
+        if ("DispatchEnabled".compareTo(evt.getPropertyName()) == 0) {
+            log.debug("propertyChange: Dispatch Button Enabled {}" , (Boolean) evt.getNewValue() );
+            dispatchButton.setEnabled( (Boolean) evt.getNewValue() );
+        }
+        
+        if ("ReleaseEnabled".compareTo(evt.getPropertyName()) == 0) {
+            log.debug("propertyChange: release Button Enabled {}" , (Boolean) evt.getNewValue() );
+            releaseButton.setEnabled( (Boolean) evt.getNewValue() );
+        }
+        
     }
 }
