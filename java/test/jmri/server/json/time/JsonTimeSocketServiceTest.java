@@ -1,5 +1,7 @@
 package jmri.server.json.time;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -37,6 +39,7 @@ public class JsonTimeSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         Timebase manager = InstanceManager.getDefault(Timebase.class);
+        TimebaseTimeListener listener = new TimebaseTimeListener();
         StdDateFormat formatter = new StdDateFormat();
         int rate = 60; // rate is one minute every six seconds
         Assert.assertEquals("No change listeners", 0, manager.getPropertyChangeListeners().length);
@@ -53,35 +56,40 @@ public class JsonTimeSocketServiceTest {
                 formatter.format(current),
                 message.findPath(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         Assert.assertEquals("Service is listening to changes", 1, manager.getPropertyChangeListeners().length);
+        // Add second listener
+        manager.addPropertyChangeListener("time", listener);
         // POST method
         ObjectNode data = connection.getObjectMapper().createObjectNode();
         data.put(JSON.RATE, rate); // integer
         data.put(JSON.STATE, JSON.ON); // start the fast clock -- to test that listeners set in onMessage work
         service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
         message = connection.getMessage();
-        current = manager.getTime();
+        current = manager.getTime(); // time before fast clock starts
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
+        // next line verifies time at start of fast clock has not changed -- is this needed?
         Assert.assertEquals("Time is current", formatter.format(current),
                 message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
-        Assert.assertEquals("Service is listening to changes", 1, manager.getPropertyChangeListeners().length);
+        Assert.assertEquals("Service and listener are listening to changes", 2, manager.getPropertyChangeListeners().length);
         Date waitFor = current;
         JUnitUtil.waitFor(() -> {
             return !manager.getTime().equals(waitFor);
         });
-        current = manager.getTime();
+        current = listener.getTime(); // get time from listener
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
         data.put(JSON.STATE, JSON.OFF); // stop the fast clock
         service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
-        current = manager.getTime();
+        current = manager.getTime(); 
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
+        // a failure on next line indicates JsonTimeHttpService has been changed to send message to client
+        // before posting changes instead of after posting changes and that change should be undone
         Assert.assertEquals("Time is current", formatter.format(current),
                 message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         // POST unreasonable rate
@@ -115,6 +123,7 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("Time is current", formatter.format(current),
                 message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         service.onClose(); // clean up listeners
+        manager.removePropertyChangeListener("time", listener);
         Assert.assertEquals("Service is not listening to changes", 0, manager.getPropertyChangeListeners().length);
     }
 
@@ -197,6 +206,22 @@ public class JsonTimeSocketServiceTest {
             this.throwException = throwException;
         }
 
+    }
+    
+    private static class TimebaseTimeListener implements PropertyChangeListener {
+
+        private Date time = null;
+        
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals("time")) {
+                this.time = (Date) evt.getNewValue();
+            }
+        }
+        
+        public Date getTime() {
+            return this.time;
+        }
     }
 
 }

@@ -32,7 +32,7 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX658N18 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
+      <model model="MX658N18 version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
