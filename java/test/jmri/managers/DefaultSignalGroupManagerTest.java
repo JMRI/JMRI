@@ -10,22 +10,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultSignalGroupManagerTest {
+public class DefaultSignalGroupManagerTest extends AbstractManagerTestBase<jmri.SignalGroupManager,jmri.SignalGroup> {
 
     @Test
     public void testCTor() {
-        DefaultSignalGroupManager t = new DefaultSignalGroupManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",l);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new DefaultSignalGroupManager();
     }
 
     @After
     public void tearDown() {
+        l = null;
         JUnitUtil.tearDown();
     }
 
