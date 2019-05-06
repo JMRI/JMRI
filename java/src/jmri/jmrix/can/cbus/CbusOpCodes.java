@@ -81,8 +81,7 @@ public class CbusOpCodes {
                     buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
                     break;
                 case 3:
-                    buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT"));
-                    buf.append(msg.getElement(1));
+                    buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT",msg.getElement(1)));
                     break;
                 case 4:
                     buf.append(Bundle.getMessage("ERR_CONSIST_EMPTY"));
@@ -100,8 +99,7 @@ public class CbusOpCodes {
                     buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
                     break;
                 case 8:
-                    buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));
-                    buf.append(msg.getElement(1));
+                    buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED",msg.getElement(1)));
                     break;
                 default:
                     break;

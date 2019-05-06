@@ -36,6 +36,10 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         tm = new CbusThrottleManager(memo);
+        
+        jmri.InstanceManager.setThrottleManager( tm );
+        
+        
         _cs = new CbusDummyCS(memo); // we are testing the tm, not the command station
         _cs.setDelay(0); // no need to simulate network delay
         

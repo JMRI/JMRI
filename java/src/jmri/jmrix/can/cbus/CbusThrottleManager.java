@@ -107,7 +107,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     @Override
     public void message(CanMessage m) {
-        if ( m.isExtended() ) {
+        if ( m.isExtended() || m.isRtr() ) {
             return;
         }
         int opc = m.getElement(0);
@@ -149,22 +149,23 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     @Override
     synchronized public void reply(CanReply m) {
-        if ( m.isExtended() ) {
+        if ( m.isExtended() || m.isRtr() ) {
             return;
         }
         int opc = m.getElement(0);
-        int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
+        int rcvdIntAddr;
         boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
         int handle = m.getElement(1);
-        int errCode = m.getElement(3);
+        
         DccLocoAddress rcvdDccAddr;
         String errStr = "";
         Iterator<Integer> itr;
 
         switch (opc) {
             case CbusConstants.CBUS_PLOC:
+                rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
                 rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
-                log.debug("Throttle manager received PLOC with session handle " + m.getElement(1) + " for address " + rcvdIntAddr);
+                log.debug("Throttle manager received PLOC with session {} for address {}",m.getElement(1),rcvdIntAddr);
                 if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                     log.debug("PLOC was expected");
                     // We're expecting an engine report and it matches our address
@@ -181,7 +182,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 break;
 
             case CbusConstants.CBUS_ERR:
-                // TODO: should be a better way to do this with constants or properties
+                rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
+                log.debug("Throttle manager received ERR " + errStr);
+                rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
+                int errCode = m.getElement(3);
+            
                 switch (errCode) {
                     case CbusConstants.ERR_LOCO_STACK_FULL:
                         errStr = Bundle.getMessage("ERR_LOCO_STACK_FULL") + " " + rcvdIntAddr;
@@ -193,7 +198,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         errStr = Bundle.getMessage("ERR_INVALID_REQUEST") + " " + rcvdIntAddr;
                         break;
                     case CbusConstants.ERR_SESSION_NOT_PRESENT:
-                        errStr = Bundle.getMessage("ERR_SESSION_NOT_PRESENT") + " " + handle;
+                        errStr = Bundle.getMessage("ERR_SESSION_NOT_PRESENT",handle) ;
+                        log.warn(Bundle.getMessage("ERR_SESSION_NOT_PRESENT",handle));
                         break;
                     case CbusConstants.ERR_CONSIST_EMPTY:
                         errStr = Bundle.getMessage("ERR_CONSIST_EMPTY") + " " + handle;
@@ -205,25 +211,33 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         errStr = Bundle.getMessage("ERR_CAN_BUS_ERROR") + " ";
                         break;
                     case CbusConstants.ERR_SESSION_CANCELLED:
-                        errStr = Bundle.getMessage("ERR_SESSION_CANCELLED") + " ";
+                        // not really an error message so don't show popup
+                        // errStr = Bundle.getMessage("ERR_SESSION_CANCELLED") + " ";
+                        log.info(Bundle.getMessage("ERR_SESSION_CANCELLED",handle));
                         break;
                     default:
                         errStr = Bundle.getMessage("ERR_UNKNOWN") + " ";
                         log.warn("Unhandled error code: {}", errCode);
                         break;
                 }
-
-                log.debug("Throttle manager received ERR " + errStr);
-                rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
+                
                 switch (errCode) {
+                    
                     case CbusConstants.ERR_LOCO_STACK_FULL:
                     case CbusConstants.ERR_LOCO_ADDRESS_TAKEN:
-                        log.debug("PLOC expected but received ERR address" + rcvdDccAddr.toString());
+                        
                         if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
+                            
+                            log.debug("PLOC expected but received ERR address" + rcvdDccAddr.toString());
+                            
                             // We were expecting an engine report and it matches our address
                             log.debug("Failed throttle request due to ERR");
                             _handleExpected = false;
                             throttleRequestTimer.stop();
+                            
+                            // if modern cbus may now request to steal or share the session
+                            
+                            
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("CBUS_ERROR") + errStr);
                             failedThrottleRequest(_dccAddr, Bundle.getMessage("CBUS_ERROR") + errStr);
                         } else {
@@ -235,14 +249,36 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                             // We were expecting an engine report and it matches our address
                             _handleExpected = false;
+                            failedThrottleRequest(_dccAddr, Bundle.getMessage("CBUS_ERROR") + errStr);
+                            log.warn("Session not present when expecting a session number");
                         }
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CBUS_ERROR") + errStr);
+                        
+                        // check if it's a JMRI throttle session, if so close it.
+                        // Inform the throttle associated with this session handle, if any
+                        itr = softThrottles.keySet().iterator();
+                        while (itr.hasNext()) {
+                            CbusThrottle throttle = softThrottles.get(itr.next());
+                            if (throttle.getHandle() == handle) {
+                                log.warn("Cancelling JMRI Throttle Session {} for loco {}",
+                                    handle,
+                                    throttle.getLocoAddress().toString()
+                                );
+                                
+                                // if main throttle is disposed, cancel it in the
+                                // list so a new session is obtained
+                                throttle.throttleDispose();
+                                forceDisposeThrottle( (DccLocoAddress) throttle.getLocoAddress() );
+                                
+                                break;
+                            }
+                        }
+                        
+                        softThrottles.remove(handle);
+                        
+                        
                         break;
-
                     case CbusConstants.ERR_CONSIST_EMPTY:
                     case CbusConstants.ERR_LOCO_NOT_FOUND:
-                        // Ignore for now CAN_CMD only supports advanced consisting
-                        // and will never issue these errors
                         break;
 
                     case CbusConstants.ERR_CAN_BUS_ERROR:
@@ -261,13 +297,17 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         while (itr.hasNext()) {
                             CbusThrottle throttle = softThrottles.get(itr.next());
                             if (throttle.getHandle() == handle) {
-                                JOptionPane.showMessageDialog(null, errStr + throttle.getLocoAddress().toString());
-                                throttle.throttleTimedOut();
-                                // Attempt to dispode of the throttle
-                                super.disposeThrottle(throttle, null);
+                                log.info("JMRI Throttle Session {} Cancelled for loco {}",
+                                    handle, throttle.getLocoAddress().toString() );
+                             
+                                throttle.throttleDispose();
+                                forceDisposeThrottle( (DccLocoAddress) throttle.getLocoAddress() ); 
+
                                 break;
                             }
                         }
+                        
+                        softThrottles.remove(handle);
 
                         break;
 
@@ -344,7 +384,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     }
 
     /**
-     * CBUS does not have a Dispatch function
+     * CBUS has a dynamic Dispatch function, defaulting to false
      *
      */
     @Override
@@ -431,9 +471,15 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
         if (t instanceof CbusThrottle) {
+            log.debug("Cbus Dispose calling abstract Throttle manager dispose");
             if (super.disposeThrottle(t, l)) {
+                
+                
                 CbusThrottle lnt = (CbusThrottle) t;
+                lnt.releaseFromCommandStation();
                 lnt.throttleDispose();
+                // forceDisposeThrottle( (DccLocoAddress) lnt.getLocoAddress() );
+                log.debug("called throttleDispose");
                 return true;
             }
         }
