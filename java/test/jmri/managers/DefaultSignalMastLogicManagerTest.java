@@ -10,22 +10,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultSignalMastLogicManagerTest {
+public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<jmri.SignalMastLogicManager,jmri.SignalMastLogic> {
 
     @Test
     public void testCTor() {
-        DefaultSignalMastLogicManager t = new DefaultSignalMastLogicManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",l);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new DefaultSignalMastLogicManager();
     }
 
     @After
     public void tearDown() {
+        l = null;
         JUnitUtil.tearDown();
     }
 
