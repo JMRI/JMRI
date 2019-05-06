@@ -1,5 +1,6 @@
 package jmri.server.json;
 
+import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.POST;
@@ -58,17 +59,20 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             }
         }
         switch (method) {
+            case DELETE:
+                service.doDelete(type, name, data, locale, id);
+                break;
+            case POST:
+                connection.sendMessage(service.doPost(type, name, data, locale, id), id);
+                break;
             case PUT:
                 connection.sendMessage(service.doPut(type, name, data, locale, id), id);
                 break;
             case GET:
-                connection.sendMessage(service.doGet(type, name, data, locale, id), id);
-                break;
-            case POST:
             default:
-                connection.sendMessage(service.doPost(type, name, data, locale, id), id);
+                connection.sendMessage(service.doGet(type, name, data, locale, id), id);
         }
-        if (!this.beanListeners.containsKey(name)) {
+        if (!beanListeners.containsKey(name)) {
             addListenerToBean(name);
         }
     }
