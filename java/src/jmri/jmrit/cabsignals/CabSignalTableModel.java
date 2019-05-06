@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender (c) 2018
  * @see CabSignalPane
  * @since 4.13.4
- * 
  */
 public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
@@ -86,7 +85,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     
     /**
      * Returns String of column name from column int
-     * used in table header
+     * used in table header.
+     *
      * @param col int col number
      */
     @Override
@@ -117,9 +117,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
 
     /**
-    * Returns int of startup column widths
-    * @param col int col number
-    */
+     * Returns int of startup column widths.
+     *
+     * @param col int col number
+     */
     public static int getPreferredWidth(int col) {
         switch (col) {
             case LOCO_ID_COLUMN:
@@ -148,8 +149,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     
     
     /**
-    * Returns column class type.
-    */
+     * Returns column class type.
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
@@ -178,9 +179,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
     
     /**
-    * Boolean return to edit table cell or not
-    * @return boolean
-    */
+     * Boolean return to edit table cell or not.*
+     * @return boolean
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
@@ -215,7 +216,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Return table values
+     * Return table values.
+     *
      * @param row int row number
      * @param col int col number
      */
@@ -375,4 +377,5 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CabSignalTableModel.class);
+
 }
