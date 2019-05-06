@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager, Sensor> {
+public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManagerTestBase<SensorManager, Sensor> {
 
     // implementing classes must provide these abstract members:
     //
