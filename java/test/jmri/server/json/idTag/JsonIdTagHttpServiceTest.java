@@ -126,7 +126,6 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     @Test
     public void testDoPut() throws IOException, JsonException {
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
-        System.out.println(manager);
         // add a idTag
         assertNull(manager.getIdTag("ID1"));
         JsonNode message = mapper.createObjectNode().put(JSON.NAME, "ID1");
