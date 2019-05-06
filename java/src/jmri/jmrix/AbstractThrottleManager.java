@@ -218,35 +218,28 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         ArrayList<WaitingThrottle> a = throttleListeners.get(la);
 
         if (addressThrottles.containsKey(la)) {
-            log.debug("A throttle to address " + la.getNumber() + " already exists, so will return that throttle");
+            log.debug("A throttle to address {} already exists, so will return that throttle",la.getNumber());
             a.add(new WaitingThrottle(l, re));
             notifyThrottleKnown(addressThrottles.get(la).getThrottle(), la);
             return throttleFree;
         } else {
-            log.debug(la.getNumber() + " has not been created before");
+            log.debug("{} has not been created before",la.getNumber() );
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("After request in ATM: " + a.size());
-        }
+        log.debug("After request in ATM: {}",a.size());
+        
         // check length
         if (singleUse() && (a.size() > 0)) {
             throttleFree = false;
-            if (log.isDebugEnabled()) {
-                log.debug("singleUser() is true, and the list of WaitingThrottles isn't empty, returning false");
-            }
+            log.debug("singleUser() is true, and the list of WaitingThrottles isn't empty, returning false");
         } else if (a.size() == 0) {
             a.add(new WaitingThrottle(l, re));
-            if (log.isDebugEnabled()) {
-                log.debug("list of WaitingThrottles is empty: " + la + ";" + a);
-            }
+            log.debug("list of WaitingThrottles is empty: {}; {}",la, a);
             log.debug("calling requestThrottleSetup()");
             requestThrottleSetup(la, true);
         } else {
             a.add(new WaitingThrottle(l, re));
-            if (log.isDebugEnabled()) {
-                log.debug("singleUse() returns false and there are existing WaitThrottles, adding a one to the list");
-            }
+            log.debug("singleUse() returns false and there are existing WaitThrottles, adding a one to the list");
         }
         return throttleFree;
     }
@@ -431,7 +424,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public void failedThrottleRequest(LocoAddress address, String reason) {
         ArrayList<WaitingThrottle> a = throttleListeners.get(address);
         if (a == null) {
-            log.warn("failedThrottleRequest with zero-length listeners: " + address);
+            log.warn("failedThrottleRequest with zero-length listeners: {}", address);
         } else {
             for (int i = 0; i < a.size(); i++) {
                 ThrottleListener l = a.get(i).getListener();
@@ -441,7 +434,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         throttleListeners.remove(address);
         ArrayList<WaitingThrottle> p = listenerOnly.get(address);
         if (p == null) {
-            log.debug("failedThrottleRequest with zero-length PropertyChange listeners: " + address);
+            log.debug("failedThrottleRequest with zero-length PropertyChange listeners: {}", address);
         } else {
             for (int i = 0; i < p.size(); i++) {
                 PropertyChangeListener l = p.get(i).getPropertyChangeListener();
@@ -461,11 +454,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * @param addr  address.
      */
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
-        log.debug("notifyThrottleKnown for " + addr);
+        log.debug("notifyThrottleKnown for {}", addr);
         DccLocoAddress dla = (DccLocoAddress) addr;
         Addresses ads = null;
         if (!addressThrottles.containsKey(dla)) {
-            log.debug("Address " + addr + "doesn't already exists so will add");
+            log.debug("Address {} doesn't already exists so will add",addr);
             ads = new Addresses(throttle);
             addressThrottles.put(dla, ads);
         } else {
@@ -473,11 +466,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         ArrayList<WaitingThrottle> a = throttleListeners.get(dla);
         if (a == null) {
-            log.debug("notifyThrottleKnown with zero-length listeners: " + addr);
+            log.debug("notifyThrottleKnown with zero-length listeners: {}", addr);
         } else {
             for (int i = 0; i < a.size(); i++) {
                 ThrottleListener l = a.get(i).getListener();
-                log.debug("Notify listener " + (i + 1) + " of " + a.size() );
+                log.debug("Notify listener {} of {}",(i + 1),a.size() );
                 l.notifyThrottleFound(throttle);
                 addressThrottles.get(dla).incrementUse();
                 addressThrottles.get(dla).addListener(l);
@@ -489,7 +482,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         ArrayList<WaitingThrottle> p = listenerOnly.get(dla);
         if (p == null) {
-            log.debug("notifyThrottleKnown with zero-length propertyChangeListeners: " + addr);
+            log.debug("notifyThrottleKnown with zero-length propertyChangeListeners: {}", addr);
         } else {
             for (int i = 0; i < p.size(); i++) {
                 PropertyChangeListener l = p.get(i).getPropertyChangeListener();
@@ -553,6 +546,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         attachListener(re.getDccLocoAddress(), re, p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attachListener(LocoAddress la, java.beans.PropertyChangeListener p) {
         attachListener((DccLocoAddress) la, null, p);
@@ -579,6 +575,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeListener(LocoAddress la, java.beans.PropertyChangeListener p) {
         if (addressThrottles.containsKey(la)) {
@@ -589,10 +588,13 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         p.propertyChange(new PropertyChangeEvent(this, "throttleNotFoundInRemoval", la, null));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addressStillRequired(LocoAddress la) {
         if (addressThrottles.containsKey(la)) {
-            log.debug("usage count is " + addressThrottles.get(la).getUseCount());
+            log.debug("usage count is {}", addressThrottles.get(la).getUseCount());
             if (addressThrottles.get(la).getUseCount() > 0) {
                 return true;
             }
@@ -600,12 +602,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addressStillRequired(int address, boolean isLongAddress) {
         DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
         return addressStillRequired(la);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addressStillRequired(int address) {
         boolean isLong = true;
@@ -615,17 +623,26 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return addressStillRequired(address, isLong);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addressStillRequired(BasicRosterEntry re) {
         return addressStillRequired(re.getDccLocoAddress());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("AbstractThrottleManager.releaseThrottle: {}, {}", t, l);
         disposeThrottle(t, l);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("AbstractThrottleManager.disposeThrottle: {}, {}", t, l);
@@ -633,27 +650,57 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 //        if (!active) log.error("Dispose called when not active");  <-- might need to control this in the sub class
         DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
         if (addressReleased(la, l)) {
-            log.debug("Address " + t.getLocoAddress() + " still has active users");
+            log.debug("Address {} still has active users",t.getLocoAddress());
             return false;
         }
         if (t.getListeners().size() > 0) {
-            log.debug("Throttle " + t.getLocoAddress() + " still has active propertyChangeListeners registered to the throttle");
+            log.debug("Throttle {} still has active propertyChangeListeners registered to the throttle",t.getLocoAddress());
             return false;
         }
         if (addressThrottles.containsKey(la)) {
             addressThrottles.remove(la);
-            log.debug("Loco Address removed from the stack " + la);
+            log.debug("Loco Address {} removed from the stack ", la);
         } else {
-            log.debug("Loco Address not found in the stack " + la);
+            log.debug("Loco Address {} not found in the stack ", la);
         }
         return true;
     }
+    
+    /**
+     * Throttle can no longer be relied upon,
+     * potentially from an external forced steal or hardware error.
+     * <p>
+     * Normally, #releaseThrottle should be used to close throttles.
+     * <p>
+     * Removes locoaddress from list to force new throttle requests
+     * to request new sessions where the Command station model
+     * implements a dynamic stack, not a static stack.
+     * 
+     * <p>
+     * Managers still need to advise listeners that the session has 
+     * been cancelled and actually dispose of the throttle
+     */
+    protected void forceDisposeThrottle(DccLocoAddress la) {
+        log.debug("force dispose address {}",la);
+        if (addressThrottles.containsKey(la)) {
+            addressThrottles.remove(la);
+            log.debug("Loco Address {} removed from the stack ", la);
+        } else {
+            log.debug("Loco Address {} not found in the stack ", la);
+        }
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
         releaseThrottle(t, l);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getThrottleUsageCount(LocoAddress la) {
         if (addressThrottles.containsKey( la)) {
@@ -662,12 +709,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getThrottleUsageCount(int address, boolean isLongAddress) {
         DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
         return getThrottleUsageCount(la);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getThrottleUsageCount(int address) {
         boolean isLong = true;
@@ -676,15 +729,23 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         return getThrottleUsageCount(address, isLong);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getThrottleUsageCount(BasicRosterEntry re) {
         return getThrottleUsageCount(re.getDccLocoAddress());
     }
 
+    /**
+     * Release a Throttle from a ThrottleListener.
+     * @return True if throttle still has listeners or a positive use count, else False.
+     */
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l) {
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).containsListener(l)) {
-                log.debug("decrementUse called with listener " + l);
+                log.debug("decrementUse called with listener {}", l);
                 addressThrottles.get(la).decrementUse();
                 addressThrottles.get(la).removeListener(l);
             } else if (l == null) {
@@ -703,6 +764,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getThrottleInfo(LocoAddress la, String item) {
         DccThrottle t;
@@ -806,7 +870,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
         void incrementUse() {
             useActiveCount++;
-            log.debug(throttle.getLocoAddress() + " increased Use Size to " + useActiveCount);
+            log.debug("{} increased Use Size to {}",throttle.getLocoAddress(),useActiveCount);
         }
 
         void decrementUse() {
@@ -814,7 +878,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             if (useActiveCount > 0) {
                 useActiveCount--;
             }
-            log.debug(throttle.getLocoAddress() + " decreased Use Size to " + useActiveCount);
+            log.debug("{} decreased Use Size to {}",throttle.getLocoAddress(),useActiveCount);
         }
 
         int getUseCount() {
@@ -835,8 +899,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             //As the throttle has changed, we need to inform the listeners
             //However if a throttle hasn't used the new code, it will not have been
             //removed and will get a notification.
-            log.debug(throttle.getLocoAddress() + " throttle assigned "
-                    + "has been changed need to notify throttle users");
+            log.debug("Throttle assigned {} has been changed, need to notify throttle users", throttle.getLocoAddress() );
 
             this.throttle = throttle;
             for (int i = 0; i < listeners.size(); i++) {
@@ -862,7 +925,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         void addListener(ThrottleListener l) {
             // Check for duplication here
             if (listeners.contains(l))
-                log.debug("this Addresses listeners already includes listener" + l);
+                log.debug("this Addresses listeners already includes listener {}",l);
             else
                 listeners.add(l);
         }
