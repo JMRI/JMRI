@@ -26,7 +26,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
 
     @Test
     public void testCreate() {
-        ConditionalManager m = (ConditionalManager)l;
+        ConditionalManager m = l;
 
         Conditional c1 = m.createNewConditional("IX01C01", "");        
         Conditional c2 = m.createNewConditional("IX01C02", "");
@@ -37,7 +37,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
 
     @Test
     public void testUserNameOverlap() {
-        ConditionalManager m = (ConditionalManager)l;
+        ConditionalManager m = l;
 
         Conditional c1 = m.createNewConditional("IX02C01", "Foo");        
         Conditional c2 = m.createNewConditional("IX02C02", "Foo");

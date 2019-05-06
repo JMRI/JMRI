@@ -1,10 +1,7 @@
 package jmri.managers;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -15,6 +12,12 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",l);
+    }
+
+    @Test
+    @Override
+    @Ignore("makeSystemName is not currently supported")
+    public void testMakeSystemName() {
     }
 
     // The minimal setup for log4J

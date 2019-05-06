@@ -22,7 +22,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
 
     @Test
     public void testCreateForms() {
-        LogixManager m = (DefaultLogixManager)l;
+        LogixManager m = l;
         
         Logix l1 = m.createNewLogix("User name 1");
         Logix l2 = m.createNewLogix("User name 2");
@@ -50,7 +50,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
 
     @Test
     public void testEmptyUserName() {
-        LogixManager m = (DefaultLogixManager)l;
+        LogixManager m = l;
         
         Logix l1 = m.createNewLogix("IX01", "");
         Logix l2 = m.createNewLogix("IX02", "");
