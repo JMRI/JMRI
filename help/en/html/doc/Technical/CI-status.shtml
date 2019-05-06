@@ -106,6 +106,22 @@
 
         <tr>
             <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/">AllTest</a> - Unit Tests Run and Skipped<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/lastBuild/testReport/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/AllTest/test/trend">
+                </a>
+            </td>
+
+            <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/">AllTest</a> - Unit Test Failures<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/lastBuild/testReport/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/AllTest/test/trend?failureOnly=true">
+                </a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/">Builds</a> - Unit Tests Run and Skipped<br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/testReport/">
                     <img src="http://builds.jmri.org/jenkins/job/Development/job/Builds/test/trend">
