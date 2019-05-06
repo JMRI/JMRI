@@ -390,6 +390,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             switch (e.getPropertyName()) {
                 case "SpeedSetting":
                 case "SpeedSteps":
+                case "IsForward":
                     try {
                         clientServer.sendStatus(bus, address);
                     } catch (IOException ioe) {
