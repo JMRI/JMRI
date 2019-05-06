@@ -30,7 +30,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     private CabSignalManager cabSignalManager;
     
-    // column order needs to match list in column tooltips
+    // column order needs to match list in columnToolTips
 
     static public final int LOCO_ID_COLUMN = 0;
     static public final int SEND_CABSIG_COLUMN = 1;
@@ -50,7 +50,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         if(cabSignalManager == null){
            log.info("creating new DefaultCabSignalManager");
-           InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
+           InstanceManager.store(new jmri.managers.DefaultCabSignalManager(), CabSignalManager.class);
            cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         }
     }
@@ -61,7 +61,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         Bundle.getMessage("CabsigCheckboxTip"),
         Bundle.getMessage("BlockUserName"),
         Bundle.getMessage("BlockDirectionTip"),
-        null, // block button
+        null, // block lookup button
         Bundle.getMessage("NextBlockTip"),
         Bundle.getMessage("NextSignalTip"),
         Bundle.getMessage("NextAspectTip"),
@@ -82,7 +82,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         return MAX_COLUMN;
     }
 
-    
     /**
      * Returns String of column name from column int
      * used in table header.
@@ -115,7 +114,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-
     /**
      * Returns int of startup column widths.
      *
@@ -146,8 +144,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
-    
-    
+
     /**
      * Returns column class type.
      */
@@ -179,7 +176,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
     
     /**
-     * Boolean return to edit table cell or not.*
+     * Boolean return to edit table cell or not.
+     *
      * @return boolean
      */
     @Override
@@ -198,7 +196,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable cmdStatTable) {
         // allow reordering of the columns
@@ -275,10 +272,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             case NEXT_ASPECT_ICON:
                 mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
                 if (mast!=null) {
-                    String imageLink = mast.getAppearanceMap().getProperty(mast.getAspect(),"imagelink");
-                    log.debug("imagelink is {}",imageLink);
+                    String imageLink = mast.getAppearanceMap().getProperty(mast.getAspect(), "imagelink");
+                    log.debug("imagelink is {}", imageLink);
                     if ( imageLink != null ) {
-                        String newlink = imageLink.replace("../", "");  // replace is ummutatable
+                        String newlink = imageLink.replace("../", "");  // replace is immutable
                         // should start at the resources directory
                         return newlink;
                     }
@@ -334,7 +331,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
      * properties change.
      */
     private void chngblockdir(int row){
-        log.debug("changing block direction for row {}",row);
+        log.debug("changing block direction for row {}", row);
         int olddirection = 0;
         Block b = cabSignalManager.getCabSignalArray()[row].getBlock();
         if (b == null){
