@@ -95,9 +95,20 @@ public class JsonUtil {
      * @return the JSON representation of engine
      */
     public ObjectNode getEngine(Engine engine, Locale locale) {
-        ObjectNode data = this.getRollingStock(engine, locale);
+        return getEngine(engine, getRollingStock(engine, locale), locale);
+    }
+
+    /**
+     * Get the JSON representation of an Engine.
+     *
+     * @param engine the Engine
+     * @param data   the JSON data from {@link #getRollingStock(RollingStock, Locale)}
+     * @param locale the client's locale
+     * @return the JSON representation of engine
+     */
+    public ObjectNode getEngine(Engine engine, ObjectNode data, Locale locale) {
         data.put(JSON.MODEL, engine.getModel());
-        data.put(JsonConsist.CONSIST, engine.getConsistName());
+        data.put(JsonConsist.CONSIST, engine.getConsist() != null ? engine.getConsistName() : null);
         return data;
     }
 

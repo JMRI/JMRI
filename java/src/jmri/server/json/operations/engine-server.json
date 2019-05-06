@@ -8,13 +8,62 @@
             "type": "string",
             "description": "Operations id for engine"
         },
-        "number": {
+        "rename": {
             "type": "string",
-            "description": "The engine number"
+            "description": "Old name of engine if road or number has changed"
         },
         "road": {
             "type": "string",
             "description": "The engine owning railroad"
+        },
+        "number": {
+            "type": "string",
+            "description": "The engine number"
+        },
+        "color": {
+            "type": "string",
+            "description": "The color of the engine"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning engine"
+        },
+        "consist": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The name of the consist the engine is in"
+        },
+        "destination": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "the current destination of the engine"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Current engine length for available siding calculations"
+        },
+        "location": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The current location of the engine"
+        },
+        "model": {
+            "type": "string",
+            "description": "The model of engine"
+        },
+        "outOfService": {
+            "type": "boolean",
+            "description": "True if out of service; false otherwise"
+        },
+        "owner": {
+            "type": "string",
+            "description": "The engine owner"
         },
         "rfid": {
             "type": [
@@ -26,48 +75,6 @@
         "type": {
             "type": "string",
             "description": "The engine type"
-        },
-        "length": {
-            "type": "integer",
-            "description": "Current engine length for available siding calculations"
-        },
-        "color": {
-            "type": "string",
-            "description": "The color of the engine"
-        },
-        "owner": {
-            "type": "string",
-            "description": "The engine owner"
-        },
-        "comment": {
-            "type": "string",
-            "description": "Freeform comment concerning engine"
-        },
-        "location": {
-            "type": [
-                "string",
-                "null"
-            ],
-            "description": "The current location of the engine"
-        },
-        "destination": {
-            "type": [
-                "string",
-                "null"
-            ],
-            "description": "the current destination of the engine"
-        },
-        "model": {
-            "type": "string",
-            "description": "The model of engine"
-        },
-        "consist": {
-            "type": "string",
-            "description": "The name of the consist the engine is in"
-        },
-        "outOfService": {
-            "type": "boolean",
-            "description": "True if out of service; false otherwise"
         }
     },
     "additionalProperties": false,
@@ -75,12 +82,16 @@
         "name",
         "number",
         "road",
-        "type",
-        "length",
-        "owner",
+        "color",
         "comment",
-        "model",
         "consist",
-        "outOfService"
+        "destination",
+        "length",
+        "location",
+        "model",
+        "outOfService",
+        "owner",
+        "rfid",
+        "type"
     ]
 }

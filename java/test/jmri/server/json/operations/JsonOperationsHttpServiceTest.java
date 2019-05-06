@@ -19,9 +19,12 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.consist.JsonConsist;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -222,6 +225,141 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean());
         assertTrue(data.path(JSON.STATUS).isValueNode());
         assertEquals("Out of service status", "<O> ", data.path(JSON.STATUS).asText());
+    }
+
+    @Test
+    public void testEngine() throws JsonException {
+        // try a non-existent engine
+        try {
+            service.doGet(JsonOperations.ENGINE, "", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+        }
+        // get a known engine
+        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+        Engine engine = manager.getByRoadAndNumber("PC", "5524");
+        JsonNode result = service.doGet(JsonOperations.ENGINE, engine.getId(), NullNode.getInstance(), locale, 42);
+        validate(result);
+        assertEquals(JsonOperations.ENGINE, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        JsonNode data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Engine", 14, data.size());
+        assertEquals(engine.getId(), data.path(JSON.NAME).asText());
+        assertEquals(engine.getRoadName(), data.path(JSON.ROAD).asText());
+        assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
+        assertTrue(data.path(JSON.RFID).isValueNode());
+        assertEquals(engine.getRfid(), data.path(JSON.RFID).asText());
+        assertEquals(engine.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(engine.getLengthInteger(), data.path(JSON.LENGTH).asInt());
+        assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
+        assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(engine.getComment(), data.path(JSON.COMMENT).asText());
+        assertEquals(engine.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
+        assertEquals(engine.getTrackId(), data.path(JsonOperations.LOCATION).path(JsonOperations.TRACK).path(JSON.NAME).asText());
+        assertTrue(data.path(JsonOperations.DESTINATION).isValueNode());
+        assertTrue(data.path(JsonOperations.DESTINATION).isNull());
+        assertTrue(data.path(JsonConsist.CONSIST).isValueNode());
+        assertEquals("C14", data.path(JsonConsist.CONSIST).asText());
+        assertFalse(data.path(JsonOperations.OUT_OF_SERVICE).isMissingNode());
+        assertFalse(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean());
+        assertTrue(data.path(JSON.MODEL).isValueNode());
+        assertEquals("SD45", data.path(JSON.MODEL).asText());
+        // add (PUT) a car
+        data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "3402");
+        validateData(JsonOperations.ENGINE, data, false);
+        result = service.doPut(JsonOperations.ENGINE, "", data, locale, 42);
+        engine = manager.getByRoadAndNumber("MEC", "3402");
+        assertNotNull(engine);
+        validate(result);
+        assertEquals(JsonOperations.ENGINE, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Engine", 14, data.size());
+        assertEquals(engine.getId(), data.path(JSON.NAME).asText());
+        assertEquals(engine.getRoadName(), data.path(JSON.ROAD).asText());
+        assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
+        assertTrue(data.path(JSON.RFID).isValueNode());
+        assertEquals(engine.getRfid(), data.path(JSON.RFID).asText());
+        assertEquals(engine.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(engine.getLengthInteger(), data.path(JSON.LENGTH).asInt());
+        assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
+        assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(engine.getComment(), data.path(JSON.COMMENT).asText());
+        assertEquals(engine.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
+        assertEquals(engine.getTrackId(), data.path(JsonOperations.LOCATION).path(JsonOperations.TRACK).path(JSON.NAME).asText());
+        assertTrue(data.path(JsonOperations.DESTINATION).isValueNode());
+        assertTrue(data.path(JsonOperations.DESTINATION).isNull());
+        assertTrue(data.path(JsonConsist.CONSIST).isValueNode());
+        assertTrue(data.path(JsonConsist.CONSIST).isNull());
+        assertFalse(data.path(JsonOperations.OUT_OF_SERVICE).isMissingNode());
+        assertFalse(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean());
+        assertTrue(data.path(JSON.MODEL).isValueNode());
+        assertTrue(data.path(JSON.MODEL).asText().isEmpty());
+        // delete an engine
+        data = mapper.createObjectNode().put(JSON.NAME, engine.getId());
+        validateData(JsonOperations.ENGINE, data, false);
+        service.doDelete(JsonOperations.ENGINE, engine.getId(), data, locale, 0);
+        assertNull(manager.getById(engine.getId()));
+        // (re)create an engine
+        // add (PUT) an engine
+        data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "3402");
+        validateData(JsonOperations.ENGINE, data, false);
+        result = service.doPut(JsonOperations.ENGINE, engine.getId(), data, locale, 42);
+        engine = manager.getByRoadAndNumber("MEC", "3402");
+        assertNotNull(engine);
+        validate(result);
+        // add (PUT) the same engine again
+        try {
+            service.doPut(JsonOperations.ENGINE, engine.getId(), data, locale, 42);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(42, ex.getId());
+            assertEquals("Unable to create new engine with road number MEC 3402 since another engine with that road number already exists.", ex.getMessage());
+        }
+        // edit (POST) the added engine
+        String id = engine.getId();
+        data = mapper.createObjectNode()
+                .put(JSON.NAME, id) // can't change this directly
+                .put(JSON.ROAD, "BM")
+                .put(JSON.NUMBER, "216")
+                .put(JSON.RFID, "1234567890AB")
+                .put(JSON.MODEL, "SD 40-2")
+                .put(JsonOperations.OUT_OF_SERVICE, true);
+        validateData(JsonOperations.ENGINE, data, false);
+        result = service.doPost(JsonOperations.ENGINE, id, data, locale, 42);
+        engine = manager.getById(id); // id invalidated by changing name and number
+        assertNull(engine);
+        engine = manager.getByRoadAndNumber("BM", "216"); // get by name and number
+        assertNotNull(engine);
+        validate(result);
+        assertEquals(JsonOperations.ENGINE, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Engine", 15, data.size()); // rename not always present
+        assertEquals("BM216", data.path(JSON.NAME).asText());
+        assertEquals("BM", data.path(JSON.ROAD).asText());
+        assertEquals("216", data.path(JSON.NUMBER).asText());
+        assertTrue(data.path(JSON.RFID).isValueNode());
+        assertEquals("1234567890AB", data.path(JSON.RFID).asText());
+        assertEquals(engine.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(0, data.path(JSON.LENGTH).asInt());
+        assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
+        assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(engine.getComment(), data.path(JSON.COMMENT).asText());
+        assertEquals(engine.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
+        assertEquals(engine.getTrackId(), data.path(JsonOperations.LOCATION).path(JsonOperations.TRACK).path(JSON.NAME).asText());
+        assertTrue(data.path(JsonOperations.DESTINATION).isValueNode());
+        assertTrue(data.path(JsonOperations.DESTINATION).isNull());
+        assertTrue(data.path(JsonConsist.CONSIST).isValueNode());
+        assertTrue(data.path(JsonConsist.CONSIST).isNull());
+        assertFalse(data.path(JsonOperations.OUT_OF_SERVICE).isMissingNode());
+        assertTrue(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean());
+        assertEquals("SD 40-2", data.path(JSON.MODEL).asText());
     }
 
     @Test

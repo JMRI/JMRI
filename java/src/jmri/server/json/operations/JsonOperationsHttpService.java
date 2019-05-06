@@ -53,6 +53,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -125,6 +126,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
                 return getKernel(carManager().getKernelByName(name), locale, id).put(RENAME, name);
             case ENGINE:
+                return message(ENGINE, postEngine(name, data, locale, id), id);
             case LOCATION:
             case TRAINS:
                 // do nothing
@@ -160,6 +162,24 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case CAR_TYPE:
                 InstanceManager.getDefault(CarTypes.class).addName(name);
                 return getCarType(name, locale, id);
+            case ENGINE:
+                if (data.path(ROAD).isMissingNode()) {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", ROAD, type), id); // NOI18N
+                }
+                if (data.path(NUMBER).isMissingNode()) {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NUMBER, type), id); // NOI18N
+                }
+                road = data.path(ROAD).asText();
+                number = data.path(NUMBER).asText();
+                if (engineManager().getById(name) != null || engineManager().getByRoadAndNumber(road, number) != null) {
+                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                            Bundle.getMessage(locale, "ErrorPutRollingStockConflict", type, road, number), id); // NOI18N
+                }
+                Engine engine = engineManager().newRS(road, number);
+                postEngine(engine, data, locale, id);
+                return message(ENGINE, utilities.getEngine(engine, locale), id);
             case KERNEL:
                 Kernel kernel = carManager().newKernel(name);
                 return getKernel(kernel, locale, id);
@@ -221,6 +241,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throwDeleteConflictException(type, name, conflicts, locale, id);
                 }
                 InstanceManager.getDefault(CarTypes.class).deleteName(name);
+                break;
+            case ENGINE:
+                deleteEngine(name, data, locale, id);
                 break;
             case KERNEL:
                 Kernel kernel = carManager().getKernelByName(name);
@@ -393,6 +416,43 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return utilities.getCar(car, result, locale);
     }
 
+
+    /**
+     * Set the properties in the data parameter for the given engine.
+     * <p>
+     * <strong>Note</strong> this returns the modified engine because changing the
+     * road or number of an engine changes its name in the JSON representation.
+     *
+     * @param name   the operations id of the engine to change
+     * @param data   engine data to change
+     * @param locale locale to throw exceptions in
+     * @param id     message id set by client
+     * @return the JSON representation of the engine
+     * @throws JsonException if a engine by name cannot be found
+     */
+    public ObjectNode postEngine(String name, JsonNode data, Locale locale, int id) throws JsonException {
+        return postEngine(getEngineByName(name, locale, id), data, locale, id);
+    }
+
+    /**
+     * Set the properties in the data parameter for the given engine.
+     * <p>
+     * <strong>Note</strong> this returns the modified engine because changing the
+     * road or number of an engine changes its name in the JSON representation.
+     *
+     * @param engine the engine to change
+     * @param data   engine data to change
+     * @param locale locale to throw exceptions in
+     * @param id     message id set by client
+     * @return the JSON representation of the engine
+     * @throws JsonException if unable to set location
+     */
+    public ObjectNode postEngine(@Nonnull Engine engine, JsonNode data, Locale locale, int id) throws JsonException {
+        ObjectNode result = postRollingStock(engine, data, locale, id);
+        engine.setModel(data.path(MODEL).asText(engine.getModel()));
+        return utilities.getEngine(engine, result, locale);
+    }
+
     /**
      * Set the properties in the data parameter for the given rolling stock.
      * <p>
@@ -452,6 +512,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
         carManager().deregister(getCarByName(name, locale, id));
     }
 
+    public void deleteEngine(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
+            throws JsonException {
+        engineManager().deregister(getEngineByName(name, locale, id));
+    }
+
     protected Car getCarByName(@Nonnull String name, @Nonnull Locale locale, int id) throws JsonException {
         Car car = carManager().getById(name);
         if (car == null) {
@@ -459,6 +524,15 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     Bundle.getMessage(locale, "ErrorNotFound", CAR, name), id);
         }
         return car;
+    }
+
+    protected Engine getEngineByName(@Nonnull String name, @Nonnull Locale locale, int id) throws JsonException {
+        Engine engine = engineManager().getById(name);
+        if (engine == null) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                    Bundle.getMessage(locale, "ErrorNotFound", ENGINE, name), id);
+        }
+        return engine;
     }
 
     protected CarManager carManager() {
