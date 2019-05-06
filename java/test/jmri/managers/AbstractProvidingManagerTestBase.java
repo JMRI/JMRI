@@ -31,8 +31,7 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
 
     @Test(expected = IllegalArgumentException.class)
     public void testProvideEmpty() throws IllegalArgumentException {
-        Assume.assumeTrue(l instanceof ProvidingManager);
-        ProvidingManager<E> m = (ProvidingManager<E>) l;
+        ProvidingManager<E> m = l;
         try {
            m.provide(""); // this should throw an IllegalArugmentException.
         } catch( IllegalArgumentException iae){
@@ -43,8 +42,7 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
 
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Assume.assumeTrue(l instanceof ProvidingManager);
-        ProvidingManager<E> m = (ProvidingManager<E>) l;
+        ProvidingManager<E> m = l;
         String s1 = l.makeSystemName("1");
         String s2 = l.makeSystemName("2");
         Assert.assertNotNull(s1);
