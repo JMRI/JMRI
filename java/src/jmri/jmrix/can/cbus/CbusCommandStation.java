@@ -4,6 +4,7 @@ import jmri.CommandStation;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * should always be referred to.
  *
  * @author Andrew Crosland Copyright (C) 2009
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusCommandStation implements CommandStation {
 
@@ -72,7 +74,7 @@ public class CbusCommandStation implements CommandStation {
      *
      * @param handle the handle for the session to be released
      */
-    public void releaseSession(int handle) {
+    protected void releaseSession(int handle) {
         // Send KLOC
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_KLOC);
@@ -85,7 +87,7 @@ public class CbusCommandStation implements CommandStation {
      * Send keep alive (DKEEP) packet for a throttle.
      *
      */
-    public void sendKeepAlive(int handle) {
+    protected void sendKeepAlive(int handle) {
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DKEEP);
         msg.setElement(1, handle);
@@ -99,7 +101,7 @@ public class CbusCommandStation implements CommandStation {
      * @param handle    The handle of the session to which it applies
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
-    public void setSpeedDir(int handle, int speed_dir) {
+    protected void setSpeedDir(int handle, int speed_dir) {
         CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DSPD);
         msg.setElement(1, handle);
@@ -137,6 +139,28 @@ public class CbusCommandStation implements CommandStation {
         msg.setElement(1, handle);
         msg.setElement(2, mode);
         tc.sendCanMessage(msg, null);
+    }
+
+    /**
+     * Check if the main command station is capable of the full CBUS Throttle commands
+     * <p>
+     * Full spec is defined as to comply with CBUS Developers Guide Version 6b
+     * <p>
+     * eg. CANCMD FW v3 supports the main loco OPCs but not full spec.
+     * eg. CANCMD FW v4 supports the full steal / share spec. 
+     *
+     * @return true if able to support steal, share, dispatch, else false
+     */
+    protected boolean isFullCbusThrottleSpec(){
+        try {
+            CbusNodeTableDataModel cs =  jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+            if ( cs.getCsByNum(0) != null ) {
+                return true;
+            }
+        } catch (NullPointerException e) {
+            return false;
+        }
+        return false;
     }
 
     @Override
