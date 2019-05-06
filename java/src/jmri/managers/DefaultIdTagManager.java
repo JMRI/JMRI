@@ -122,8 +122,10 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             return newIdTag(name, null);
-        } else {
+        } else if (!name.isEmpty()) {
             return newIdTag(makeSystemName(name), null);
+        } else {
+            throw new IllegalArgumentException("\"" + name + "\" is invalid");
         }
     }
 
