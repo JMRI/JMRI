@@ -352,7 +352,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         log.debug(" Direction to reverse :{}", Path.decodeDirection(olddirection) );
         
         if (olddirection==0){
-            log.debug("No direction found, setting North East.");
+            log.debug("No direction found, setting to North, East");
             b.setDirection(80);
         } else {
             log.debug(" direction found, setting reverse.");
@@ -361,7 +361,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         jmri.util.ThreadingUtil.runOnGUI( ()->{
             fireTableDataChanged();
         });
-        log.debug("block {} now has direction {}",b.getUserName(),b.getDirection());
+        log.debug("block {} now has direction {}", b.getUserName(), b.getDirection());
     }
     
     protected void setPanelPauseButton(boolean isPaused){
