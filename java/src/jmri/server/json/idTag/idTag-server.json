@@ -1,0 +1,53 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-idTag-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"idTag\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the idTag"
+        },
+        "userName": {
+            "type": ["string", "null"],
+            "description": "User name of the idTag"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the idTag"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the idTag",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["name", "value"]
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the idTag; 0 if unknown; 2 if seen; 3 if not seen yet"
+        },
+        "reporter": {
+            "type": ["string", "null"],
+            "description": "The system name of the last reporter to have seen the tag or null if not seen yet"
+        },
+        "time": {
+            "type": ["string", "null"],
+            "description": "The time of the last reported sighting of the tag or null if not seen yet"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "properties", "reporter", "time"]
+}

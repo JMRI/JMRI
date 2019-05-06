@@ -107,21 +107,18 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         JsonNode result = service.doPost(JsonBlock.BLOCK, "IB1", message, locale, 0);
         assertEquals(Block.UNOCCUPIED, block1.getState());
         validate(result);
-        this.validate(result);
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set on
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.ACTIVE);
         result = service.doPost(JsonBlock.BLOCK, "IB1", message, locale, 0);
         assertEquals(Block.OCCUPIED, block1.getState());
         validate(result);
-        this.validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set unknown - remains on
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.UNKNOWN);
         result = service.doPost(JsonBlock.BLOCK, "IB1", message, locale, 0);
         assertEquals(Block.OCCUPIED, block1.getState());
         validate(result);
-        this.validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, 42); // Invalid value
@@ -196,7 +193,6 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, Block.UNOCCUPIED);
         JsonNode result = service.doPut(JsonBlock.BLOCK, "IB1", message, locale, 0);
         validate(result);
-        this.validate(result);
         assertNotNull(manager.getBlock("IB1"));
         try {
             // add an invalid block by using a turnout name instead of a block name
@@ -219,7 +215,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         JsonBlockHttpService instance = new JsonBlockHttpService(mapper);
         JsonNode result = instance.doGetList(JsonBlock.BLOCK, mapper.createObjectNode(), locale, 0);
         assertEquals(1, result.size());
-        this.validate(result);
+        validate(result);
     }
 
     /**
