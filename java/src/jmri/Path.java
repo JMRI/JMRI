@@ -214,21 +214,34 @@ public class Path {
      */
     static public String decodeDirection(int d) {
         if (d == NONE) {
-            return "None";
+            return (Bundle.getMessage("None"));
         }
-
         StringBuffer b = new StringBuffer();
-        if ((d & NORTH) != 0) {
-            appendOne(b, "North");
+        if (((d & NORTH) != 0) && ((d & EAST) != 0) ) {
+            appendOne(b, (Bundle.getMessage("NorthEast")));
         }
-        if ((d & SOUTH) != 0) {
-            appendOne(b, "South");
+        else if (((d & NORTH) != 0) && ((d & WEST) != 0) ) {
+            appendOne(b, (Bundle.getMessage("NorthWest")));
         }
-        if ((d & EAST) != 0) {
-            appendOne(b, "East");
+        else if (((d & SOUTH) != 0) && ((d & EAST) != 0) ) {
+            appendOne(b, (Bundle.getMessage("SouthEast")));
         }
-        if ((d & WEST) != 0) {
-            appendOne(b, "West");
+        else if (((d & SOUTH) != 0) && ((d & WEST) != 0) ) {
+            appendOne(b, (Bundle.getMessage("SouthWest")));
+        }
+        else {
+            if ((d & NORTH) != 0) {
+                appendOne(b, (Bundle.getMessage("North")));
+            }
+            if ((d & SOUTH) != 0) {
+                appendOne(b, (Bundle.getMessage("South")));
+            }
+            if ((d & EAST) != 0) {
+                appendOne(b, (Bundle.getMessage("East")));
+            }
+            if ((d & WEST) != 0) {
+                appendOne(b, (Bundle.getMessage("West")));
+            }
         }
         if ((d & CW) != 0) {
             appendOne(b, "CW");
