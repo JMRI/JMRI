@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Nigel Cliffe   nigel.cliffe@outlook.com" version="1" lastUpdated="20162404"/>
+  <version author="Mark Waters   mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20162707"/>
+  <!-- This decoder configuration file is based on other Zimo non-sound decoders                     -->
+  <!-- Tested on a MX600, which reported v31 firmware and decoderID 199 (which matches manuals), on 6th May 2016 (NC)    -->
+  <!--                                                                                       -->
+  <!-- Based on the "2016 02 02" English version of the ZIMO small                           -->
+  <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
+  <!-- for the translations!)                                                                -->
+  <!--                                                                                       -->
+  <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
+  <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
+  <!-- variables on the proper pane of the Comprehensive programmer.                         -->
+  <!-- V 1 new file -->
+  <!-- v1.1,  change to refer to PaneAltFunctionMap4.xml and highVersionID changed to 41. Mark Waters 27 july 2016 -->
+  <!-- v1.2,  german translation. Ronald Kuhn 18 September 2017 -->
+  <!-- v1.3,  include CV's for v37. Ronald Kuhn 25 April 2019, tested with MX600R with FW 37.8 -->
+  <decoder>
+    <family name="Zimo Unified software (version 37+)" mfg="Zimo">
+      <model  model="MX600 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <size length="25" width="11" height="2" units="mm"/>
+      </model>
+      <model  model="MX600P12 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <size length="25" width="11" height="2" units="mm"/>
+      </model>
+      <model  model="MX600R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <size length="25" width="11" height="2" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV20.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
+      <!-- CV158 has both sound and Railcom information -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
+     <!-- CV7 set to default 37 -->
+      <variable CV="7" readOnly="yes" default="37">
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable> 
+      <variable item="Decoder ID 1" CV="250" default="199" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 2" CV="251" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 2</label>
+        <label xml:lang="it">ID 2 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 2:</label>
+      </variable>
+      <variable item="Decoder ID 3" CV="252" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 3</label>
+        <label xml:lang="it">ID 3 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 3:</label>
+      </variable>
+      <variable item="Decoder ID 4" CV="253" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 4</label>
+        <label xml:lang="it">ID 4 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 4:</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
+      <!-- Begin constant stopping distance variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version37.xml"/>
+    </variables>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap4.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
+</decoder-config>

@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
- * Swing action to create and register a RpsTrackingFrame object
+ * Swing action to create and register an RpsTrackingFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
@@ -14,13 +14,13 @@ public class AlignmentPanelAction extends AbstractAction {
 
     RpsSystemConnectionMemo memo = null;
 
-    public AlignmentPanelAction(String s,RpsSystemConnectionMemo _memo) {
+    public AlignmentPanelAction(String s, RpsSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public AlignmentPanelAction(RpsSystemConnectionMemo _memo) {
-        this("RPS Alignment Tool",_memo);
+        this("RPS Alignment Tool", _memo);
     }
 
     @Override

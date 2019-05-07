@@ -13,29 +13,30 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class StackMonFrameTest {
+public class StackMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
-        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
-
-        StackMonFrame f = new StackMonFrame(memo);
-        Assert.assertNotNull(f);
-        f.dispose();
-    }
+    private jmri.jmrix.lenz.XNetInterfaceScaffold t = null;
+    private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new StackMonFrame(memo);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        memo = null;
+        t = null;
+        super.tearDown();
     }
 
 }

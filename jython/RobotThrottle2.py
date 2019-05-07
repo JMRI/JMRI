@@ -270,7 +270,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             oldId = self.currentThrottle.getLocoAddress()
             self.msgText("stop and release the current loco: " + oldId.toString() + "\n")
             self.doStop();
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
             self.currentThrottle = None
             self.msgText("Throttle " + oldId.toString() + " released\n")
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -566,7 +566,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             #print("RB2: releasing throttle\n")
             self.currentThrottle.setSpeedSetting(0)
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
         self.isAborting = True
         return
 

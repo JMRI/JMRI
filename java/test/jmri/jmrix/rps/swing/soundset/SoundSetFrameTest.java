@@ -2,11 +2,7 @@ package jmri.jmrix.rps.swing.soundset;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
@@ -14,23 +10,24 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SoundSetFrameTest {
+public class SoundSetFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private RpsSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        SoundSetFrame action = new SoundSetFrame(memo);
-        Assert.assertNotNull("exists", action);
-    }
-
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new RpsSystemConnectionMemo();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new SoundSetFrame(memo);
+	}
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {
+	memo = null;
+    	super.tearDown();
+    }
 }

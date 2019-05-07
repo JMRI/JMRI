@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for The ZTC
+ * This class performs Command Station dependant initialization for the ZTC
  * ZTC611. It adds the appropriate Managers via the Instance Manager based
  * on the Command Station Type.
  *
- * @author Paul Bender Copyright (C) 2003,2008
-  */
+ * @author Paul Bender Copyright (C) 2003, 2008
+ */
 public class ZTC611XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public ZTC611XNetInitializationManager(XNetSystemConnectionMemo memo) {
@@ -23,13 +23,8 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
 
     @Override
     protected void init() {
-        if (log.isDebugEnabled()) {
-            log.debug("Init called");
-        }
-
-        if (log.isDebugEnabled()) {
-            log.debug("Command Station is ZTC ZTC611 (manually identified).");
-        }
+        log.debug("Init called");
+        log.debug("Command Station is ZTC ZTC611 (manually identified).");
 
         /* First, we load things that should work on all systems */
 
@@ -54,9 +49,7 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
-        if (log.isDebugEnabled()) {
-            log.debug("XpressNet Initialization Complete");
-        }
+        log.debug("XpressNet Initialization Complete");
     }
 
     private final static Logger log = LoggerFactory.getLogger(ZTC611XNetInitializationManager.class);

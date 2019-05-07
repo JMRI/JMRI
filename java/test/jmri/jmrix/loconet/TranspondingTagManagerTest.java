@@ -2,6 +2,8 @@ package jmri.jmrix.loconet;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.util.JUnitUtil;
+import jmri.managers.ProxyIdTagManager;
 import org.junit.*;
 
 /**
@@ -9,19 +11,21 @@ import org.junit.*;
  *
  * @author	Matthew Harris Copyright (C) 2011
  */
-public class TranspondingTagManagerTest {
+public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManagerTest {
 
     @Test
-    public void testTranspondingTagCreation() {
-        TranspondingTagManager m = getManager();
+    @Override
+    public void testIdTagCreation() {
+        TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = m.createNewIdTag("LD0413276BC1", "Test Tag");
 
         Assert.assertNotNull("TranspondingTag is not null", t);
     }
 
     @Test
-    public void testTranspondingTagNames() {
-        TranspondingTagManager m = getManager();
+    @Override
+    public void testIdTagNames() {
+        TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = m.createNewIdTag("LD0413276BC1", "Test Tag");
 
         Assert.assertEquals("TranspondingTag system name is 'LD0413276BC1'", "LD0413276BC1", t.getSystemName());
@@ -30,8 +34,9 @@ public class TranspondingTagManagerTest {
     }
 
     @Test
-    public void testTranspondingTagSingleRetrieval() {
-        TranspondingTagManager m = getManager();
+    @Override
+    public void testIdTagSingleRetrieval() {
+        TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = (TranspondingTag) m.newIdTag("LD0413276BC1", "Test Tag");
 
         Assert.assertNotNull("Returned TranspondingTag is not null", t);
@@ -54,8 +59,9 @@ public class TranspondingTagManagerTest {
     }
 
     @Test
-    public void testTranspondingTagMultiRetrieval() {
-        TranspondingTagManager m = getManager();
+    @Override
+    public void testIdTagMultiRetrieval() {
+        TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t1 = (TranspondingTag) m.newIdTag("LD0413276BC1", "Test Tag 1");
         TranspondingTag t2 = (TranspondingTag)m.newIdTag("LD0413275FCA", "Test Tag 2");
 
@@ -79,8 +85,9 @@ public class TranspondingTagManagerTest {
     }
 
     @Test
-    public void testTranspondingTagProviderCreate() {
-        TranspondingTagManager m = getManager();
+    @Override
+    public void testIdTagProviderCreate() {
+        TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = (TranspondingTag) m.provideIdTag("0413276BC1");
 
         Assert.assertNotNull("TranspondingTag is not null", t);
@@ -96,8 +103,9 @@ public class TranspondingTagManagerTest {
     }
 
     @Test
-    public void testTranspondingTagProviderGet() {
-        TranspondingTagManager m = getManager();
+    @Override
+    public void testIdTagProviderGet() {
+        TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t1 = (TranspondingTag)m.newIdTag("LD0413276BC1", "Test Tag 1");
         TranspondingTag t2 = (TranspondingTag)m.newIdTag("LD0413275FCA", "Test Tag 2");
 
@@ -115,16 +123,18 @@ public class TranspondingTagManagerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
+        l = getManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        l = null;
         jmri.util.JUnitUtil.tearDown();
     }
 

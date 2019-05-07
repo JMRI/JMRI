@@ -69,7 +69,7 @@ class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :
         return
 
     def whenReleaseButtonClicked(self,event) :
-    self.Throttle.release()
+    self.Throttle.release(None)
         self.status = javax.swing.JLabel("Enter address & click start")
         self.Address.enabled = True
         self.StartButton.enabled = True

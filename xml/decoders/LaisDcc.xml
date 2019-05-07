@@ -1734,7 +1734,10 @@
                 <label>
                     <text> </text>
                 </label>
-                <display item="Accel" layout="above" label="Base Acceleration Rate" format="hslider"/>
+                <display item="Accel" layout="above" format="hslider">
+                    <label>Base Acceleration Rate</label>
+                    <label xml:lang="cs">Základní míra zrychlení</label>
+                </display>
             </row>
             <label>
                 <text> </text>
@@ -1787,7 +1790,10 @@
                 <label>
                     <text> </text>
                 </label>
-                <display item="Decel" layout="above" label="Base Deceleration Rate" format="hslider"/>
+                <display item="Decel" layout="above" format="hslider">
+                    <label>Base Deceleration Rate</label>
+                    <label xml:lang="cs">Základní míra zpomalení</label>
+                </display>
             </row>
             <label>
                 <text> </text>

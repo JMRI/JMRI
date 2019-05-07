@@ -33,8 +33,8 @@ public class CbusEventResponder implements CanListener {
     private Boolean _sendOut;
     private CbusSend send;
     
-    public static ArrayList<String> evModes = new ArrayList<String>();
-    public static ArrayList<String> evModesTip = new ArrayList<String>();
+    public ArrayList<String> evModes = new ArrayList<String>();
+    public ArrayList<String> evModesTip = new ArrayList<String>();
     
     public CbusEventResponder( CanSystemConnectionMemo memod ){
         memo = memod;
@@ -195,6 +195,9 @@ public class CbusEventResponder implements CanListener {
     
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
             processEventforResponse(m);
         }
@@ -202,6 +205,9 @@ public class CbusEventResponder implements CanListener {
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
             CanMessage m = new CanMessage(r);
             processEventforResponse(m);

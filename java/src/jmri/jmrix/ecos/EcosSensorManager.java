@@ -46,7 +46,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        //int ports = Integer.parseInt(systemName.substring(2));
+        //int ports = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Sensor s = new EcosSensor(systemName, userName);
         //s.setUserName(userName);
 

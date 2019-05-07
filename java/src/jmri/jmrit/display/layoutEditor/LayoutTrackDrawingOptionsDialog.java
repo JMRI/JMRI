@@ -1277,9 +1277,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO = new LayoutTrackDrawingOptions(csdazd71PresetName);
         tempLTDO.setMainBallastColor(Color.decode("#000000"));
         tempLTDO.setMainBallastWidth(0);
-        tempLTDO.setMainBlockLineDashPercentageX10(8);
-        tempLTDO.setMainBlockLineWidth(8);
-        tempLTDO.setMainRailColor(Color.decode("#202020"));
+        tempLTDO.setMainBlockLineDashPercentageX10(6);
+        tempLTDO.setMainBlockLineWidth(6);
+        tempLTDO.setMainRailColor(Color.decode("#000000"));
         tempLTDO.setMainRailCount(1);
         tempLTDO.setMainRailGap(0);
         tempLTDO.setMainRailWidth(10);

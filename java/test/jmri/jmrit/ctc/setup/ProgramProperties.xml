@@ -12,12 +12,12 @@
 <entry key="_mSIDI_NormalInternalSensorPattern">IS#:NK</entry>
 <entry key="_mFilename">preference:ctc/CTCSystem.xml</entry>
 <entry key="_mSWDI_NormalInternalSensorPattern">IS#:SN</entry>
-<entry key="_mSIDI_CodingAndResponseTime">2000</entry>
+<entry key="_mSIDI_CodingAndResponseTime">0</entry>
 <entry key="_mSIDL_RightInternalSensorPattern">IS#:RL</entry>
 <entry key="_mCO_CallOnToggleInternalSensorPattern">IS#:CALLON</entry>
-<entry key="_mSWDI_CodingTimeInMilliseconds">2000</entry>
+<entry key="_mSWDI_CodingTimeInMilliseconds">0</entry>
 <entry key="_mTUL_DispatcherInternalSensorLockTogglePattern">IS#:LOCKTOGGLE</entry>
-<entry key="_mSIDI_TimeLockingTimeInMilliseconds">3000</entry>
+<entry key="_mSIDI_TimeLockingTimeInMilliseconds">0</entry>
 <entry key="_mSIDI_LeftInternalSensorPattern">IS#:LK</entry>
 <entry key="_mCodeButtonInternalSensorPattern">IS#:CB</entry>
 </properties>

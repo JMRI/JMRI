@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Persist RPS polling information
- * <P>
+ * Persist RPS polling information.
+ *
  * @author Bob Jacobsen Copyright 2008
  */
 public class PollingFile extends XmlFile {
@@ -24,7 +24,7 @@ public class PollingFile extends XmlFile {
 
     /**
      * Initialize for writing information.
-     * <P>
+     * <p>
      * This is followed by multiple "set" calls, then a "store"
      */
     public void prepare() {
@@ -38,7 +38,6 @@ public class PollingFile extends XmlFile {
         m.put("href", xsltLocation + "rpsroster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0, p);
-
     }
 
     public void setPoll() {
@@ -94,7 +93,7 @@ public class PollingFile extends XmlFile {
                 value = a.getIntValue();
             }
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("in getPollValues", ex);
+            log.error("in getPollValues ", ex);
         }
         Engine.instance().setPollingInterval(value);
 
@@ -117,7 +116,6 @@ public class PollingFile extends XmlFile {
         if (throttlepoll) {
             Engine.instance().setThrottlePollMode();
         }
-
     }
 
     /**
@@ -132,7 +130,7 @@ public class PollingFile extends XmlFile {
             if (e.getAttribute("rostername") != null) {
                 id = e.getAttribute("rostername").getValue();
             } else {
-                log.warn("Using ID as roster name for " + id + ", please save your polling information to remove this warning");
+                log.warn("Using ID as roster name for {}, please save your polling information to remove this warning", id);
             }
 
             // find the matching transmitter (from Roster) and load poll value
@@ -165,4 +163,5 @@ public class PollingFile extends XmlFile {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(PollingFile.class);
+
 }

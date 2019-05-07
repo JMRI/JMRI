@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
@@ -864,6 +865,13 @@ public class JUnitUtil {
     }
 
     /**
+     * End any running BlockBossLogic (Simple Signal Logic) objects
+     */
+    public static void clearBlockBossLogic() {
+        jmri.jmrit.blockboss.BlockBossLogic.stopAllAndClear();
+    }
+    
+    /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.
      * @see #initShutDownManager()
@@ -1201,9 +1209,9 @@ public class JUnitUtil {
                         if (name.startsWith("Thread-")) {
                             Exception ex = new Exception("traceback of numbered thread");
                             ex.setStackTrace(Thread.getAllStackTraces().get(t));
-                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName(), ex);
+                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), (t.getThreadGroup() != null ? t.getThreadGroup().getName() : "<no group>"), getTestClassName(), ex);
                         } else {
-                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName());
+                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), (t.getThreadGroup() != null ? t.getThreadGroup().getName() : "<no group>"), getTestClassName());
                         }
                 }
             });

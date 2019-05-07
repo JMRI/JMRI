@@ -1,11 +1,7 @@
 package apps;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -14,7 +10,6 @@ import org.junit.Test;
 public class SystemConsoleConfigPanelTest {
 
     @Test
-    @Ignore("Needs more setup")
     public void testCTor() {
         SystemConsoleConfigPanel t = new SystemConsoleConfigPanel();
         Assert.assertNotNull("exists",t);
@@ -24,6 +19,7 @@ public class SystemConsoleConfigPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.InstanceManager.setDefault(apps.systemconsole.SystemConsolePreferencesManager.class,new apps.systemconsole.SystemConsolePreferencesManager());
     }
 
     @After
