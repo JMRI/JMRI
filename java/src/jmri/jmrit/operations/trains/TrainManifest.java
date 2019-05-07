@@ -137,7 +137,7 @@ public class TrainManifest extends TrainCommon {
                         }
                         // add route location comment
                         if (!rl.getComment().trim().equals(RouteLocation.NONE)) {
-                            newLine(fileOut, rl.getComment());
+                            newLine(fileOut, rl.getFormatedColorComment());
                         }
 
                         // add location comment
@@ -236,7 +236,7 @@ public class TrainManifest extends TrainCommon {
                             if (rl.getComment().trim().length() > 0) {
                                 s = MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringNoScheduledWorkWithRouteComment(),
-                                        new Object[]{routeLocationName, rl.getComment(), train.getName(),
+                                        new Object[]{routeLocationName, rl.getFormatedColorComment(), train.getName(),
                                                 train.getDescription()});
                             }
                         }

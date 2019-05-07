@@ -144,7 +144,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 address away
+     * return the next free valid address up to a maximum of 10 addresses away
      * from the initial address.
      *
      * @param prefix     system prefix used to make up the systemName

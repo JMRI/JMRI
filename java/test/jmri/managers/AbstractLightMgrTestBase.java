@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<LightManager, Light> {
+public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerTestBase<LightManager, Light> {
 
     // implementing classes must provide these abstract members:
     //

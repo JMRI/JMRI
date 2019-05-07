@@ -4,6 +4,7 @@ import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.PowerManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -86,6 +87,31 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         jmri.jmrix.can.CanMessage m = new jmri.jmrix.can.CanMessage(new int[]{CbusConstants.CBUS_TON},0x12);
         pwr.message(m);
         Assert.assertTrue(true);
+        
+    }
+    
+    
+    @Test
+    public void checkCanReplyExtendedRtr () throws jmri.JmriException {
+        
+        CanReply r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
+        pwr.reply(r);
+        Assert.assertEquals("set off", PowerManager.OFF, p.getPower());
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_TON},0x12);
+        r.setExtended(true);
+        
+        pwr.reply(r);
+        Assert.assertEquals("still off", PowerManager.OFF, p.getPower());
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        pwr.reply(r);
+        Assert.assertEquals("still off", PowerManager.OFF, p.getPower());
+        
+        r.setRtr(false);
+        pwr.reply(r);
+        Assert.assertEquals("on", PowerManager.ON, p.getPower());
         
     }
     

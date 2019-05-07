@@ -9,7 +9,10 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -17,9 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.table.TableCellEditor;
+
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -550,12 +556,23 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         dialog.add(buttonPane, BorderLayout.SOUTH);
+        
+        // text color chooser
+        JPanel pTextColor = new JPanel();
+        pTextColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TextColor")));
+        JColorChooser commentColorChooser = new JColorChooser(rl.getCommentColor());
+        AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
+        commentColorChooser.setChooserPanels(commentColorPanels);
+        commentColorChooser.setPreviewPanel(new JPanel());
+        pTextColor.add(commentColorChooser);
+        buttonPane.add(pTextColor);
 
         JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         okayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 rl.setComment(commentTextArea.getText());
+                rl.setCommentColor(commentColorChooser.getColor());
                 dialog.dispose();
                 return;
             }

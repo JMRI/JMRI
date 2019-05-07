@@ -576,8 +576,13 @@
       while future uses of this may also be for local media streaming ( eg. transferring 
       pictures of trains or sound files between modules. )
       <br>The extended frames do not interfere with the standard frames, 
-      hence modules can be targetted for boatloading by module number, without affecting Standard CAN event frames.
-      </p>
+      hence modules can be targetted for boatloading by module number, 
+      without affecting normal layout messaging.</p>
+      
+      <p>Extended CAN frames ( which are not CBUS messages ) can be monitored in the 
+      <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
+        >CBUS console</a>,
+        and are filtered from all other JMRI objects ( Sensors, Turnouts etc. ).</p>
       
       <p>Although module firmware updates are not currently available within JMRI, 
       full support for this is available via 3rd party software ( FCU - FLiM Configuration Utility ), 
