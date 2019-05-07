@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -218,6 +219,10 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         tabbedPane.addTab(("Node Variables "), nodevarPane);
         tabbedPane.addTab(("Node Events"), nodeEventPane);
         
+        tabbedPane.addChangeListener((ChangeEvent e) -> {
+            updateTabs();
+        });
+        
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fcuPane, tabbedPane);
         split.setDividerLocation(0.5);
         split.setContinuousLayout(true);
@@ -339,9 +344,14 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
         if ( nodeTable.getSelectedRow() > -1 ) {
             
-            nodeinfoPane.initComponents( nodeFromSelectedRow() );
-            nodevarPane.setNode( nodeFromSelectedRow() );
-            nodeEventPane.setNode( nodeFromSelectedRow() );
+            if ( tabbedPane.getSelectedIndex() == 1 ){ // nv pane
+                nodevarPane.setNode( nodeFromSelectedRow() );
+            }
+            else if ( tabbedPane.getSelectedIndex() == 2 ) { // ev pane
+                nodeEventPane.setNode( nodeFromSelectedRow() );
+            } else {
+                nodeinfoPane.initComponents( nodeFromSelectedRow() );
+            }
         }
         else {
             nodeinfoPane.initComponents( null );
@@ -538,7 +548,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             if ( !evList.get(i).getName().isEmpty() ){
                 eventModel.provideEvent(evList.get(i).getNn(),evList.get(i).getEn()).setName(evList.get(i).getName());
             }
-        }        
+        }
+        eventModel.fireTableDataChanged();
     }
     
     private void showConfirmThenSave(){

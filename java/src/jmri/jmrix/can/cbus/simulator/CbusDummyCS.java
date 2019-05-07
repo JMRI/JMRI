@@ -45,8 +45,8 @@ public class CbusDummyCS implements CanListener {
     private Boolean _sendOut;
     protected CbusSend send;
 
-    public static ArrayList<String> csTypes = new ArrayList<String>();
-    public static ArrayList<String> csTypesTip = new ArrayList<String>();
+    public ArrayList<String> csTypes = new ArrayList<String>();
+    public ArrayList<String> csTypesTip = new ArrayList<String>();
     
     protected static int DEFAULT_CS_TIMEOUT = 60000; // ms
     protected static int DEFAULT_SESSION_START_SPDDIR = 128;  // default DCC speed direction on start session
@@ -337,6 +337,9 @@ public class CbusDummyCS implements CanListener {
 
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
             CanFrame test = m;
             passMessage(test);
@@ -345,6 +348,9 @@ public class CbusDummyCS implements CanListener {
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
             CanFrame test = r;
             passMessage(test);

@@ -10,23 +10,24 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultCatalogTreeManagerTest {
+public class DefaultCatalogTreeManagerTest extends jmri.managers.AbstractManagerTestBase<jmri.CatalogTreeManager,jmri.CatalogTree> {
 
     @Test
     public void testCTor() {
-        DefaultCatalogTreeManager t = new DefaultCatalogTreeManager();
-        Assert.assertNotNull("exists",t);
-        t.dispose();
+        Assert.assertNotNull("exists",l);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new DefaultCatalogTreeManager();
     }
 
     @After
     public void tearDown() {
+        l.dispose();
+        l = null;
         JUnitUtil.tearDown();
     }
 

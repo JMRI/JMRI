@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="ronald@wirkuhns.de" version="2" lastUpdated="2017/09/25"/>
+  <version author="ronald@wirkuhns.de" version="1" lastUpdated="2016/12/14"/>
+  <decoder>
+    <family name="Zimo Function Decoders" mfg="Zimo">
+      <model model="MX681 version 31.5+" lowVersionID="31" highVersionID="31" maxInputVolts="10-35V" maxTotalCurrent="0.7A" productID="228" formFactor="N" numOuts="6" numFns="14">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+        <size length="12" width="8.5" height="2.2" units="mm"/>
+      </model>
+      <model model="MX681R version 31.5+" lowVersionID="31" highVersionID="31" maxInputVolts="10-35V" maxTotalCurrent="0.7A" productID="228" formFactor="N" numOuts="6" numFns="14" connector="NMRAmedium">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+        <size length="12" width="8.5" height="2.2" units="mm"/>
+      </model>
+      <model model="MX681N version 31.5+" lowVersionID="31" highVersionID="31" maxInputVolts="10-35V" maxTotalCurrent="0.7A" productID="228" formFactor="N" numOuts="6" numFns="14" connector="NMRAsmall">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+        <size length="12" width="8.5" height="2.2" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV20.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV37-CV46.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV250-CV253.xml"/>
+      <variable CV="64" default="0" item="Secondary Short Address">
+        <shortAddressVal/>
+        <label>Secondary Short Address</label>
+        <label xml:lang="de">zweite Basisadresse</label>
+        <tooltip>Sets the short (Primary) address</tooltip>
+        <tooltip xml:lang="de">Setzt die zweite Basisadresse</tooltip>
+        <comment>Short address</comment>
+        <comment xml:lang="de">zweite Basisadresse</comment>
+      </variable>
+      <variable CV="67" item="Secondary Long Address">
+        <decVal/>
+        <!--longAddressVal/-->
+        <label>Secondary Long Address, part 1</label>
+        <label xml:lang="de">zweite Erweiterte Adresse, Teil 1</label>
+        <tooltip>Sets the long (Extended) address</tooltip>
+        <tooltip xml:lang="de">Wert aus CV#17 manuell übernehmen</tooltip>
+        <comment>Long address (Range 0001-10239)</comment>
+        <comment xml:lang="de">Lange Zweitadresse (Bereich 0001-10239)</comment>
+      </variable>
+      <variable CV="68" item="Secondary Long Address 2">
+        <decVal/>
+        <label>Secondary Long Address, part 2</label>
+        <label xml:lang="de">zweite Erweiterte Adresse, Teil 2</label>
+        <tooltip>Sets the long (Extended) address</tooltip>
+        <tooltip xml:lang="de">Wert aus CV#18 manuell übernehmen</tooltip>
+        <comment>Long address (Range 0001-10239)</comment>
+        <comment xml:lang="de">Lange Zweitadresse (Bereich 0001-10239)</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV69-CV83_alternative.xml"/>
+      <variable CV="109" mask="XXXXVVVV" item="Function F0F option 3">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="de">FA1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="de">FA2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="de">FA3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="de">FA4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="de">FA5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="de">FA6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco front additional function 2 off</label>
+    <label xml:lang="it">Funzione addizionale 2 Frontale Off</label>
+    <label xml:lang="de">Lvor + Zusatz 2 aus</label>
+      </variable>
+      <variable CV="110" mask="XXXXVVVV" item="Function F0R option 3">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="de">FA1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="de">FA2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="de">FA3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="de">FA4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="de">FA5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="de">FA6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco rear additional function 2 off</label>
+    <label xml:lang="it">Funzione addizionale 2 Posteriore Off</label>
+    <label xml:lang="de">Lrück + Zusatz 2 aus</label>
+      </variable>
+    </variables>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSecondAddress.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
+</decoder-config>

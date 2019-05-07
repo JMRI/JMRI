@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -222,7 +225,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     public String getNameString() {
         Portal p = getPortal();
         if (p == null) return "No Portal Defined";
-        return getPortal().getDescription();
+        return p.getDescription();
     }
 
     /**
