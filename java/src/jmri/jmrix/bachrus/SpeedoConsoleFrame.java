@@ -1072,7 +1072,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     profileGraphPane.repaint();
                     profileTimer.start();
                     log.info("Requesting throttle");
-                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(profileAddress, profileIsLong, this);
+                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(
+                        new DccLocoAddress(profileAddress, profileIsLong), this);
                     if (!requestOK) {
                         log.error("Loco Address in use, throttle request failed.");
                     }
@@ -1223,7 +1224,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Timeout requesting a throttle.
      */
     synchronized protected void throttleTimeout() {
-        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, profileIsLong, this);
+        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(
+            new DccLocoAddress(profileAddress, profileIsLong), this);
         state = ProfileState.IDLE;
         log.error("Timeout waiting for throttle");
     }
@@ -1286,7 +1288,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 //        }
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
-            //jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
             //throttle.release();
             throttle = null;

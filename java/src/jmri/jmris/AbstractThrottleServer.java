@@ -119,7 +119,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      */
     public void releaseThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
-        t.cancelThrottleRequest(l.getNumber(), this);
+        t.cancelThrottleRequest(l, this);
         if (l instanceof DccLocoAddress) {
             throttleList.forEach(throttle -> {
                 if (throttle.getLocoAddress() == l) {

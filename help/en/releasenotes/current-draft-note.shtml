@@ -390,6 +390,11 @@
             Old syntax: <code>self.throttle.release()</code> <br>
             New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
             </li>
+            <li><strong>Custom scripts that use the DCCThrottle.py Jynstrument may need to be modified.</strong><br>
+            Old syntax: <code>listenToDCCThrottle = 3</code> <br>
+            New syntax (below imports): <code>listenToDCCThrottle = DccLocoAddress(3,False)</code>
+            using <code>True</code> for Long DCC addresses.
+            </li>
         </ul>
 
     <h3>Signals</h3>

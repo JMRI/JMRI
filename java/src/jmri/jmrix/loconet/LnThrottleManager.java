@@ -448,21 +448,20 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Cancel a request for a throttle.
      *
      * @param address The decoder address desired.
-     * @param isLong  True if this is a request for a DCC long (extended)
      *                address.
      * @param l       The ThrottleListener cancelling request for a throttle.
      */
-
     @Override
-    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
-        super.cancelThrottleRequest(address, isLong, l);
-        log.debug("cancelThrottleRequest - address {}", address);
-        if (waitingForNotification.containsKey(address)) {
-            waitingForNotification.get(address).interrupt();
-            waitingForNotification.remove(address);
+    public void cancelThrottleRequest(LocoAddress address, ThrottleListener l) {
+        super.cancelThrottleRequest(address, l);
+        int loconumber = address.getNumber();
+        log.debug("cancelThrottleRequest - loconumber {}", loconumber);
+        if (waitingForNotification.containsKey(loconumber)) {
+            waitingForNotification.get(loconumber).interrupt();
+            waitingForNotification.remove(loconumber);
         }
-        if (slotForAddress.containsKey(address)) {
-            slotForAddress.remove(address);
+        if (slotForAddress.containsKey(loconumber)) {
+            slotForAddress.remove(loconumber);
         }
         requestOutstanding = false;
         processQueuedThrottleSetupRequest();
@@ -508,7 +507,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      *
      * @param locoAddr address of DCC loco or consist
      */
-    public void notifyStealRequest(int locoAddr) {
+    private void notifyStealRequest(int locoAddr) {
         // need to find the "throttleListener" associated with the request for locoAddr, and
         // send that "throttleListener" a notification that the command station needs
         // permission to "steal" the loco address.
@@ -541,7 +540,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
         if (steal == false) {
             if (address instanceof DccLocoAddress) {
-                cancelThrottleRequest((DccLocoAddress)address,l);
+                cancelThrottleRequest(address, l);
                 failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
             } else {
                 log.error("cannot cast address to DccLocoAddress.");

@@ -267,7 +267,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                                 // if main throttle is disposed, cancel it in the
                                 // list so a new session is obtained
                                 throttle.throttleDispose();
-                                forceDisposeThrottle( (DccLocoAddress) throttle.getLocoAddress() );
+                                forceDisposeThrottle( throttle.getLocoAddress() );
                                 
                                 break;
                             }
@@ -301,7 +301,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                                     handle, throttle.getLocoAddress().toString() );
                              
                                 throttle.throttleDispose();
-                                forceDisposeThrottle( (DccLocoAddress) throttle.getLocoAddress() ); 
+                                forceDisposeThrottle( throttle.getLocoAddress() ); 
 
                                 break;
                             }

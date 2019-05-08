@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
+import javax.annotation.Nonnull;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -155,7 +156,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * notification of changes to a throttle that hasn't yet been created/ The
      * entries in this Hashmap are only valid during the throttle setup process.
      */
-    private final HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> listenerOnly = new HashMap<>(5);
+    private final HashMap<LocoAddress, ArrayList<WaitingThrottle>> listenerOnly = new HashMap<>(5);
 
     //This keeps a map of all the current active DCC loco Addresses that are in use.
     /**
@@ -163,7 +164,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * subclass of the throttle assigned to an address and the number of
      * requests and active users for this address.
      */
-    private final Hashtable<DccLocoAddress, Addresses> addressThrottles = new Hashtable<>();
+    private final Hashtable<LocoAddress, Addresses> addressThrottles = new Hashtable<>();
 
     /**
      * Does this DCC system allow a Throttle (e.g. an address) to be used by
@@ -173,18 +174,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     protected boolean singleUse() {
         return true;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l) {
+    public boolean requestThrottle(@Nonnull BasicRosterEntry re, ThrottleListener l) {
         return requestThrottle(re.getDccLocoAddress(), re, l);
     }
 
-    @Override
-    public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l) {
-        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
-        return requestThrottle(la, null, l);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean requestThrottle(LocoAddress la, ThrottleListener l) {
         return requestThrottle(la, null, l);
@@ -197,12 +198,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      *
      * @param la LocoAddress of the decoder desired.
      * @param l  The ThrottleListener awaiting notification of a found throttle.
+     * @param re A BasicRosterEntry can be passed, this is attached to a throttle after creation.
      * @return True if the request will continue, false if the request will not
      *         be made. False may be returned if a the throttle is already in
      *         use.
      */
-    @Override
-    public boolean requestThrottle(LocoAddress la, BasicRosterEntry re, ThrottleListener l) {
+    protected boolean requestThrottle(LocoAddress la, BasicRosterEntry re, ThrottleListener l) {
         boolean throttleFree = true;
 
         // check for a valid throttle address
@@ -245,30 +246,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     /**
-     * Request a throttle, given a decoder address. When the decoder address is
-     * located, the ThrottleListener gets a callback via the
-     * ThrottleListener.notifyThrottleFound method.
-     * <P>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     *
-     * @param address The decoder address desired.
-     * @param l       The ThrottleListener awaiting notification of a found
-     *                throttle.
-     * @return True if the request will continue, false if the request will not
-     *         be made. False may be returned if a the throttle is already in
-     *         use.
-     */
-    @Override
-    public boolean requestThrottle(int address, ThrottleListener l) {
-        boolean isLong = true;
-        if (canBeShortAddress(address)) {
-            isLong = false;
-        }
-        return requestThrottle(address, isLong, l);
-    }
-
-    /**
      * Abstract member to actually do the work of configuring a new throttle,
      * usually via interaction with the DCC system
      * @param a  address
@@ -284,34 +261,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public void requestThrottleSetup(LocoAddress a) {
         requestThrottleSetup(a, true);
     }
-
+    
     /**
-     * Cancel a request for a throttle
-     *
-     * @param address The decoder address desired.
-     * @param isLong  True if this is a request for a DCC long (extended)
-     *                address.
-     * @param l       The ThrottleListener cancelling request for a throttle.
+     * {@inheritDoc}
      */
     @Override
-    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
-        if (throttleListeners != null) {
-            DccLocoAddress la = new DccLocoAddress(address, isLong);
-            cancelThrottleRequest(la, l);
-        }
-        /*if (addressThrottles.contains(la)){
-         addressThrottles.get(la).decrementUse();
-         }*/
-    }
-
-    @Override
-    public void cancelThrottleRequest(BasicRosterEntry re, ThrottleListener l) {
-        if (throttleListeners != null) {
-            cancelThrottleRequest(re.getDccLocoAddress(), l);
-        }
-    }
-
-    protected void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
+    public void cancelThrottleRequest(LocoAddress la, ThrottleListener l) {
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(la);
             if (a == null || l == null ) {
@@ -323,75 +278,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 }
             }
         }
-    }
-
-    /**
-     * Cancel a request for a throttle.
-     * <P>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     *
-     * @param address The decoder address desired.
-     * @param l       The ThrottleListener cancelling request for a throttle.
-     */
-    @Override
-    public void cancelThrottleRequest(int address, ThrottleListener l) {
-        boolean isLong = true;
-        if (canBeShortAddress(address)) {
-            isLong = false;
-        }
-        cancelThrottleRequest(address, isLong, l);
-    }
-
-    /**
-     * Steal a requested throttle.
-     * <P>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     *
-     * @param re desired Roster Entry
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
-     * @since 4.9.2
-     */
-    @Override
-    public void stealThrottleRequest(BasicRosterEntry re, ThrottleListener l,boolean steal){
-        stealThrottleRequest(re.getDccLocoAddress(), l,steal);
-    }
-
-    /**
-     * Steal a requested throttle.
-     * <P>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     *
-     * @param address desired decoder address
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
-     * @since 4.9.2
-     */
-    @Override
-    public void stealThrottleRequest(int address, ThrottleListener l,boolean steal){
-        boolean isLong = true;
-        if (canBeShortAddress(address)) {
-            isLong = false;
-        }
-        stealThrottleRequest(address, isLong, l,steal);
-    }
-
-    /**
-     * Steal a requested throttle.
-     *
-     * @param address desired decoder address
-     * @param isLong  true if requesting a DCC long (extended) address
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
-     * @since 4.9.2
-     */
-    @Override
-    public void stealThrottleRequest(int address, boolean isLong, ThrottleListener l,boolean steal){
-        DccLocoAddress la = new DccLocoAddress(address, isLong);
-        stealThrottleRequest(la, l,steal);
     }
 
     /**
@@ -407,8 +293,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
        // the default implementation does nothing.
        log.debug("empty stealThrottleRequest() has been activated for address {}, with steal boolean = {}",address.getNumber(),steal);
     }
-
-
 
     /**
      * If the system-specific ThrottleManager has been unable to create the DCC
@@ -455,16 +339,15 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for {}", addr);
-        DccLocoAddress dla = (DccLocoAddress) addr;
         Addresses ads = null;
-        if (!addressThrottles.containsKey(dla)) {
+        if (!addressThrottles.containsKey(addr)) {
             log.debug("Address {} doesn't already exists so will add",addr);
             ads = new Addresses(throttle);
-            addressThrottles.put(dla, ads);
+            addressThrottles.put(addr, ads);
         } else {
-            addressThrottles.get(dla).setThrottle(throttle);
+            addressThrottles.get(addr).setThrottle(throttle);
         }
-        ArrayList<WaitingThrottle> a = throttleListeners.get(dla);
+        ArrayList<WaitingThrottle> a = throttleListeners.get(addr);
         if (a == null) {
             log.debug("notifyThrottleKnown with zero-length listeners: {}", addr);
         } else {
@@ -472,28 +355,28 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 ThrottleListener l = a.get(i).getListener();
                 log.debug("Notify listener {} of {}",(i + 1),a.size() );
                 l.notifyThrottleFound(throttle);
-                addressThrottles.get(dla).incrementUse();
-                addressThrottles.get(dla).addListener(l);
+                addressThrottles.get(addr).incrementUse();
+                addressThrottles.get(addr).addListener(l);
                 if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
                     throttle.setRosterEntry(a.get(i).getRosterEntry());
                 }
             }
-            throttleListeners.remove(dla);
+            throttleListeners.remove(addr);
         }
-        ArrayList<WaitingThrottle> p = listenerOnly.get(dla);
+        ArrayList<WaitingThrottle> p = listenerOnly.get(addr);
         if (p == null) {
             log.debug("notifyThrottleKnown with zero-length propertyChangeListeners: {}", addr);
         } else {
             for (int i = 0; i < p.size(); i++) {
                 PropertyChangeListener l = p.get(i).getPropertyChangeListener();
                 log.debug("Notify propertyChangeListener");
-                l.propertyChange(new PropertyChangeEvent(this, "throttleAssigned", null, dla));
+                l.propertyChange(new PropertyChangeEvent(this, "throttleAssigned", null, addr));
                 if (ads != null && p.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
                     throttle.setRosterEntry(p.get(i).getRosterEntry());
                 }
                 throttle.addPropertyChangeListener(l);
             }
-            listenerOnly.remove(dla);
+            listenerOnly.remove(addr);
         }
     }
 
@@ -504,9 +387,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * <p>
      * This applies only to those systems where "stealing" applies, such as LocoNet.
      * <p>
-     * @param address The DCC Loco Address where controlling requires a steal
+     * @param address The LocoAddress where controlling requires a steal
      */
-    public void notifyStealRequest(DccLocoAddress address) {
+    protected void notifyStealRequest(LocoAddress address) {
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(address);
             if (a == null) {
@@ -541,20 +424,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128);
     }
-
-    public void attachListener(BasicRosterEntry re, java.beans.PropertyChangeListener p) {
-        attachListener(re.getDccLocoAddress(), re, p);
-    }
-
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public void attachListener(LocoAddress la, java.beans.PropertyChangeListener p) {
-        attachListener((DccLocoAddress) la, null, p);
-    }
-
-    public void attachListener(DccLocoAddress la, BasicRosterEntry re, java.beans.PropertyChangeListener p) {
         if (addressThrottles.containsKey(la)) {
             addressThrottles.get(la).getThrottle().addPropertyChangeListener(p);
             p.propertyChange(new PropertyChangeEvent(this, "throttleAssigned", null, la));
@@ -566,7 +441,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
             // get the corresponding list to check length
             ArrayList<WaitingThrottle> a = listenerOnly.get(la);
-            a.add(new WaitingThrottle(p, re));
+            a.add(new WaitingThrottle(p, null));
             //Only request that the throttle is set up if it hasn't already been
             //requested.
             if ((!throttleListeners.containsKey(la)) && (a.size() == 1)) {
@@ -606,35 +481,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean addressStillRequired(int address, boolean isLongAddress) {
-        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
-        return addressStillRequired(la);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean addressStillRequired(int address) {
-        boolean isLong = true;
-        if (canBeShortAddress(address)) {
-            isLong = false;
-        }
-        return addressStillRequired(address, isLong);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean addressStillRequired(BasicRosterEntry re) {
-        return addressStillRequired(re.getDccLocoAddress());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("AbstractThrottleManager.releaseThrottle: {}, {}", t, l);
         disposeThrottle(t, l);
@@ -648,7 +494,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         log.debug("AbstractThrottleManager.disposeThrottle: {}, {}", t, l);
 
 //        if (!active) log.error("Dispose called when not active");  <-- might need to control this in the sub class
-        DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
+        LocoAddress la = t.getLocoAddress();
         if (addressReleased(la, l)) {
             log.debug("Address {} still has active users",t.getLocoAddress());
             return false;
@@ -680,7 +526,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * Managers still need to advise listeners that the session has 
      * been cancelled and actually dispose of the throttle
      */
-    protected void forceDisposeThrottle(DccLocoAddress la) {
+    protected void forceDisposeThrottle(LocoAddress la) {
         log.debug("force dispose address {}",la);
         if (addressThrottles.containsKey(la)) {
             addressThrottles.remove(la);
@@ -710,39 +556,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getThrottleUsageCount(int address, boolean isLongAddress) {
-        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
-        return getThrottleUsageCount(la);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getThrottleUsageCount(int address) {
-        boolean isLong = true;
-        if (canBeShortAddress(address)) {
-            isLong = false;
-        }
-        return getThrottleUsageCount(address, isLong);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getThrottleUsageCount(BasicRosterEntry re) {
-        return getThrottleUsageCount(re.getDccLocoAddress());
-    }
-
-    /**
      * Release a Throttle from a ThrottleListener.
      * @return True if throttle still has listeners or a positive use count, else False.
      */
-    protected boolean addressReleased(DccLocoAddress la, ThrottleListener l) {
+    protected boolean addressReleased(LocoAddress la, ThrottleListener l) {
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).containsListener(l)) {
                 log.debug("decrementUse called with listener {}", l);
@@ -906,7 +723,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 listeners.get(i).notifyThrottleFound(throttle);
             }
             //This handles moving the listeners from the old throttle to the new one
-            DccLocoAddress la = (DccLocoAddress) this.throttle.getLocoAddress();
+            LocoAddress la = this.throttle.getLocoAddress();
             Vector<PropertyChangeListener> v = old.getListeners();
             for (PropertyChangeListener prop : v) {
                 this.throttle.addPropertyChangeListener(prop);

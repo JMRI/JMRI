@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -273,23 +274,22 @@ public class AutoActiveTrain implements ThrottleListener {
         log.debug("{}: requesting throttle address={}", _activeTrain.getTrainName(), _address);
         useSpeedProfile = false;
         boolean ok;
+        DccLocoAddress addressForRequest = new DccLocoAddress(
+            _address,!InstanceManager.throttleManagerInstance().canBeShortAddress(_address));
         if (_activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
             if (_activeTrain.getRosterEntry() != null) {
                 re = _activeTrain.getRosterEntry();
-                //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_activeTrain.getRosterEntry(), this);
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(_activeTrain.getRosterEntry(), this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this);
                 if (_useSpeedProfile) {
                     if (re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0) {
                         useSpeedProfile = true;
                     }
                 }
             } else {
-                //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_address, this);
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(_address, this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this);
             }
         } else {
-            //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_address, this);
-            ok = InstanceManager.throttleManagerInstance().requestThrottle(_address, this);
+            ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this);
         }
         if (!ok) {
             log.warn("Throttle for locomotive address {} could not be setup.", _address);

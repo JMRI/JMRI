@@ -5,15 +5,13 @@
 #
 # Part of the JMRI distribution
 #
-# Listen for a given (3 as a default) DCC throttle commands 
+# Listen for a given (3 short as a default) DCC throttle commands 
 # and forward them to the curently selected one in throttle window
 # or call advanced function if any defined for curently selected roster entry
 #
 # See JMRI output or log in case of issue.
 #
 # Customize at will.
-
-listenToDCCThrottle = 3
 
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
@@ -22,6 +20,8 @@ import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
 import time
+
+listenToDCCThrottle = DccLocoAddress(3,False)
 
 class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.ThrottleListener):
     #Jynstrument main and mandatory methods

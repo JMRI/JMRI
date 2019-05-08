@@ -71,7 +71,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CbusThrottleListen throtListen = new CbusThrottleListen();
         cbtm.requestThrottle(addr,throtListen);
         
-        JUnitUtil.waitFor(()->{ return(cbtm.getThrottleUsageCount(1234,true)>0); }, "reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(cbtm.getThrottleUsageCount(addr)>0); }, "reply didn't arrive");
         Assert.assertEquals("F0 init",false,cbtm.getThrottleInfo(addr,Throttle.F0));
 
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFUN, 1, 0x00, 0x00 },0x12 );

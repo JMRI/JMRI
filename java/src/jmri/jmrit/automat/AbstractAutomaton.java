@@ -976,13 +976,14 @@ public class AbstractAutomaton implements Runnable {
                 InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
-        boolean ok = InstanceManager.getDefault(ThrottleManager.class)
-                .requestThrottle(address, longAddress, throttleListener);
+        boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle( 
+            new jmri.DccLocoAddress(address, longAddress), throttleListener);
 
         // check if reply is coming
         if (!ok) {
-            log.info("Throttle for loco " + address + " not available");
-            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
+            log.info("Throttle for loco {} not available",address);
+            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(
+                new jmri.DccLocoAddress(address, longAddress), throttleListener);  //kill the pending request
             return null;
         }
 
@@ -998,7 +999,8 @@ public class AbstractAutomaton implements Runnable {
         }
         if (throttle == null) {
             log.debug("canceling request for Throttle " + address);
-            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
+            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(
+                new jmri.DccLocoAddress(address, longAddress), throttleListener);  //kill the pending request
         }
         return throttle;
     }
@@ -1052,7 +1054,8 @@ public class AbstractAutomaton implements Runnable {
         // check if reply is coming
         if (!ok) {
             log.info("Throttle for loco " + re.getId() + " not available");
-            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
+            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(
+                re.getDccLocoAddress(), throttleListener);  //kill the pending request
             return null;
         }
 
@@ -1067,8 +1070,9 @@ public class AbstractAutomaton implements Runnable {
             }
         }
         if (throttle == null) {
-            log.debug("canceling request for Throttle " + re.getId());
-            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
+            log.debug("canceling request for Throttle {}", re.getId());
+            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(
+                re.getDccLocoAddress(), throttleListener);  //kill the pending request
         }
         return throttle;
     }
