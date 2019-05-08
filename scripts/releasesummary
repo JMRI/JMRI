@@ -8,7 +8,7 @@
 # - Display sample text for JMRI release note
 
 # Download a test release from Jenkins and unpack
-curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.15.4/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/$1/lastSuccessfulBuild/artifact/*zip*/archive.zip"
 
 rm release/JMRI*
 unzip -j -d release release.zip

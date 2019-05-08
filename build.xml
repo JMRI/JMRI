@@ -285,7 +285,7 @@
         <pathelement location="${libdir}/typetools-0.5.0.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
-        <pathelement location="${libdir}/webdrivermanager-2.0.1.jar"/>
+        <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
         <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
@@ -1360,9 +1360,36 @@
         </java>
     </target>
 
-    <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="${jacocoexec}">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
+    <target name="headlesstest" depends="debug, tests, runtime-library-selection" description="build and run HeadLessTest suite">
+        <java classname="jmri.HeadLessTest"
+          dir="."
+          fork="yes" >
+
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <sysproperty key="java.awt.headless" value="true"/>
+
+            <sysproperty key="user.language" value="en"/>
+            <sysproperty key="user.country" value="US"/>
+
+            <classpath refid="test.class.path"/>
+
+            <jvmarg value="-Xmx512m"/><!-- checking that memory doesnt run away -->
+            <jvmarg line="${jvm.args}"/>
+            
+            <arg value="${antargline}"/>
+        </java>
+
+    </target>
+
+    <target name="logheadlesstest" depends="tests, runtime-library-selection" description="run headlesstest test suite with jacoco output">
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1377,7 +1404,13 @@
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg line="${jvm.args}"/>
+
             <classpath refid="test.class.path"/>
+
+            <!-- use different log4j settings to pick up additional coverage -->
+            <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
             <test name="jmri.HeadLessTest" outfile="junit-results">
                 <formatter type="xml"/>
@@ -1387,7 +1420,7 @@
         </jacoco:coverage>
     </target>
 
-    <target name="headless-coveragereport" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <target name="headless-coveragereport" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1407,7 +1440,7 @@
        </jacoco:report>
     </target>
 
-    <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <target name="headless-coveragecheck" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1423,7 +1456,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.45"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1530,7 +1563,7 @@
 
     <!-- Note if modifying the alltest target, please be sure to up date the -->
     <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
-    <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run test suite">
+    <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run AllTest suite">
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
@@ -1553,9 +1586,8 @@
 
     </target>
 
-    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
+    <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1567,6 +1599,9 @@
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
+
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg line="${jvm.args}"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1582,7 +1617,17 @@
     </target>
 
 
-    <target name="alltest-coveragereport" depends="logalltest" description="Generate Test Coverage Report from logalltest">
+    <target name="alltest-coveragereport" depends="logalltest, coveragereport" description="Generate Test Coverage Report from logalltest" />
+
+    <target name="alltest-coveragecheck" depends="logalltest, coveragecheck" description="Test Coverage check from logalltest" />
+
+    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis, coveragecheck" description="Test Coverage check from logalltest for Appveyor" />
+
+    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor, coveragecheck" description="Test Coverage check from logalltest for Travis" />
+
+    <!-- end of test execution targets -->
+
+    <target name="coveragereport" description="Generate Test Coverage Report from existing jacoco.exe file">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1602,7 +1647,7 @@
        </jacoco:report>
     </target>
 
-    <target name="alltest-coveragecheck" depends="logalltest" description="Test Coverage check from logalltest">
+    <target name="coveragecheck" description="Check test results in existing jacoco.exe file">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1618,7 +1663,7 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
@@ -1630,66 +1675,6 @@
           </check>
        </jacoco:report>
     </target>
-
-    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis" description="Test Coverage check from logalltest">
-    <!-- Generate Code Coverage report
-    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
-       <jacoco:report>
-          <executiondata>
-              <file file="${jacocoexec}" />
-          </executiondata>
-
-          <structure name="AntTestReporting">
-              <classfiles>
-                 <fileset refid="jacocofileset"/>
-              </classfiles>
-          </structure>
-
-          <check>
-              <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
-              </rule>
-              <rule element="PACKAGE">
-                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-              <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-          </check>
-       </jacoco:report>
-    </target>
-
-    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor" description="Test Coverage check from logalltest">
-    <!-- Generate Code Coverage report
-    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
-       <jacoco:report>
-          <executiondata>
-              <file file="${jacocoexec}" />
-          </executiondata>
-
-          <structure name="AntTestReporting">
-              <classfiles>
-                 <fileset refid="jacocofileset"/>
-              </classfiles>
-          </structure>
-
-          <check>
-              <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
-              </rule>
-              <rule element="PACKAGE">
-                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-              <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
-              </rule>
-          </check>
-       </jacoco:report>
-    </target>
-
-    <!-- end of test execution targets -->
 
     <!-- ============================================================================= -->
     <!-- Distribution build targets                                                    -->
@@ -1807,7 +1792,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2300"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -1878,7 +1863,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2300"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             

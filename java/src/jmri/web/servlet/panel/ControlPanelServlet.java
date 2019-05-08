@@ -4,10 +4,9 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
-import jmri.configurexml.ConfigXmlManager;
+
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -64,23 +63,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
-                        Element e = ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
-                                e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
-                            }
-                            try {
-                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-                            } catch (NullPointerException ex) {
-                                if (sub.getNamedBean() == null) {
-                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                                } else {
-                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
-                                }
-                            }
-                            parsePortableURIs(e);
-                            panel.addContent(e);
-                        }
+                        panel.addContent(positionableElement(sub));
                     } catch (Exception ex) {
                         log.error("Error storing panel element: " + ex, ex);
                     }

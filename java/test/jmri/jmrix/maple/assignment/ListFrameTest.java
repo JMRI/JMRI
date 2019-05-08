@@ -3,7 +3,7 @@ package jmri.jmrix.maple.assignment;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.*;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -14,23 +14,24 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class ListFrameTest {
+public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private MapleSystemConnectionMemo _memo = null;
 
-    @Test
-    public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListFrame action = new ListFrame(_memo);
-        Assert.assertNotNull("exists", action);
-    }
-
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         _memo = new MapleSystemConnectionMemo("K", "Maple");
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new ListFrame(_memo);
+	}
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {
+	_memo = null;
+    	super.tearDown();    
+    }
 }

@@ -10,7 +10,7 @@ import org.jdom2.Element;
  * Handle XML persistance of layout connections by persisting the SeriaAdapter
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the SerialAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -55,7 +55,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if(adapter == null ) {
+        if (adapter == null ) {
            adapter = new SerialAdapter();
         }
     }

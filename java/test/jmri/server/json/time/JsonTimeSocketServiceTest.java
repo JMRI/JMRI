@@ -1,5 +1,7 @@
 package jmri.server.json.time;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -37,9 +39,10 @@ public class JsonTimeSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         Timebase manager = InstanceManager.getDefault(Timebase.class);
+        TimebaseTimeListener listener = new TimebaseTimeListener();
         StdDateFormat formatter = new StdDateFormat();
-        Assert.assertEquals("No time listeners", 0, manager.getMinuteChangeListeners().length);
-        Assert.assertEquals("No change listeners", 0, manager.getNumPropertyChangeListeners());
+        int rate = 60; // rate is one minute every six seconds
+        Assert.assertEquals("No change listeners", 0, manager.getPropertyChangeListeners().length);
         manager.setRun(false); // stop for testing
         // GET method
         service.onMessage(JsonTimeServiceFactory.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
@@ -52,42 +55,43 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("Time is correct",
                 formatter.format(current),
                 message.findPath(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
-        Assert.assertEquals("Service is listening to time", 1, manager.getMinuteChangeListeners().length);
-        Assert.assertEquals("Service is listening to changes", 1, manager.getNumPropertyChangeListeners());
+        Assert.assertEquals("Service is listening to changes", 1, manager.getPropertyChangeListeners().length);
+        // Add second listener
+        manager.addPropertyChangeListener("time", listener);
         // POST method
         ObjectNode data = connection.getObjectMapper().createObjectNode();
-        data.put(JSON.RATE, 60); // integer, one minute per second
+        data.put(JSON.RATE, rate); // integer
         data.put(JSON.STATE, JSON.ON); // start the fast clock -- to test that listeners set in onMessage work
         service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
         message = connection.getMessage();
-        // current = manager.getTime();
+        current = manager.getTime(); // time before fast clock starts
         Assert.assertNotNull("Message is not null", message);
-        Assert.assertEquals("Rate is fast", 60, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
+        Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        // Don't actually test times -- systems are too sensitive
-        // Assert.assertEquals("Time is current", formatter.format(current), message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
-        Assert.assertEquals("Service is listening to time", 1, manager.getMinuteChangeListeners().length);
-        Assert.assertEquals("Service is listening to changes", 1, manager.getNumPropertyChangeListeners());
+        // next line verifies time at start of fast clock has not changed -- is this needed?
+        Assert.assertEquals("Time is current", formatter.format(current),
+                message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
+        Assert.assertEquals("Service and listener are listening to changes", 2, manager.getPropertyChangeListeners().length);
         Date waitFor = current;
         JUnitUtil.waitFor(() -> {
             return !manager.getTime().equals(waitFor);
         });
-        // current = manager.getTime();
+        current = listener.getTime(); // get time from listener
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
-        Assert.assertEquals("Rate is fast", 60, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
+        Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        // Don't actually test times -- systems are too sensitive
-        // Assert.assertEquals("Time is current", formatter.format(current), message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         data.put(JSON.STATE, JSON.OFF); // stop the fast clock
         service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
-        // current = manager.getTime();
+        current = manager.getTime(); 
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
-        Assert.assertEquals("Rate is fast", 60, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
+        Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        // Don't actually test times -- systems are too sensitive
-        // Assert.assertEquals("Time is current", formatter.format(current), message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
+        // a failure on next line indicates JsonTimeHttpService has been changed to send message to client
+        // before posting changes instead of after posting changes and that change should be undone
+        Assert.assertEquals("Time is current", formatter.format(current),
+                message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         // POST unreasonable rate
         data.put(JSON.RATE, 123456.789); // double so that both integers and doubles are tested
         try {
@@ -99,7 +103,7 @@ public class JsonTimeSocketServiceTest {
         }
         JUnitAppender.assertErrorMessage("rate of 123456.789 is out of reasonable range");
         // POST bad time
-        data.put(JSON.RATE, 100); // set rate to valid rate again
+        data.put(JSON.RATE, 100); // set rate to max valid rate
         data.put(JsonTimeServiceFactory.TIME, "this is not a time");
         try {
             service.onMessage(JsonTimeServiceFactory.TIME, data, JSON.POST, Locale.ENGLISH);
@@ -116,14 +120,13 @@ public class JsonTimeSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", 100, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is off", JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
-        Assert.assertEquals("Time is current",
-                formatter.format(current),
+        Assert.assertEquals("Time is current", formatter.format(current),
                 message.path(JSON.DATA).path(JsonTimeServiceFactory.TIME).asText());
         service.onClose(); // clean up listeners
-        Assert.assertEquals("Service is not listening to time", 0, manager.getMinuteChangeListeners().length);
-        Assert.assertEquals("Service is not listening to changes", 0, manager.getNumPropertyChangeListeners());
+        manager.removePropertyChangeListener("time", listener);
+        Assert.assertEquals("Service is not listening to changes", 0, manager.getPropertyChangeListeners().length);
     }
-    
+
     @Test
     public void testOnList() {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -157,13 +160,14 @@ public class JsonTimeSocketServiceTest {
                 Locale.ENGLISH);
         // Thrown JsonException on next message
         http.setThrowException(true);
-        // We should be listening so start the manager
+        // We should be listening so make a change
         manager.setRate(60); // one minute per second
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Message is error", JsonException.ERROR, message.path(JSON.TYPE).asText());
         Assert.assertEquals("Error code is HTTP 499", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
-        Assert.assertEquals("Error message is mocked", "Mock Exception", message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
+        Assert.assertEquals("Error message is mocked", "Mock Exception",
+                message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
         // Thrown IOException on next message
         connection.setThrowIOException(true);
         manager.setRate(10);
@@ -190,18 +194,34 @@ public class JsonTimeSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        public JsonNode doGet(String type, Timebase timebase, Date time, Locale locale) throws JsonException {
             if (throwException) {
                 throwException = false;
                 throw new JsonException(499, "Mock Exception");
             }
-            return super.doGet(type, name, locale);
+            return super.doGet(type, timebase, time, locale);
         }
 
         public void setThrowException(boolean throwException) {
             this.throwException = throwException;
         }
 
+    }
+    
+    private static class TimebaseTimeListener implements PropertyChangeListener {
+
+        private Date time = null;
+        
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals("time")) {
+                this.time = (Date) evt.getNewValue();
+            }
+        }
+        
+        public Date getTime() {
+            return this.time;
+        }
     }
 
 }

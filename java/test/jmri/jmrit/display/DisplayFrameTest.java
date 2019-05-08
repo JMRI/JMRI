@@ -2,26 +2,14 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of DisplayFrame
  *
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class DisplayFrameTest {
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DisplayFrame df = new DisplayFrame("DisplayFrame Test");
-        Assert.assertNotNull("exists", df );
-        JUnitUtil.dispose(df);
-    }
+public class DisplayFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testPreviewBg() {
@@ -33,13 +21,18 @@ public class DisplayFrameTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new DisplayFrame("DisplayFrame Test");
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

@@ -14,10 +14,10 @@ public class RpsBlockTest {
 
     @Test
     public void testCTor() {
-        RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
-        jmri.SignalHead sh = new jmri.implementation.VirtualSignalHead("TS1","test signal head");
-        RpsBlock t = new RpsBlock(s,sh,0.0f,1.0f);
-        Assert.assertNotNull("exists",t);
+        RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)", "R");
+        jmri.SignalHead sh = new jmri.implementation.VirtualSignalHead("TS1", "test signal head");
+        RpsBlock t = new RpsBlock(s, sh, 0.0f, 1.0f);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

@@ -120,7 +120,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         // confirm that panel hasn't already been loaded
         if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
-            log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
         SwitchboardEditor panel = new SwitchboardEditor(name);
@@ -198,6 +198,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         connection = shared.getAttribute("connection").getValue();
         panel.setSwitchManu(connection);
+        log.debug("SwitchBoard connection choice set to {}", connection);
 
         shape = shared.getAttribute("shape").getValue();
         panel.setSwitchShape(shape);
@@ -226,7 +227,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
-        //set the (global) editor display widgets to their flag settings
+        // set the (global) editor display widgets to their flag settings
         panel.initView();
 
         // load the contents with their individual option settings
@@ -259,7 +260,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         // we don't pack the target frame here, because size was specified
         // TODO: Work out why, when calling this method, panel size is increased
         // vertically (at least on MS Windows)
-        panel.getTargetFrame().setVisible(true);    // always show the panel
+        panel.getTargetFrame().setVisible(true); // always show the panel
 
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -271,6 +272,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
         panel.updatePressed();
+        log.debug("Switchboard ready");
         return result;
     }
 

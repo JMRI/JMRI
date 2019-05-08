@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for control of the sound speed for the RPS system
+ * Frame for control of the sound speed for the RPS system.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
@@ -185,4 +185,5 @@ public class SoundSetPane extends JPanel
     }
 
     private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class);
+
 }

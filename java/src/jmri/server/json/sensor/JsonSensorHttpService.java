@@ -54,9 +54,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Sensor sensor = this.postNamedBean(getManager().getBeanBySystemName(name), data, name,
-                type, locale);
+    public ObjectNode doPost(Sensor sensor, String name, String type, JsonNode data, Locale locale) throws JsonException {
         if (data.path(JSON.INVERTED).isBoolean()) {
             sensor.setInverted(data.path(JSON.INVERTED).asBoolean());
         }
@@ -79,7 +77,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(sensor, name, type, locale);
     }
 
     @Override

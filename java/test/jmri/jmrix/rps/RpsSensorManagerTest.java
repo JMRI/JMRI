@@ -38,8 +38,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @Test
     public void testDefaultSystemName() {
         // create
-        // RPS sensors use coordinates as their address, and they require a
-        // 2 characterprefix (for now).
+        // RPS sensors use coordinates as their address
         Sensor t = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         // check
         Assert.assertTrue("real object returned ", t != null);
@@ -66,18 +65,23 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         Assert.assertTrue(null == t1.getUserName());
     }
 
+    @Test
+    public void testGetSystemPrefix() {
+        Assert.assertEquals("R", l.getSystemPrefix());
+    }
+
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
 
-        l = new RpsSensorManager();
+        l = new RpsSensorManager(new RpsSystemConnectionMemo());
     }
 
     @After
     public void tearDown() {
         l.dispose();
         JUnitUtil.tearDown();
-
     }
+
 }

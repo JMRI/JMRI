@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -36,7 +37,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
         return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), name, type, locale);
     }
 
@@ -51,7 +52,11 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             data.put(TRACK_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockTrackColor()));
             data.put(OCCUPIED_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockOccupiedColor()));
             data.put(EXTRA_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockExtraColor()));
-            data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensor() != null ? layoutBlock.getOccupancySensorName() : null);
+            if (layoutBlock.getOccupancySensor() != null) {
+                data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensor().getSystemName());
+            } else {
+                data.putNull(OCCUPANCY_SENSOR);
+            }
             data.put(OCCUPIED_SENSE, layoutBlock.getOccupiedSense());
         }
         return root;
@@ -64,12 +69,12 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         if (!data.path(STATE).isMissingNode()) {
             layoutBlock.setState(data.path(STATE).asInt());
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, locale);
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
+        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, locale);
     }
 
     @Override

@@ -5,7 +5,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
-
+    
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -32,10 +32,6 @@ public class CbusNodeFromFcu extends CbusNode implements CanListener {
     
     @Override
     public void dispose(){
-    }
-    
-    @Override
-    public void startParamsLookup() {
     }
     
     // private static final Logger log = LoggerFactory.getLogger(CbusNodeFromFcu.class);

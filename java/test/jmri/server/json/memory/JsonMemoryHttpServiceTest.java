@@ -30,18 +30,18 @@ public class JsonMemoryHttpServiceTest {
         Memory memory1 = manager.provideMemory("IM1"); // no value
         JsonNode result;
         try {
-            result = service.doGet(JsonMemory.MEMORY, "IM1", Locale.ENGLISH);
+            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonMemory.MEMORY, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IM1", result.path(JSON.DATA).path(JSON.NAME).asText());
             // JSON node has the text "null" if memory is null
             Assert.assertEquals("null", result.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("throw");
-            result = service.doGet(JsonMemory.MEMORY, "IM1", Locale.ENGLISH);
+            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("close");
-            result = service.doGet(JsonMemory.MEMORY, "IM1", Locale.ENGLISH);
+            result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JSON.VALUE).asText());
         } catch (JsonException ex) {
@@ -104,12 +104,12 @@ public class JsonMemoryHttpServiceTest {
             JsonMemoryHttpService service = new JsonMemoryHttpService(mapper);
             MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
             JsonNode result;
-            result = service.doGetList(JsonMemory.MEMORY, Locale.ENGLISH);
+            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideMemory("IM1");
             manager.provideMemory("IM2");
-            result = service.doGetList(JsonMemory.MEMORY, Locale.ENGLISH);
+            result = service.doGetList(JsonMemory.MEMORY, mapper.createObjectNode(), Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {

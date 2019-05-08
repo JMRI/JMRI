@@ -26,6 +26,9 @@ import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Handler for JSON messages from a TCP socket or WebSocket client.
+ */
 public class JsonClientHandler {
 
     /**
@@ -75,34 +78,14 @@ public class JsonClientHandler {
     /**
      * Process a JSON string and handle appropriately.
      * <p>
-     * Currently JSON strings in four different forms are handled by this
-     * method:<ul> <li>list requests in the form:
-     * <code>{"type":"list","list":"trains"}</code> or
-     * <code>{"list":"trains"}</code> that are passed to the JsonUtil for
-     * handling.</li> <li>individual item state requests in the form:
-     * <code>{"type":"turnout","data":{"name":"LT14"}}</code> that are passed to
-     * type-specific handlers. In addition to the initial response, these
-     * requests will initiate "listeners", which will send updated responses
-     * every time the item's state changes.<ul>
-     * <li>an item's state can be set by adding a <strong>state</strong> node to
-     * the <em>data</em> node:
-     * <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
-     * <li>individual types can be created if a <strong>method</strong> node
-     * with the value <em>put</em> is included in message:
-     * <code>{"type":"turnout","method":"put","data":{"name":"LT14"}}</code>.
-     * The <em>method</em> node may be included in the <em>data</em> node:
-     * <code>{"type":"turnout","data":{"name":"LT14","method":"put"}}</code>
-     * Note that not all types support this.</li></ul>
-     * </li><li>a heartbeat in the form <code>{"type":"ping"}</code>. The
-     * heartbeat gets a <code>{"type":"pong"}</code> response.</li> <li>a sign
-     * off in the form: <code>{"type":"goodbye"}</code> to which an identical
-     * response is sent before the connection gets closed.</li></ul>
+     * See {@link jmri.server.json} for expected JSON objects.
      *
      * @param string the message
      * @throws java.io.IOException if communications with the client is broken
+     * @see #onMessage(JsonNode)
      */
     public void onMessage(String string) throws IOException {
-        if (string.equals("{\"type\":\"ping\"}")) { //turn down the noise a bit
+        if (string.equals("{\"type\":\"ping\"}")) { //turn down the noise when debugging
             log.trace("Received from client: '{}'", string);            
         } else {
             log.debug("Received from client: '{}'", string);
@@ -118,10 +101,10 @@ public class JsonClientHandler {
     /**
      * Process a JSON node and handle appropriately.
      * <p>
-     * See {@link #onMessage(java.lang.String)} for expected JSON objects.
+     * See {@link jmri.server.json} for expected JSON objects.
      *
      * @param root the JSON node.
-     * @throws java.io.IOException if communications is broken with the client.
+     * @throws java.io.IOException if communications with the client is broken
      * @see #onMessage(java.lang.String)
      */
     public void onMessage(JsonNode root) throws IOException {
@@ -152,8 +135,7 @@ public class JsonClientHandler {
             if (root.path(METHOD).isMissingNode()) { // method not explicitly set
                 if (data.path(METHOD).isValueNode()) {
                     // at one point, we used method within data, so check there also
-                    // if method was not specified, set it to "post"
-                    method = data.path(METHOD).asText(JSON.POST);
+                    method = data.path(METHOD).asText(JSON.GET);
                 }
             }
             if (type.equals(PING)) { //turn down the noise a bit

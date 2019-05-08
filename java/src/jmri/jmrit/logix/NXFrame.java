@@ -3,6 +3,7 @@ package jmri.jmrit.logix;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
 import jmri.JmriException;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
@@ -58,9 +62,12 @@ public class NXFrame extends WarrantRoute {
     private JButton _originUnits;
     private final JTextField _destDist = new JTextField(6);
     private JButton _destUnits;
+    private JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));
+    private JTextField _rampIncre = new JTextField(6);
     private final JRadioButton _forward = new JRadioButton();
     private final JRadioButton _reverse = new JRadioButton();
     private final JCheckBox _noRamp = new JCheckBox();
+    private final JCheckBox _noSound = new JCheckBox();
     private final JCheckBox _stageEStop = new JCheckBox();
     private final JCheckBox _shareRouteBox = new JCheckBox();
     private final JCheckBox _haltStartBox = new JCheckBox();
@@ -316,21 +323,59 @@ public class NXFrame extends WarrantRoute {
 
         p1.add(makeTextAndButtonPanel(_originDist, _originUnits, "startDistance", "ToolTipStartDistance"));
         p1.add(makeTextAndButtonPanel(_destDist, _destUnits, "stopDistance", "ToolTipStopDistance"));
+        p1.add(WarrantPreferencesPanel.timeIncrementPanel(false, _timeIncre));
+        p1.add(WarrantPreferencesPanel.throttleIncrementPanel(false, _rampIncre));
+        _rampIncre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = _rampIncre.getText();
+                boolean showdialog = false;
+                try {
+                    float incr = NumberFormat.getNumberInstance().parse(text).floatValue();
+                    showdialog = (incr < 0.5f || incr > 25f);
+                } catch (java.text.ParseException pe) {
+                    showdialog = true;
+                }
+                if (showdialog) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(_forward);
+        bg.add(_reverse);
+        JPanel pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
+        pp.add(Box.createHorizontalGlue());
+        pp.add(makeTextBoxPanel(false, _forward, "forward", null));
+        pp.add(makeTextBoxPanel(false, _reverse, "reverse", null));
+        pp.add(Box.createHorizontalGlue());
+        p1.add(pp);
 
         __trainHolder.setLayout(new BoxLayout(__trainHolder, BoxLayout.PAGE_AXIS));
         _trainPanel = makeTrainIdPanel(null);
         __trainHolder.add(_trainPanel);
 
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));      
+        p2.add(__trainHolder);
+        p2.add(makeTextBoxPanel(_noRamp, "NoRamping", "ToolTipNoRamping"));
+        p2.add(makeTextBoxPanel(_noSound, "NoSound", "ToolTipNoSound"));
+        p2.add(makeTextBoxPanel(_stageEStop, "StageEStop", null));
+        p2.add(makeTextBoxPanel(_haltStartBox, "HaltAtStart", null));
+        p2.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+
         JPanel autoRunPanel = new JPanel();
         autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.PAGE_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(p1);
-        pp.add(Box.createHorizontalGlue());
-        pp.add(__trainHolder);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        autoRunPanel.add(pp);
+        JPanel ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.LINE_AXIS));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(p1);
+        ppp.add(Box.createHorizontalGlue());
+        ppp.add(p2);
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        autoRunPanel.add(ppp);
 
         _forward.addActionListener((ActionEvent evt)-> {
             maxThrottleEventAction();
@@ -338,42 +383,7 @@ public class NXFrame extends WarrantRoute {
         _reverse.addActionListener((ActionEvent evt)-> {
             maxThrottleEventAction();
         });
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(_forward);
-        bg.add(_reverse);
-        p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
-        p1.add(Box.createHorizontalGlue());
-        p1.add(makeTextBoxPanel(false, _forward, "forward", null));
-        p1.add(makeTextBoxPanel(false, _reverse, "reverse", null));
-        p1.add(Box.createHorizontalGlue());
-        
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));      
-        p2.add(Box.createHorizontalGlue());
-        p2.add(makeTextBoxPanel(_noRamp, "NoRamping", "ToolTipNoRamping"));
 
-        pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
-        pp.add(Box.createHorizontalGlue());
-//        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(p1);
-        pp.add(Box.createHorizontalGlue());
-        pp.add(p2);
-//        pp.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        pp.add(Box.createHorizontalGlue());
-        autoRunPanel.add(pp);
-
-        JPanel ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.LINE_AXIS));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(makeTextBoxPanel(false, _stageEStop, "StageEStop", null));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(makeTextBoxPanel(false, _haltStartBox, "HaltAtStart", null));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(makeTextBoxPanel(false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        autoRunPanel.add(ppp);
         return autoRunPanel;
     }
     
@@ -581,7 +591,25 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("badSpeed", maxSpeed);
         }
         _maxThrottle = maxSpeed;
+
         setAddress();
+
+        int time = (Integer)_timeIncre.getValue();
+        _speedUtil.setRampTimeIncrement(time);
+
+        try {
+            text = _rampIncre.getText();
+            float incre = NumberFormat.getNumberInstance().parse(text).floatValue();
+            if (incre < 0.5f || incre > 25f) {
+                return Bundle.getMessage("rampIncrWarning", text);                
+            } else {
+                _speedUtil.setRampThrottleIncrement(incre/100);
+            }
+        } catch (java.text.ParseException pe) {
+            return Bundle.getMessage("MustBeFloat", text);
+        }
+        
+        _speedUtil.resetSpeedProfile();
         return null;
     }
 
@@ -707,18 +735,26 @@ public class NXFrame extends WarrantRoute {
         w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
         if (_forward.isSelected()) {
             w.addThrottleCommand(new ThrottleSetting(100, "Forward", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
-            cmdNum = 7;
+            if (!_noSound.isSelected()) {
+                w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+                w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+                cmdNum = 7;
+            } else {
+                cmdNum = 3;
+            }
         } else {
             w.addThrottleCommand(new ThrottleSetting(100, "Forward", "false", blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F3", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(500, "F3", "false", blockName));
-            w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
-            cmdNum = 6;
+            if (!_noSound.isSelected()) {
+                w.addThrottleCommand(new ThrottleSetting(1000, "F3", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, "F3", "false", blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
+                cmdNum = 6;
+            } else {
+                cmdNum = 2;
+            }
         }
 
         float totalLen;
@@ -1009,9 +1045,11 @@ public class NXFrame extends WarrantRoute {
         // Ramp down finished
         log.debug("Ramp down done at block \"{}\",  remRamp= {}, curDistance= {} remRamp= {}",
                 blockName, remRamp, curDistance, remTotal);
-        w.addThrottleCommand(new ThrottleSetting(500, "F1", "false", blockName));
-        w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-        w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
+        if (!_noSound.isSelected()) {
+            w.addThrottleCommand(new ThrottleSetting(500, "F1", "false", blockName));
+            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
+        }
         w.addThrottleCommand(new ThrottleSetting(1000, "F0", "false", blockName));
         /*      if (_addTracker.isSelected()) {
             WarrantTableFrame._defaultAddTracker = true;

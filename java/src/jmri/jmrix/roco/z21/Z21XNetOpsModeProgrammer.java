@@ -85,7 +85,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      * {@inheritDoc}
      */
     @Override
-    public void confirmCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void confirmCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
