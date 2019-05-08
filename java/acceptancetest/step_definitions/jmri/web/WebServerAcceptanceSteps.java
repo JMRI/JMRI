@@ -25,6 +25,7 @@ public class WebServerAcceptanceSteps implements En {
     String[] firefoxtags = {"@webtest", "@firefox"};
     String[] chrometags = {"@webtest", "@chrome"};
     String[] tags = {"@webtest"};
+    String[] paneltags = {"@webpanel"};
 
     public WebServerAcceptanceSteps(jmri.InstanceManager instance) {
 
@@ -70,7 +71,7 @@ public class WebServerAcceptanceSteps implements En {
         });
 
 
-        After(tags, () -> {
+        After(paneltags, () -> {
            // navigate back home to prevent the webpage from reloading.
            webDriver.get("http://localhost:12080/");
            jmri.util.JUnitUtil.closeAllPanels();
