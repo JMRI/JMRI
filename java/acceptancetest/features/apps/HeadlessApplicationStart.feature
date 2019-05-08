@@ -1,4 +1,4 @@
-@apptest @headless
+@apptest @Headless
 Feature: Headless JMRI Applications 
 
 Scenario Outline: Application Start
