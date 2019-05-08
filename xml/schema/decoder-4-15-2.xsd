@@ -346,6 +346,10 @@
     <!-- element definition for include files -->
   </xs:element>
 
+  <xs:element name="soundlabels" type="soundlabelsType">
+    <!-- element definition for include files -->
+  </xs:element>
+
   <xs:complexType name="FamilyType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
@@ -431,10 +435,13 @@
           <xs:attribute name="comment" type="xs:string" />
           <xs:attribute name="numFns" type="xs:int">
             <xs:annotation><xs:documentation>
-                This is a legacy attribute that limits the total number of function mapping lines displayed. 
-                It is no longer required as there are many optional variations as well as
-                the original F0F, F0R &amp; F1-F28.
-                Hence the JMRI code now automatically suppresses unused lines.
+                For the traditional Function Map:
+                    This is a legacy attribute that limits the total number of function mapping lines displayed. 
+                    It is no longer required as there are many optional variations as well as
+                    the original F0F, F0R &amp; F1-F28.
+                    Hence the JMRI code now automatically suppresses unused lines.
+                For the ESU Function Maps:
+                    This optional attribute limits the total number of function mapping lines displayed. 
             </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="numOuts" type="xs:int" >
@@ -508,10 +515,17 @@
                 Functions 13 and up are implemented via MRC's non-standard use of DCC packets
             </xs:documentation></xs:annotation>
           </xs:attribute>
-          <xs:attribute name="extFnsESU" type="yesNoType" >
+          <xs:attribute name="extFnsESU"  default="no">
             <xs:annotation><xs:documentation>
                 The decoder implement's ESU's function mapping instead of the NMRA's.
             </xs:documentation></xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="no"/>
+                <xs:enumeration value="V4"/>
+                <xs:enumeration value="V5"/>
+              </xs:restriction>
+            </xs:simpleType>
           </xs:attribute>
           <xs:attribute name="extFnsNmraBSC" type="yesNoType" >
             <xs:annotation><xs:documentation>
