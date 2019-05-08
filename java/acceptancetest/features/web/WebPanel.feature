@@ -8,7 +8,8 @@ Scenario Outline: Web Panel requests
    When I ask for the url <panelURL>
    Then a page with title <PageTitle> is returned
 
-   @firefox
+   # firefox version of the test appears to be hanging on travis
+   @firefox @Ignore
    Examples: Firefox Panel Tests
    | browser | panel | panelURL | PageTitle | 
    | firefox | java/test/jmri/jmrit/cabsignals/SimpleCabSignalTestPanel.xml | http://localhost:12080/panel/Layout/Cab%20Signal%20Test  | Layout/Cab%20Signal%20Test \| My JMRI Railroad | 
