@@ -614,11 +614,7 @@ public final class FnMapPanelESU extends JPanel {
     }
 
     /**
-     * Loads labels as per documentation at {@link FnMapPanelESU}.
-     *
-     * @param item  the item number to load
-     * @param name  the "name" attribute from the "output" element
-     * @param label the "label" attribute from the "output" element
+     * Set up the default names and labels.
      */
     void setupDefaultNamesLabels() {
         // get block names
