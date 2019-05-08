@@ -1,5 +1,6 @@
-@webtest
-Feature: JMRI Web Server 
+#These tests load a panel window, so must run headed.
+@webtest @Headed
+Feature: JMRI Web Panel 
 
 Scenario Outline: Web Panel requests
    Given I am using <browser>
