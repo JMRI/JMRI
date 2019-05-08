@@ -1,4 +1,4 @@
-@apptest @headed
+@apptest @Headed
 Feature: JMRI Applications 
 
 Scenario Outline: Application Start
