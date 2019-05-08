@@ -215,19 +215,32 @@ public class Path {
         if (d == NONE) {
             return Bundle.getMessage("None"); // UI strings i18n using NamedBeanBundle.properties
         }
-
         StringBuffer b = new StringBuffer();
-        if ((d & NORTH) != 0) {
-            appendOne(b, Bundle.getMessage("North"));
+        if (((d & NORTH) != 0) && ((d & EAST) != 0) ) {
+            appendOne(b, Bundle.getMessage("NorthEast"));
         }
-        if ((d & SOUTH) != 0) {
-            appendOne(b, Bundle.getMessage("South"));
+        else if (((d & NORTH) != 0) && ((d & WEST) != 0) ) {
+            appendOne(b, Bundle.getMessage("NorthWest"));
         }
-        if ((d & EAST) != 0) {
-            appendOne(b, Bundle.getMessage("East"));
+        else if (((d & SOUTH) != 0) && ((d & EAST) != 0) ) {
+            appendOne(b, Bundle.getMessage("SouthEast"));
         }
-        if ((d & WEST) != 0) {
-            appendOne(b, Bundle.getMessage("West"));
+        else if (((d & SOUTH) != 0) && ((d & WEST) != 0) ) {
+            appendOne(b, Bundle.getMessage("SouthWest"));
+        }
+        else {
+            if ((d & NORTH) != 0) {
+                appendOne(b, Bundle.getMessage("North"));
+            }
+            if ((d & SOUTH) != 0) {
+                appendOne(b, Bundle.getMessage("South"));
+            }
+            if ((d & EAST) != 0) {
+                appendOne(b, Bundle.getMessage("East"));
+            }
+            if ((d & WEST) != 0) {
+                appendOne(b, Bundle.getMessage("West"));
+            }
         }
         if ((d & CW) != 0) {
             appendOne(b, Bundle.getMessage("Clockwise"));
