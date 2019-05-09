@@ -644,7 +644,7 @@ public class SplitVariableValue extends VariableValue
             }
 
             if (_progState == IDLE) { // no, just a CV update
-                log.debug("Variable={}; Busy goes false with state IDLE", _name);
+                log.error("Variable={}; Busy goes false with state IDLE", _name);
             } else if (_progState >= READING_FIRST) {   // reading CVs
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
                     retry = 0;
