@@ -1217,6 +1217,19 @@ public class JUnitUtil {
             });
     }
 
+    /* Global Panel operations */
+    /**
+     * Close all panels associated with the jmri.jmrit.display.EditorManager instance.
+     */
+    public static void closeAllPanels(){
+        List<jmri.jmrit.display.Editor> l = (InstanceManager.getNullableDefault(jmri.jmrit.display.EditorManager.class)).getEditorsList();
+        for( jmri.jmrit.display.Editor e : l ){
+           jmri.jmrit.display.EditorFrameOperator efo = new jmri.jmrit.display.EditorFrameOperator(e);
+           efo.closeFrameWithConfirmations(); 
+        }
+    }
+
+
     /* GraphicsEnvironment utility methods */
 
     /**

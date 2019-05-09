@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Add Jingle, CV-Read and CV-Prog Locked, Ronald Kuhn, 05.05.2019 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Decoder Lock</name>
+  <name xml:lang="it">Blocco decoder</name>
+  <name xml:lang="cs">Zámek dekodéru</name>
   <column>
+    <display item="Jingle Sound CV Write" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Service Mode Programming Read Locked" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Service Mode Programming Locked" format="checkbox"/>
     <label>
       <text> </text>
     </label>
     <display item="Software Update Locked" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="CV-Prog Locked" format="checkbox"/>
   </column>
-  <name>Decoder Lock</name>
-  <name xml:lang="it">Blocco decoder</name>
-  <name xml:lang="cs">Zámek dekodéru</name>
 </pane>
