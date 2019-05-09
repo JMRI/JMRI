@@ -21,6 +21,7 @@ import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
 import static jmri.server.json.operations.JsonOperations.TRACK;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -31,6 +32,7 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
+import jmri.Reporter;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -191,6 +193,9 @@ public class JsonUtil {
         data.put(NAME, location.getId());
         data.put(LENGTH, location.getLength());
         data.put(COMMENT, location.getComment());
+        Reporter reporter = location.getReporter();
+        data.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
+        // note type defaults to all in-use rolling stock types 
         ArrayNode types = data.putArray(TYPE);
         for (String type : location.getTypeNames()) {
             types.add(type);
@@ -217,9 +222,7 @@ public class JsonUtil {
     }
 
     private ObjectNode getLocation(Location location, RouteLocation routeLocation, Locale locale) {
-        ObjectNode node = mapper.createObjectNode();
-        node.put(USERNAME, location.getName());
-        node.put(NAME, location.getId());
+        ObjectNode node = getLocation(location, locale);
         if (routeLocation != null) {
             node.put(ROUTE, routeLocation.getId());
         } else {

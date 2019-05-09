@@ -16,6 +16,9 @@ import org.junit.Test;
 
 import jmri.IdTagManager;
 import jmri.InstanceManager;
+import jmri.ReporterManager;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
@@ -25,6 +28,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.consist.JsonConsist;
+import jmri.server.json.reporter.JsonReporter;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -363,6 +368,111 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     }
 
     @Test
+    public void testLocation() throws JsonException {
+        // try a non-existent location
+        try {
+            service.doGet(JsonOperations.LOCATION, "", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+        }
+        JUnitAppender.assertErrorMessage("Unable to get location id [].");
+        // get a known location
+        LocationManager manager = InstanceManager.getDefault(LocationManager.class);
+        Location location = manager.getLocationById("20");
+        JsonNode result = service.doGet(JsonOperations.LOCATION, location.getId(), NullNode.getInstance(), locale, 42);
+        validate(result);
+        assertEquals(JsonOperations.LOCATION, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        JsonNode data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Location", 6, data.size());
+        assertEquals(location.getId(), data.path(JSON.NAME).asText());
+        assertEquals(location.getName(), data.path(JSON.USERNAME).asText());
+        assertTrue(data.path(JSON.COMMENT).isValueNode());
+        assertEquals(location.getComment(), data.path(JSON.COMMENT).asText());
+        assertTrue(data.path(JsonReporter.REPORTER).isValueNode());
+        assertTrue(data.path(JsonReporter.REPORTER).isNull());
+        assertTrue(data.path(JSON.TYPE).isArray());
+        assertEquals(4, data.path(JSON.TYPE).size());
+        assertEquals("Boxcar", data.path(JSON.TYPE).path(0).asText());
+        assertEquals("Caboose", data.path(JSON.TYPE).path(1).asText());
+        assertEquals("Flat", data.path(JSON.TYPE).path(2).asText());
+        assertEquals("Diesel", data.path(JSON.TYPE).path(3).asText());
+        // add (PUT) a location
+        data = mapper.createObjectNode().put(JSON.USERNAME, "Test Site");
+        validateData(JsonOperations.LOCATION, data, false);
+        result = service.doPut(JsonOperations.LOCATION, "42", data, locale, 42);
+        location = manager.getLocationById("42");
+        assertNull(location);
+        location = manager.getLocationByName("Test Site");
+        assertNotNull(location);
+        validate(result);
+        assertEquals(JsonOperations.LOCATION, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Location", 6, data.size());
+        assertEquals(location.getId(), data.path(JSON.NAME).asText());
+        assertEquals(location.getName(), data.path(JSON.USERNAME).asText());
+        // delete a location
+        data = mapper.createObjectNode().put(JSON.NAME, location.getId());
+        validateData(JsonOperations.LOCATION, data, false);
+        service.doDelete(JsonOperations.LOCATION, location.getId(), data, locale, 0);
+        assertNull(manager.getLocationById(location.getId()));
+        // (re)create a location
+        // add (PUT) a location
+        data = mapper.createObjectNode().put(JSON.USERNAME, "Test Site");
+        validateData(JsonOperations.LOCATION, data, false);
+        result = service.doPut(JsonOperations.LOCATION, "42", data, locale, 42);
+        location = manager.getLocationByName("Test Site");
+        assertNotNull(location);
+        validate(result);
+        // add (PUT) the same location again with same name (id)
+        try {
+            service.doPut(JsonOperations.LOCATION, location.getId(), data, locale, 42);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(42, ex.getId());
+            assertEquals("Unable to create object type location with name \"22\" since already exists.", ex.getMessage());
+        }
+        // add (PUT) the same location again with same user name, different name (id)
+        try {
+            service.doPut(JsonOperations.LOCATION, "42", data, locale, 42);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(42, ex.getId());
+            assertEquals("Unable to create object type location with user name \"Test Site\" since already exists.", ex.getMessage());
+        }
+        // edit (POST) the added location
+        String id = location.getId();
+        data = mapper.createObjectNode()
+                .put(JSON.NAME, id) // can't change this
+                .put(JSON.USERNAME, "Editted Site")
+                .put(JSON.COMMENT, "A comment")
+                .put(JsonReporter.REPORTER, InstanceManager.getDefault(ReporterManager.class).provide("IR1").getSystemName());
+        // TODO: put change to types?
+        validateData(JsonOperations.LOCATION, data, false);
+        result = service.doPost(JsonOperations.LOCATION, id, data, locale, 42);
+        location = manager.getLocationById(id);
+        assertNotNull(location);
+        validate(result);
+        assertEquals(JsonOperations.LOCATION, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Location", 6, data.size());
+        assertEquals(id, data.path(JSON.NAME).asText());
+        assertEquals("Editted Site", data.path(JSON.USERNAME).asText());
+        assertEquals("A comment", data.path(JSON.COMMENT).asText());
+        assertEquals("IR1", data.path(JsonReporter.REPORTER).asText());
+        assertTrue(data.path(JSON.TYPE).isArray());
+        assertEquals(4, data.path(JSON.TYPE).size());
+    }
+
+    @Test
     public void testDoGetListCarEngineRollingStock() throws JsonException {
         JsonNode result = service.doGetList(JsonOperations.CAR, NullNode.getInstance(), locale, 0);
         validate(result);
@@ -467,6 +577,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     public void setUp() throws Exception {
         super.setUp();
         JUnitUtil.initIdTagManager();
+        JUnitUtil.initReporterManager();
         InstanceManager.getDefault(IdTagManager.class).provideIdTag("1234567890AB");
         JUnitOperationsUtil.setupOperationsTests();
         JUnitOperationsUtil.initOperationsData();
