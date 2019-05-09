@@ -205,7 +205,9 @@ public class ActiveTrain {
     private int mDepartureTimeMin = 0;
     private int mRestartDelay = 0;
     private NamedBeanHandle<jmri.Sensor> mStartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
-    private NamedBeanHandle<jmri.Sensor> mRestartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
+    private boolean resetStartSensor = true;
+    private NamedBeanHandle<jmri.Sensor> mRestartSensor = null; // A Sensor that when changes state to active will trigger the trains restart.
+    private boolean resetRestartSensor = true;
     private int mTrainType = LOCAL_FREIGHT;
     private boolean terminateWhenFinished = false;
 
@@ -416,6 +418,10 @@ public class ActiveTrain {
         mStartSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(s.getDisplayName(), s);
     }
 
+    public void setResetStartSensor(boolean b) {
+        resetStartSensor = b;
+    }
+
     public jmri.Sensor getRestartSensor() {
         if (mRestartSensor == null) {
             return null;
@@ -438,6 +444,11 @@ public class ActiveTrain {
         mRestartSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(s.getDisplayName(), s);
     }
 
+    public void setResetRestartSensor(boolean b) {
+        resetRestartSensor = b;
+    }
+
+
     private java.beans.PropertyChangeListener delaySensorListener = null;
     private java.beans.PropertyChangeListener restartSensorListener = null;
     private java.beans.PropertyChangeListener restartAllocationSensorListener = null;
@@ -458,10 +469,13 @@ public class ActiveTrain {
                             InstanceManager.getDefault(DispatcherFrame.class).removeDelayedTrain(at);
                             setStarted();
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                            try {
-                                getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
-                            } catch (jmri.JmriException ex) {
-                                log.error("Error reseting start sensor back to in active");
+                            if (resetStartSensor) {
+                                try {
+                                    getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
+                                    log.debug("Start sensor {} set back to inActive", getDelaySensorName());                                    
+                                } catch (jmri.JmriException ex) {
+                                    log.error("Error resetting start sensor {} back to inActive", getDelaySensorName());
+                                }
                             }
                         }
                     }
@@ -473,7 +487,7 @@ public class ActiveTrain {
 
     public void initializeRestartSensor() {
         if (mRestartSensor == null) {
-            log.error("Call to initialise delay on start sensor, but none specified");
+            log.error("Call to initialise delay on restart sensor, but none specified");
             return;
         }
         if (restartSensorListener == null) {
@@ -488,10 +502,13 @@ public class ActiveTrain {
                             InstanceManager.getDefault(DispatcherFrame.class).removeDelayedTrain(at);
                             restart();
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                            try {
-                                getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
-                            } catch (jmri.JmriException ex) {
-                                log.error("Error reseting start sensor back to in active");
+                            if (resetRestartSensor) {
+                                try {
+                                    getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
+                                    log.debug("Restart sensor {} set back to inActive", getRestartSensorName());
+                                } catch (jmri.JmriException ex) {
+                                    log.error("Error resetting restart sensor back to inActive");
+                                }
                             }
                         }
                     }
