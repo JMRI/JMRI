@@ -12,11 +12,9 @@ Scenario Outline: Basic Http requests
    | firefox | http://localhost:12080/       | My JMRI Railroad |
    | firefox | http://localhost:12080/index.html | My JMRI Railroad |
    | firefox | http://localhost:12080/panel | Panels \| My JMRI Railroad |
-   | firefox | http://localhost:12080/web/showPanel.html| Panels \| My JMRI Railroad |
    | firefox | http://localhost:12080/roster | Roster \| My JMRI Railroad |
    | firefox | http://localhost:12080/operations | Trains \| My JMRI Railroad |
    | firefox | http://localhost:12080/frame | Panels \| My JMRI Railroad |
-   | firefox | http://localhost:12080/web/webThrottle.html | JMRI Web Throttle |
    | firefox | http://localhost:12080/prefs/ | Directory: /prefs/ \| My JMRI Railroad |
    | firefox | http://localhost:12080/dist/ | Directory: /dist/ \| My JMRI Railroad |
    | firefox | http://localhost:12080/images/ | Directory: /images/ \| My JMRI Railroad |
@@ -33,7 +31,6 @@ Scenario Outline: Basic Http requests
    | chrome  | http://localhost:12080/roster | Roster \| My JMRI Railroad |
    | chrome  | http://localhost:12080/operations | Trains \| My JMRI Railroad |
    | chrome  | http://localhost:12080/frame | Panels \| My JMRI Railroad |
-   | chrome  | http://localhost:12080/web/webThrottle.html | JMRI Web Throttle |
    | chrome  | http://localhost:12080/prefs/ | Directory: /prefs/ \| My JMRI Railroad |
    | chrome  | http://localhost:12080/dist/ | Directory: /dist/ \| My JMRI Railroad |
    | chrome  | http://localhost:12080/images/ | Directory: /images/ \| My JMRI Railroad |
