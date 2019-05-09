@@ -4,12 +4,10 @@ import static jmri.server.json.idTag.JsonIdTag.IDTAG;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.IdTag;
@@ -70,22 +68,8 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
     }
 
     @Override
-    public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        IdTag bean = getManager().getBeanBySystemName(name);
-        if (bean != null) {
-            List<String> listeners = bean.getListenerRefs();
-            if (listeners.size() > 0 && !acceptForceDeleteToken(type, name, data.path(JSON.FORCE_DELETE).asText())) {
-                ArrayNode conflicts = mapper.createArrayNode();
-                listeners.forEach((listener) -> {
-                    conflicts.add(listener);
-                });
-                throwDeleteConflictException(type, name, conflicts, locale, id);
-            } else {
-                getManager().deregister(bean);
-            }
-        } else {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
-        }
+    public void doDelete(IdTag bean, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+        super.deleteBean(bean, name, type, data, locale, id);
     }
 
     @Override

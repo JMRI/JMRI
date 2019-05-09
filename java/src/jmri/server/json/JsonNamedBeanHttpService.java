@@ -2,9 +2,13 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.List;
 import java.util.Locale;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
@@ -92,6 +96,20 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        if (!type.equals(getType())) {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(locale, "LoggedError"), id);
+        }
+        // NOTE: although allowing a user name to be used, a system name is recommended as it is
+        // less likely to suffer errors in translation between the allowed name and URL conversion
+        this.doDelete(getManager().getNamedBean(name), name, type, data, locale, id);
+    }
+
+    /**
      * Respond to an HTTP GET request for the requested name.
      * <p>
      * If name is null, return a list of all objects for the given type, if
@@ -129,6 +147,56 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     @Nonnull
     protected abstract ObjectNode doPost(T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException;
+
+    /**
+     * Delete the requested bean.
+     * <p>
+     * This method must be overridden to allow a bean to be deleted. The
+     * simplest overriding method body is:
+     * {@code deleteBean(bean, name, type, data, locale, id); }
+     * 
+     * @param bean   the bean to delete
+     * @param name   the named of the bean to delete
+     * @param type   the type of the bean to delete
+     * @param data   data describing the named bean
+     * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
+     * @throws JsonException if an error occurs
+     */
+    protected void doDelete(@Nullable T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
+        super.doDelete(type, name, data, locale, id);
+    }
+
+    /**
+     * Delete the requested bean. This is the simplest method to delete a bean,
+     * and is likely to become the default implementation of
+     * {@link #doDelete(NamedBean, String, String, JsonNode, Locale, int)} in an
+     * upcoming release of JMRI.
+     * 
+     * @param bean   the bean to delete
+     * @param name   the named of the bean to delete
+     * @param type   the type of the bean to delete
+     * @param data   data describing the named bean
+     * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
+     * @throws JsonException if an error occurs
+     */
+    protected final void deleteBean(@Nullable T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
+        if (bean == null) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                    Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+        }
+        List<String> listeners = bean.getListenerRefs();
+        if (listeners.size() > 0 && !acceptForceDeleteToken(type, name, data.path(JSON.FORCE_DELETE).asText())) {
+            ArrayNode conflicts = mapper.createArrayNode();
+            listeners.forEach((listener) -> {
+                conflicts.add(listener);
+            });
+            throwDeleteConflictException(type, name, conflicts, locale, id);
+        } else {
+            getManager().deregister(bean);
+        }
+    }
 
     /**
      * Get the JSON type supported by this service.
