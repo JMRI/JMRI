@@ -534,16 +534,19 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (typeComboBox.getSelectedItem() != null) {
             _rs.setTypeName((String) typeComboBox.getSelectedItem());
         }
+        
+        int blocking = 0;
         try {
-            int blocking = Integer.parseInt(blockingTextField.getText());
+            blocking = Integer.parseInt(blockingTextField.getText());
             // only allow numbers between 0 and 100
             if (blocking < 0 || blocking > 100) {
-                blockingTextField.setText("0");
+                blocking = 0;
             }
         } catch (Exception e) {
             log.warn("Blocking must be a number between 0 and 100");
-            blockingTextField.setText("0");
         }
+        blockingTextField.setText(Integer.toString(blocking));
+        
         if (lengthComboBox.getSelectedItem() != null) {
             _rs.setLength((String) lengthComboBox.getSelectedItem());
         }
