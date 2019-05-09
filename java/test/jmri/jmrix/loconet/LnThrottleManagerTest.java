@@ -63,7 +63,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
-        tm.requestThrottle( new DccLocoAddress(1203,true), throtListen);
+        tm.requestThrottle( new DccLocoAddress(1203,true), throtListen,true);
 
         Assert.assertEquals("address request message",
                 "BF 09 33 00",
@@ -129,7 +129,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
-        tm.requestThrottle(new DccLocoAddress(1204,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(1204,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 09 34 00",
@@ -216,7 +216,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
-        tm.requestThrottle(new DccLocoAddress(1203,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(1203,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 09 33 00",
@@ -304,7 +304,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(129,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(129,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 01 01 00",
@@ -350,7 +350,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(5,false), throtListen);
+        tm.requestThrottle(new DccLocoAddress(5,false), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 00 05 00",
@@ -395,7 +395,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(85,false), throtListen);
+        tm.requestThrottle(new DccLocoAddress(85,false), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 00 55 00",
@@ -441,7 +441,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(256,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(256,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 00 00",
@@ -489,7 +489,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(257,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(257,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 01 00",
@@ -533,7 +533,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(259,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(259,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 03 00",
@@ -611,7 +611,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(260,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 04 00",
@@ -627,7 +627,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen2);  // An additional user of the same throttle
+        tm.requestThrottle(new DccLocoAddress(260,true), throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -718,7 +718,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(260,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 04 00",
@@ -734,7 +734,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen2);  // An additional user of the same throttle
+        tm.requestThrottle(new DccLocoAddress(260,true), throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -866,7 +866,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(261,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(261,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 05 00",
@@ -882,7 +882,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(261,true), throtListen2);  // An additional user of the same throttle
+        tm.requestThrottle(new DccLocoAddress(261,true), throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -900,7 +900,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertTrue("Address still required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(261, true)));
 
-        tm.requestThrottle(new DccLocoAddress(261,true), throtListen3);  // An additional user of the same throttle
+        tm.requestThrottle(new DccLocoAddress(261,true), throtListen3, true);  // An additional user of the same throttle
 
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle3");
 
@@ -1003,7 +1003,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(262,true), throtListen);
+        tm.requestThrottle(new DccLocoAddress(262,true), throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 06 00",
@@ -1023,7 +1023,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(262,true), throtListen2);  // An additional user of the same throttle
+        tm.requestThrottle(new DccLocoAddress(262,true), throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -1103,7 +1103,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(re, throtListen);
+        tm.requestThrottle(re, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 09 52 00",

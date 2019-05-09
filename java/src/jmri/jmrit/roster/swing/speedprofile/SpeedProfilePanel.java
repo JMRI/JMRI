@@ -444,7 +444,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
 
         re = reBox.getSelectedRosterEntries()[0];
-        boolean ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this);
+        boolean ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this, true); // we have a mechanism for steal / share
         if (!ok) {
             log.warn("Throttle for locomotive {} could not be set up.", re.getId());
             setButtonStates(true);

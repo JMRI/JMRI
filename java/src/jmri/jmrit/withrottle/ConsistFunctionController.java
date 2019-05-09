@@ -67,7 +67,7 @@ public class ConsistFunctionController implements ThrottleListener {
     }
 
     boolean requestThrottle(DccLocoAddress loco) {
-        return jmri.InstanceManager.throttleManagerInstance().requestThrottle(loco, this);
+        return jmri.InstanceManager.throttleManagerInstance().requestThrottle(loco, this, true);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class);

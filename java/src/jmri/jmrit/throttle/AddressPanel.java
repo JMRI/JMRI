@@ -179,7 +179,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (((DccLocoAddress) t.getLocoAddress()).getNumber() != currentAddress.getNumber()) {
             log.warn("Not correct address, asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress() + ", requesting again...");
             boolean requestOK
-                    = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this);
+                    = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this, true);
             if (!requestOK) {
                 JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
             }
@@ -498,10 +498,10 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         log.debug("Requesting new slot for address {} rosterEntry {}",currentAddress,rosterEntry);
         boolean requestOK;
         if (rosterEntry == null) {
-            requestOK = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this);
+            requestOK = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this, true);
         }
         else {
-            requestOK = InstanceManager.throttleManagerInstance().requestThrottle(rosterEntry, this);
+            requestOK = InstanceManager.throttleManagerInstance().requestThrottle(rosterEntry, this, true);
         }
         if (!requestOK) {
             JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
@@ -521,7 +521,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
 
         boolean requestOK
-                = InstanceManager.throttleManagerInstance().requestThrottle(consistAddress, this);
+                = InstanceManager.throttleManagerInstance().requestThrottle(consistAddress, this, true);
         if (!requestOK) {
             JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
         }

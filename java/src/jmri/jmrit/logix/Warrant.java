@@ -872,7 +872,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (tm == null) {
                 msg = Bundle.getMessage("noThrottle", _speedUtil.getDccAddress().getNumber());
             } else {
-                if (!tm.requestThrottle(dccAddress, this)) {
+                if (!tm.requestThrottle(dccAddress, this, false)) {
                     return Bundle.getMessage("trainInUse", dccAddress.getNumber());
                 }
             }

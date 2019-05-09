@@ -599,9 +599,9 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void setAddress(int number, boolean isLong) {
         log.debug("setAddress: {}, isLong: {}", number, isLong);
         if (rosterLoco != null) {
-            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this, true);
         } else {
-            jmri.InstanceManager.throttleManagerInstance().requestThrottle(new DccLocoAddress(number, isLong), this);
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(new DccLocoAddress(number, isLong), this, true);
             
         }
     }

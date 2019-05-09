@@ -150,7 +150,7 @@ public abstract class AbstractThrottleManagerTestBase {
 		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
 		Assert.assertNull("NULL",tm.getThrottleInfo(addr,Throttle.F28));
         ThrottleListener throtListen = new ThrottleListen();
-        tm.requestThrottle(addr,throtListen);
+        tm.requestThrottle(addr,throtListen, true);
         JUnitUtil.waitFor(()->{ return(tm.getThrottleInfo(addr,"IsForward")!=null); }, "reply didn't arrive");
         
         Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,"IsForward"));
@@ -188,6 +188,7 @@ public abstract class AbstractThrottleManagerTestBase {
         Assert.assertNotNull("F28",tm.getThrottleInfo(addr,Throttle.F28));
         Assert.assertNull("NULL",tm.getThrottleInfo(addr,"NOT A VARIABLE"));
         Assert.assertEquals("throttle use 1 addr", 1, tm.getThrottleUsageCount(addr));
+        Assert.assertEquals("throttle use 1 new DccAddr", 1, tm.getThrottleUsageCount(new DccLocoAddress(42,false)));
 		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(new DccLocoAddress(77,true)));
 
     }

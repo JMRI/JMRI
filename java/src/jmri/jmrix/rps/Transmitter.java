@@ -93,7 +93,7 @@ public class Transmitter implements ThrottleListener {
         }
         // request throttle
         InstanceManager.throttleManagerInstance().requestThrottle(
-            new jmri.DccLocoAddress(address, longAddress), this);
+            new jmri.DccLocoAddress(address, longAddress), this, false);
         return false;
     }
 

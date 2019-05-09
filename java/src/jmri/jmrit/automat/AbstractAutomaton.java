@@ -978,7 +978,7 @@ public class AbstractAutomaton implements Runnable {
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle( 
-            new jmri.DccLocoAddress(address, longAddress), throttleListener);
+            new jmri.DccLocoAddress(address, longAddress), throttleListener, false);
 
         // check if reply is coming
         if (!ok) {
@@ -1052,7 +1052,7 @@ public class AbstractAutomaton implements Runnable {
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)
-                .requestThrottle(re, throttleListener);
+                .requestThrottle(re, throttleListener, false);
 
         // check if reply is coming
         if (!ok) {

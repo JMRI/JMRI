@@ -69,7 +69,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         DccLocoAddress addr = new DccLocoAddress(1234,true);
         
         CbusThrottleListen throtListen = new CbusThrottleListen();
-        cbtm.requestThrottle(addr,throtListen);
+        cbtm.requestThrottle(addr,throtListen,true);
         
         JUnitUtil.waitFor(()->{ return(cbtm.getThrottleUsageCount(addr)>0); }, "reply didn't arrive");
         Assert.assertEquals("F0 init",false,cbtm.getThrottleInfo(addr,Throttle.F0));
@@ -176,7 +176,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         DccLocoAddress addr = new DccLocoAddress(221,true);
         
         CbusThrottleListen throtListen = new CbusThrottleListen();
-        cbtmb.requestThrottle(addr,throtListen);
+        cbtmb.requestThrottle(addr,throtListen,true);
         
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFNON, 1, 0 },0x12 );
@@ -203,7 +203,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         DccLocoAddress addr = new DccLocoAddress(422,true);
         
         CbusThrottleListen throtListen = new CbusThrottleListen();
-        cbtmb.requestThrottle(addr,throtListen);
+        cbtmb.requestThrottle(addr,throtListen,true);
         
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");
         
@@ -317,7 +317,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         DccLocoAddress addr = new DccLocoAddress(1234,true);
         
         CbusThrottleListen throtListen = new CbusThrottleListen();
-        cbtmb.requestThrottle(addr,throtListen);
+        cbtmb.requestThrottle(addr,throtListen,true);
         
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");        
         
@@ -366,7 +366,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         DccLocoAddress addr = new DccLocoAddress(555,true);
         Assert.assertEquals("throttle use 0", 0, cbtmb.getThrottleUsageCount(addr));
         CbusThrottleListen throtListen = new CbusThrottleListen();
-        cbtmb.requestThrottle(addr,throtListen);
+        cbtmb.requestThrottle(addr,throtListen,true);
         CbusThrottle cbt = new CbusThrottle(memo,addr,1);
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)>0); }, "Throttle count did not increase");
         Assert.assertEquals("throttle use 1", 1, cbtmb.getThrottleUsageCount(addr));

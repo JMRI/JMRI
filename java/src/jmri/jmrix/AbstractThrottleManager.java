@@ -127,15 +127,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         ThrottleListener l;
         BasicRosterEntry re;
         PropertyChangeListener pl;
+        boolean canHandleDecisions;
 
-        WaitingThrottle(ThrottleListener _l, BasicRosterEntry _re) {
+        WaitingThrottle(ThrottleListener _l, BasicRosterEntry _re, boolean _canHandleDecisions) {
             l = _l;
             re = _re;
+            canHandleDecisions = _canHandleDecisions;
         }
 
-        WaitingThrottle(PropertyChangeListener _pl, BasicRosterEntry _re) {
+        WaitingThrottle(PropertyChangeListener _pl, BasicRosterEntry _re, boolean _canHandleDecisions) {
             pl = _pl;
             re = _re;
+            canHandleDecisions = _canHandleDecisions;
         }
 
         PropertyChangeListener getPropertyChangeListener() {
@@ -149,6 +152,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         BasicRosterEntry getRosterEntry() {
             return re;
         }
+        
+        boolean canHandleDecisions() {
+            return canHandleDecisions;
+        }
+        
     }
     /**
      * listenerOnly is indexed by the address, and contains as elements an
@@ -179,16 +187,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean requestThrottle(@Nonnull BasicRosterEntry re, ThrottleListener l) {
-        return requestThrottle(re.getDccLocoAddress(), re, l);
+    public boolean requestThrottle(@Nonnull BasicRosterEntry re, ThrottleListener l, boolean canHandleDecisions) {
+        return requestThrottle(re.getDccLocoAddress(), re, l, canHandleDecisions);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean requestThrottle(LocoAddress la, ThrottleListener l) {
-        return requestThrottle(la, null, l);
+    public boolean requestThrottle(LocoAddress la, ThrottleListener l, boolean canHandleDecisions) {
+        return requestThrottle(la, null, l, canHandleDecisions);
     }
 
     /**
@@ -203,9 +211,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      *         be made. False may be returned if a the throttle is already in
      *         use.
      */
-    protected boolean requestThrottle(LocoAddress la, BasicRosterEntry re, ThrottleListener l) {
+    protected boolean requestThrottle(LocoAddress la, BasicRosterEntry re, ThrottleListener l, boolean canHandleDecisions) {
         boolean throttleFree = true;
-
+        
         // check for a valid throttle address
         if (!canBeLongAddress(la.getNumber()) && !canBeShortAddress(la.getNumber())) {
             return false;
@@ -220,7 +228,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
         if (addressThrottles.containsKey(la)) {
             log.debug("A throttle to address {} already exists, so will return that throttle",la.getNumber());
-            a.add(new WaitingThrottle(l, re));
+            a.add(new WaitingThrottle(l, re, canHandleDecisions));
             notifyThrottleKnown(addressThrottles.get(la).getThrottle(), la);
             return throttleFree;
         } else {
@@ -234,12 +242,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             throttleFree = false;
             log.debug("singleUser() is true, and the list of WaitingThrottles isn't empty, returning false");
         } else if (a.size() == 0) {
-            a.add(new WaitingThrottle(l, re));
+            a.add(new WaitingThrottle(l, re, canHandleDecisions));
             log.debug("list of WaitingThrottles is empty: {}; {}",la, a);
             log.debug("calling requestThrottleSetup()");
             requestThrottleSetup(la, true);
         } else {
-            a.add(new WaitingThrottle(l, re));
+            a.add(new WaitingThrottle(l, re, canHandleDecisions));
             log.debug("singleUse() returns false and there are existing WaitThrottles, adding a one to the list");
         }
         return throttleFree;
@@ -394,12 +402,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * @param question The Question to be put to the ThrottleListener
      */
     protected void makeHardwareDecision(LocoAddress address, ThrottleListener.DecisionType question){
-        
         responseThrottleDecision(address, ThrottleListener.DecisionType.STEAL );
-        
     }
-
-    public int testInt =6;
 
     /**
      * When the system-specific ThrottleManager has been unable to create the DCC
@@ -413,10 +417,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     protected void notifyDecisionRequest(LocoAddress address, ThrottleListener.DecisionType question) {
         
-        if ( testInt == 77) {
-            makeHardwareDecision(address,question);
-        }
-        
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(address);
             if (a == null) {
@@ -426,9 +426,15 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             ThrottleListener l;
             log.debug("{} listener(s) registered for address {}",a.size(),address.getNumber());
             for (int i = 0; i < a.size(); i++) {
-                l = a.get(i).getListener();
-                log.debug("Notifying a throttle listener (address {}) of the steal share situation", address.getNumber());
-                l.notifyDecisionRequired(address,question);
+                if (a.get(i).canHandleDecisions() ){
+                    l = a.get(i).getListener();
+                    log.debug("Notifying a throttle listener (address {}) of the steal share situation", address.getNumber());
+                    l.notifyDecisionRequired(address,question);
+                }
+                else {
+                    log.debug("Passing {} to hardware steal / share decision making", address.getNumber());
+                    makeHardwareDecision(address,question);
+                }
             }
         }
     }
@@ -468,7 +474,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
             // get the corresponding list to check length
             ArrayList<WaitingThrottle> a = listenerOnly.get(la);
-            a.add(new WaitingThrottle(p, null));
+            a.add(new WaitingThrottle(p, null, false));
             //Only request that the throttle is set up if it hasn't already been
             //requested.
             if ((!throttleListeners.containsKey(la)) && (a.size() == 1)) {

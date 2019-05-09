@@ -1073,7 +1073,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     profileTimer.start();
                     log.info("Requesting throttle");
                     boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(
-                        new DccLocoAddress(profileAddress, profileIsLong), this);
+                        new DccLocoAddress(profileAddress, profileIsLong), this, false);
                     if (!requestOK) {
                         log.error("Loco Address in use, throttle request failed.");
                     }

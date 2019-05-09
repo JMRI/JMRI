@@ -101,7 +101,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     public void requestThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
         boolean result;
-        result = t.requestThrottle(l, this); 
+        result = t.requestThrottle(l, this, false); 
         if (!result) {
             try {
                 sendErrorStatus();

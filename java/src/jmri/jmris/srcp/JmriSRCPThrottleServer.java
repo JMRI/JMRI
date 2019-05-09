@@ -224,7 +224,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             DccLocoAddress addr = new DccLocoAddress(address, isLong);
             busList.add(bus);
             addressList.add(addr);
-            t.requestThrottle(addr, this);
+            t.requestThrottle(addr, this, false);
         }
     }
 

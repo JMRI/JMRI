@@ -38,7 +38,7 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         self.add(self.label)
         # create a dcc throttle and request one from the ThrottleManager
         self.masterThrottle = None
-        if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
+        if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self, false) == False):
             print "Couldn't request a throttle for "+locoAddress        
         # Advanced functions
         self.advFunctions = AdvFunctions()
@@ -138,7 +138,7 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
            
     def notifyDecisionRequired(LocoAddress, decision):
         pass # Throttle steal / share decisions are delegated to the ThrottleManager
-        
+    
     #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):
         pass

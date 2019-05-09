@@ -35,11 +35,13 @@ public interface ThrottleManager {
      *
      * @param re desired RosterEntry
      * @param l  ThrottleListener awaiting notification of a found throttle
+     * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
+     *        Share / Steal decisions, else false
      * @return true if the request will continue, false if the request will not
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
-    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l);
+    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l, boolean canHandleDecisions);
 
     /**
      * Request a throttle, given a LocoAddress. When the address is
@@ -48,11 +50,13 @@ public interface ThrottleManager {
      *
      * @param address desired loco address
      * @param l       ThrottleListener awaiting notification of a found throttle
+     * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
+     *        Share / Steal decisions, else false
      * @return true if the request will continue, false if the request will not
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
-    public boolean requestThrottle(LocoAddress address, ThrottleListener l);
+    public boolean requestThrottle(LocoAddress address, ThrottleListener l , boolean canHandleDecisions);
     
     /**
      * Cancel a request for a throttle.

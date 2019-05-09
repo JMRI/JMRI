@@ -279,17 +279,17 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
             if (_activeTrain.getRosterEntry() != null) {
                 re = _activeTrain.getRosterEntry();
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this, false);
                 if (_useSpeedProfile) {
                     if (re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0) {
                         useSpeedProfile = true;
                     }
                 }
             } else {
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
             }
         } else {
-            ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this);
+            ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
         }
         if (!ok) {
             log.warn("Throttle for locomotive address {} could not be setup.", _address);
