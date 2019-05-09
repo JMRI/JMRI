@@ -970,10 +970,11 @@ public class AbstractAutomaton implements Runnable {
                 }
             }
 
+            /**
+             * No steal or share decisions made locally
+             */
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-                // this is an automatically stealing impelementation.
-                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle( 
@@ -1041,11 +1042,13 @@ public class AbstractAutomaton implements Runnable {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
-
+            
+            /**
+             * No steal or share decisions made locally
+             * {@inheritDoc}
+             */
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-                // this is an automatically stealing impelementation.
-                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)

@@ -13,6 +13,8 @@
 #
 # Customize at will.
 
+listenToDCCThrottle = jmri.DccLocoAddress(3,False) # use True for a Long DCC Address.
+
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.beans.PropertyChangeListener as PropertyChangeListener
@@ -20,8 +22,6 @@ import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
 import time
-
-listenToDCCThrottle = DccLocoAddress(3,False)
 
 class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.ThrottleListener):
     #Jynstrument main and mandatory methods
@@ -136,9 +136,9 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
             print "Couldn't request a throttle for "+locoAddress     
            
-    def notifyStealThrottleRequired(self, locoAddress):
-         jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(locoAddress, self, True);
-    
+    def notifyDecisionRequired(LocoAddress, decision):
+        pass # Throttle steal / share decisions are delegated to the ThrottleManager
+        
     #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):
         pass

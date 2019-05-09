@@ -391,9 +391,11 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
        }
 
        @Override
-       public void notifyStealThrottleRequired(LocoAddress address){
-            // throttleStealResult = true;
-       }
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+                // this is a WIP impelementation.
+                if ( question == DecisionType.STEAL ){
+                }
+            }
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);

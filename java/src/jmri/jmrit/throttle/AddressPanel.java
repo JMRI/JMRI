@@ -235,11 +235,28 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
+
+
+    /**
+    * A decision is required for Throttle creation to continue.
+    * <p>
+    * Steal / Cancel, Share / Cancel, or Steal / Share Cancel
+    */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address){
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, 
-                InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() || 
-                ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)));
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+        if ( question == DecisionType.STEAL ){
+            if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() ){
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL );
+                return;
+            }
+            if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                this, Bundle.getMessage("StealQuestionText",address.toString()), 
+                Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL );
+            } else {
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+            }
+        }
     }
 
     /**

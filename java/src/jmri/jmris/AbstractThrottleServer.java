@@ -135,7 +135,9 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         }
     }
 
-    // implementation of ThrottleListener
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyThrottleFound(DccThrottle t) {
         throttleList.add(t);
@@ -147,6 +149,9 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         try {
@@ -156,10 +161,13 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         }
     }
 
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
     }
 
     // internal class used to propagate back end throttle changes

@@ -41,20 +41,22 @@ public abstract class AbstractThrottleManagerTestBase {
 
     protected class ThrottleListen implements ThrottleListener {
 
-       @Override
-       public void notifyThrottleFound(DccThrottle t){
-             throttleFoundResult = true;
-       }
+        @Override
+        public void notifyThrottleFound(DccThrottle t){
+            throttleFoundResult = true;
+        }
 
-       @Override
-       public void notifyFailedThrottleRequest(LocoAddress address, String reason){
-             throttleNotFoundResult = true;
-       }
+        @Override
+        public void notifyFailedThrottleRequest(LocoAddress address, String reason){
+            throttleNotFoundResult = true;
+        }
 
-       @Override
-       public void notifyStealThrottleRequired(LocoAddress address){
+        @Override
+        public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+        if ( question == DecisionType.STEAL ){
             throttleStealResult = true;
-       }
+            }
+        }
     }
 
     @After

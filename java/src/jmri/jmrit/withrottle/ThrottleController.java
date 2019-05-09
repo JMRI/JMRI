@@ -213,12 +213,14 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
     }
 
+    /**
+     * calls notifyFailedThrottleRequest, Steal Required
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
         notifyFailedThrottleRequest(address, "Steal Required");
-
-        // this is an automatically stealing impelementation.
-//        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
 

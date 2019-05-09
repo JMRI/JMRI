@@ -90,10 +90,13 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
     }
 
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address){
-        // this is an automatically stealing impelementation.
-        jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     void updateCurrentThrottles() {

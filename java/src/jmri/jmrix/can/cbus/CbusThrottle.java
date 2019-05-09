@@ -593,36 +593,11 @@ public class CbusThrottle extends AbstractThrottle {
         log.debug("remove listeners size is {}", getListeners().size());
         if ((getListeners().isEmpty())) {
             log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
-            jmri.InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
-                @Override
-                public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                }
-
-                @Override
-                public void notifyThrottleFound(DccThrottle t) {
-                }
+            jmri.InstanceManager.throttleManagerInstance().disposeThrottle(this, null );
     
-                @Override
-                public void notifyStealThrottleRequired(LocoAddress address){
-                    // this is an automatically stealing impelementation.
-                    jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
-                }
-            });
         }
+    
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     

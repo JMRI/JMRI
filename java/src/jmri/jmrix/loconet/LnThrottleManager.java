@@ -207,7 +207,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             if ((s.id() != 0) && s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
                 // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
-                //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
+                //note: throttle listener expects to have "callback" method notifyDecisionRequired
                 //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
                 slotForAddress.put(s.locoAddr(),s);
                 notifyStealRequest(s.locoAddr());
@@ -515,7 +515,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             waitingForNotification.get(locoAddr).interrupt();
             waitingForNotification.remove(locoAddr);
 
-            notifyStealRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
+            notifyDecisionRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)),ThrottleListener.DecisionType.STEAL);
         }
     }
 
@@ -531,23 +531,16 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * throttle running that address to drop the loco".
      *
      * @param address desired DccLocoAddress
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
+     * @param decision made by the ThrottleListener, only listening for STEAL
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
-        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
-        if (steal == false) {
-            if (address instanceof DccLocoAddress) {
-                cancelThrottleRequest(address, l);
-                failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
-            } else {
-                log.error("cannot cast address to DccLocoAddress.");
-                requestOutstanding = false;
-                processQueuedThrottleSetupRequest();
-            }
-        } else {
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision){
+        
+        if ( decision == ThrottleListener.DecisionType.STEAL ) {
+            
+            log.debug("steal invoked for address {}",address.getNumber() );
+            
             // Steal is currently implemented by using the same method
             // we used to aquire the slot prior to the release of 
             // Digitrax command stations with expanded slots.
@@ -558,6 +551,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             } else {
                 log.error("Address {} not found in list of slots", address.getNumber());
             }
+        } else {
+            log.error("Invalid DecisionType for this hardware type.");
         }
     }
 

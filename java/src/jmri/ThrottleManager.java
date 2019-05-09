@@ -42,14 +42,11 @@ public interface ThrottleManager {
     public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l);
 
     /**
-     * Request a throttle, given a decoder address. When the decoder address is
+     * Request a throttle, given a LocoAddress. When the address is
      * located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
-     * <P>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
      *
-     * @param address desired decoder address
+     * @param address desired loco address
      * @param l       ThrottleListener awaiting notification of a found throttle
      * @return true if the request will continue, false if the request will not
      *         be made; false may be returned if a the throttle is already in
@@ -66,14 +63,13 @@ public interface ThrottleManager {
     public void cancelThrottleRequest(LocoAddress address, ThrottleListener l);
 
     /**
-     * Steal a requested throttle.
+     * Steal or Share a requested throttle.
      *
      * @param address desired LocoAddress 
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
+     * @param decision from the ThrottleListener, STEAL or SHARE.
      * @since 4.9.2
      */
-    public void stealThrottleRequest(LocoAddress address, ThrottleListener l,boolean steal);
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision);
 
     /**
      * Test if the Dispatch Button should be enabled or not.

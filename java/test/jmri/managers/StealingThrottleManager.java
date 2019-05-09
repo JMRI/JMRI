@@ -34,22 +34,18 @@ public class StealingThrottleManager extends DebugThrottleManager {
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the steal callback.
         DccLocoAddress address = (DccLocoAddress) a;
-        notifyStealRequest(address);
+        responseThrottleDecision(address, ThrottleListener.DecisionType.STEAL );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void stealThrottleRequest(LocoAddress a, ThrottleListener l,boolean steal){
-        DccLocoAddress address = (DccLocoAddress) a;
-        if(steal) {
-           notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
-        } else {
-           cancelThrottleRequest(address,l);
-           failedThrottleRequest(a,"user declined to steal");
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision){
+        if ( decision == ThrottleListener.DecisionType.STEAL ) {
+            DccLocoAddress a = (DccLocoAddress) address;
+            notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
         }
     }
-
 
 }

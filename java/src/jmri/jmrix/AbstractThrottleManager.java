@@ -267,6 +267,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     @Override
     public void cancelThrottleRequest(LocoAddress la, ThrottleListener l) {
+        failedThrottleRequest(la, "Throttle request was cancelled."); // needs I18N
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(la);
             if (a == null || l == null ) {
@@ -284,14 +285,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * Steal a requested throttle.
      *
      * @param address desired LocoAddress
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
+     * @param decision either STEAL or SHARE
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(LocoAddress address, ThrottleListener l,boolean steal){
-       // the default implementation does nothing.
-       log.debug("empty stealThrottleRequest() has been activated for address {}, with steal boolean = {}",address.getNumber(),steal);
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision) {
+        log.error("Received response form ThrottleListener, this method should be overridden by a hardware type");
     }
 
     /**
@@ -303,7 +302,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * the request has failed.
      *
      * @param address The Loco Address that the request failed on.
-     * @param reason  A text string passed by the ThrottleManae as to why
+     * @param reason  A text string passed by the ThrottleManager as to why
      */
     public void failedThrottleRequest(LocoAddress address, String reason) {
         ArrayList<WaitingThrottle> a = throttleListeners.get(address);
@@ -380,28 +379,56 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
+
+    /**
+     * For when a steal / share decision is needed and the ThrottleListener has delegated
+     * this decision to the ThrottleManager.
+     * <p>
+     * Responds to the question by requesting a Throttle "Steal" by default.
+     * <p>
+     * Can be overridden by hardware types which do not wish the default behaviour to Steal.
+     * <p>
+     * This applies only to those systems where "stealing" or "sharing" applies, such as LocoNet.
+     * <p>
+     * @param address The LocoAddress the steal / share question relates to
+     * @param question The Question to be put to the ThrottleListener
+     */
+    protected void makeHardwareDecision(LocoAddress address, ThrottleListener.DecisionType question){
+        
+        responseThrottleDecision(address, ThrottleListener.DecisionType.STEAL );
+        
+    }
+
+    public int testInt =6;
+
     /**
      * When the system-specific ThrottleManager has been unable to create the DCC
-     * throttle because it is already in use and must be "stolen" to take control,
+     * throttle because it is already in use and must be "stolen" or "shared" to take control,
      * it needs to notify the listener of this situation.
      * <p>
-     * This applies only to those systems where "stealing" applies, such as LocoNet.
+     * This applies only to those systems where "stealing" or "sharing" applies, such as LocoNet.
      * <p>
-     * @param address The LocoAddress where controlling requires a steal
+     * @param address The LocoAddress the steal / share question relates to
+     * @param question The Question to be put to the ThrottleListener
      */
-    protected void notifyStealRequest(LocoAddress address) {
+    protected void notifyDecisionRequest(LocoAddress address, ThrottleListener.DecisionType question) {
+        
+        if ( testInt == 77) {
+            makeHardwareDecision(address,question);
+        }
+        
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(address);
             if (a == null) {
-                log.debug("Cannot issue a steal request to a throttle listener because No throttle listeners registered for address {}",address.getNumber());
+                log.debug("Cannot issue question, No throttle listeners registered for address {}",address.getNumber());
                 return;
             }
             ThrottleListener l;
             log.debug("{} listener(s) registered for address {}",a.size(),address.getNumber());
             for (int i = 0; i < a.size(); i++) {
                 l = a.get(i).getListener();
-                log.debug("Notifying a throttle listener (address {}) of the steal situation", address.getNumber());
-                l.notifyStealThrottleRequired(address);
+                log.debug("Notifying a throttle listener (address {}) of the steal share situation", address.getNumber());
+                l.notifyDecisionRequired(address,question);
             }
         }
     }

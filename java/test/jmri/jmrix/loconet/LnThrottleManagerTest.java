@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
@@ -57,9 +58,9 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
         tm.requestThrottle( new DccLocoAddress(1203,true), throtListen);
@@ -117,15 +118,15 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
         tm.requestThrottle(new DccLocoAddress(1204,true), throtListen);
@@ -204,15 +205,15 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
         tm.requestThrottle(new DccLocoAddress(1203,true), throtListen);
@@ -287,18 +288,20 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for " + address + " because " + reason);
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
-                log.error("1: Got a steal request");
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                    log.error("1: Got a steal request");
+                }
             }
         };
         tm.requestThrottle(new DccLocoAddress(129,true), throtListen);
@@ -332,17 +335,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for " + address + " because " + reason);
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
-                log.error("2: Got a steal request");
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                    log.error("2: Got a steal request");
+                }
             }
         };
         tm.requestThrottle(new DccLocoAddress(5,false), throtListen);
@@ -375,17 +380,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for " + address + " because " + reason);
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
-                log.error("3: Got a steal request");
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                    log.error("3: Got a steal request");
+                }
             }
         };
         tm.requestThrottle(new DccLocoAddress(85,false), throtListen);
@@ -419,17 +426,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                // this is an always-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, true);
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+                if ( question == DecisionType.STEAL ){
+                    // this is an always-stealing impelementation.
+                    flagGotStealRequest = address.getNumber();
+                    log.debug("going to steal loco {}", address);
+                    tm.responseThrottleDecision(address, DecisionType.STEAL );
+                }
             }
         };
         tm.requestThrottle(new DccLocoAddress(256,true), throtListen);
@@ -465,17 +474,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                // this is an always-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, true);
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+                if ( question == DecisionType.STEAL ){
+                    // this is an always-stealing impelementation.
+                    flagGotStealRequest = address.getNumber();
+                    log.debug("going to steal loco {}", address);
+                    tm.responseThrottleDecision(address, DecisionType.STEAL );
+                }
             }
         };
         tm.requestThrottle(new DccLocoAddress(257,true), throtListen);
@@ -508,17 +519,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
         tm.requestThrottle(new DccLocoAddress(259,true), throtListen);
@@ -561,17 +573,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -583,17 +596,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest2 = address.getNumber();
-                log.debug("Throttle2 going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest2 = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -665,17 +679,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -687,17 +702,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                // this is a never-stealing impelementation.
-                flagGotStealRequest2 = address.getNumber();
-                log.debug("Throttle2 going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+                if ( question == DecisionType.STEAL ){
+                    // this is an always-stealing impelementation.
+                    flagGotStealRequest2 = address.getNumber();
+                    log.debug("Throttle2 going to steal loco {}", address);
+                    tm.responseThrottleDecision(address, DecisionType.STEAL );
+                }
             }
         };
 
@@ -788,17 +805,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -810,17 +828,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest2 = address.getNumber();
-                log.debug("Throttle2 going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest2 = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -832,17 +851,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle3 request failed for " + address + " because " + reason);
                 failedThrottleRequest3 = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest3 = address.getNumber();
-                log.debug("Throttle3 going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest3 = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -944,17 +964,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                // this is a never-stealing impelementation.
-                flagGotStealRequest = address.getNumber();
-                log.debug("going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, true);
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+                if ( question == DecisionType.STEAL ){
+                    // this is an always-stealing impelementation.
+                    flagGotStealRequest = address.getNumber();
+                    log.debug("going to steal loco {}", address);
+                    tm.responseThrottleDecision(address, DecisionType.STEAL );
+                }
             }
         };
 
@@ -966,17 +988,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest2 = address.getNumber();
-                log.debug("Throttle2 going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest2 = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 
@@ -1065,17 +1088,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle4 request failed for " + address + " because " + reason);
                 failedThrottleRequest4 = true;
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
-                flagGotStealRequest4 = address.getNumber();
-                log.debug("Throttle4 going to steal loco {}", address);
-                tm.stealThrottleRequest(address, this, false);
+                if ( question == DecisionType.STEAL ){
+                    flagGotStealRequest4 = address.getNumber();
+                    tm.cancelThrottleRequest(address, this);
+                }
             }
         };
 

@@ -51,10 +51,11 @@ public class ConsistFunctionController implements ThrottleListener {
         log.error("Throttle request failed for " + address + " because " + reason);
     }
 
+    /**
+     * No steal or share decisions made locally
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address){
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     public void dispose() {

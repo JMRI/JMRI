@@ -471,8 +471,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         notifyPropertyChangeListener("ThrottleConnected", true, false ); // NOI18N
     }
     
-    private boolean _dispatchEnabled = InstanceManager.throttleManagerInstance().hasDispatchFunction();
-    private boolean _releaseEnabled = true;
+    // set initial values purely for changelistener following
+    private Boolean _dispatchEnabled = null; 
+    private Boolean _releaseEnabled = null;
     
     
     /**
@@ -486,6 +487,9 @@ abstract public class AbstractThrottle implements DccThrottle {
      *
      */
     protected void notifyThrottleDispatchEnabled( boolean newVal ) {
+        if (_dispatchEnabled == null){
+            _dispatchEnabled = !newVal; // make sure the 1st time is always sent
+        }
         if ( newVal == _dispatchEnabled ) {
             return;
         }
@@ -506,6 +510,9 @@ abstract public class AbstractThrottle implements DccThrottle {
      *
      */
     protected void notifyThrottleReleaseEnabled( boolean newVal ) {
+        if (_releaseEnabled == null){
+            _releaseEnabled = !newVal; // make sure the 1st time is always sent
+        }
         if ( newVal == _releaseEnabled ) {
             return;
         }
@@ -528,7 +535,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
         log.debug("remove listeners size is {}", listeners.size());
         if ((listeners.isEmpty())) {
-            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
+            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListener null value");
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
                 @Override
                 public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
@@ -539,9 +546,7 @@ abstract public class AbstractThrottle implements DccThrottle {
                 }
     
                 @Override
-                public void notifyStealThrottleRequired(LocoAddress address){
-                    // this is an automatically stealing impelementation.
-                    InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                public void notifyDecisionRequired(LocoAddress address, DecisionType question){
                 }
             });
         }

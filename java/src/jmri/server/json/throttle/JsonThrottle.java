@@ -379,10 +379,13 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         }
     }
 
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        // this is an automatically stealing implementation.
-        InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     private void sendErrorMessage(JsonException message, JsonThrottleSocketService server) {

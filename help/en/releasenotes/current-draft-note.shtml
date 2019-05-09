@@ -386,14 +386,19 @@
                 <li>RocoCrane</li>
                 <li>Zimo Programmers</li>
             </ul>
-            <br>
             Old syntax: <code>self.throttle.release()</code> <br>
             New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
+            <br>
             </li>
             <li><strong>Custom scripts that use the DCCThrottle.py Jynstrument may need to be modified.</strong><br>
-            Old syntax: <code>listenToDCCThrottle = 3</code> <br>
-            New syntax (below imports): <code>listenToDCCThrottle = DccLocoAddress(3,False)</code>
-            using <code>True</code> for Long DCC addresses.
+            Old line 16: <code>listenToDCCThrottle = 3</code> <br>
+            New line 16: <code>listenToDCCThrottle = jmri.DccLocoAddress(3,False) # use True for long DCC Addresses</code><br>
+            Old line 139 : <code>def notifyStealThrottleRequired(self, locoAddress):</code><br>
+            Old line 140 : <code>jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(locoAddress, 
+                self, True);</code><br>
+            New line 139 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
+            New line 140 : <code>pass # Throttle steal / share decisions are delegated to the ThrottleManager</code><br>
+            These changes were made to enhance the JMRI Steal / Share mechanism for hardware types that support this.<br>
             </li>
         </ul>
 

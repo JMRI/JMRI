@@ -23,6 +23,27 @@ import java.util.EventListener;
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public interface ThrottleListener extends EventListener {
+    
+    /**
+     * A decision type requested from ThrottleManager to ThrottleListener,
+     * or decision made from ThrottleListener to ThrottleManager
+     *
+     * @since 4.15.6
+     */
+    enum DecisionType {
+        /**
+         * Notification for decision needed Steal OR Cancel, or wish to Steal
+         */
+        STEAL,
+        /**
+         * Notification for decision needed Share OR Cancel, or wish to Share
+         */
+        SHARE,
+        /**
+         * Notification for decision needed Steal OR Share OR Cancel
+         */
+        STEAL_OR_SHARE
+    }
 
     /**
      * Get notification that a throttle has been found as you requested.
@@ -38,14 +59,15 @@ public interface ThrottleListener extends EventListener {
      * @param reason  The reason why the throttle request failed.
      */
     public void notifyFailedThrottleRequest(LocoAddress address, String reason);
-
+    
     /**
-     * Get notification that a throttle request requires is in use by another
-     * device, and a "steal" may be required.
+     * Get notification that a throttle request is in use by another
+     * device, and a "steal", "share", or "steal/share" decision may be required.
      *
-     * @param address LocoAddress of the throttle that needs to be stolen.
+     * @param address The LocoAddress that needs the decision.
+     * @param question The question being asked, steal / cancel, share / cancel, steal / share / cancel
      */
-    public void notifyStealThrottleRequired(LocoAddress address);
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question);
 
 }
 
