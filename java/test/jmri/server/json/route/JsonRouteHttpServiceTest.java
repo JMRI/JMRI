@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Route;
@@ -216,16 +215,6 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), locale, 0);
         validate(result);
         assertEquals(2, result.size());
-    }
-
-    @Test
-    public void testDelete() {
-        try {
-            service.doDelete(JsonRouteServiceFactory.ROUTE, "", NullNode.getInstance(), locale, 42);
-            fail("Did not throw expected error.");
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-        }
     }
 
     @Before

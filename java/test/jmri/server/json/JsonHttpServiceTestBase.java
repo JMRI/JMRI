@@ -2,6 +2,12 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
+
 import java.util.Locale;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -11,6 +17,7 @@ import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Common methods for JMRI JSON Service HTTP provider tests.
@@ -31,7 +38,7 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
     @OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        this.mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         // require valid inputs and outputs for tests by default
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateClientMessages(true);
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
@@ -43,9 +50,22 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
      */
     @OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
-        this.service = null;
-        this.mapper = null;
+        service = null;
+        mapper = null;
         JUnitUtil.tearDown();
+    }
+
+    @Test
+    public void testDoDelete() throws JsonException {
+        try {
+            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
+            service.doDelete("foo", "foo", NullNode.getInstance(), locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals("Code is HTTP METHOD NOT ALLOWED", 405, ex.getCode());
+            assertEquals("Message", "Deleting foo is not allowed.", ex.getMessage());
+            assertEquals("ID is 42", 42, ex.getId());
+        }
     }
 
     /**

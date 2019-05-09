@@ -155,17 +155,6 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         assertEquals(2, result.size());
     }
 
-    @Test
-    public void testDelete() {
-        try {
-            service.doDelete(JsonSensor.SENSOR, "", NullNode.getInstance(), locale, 42);
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-            return;
-        }
-        fail("Did not throw expected error.");
-    }
-
     @Before
     public void setUp() throws Exception {
         super.setUp();

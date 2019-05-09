@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author Randall Wood Copyright 2018
  */
-public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase<JsonNamedBeanHttpService<Turnout>> {
+public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Turnout, JsonNamedBeanHttpService<Turnout>> {
 
     public JsonNamedBeanHttpServiceTest() {
     }
@@ -69,7 +69,6 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase<JsonNa
      */
     @Test
     public void testGetNamedBean() throws Exception {
-        Turnout bean = null;
         String name = "non-existant";
         String type = "non-existant";
         try {
@@ -95,7 +94,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase<JsonNa
         String name = "IT1";
         // retain turnout as NamedBean to ensure only "generic" NamedBean
         // methods are used
-        Turnout bean = InstanceManager.getDefault(TurnoutManager.class).provide(name);
+        bean = InstanceManager.getDefault(TurnoutManager.class).provide(name);
         bean.setUserName("Turnout 1");
         bean.setComment("Turnout Comment");
         bean.setProperty("foo", "bar");
@@ -132,7 +131,6 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase<JsonNa
      */
     @Test
     public void testPostNamedBean() throws Exception {
-        Turnout bean = null;
         String name = "non-existant";
         String type = "non-existant";
         try {
@@ -145,5 +143,4 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase<JsonNa
             Assert.assertEquals("Message Id", 42, ex.getId());
         }
     }
-
 }

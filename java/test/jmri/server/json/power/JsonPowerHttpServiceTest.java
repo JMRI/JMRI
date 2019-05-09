@@ -98,7 +98,7 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
     }
 
     @Test
-    public void testDelete() {
+    public void testDoDelete() {
         try {
             service.doDelete(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);
             Assert.fail("Expected exception not thrown");

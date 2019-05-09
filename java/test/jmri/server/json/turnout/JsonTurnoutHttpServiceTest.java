@@ -134,17 +134,6 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         assertEquals(2, result.size());
     }
 
-    @Test
-    public void testDelete() {
-        try {
-            service.doDelete(JsonTurnoutServiceFactory.TURNOUT, "", NullNode.getInstance(), locale, 42);
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-            return;
-        }
-        fail("Did not throw expected error.");
-    }
-
     @Before
     @Override
     public void setUp() throws Exception {

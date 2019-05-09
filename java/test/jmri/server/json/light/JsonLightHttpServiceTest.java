@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -128,17 +127,6 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
         validate(result);
         assertEquals(2, result.size());
         this.validate(result);
-    }
-
-    @Test
-    public void testDelete() {
-        try {
-            service.doDelete(JsonLight.LIGHT, "", NullNode.getInstance(), locale, 0);
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-            return;
-        }
-        fail("Did not throw expected error.");
     }
 
     @Before

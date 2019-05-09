@@ -9,7 +9,6 @@ import static org.junit.Assert.fail;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
@@ -149,16 +148,6 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         result = service.doGetList(REPORTER, mapper.createObjectNode(), locale, 0);
         validate(result);
         assertEquals(2, result.size());
-    }
-
-    @Test
-    public void testDelete() {
-        try {
-            service.doDelete(REPORTER, "", NullNode.getInstance(), locale, 42);
-            fail("Did not throw expected error.");
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-        }
     }
 
     // The minimal setup for log4J

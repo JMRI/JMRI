@@ -1,9 +1,16 @@
 package jmri.server.json;
 
 import jmri.NamedBean;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.node.NullNode;
 
 /**
  * Test handling of null, or non-existent Named Beans. Testing of existent, or
@@ -15,7 +22,6 @@ import org.junit.Test;
  */
 public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S extends JsonNamedBeanHttpService<B>> extends JsonHttpServiceTestBase<S> {
 
-    protected S service;
     protected B bean = null;
 
     @After
@@ -92,4 +98,17 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
         }
     }
 
+    @Test
+    @Override
+    public void testDoDelete() throws JsonException {
+        try {
+            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
+            service.doDelete(service.getType(), "non-existant", NullNode.getInstance(), locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals("Code is HTTP METHOD NOT ALLOWED", 405, ex.getCode());
+            assertEquals("Message", "Deleting " + service.getType() + " is not allowed.", ex.getMessage());
+            assertEquals("ID is 42", 42, ex.getId());
+        }
+    }
 }

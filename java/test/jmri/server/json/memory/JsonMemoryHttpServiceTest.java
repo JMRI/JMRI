@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.node.NullNode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
-import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
@@ -96,16 +94,6 @@ public class JsonMemoryHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         result = service.doGetList(JsonMemory.MEMORY, NullNode.getInstance(), locale, 0);
         validate(result);
         assertEquals(2, result.size());
-    }
-
-    @Test
-    public void testDelete() {
-        try {
-            service.doDelete(JsonMemory.MEMORY, "", NullNode.getInstance(), locale, 42);
-            fail("Did not throw expected error.");
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
-        }
     }
 
     @Before

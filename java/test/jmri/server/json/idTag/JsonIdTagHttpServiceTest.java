@@ -2,6 +2,7 @@ package jmri.server.json.idTag;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import static org.junit.Assert.assertEquals;
@@ -140,6 +141,36 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
+        }
+    }
+
+    @Test
+    @Override
+    public void testDoDelete() throws JsonException {
+        ObjectNode message = mapper.createObjectNode();
+        IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
+        manager.provide("ID1");
+        // delete an idTag
+        assertNotNull(manager.getBeanBySystemName("ID1"));
+        try {
+            // first attempt should fail on conflict
+            service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+        }
+        assertNotNull(manager.getBeanBySystemName("ID1"));
+        // will throw if prior catch failed
+        service.doDelete(JsonIdTag.IDTAG, "ID1", message, locale, 0);
+        assertNull(manager.getBeanBySystemName("ID1"));
+        try {
+            // deleting again should throw an exception
+            service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
         }
     }
 
