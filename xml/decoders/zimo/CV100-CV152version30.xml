@@ -12,6 +12,7 @@
 <!-- version 1.5 23 Jan 2015 Mark Waters -  added more includes for CV133 for newer decoders -->
 <!-- version 1.6 14 Dec 2016 Ronald Kuhn -  added german translation and Function Decoder-->
 <!-- version 1.7 15 Apr 2019 Ronald Kuhn -  added some german translation -->
+<!-- version 1.8 06 May 2019 Ronald Kuhn -  added CV144 Bit4 & Bit5 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -1210,7 +1211,7 @@
     <label xml:lang="de">Asymmetrie-Schwelle</label>
     <label xml:lang="cs">Práh asymetrického DCC</label>
   </variable>
-  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0"  mask="XXXVVVVV" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>
       <enumChoice choice="Not Active">
         <choice>Not Active</choice>
@@ -1403,12 +1404,30 @@
     <label xml:lang="cs">Rychlostní korekce pro zastavení řízené vzdáleností (HLU)</label>
     <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (HLU)</label>
   </variable>
+  <variable CV="144" item="Jingle Sound CV Write" mask="XXXVXXXX" default="0" include="190,221,222,225,246,253">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Jingle Sound CV Write</label>
+    <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
+    <tooltip>The writing of values is confirmed by a jingle.</tooltip>
+    <tooltip xml:lang="de">Das Schreiben von Werten wird durch einen Jingle bestätigt.</tooltip>
+  </variable>
+  <variable CV="144" item="Service Mode Programming Read Locked" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Service Mode Programming Read Locked</label>
+    <!--label xml:lang="it">Blocco programmazione in modo Servizio</label-->
+    <!--label xml:lang="cs">Zámek programování v servisním režimu</label-->
+    <label xml:lang="de">„Service mode“-Sperre CV lesen</label>
+    <tooltip>Read CV's in "Service mode" locked</tooltip>
+    <tooltip xml:lang="de">CV's lesen im "Service mode" gesperrt</tooltip>
+  </variable>
   <variable CV="144" item="Service Mode Programming Locked" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Service Mode Programming Locked</label>
     <label xml:lang="it">Blocco programmazione in modo Servizio</label>
     <label xml:lang="cs">Zámek programování v servisním režimu</label>
-    <label xml:lang="de">Programmiersperre</label>
+    <label xml:lang="de">„Service mode“-Sperre CV schreiben</label>
+    <tooltip>Programming lock only in "Service mode"</tooltip>
+    <tooltip xml:lang="de">Programmiersperre nur im „Service mode“</tooltip>
   </variable>
   <variable CV="144" item="Software Update Locked" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1416,6 +1435,8 @@
     <label xml:lang="it">Blocco aggiornamento Software</label>
     <label xml:lang="cs">Zámek softwarových aktualizací</label>
     <label xml:lang="de">Updatesperre</label>
+    <tooltip>Lock the software update</tooltip>
+    <tooltip xml:lang="de">Sperre des Software-Updates</tooltip>
   </variable>
   <variable CV="145" item="Kick Start" default="0" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>

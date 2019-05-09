@@ -163,7 +163,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                                     tInfo.setDelayedRestart(ActiveTrain.SENSORDELAY);
                                     if (traininfo.getAttribute("delayedrestartsensor") != null) {
                                         tInfo.setRestartSensorName(traininfo.getAttribute("delayedrestartsensor").getValue());
-                                    }   break;
+                                    }   
+                                    if (traininfo.getAttribute("resetrestartsensor") != null) {
+                                        tInfo.setResetRestartSensor(traininfo.getAttribute("resetrestartsensor").getValue().equals("yes"));
+                                    }
+                                    break;
                                 case "timed":
                                     tInfo.setDelayedRestart(ActiveTrain.TIMEDDELAY);
                                     if (traininfo.getAttribute("delayedrestarttime") != null) {
@@ -202,6 +206,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     }
                     if (traininfo.getAttribute("delayedSensor") != null) {
                         tInfo.setDelaySensorName(traininfo.getAttribute("delayedSensor").getValue());
+                    }
+                    if (traininfo.getAttribute("resetstartsensor") != null) {
+                        tInfo.setResetStartSensor(traininfo.getAttribute("resetstartsensor").getValue().equals("yes"));
                     }
                     if (traininfo.getAttribute("traintype") != null) {
                         tInfo.setTrainType(traininfo.getAttribute("traintype").getValue());
@@ -391,6 +398,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             case ActiveTrain.SENSORDELAY:
                 traininfo.setAttribute("delayedrestart", "sensor");
                 traininfo.setAttribute("delayedrestartsensor", tf.getRestartSensorName());
+                traininfo.setAttribute("resetrestartsensor", "" + (tf.getResetRestartSensor() ? "yes" : "no"));
                 break;
             case ActiveTrain.TIMEDDELAY:
                 traininfo.setAttribute("delayedrestart", "timed");
@@ -408,6 +416,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             traininfo.setAttribute("delayedstart", "sensor");
             if (tf.getDelaySensorName() != null) {
                 traininfo.setAttribute("delayedSensor", tf.getDelaySensorName());
+                traininfo.setAttribute("resetstartsensor", "" + (tf.getResetStartSensor() ? "yes" : "no"));
             }
         }
 

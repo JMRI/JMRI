@@ -54,7 +54,7 @@
         </display>
         <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
           <label>Reverse Headlight F0(r)</label>
-          <label>Reverse Headlight F0(r)</label>
+          <label xml:lang="it">Luci Posteriori  F0(retro)</label>
           <label xml:lang="cs">Zadní světla F0 vzad</label>
           <label xml:lang="de">F0 (hinten)         </label>
         </display>
