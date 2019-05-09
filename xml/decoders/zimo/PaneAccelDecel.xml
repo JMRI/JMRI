@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german and czech translation and CVs from v37+ -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Accel/Decel</name>
+  <name xml:lang="cs">Zrychlení/Zpomalení</name>
+  <name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
   <column>
     <row>
       <column>
@@ -39,15 +43,18 @@
         </row>
       </column>
     </row>
+   <group exclude="226,228">
     <separator/>
     <row>
       <column>
         <display item="BEMF Intensity"/>
       </column>
       <column>
+        <display item="Brake key"/>
         <label>
           <text>   </text>
         </label>
+        <display item="Brake time"/>
       </column>
       <separator/>
       <column>
@@ -59,26 +66,34 @@
         </label>
       </column>
       <column>
-        <label>
-          <text> </text>
-        </label>
-        <label>
+          <label>
+           <text> </text>
+          </label>
+          <label>
             <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
             <text xml:lang="it">Numero Centinaia =1 è valore intermedio per motori 'coreless'</text>
+            <text xml:lang="cs">Stovky jsou pro coreless motory, 1 je střední hodnota</text>
+            <text xml:lang="de">Hunderterstelle: modifizierte Einstellungen für Glockenanker-Motoren (Faulhaber, Maxxon, usw.)</text>
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
             <text xml:lang="it">Numero decine è valore proporzionale, valore medio=5</text>
+            <text xml:lang="cs">Desítky jsou proporcionální složka, 5 je střední hodnota</text>
+            <text xml:lang="de">Zehnerstelle: Proportional-Wert der PID-Regelung</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
             <text xml:lang="it">Numero unità è valore integrale, valore medio =5</text>
+            <text xml:lang="cs">Jednotky jsou integrační složka, 5 je střední hodnota</text>
+            <text xml:lang="de">Einerstelle: Integral-Wert der PID-Regelung</text>
           </label>
           <label>
             <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
             <text xml:lang="it">Con i valori di default = 0 il valore proporzionale si regola automaticamente e il valore integrale è = 5</text>
+            <text xml:lang="cs">S výchozím nastavením 0 se proporcionální složka upravuje automaticky a integrační složka odpovídá 5</text>
+            <text xml:lang="de">Bei der Einstellung 0 werden die Proportionalwerte automatisch angepasst und der Integralwert entspricht 5</text>
           </label>
-        <label>
+          <label>
           <text> </text>
         </label>
       </column>
@@ -92,43 +107,61 @@
         <text>    </text>
       </label>
       <column>
-        <label>
+          <label>
           <text> </text>
         </label>
-        <label>
-            <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
-            <text xml:lang="it">0 = 20/40KHz (con CV112) e campionamento si regola automaticamente tra 200Hz (bassa velocità) e 50Hz</text>
-          </label>
           <label>
             <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
             <text xml:lang="it">Numero decine = campionamento (1-9) valore medio=5</text>
+            <text xml:lang="cs">Desítky = vzorkovací frekvence (1-9) střední hodnota = 5</text>
+            <text xml:lang="de">Zehnerstelle = Abtastrate (1-9) Mittelwert = 5</text>
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
             <text xml:lang="it">Numero unità = tempo campionamento EMF(1-9), valore medio =5</text>
+            <text xml:lang="cs">Jednotky = EMF vzorkovací čas (1-9) střední hodnota = 5</text>
+            <text xml:lang="de">Einerstelle = EMF-Abtastzeit (1-9) Mittelwert = 5</text>
+          </label>
+          <label>
+            <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
+            <text xml:lang="it">0 = 20/40KHz (con CV112) e campionamento si regola automaticamente tra 200Hz (bassa velocità) e 50Hz</text>
+            <text xml:lang="cs">0 = 20/40kHz (nastaveno s CV112) a vzorkovací frekvence se nastavuje automaticky mezi 200 Hz (nízká rychlost) a 50 Hz</text>
+            <text xml:lang="de">0 = 20 kHz, 1 = 40 kHz (gesetzt in CV112)</text>
+          </label>
+          <label>
+            <text xml:lang="de">       200 Hz (bei Langsamfahrt) und 50 Hz an</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
             <text xml:lang="it">100 = Campionamento 'Ampio spettro' per rumore ridotto, con tempo campionamento medio</text>
+            <text xml:lang="cs">100 = 'Rozdělení spektra' vzorkovací frekvence pro omezení šumu, se středním vzorkovacím časem</text>
+            <text xml:lang="de">100 = 'Spread Spectrum' Abtastrate für reduziertes Rauschen bei mittlerer Abtastzeit</text>
           </label>
           <label>
             <text>255-176 = Low frequency according to formula;-</text>
             <text xml:lang="it">255-176 = Bassa frequenza secondo la formula;-</text>
+            <text xml:lang="cs">255-176 = Nízká frekvence podle vzorce</text>
+            <text xml:lang="de">255 - 176 = Niederfrequenz (nur für alte Motoren!) nach folgender Formel</text>
           </label>
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
             <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
+            <text xml:lang="cs">(131 + mantisa * 4) * 2 ^ exponent. Bity 0-4 = mantisa, Bity 5-7 = exponent</text>
+            <text xml:lang="de">                    (131 + mantisse * 4) * 2 exp. Bit 0-4 = mantisse, Bit 5-7 = exp</text>
           </label>
         <label>
           <text> </text>
         </label>
       </column>
     </row>
+   </group>
     <separator/>
     <row>
       <label>
         <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
         <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
+        <text xml:lang="cs">Doba zrychlení/zpomalení (hybnost) se může rozprostírat v rozmezí nížších rychlostí</text>
+        <text xml:lang="de">Beschleunigungs-/Bremsverhalten kann im Niedriggeschwindigkeitsbereich angepasst werden.</text>
       </label>
     </row>
     <row>
@@ -148,32 +181,41 @@
         </label>
       </column>
       <column>
-        <label>
-          <text> </text>
-        </label>
-        <label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
             <text>Tens digit = percentage of speed range to be included (0-9)</text>
             <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
+            <text xml:lang="cs">Desítky = procentuální podíl rozsahu otáček, které mají být zahrnuty (0-9)</text>
+            <text xml:lang="de">Zehnerstelle: Prozentsatz (0 bis 90 %) des Geschwindigkeitsbereichs (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Exponential curve (0-9)</text>
             <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
+            <text xml:lang="cs">Jednotky = exponenciální křivka (0-9)</text>
+            <text xml:lang="de">Einerstelle: Parameter für die Krümmung der Exponentialfunktion. (0-9)</text>
           </label>
-        <label>
-          <text> </text>
-        </label>
+          <label>
+           <text> </text>
+          </label>
       </column>
     </row>
+   <group exclude="226,228">
     <separator/>
     <row>
       <column>
-        <label>
+          <label>
             <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
             <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto lo step precedente. La tolleranza</text>
+            <text xml:lang="cs">K zvyšování nebo snižování rychlosti na další interní krok dochází pouze pokud předchozí krok je téměř dosažen.</text>
+            <text xml:lang="de">Die Erhöhung bzw. Absenkung der Sollgeschwindigkeit soll erst nach einer definierten Annäherung der Ist-Geschwindigkeit</text>
           </label>
           <label>
             <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
             <text xml:lang="it">per raggiungere lo step precedente è definita da questa CV ( valori piccoli per accell./decell. più graduali)</text>
+            <text xml:lang="cs">Tolerance pro dosažení předchozího kroku je definována tímto CV (menší hodnota pro hladké zrychlení/zpomalení)</text>
+            <text xml:lang="de">an die bisher vorgegebene Sollgeschwindigkeit erfolgen. Die CV #123 enthält den Fahrstufenabstand, der erreicht werden muss.</text>
           </label>
       </column>
     </row>
@@ -199,20 +241,26 @@
         <label>
             <text>Tens digit = acceleration (1-9)</text>
             <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
+            <text xml:lang="cs">Desítky = zrychlení (1-9)</text>
+            <text xml:lang="de">Zehnerstelle: 0 - 9 für Beschleunigen (1 = starke Wirkung)</text>
           </label>
           <label>
             <text>Ones digit = deceleration (1-9)</text>
             <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
+            <text xml:lang="cs">Jednotky = zpomalení (1-9)</text>
+            <text xml:lang="de">Einerstelle: 0 - 9 für die Bremsung</text>
           </label>
           <label>
             <text>Value 0 = no adaptive acceleration/deceleration</text>
             <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
+            <text xml:lang="cs">Hodnota 0 = bez přizpůsobeného zrychlení/zpomalení</text>
+            <text xml:lang="de">0: kein adaptives Verfahren</text>
           </label>
         <label>
           <text> </text>
         </label>
       </column>
     </row>
+   </group>
   </column>
-  <name>Accel/Decel</name>
 </pane>

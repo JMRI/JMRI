@@ -564,8 +564,17 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         String name = block.getSystemName();
         for (int i = 0; i < paths.size(); i++) {
-            String pathName = paths.get(i).getBlock().getSystemName();
+            OPath path = paths.get(i);
+            jmri.Block blk = path.getBlock();
+            if (blk == null) {
+                log.error("Path \"{}\" belongs to null block. Cannot verify set block to \"{}\"",
+                        path.getName(), name);
+                return false;
+            }
+            String pathName = blk.getSystemName();
             if (!pathName.equals(name)) {
+                log.warn("Path \"{}\" belongs to block \"{}\". Cannot verify set block to \"{}\"",
+                        path.getName(), pathName, name);
                 return false;
             }
         }

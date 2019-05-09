@@ -35,6 +35,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1964,7 +1965,8 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 // only print out the first DISPLAY_CAR_LIMIT cars for each location
-                if (carCount < DISPLAY_CAR_LIMIT_50) {
+                if (carCount < DISPLAY_CAR_LIMIT_50 &&
+                        (car.getKernel() == null || car.isLead())) {
                     if (car.getLoadPriority().equals(CarLoad.PRIORITY_LOW)) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
                                 new Object[]{car.toString(), car.getTypeName(), car.getTypeExtensions(),
@@ -1977,24 +1979,30 @@ public class TrainBuilder extends TrainCommon {
                                         car.getTrackName(), car.getMoves(), car.getLoadName(),
                                         car.getLoadPriority()}));
                     }
-                }
-                if (carCount == DISPLAY_CAR_LIMIT_50) {
-                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
-                            new Object[]{carCount, rl.getName()}));
-                }
-                carCount++;
-                // use only the lead car in a kernel for building trains
-                if (car.getKernel() != null) {
                     if (car.isLead()) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarLeadKernel"),
                                 new Object[]{car.toString(), car.getKernelName(), car.getKernel().getSize(),
                                         car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()}));
-                    } else {
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
-                                new Object[]{car.toString(), car.getKernelName(), car.getKernel().getSize(),
-                                        car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()}));
+                        // list all of the cars in the kernel now
+                        for (Car k : car.getKernel().getCars()) {
+                            if (!k.isLead()) {
+                                addLine(_buildReport, SEVEN,
+                                        MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
+                                                new Object[]{k.toString(), k.getKernelName(), k.getKernel().getSize(),
+                                                        k.getKernel().getTotalLength(),
+                                                        Setup.getLengthUnit().toLowerCase()}));
+                            }
+                        }
                     }
-                    checkKernel(car);
+                    carCount++;
+                    if (carCount == DISPLAY_CAR_LIMIT_50) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
+                                new Object[]{carCount, rl.getName()}));
+                    }
+                }             
+                // use only the lead car in a kernel for building trains
+                if (car.getKernel() != null) {
+                    checkKernel(car); // confirm that kernel has lead car and all cars have the same location and track
                     if (!car.isLead()) {
                         _carList.remove(car); // remove this car from the list
                         i--;
@@ -5241,36 +5249,40 @@ public class TrainBuilder extends TrainCommon {
         log.debug(msg);
 
         if (trainManager.isBuildMessagesEnabled()) {
-            if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
-                JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                        new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
-            } else {
-                // build error, could not find destinations for cars departing staging
-                Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
-                int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
-                        .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
-                if (results == 0) {
-                    log.debug("User requested that cars be removed from staging track");
-                    removeCarsFromStaging();
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
+                    JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                            new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // build error, could not find destinations for cars departing staging
+                    Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
+                    int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
+                            .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+                    if (results == 0) {
+                        log.debug("User requested that cars be removed from staging track");
+                        removeCarsFromStaging();
+                    }
                 }
-            }
-            int size = carManager.getList(_train).size();
-            if (size > 0) {
-                if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
-                        new Object[]{size, _train.getName()}), Bundle.getMessage("buildResetTrain"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
+                int size = carManager.getList(_train).size();
+                if (size > 0) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
+                                    new Object[]{size, _train.getName()}),
+                            Bundle.getMessage("buildResetTrain"),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        _train.reset();
+                    }
+                } else if ((size = engineManager.getList(_train).size()) > 0) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
+                                    new Object[]{size, _train.getName()}),
+                            Bundle.getMessage("buildResetTrain"),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        _train.reset();
+                    }
                 }
-            } else if ((size = engineManager.getList(_train).size()) > 0) {
-                if (JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
-                                new Object[]{size, _train.getName()}),
-                        Bundle.getMessage("buildResetTrain"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    _train.reset();
-                }
-            }
+            });
         }
         if (_buildReport != null) {
             addLine(_buildReport, ONE, msg);

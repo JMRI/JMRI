@@ -36,8 +36,18 @@
         </ul>
 
     <h2>Signal Data Table Columns</h2>
+    
+        <img src="Cab-Signals-Window-868x211.png" 
+            height="211" width="868" 
+            title="JMRI CabSignal Data Send Layout Window"
+            alt="JMRI Cab Signal Data Send Window"
+            >
+    
         <ul>
         <li>Loco ID</li>
+        <li>Send Cabdata checkbox - Will send data for Cab Signalling when 
+            the next signal aspect or speed changes.
+            Will not send when the master Cabdata button is paused.</li>
         <li>Block - Current Block Username</li>
         <li>Direction of current block</li>
         <li>Block Button - "Block Lookup" Will search for a block which 
@@ -47,9 +57,8 @@
         <li>Next Block Username</li>
         <li>Next Signal Mast Username</li>
         <li>Next Aspect</li>
-        <li>Send Cabdata checkbox - Will send data for Cab Signalling when 
-        the next signal aspect or speed changes.
-        Over-ridden by the master Cabdata button being switched off.</li>
+        <li>Next Aspect ( Icon )<br>The icon orientations can be changed 
+            via the Aspect Icon Menu in the top menu bar.</li>
         </ul>
                 
         <p>The table will attempt to identify which 
@@ -84,12 +93,8 @@
         on an individual Layout Editor 
         track segment and selecting View Block Routing.</p>
         
-        <p>As the tracking takes data from the block table, 
-        if your panel is loaded after the monitor, click on 
-        Refresh Blocks, within the Command station Options menu.</p>
-        
         <p>The table will follow the block route of the train until 
-        it finds the next signal.</p>  
+        it finds the next signal or bumper / buffer stop.</p>  
 
         <p>Signals used by this tool are defined using <a href="../../../../html/tools/signaling/AspectSignaling.shtml">Aspect Signalling</a>.
 

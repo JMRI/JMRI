@@ -23,7 +23,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast {
+public class NBHSignalMast extends NBHAbstractSignalCommon {
 
 //  Standard sane return values for the types indicated:
     public static final Object DEFAULT_OBJECT_RV = null;       // For any function that returns something derived from Java's Object.
@@ -80,61 +80,14 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
     @Override
     public void setAppearance(int newAppearance) {}
 
-
-    @Override
-    public void setAspect(String aspect) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setAspect(aspect);
-    }
-
-    @Override
     public String getAspect() {
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
         return _mNamedBeanHandleSignalMast.getBean().getAspect();
     }
 
-    @Override
-    public Vector<String> getValidAspects() {
-        if (_mNamedBeanHandleSignalMast == null) return new Vector<>();
-        return _mNamedBeanHandleSignalMast.getBean().getValidAspects();
-    }
-
-//  Without a default "SignalSystem", just return null if the object is invalid, let the caller deal with it!
-    @Override
-    public SignalSystem getSignalSystem() {
-        if (_mNamedBeanHandleSignalMast == null) return null;
-        return _mNamedBeanHandleSignalMast.getBean().getSignalSystem();
-    }
-
-//  Without a default "SignalAppearanceMap", just return null if the object is invalid, let the caller deal with it!
-    @Override
     public SignalAppearanceMap getAppearanceMap() {
         if (_mNamedBeanHandleSignalMast == null) return null;
         return _mNamedBeanHandleSignalMast.getBean().getAppearanceMap();
-    }
-
-    @Override
-    public void setMastType(String type) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setMastType(type);
-    }
-
-    @Override
-    public String getMastType() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getMastType();
-    }
-
-    @Override
-    public boolean getLit() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_BOOLEAN_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getLit();
-    }
-
-    @Override
-    public void setLit(boolean newLit) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setLit(newLit);
     }
 
     @Override
@@ -150,57 +103,9 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
     }
 
     @Override
-    public boolean isAspectDisabled(String aspect) {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_BOOLEAN_RV;
-        return _mNamedBeanHandleSignalMast.getBean().isAspectDisabled(aspect);
-    }
-
-    @Override
-    public void setAllowUnLit(boolean boo) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setAllowUnLit(boo);
-    }
-
-    @Override
-    public boolean allowUnLit() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_BOOLEAN_RV;
-        return _mNamedBeanHandleSignalMast.getBean().allowUnLit();
-    }
-
-    @Override
-    public String getUserName() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getUserName();
-    }
-
-    @Override
-    public void setUserName(String s) throws BadUserNameException {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setUserName(s);
-    }
-
-    @Override
-    public String getSystemName() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getSystemName();
-    }
-
-    @Override
     public String getDisplayName() {
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
         return _mNamedBeanHandleSignalMast.getBean().getDisplayName();
-    }
-
-    @Override
-    public String getFullyFormattedDisplayName() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getFullyFormattedDisplayName();
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().addPropertyChangeListener(l, name, listenerRef);
     }
 
     @Override
@@ -214,115 +119,4 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         if (_mNamedBeanHandleSignalMast == null) return;
         _mNamedBeanHandleSignalMast.getBean().removePropertyChangeListener(l);
     }
-
-    @Override
-    public void updateListenerRef(PropertyChangeListener l, String newName) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().updateListenerRef(l, newName);
-    }
-
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "I don't use this function, let it not do anything if it fails.")
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        try { _mNamedBeanHandleSignalMast.getBean().vetoableChange(evt); } catch (PropertyVetoException ex){}
-    }
-
-    @Override
-    public String getListenerRef(PropertyChangeListener l) {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getListenerRef(l);
-    }
-
-    @Override
-    public ArrayList<String> getListenerRefs() {
-        if (_mNamedBeanHandleSignalMast == null) return new ArrayList<>();
-        return _mNamedBeanHandleSignalMast.getBean().getListenerRefs();
-    }
-
-    @Override
-    public int getNumPropertyChangeListeners() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_INT_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getNumPropertyChangeListeners();
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-        if (_mNamedBeanHandleSignalMast == null) return new PropertyChangeListener[0];
-        return _mNamedBeanHandleSignalMast.getBean().getPropertyChangeListenersByReference(name);
-    }
-
-    @Override
-    public void dispose() {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().dispose();
-    }
-
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
-    @Override
-    public void setState(int s) throws JmriException {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        try { _mNamedBeanHandleSignalMast.getBean().setState(s); } catch (JmriException ex){}
-    }
-
-    @Override
-    public int getState() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_INT_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getState();
-    }
-
-    @Override
-    public String describeState(int state) {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().describeState(state);
-    }
-
-    @Override
-    public String getComment() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getComment();
-    }
-
-    @Override
-    public void setComment(String comment) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setComment(comment);
-    }
-
-    @Override
-    public void setProperty(String key, Object value) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().setProperty(key, value);
-    }
-
-    @Override
-    public Object getProperty(String key) {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_OBJECT_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getProperty(key);
-    }
-
-    @Override
-    public void removeProperty(String key) {
-        if (_mNamedBeanHandleSignalMast == null) return;
-        _mNamedBeanHandleSignalMast.getBean().removeProperty(key);
-    }
-
-    @Override
-    public Set<String> getPropertyKeys() {
-        if (_mNamedBeanHandleSignalMast == null) return Collections.emptySet();
-        return _mNamedBeanHandleSignalMast.getBean().getPropertyKeys();
-    }
-
-    @Override
-    public String getBeanType() {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getBeanType();
-    }
-
-    @Override
-    public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        if (_mNamedBeanHandleSignalMast == null) return DEFAULT_INT_RV;
-        return _mNamedBeanHandleSignalMast.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
-    }
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSignalMast.class);
 }

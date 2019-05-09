@@ -97,9 +97,7 @@ public class DebuggerTimePane extends JPanel
             double rt = p.distance(x) / Engine.instance().getVSound();
             int res = (int) (rt - m.getReading().getValue(i)) - Engine.instance().getOffset();
             residuals[i].setText("" + res);
-            if (log.isDebugEnabled()) {
-                log.debug(" residual " + res + " from " + p + " vs " + x);
-            }
+            log.debug(" residual {} from {} vs {}", res, p, x);
         } catch (Exception e) {
             residuals[i].setText(""); // just blank out
         }
@@ -113,7 +111,6 @@ public class DebuggerTimePane extends JPanel
         for (int i = 1; i <= Math.min(r.getNValues(), times.length - 1); i++) {
             times[i].setText(nf.format(r.getValue(i)));
         }
-
     }
 
     @Override
@@ -123,9 +120,10 @@ public class DebuggerTimePane extends JPanel
                 setResidual(i, m);
             }
         } catch (Exception e) {
-            log.error("Error setting residual: " + e);
+            log.error("Error setting residual: ", e);
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DebuggerTimePane.class);
+
 }

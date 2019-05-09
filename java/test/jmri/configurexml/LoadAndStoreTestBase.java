@@ -296,6 +296,7 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 

@@ -642,6 +642,21 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
     }
 
+    /**
+     * Get the string representation of this Roster ID. Returns empty string 
+     * if no address in use.
+     * since 4.15.4
+     *
+     * @return string value of throttle Roster ID
+     */
+    public String getCurrentRosterIdString() {
+        if (rosterLoco != null) {
+            return rosterLoco.getId() ;
+        } else {
+            return " ";
+        }
+    }
+
     public void sendAddress() {
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(whichThrottle + getCurrentAddressString());

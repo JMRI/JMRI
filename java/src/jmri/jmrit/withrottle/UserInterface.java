@@ -67,8 +67,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     boolean isListen;
     private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
+    /**
+     * Save the last known size and the last known location since 4.15.4.
+     */
     UserInterface() {
-        super(false, false);
+        super(true, true);
 
         isListen = true;
         facelessServer = (FacelessServer) InstanceManager.getOptionalDefault(DeviceManager.class).orElseGet(() -> {
@@ -198,17 +201,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         this.setTitle("WiThrottle");
         this.pack();
 
-        this.setResizable(true);
-        Rectangle screenRect = new Rectangle(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
-
-//  Centers on top edge of screen
-        this.setLocation((screenRect.width / 2) - (this.getWidth() / 2), 0);
-
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         setVisible(true);
-        setMinimumSize(getSize());
-
+        setMinimumSize(new Dimension(400, 250));
+        
         rosterGroupSelector.addActionListener(new ActionListener() {
 
             @SuppressWarnings("unchecked")
@@ -269,7 +266,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         deviceList.add(device);
         numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         withrottlesListModel.updateDeviceList(deviceList);
-        pack();
     }
 
     @Override
@@ -284,7 +280,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         withrottlesListModel.updateDeviceList(deviceList);
         device.removeDeviceListener(this);
-        pack();
     }
 
     @Override
