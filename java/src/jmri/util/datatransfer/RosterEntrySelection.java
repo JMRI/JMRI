@@ -49,7 +49,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      * Takes as a parameter an ArrayList containing Strings representing
      * RosterEntry Ids.
      *
-     * @param rosterEntries - an ArrayList of RosterEntry Ids
+     * @param rosterEntries  an ArrayList of RosterEntry Ids
      */
     public RosterEntrySelection(ArrayList<String> rosterEntries) {
         this.Ids = rosterEntries;

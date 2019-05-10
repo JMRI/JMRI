@@ -13,7 +13,7 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs
+- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
@@ -22,7 +22,7 @@ On macOS, most of these changes can be affected with:
 ```
 find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-(you may need to install gsed using [Homebrew](http://brew.sh))
+(you may need to install gsed using [Homebrew](http://brew.sh)), although this probably doesn't fix the Javadoc links.
 
 On Linux, these same changes can be affected with:
 ```
@@ -102,11 +102,11 @@ After that, add and commit the additional files that were created within lib/
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.8.11.jar, jackson-core-2.8.11.jar, jackson-databind-2.8.11.jar
+##### jackson-annotations-2.9.8.jar, jackson-core-2.9.8.jar, jackson-databind-2.9.8.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.8.11
+- version 2.9.8
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.11
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8
 
 ##### mqtt-client-0.4.0.jar
 starting in JMRI 4.11.5
@@ -140,10 +140,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jython-standalone-2.7.0.jar
 - from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
 - unlike jython-2.7.0.jar, includes embedded standard python libs
-
-##### jakarta-regexp-1.5.jar
-- (needed for jfcunit)
-- Used for testing only, not at runtime
 
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
@@ -206,10 +202,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
 
 ##### jmdns.jar
-- Version 3.5.1 (4 August 2016)
+- Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
-
-##### jakarta-regexp-1.5.jar
 
 ##### jna-4.4.0.jar
 - Java Native Access library
@@ -268,11 +262,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version 1.3
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
-
-##### jfcunit.jar
-- version 2.08
-- Used for testing only, not at runtime
-- from <http://jfcunit.sourceforge.net>
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.  

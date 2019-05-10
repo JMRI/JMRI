@@ -45,6 +45,7 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 import jmri.web.server.WebServerPreferences;
 
 /**
@@ -59,7 +60,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     @Override
     // use @Nullable to override @Nonnull specified in superclass
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.HELLO:
                 return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval());
@@ -90,7 +91,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale);
@@ -102,7 +103,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getConfigProfiles(locale);
             default:
                 ArrayNode array = this.mapper.createArrayNode();
-                JsonNode node = this.doGet(type, null, locale);
+                JsonNode node = this.doGet(type, null, data, locale);
                 if (node.isArray()) {
                     array.addAll((ArrayNode) node);
                 } else {
@@ -115,8 +116,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     @Override
     // Use @Nullable to override non-null requirement of superclass
     public JsonNode doPost(String type, @Nullable String name,
-            @Nullable JsonNode data, Locale locale) throws JsonException {
-        return this.doGet(type, name, locale);
+            JsonNode data, Locale locale) throws JsonException {
+        return this.doGet(type, name, data, locale);
     }
 
     /**
@@ -135,7 +136,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
         data.put(JSON.RAILROAD, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName());
-        data.put(JSON.NODE, NodeIdentity.identity());
+        data.put(JSON.NODE, NodeIdentity.networkIdentity());
         data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
         return root;
     }
@@ -191,8 +192,8 @@ public class JsonUtilHttpService extends JsonHttpService {
      *                                        networking protocol.
      */
     public JsonNode getNetworkService(Locale locale, String name) throws JsonException {
-        for (ZeroConfService service : ZeroConfService.allServices()) {
-            if (service.type().equals(name)) {
+        for (ZeroConfService service : InstanceManager.getDefault(ZeroConfServiceManager.class).allServices()) {
+            if (service.getType().equals(name)) {
                 return this.getNetworkService(service);
             }
         }
@@ -202,13 +203,13 @@ public class JsonUtilHttpService extends JsonHttpService {
     private JsonNode getNetworkService(ZeroConfService service) {
         ObjectNode ns = mapper.createObjectNode().put(JSON.TYPE, JSON.NETWORK_SERVICE);
         ObjectNode data = ns.putObject(JSON.DATA);
-        data.put(JSON.NAME, service.name());
-        data.put(JSON.PORT, service.serviceInfo().getPort());
-        data.put(JSON.TYPE, service.type());
-        Enumeration<String> pe = service.serviceInfo().getPropertyNames();
+        data.put(JSON.NAME, service.getName());
+        data.put(JSON.PORT, service.getServiceInfo().getPort());
+        data.put(JSON.TYPE, service.getType());
+        Enumeration<String> pe = service.getServiceInfo().getPropertyNames();
         while (pe.hasMoreElements()) {
             String pn = pe.nextElement();
-            data.put(pn, service.serviceInfo().getPropertyString(pn));
+            data.put(pn, service.getServiceInfo().getPropertyString(pn));
         }
         return ns;
     }
@@ -220,7 +221,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     public ArrayNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        ZeroConfService.allServices().stream().forEach((service) -> {
+        InstanceManager.getDefault(ZeroConfServiceManager.class).allServices().stream().forEach((service) -> {
             root.add(this.getNetworkService(service));
         });
         return root;
@@ -238,7 +239,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, JSON.NODE);
         ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JSON.NODE, NodeIdentity.identity());
+        data.put(JSON.NODE, NodeIdentity.networkIdentity());
         ArrayNode nodes = mapper.createArrayNode();
         NodeIdentity.formerIdentities().stream().forEach((node) -> {
             nodes.add(node);

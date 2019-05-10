@@ -10,11 +10,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.CbusLight;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
@@ -22,11 +19,6 @@ import jmri.jmrix.can.cbus.CbusSensor;
 import jmri.jmrix.can.cbus.CbusTurnout;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.FileUtil;
-import jmri.util.xml.XMLUtil;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventTableAction {
 
- //   CanSystemConnectionMemo memo;
     CbusEventTableDataModel _model;
     
     final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
@@ -47,8 +38,8 @@ public class CbusEventTableAction {
     /*
 
     // column order needs to match list in column tooltips
-    static public final int EVENT_COLUMN = 0; 
-    static public final int NODE_COLUMN = 1; 
+    static public final int EVENT_COLUMN = 1; 
+    static public final int NODE_COLUMN = 0; 
     static public final int NAME_COLUMN = 2; 
     static public final int NODENAME_COLUMN = 3;
     static public final int COMMENT_COLUMN = 4;
@@ -78,7 +69,7 @@ public class CbusEventTableAction {
     public File _saveFile = null;
     private String _saveFileName = null;
     public boolean _saved = false;
-    private boolean sessionConfirmDeleteRow=true; // display confirm popup
+    protected boolean sessionConfirmDeleteRow=true; // display confirm popup
     
     private void updatejmricell(int row, Boolean ison, String name){
         String bb;
@@ -98,7 +89,7 @@ public class CbusEventTableAction {
         int opc = CbusMessage.getOpcode(m);
         int row = _model.seeIfEventOnTable( node, event);
         if (row<0) {
-            _model.addEvent(node,event,0,CbusTableEvent.EvState.UNKNOWN,name,"","",0,0,0,0);
+            _model.addEvent(node,event,0,CbusTableEvent.EvState.UNKNOWN,name,"",0,0,0,0);
             row = _model.seeIfEventOnTable( node, event );
         }
         updatejmricell(row, CbusOpCodes.isOnEvent(opc), text );
@@ -113,7 +104,7 @@ public class CbusEventTableAction {
             _model.setValueAt("", i, CbusEventTableDataModel.STLR_ON_COLUMN);
             _model.setValueAt("", i, CbusEventTableDataModel.STLR_OFF_COLUMN);
         }
-        jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
+        jmri.SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
         sm.getNamedBeanSet().forEach((nb) -> {
             if (nb instanceof CbusSensor) {
                 CbusSensor cs = (CbusSensor) sm.provideSensor(nb.toString());
@@ -123,7 +114,7 @@ public class CbusEventTableAction {
                 linkHwaddtoEvent( cs.getAddrInactive(), text, nb.getDisplayName() );
             }
         });
-        jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        jmri.TurnoutManager tm = InstanceManager.getDefault(jmri.TurnoutManager.class);
         tm.getNamedBeanSet().forEach((nb) -> {
             if (nb instanceof CbusTurnout) {
                 CbusTurnout ct = (CbusTurnout) tm.provideTurnout(nb.toString());
@@ -133,7 +124,7 @@ public class CbusEventTableAction {
                 linkHwaddtoEvent( ct.getAddrClosed(), text, nb.getDisplayName() );
             }
         });
-        jmri.LightManager lm = InstanceManager.lightManagerInstance();
+        jmri.LightManager lm = InstanceManager.getDefault(jmri.LightManager.class);
         lm.getNamedBeanSet().forEach((nb) -> {
             if (nb instanceof CbusLight) {
                 CbusLight cl = (CbusLight) lm.provideLight(nb.toString());
@@ -161,7 +152,7 @@ public class CbusEventTableAction {
             if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                     null, params, Bundle.getMessage("DelEvPopTitle"), 
                     JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE)) {
+                JOptionPane.WARNING_MESSAGE)) {
                     boolean dontShow = checkbox.isSelected();
                     if (dontShow) {
                         sessionConfirmDeleteRow=false;
@@ -174,110 +165,6 @@ public class CbusEventTableAction {
         }
     }
     
-    
-    /**
-     * Import events from a MERG FCU XML File
-     */
-    public synchronized void readTheFCU14742File(final String filePath){
-
-        String _context = Bundle.getMessage("ImportStart") + filePath;
-        _model.addToLog(4,_context);
-        
-        if (filePath.length()<3) {
-            _context = Bundle.getMessage("ImportNotXml");
-            _model.addToLog(0,_context);
-            return;
-        }        
-        
-        if (!filePath.toUpperCase().endsWith("XML")) {
-            _context = Bundle.getMessage("ImportNotXml");
-            _model.addToLog(3,_context);
-            return;
-        }
-        
-        try {
-            File inputFile = new File(filePath);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("userEvents");
-            int addedtotable=0;
-            int alreadyontable=0;
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
-                Element eElement = (Element) nNode;
-                
-                String eventValue = eElement.getElementsByTagName("eventValue").item(0).getTextContent();
-                String eventNode = eElement.getElementsByTagName("eventNode").item(0).getTextContent();
-                String nodeName = eElement.getElementsByTagName("nodeName").item(0).getTextContent();
-                String eventName = eElement.getElementsByTagName("eventName").item(0).getTextContent();
-                
-                int eventnum = Integer.parseInt(eventValue);
-                int nodenum = Integer.parseInt(eventNode);
-
-                //    log.warn(" 1173 eventnum is {} nodenum is {} ",eventnum, nodenum);
-                int row = _model.seeIfEventOnTable(nodenum,eventnum);
-                if ( row < 0 ) {
-                    _model.addEvent(nodenum,eventnum,0,CbusTableEvent.EvState.ON,eventName,nodeName,null,0,0,0,0);
-                    addedtotable++;
-                } else {
-                    
-                    // update event name if null
-                    // update event node name if null ( which should really be got from a future node table )
-                    StringBuilder addbuf = new StringBuilder(50);
-                    
-                    addbuf.append (Bundle.getMessage("CbusEvent"));
-                    addbuf.append (eventValue + " ");
-                    addbuf.append (Bundle.getMessage("CbusNode"));
-                    addbuf.append (eventNode + " ");
-                    addbuf.append (Bundle.getMessage("AlreadyOnTable"));
-                    
-                    if ( _model._mainArray.get(row).getName().equals("") ) {
-                            _model.setValueAt(eventName, row, CbusEventTableDataModel.NAME_COLUMN);
-                            addbuf.append (Bundle.getMessage("EventNameAdded", eventName));
-                    } else {
-                        addbuf.append (" ");
-                        addbuf.append ( _model._mainArray.get(row).getName() );
-                    }
-                    
-                    if ( _model._mainArray.get(row).getNodeName().equals("") ) {
-                            _model.setValueAt(nodeName, row, CbusEventTableDataModel.NODENAME_COLUMN);
-                            addbuf.append (Bundle.getMessage("NodeNameAdded", nodeName));
-                    } else {
-                        addbuf.append (" ");
-                        addbuf.append (_model._mainArray.get(row).getNodeName() );
-                    }
-                    
-                    _context = addbuf.toString();
-                    _model.addToLog(0,_context);
-                    alreadyontable++;
-                }
-            }
-            
-            _context = "---------------------------------------------------------- \n" + 
-            Bundle.getMessage("ImportComplete") + " \n" + 
-            String.valueOf(nList.getLength()) + " " + Bundle.getMessage("CbusEvents") + " " + Bundle.getMessage("ImportFound") + " \n" +
-            String.valueOf(alreadyontable) + " " + Bundle.getMessage("AlreadyOnTable") + " \n" +
-            String.valueOf(addedtotable) + " " + Bundle.getMessage("CbusEvents") + " " + Bundle.getMessage("AddedToTable");
-            _model.addToLog(2,_context); 
-            
-        } 
-        
-        catch (RuntimeException e) {
-            log.warn(" 1423 Error importing xml file.  {} ", e);
-            _context = Bundle.getMessage("ImportError");
-            _model.addToLog(3,_context); 
-        } 
-        
-        catch (Exception e) {
-            log.warn(" 1429 Error importing xml file. Valid xml? {} ", e);
-            _context = Bundle.getMessage("ImportError");
-            _model.addToLog(3,_context); 
-        }
-    }
-
-
     /**
      * Self save as a .csv file.
      */

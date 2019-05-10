@@ -1,6 +1,8 @@
 package jmri.jmrit.operations.trains;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -32,6 +34,8 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.ColorUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +53,8 @@ public class TrainCommon {
     protected static final String BLANK_LINE = " ";
     protected static final String HORIZONTAL_LINE_CHAR = "-";
     protected static final String VERTICAL_LINE_CHAR = "|";
+    protected static final String COMMENT_COLOR_START = "<FONT color=\"";
+    protected static final String COMMENT_COLOR_END = "</FONT>";
     // protected static final String ARROW = ">";
 
     protected static final boolean PICKUP = true;
@@ -1909,7 +1915,7 @@ public class TrainCommon {
                 return Setup.getYearModeled();
             }
         }
-        return (new ISO8601DateFormat()).format(calendar.getTime());
+        return (new StdDateFormat()).format(calendar.getTime());
     }
 
     public static String getDate(Date date) {
@@ -2081,6 +2087,49 @@ public class TrainCommon {
             sbuf.setLength(sbuf.length() - 2); // remove trailing separators
         }
         return sbuf.toString();
+    }
+    
+    /**
+     * Adds HTML like color text control characters around a string. Note that
+     * black is the standard text color, and if black is requested no control
+     * characters are added.
+     * 
+     * @param text the text to be modified
+     * @param color the color the text is to be printed
+     * @return formated text with color modifiers
+     */
+    public static String formatColorString(String text, Color color) {
+        String s = text;
+        if (!color.equals(Color.black)) {
+            s = COMMENT_COLOR_START + ColorUtil.colorToColorName(color) + "\">" + text + COMMENT_COLOR_END;
+        }
+        return s;
+    }
+    
+    /**
+     * Removes the color text control characters around the desired string
+     * @param string the string with control characters
+     * @return pure text
+     */
+    public static String getTextColorString(String string) {
+        String text = string;
+        if (string.contains(COMMENT_COLOR_START)) {
+            text = string.substring(0, string.indexOf("<")) + string.substring(string.indexOf(">") + 1);
+        }
+        if (text.endsWith(COMMENT_COLOR_END)) {
+            text = text.substring(0, text.length() - COMMENT_COLOR_END.length());
+        }
+        return text;
+    }
+    
+    public static Color getTextColor(String string) {
+        Color color = Color.black;
+        if (string.contains(COMMENT_COLOR_START)) {
+            String c = string.substring(string.indexOf("\"") + 1);
+            c = c.substring(0, c.indexOf("\""));
+            color = ColorUtil.stringToColor(c);
+        }
+        return color;
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainCommon.class);

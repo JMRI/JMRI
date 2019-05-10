@@ -1,6 +1,5 @@
 
     <h3>Hardware Support</h3>
-
         <ul>
           <li></li>
         </ul>
@@ -9,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -62,10 +61,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Turnouts now accept DIRECT and DELAYED feedback.</li>
-                <li>Querying a turnout will also query any feedback sensors for that turnout.<li>
-                <li>Event Request monitoring has moved from the Event Table to a stand-alone request monitoring table.</li>
-                <li>The CBUS console will attempt to lookup event ( and node ) names from the Event Table.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -80,7 +76,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li><li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -100,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li><>/li>
             </ul>
 
         <h4>Secsi</h4>
@@ -139,9 +135,9 @@
             </ul>
 
     <h3>New / Updated decoder definitions</h3>
-      <ul>
-        <li></li>
-     </ul>
+        <ul>
+          <li></li>
+        </ul>
 
         <h4>Arnold</h4>
             <ul>
@@ -262,7 +258,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -309,84 +305,95 @@
             </ul>
 
     <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"/>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-          <li></li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
-        <a id="Dispatcher" name="Dispatcher"/>
+        <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
         </ul>
 
    <h3>Internationalization</h3>
-        <a id="I18N" name="I18N"/>
+        <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Petr Šídlo improved the Czech translation</li>
         </ul>
 
     <h3>Layout Editor</h3>
-        <a id="LE" name="LE"/>
+        <a id="LE" name="LE"></a>
         <ul>
 	        <li></li>
         </ul>
 
     <h3>Logix</h3>
-        <a id="Logix" name="Logix"/>
+        <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
         </ul>
 
     <h3>Operations</h3>
-        <a id="Operations" name="Operations"/>
+        <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Panel Editors</h3>
-        <a id="PE" name="PE"/>
+        <a id="PE" name="PE"></a>
         <ul>
             <li></li>
         </ul>
+        <h4>CTC Tool</h4>
+            <a id="PE-CTC" name="PE-CTC"></a>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Preferences</h3>
-        <a id="Preferences" name="Preferences"/>
+        <a id="Preferences" name="Preferences"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Resources</h3>
-        <a id="Resources" name="Resources"/>
+        <a id="Resources" name="Resources"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"/>
+        <a id="Roster" name="Roster"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"/>
+        <a id="TLae" name="TLae"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Scripting</h3>
-        <a id="Scripting" name="Scripting"/>
+        <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Geoff Bunza provided sample scripts supporting bulk 
-            <a href="http://jmri.org/jython/serialinput/Sensor_Channel_To_JMRI/Sensor_Channels_Readme.md">sensor channels</a>
-            and
-            <a href="http://jmri.org/jython/serialinput/Turnout_Channel_from_JMRI/Turnout_Channels_Readme.md">turnout channels</a>
-            via USB between JMRI Sensor and Turnout Tables and Arduino interfaces to hardware.</li>.
-            For more information, see the Readme files linked just above.
+            <li><strong>Custom scripts that release throttles may need to be modified.</strong><br>
+            <ul>
+                <li>AutoDispatcher2</li>
+                <li>RobotThrottle2</li>
+                <li>RobotThrottle3</li>
+                <li>RocoCrane</li>
+                <li>Zimo Programmers</li>
+            </ul>
+            <br>
+            Old syntax: <code>self.throttle.release()</code> <br>
+            New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
+            </li>
         </ul>
 
     <h3>Signals</h3>
-        <a id="Signals" name="Signals"/>
+        <a id="Signals" name="Signals"></a>
         <ul>
             <li></li>
         </ul>
@@ -397,14 +404,14 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>Fix an XML validation problem when reading files with RGB heads</li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -426,55 +433,44 @@
             </ul>
 
    <h3>Switchboard Editor</h3>
-        <a id="SW" name="SW"/>
+        <a id="SW" name="SW"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Timetable</h3>
-        <a id="Timetable" name="Timetable"/>
-        <span class="since">since 4.13.4</span>
+        <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
-            CSV file that can be imported into a spreadsheet program.  This can
-            be used to create a traditional timetable.</li>
-            <li>New menu item: <strong>Import CSV File</strong> &mash; Import a
-            CSV file that contains external timetable data to create a new
-            layout defintion or extend an existing layout definition.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
-        <a id="Wt" name="Wt"/>
+        <a id="Wt" name="Wt"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Web Access</h3>
-        <a id="WA" name="WA"/>
+        <a id="WA" name="WA"></a>
         <ul>
             <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
-        <a id="WS" name="WS"/>
+        <a id="WS" name="WS"></a>
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"/>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
-        <a id="Misc" name="Misc"/>
+        <a id="Misc" name="Misc"></a>
         <ul>
-            <li>We're building the release note a
-                <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
-                starting with this release.</li>
-            <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
-            <li>The Windows "installer" and "launcher" have been updated to support 
-                Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
+            <li>Add new <code>TestWaitsForever</class> test class to allow end-of-job debug.</li>
         </ul>
 

@@ -63,7 +63,7 @@ import jmri.implementation.LightControl;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends DigitalIO {
+public interface Light extends DigitalIO, AnalogIO {
 
     /**
      * State value indicating output intensity is less than maxIntensity and
@@ -106,7 +106,16 @@ public interface Light extends DigitalIO {
     /** {@inheritDoc} */
     @Override
     default public boolean isConsistentState() {
-        return (getState() == DigitalIO.ON) || (getState() == DigitalIO.OFF);
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF)
+                || (getState() == INTERMEDIATE);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentValue() {
+        // Assume that the value is consistent if the state is consistent.
+        return isConsistentState();
     }
     
     /** {@inheritDoc} */

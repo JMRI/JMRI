@@ -5,6 +5,7 @@ import jmri.jmrit.blockboss.*;
 import jmri.implementation.*;
 import jmri.*;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import org.junit.After;
@@ -139,11 +140,23 @@ public class BlockBossLogicXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        
+        // clear the BlockBossLogic static list
+        Enumeration<BlockBossLogic> en = BlockBossLogic.entries();
+        ArrayList<SignalHead> heads = new ArrayList<>();
+        while (en.hasMoreElements()) {
+            heads.add(en.nextElement().getDrivenSignalNamedBean().getBean());
+        }
+        for (SignalHead head : heads) {  // avoids ConcurrentModificationException
+            BlockBossLogic.getStoppedObject(head);
+        }
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 

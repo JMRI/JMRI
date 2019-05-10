@@ -28,7 +28,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriPanel;
 
-@SuppressWarnings("serial")
 public class VSDOptionPanel extends JmriPanel {
 
     private javax.swing.JComboBox<Object> hornOptionComboBox;

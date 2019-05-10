@@ -1105,45 +1105,6 @@
     <label>Pink Wire Timing</label>
     <label xml:lang="it">Temporizzazioni filo Rosa</label>
   </variable>
-  <variable CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" default="0">
-    <enumVal>
-      <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
-      </enumChoice>
-      <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Pink/Purple Wire Effect Group</label>
-    <label xml:lang="it">Gruppo Effetti filo Rosa/Porpora</label>
-  </variable>
-  <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-        <qualifier>
-      <variableref>Pink/Purple Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>1</value>
-    </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink/Purple Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label></variable>
-  <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 behavior">
-        <qualifier>
-      <variableref>Pink/Purple Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-        <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-    </enumVal><label>Pink/Purple Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label></variable>
-  <variable CV="55" mask="XXVVXXXX" minOut="7" default="2" item="Output 7 option 1">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-    <label>Pink/Purple Wire Timing</label>
-    <label xml:lang="it">Temporizzazioni filo Rosa/Porpora</label>
-  </variable>
   <variable CV="58" minOut="8" item="Output 7 effect generated" default="0" include="132,172">
     <enumVal>
       <enumChoice choice="F5 and F6 on/off constant bright">
@@ -1152,51 +1113,6 @@
       </enumChoice>
     </enumVal>
     <label>Outputs 7 and 8 effect generated</label>
-  </variable>
-  <variable CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0" exclude="132,172">
-    <enumVal>
-      <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
-      </enumChoice>
-      <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Green/Brown Wire Effect Group</label>
-    <label xml:lang="it">Gruppo Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated" exclude="132,172">
-    <qualifier>
-      <variableref>Green/Brown Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>1</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <label>Green/Brown Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 behavior" exclude="132,172">
-    <qualifier>
-      <variableref>Green/Brown Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-    </enumVal>
-    <label>Green/Brown Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXVVXXXX" minOut="8" default="2" item="Output 8 option 1" exclude="132,172">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-    <label>Green/Brown Wire Timing</label>
-    <label xml:lang="it">Temporizzazioni filo Verde/Marrone</label>
   </variable>
   <variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="BEMF always enabled, Dither disabled">
   <enumVal>
@@ -1256,7 +1172,7 @@
 	<label xml:lang="it">Impulso Momentaneo</label>
 	<tooltip xml:lang="it">1 secondo = 60 a 4 secondi = 255</tooltip>
   </variable>
-  <variable CV="63" default="100" item="Function 2 effect generated" tooltip="1 second = about 12" exclude="220">
+  <variable CV="63" default="63" item="Function 2 effect generated" tooltip="1 second = about 12" exclude="220">
 	<decVal/>
 	<label>Ditch Light Blink Holdover Time</label>
 	<label xml:lang="it">Tempo strascico lampeggio Luce Ditch </label>

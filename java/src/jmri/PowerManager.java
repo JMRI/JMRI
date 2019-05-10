@@ -5,6 +5,8 @@ import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
+import jmri.beans.PropertyChangeProvider;
+
 /**
  * Provide controls for layout power.
  * <P>
@@ -36,7 +38,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface PowerManager {
+public interface PowerManager extends PropertyChangeProvider {
 
     static final int UNKNOWN = NamedBean.UNKNOWN;
     static final int ON = 0x02;
@@ -52,11 +54,6 @@ public interface PowerManager {
 
     // to free resources when no longer used
     public void dispose() throws JmriException;
-
-    // to hear of changes
-    public void addPropertyChangeListener(@CheckForNull PropertyChangeListener p);
-
-    public void removePropertyChangeListener(PropertyChangeListener p);
     
     public default boolean implementsIdle() {
         // By default the Power Manager does not implement the IDLE power state

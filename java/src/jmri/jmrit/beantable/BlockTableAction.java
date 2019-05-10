@@ -89,6 +89,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
         }
         updateSensorList();
+        updateReporterList();
     }
 
     public BlockTableAction() {
@@ -102,6 +103,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     private String[] curveOptions = {noneText, gradualText, tightText, severeText};
     private java.util.Vector<String> speedList = new java.util.Vector<String>();
     private String[] sensorList;
+    private String[] reporterList;
     private DecimalFormat twoDigit = new DecimalFormat("0.00");
     String defaultBlockSpeedText;
     // for icon state col
@@ -246,8 +248,14 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     c.setSelectedItem(name);
                     return c;
                 } else if (col == REPORTERCOL) {
-                    Reporter r = b.getReporter();
-                    return (r != null) ? r.getDisplayName() : null;
+                    Reporter reporter = b.getReporter();
+                    JComboBox<String> rs = new JComboBox<String>(reporterList);
+                    String name = "";
+                    if (reporter != null) {
+                        name = reporter.getDisplayName();
+                    }
+                    rs.setSelectedItem(name);
+                    return rs;
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
                 } else if (col == EDITCOL) {  //
@@ -309,16 +317,17 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
-                    Reporter r = null;
-                    if (value != null && !value.equals("")) {
-                        r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter((String) value);
-                    }
+                    @SuppressWarnings("unchecked")
+                    String strReporter = (String) ((JComboBox<String>) value).getSelectedItem();
+                    Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter); 
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
+                    return;
                 } else if (col == SENSORCOL) {
                     @SuppressWarnings("unchecked")
                     String strSensor = (String) ((JComboBox<String>) value).getSelectedItem();
                     b.setSensor(strSensor);
+                    fireTableRowsUpdated(row, row);
                     return;
                 } else if (col == CURRENTREPCOL) {
                     boolean boo = ((Boolean) value);
@@ -412,7 +421,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                 }
                 if (col == REPORTERCOL) {
-                    return String.class;
+                    return JComboBox.class;
                 }
                 if (col == SENSORCOL) {
                     return JComboBox.class;
@@ -499,6 +508,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
+                jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(this);
                 configStateColumn(table);
                 super.configureTable(table);
             }
@@ -522,6 +532,11 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         updateSensorList();
                     }
                 }
+                if (e.getSource() instanceof jmri.ReporterManager) {
+                    if (e.getPropertyName().equals("length") || e.getPropertyName().equals("DisplayListName")) {
+                        updateReporterList();
+                    }
+                }
                 if (e.getPropertyName().equals("DefaultBlockSpeedChange")) {
                     updateSpeedList();
                 } else {
@@ -538,6 +553,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             synchronized public void dispose() {
                 super.dispose();
                 jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
+                jmri.InstanceManager.getDefault(jmri.ReporterManager.class).removePropertyChangeListener(this);
             }
 
             /**
@@ -565,8 +581,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
              * states). Renderer and Editor are identical, as the cell contents
              * are not actually edited.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
@@ -700,6 +714,25 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         i = 1;
         for (String name : displayList) {
             sensorList[i] = name;
+            i++;
+        }
+    }
+
+    private void updateReporterList() {
+        Set<Reporter> nameSet = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet();
+        String[] displayList = new String[nameSet.size()];
+        int i = 0;
+        for (Reporter nBean : nameSet) {
+            if (nBean != null) {
+                displayList[i++] = nBean.getDisplayName();
+            }
+        }
+        java.util.Arrays.sort(displayList);
+        reporterList = new String[displayList.length + 1];
+        reporterList[0] = "";
+        i = 1;
+        for (String name : displayList) {
+            reporterList[i] = name;
             i++;
         }
     }
@@ -903,7 +936,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
     JComboBox<String> speeds = new JComboBox<String>();
 
-    JPanel additionalAddOption() {
+/*    JPanel additionalAddOption() {
 
         GridLayout additionLayout = new GridLayout(0, 2);
         JPanel mainPanel = new JPanel();
@@ -947,7 +980,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         });
 
         return mainPanel;
-    }
+    }*/
 
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 

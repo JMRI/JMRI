@@ -3,17 +3,13 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,6 +95,68 @@ public class SensorTableActionTest extends AbstractTableActionBase {
         _sTable.dispose();
         _s1Table.dispose();
     }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSensor");
+    }
+
+    @Test
+    @Override
+    public void testAddButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    @Override
+    public void testEditButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        JFrameOperator jfo = new JFrameOperator(f);
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        //Enter 1 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).typeText("1");
+        //and press create 
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0,jmri.jmrit.beantable.sensor.SensorTableDataModel.EDITCOL);
+
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.dispose(f2);
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Override
+    public String getEditFrameName(){
+        return "Edit Sensor IS1";
+    }
+
 
     // The minimal setup for log4J
     @Override

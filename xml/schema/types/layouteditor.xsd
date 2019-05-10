@@ -60,6 +60,7 @@
         <xs:element name="locoicon"           type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LightIcon"          type="EditorLightIconType"         minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutShape"        type="EditorLayoutShapeType"       minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required" />
@@ -99,6 +100,8 @@
       <xs:attribute name="defaultoccupiedtrackcolor" type="screenColorType"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
       <xs:attribute name="turnoutcirclecolor" type="turnoutCircleColourType"/>
+      <xs:attribute name="turnoutcirclethrowncolor" type="turnoutCircleColourType"/>
+      <xs:attribute name="turnoutfillcontrolcircles" type="yesNoType" default="no"/>
       <xs:attribute name="turnoutcirclesize" type="xs:integer"/>
       <xs:attribute name="turnoutdrawunselectedleg" type="yesNoType" default="yes"/>
       <xs:attribute name="turnoutbx" type="xs:float"/>

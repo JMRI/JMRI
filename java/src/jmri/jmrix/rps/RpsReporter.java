@@ -20,17 +20,17 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
 
-    public RpsReporter(String systemName) {
+    public RpsReporter(String systemName, String prefix) {
         super(systemName);
         // create Region from all but prefix
-        region = new Region(systemName.substring(2, systemName.length()));
+        region = new Region(systemName.substring(prefix.length() + 1)); // multichar prefix from memo
         Model.instance().addRegion(region);
     }
 
-    public RpsReporter(String systemName, String userName) {
+    public RpsReporter(String systemName, String userName, String prefix) {
         super(systemName, userName);
         // create Region from all but prefix
-        region = new Region(systemName.substring(2, systemName.length()));
+        region = new Region(systemName.substring(prefix.length() + 1)); // multichar prefix from memo
         Model.instance().addRegion(region);
     }
 
@@ -49,9 +49,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
             return;
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("starting " + getSystemName());
-        }
+        log.debug("starting {}", getSystemName());
         if (region.isInside(p)) {
             notifyInRegion(id);
         } else {
@@ -80,7 +78,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     /**
      * Notify parameter listeners that a device has left the region covered by
-     * this sensor
+     * this sensor.
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
@@ -89,7 +87,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     /**
      * Notify parameter listeners that a device has entered the region covered
-     * by this sensor
+     * by this sensor.
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);
@@ -97,7 +95,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
 
     /**
-     * Numerical state is the number of transmitters in the region
+     * Numerical state is the number of transmitters in the region.
      */
     @Override
     public int getState() {
@@ -114,16 +112,15 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
 
     // Methods to support PhysicalLocationReporter interface
+
     /**
-     * getLocoAddress()
-     *
      * Parses out a (possibly old) RpsReporter-generated report string to
      * extract the address from the front. Assumes the RpsReporter format is
-     * "NNNN"
+     * "NNNN".
      */
     public LocoAddress getLocoAddress(String rep) {
         // The report is a string, that is the ID of the locomotive (I think)
-        log.debug("Parsed ID: " + rep);
+        log.debug("Parsed ID: {}", rep);
         // I have no idea what kind of loco address an RPS reporter uses,
         // so we'll default to DCC for now.
         if (rep.length() > 0) {
@@ -140,10 +137,9 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
 
     /**
-     * getDirection()
-     *
-     * Gets the direction (ENTER/EXIT) of the report. Because of the way Ecos
-     * Reporters work (or appear to), all reports are ENTER type.
+     * Get the direction (ENTER/EXIT) of the report.
+     * <p>
+     * Because of the way Ecos Reporters work (or appear to), all reports are ENTER type.
      */
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // The RPS reporter only sends a report on entry.
@@ -151,9 +147,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
 
     /**
-     * getPhysicalLocation()
-     *
-     * Returns the PhysicalLocation of the Reporter
+     * Get the PhysicalLocation of the Reporter
      *
      * Reports its own location, for now. Not sure if that's the right thing or
      * not. Would be nice if it reported the exact measured location of the
@@ -165,9 +159,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
 
     /**
-     * getPhysicalLocation(String s)
-     *
-     * Returns the PhysicalLocation of the Transmitter with the given ID
+     * Get the PhysicalLocation of the Transmitter for a given ID
      *
      * Given an ID (in String form), looks up the Transmitter and gets its
      * current PhysicalLocation (translated from the RPS Measurement).
@@ -186,8 +178,8 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         } else {
             return (null);
         }
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsReporter.class);
+
 }

@@ -8,9 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,74 +61,92 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
     // some of the premade tests don't quite make sense; override them here.
     // (This is removing the majority of the tests, which seems rather much)
     @Override
+    @Test
     public void testVariableValueCreate() {
     }// mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeValue() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue256() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
     } // mask is ignored 
 
     @Override
+    @Test
     public void testVariableSynch() {
     }     // low CV is upper part of address
 
     @Override
+    @Test
     public void testVariableReadOnly() {
     }     // low CV is upper part of address
 
     @Override
+    @Test
     public void testVariableFromCV() {
     }     // low CV is upper part of address
 
     @Override
+    @Test
     public void testVariableValueRead() {
     }	// due to multi-cv nature
 
     @Override
+    @Test
     public void testVariableValueStates() {
     }	// due to multi-cv nature
 
     @Override
+    @Test
     public void testVariableValueStateColor() {
     }	// due to multi-cv nature
 
     @Override
+    @Test
     public void testVariableRepStateColor() {
     }	// due to multi-cv nature
 
+    @Test
     public void testVariableValueRepStateColor() {
     }	// due to multi-cv nature
 
     @Override
+    @Test
     public void testVariableVarChangeColorRep() {
     }	// due to multi-cv nature
 
     @Override
+    @Test
     public void testVariableValueWrite() {
     } // due to multi-cv nature
 
     @Override
+    @Test
     public void testVariableCvWrite() {
     }    // due to multi-cv nature
 
     @Override
+    @Test
     public void testWriteSynch2() {
     }        // programmer synch is different
 
     // rest of tests are new, for just this type of variable
     // can we create three variables, then manipulate the composite variable to change them?
+    @Test
     public void testCompositeCreateAndSet() {
 
         CompositeVariableValue testVar = createTestVar();
@@ -146,6 +166,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // can we change the CVs and see the result in the Variable?
+    @Test
     public void testValueFromCV() {
 
         CompositeVariableValue testVar = createTestVar();
@@ -164,6 +185,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
+    @Test
     public void testRead() {
 
         CompositeVariableValue testVar = createTestVar();
@@ -211,6 +233,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
         log.debug("end testRead");
     }
 
+    @Test
     public void testWrite() {
 
         CompositeVariableValue testVar = createTestVar();
@@ -254,6 +277,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     }
 
+    @Test
     public void testIsChanged() {
 
         CompositeVariableValue testVar = createTestVar();
@@ -325,34 +349,17 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
         return testVar;
     }
 
-    // from here down is testing infrastructure
-    public CompositeVariableValueTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CompositeVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CompositeVariableValueTest.class);
-        return suite;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class);
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        JUnitUtil.setUp();
+    @Before
+    public void setUp() {
+        super.setUp();
     }
 
-    @Override
-    protected void tearDown() {
-        JUnitUtil.tearDown();
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
 
 }

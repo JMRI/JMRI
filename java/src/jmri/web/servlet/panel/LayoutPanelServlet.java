@@ -7,13 +7,11 @@ import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
-import jmri.server.json.JSON;
 import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -79,23 +77,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
-                        Element e = ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
-                                e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
-                            }
-                            try {
-                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-                            } catch (NullPointerException ex) {
-                                if (sub.getNamedBean() == null) {
-                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                                } else {
-                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
-                                }
-                            }
-                            parsePortableURIs(e);
-                            panel.addContent(e);
-                        }
+                        panel.addContent(positionableElement(sub));
                     } catch (Exception ex) {
                         log.error("Error storing panel element: " + ex, ex);
                     }

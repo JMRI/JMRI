@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen
  */
-public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase<TurnoutManager, Turnout> {
+public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManagerTestBase<TurnoutManager, Turnout> {
 
     // implementing classes must implement to convert integer (count) to a system name
     abstract public String getSystemName(int i);
@@ -126,6 +126,17 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
+
+    @Test
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
+
 
     /**
      * Number of turnout to test. Made a separate method so it can be overridden

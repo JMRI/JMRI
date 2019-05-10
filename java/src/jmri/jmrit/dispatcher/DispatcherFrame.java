@@ -159,8 +159,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     /**
      * Loads a train into the Dispatcher from a traininfo file
      *
-     * @param traininfoFileName - the file name of a traininfo file.
-     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     * @param traininfoFileName  the file name of a traininfo file.
+     * @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
      */
     public int loadTrainFromTrainInfo(String traininfoFileName) {
         return loadTrainFromTrainInfo(traininfoFileName, "NONE", "");
@@ -170,11 +170,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Loads a train into the Dispatcher from a traininfo file, overriding
      * dccaddress
      *
-     * @param traininfoFileName - the file name of a traininfo file.
-     * @param overRideType - "NONE", "USER", "ROSTER" or "OPERATIONS"
-     * @param overRideValue - "" , dccAddress, RosterEntryName or Operations
+     * @param traininfoFileName  the file name of a traininfo file.
+     * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
      *            trainname.
-     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     * @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
      */
     public int loadTrainFromTrainInfo(String traininfoFileName, String overRideType, String overRideValue) {
         //read xml data from selected filename and move it into trainfo
@@ -201,8 +201,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     /**
      * Loads a train into the Dispatcher
      *
-     * @param info - a completed TrainInfo class.
-     * @return - 0 good. -1 failure
+     * @param info  a completed TrainInfo class.
+     * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info) {
         return loadTrainFromTrainInfo(info, "NONE", "");
@@ -211,11 +211,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     /**
      * Loads a train into the Dispatcher
      *
-     * @param info - a completed TrainInfo class.
-     * @param overRideType - "NONE", "USER", "ROSTER" or "OPERATIONS"
-     * @param overRideValue - "" , dccAddress, RosterEntryName or Operations
+     * @param info  a completed TrainInfo class.
+     * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
      *            trainname.
-     * @return - 0 good. -1 failure
+     * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
 
@@ -274,12 +274,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setRestartDelay(info.getRestartDelayMin()); //this is number of minutes to delay between runs
             at.setDelaySensor(info.getDelaySensor());
+            at.setResetStartSensor(info.getResetStartSensor());
             if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) &&
                     info.getDelayedStart() != ActiveTrain.SENSORDELAY) ||
                     info.getDelayedStart() == ActiveTrain.NODELAY) {
                 at.setStarted();
             }
             at.setRestartSensor(info.getRestartSensor());
+            at.setResetRestartSensor(info.getResetRestartSensor());
             at.setTrainType(info.getTrainType());
             at.setTerminateWhenDone(info.getTerminateWhenDone());
             if (info.getAutoRun()) {

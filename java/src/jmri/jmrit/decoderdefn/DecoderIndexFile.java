@@ -552,7 +552,7 @@ public class DecoderIndexFile extends XmlFile {
         // create root element and document
         Element root = new Element("decoderIndex-config");
         root.setAttribute("noNamespaceSchemaLocation",
-                "http://jmri.org/xml/schema/decoder.xsd",
+                "http://jmri.org/xml/schema/decoder-4-15-2.xsd",
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));
 

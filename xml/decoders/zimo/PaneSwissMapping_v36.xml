@@ -41,7 +41,7 @@
         <label>
           <text>If the M-key + F-key options are selected, the specified outputs are on when both the M-Key and F-Key are operated</text>
           <text xml:lang="cs">Pokud je volba M-klávesa + F-klávesa vybraná, tak určený výstup je obsluhován oběma M-klávesou a F-klávesou.</text>
-          <text xml:lang="de">Wenn eine M- und F-Taste definiert ist wird die entsprechnde Funktion nur ausgelöst, wenn beide Tasten geschaltet werden</text>
+          <text xml:lang="de">Wenn eine M- und F-Taste definiert ist wird die entsprechende Funktion nur ausgelöst, wenn beide Tasten geschaltet werden</text>
         </label>
 
     <group>
@@ -618,6 +618,7 @@
         </display>
       </column>
     </row>
+    <!-- options with fw v34 and higher -->
     <row>
       <column>
         <display item="Swiss Mapping Group 11 F-key" label="Group 11">
@@ -723,7 +724,7 @@
         </display>
       </column>
     </row>
-
+    <!-- options with fw v35.27 and higher -->
     <row>
       <column>
         <display item="Swiss Mapping Group 14 F-key" label="Group 14">
@@ -759,7 +760,6 @@
         </display>
       </column>
     </row>
- 
     <row>
       <column>
         <display item="Swiss Mapping Group 15 F-key" label="Group 15">
@@ -795,8 +795,7 @@
         </display>
       </column>
     </row>
-
-   <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 16 F-key" label="Group 16">
           <label>Group 16 </label>
@@ -831,8 +830,7 @@
         </display>
       </column>
     </row>
-
-   <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 17 F-key" label="Group 16">
           <label>Group 17 </label>
@@ -868,7 +866,7 @@
       </column>
     </row>
 
-   <row>
+    <row>
         <label>
           <text> </text>
         </label>
@@ -895,6 +893,58 @@
           <text xml:lang="de">Wenn die (interne) Fahrstufe den Wert erreicht wird das Fernlicht eingeschaltet. (0-255)</text>
         </label>
     </column>
+    </row>
+        <label>
+          <text> </text>
+        </label>
+    <row>
+    <column>
+        <label>
+          <text>Dimmwert-Gruppen</text>
+        </label>
+    </column>
+    </row>
+        <label>
+          <text> </text>
+        </label>
+    <row>
+     <column>
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>36</value>
+        </qualifier>
+        <display item="Swiss Dimming 1">
+          <label>Group  1  </label>
+          <label xml:lang="it">Gruppo  1  </label>
+          <label xml:lang="cs">Skupina  1  </label>
+          <label xml:lang="de">Gruppe  1  </label>
+        </display>
+        <display item="Swiss Dimming 2">
+          <label>Group  2  </label>
+          <label xml:lang="it">Gruppo  2  </label>
+          <label xml:lang="cs">Skupina  2  </label>
+          <label xml:lang="de">Gruppe  2  </label>
+        </display>
+        <display item="Swiss Dimming 3">
+          <label>Group  3  </label>
+          <label xml:lang="it">Gruppo  3  </label>
+          <label xml:lang="cs">Skupina  3  </label>
+          <label xml:lang="de">Gruppe  3  </label>
+        </display>
+        <display item="Swiss Dimming 4">
+          <label>Group  4  </label>
+          <label xml:lang="it">Gruppo  4  </label>
+          <label xml:lang="cs">Skupina  4  </label>
+          <label xml:lang="de">Gruppe  4  </label>
+        </display>
+        <display item="Swiss Dimming 5">
+          <label>Group  5  </label>
+          <label xml:lang="it">Gruppo  5  </label>
+          <label xml:lang="cs">Skupina  5  </label>
+          <label xml:lang="de">Gruppe  5  </label>
+        </display>
+     </column>
     </row>
   </column>
 </pane>

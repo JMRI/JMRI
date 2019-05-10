@@ -7,7 +7,7 @@ import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide programmers on LocoNet
+ * Extend DefaultProgrammerManager to provide programmers on LocoNet.
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002
@@ -21,6 +21,8 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
 
     /**
      * @deprecated 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
+     * @param pSlotManager  an ignored parameter
+     * @param memo the LocoNetSystemConnectionMemo to associate with this manager
      */
     @Deprecated // 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
     public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
@@ -90,7 +92,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
-        ret.add(LOCONETSV1MODE); // they show in interface in order listed here
+        ret.add(LOCONETSV1MODE); // they show in the interface in the order listed here
         return ret;
     }
 

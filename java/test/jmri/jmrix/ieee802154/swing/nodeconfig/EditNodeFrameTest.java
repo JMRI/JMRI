@@ -7,21 +7,18 @@ import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EditNodeFrameTest {
+public class EditNodeFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
         IEEE802154TrafficController tc = new IEEE802154TrafficController() {
             @Override
             protected AbstractMRReply newReply() {
@@ -52,17 +49,13 @@ public class EditNodeFrameTest {
                 };
             }
         };
-        EditNodeFrame t = new EditNodeFrame(tc,tc.newNode());
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new EditNodeFrame(tc,tc.newNode());
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

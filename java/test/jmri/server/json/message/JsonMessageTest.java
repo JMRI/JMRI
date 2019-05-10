@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.server.json.message;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.DataOutputStream;
@@ -20,7 +16,7 @@ import org.junit.Test;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood Copyright (C) 2018
  */
 public class JsonMessageTest {
 
@@ -43,25 +39,41 @@ public class JsonMessageTest {
         context.put(JSON.ASPECT, JSON.ASPECT_UNKNOWN); // contents insignificant
         // send to all
         new JsonMessage("testSend1", Locale.ENGLISH).send();
-        Assert.assertEquals(JsonMessage.INFO, connection.getMessage().path(JSON.DATA).path(JSON.TYPE).asText());
-        Assert.assertEquals("testSend1", connection.getMessage().path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertTrue(connection.getMessage().path(JSON.DATA).path(JsonMessage.CONTEXT).isNull());
+        JsonNode message = connection.getMessage();
+        Assert.assertNotNull(message);
+        JsonNode data = message.path(JSON.DATA);
+        Assert.assertNotNull(data);
+        Assert.assertEquals(JsonMessage.INFO, data.path(JSON.TYPE).asText());
+        Assert.assertEquals("testSend1", data.path(JsonMessage.MESSAGE).asText());
+        Assert.assertTrue(data.path(JsonMessage.CONTEXT).isNull());
         // send to client "1" with default (null) context
         new JsonMessage(JsonMessage.TYPE.INFO, "testSend2", "1", Locale.ENGLISH).send();
-        Assert.assertEquals(JsonMessage.INFO, connection.getMessage().path(JSON.DATA).path(JSON.TYPE).asText());
-        Assert.assertEquals("testSend2", connection.getMessage().path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertTrue(connection.getMessage().path(JSON.DATA).path(JsonMessage.CONTEXT).isNull());
-        // send to non-existant client "2"
+        message = connection.getMessage();
+        Assert.assertNotNull(message);
+        data = message.path(JSON.DATA);
+        Assert.assertNotNull(data);
+        Assert.assertEquals(JsonMessage.INFO, data.path(JSON.TYPE).asText());
+        Assert.assertEquals("testSend2", data.path(JsonMessage.MESSAGE).asText());
+        Assert.assertTrue(data.path(JsonMessage.CONTEXT).isNull());
+        // send to non-existent client "2"
         new JsonMessage(JsonMessage.TYPE.ERROR, "testSend3", "2", Locale.ENGLISH).send();
-        Assert.assertEquals(JsonMessage.INFO, connection.getMessage().path(JSON.DATA).path(JSON.TYPE).asText());
-        Assert.assertEquals("testSend2", connection.getMessage().path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertTrue(connection.getMessage().path(JSON.DATA).path(JsonMessage.CONTEXT).isNull());
+        message = connection.getMessage();
+        Assert.assertNotNull(message);
+        data = message.path(JSON.DATA);
+        Assert.assertNotNull(data);
+        Assert.assertEquals(JsonMessage.INFO, data.path(JSON.TYPE).asText());
+        Assert.assertEquals("testSend2", data.path(JsonMessage.MESSAGE).asText());
+        Assert.assertTrue(data.path(JsonMessage.CONTEXT).isNull());
         // send to client "1" with non-null context
         new JsonMessage(JsonMessage.TYPE.SUCCESS, "testSend4", "1", context, Locale.ENGLISH).send();
-        Assert.assertEquals(JsonMessage.SUCCESS, connection.getMessage().path(JSON.DATA).path(JSON.TYPE).asText());
-        Assert.assertEquals("testSend4", connection.getMessage().path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertFalse(connection.getMessage().path(JSON.DATA).path(JsonMessage.CONTEXT).isNull());
-        Assert.assertEquals(JSON.ASPECT_UNKNOWN, connection.getMessage().path(JSON.DATA).path(JsonMessage.CONTEXT).path(JSON.ASPECT).asText());
+        message = connection.getMessage();
+        Assert.assertNotNull(message);
+        data = message.path(JSON.DATA);
+        Assert.assertNotNull(data);
+        Assert.assertEquals(JsonMessage.SUCCESS, data.path(JSON.TYPE).asText());
+        Assert.assertEquals("testSend4", data.path(JsonMessage.MESSAGE).asText());
+        Assert.assertFalse(data.path(JsonMessage.CONTEXT).isNull());
+        Assert.assertEquals(JSON.ASPECT_UNKNOWN, data.path(JsonMessage.CONTEXT).path(JSON.ASPECT).asText());
     }
 
     @Test

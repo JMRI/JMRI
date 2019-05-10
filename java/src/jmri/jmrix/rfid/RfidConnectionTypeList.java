@@ -20,7 +20,8 @@ public class RfidConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.rfid.serialdriver.ConnectionConfig",
-            "jmri.jmrix.rfid.networkdriver.ConnectionConfig"
+            "jmri.jmrix.rfid.networkdriver.ConnectionConfig",
+            "jmri.jmrix.rfid.RfidStreamConnectionConfig"
         };
     }
 

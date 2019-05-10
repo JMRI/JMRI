@@ -39,6 +39,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     
     public void dispose() {
         tc.removeCanListener(this);
+        if (throttleRequestTimer != null ) {
+            throttleRequestTimer.stop();
+            throttleRequestTimer = null;
+        }
     }
 
     TrafficController tc;
@@ -103,6 +107,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() ) {
+            return;
+        }
         int opc = m.getElement(0);
         int handle;
         switch (opc) {
@@ -142,6 +149,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     @Override
     synchronized public void reply(CanReply m) {
+        if ( m.isExtended() ) {
+            return;
+        }
         int opc = m.getElement(0);
         int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
         boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;

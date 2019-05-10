@@ -18,26 +18,31 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonNonProvidedNamedBeanHttpService;
 
 /**
  *
  * @author mstevetodd Copyright (C) 2018 (copied from JsonMemoryHttpService)
  * @author Randall Wood
  */
-public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {
+public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpService<LayoutBlock> {
 
     public JsonLayoutBlockHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), name, type, locale);
+    }
+
+    @Override
+    protected ObjectNode doGet(LayoutBlock layoutBlock, String name, String type, Locale locale) throws JsonException {
         ObjectNode root = super.getNamedBean(layoutBlock, name, type, locale); // throws JsonException if layoutBlock == null
         ObjectNode data = root.with(DATA);
         if (layoutBlock != null) {
@@ -47,7 +52,11 @@ public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {
             data.put(TRACK_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockTrackColor()));
             data.put(OCCUPIED_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockOccupiedColor()));
             data.put(EXTRA_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockExtraColor()));
-            data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensor() != null ? layoutBlock.getOccupancySensorName() : null);
+            if (layoutBlock.getOccupancySensor() != null) {
+                data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensor().getSystemName());
+            } else {
+                data.putNull(OCCUPANCY_SENSOR);
+            }
             data.put(OCCUPIED_SENSE, layoutBlock.getOccupiedSense());
         }
         return root;
@@ -55,26 +64,17 @@ public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
-        if (layoutBlock == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LAYOUTBLOCK, name));
-        }
-        this.postNamedBean(layoutBlock, data, name, type, locale);
+        LayoutBlock layoutBlock = this.postNamedBean(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), data, name, type, locale);
         //layoutBlock.state is a bogus construct, so don't expect valid results from this
         if (!data.path(STATE).isMissingNode()) {
             layoutBlock.setState(data.path(STATE).asInt());
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (LayoutBlock lb: InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet()) {
-            root.add(this.doGet(LAYOUTBLOCK, lb.getSystemName(), locale));
-        }
-        return root;
-
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
+        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, locale);
     }
 
     @Override

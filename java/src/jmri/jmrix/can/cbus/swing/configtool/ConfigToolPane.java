@@ -22,7 +22,7 @@ import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
-import jmri.jmrix.can.cbus.swing.console.CbusEventHighlightFrame;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
@@ -55,7 +55,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     }
 
     public static int getConfigToolInstanceNum() {
-        log.warn("instance num {}",configtool_instance_num);
+        log.debug("instance num {}",configtool_instance_num);
         return configtool_instance_num;
     }
     
@@ -235,6 +235,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     @Override
     public void reply(jmri.jmrix.can.CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( ( _filterFrame!=null ) && ( _filterFrame.filter(m) ) ) {
             return;
         }
@@ -252,6 +255,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     @Override
     public void message(jmri.jmrix.can.CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( ( _filterFrame!=null ) && ( _filterFrame.filter(m)) ) {
             return;
         }
@@ -375,7 +381,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             bc.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (f2.getText().equals("")) {
+                    if (f2.getText().isEmpty()) {
                         create(f1.getText());
                     } else {
                         create(f1.getText() + ";" + f2.getText());

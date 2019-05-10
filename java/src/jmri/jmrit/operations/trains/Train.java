@@ -3159,7 +3159,7 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     @Deprecated
     public boolean getPrinted() {
-        return _printed;
+        return isPrinted();
     }
 
     protected RouteLocation _trainIconRl = null; // saves the icon current route location

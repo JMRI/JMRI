@@ -12,12 +12,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.Timebase;
+import jmri.TimebaseRateException;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
@@ -33,39 +36,48 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @Nullable to override @Nonnull in super class
-    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
+        Timebase timebase = InstanceManager.getDefault(Timebase.class);
+        return doGet(type, timebase, timebase.getTime(), locale);
+    }
+
+    public JsonNode doGet(String type, Timebase timebase, Date date, Locale locale) throws JsonException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.getDefault(jmri.Timebase.class).getTime()));
-        data.put(RATE, InstanceManager.getDefault(jmri.Timebase.class).getRate());
-        data.put(STATE, InstanceManager.getDefault(jmri.Timebase.class).getRun() ? ON : OFF);
+        data.put(TIME, new StdDateFormat().format(date));
+        data.put(RATE, timebase.getRate());
+        data.put(STATE, timebase.getRun() ? ON : OFF);
         return root;
     }
 
     @Override
     // using @Nullable to override @Nonnull in super class
     public JsonNode doPost(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
+        Timebase timebase = InstanceManager.getDefault(Timebase.class);
         try {
             if (data.path(TIME).isTextual()) {
-                InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                timebase.setTime(new StdDateFormat().parse(data.path(TIME).asText()));
             }
-            if (data.path(RATE).isDouble()) {
-                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
+            if (data.path(RATE).isDouble() || data.path(RATE).isInt()) {
+                timebase.userSetRate(data.path(RATE).asDouble());
             }
-            if (data.path(STATE).isInt()) {
-                InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
+            int state = data.findPath(STATE).asInt(0);
+            if (state == ON || state == OFF) { // passing the state UNKNOWN (0) will not trigger change
+                timebase.setRun(state == ON);
             }
         } catch (ParseException ex) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"));
+        } catch (TimebaseRateException e) {
+            throw new JsonException(400, Bundle.getMessage(locale, "ErrorRateFactor"));
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(type, name, data, locale);
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
         ArrayNode result = this.mapper.createArrayNode();
-        result.add(this.doGet(type, null, locale));
+        result.add(this.doGet(type, null, data, locale));
         return result;
     }
 

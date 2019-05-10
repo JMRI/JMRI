@@ -42,7 +42,6 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     RollingStock _rs;
-    protected boolean _disableComboBoxUpdate = false;
 
     // labels
     JLabel textRoad = new JLabel();
@@ -53,13 +52,13 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
     // combo boxes
-    protected JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
+    protected JComboBox<Location> locationBox = locationManager.getComboBox();
     protected JComboBox<Track> trackLocationBox = new JComboBox<>();
-    protected JComboBox<Location> destinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
+    protected JComboBox<Location> destinationBox = locationManager.getComboBox();
     protected JComboBox<Track> trackDestinationBox = new JComboBox<>();
-    protected JComboBox<Location> finalDestinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
+    protected JComboBox<Location> finalDestinationBox = locationManager.getComboBox();
     protected JComboBox<Track> finalDestTrackBox = new JComboBox<>();
-    protected JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
+    protected JComboBox<Train> trainBox = trainManager.getTrainComboBox();
 
     // check boxes
     protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
@@ -242,7 +241,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         ignoreTrainCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
 
         // get notified if combo box gets modified
-        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
+        locationManager.addPropertyChangeListener(this);
         // get notified if train combo box gets modified
         trainManager.addPropertyChangeListener(this);
 
@@ -281,9 +280,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            _disableComboBoxUpdate = true; // need to stop property changes while we update
             save();
-            _disableComboBoxUpdate = false;
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -332,7 +329,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         if (!changeDestination(rs)) {
             return false;
         }
-        
+
         updateTrainComboBox();
 
         // check if train can service this rolling stock
@@ -345,6 +342,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                             "rsTrainNotServType"), new Object[]{rs.getTypeName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
                             JOptionPane.ERROR_MESSAGE);
+                    // prevent rs from being picked up and delivered
+                    setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
                 // determine if train services this rs's road
@@ -353,6 +352,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
                             JOptionPane.ERROR_MESSAGE);
+                    // prevent rs from being picked up and delivered
+                    setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
                 // determine if train services this rs's built date
@@ -361,14 +362,18 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                             "rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
                             JOptionPane.ERROR_MESSAGE);
+                    // prevent rs from being picked up and delivered
+                    setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
-                // determine if train services this rs's built date
+                // determine if train services this rs's owner
                 if (!train.acceptsOwnerName(rs.getOwner())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
                             JOptionPane.ERROR_MESSAGE);
+                    // prevent rs from being picked up and delivered
+                    setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
                 // determine if train services the location and destination selected by user
@@ -385,12 +390,16 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                         JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                 "rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
                                 getRb().getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                        // prevent rs from being picked up and delivered
+                        setRouteLocationAndDestination(rs, train, null, null);
                         return false;
                     }
                     if (rd == null && !rs.getDestinationName().equals(RollingStock.NONE)) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                 "rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
                                 getRb().getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                        // prevent rs from being picked up and delivered
+                        setRouteLocationAndDestination(rs, train, null, null);
                         return false;
                     }
                     if (rd != null && route != null) {
@@ -429,6 +438,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                                             rs.getLocationName()}),
                                     getRb().getString("rsNotMove"),
                                     JOptionPane.ERROR_MESSAGE);
+                            // prevent rs from being picked up and delivered
+                            setRouteLocationAndDestination(rs, train, null, null);
                             return false;
                         }
                         if (!foundDes) {
@@ -438,6 +449,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                                             rs.getLocationName(), train.getName()}),
                                     getRb().getString("rsNotMove"),
                                     JOptionPane.ERROR_MESSAGE);
+                            // prevent rs from being picked up and delivered
+                            setRouteLocationAndDestination(rs, train, null, null);
                             return false;
                         }
                     }
@@ -556,8 +569,12 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         return true;
     }
 
+    /*
+     * Checks to see if rolling stock's location or destination has changed, and
+     * if so, removes the rolling stock from the train. Also allows user to add or
+     * remove rolling stock to or from train.
+     */
     protected void checkTrain(RollingStock rs) {
-        // determine if train is built and car is part of train or wants to be part of the train
         Train train = rs.getTrain();
         if (train != null && train.isBuilt()) {
             if (rs.getRouteLocation() != null &&
@@ -566,8 +583,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     rd != null &&
                     (!rs.getRouteLocation().getName().equals(rl.getName()) ||
                             !rs.getRouteDestination().getName().equals(rd.getName()) ||
-                            rs
-                                    .getDestinationTrack() == null)) {
+                            rs.getDestinationTrack() == null)) {
                 // user changed rolling stock location or destination or no destination track
                 setRouteLocationAndDestination(rs, train, null, null);
             }
@@ -589,8 +605,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                             Bundle.getMessage("rsStagingTrackError"), JOptionPane.ERROR_MESSAGE);
                 } else if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
                         getRb().getString("rsAddRsToTrain"), new Object[]{rs.toString(), train.getName()}),
-                        getRb()
-                                .getString("rsAddManuallyToTrain"),
+                        getRb().getString("rsAddManuallyToTrain"),
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     // set new pick up and set out locations
                     setRouteLocationAndDestination(rs, train, rl, rd);
@@ -788,12 +803,13 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     trackDestinationBox.setSelectedItem(track);
                 }
             }
-            if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(destination)) {
-                if (_rs.getDestinationTrack() != null) {
-                    trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
-                } else if (track != null) {
-                    trackDestinationBox.setSelectedItem(track);
-                }
+            if (_rs != null &&
+                    _rs.getDestination() != null &&
+                    _rs.getDestination().equals(destination) &&
+                    _rs.getDestinationTrack() != null) {
+                trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
+            } else if (track != null) {
+                trackDestinationBox.setSelectedItem(track);
             }
         }
     }
@@ -816,7 +832,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         if (_rs != null) {
             _rs.removePropertyChangeListener(this);
         }
-        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
+        locationManager.removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         super.dispose();
     }

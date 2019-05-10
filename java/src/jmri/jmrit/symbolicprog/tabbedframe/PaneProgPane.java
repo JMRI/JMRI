@@ -51,6 +51,8 @@ import jmri.jmrit.symbolicprog.ValueEditor;
 import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.util.CvUtil;
+import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
@@ -92,7 +94,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
- * @author Dave Heap Copyright (C) 2014
+ * @author Dave Heap Copyright (C) 2014, 2019
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  */
 /*
@@ -2166,14 +2168,13 @@ public class PaneProgPane extends javax.swing.JPanel
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         // instead of forcing the columns to fill the frame (and only fill)
         cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         JScrollPane cvScroll = new JScrollPane(cvTable);
         cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 
-        cs.gridheight = GridBagConstraints.REMAINDER;
+        cs.fill = GridBagConstraints.VERTICAL;
+        cs.weighty = 2.0;
         g.setConstraints(cvScroll, cs);
         c.add(cvScroll);
-        cs.gridheight = 1;
 
         // remember which CVs to read/write
         isCvTablePane = true;
@@ -2213,7 +2214,7 @@ public class PaneProgPane extends javax.swing.JPanel
         Attribute a = modelElem.getAttribute("extFnsESU");
         try {
             if (a != null) {
-                extFnsESU = (a.getValue()).equalsIgnoreCase("yes");
+                extFnsESU = !(a.getValue()).equalsIgnoreCase("no");
             }
         } catch (Exception ex) {
             log.error("error handling decoder's extFnsESU value");
@@ -2393,144 +2394,28 @@ public class PaneProgPane extends javax.swing.JPanel
         // add information about CVs, etc in the ToolTip text
 
         // Optionally add CV numbers based on Roster Preferences setting
-        start = addCvDescription(start, variable.getCvDescription(), variable.getMask());
+        start = CvUtil.addCvDescription(start, variable.getCvDescription(), variable.getMask());
 
         // Indicate what the command station can do
         // need to update this with e.g. the specific CV numbers
         if (_cvModel.getProgrammer() != null
                 && !_cvModel.getProgrammer().getCanRead()) {
-            start = addTextHTMLaware(start, " (Hardware cannot read)");
+            start = StringUtil.concatTextHtmlAware(start, " (Hardware cannot read)");
         }
         if (_cvModel.getProgrammer() != null
                 && !_cvModel.getProgrammer().getCanWrite()) {
-            start = addTextHTMLaware(start, " (Hardware cannot write)");
+            start = StringUtil.concatTextHtmlAware(start, " (Hardware cannot write)");
         }
 
         // indicate other reasons for read/write constraints
         if (variable.getReadOnly()) {
-            start = addTextHTMLaware(start, " (Defined to be read only)");
+            start = StringUtil.concatTextHtmlAware(start, " (Defined to be read only)");
         }
         if (variable.getWriteOnly()) {
-            start = addTextHTMLaware(start, " (Defined to be write only)");
+            start = StringUtil.concatTextHtmlAware(start, " (Defined to be write only)");
         }
 
         return start;
-    }
-
-    public static final String HTML_OPEN_TAG = "<html>";
-    public static final String HTML_CLOSE_TAG = "</html>";
-
-    /**
-     * Appends text to a String possibly in HTML format (as used in many Swing
-     * components).
-     * <p>
-     * Ensures any appended text is added prior to the closing {@code </html>}
-     * tag, if there is one.
-     *
-     * @param baseText  original text
-     * @param extraText text to be appended to original text
-     * @return combined text
-     */
-    public static String addTextHTMLaware(String baseText, String extraText) {
-        String result;
-
-        if (baseText == null || baseText.length() < 1) {
-            result = extraText;
-        } else if (baseText.endsWith(HTML_CLOSE_TAG)) {
-            result = baseText.substring(0, baseText.length() - HTML_CLOSE_TAG.length()) + extraText + HTML_CLOSE_TAG;
-        } else {
-            result = baseText + extraText;
-        }
-        return result;
-    }
-
-    /**
-     * Optionally add CV numbers and bit numbers to tool tip text based on
-     * Roster Preferences setting.
-     * <p>
-     * Needs to be independent of VariableValue methods to allow use by
-     * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
-     * FnMapPanel.
-     *
-     * @param toolTip       existing tool tip text
-     * @param cvDescription description of CV
-     * @param mask          a bitmask
-     * @return new tool tip text
-     */
-    public static String addCvDescription(String toolTip, String cvDescription, String mask) {
-        // start with CV description
-        String descString = cvDescription;
-
-        // add bit numbers from bitmask if applicable
-        String temp = getMaskDescription(mask);
-        if (temp.length() > 0) {
-            descString = descString + " " + temp;
-        }
-
-        // add to tool tip if Show CV Numbers enabled
-        // parenthesise if adding to existing tool tip
-        if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
-            if (toolTip == null) {
-                toolTip = descString;
-            } else {
-                toolTip = addTextHTMLaware(toolTip, " (" + descString + ")");
-            }
-        } else if (toolTip == null) {
-            toolTip = "";
-        }
-
-        return toolTip;
-    }
-
-    /**
-     * Generate bit numbers from bitmask if applicable. Returns empty String if
-     * not applicable.
-     *
-     * Needs to be independent of VariableValue methods to allow use by
-     * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
-     * FnMapPanel.
-     *
-     * @param mask a bitmask
-     * @return bit numbers or empty string
-     */
-    public static String getMaskDescription(String mask) {
-        StringBuilder maskDescString = new StringBuilder("");
-
-        // generate bit numbers from bitmask if applicable
-        if ((mask != null) && (mask.contains("X"))) {
-            int lastBit = mask.length() - 1;
-            int lastV = -2;
-            if (mask.contains("V")) {
-                if (mask.indexOf('V') == mask.lastIndexOf('V')) {
-                    maskDescString.append("bit ").append(lastBit - mask.indexOf('V'));
-                } else {
-                    maskDescString.append("bits ");
-                    for (int i = 0; i <= lastBit; i++) {
-                        char descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
-                        if (mask.charAt(lastBit - i) == 'V') {
-                            if (descStringLastChar == ' ') {
-                                maskDescString.append(i);
-                            } else if (lastV == (i - 1)) {
-                                if (descStringLastChar != '-') {
-                                    maskDescString.append("-");
-                                }
-                            } else {
-                                maskDescString.append(",").append(i);
-                            }
-                            lastV = i;
-                        }
-                        descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
-                        if ((descStringLastChar == '-') && ((mask.charAt(lastBit - i) != 'V') || (i == lastBit))) {
-                            maskDescString.append(lastV);
-                        }
-                    }
-                }
-            } else {
-                maskDescString.append("no bits");
-            }
-            log.trace("{} Mask:{}", maskDescString, mask);
-        }
-        return maskDescString.toString();
     }
 
     JComponent getRep(int i, String format) {

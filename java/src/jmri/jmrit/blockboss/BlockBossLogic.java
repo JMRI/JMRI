@@ -3,6 +3,7 @@ package jmri.jmrit.blockboss;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -126,18 +127,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     static public final int FACING = 4;
 
     int mode = 0;
-
-    /**
-     * Create a default object, without contents.
-     * Used when registering a dummy with the configuration system.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
-                justification = "Private ctor used to create dummy object for registration; object never asked to do anything")
-        private BlockBossLogic() {
-        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-    }
 
     /**
      * Create an object to drive a specific signal head.
@@ -1160,19 +1149,32 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return;
     }
 
-    static ArrayList<BlockBossLogic> bblList;
+    // Due to an older configuration & storage paradigm, this class
+    // has to add itself to the configuration manager, but only once.
+    // We do that the first time an instance is created and added to the active list
+    private static volatile boolean addedToConfig = false;
+    
+    // The list of existing instances. When the first is added,
+    // the configuration connection is made.
+    static List<BlockBossLogic> bblList = Collections.synchronizedList(
+                        new ArrayList<BlockBossLogic>() {
+                            @Override
+                            public boolean add(BlockBossLogic bbl) {
+                                if (!addedToConfig) {
+                                    addedToConfig = true;
+                                    ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+                                    if (cm != null) {
+                                        cm.registerConfig(bbl, jmri.Manager.BLOCKBOSS);
+                                    }
+                                    log.debug("added to config for {}", bbl.name);
+                                }
+                                return super.add(bbl);
+                            }
+                        }
+            );
 
     public static Enumeration<BlockBossLogic> entries() {
         return Collections.enumeration(bblList);
-    }
-
-    //  ensure proper registration
-    static {
-        bblList = new ArrayList<BlockBossLogic>();
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
-            cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
-        }
     }
 
     /**
@@ -1272,8 +1274,11 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
+            log.debug("name: {} got {} from {}", name, evt, evt.getSource());
+
             StringBuilder message = new StringBuilder();
             message.append(Bundle.getMessage("InUseBlockBossHeader", getDrivenSignal()));
+
             boolean found = false;
 
             if (nb instanceof SignalHead) {
@@ -1420,6 +1425,18 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
     }
 
+    /**
+     * Stop() all existing objects and clear the list.
+     * <p>
+     * Intended to be only used during testing.
+     */
+    public static void stopAllAndClear() {
+        for (BlockBossLogic b : bblList) {
+            b.stop();
+        }
+        bblList.clear();
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
 
 }

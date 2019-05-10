@@ -228,11 +228,15 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     public void dispose() {
         // deregister with the command station.
         stopTimer();
-        slotModel.dispose();
+	if(slotModel!=null) {
+           slotModel.dispose();
+	}
         slotModel = null;
         slotTable = null;
         slotScroll = null;
-        tc.removeSprogListener(this);
+	if(tc!=null) {
+           tc.removeSprogListener(this);
+	}
         super.dispose();
     }
 

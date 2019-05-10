@@ -15,6 +15,8 @@ import org.junit.runners.Suite;
         jmri.jmrix.can.cbus.simulator.PackageTest.class,
         jmri.jmrix.can.cbus.node.PackageTest.class,
         CbusReporterManagerTest.class,
+        CbusCabSignalTest.class,
+        CbusCabSignalManagerTest.class,
         CbusConstantsTest.class,
         CbusEventHighlighterTest.class,
         CbusFilterTest.class,
@@ -27,7 +29,9 @@ import org.junit.runners.Suite;
         CbusDccProgrammerTest.class,
         CbusLightManagerTest.class,
         CbusLightTest.class,
+        CbusMultiMeterTest.class,
         CbusPowerManagerTest.class,
+        CbusPreferenceTest.class,
         CbusReporterTest.class,
         CbusThrottleTest.class,
         CbusThrottleManagerTest.class,
@@ -36,6 +40,7 @@ import org.junit.runners.Suite;
         BundleTest.class,
         CbusEventTest.class,
         CbusSendTest.class,
+        CbusNameServiceTest.class,
         jmri.jmrix.can.cbus.eventtable.PackageTest.class
 })
 

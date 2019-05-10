@@ -158,7 +158,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     JTextField _variableNameField;
     JComboBox<String> _variableCompareOpBox;
     JComboBox<String> _variableSignalBox;
-    JComboBox<String> _variableCompareTypeBox;
+    JComboBox<Conditional.Type> _variableCompareTypeBox;
     JTextField _variableData1Field;
     JTextField _variableData2Field;
     JButton _reorderVarButton;
@@ -1726,9 +1726,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _variableComparePanel.add(Box.createHorizontalStrut(STRUT));
 
         // Compare type
-        _variableCompareTypeBox = new JComboBox<String>();
+        _variableCompareTypeBox = new JComboBox<>();
         for (Conditional.Type t : Conditional.Type.getMemoryItems()) {
-            _variableCompareTypeBox.addItem(t.toString());
+            _variableCompareTypeBox.addItem(t);
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareTypeBox, "LabelCompareType", "CompareTypeHint"));  // NOI18N
         _variableComparePanel.setVisible(false);
@@ -2409,7 +2409,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
+                testType = _variableCompareTypeBox.getItemAt(_variableCompareTypeBox.getSelectedIndex());
                 break;
             case CONDITIONAL:
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
@@ -3564,7 +3564,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      *                            comboBox
      * @return integer representing the selected action
      */
-/*    
+/*
     static Conditional.Action getActionTypeFromBox(Conditional.ItemType itemType, int actionTypeSelection) {
 //        if (itemType < 0 || actionTypeSelection < 0) {
 //            return Conditional.Action.NONE;

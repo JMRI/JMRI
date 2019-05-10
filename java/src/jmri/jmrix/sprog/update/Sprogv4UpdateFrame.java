@@ -49,7 +49,7 @@ public class Sprogv4UpdateFrame
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
-        if (sv.sprogType.isSprog() == false) {
+        if (sv!=null && sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
             if (log.isDebugEnabled()) {
                 log.debug("SPROG not found - looking for bootloader");
@@ -58,7 +58,7 @@ public class Sprogv4UpdateFrame
             requestBoot();
         } else {
             // Check that it's a V4
-            if (sv.sprogType.sprogType == SprogType.SPROGV4) {
+            if (sv!=null && sv.sprogType.sprogType == SprogType.SPROGV4) {
                 statusBar.setText(Bundle.getMessage("StatusFoundX", sv.toString()));
                 // Put SPROG in boot mode
                 if (log.isDebugEnabled()) {
@@ -175,7 +175,6 @@ public class Sprogv4UpdateFrame
     }
 
     @Override
-    @SuppressWarnings("deprecation") // entire class is deprecated
     synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by sending an extended address command
         // which should be echoed
@@ -189,7 +188,6 @@ public class Sprogv4UpdateFrame
     }
 
     @Override
-    @SuppressWarnings("deprecation") // entire class is deprecated
     synchronized protected void sendWrite() {
         if (hexFile.getAddress() < 2 * 0x700) {
             log.debug("Send write Flash {}", hexFile.getAddress());
@@ -212,7 +210,6 @@ public class Sprogv4UpdateFrame
     }
 
     @Override
-    @SuppressWarnings("deprecation") // entire class is deprecated
     synchronized protected void doneWriting() {
         // Finished
         log.debug("Done writing");

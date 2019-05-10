@@ -624,8 +624,13 @@
       the master JMRI repo.</p>
 
       <p>To make a PR from within IntelliJ IDEA, select "Create
-      Pull Request" from the "VCS" -&gt; Git menu (that's the last
-      item, supported by the Git plug in).<br>
+      Pull Request" from the "VCS" -&gt; Git menu (that's the one but
+      last item, supported by the Git plug in).<br>
+      Note: Be sure to select your own repository if you see multiple options
+      to choose from in this submenu:<br>
+      <a href="images/IntelliJ/IjPullViaOwnRepo.png">
+        <img src="images/IntelliJ/IjPullViaOwnRepo.png" width="311" height="26" alt="IntelliJ Git Menu"></a></p>
+      <p>Fill in a title and comment for your PR:<br>
       <a href="images/IntelliJ/IjGitPRCreate.png">
         <img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a></p>
 

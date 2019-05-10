@@ -4,11 +4,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
+import jmri.beans.Beans;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -49,7 +52,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
     protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        if (sys == null) {
+        if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
         mSystemName = sys;
@@ -135,17 +138,45 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, l);
+        if (beanRef != null) {
+            register.put(l, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(l, listenerRef);
+        }
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-        if (l != null) {
-            register.remove(l);
-            listenerRefs.remove(l);
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
+        }
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
         }
     }
 
@@ -194,8 +225,14 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners().length;
     }
 
+    @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /** {@inheritDoc} */
@@ -259,13 +296,28 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(String key, Object value) {
-        if (parameters == null) {
-            parameters = new HashMap<>();
-        }
-        parameters.put(key, value);
+    public void setProperty(String key,Object value){
+         if (parameters == null) {
+             parameters = new HashMap<>();
+         }
+         Set<String> keySet = getPropertyKeys();
+         if(keySet.contains(key)){
+            // key already in the map, replace the value.
+            Object oldValue = getProperty(key);
+            if(!Objects.equals(oldValue, value)){
+	          removeProperty(key); // make sure the old value is removed.
+              parameters.put(key, value);
+              firePropertyChange(key,oldValue,value);
+            }
+         } else {
+            parameters.put(key, value);
+            firePropertyChange(key,null,value);
+         }
     }
 
     @Override
@@ -289,7 +341,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @OverridingMethodsMustInvokeSuper
     public void removeProperty(String key) {
-        if (parameters == null || key == null) {
+        if (parameters == null || Objects.isNull(key)) {
             return;
         }
         parameters.remove(key);

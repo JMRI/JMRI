@@ -46,6 +46,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Updated for PRR 1956</revremark>
      </revision>    
+    <revision>
+        <revnumber>1.3</revnumber>
+        <date>2019-02-02</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Typo correction Rule 285a</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>PRR 1956</aspecttable>
@@ -73,7 +79,7 @@
       <aspectname>Caution</aspectname>
       <show>lunar</show>
       <reference>Page 60</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/PRR-1956/PL-1-high-pbs/rule-285A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/PRR-1956/PL-1-high-pbs/rule-285a.gif</imagelink>
     </appearance>
 
     <appearance>

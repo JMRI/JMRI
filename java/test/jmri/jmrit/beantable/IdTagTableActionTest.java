@@ -1,10 +1,12 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
@@ -37,6 +39,38 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
     public void testIncludeAddButton(){
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddIdTag");
+    }
+
+    @Test
+    public void testAddThroughDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	    //Enter 1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        (new JTextFieldOperator((JTextField)jlo.getLabelFor())).enterText("1");
+	//and press OK 
+	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonOK"));
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    @Ignore("IdTag table has no Edit button")
+    public void testEditButton() {
+    }
+
 
     // The minimal setup for log4J
     @Before

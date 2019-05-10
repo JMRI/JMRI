@@ -277,6 +277,66 @@
   </tocitem>
   <tocitem text="Consisting Tool " target="html.tools.consisttool.ConsistTool"/>
 
+  <tocitem text="CTC " target="package.jmri.jmrit.ctc.CTC">
+   <tocitem text="CTCEditor " target="package.jmri.jmrit.ctc.CTC_editor">
+    <tocitem text="Menus " target="package.jmri.jmrit.ctc.CTC_menuFile">
+     <tocitem text="File menu " target="package.jmri.jmrit.ctc.CTC_menuFile">
+      <tocitem text="New " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+      <tocitem text="Save " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+      <tocitem text="Exit without saving " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+     </tocitem>
+     <tocitem text="Edit menu " target="package.jmri.jmrit.ctc.CTC_menuEditFind">
+      <tocitem text="Find and Replace... " target="package.jmri.jmrit.ctc.CTC_menuEditFind"/>
+
+      <tocitem text="Fix Error(s)... " target="package.jmri.jmrit.ctc.CTC_menuEditFix"/>
+
+     </tocitem>
+     <tocitem text="Configure menu " target="package.jmri.jmrit.ctc.CTC_menuCfgDeb">
+      <tocitem text="Debugging " target="package.jmri.jmrit.ctc.CTC_menuCfgDeb"/>
+
+      <tocitem text="Defaults " target="package.jmri.jmrit.ctc.CTC_menuCfgDef"/>
+
+      <tocitem text="Fleeting " target="package.jmri.jmrit.ctc.CTC_menuCfgFlt"/>
+
+      <tocitem text="Patterns " target="package.jmri.jmrit.ctc.CTC_menuCfgPat"/>
+
+      <tocitem text="GUI Design " target="package.jmri.jmrit.ctc.CTC_menuCfgGui"/>
+
+     </tocitem>
+    </tocitem>
+    <tocitem text="O.S. Sections List " target="package.jmri.jmrit.ctc.CTC_osList"/>
+
+    <tocitem text="Edit Buttons " target="package.jmri.jmrit.ctc.CTC_frmCB">
+     <tocitem text="Code button " target="package.jmri.jmrit.ctc.CTC_frmCB"/>
+
+     <tocitem text="Signal direction indicators " target="package.jmri.jmrit.ctc.CTC_frmSIDI"/>
+
+     <tocitem text="Signal direction lever " target="package.jmri.jmrit.ctc.CTC_frmSIDL"/>
+
+     <tocitem text="Switch direction indicators " target="package.jmri.jmrit.ctc.CTC_frmSWDI"/>
+
+     <tocitem text="Switch direction lever " target="package.jmri.jmrit.ctc.CTC_frmSWDL"/>
+
+     <tocitem text="Call On " target="package.jmri.jmrit.ctc.CTC_frmCO"/>
+
+     <tocitem text="Traffic locking " target="package.jmri.jmrit.ctc.CTC_frmTRL"/>
+
+     <tocitem text="Turnout locking " target="package.jmri.jmrit.ctc.CTC_frmTUL"/>
+
+     <tocitem text="Indication locking " target="package.jmri.jmrit.ctc.CTC_frmIL"/>
+
+    </tocitem>
+   </tocitem>
+   <tocitem text="Files " target="package.jmri.jmrit.ctc.CTC_ctcFiles"/>
+
+   <tocitem text="CTCMain " target="package.jmri.jmrit.ctc.CTC_ctcMain"/>
+
+   <tocitem text="Definitions " target="package.jmri.jmrit.ctc.CTC_ctcDefinitions"/>
+
+  </tocitem>
   <tocitem text="Fast Clocks " target="html.tools.fastclock.index">
    <tocitem text="Introduction " target="html.tools.fastclock.index"/>
 
@@ -420,17 +480,23 @@
 
   </tocitem>
   <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant">
-   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+   <tocitem text="Warrants Introduction " target="package.jmri.jmrit.logix.Warrant"/>
 
    <tocitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
 
    <tocitem text="NXWarrants " target="package.jmri.jmrit.logix.NXWarrant"/>
+
+   <tocitem text="SCWarrants " target="package.jmri.jmrit.logix.SCWarrant"/>
+
+   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
 
    <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 
    <tocitem text="Creating and Editing OBlocks, Portals and OPaths " target="package.jmri.jmrit.logix.OBlockEdit"/>
+
+   <tocitem text="Circuit Builder " target="package.jmri.jmrit.display.CircuitBuilder"/>
 
   </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">

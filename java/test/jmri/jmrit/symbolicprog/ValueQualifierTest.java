@@ -4,17 +4,17 @@ import java.util.HashMap;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
- * @author	Bob Jacobsen, Copyright 2017 
+ * @author	Bob Jacobsen, Copyright 2014, 2017
  */
-public class ValueQualifierTest extends TestCase {
+public class ValueQualifierTest {
 
     private ProgDebugger p = new ProgDebugger();
     private VariableValue qualified = null; 
@@ -30,18 +30,21 @@ public class ValueQualifierTest extends TestCase {
         return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
+    @Test
     public void testVariableNotExistsOk() {
 
         ValueQualifier aq = new ValueQualifier(qualified, null , 0, "exists");
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableNotExistsNOk() {
 
         ValueQualifier aq = new ValueQualifier(qualified, null, 1, "exists");
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableExistsOk() {
 
         // test Exists
@@ -49,12 +52,14 @@ public class ValueQualifierTest extends TestCase {
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableExistsNotOk() {
         // test Exists
         ValueQualifier aq = new ValueQualifier(qualified, watched, 0, "exists");
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableEq() {
         // test "eq"
         ValueQualifier aq = new ValueQualifier(qualified, watched, 10, "eq");
@@ -66,6 +71,7 @@ public class ValueQualifierTest extends TestCase {
 
     }
 
+    @Test
     public void testVariableGe() {
         // test "ge"
         ValueQualifier aq = new ValueQualifier(qualified, watched, 10, "ge");
@@ -79,6 +85,7 @@ public class ValueQualifierTest extends TestCase {
 
     }
 
+    @Test
     public void testVariableRefEqNotExist() {
         // test arithmetic operation when variable not found
         ValueQualifier aq = new ValueQualifier(qualified, null, 10, "eq");
@@ -91,26 +98,8 @@ public class ValueQualifierTest extends TestCase {
         return m;
     }
 
-    // from here down is testing infrastructure
-    public ValueQualifierTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ValueQualifierTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests, including others in the package
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ValueQualifierTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         v = createCvMap();
         cv1 = new CvValue("81", p);
@@ -123,8 +112,8 @@ public class ValueQualifierTest extends TestCase {
         watched = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

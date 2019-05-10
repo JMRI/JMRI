@@ -3,9 +3,11 @@ package jmri.jmrix.internal;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,5 +78,4 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
-
 }

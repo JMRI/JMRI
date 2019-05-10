@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Analog Controls</name>
   <name xml:lang="ca">Control Analògic</name>
   <name xml:lang="cs">Analogové řízení</name>
@@ -60,13 +62,13 @@
     <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
       <tooltip xml:lang="ca">Estableix l'alimentació alternativa quan l'adreçaa curta és zero</tooltip>
       <tooltip xml:lang="de">Alternative Stromversorgung wenn die kurze Adresse Null ist</tooltip>
-      <tooltip xml:lang="it">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
+      <tooltip xml:lang="fr">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
       <tooltip xml:lang="it">Imposta la fonte di alimentazione analogica alternativa quando l'indirizzo corto = Zero</tooltip>
     </display>
     <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
       <tooltip xml:lang="ca">Estableix l'alimentació alternativa quan l'adreça curta és zero</tooltip>
       <tooltip xml:lang="de">Alternative Stromversorgung wenn die kurze Adresse Null ist</tooltip>
-      <tooltip xml:lang="it">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
+      <tooltip xml:lang="fr">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
       <tooltip xml:lang="it">Imposta la fonte di alimentazione Radio alternativa quando l'indirizzo corto = Zero</tooltip>
     </display>
     <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
@@ -93,6 +95,32 @@
       <tooltip xml:lang="fr">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
       <tooltip xml:lang="it">Imposta la fonte di alimentazione Radio alternativa quando l'indirizzo corto = Zero</tooltip>
     </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Analog Mode Automatic Effects - FWDD" format="checkbox" tooltip="Check to enable automatic effects when moving in forward direction in analog power mode">
+    </display>
+    <display item="Analog Mode Automatic Effects - REVD" format="checkbox" tooltip="Check to enable automatic effects when moving in reverse direction in analog power mode">
+    </display>
+    <display item="Analog Mode Automatic Effects - FWDS" format="checkbox" tooltip="Check to enable automatic effects when stopped in forward direction in analog power mode">
+    </display>
+    <display item="Analog Mode Automatic Effects - REVS" format="checkbox" tooltip="Check to enable automatic effects when stopped in reverse direction in analog power mode">
+    </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Analog Control option 1"/>
+    <display item="Analog Control option 2"/>
+    <display item="Analog Control option 3"/>
+    <display item="Analog Control option 4"/>
+    <display item="Analog Control check 1" format="checkbox"/>
+    <display item="Analog Control check 2" format="checkbox"/>
+    <display item="Analog Control check 3" format="checkbox"/>
+    <display item="Analog Control check 4" format="checkbox"/>
+    <display item="Analog Control slider 1" format="hslider"/>
+    <display item="Analog Control slider 2" format="hslider"/>
+    <display item="Analog Control slider 3" format="hslider"/>
+    <display item="Analog Control slider 4" format="hslider"/>
   </column>
   <column>
     <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Check to enable function FL when the unit is operating in analog power mode">
@@ -518,16 +546,6 @@
       <tooltip xml:lang="de">Setzt den Status der Funktion F28 wenn die Lok im Analogbetrieb ist</tooltip>
       <tooltip xml:lang="fr">Sélectionner pour activer la fonction F28 lorsque la loco fonctionne en analogique</tooltip>
       <tooltip xml:lang="it">Imposta stato funzione F28 quando si opera in analogico</tooltip>
-    </display>
-  </column>
-  <column>
-    <display item="Analog Mode Automatic Effects - FWDD" format="checkbox" tooltip="Check to enable automatic effects when moving in forward direction in analog power mode">
-    </display>
-    <display item="Analog Mode Automatic Effects - REVD" format="checkbox" tooltip="Check to enable automatic effects when moving in reverse direction in analog power mode">
-    </display>
-    <display item="Analog Mode Automatic Effects - FWDS" format="checkbox" tooltip="Check to enable automatic effects when stopped in forward direction in analog power mode">
-    </display>
-    <display item="Analog Mode Automatic Effects - REVS" format="checkbox" tooltip="Check to enable automatic effects when stopped in reverse direction in analog power mode">
     </display>
   </column>
 </pane>

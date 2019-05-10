@@ -13,6 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,9 +39,7 @@ public class LearnWarrantTest {
 
     @Test
     public void testLearnWarrant() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
         /* This layout designed so that the block and path will define a unique
@@ -80,7 +79,8 @@ public class LearnWarrantTest {
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
-        frame.setTrainInfo("99");
+        frame._speedUtil.setDccAddress("99");
+        frame.setTrainInfo(null);
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
@@ -112,6 +112,7 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("Stop"));
 
         // change address and run
+        frame._speedUtil.setDccAddress("111");
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
@@ -131,7 +132,7 @@ public class LearnWarrantTest {
             return m.endsWith("Cmd #3.");
         }, "Train starts to move at 3rd command");
 
-        sensor = runtimes(route);
+        sensor = NXFrameTest.runtimes(route, _OBlockMgr);
         Assert.assertNotNull("Sensor not null", sensor);
 
         // wait for done
@@ -182,9 +183,9 @@ public class LearnWarrantTest {
     }
 
     /**
-     * @param array of OBlock names
+     * @param route Array of OBlock names
      * @param throttle
-     * @return - active end sensor
+     * @return Active end sensor
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
@@ -212,20 +213,6 @@ public class LearnWarrantTest {
         }
         // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
         throttle.setSpeedSetting(0.0f);
-        return sensor;
-    }
-
-    private Sensor runtimes(String[] route) throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
-        for (int i=1; i<route.length; i++) {
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
-            sensorNext.setState(Sensor.ACTIVE);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            sensor.setState(Sensor.INACTIVE);
-            sensor = sensorNext;
-        }
         return sensor;
     }
 

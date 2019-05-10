@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LayoutSlip extends LayoutTurnout {
 
@@ -189,9 +189,10 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
+            default:
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
-        log.error("Invalid Connection Type " + connectionType); //I18IN
-        throw new jmri.JmriException("Invalid Connection Type " + connectionType);
     }
 
     /**
@@ -329,6 +330,9 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                     break;
                 }
+                default:
+                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected selectedPointType = {}", selectedPointType);
+                    break;
             }   // switch
             setSlipState(newSlipState);
         }
@@ -755,7 +759,7 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.isEmpty())) {
+            if (getBlockName().isEmpty()) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
@@ -997,7 +1001,7 @@ public class LayoutSlip extends LayoutTurnout {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockName != null) && (!blockName.isEmpty()) && (getLayoutBlock() != null)) {
+        if ((!getBlockName().isEmpty()) && (getLayoutBlock() != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
@@ -1116,8 +1120,8 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Check if either turnout is inconsistent.
-     * This is used to create an alternate slip image.
+     * Check if either turnout is inconsistent. This is used to create an
+     * alternate slip image.
      *
      * @return true if either turnout is inconsistent.
      */
@@ -1523,12 +1527,61 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
-        // drawHidden left/right turnout control circles
-        Point2D leftCircleCenter = getCoordsLeft();
-        g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+        if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            // TODO: query user base if this is "acceptable" (can obstruct state)
+            if (false) {
+                int stateA = UNKNOWN;
+                Turnout toA = getTurnout();
+                if (toA != null) {
+                    stateA = toA.getKnownState();
+                }
 
-        Point2D rightCircleCenter = getCoordsRight();
-        g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                Color foregroundColor = g2.getColor();
+                Color backgroundColor = g2.getBackground();
+
+                if (stateA == Turnout.THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateA != Turnout.CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                Point2D rightCircleCenter = getCoordsRight();
+                if (layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                } else {
+                    g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                }
+                if (stateA != Turnout.CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+
+                int stateB = UNKNOWN;
+                Turnout toB = getTurnoutB();
+                if (toB != null) {
+                    stateB = toB.getKnownState();
+                }
+
+                if (stateB == Turnout.THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateB != Turnout.CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                // drawHidden left/right turnout control circles
+                Point2D leftCircleCenter = getCoordsLeft();
+                if (layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                } else {
+                    g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                }
+                if (stateB != Turnout.CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+            } else {
+                Point2D rightCircleCenter = getCoordsRight();
+                g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                Point2D leftCircleCenter = getCoordsLeft();
+                g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+            }
+        }
     }   // drawTurnoutControls
 
     static class TurnoutState {

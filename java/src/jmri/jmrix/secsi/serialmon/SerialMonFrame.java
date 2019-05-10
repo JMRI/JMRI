@@ -30,9 +30,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         memo.getTrafficController().addSerialListener(this);
     }
 
-    /**
-     * Define system-specific help item.
-     */
+    @Override
     protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.secsi.serialmon.SerialMonFrame", true);  // NOI18N
     }

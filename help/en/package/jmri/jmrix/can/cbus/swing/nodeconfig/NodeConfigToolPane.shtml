@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS NODE CONFIG TOOL configuration variable">
-  <title>JMRI: MERG CBUS Node Config Tool</title><!-- Style -->
+  <meta name="keywords" content="JMRI help MERG CBUS NODE Manager CONFIG TOOL configuration variable">
+  <title>JMRI: MERG CBUS Node Manager</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,107 +22,261 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-     <h1>JMRI: MERG CBUS Node Configuration Tool</h1>
+     <h1>JMRI: MERG CBUS Node Manager</h1>
      
       <ul class="snav">
-      <li><a href="#selection">Node Selection</a></li>
+      <li><a href="#table">Node Table</a></li>
+      <li><a href="#nodeinfo">Node Info</a></li>
       <li><a href="#variables">Node Variables</a></li>
       <li><a href="#events">Node Events</a></li>
+      <li><a href="#setup">Node Setup</a></li>
       <li><a href="#nodenumber">Node Numbers</a></li>
-      <li><a href="#opc">OPCs</a></li>
+      <li><a href="#fcuimport">Restore from FCU</a></li>
       </ul>
      
      
      
-      <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-generic-nv-691x469.png"
-      width="691" height="469" alt="Merg Node Configuration Tool screenshot"
+      <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-752x541.png"
+      width="676" height="487" alt="MERG CBUS Node Manager screenshot"
       align="right">
-
-        <p>This is a generic tool for Node Variable and Node Event editing.</p>
-        <p><strong>Other tools may be more appropriate for full node configuration.</strong></p>
-        <p>Do not blindly change NVs to <i>see what happens!</i> Use in conjunction with 
-        the individual module documentation.</p>
-        <p>JMRI does not save node configuration changes, this is all saved on the node.</p>
-        <p>It is sensible to make regular backups of your node configurations using 
-        appropriate software.</p>
-        <p>You are advised not to use this tool at the same time as any other node configuration tool.</p>
-        <p>At the bottom of the main window is a config console where information 
-        relating to the current task is displayed, 
-        this is set to cover the main window on startup.</p>
-        <p>You can monitor full network activity in the <a href="../console/CbusConsoleFrame.shtml"
-        >MERG CBUS Console Tool</a>.</p>
-        <p>Timeouts to actions are currently set at 2 seconds.</p>
       
-    <h3><a name="selection" id="selection">Node Selection</a></h3>
-        <p>Selecting the Refresh button at the top of the screen will request each node 
-        on the CBUS network to report back.</p>
-        <p>This node list is added to the dropdown menu at the top of the screen.</p>
-        <p>Each node which reports itself is sent a message to take it out of 
-        any existing learn event mode.</p>
-        <p>A message identifying nodes in setup mode, ie requesting a node number 
-        will also be sent to the network.</p>
-        <p>Select the node you wish to configure, then press Select Node.</p>
-      
-        <p>Additional information may be displayed, including firmware version,
-        and if available a module specific web support link which will open in your browser.</p>
-        <p>The NV screen will show in the main window unless the event screen 
-        was displayed previously.</p>
-        <p>When a node is selected, you can switch the main screen between 
-        Node Variables to Events.</p>
+      <p>The node manager comprises a Node Table, along with node configuration abilities.</p>
 
+      <p>Apart from being a setup tool, this table is used by JMRI to locate DC / DCC Command stations, 
+      enabling features for the command stations which support them.</p>
+
+        <p>You can open multiple manager windows, these will all use the same node database.</p>
+      
+      
+      
+    <h2><a name="table" id="table">Node Table</a></h2>
+    <div>
+    
+        <p>The top half of the screen displays a Node table, while the bottom half
+        displays details about the selected node.</p>
+        
+        <p>Nodes will be added to the table when a node admin operation OPC
+        is heard for the node number.</p>
+        
+        <p>Nodes ( and command stations ) will also be added following a node
+        or command station search.</p>
+        
+        <p>There is one row in the table for each node number.</p>
+        
+        <p>The manager will query any node added to the table for its properties.</p>
+        
+        <p>If enabled, this will trigger the background fetch of the full node configuration.</p>
+        
+        <p>When a node is selected in the table, any background fetching will be prioritised to that node.</p>
+        
+        <p>Columns : </p>
+        <ul>
+        <li>Node Number</li>
+        <li>Node Type eg. CANPAN, as reported by node</li>
+        <li>User Name - Editable</li>
+        <li>Command Station Number - Only available if the node is a command station</li>
+        <li>CAN ID - See node setup tab to edit</li>
+        <li>Events - Number of events currently stored on the node</li>
+        <li>Fetch Progress - Percentage of total node config downloaded to JMRI</li>
+        <li>Total Bytes - Total node data bytes</li>
+        <li>Learn Mode - Checked if the node is currently in learn mode</li>
+        </ul>
+        
+        <p>Pre-fetching enables quick node editing, and may be the basis for any future node backup integration.</p>
+        
+        <p>Node data bytes are calculated as the sum of :</p>
+        
+        <ul>
+        <li>Number of Node Parameters</li>
+        <li>Number of Node Variables ( NVs )</li>
+        <li>Number of events x 5 ( initial event index fetch )</li>
+        <li>Number of events x Number of event variables per event</li>
+        </ul>
+        
+        <p>You can click into the Node Name cell to edit the node name.</p>
+        
+        <p>You can remove a node from the table via the Node Setup tab.</p>
+        
+        
+        
+        <h4>File Menu</h4>
+        <p>Import Node Names from FCU File ( node names not currently maintained between sessions )</p>
+        <p>Restore Node From FCU File - see <a href="#fcuimport">Restore from FCU</a></p>
+        
+        <h4>Options Menu</h4>
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-options-372x216.png"
+      width="372" height="216" alt="MERG CBUS Node Manager options"
+      align="right">
+        
+        
+        <ul>
+        <li>Search for Nodes and Command Stations
+            <p>You can select Options > Search for Nodes and Command Stations
+            whereby the manager will request each node 
+            on the CBUS network to report back.
+            <br>Each node which reports itself is sent a message to take it out of 
+            any existing learn event mode.
+            <br>A message identifying nodes in setup mode, ie requesting a node number 
+            will also be sent to the network.</p>
+        </li>
+        <li>Send System Reset OPC</li>
+        <li>Background Fetch
+            <p>The background fetch attempts to use low traffic periods on the CBUS network to
+            refresh Node details.
+            <br>If Fast is selected, the system will check every 20ms for any traffic on the CBUS network.
+            <br>If no traffic is observed, and there is no current data fetch, a data request to the node
+            will be made.
+            <br>If slow is selected, this is reduced to every 50ms.</p>
+        </li>
+        <li>Listen for Node Number Requests</li>
+        <li>Add Command Stations to table when found</li>
+        <li>Add nodes to table when found</li>
+        <li>Search for Command Stations on JMRI startup</li>
+        <li>Search for nodes on JMRI startup</li>
+        </ul>
+        
+        <p>Options are saved between sessions on a per-profile basis.</p>
+        
+        
+    </div>
+
+    <h3><a name="nodeinfo" id="nodeinfo">Node Info</a></h3>
+    <div>
+    
+        <p>Additional node information including, if available</p>
+    
+        <ul>
+        <li>Manufacturer</li>
+        <li>Node type text</li>
+        <li>Firmware Version</li>
+        <li>Total Node Variables</li>
+        <li>Total Parameters</li>
+        <li>Event Variables per event</li>
+        <li>Maximum node events</li>
+        <li>Bus type</li>
+        <li>Node Support Link</li>
+        </ul>
+    
+    </div>
 
     <h3><a name="variables" id="variables">Node Variables</a></h3>
+    <div>
+    
+    <p>This is a generic tool for Node Variable and Node Event editing.</p>
+        
+        <p><strong>Other tools may be more appropriate for full node configuration.</strong></p>
+        
+        
+        <p>JMRI does not save node configuration changes, this is all saved on the node.</p>
+        
+        <p>It is sensible to make regular backups of your node configurations using 
+        appropriate software.</p>
+        
+        
+        <p>Do not blindly change NVs to <i>see what happens!</i> Use in conjunction with 
+        the individual module documentation.</p>
+        
+    
+    
+        <p>These are displayed in a table form.</p>
      
-        <p>These are displayed in a list form, the mouseover tooltips can give extra information.</p>
-     
-        <p>NV1: 10   ( Node Variable 1 is set at 10 decimal)</p>
-        <p>(a) 0000 1010 ( hexdecimal + binary forms of the variable )</p>
-        <p>Binary values are shown as a split value purely for readability.</p>
-        <p>New: Decimal Value ( Spinner box allows entry for values between 0 and 255. 
-        <br>When changed from existing value, the background colour highlights. )</p>
-     
-        <p>The new hex and binary values are shown to the right hand side.</p>
+        <p>Table columns include the NV number, along with the NV value in decimal, hex and binary forms.</p>
+        
+        <p>Click edit to edit the NVs, the edit screen will open in a new window.</p>
+        
+        <h4>Editing Node Variables</h4>
+        
+        <p>Columns on the left are the current values, columns on the right show proposed.</p>
+        
+        <p>If the values have been changed, the row is highlighted yellow.</p>
 
-        <p>To write the new NV's, the Write NV's button is enabled when a variable has been changed.</p>
+        <p>To write the new NV's, the save button is enabled when a variable has been changed.</p>
         
-        <p>Click on this button for a confirmation before writing.</p>
+        <p>Click on this button for a confirmation before writing, after which the window will close.</p>
         
-        
+    </div>
+    
     <h3><a name="events" id="events">Node Events</a></h3>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-ev-list-931x472.png"
-      width="931" height="472" alt="Merg cbus Node Configuration Tool Event List">
-        
+    <div>
+    <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-generic-edit-ev-488x525.png"
+      width="488" height="525" alt="MERG CBUS Node Event Generic Config" align="right">
       
-        
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-edit-ev-321x388.png"
-      width="321" height="388" alt="Merg cbus Node Configuration Tool Event Edit" align="right">
+      <p>You can create new node events by dragging an event from the MERG CBUS event table to the Node Manager window.</p>
+      
+      <p>If the event is new to the node it will open in a new event window.</p>
+      
+      <p>If the event is already on the node, it will open in an edit event window.</p>
+      
       
       <p>Click on the Edit button in the event list, or the new event button 
       to bring up the edit event window.</p>
       <p>The event and node combination are set at the top of the list</p>
-      <p>The number of variables per event will depend on the module specific 
+      
+      <p>The node and event names are looked up from the CBUS Event Table when the spinners are changed.</p>
+      <p>The action buttons will be enabled or disabled depending on how the event number has changed.</p>
+      
+      <p>Do not blindly change Event Variables to <i>see what happens!</i> Use in conjunction with 
+        the individual node documentation.</p>
+      
+      <p>Any existing values are shown on the left of the table, proposed values on the right.</p>
+
+      <p>Zero values are not displayed for binary columns to help identify populated values.</p>
+
+
+      <p>Use the spinners or enter a value in the cell to edit the value.</p>
+      
+      <p>Any changed variables will have their rows highlighted yellow.</p>
+
+      <p>The number of variables per event will depend on the node specific 
       event settings and firmware.</p>
       
-      <p>The hex and binary values are shown on the right hand side of each event variable.</p>
-      
       <p>Click on edit or new event to save this to the node.</p>
-              <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-edit-ev-confirm-449x127.png"
-      width="449" height="127" alt="Merg cbus Node Configuration Tool Event Edit Confirm" >
       
+      <p>When teaching, </p>
       
+      <p>Copying an event will also copy the event variables into a new event ready for editing.</p>
       
       <p>If deleting an event from the node you will be asked to confirm this.</p>
       
+      <p>The edit event window will remain open after teach or edit event operations.</p>
+      
+      <p>At present, only the generic tab is available.  Templates may be available in due course.</p>
+      
+    </div>
+    
+    <h3><a name="setup" id="setup">Node Setup</a></h3>
+    <div>
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-setup-752x541.png"
+      width="676" height="487" alt="MERG CBUS Node Setup" align="right">
+      
+      <p>The node setup tab contains some lesser used node setup functionality.</p>
+      
+      <p>The node JMRI user name is used to refer to the node in the CBUS Console and other CBUS applications.</p>
       
       
+        <p>CAN Self-enumeration sends an enumeration request to the node,
+        which should then sort itself out with a good CAN ID.</p>
+      
+      <p>The CAN can also be set manually by clicking on the force set button.
+      <br>A popup dialogue will ask for the new CAN ID, min 1, max 99.</p>
+      
+      <p>Clear All Events from Node button</p>
+      
+      <p>Remove from table button</p>
+      
+    </div>    
+    
+    
     <h3><a name="nodenumber" id="nodenumber">Node Numbers</a></h3>
+        <div>
         
         <p>Node Number : Each individual module in FLIM operation has a node number.</p>
         
         <p>A node number is requested by the holding down the FLiM button on a node.</p>
         
-        <p>While the JMRI MERG CBUS Node Config Tool is running, it will listen for 
-        individual modules requesting a node number.</p>
+        <p>JMRI can listen for modules requesting a node number.</p>
+        
+        <p>This is enabled by default, though can be disabled in the Node Manager options menu.</p>
         
         <p>On hearing a node number request, an allocation popup window will be displayed.</p>
         
@@ -134,78 +288,152 @@
         
         <p>It is suggested that you allocate node numbers above 256, the maximum non-reserved number is 65,533</p>
         
-        <p>If a reserved OpCode is used, background will turn yellow with explanation.</p>      
-        <p>If an existing node number being used is selected, background will turn red.</p>
-    
-        <p>If a node releases its Node Number, a notification is displayed 
-        with an option to refresh the node list.</p>
+        <p>If a reserved OpCode is used, the background will turn yellow with explanation.</p>      
+        <p>If an existing node number being used is selected, the background will turn red.</p>
       
-    <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
+      </div>
+      
+    <h3><a name="fcuimport" id="fcuimport">MERG FCU xml file - Restore Node / Import CBUS Event and Node Names</a></h3>
+    <div>
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus_node_restore_from_fcu_661x619.png"
+      width="661" height="619" alt="MERG CBUS Node Setup" align="right">
       
       <ul>
-      <li>NERD - Sent when requesting node events.</li>
-      <li>RQEVN - Sent when node selected prior to building event list.</li>
-      <li>NVSET - Sent when editing NV's.</li>
-      <li>NVRD - Sent when NV window selected in get node variable loop.</li>
-      <li>RQNP - Sent on refresh node list to identify any nodes already in setup mode.
-                Also sent in response to a node requesting a node number.</li>
-      <li>QNN - Sent when refreshing node list.</li>
-      <li>RQNPN - Sent when node selected to receive node parameter total, also sent to get each node parameter.</li>
-      <li>REVAL - Sent when node event window selected, to request each event value.</li>
+      <li>Restore Node NV's and Events</li>
+      <li>Import Node Names to the main Node Manager</li>
+      <li>Import Event Names to the <a href="../eventtable/EventTablePane.shtml">JMRI CBUS Event Table</a></li>
+      </ul>
+      
+        <p>Open the restore window via the Node Manager File Menu > Restore Node from FCU xml</p>
+      
+        <p>Select an FCU xml file from the button at top of the screen.</p>
+      
+        <p>Nodes within the file will appear in the top table.</p>
+        <p>There are tabs for viewing the information on the selected node, 
+            node variables and node events in the centre of the window.</p>
+
+
+        <p>If the JMRI CBUS Event Table is running, the button to import event names will be enabled.
+        <br>An event name will be added to an existing event table entry if it has no event name.</p>
+      
+        <p>Node names are imported to the main node table, updating the node name if unset.
+        <br>If a node number is not present in the table, 
+        a new row will be created enabling the node name 
+        to be used within other JMRI CBUS applications.</p>
+        
+        <p>Restore options are towards the bottom of the screen.</p>
+      
+        <p>Nodes from the main Node Table are listed toward the bottom left of the restore screen.</p>
+      
+        <p>Both NV and event transfer can be independently selected.</p>
+      
+        <p>There is also an option to clear any existing events on the node.</p>
+        
+        <p>When a matching FCU node and a node table node have both been selected, 
+        the Update Node button will become active.  </p>
+      
+        <p>The donor node and the target node require the same amount of NVs or Event Variables.</p>
+      
+        <p>Once clicked, there's a confirmation popup
+        confirming the options which are set.</p>
+        
+      <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-teach-from-fcu-file-confirm-278x215.png"
+      width="278" height="215" alt="MERG CBUS Confirm write restore" >
+      
+        <p>Click OK, the busy icon will appear and the write process will commence.</p>
+        <p>Any unchanged values will NOT be written to the node.</p>
+        <p>As with other operations, the node being taught will update in real time via the main node table.</p>
+        
+        <p>On teach completion, the busy icon will dissapear and a teach failure popup 
+        will display should any issues be detected.</p>
+
+      
+      
+    </div>   
+      
+      
+      
+    <h3><a name="opc" id="opc">Sent Operation Codes</a></h3>
+    <div>
+      <ul>
       <li>EVULN - Sent when deleting an event, also sent when editing an event.</li>
       <li>EVLRN - Sent to teach an event variable.</li>
+      <li>NERD - Sent when requesting node events.</li>
       <li>NNLRN - Sent to request node enter learn mode, prior to deleting an event or teaching an event.</li>
+      <li>NVSET - Sent when editing NV's.</li>
+      <li>NVRD - Sent when NV window selected in get node variable loop.</li>
+      <li>QNN - Sent when refreshing node list.</li>
+      <li>REVAL - Sent when node event window selected, to request each event value.</li>
+      <li>RQEVN - Sent when node selected prior to building event list.</li>
+      <li>RQMN - Request Module Name - Sent to request module name when in setup mode.</li>
+      <li>RQNP - Sent on refresh node list to identify any nodes already in setup mode.
+                Also sent in response to a node requesting a node number.</li>
+      <li>RQNPN - Sent when node selected to receive node parameter total, also sent to get each node parameter.</li>
       <li>SNN - Sent to allocate a node number following user choosing number.</li>
       </ul>
       
-      <p>Received OPCS must from an external CBUS connection.  
-      Messages sent from other JMRI components will be ingnored by this tool. </p>
+      <h4>Received Operation Codes</h4>
       
       <ul>
-      <li>RQNN - Constant listener for node number requests.</li>
-      <li>NNREL - Constant listener for node number release.</li>
+      <li>CANID - Listener to set node to a specific CAN ID.</li>
+      <li>CMDERR - Constant listener with extra functionality
+                <ul>
+                <li>When waiting for unlearn event response </li>
+                <li>When waiting for a response to setting event </li> 
+                <li>When waiting for a response to setting NV </li>
+                </ul>
+                </li>
+      <li>ENRSP - Listener when waiting for node event list.</li>
+      <li>ENUM - Listener to auto reset CAN ID.</li>
+      <li>EVLRN - Listener to teach event in learn mode.</li>
+      <li>EVLRNI - Listener to modify event in learn mode by index ( Node must have a valid index ).</li>
+      <li>EVULN - Listener to remove event in learn mode.</li>
+      <li>NEVAL - Listen when waiting for an event variable.</li>
       <li>NNACK - Listener when waiting for a SNN response.</li>
+      <li>NNCLR - Listener to clear all Node events</li>
+      <li>NNLRN - Listener for when node enters Learn Mode</li>
+      <li>NNREL - Constant listener for node number release
+            <br>Node will be removed from Node manager table as any previous data cannot be relied on.</li>
+      <li>NNULN - Listener for when node exits Learn Mode</li>
+      <li>NVANS - Listener when waiting for node NV's.</li>
+      <li>NVSET - Listener for node set single NV.</li>
+      <li>NUMEV - Listener when waiting for number of node events.</li>
       <li>PARAMS - Listener for setup mode on node list refresh, 
                 listener when an RQNP has been sent.</li>
-      <li>WRACK - Listener when waiting for unlearn event response, 
-                listener when waiting for a response to setting event, 
-                listener when waiting for a response to setting NV.</li>
-      <li>CMDERR - Listener when waiting for unlearn event response, 
-                listener when waiting for a response to setting event, 
-                listener when waiting for a response to setting NV. 
-            <br>Generic error message, numeric response value not translated at present.</li>
-      <li>PNN - Listener when refreshing node list.</li>
-      <li>NVANS - Listener when waiting for node NV's.</li>
-      <li>NUMEV - Listener when waiting for number of node events.</li>
       <li>PARAN - Listener when waiting for node ( which is not in setup ) parameters.</li>
-      <li>ENRSP - Listener when waiting for node event list.</li>
-      <li>NEVAL - Listen when waiting for an event variable.</li>
+      <li>PNN - Update from Node - Can create a new Node Manager table row.</li>
+      <li>RQNN - Constant listener for node number requests.</li>
+      <li>STAT - Update from Command Station - Can create a new Node Manager table row.</li>
+      <li>WRACK - 
+                <ul>
+                <li>Listener when waiting for unlearn event response</li>
+                <li>Listener when waiting for a response to setting event</li>
+                <li>Listener when waiting for a response to setting NV</li>
+                </ul>
+                </li>
       </ul>
       
+      <p>All nodes are referred to by both Manufacturer and Node Type.</p>
+    
+    </div>
+    
     <h4>Variance to MERG CBUS Developers Guide 6b</h4>
-      <p>ENLRNI has not been found to be supported by enough modules to be appropriate for use in a generic tool.
-      Instead when editing, the event is deleted fom the node and then re-taught for each event variable.</p>
-      
-        <p>Although a WRACK acknowledge is not expected in response to an NNULN, 
-        if one is received it is used as confirmation and cancels the timeout, 
-        enabling the next task to proceed slightly faster.</p>
-        
-      <p>Following an EVULN being sent, many modules take themselves out of learn mode, 
-      hence when another operation is expected directly after the EVULN, 
-      the module is taken out of learn mode, then re-enters learn mode prior to continuing.</p>
+    
+    <div>
       
       <p>It cannot be guaranteed that another program within the JMRI suite 
-      will not send any normal operational OPC to a module while in learn mode.</p>
-      
+      will not send any normal operational OPC to a module which is in learn mode.</p>
+    </div>
       
     <h3>JMRI Help</h3>
       
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Node Configuration Tool window.</p>
+      <p>You can view this help page within JMRI by selecting Help > Window Help 
+      in the top bar of the MERG CBUS Node Manager window.</p>
+      
+      <p>The methods to teach nodes are accessible via Jython script, and include single commands
+      which take care of all of the loops.</p>
       
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
-      
-      <p><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.java"
-      >MERG CBUS Node Config Tool Source Code on Github</a></p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
