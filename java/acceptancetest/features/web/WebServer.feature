@@ -27,7 +27,6 @@ Scenario Outline: Basic Http requests
    | chrome  | http://localhost:12080/       | My JMRI Railroad |
    | chrome  | http://localhost:12080/index.html | My JMRI Railroad |
    | chrome  | http://localhost:12080/panel | Panels \| My JMRI Railroad |
-   | chrome  | http://localhost:12080/web/showPanel.html| Panels \| My JMRI Railroad |
    | chrome  | http://localhost:12080/roster | Roster \| My JMRI Railroad |
    | chrome  | http://localhost:12080/operations | Trains \| My JMRI Railroad |
    | chrome  | http://localhost:12080/frame | Panels \| My JMRI Railroad |
