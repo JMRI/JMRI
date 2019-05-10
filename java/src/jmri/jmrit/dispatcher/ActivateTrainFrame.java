@@ -106,9 +106,11 @@ public class ActivateTrainFrame {
     private final JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
     int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
     String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
+    private final JCheckBox resetStartSensorBox = new JCheckBox(Bundle.getMessage("ResetStartSensor"));
     private final JComboBox<String> delayedStartBox = new JComboBox<>(delayedStartString);
     private final JLabel delayedReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
     private final JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
+    private final JCheckBox resetRestartSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
     private final JComboBox<String> delayedReStartBox = new JComboBox<>(delayedStartString);
     private final jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
     private final jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
@@ -320,6 +322,9 @@ public class ActivateTrainFrame {
             ((FlowLayout) p6a.getLayout()).setVgap(1);
             p6a.add(delayedReStartLabel);
             p6a.add(delayedReStartBox);
+            p6a.add(resetRestartSensorBox);
+            resetRestartSensorBox.setToolTipText(Bundle.getMessage("ResetRestartSensorHint"));
+            resetRestartSensorBox.setSelected(true);
             delayedReStartBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -392,6 +397,9 @@ public class ActivateTrainFrame {
             departureMinSpinner.setToolTipText(Bundle.getMessage("DepartureTimeMinHint"));
             p9.add(delaySensor);
             delaySensor.setFirstItemBlank(true);
+            p9.add(resetStartSensorBox);
+            resetStartSensorBox.setToolTipText(Bundle.getMessage("ResetStartSensorHint"));
+            resetStartSensorBox.setSelected(true);
             handleDelayStartClick(null);
             initiatePane.add(p9);
 
@@ -521,6 +529,7 @@ public class ActivateTrainFrame {
         departureTimeLabel.setVisible(false);
         departureSepLabel.setVisible(false);
         delaySensor.setVisible(false);
+        resetStartSensorBox.setVisible(false);
         if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartTimed"))) {
             departureHrSpinner.setVisible(true);
             departureMinSpinner.setVisible(true);
@@ -528,6 +537,7 @@ public class ActivateTrainFrame {
             departureSepLabel.setVisible(true);
         } else if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))) {
             delaySensor.setVisible(true);
+            resetStartSensorBox.setVisible(true);
         }
         initiateFrame.pack(); // to fit extra hh:mm in window
     }
@@ -539,6 +549,7 @@ public class ActivateTrainFrame {
         delayedReStartBox.setVisible(false);
         delayReStartSensorLabel.setVisible(false);
         delayReStartSensor.setVisible(false);
+        resetRestartSensorBox.setVisible(false);
         if (resetWhenDoneBox.isSelected()) {
             delayedReStartLabel.setVisible(true);
             delayedReStartBox.setVisible(true);
@@ -548,6 +559,7 @@ public class ActivateTrainFrame {
             } else if (delayedReStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))) {
                 delayReStartSensor.setVisible(true);
                 delayReStartSensorLabel.setVisible(true);
+                resetRestartSensorBox.setVisible(true);
             }
         }
         handleReverseAtEndBoxClick(e);
@@ -747,11 +759,13 @@ public class ActivateTrainFrame {
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
         at.setDelaySensor((jmri.Sensor) delaySensor.getSelectedBean());
+        at.setResetStartSensor(resetStartSensorBox.isSelected());
         if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY)
                 || delayedStart == ActiveTrain.NODELAY) {
             at.setStarted();
         }
         at.setRestartSensor((jmri.Sensor) delayReStartSensor.getSelectedBean());
+        at.setResetRestartSensor(resetRestartSensorBox.isSelected());
         at.setTrainType(trainType);
         at.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
         if (autoRunBox.isSelected()) {
@@ -1108,10 +1122,11 @@ public class ActivateTrainFrame {
         departureHrSpinner.setValue(info.getDepartureTimeHr());
         departureMinSpinner.setValue(info.getDepartureTimeMin());
         delaySensor.setSelectedBeanByName(info.getDelaySensorName());
-
+        resetStartSensorBox.setSelected(info.getResetStartSensor());
         setDelayModeBox(info.getDelayedRestart(), delayedReStartBox);
         delayMinSpinner.setValue(info.getRestartDelayMin());
         delayReStartSensor.setSelectedBeanByName(info.getRestartSensorName());
+        resetRestartSensorBox.setSelected(info.getResetRestartSensor());
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
@@ -1156,6 +1171,7 @@ public class ActivateTrainFrame {
         info.setReverseAtEnd(reverseAtEndBox.isSelected());
         info.setDelayedStart(delayModeFromBox(delayedStartBox));
         info.setDelaySensorName(delaySensor.getSelectedDisplayName());
+        info.setResetStartSensor(resetStartSensorBox.isSelected());
         info.setDepartureTimeHr((Integer) departureHrSpinner.getValue());
         info.setDepartureTimeMin((Integer) departureMinSpinner.getValue());
         info.setTrainType((String) trainTypeBox.getSelectedItem());
@@ -1171,6 +1187,7 @@ public class ActivateTrainFrame {
         }
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
+        info.setResetRestartSensor(resetRestartSensorBox.isSelected());
         info.setRestartDelayMin((Integer) delayMinSpinner.getValue());
         info.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
         autoRunItemsToTrainInfo(info);

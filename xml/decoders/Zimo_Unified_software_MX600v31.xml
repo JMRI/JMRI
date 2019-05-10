@@ -29,7 +29,7 @@
   <!-- v1.2,  german translation. Ronald Kuhn 18 September 2017 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX600 version 31+" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model model="MX600 version 31+" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -44,7 +44,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX600R version 31+" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model model="MX600R version 31+" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -59,7 +59,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX600P12 version 31+" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model model="MX600P12 version 31+" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>

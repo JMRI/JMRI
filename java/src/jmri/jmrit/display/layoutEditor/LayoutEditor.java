@@ -289,6 +289,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
     protected Color turnoutCircleColor = Color.black; //matches earlier versions
+    protected Color turnoutCircleThrownColor = Color.black;
+    protected boolean turnoutFillControlCircles = false;
     protected int turnoutCircleSize = 4; //matches earlier versions
 
     //use turnoutCircleSize when you need an int and these when you need a double
@@ -340,6 +342,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
     private transient ButtonGroup turnoutCircleSizeButtonGroup = null;
@@ -423,6 +426,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient float mainlineTrackWidth = 4.0F;
     private transient float sidelineTrackWidth = 2.0F;
 
+    private transient Color mainlineTrackColor = Color.DARK_GRAY ;
+    private transient Color sidelineTrackColor = Color.DARK_GRAY ;
     private transient Color defaultTrackColor = Color.DARK_GRAY;
     private transient Color defaultOccupiedTrackColor = Color.red;
     private transient Color defaultAlternativeTrackColor = Color.white;
@@ -2722,7 +2727,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //select turnout circle color
         JMenuItem turnoutCircleColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleColor"));
-
         turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("TurnoutCircleColor"),
@@ -2734,6 +2738,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
         turnoutOptionsMenu.add(turnoutCircleColorMenuItem);
+
+        //select turnout circle thrown color
+        JMenuItem turnoutCircleThrownColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleThrownColor"));
+        turnoutCircleThrownColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("TurnoutCircleThrownColor"),
+                    turnoutCircleThrownColor);
+            if (desiredColor != null && !turnoutCircleThrownColor.equals(desiredColor)) {
+                setTurnoutCircleThrownColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
+        });
+        turnoutOptionsMenu.add(turnoutCircleThrownColorMenuItem);
+
+        turnoutFillControlCirclesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("TurnoutFillControlCircles"));
+        turnoutOptionsMenu.add(turnoutFillControlCirclesCheckBoxMenuItem);
+        turnoutFillControlCirclesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            turnoutFillControlCircles = turnoutFillControlCirclesCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        turnoutFillControlCirclesCheckBoxMenuItem.setSelected(turnoutFillControlCircles);
 
         //select turnout circle size
         JMenu turnoutCircleSizeMenu = new JMenu(Bundle.getMessage("TurnoutCircleSize"));
@@ -2767,6 +2793,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
+    /**
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+     * @return LayoutTrackDrawingOptions object
+     */
     @Nonnull
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
@@ -2776,19 +2806,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
-            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
-            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
 
+    /** 
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+     * @param ltdo LayoutTrackDrawingOptions object
+     */
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
 
         // integrate LayoutEditor drawing options with previous drawing options
         mainlineTrackWidth = layoutTrackDrawingOptions.getMainBlockLineWidth();
         sidelineTrackWidth = layoutTrackDrawingOptions.getSideBlockLineWidth();
-        defaultTrackColor = layoutTrackDrawingOptions.getMainRailColor();
+        mainlineTrackColor = layoutTrackDrawingOptions.getMainRailColor();
+        sidelineTrackColor = layoutTrackDrawingOptions.getSideRailColor();
         redrawPanel();
     }
 
@@ -9058,6 +9093,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ColorUtil.colorToColorName(turnoutCircleColor);
     }
 
+    public String getTurnoutCircleThrownColor() {
+        return ColorUtil.colorToColorName(turnoutCircleThrownColor);
+    }
+    
+    public boolean isTurnoutFillControlCircles() {
+        return turnoutFillControlCircles;
+    }
+
     public int getTurnoutCircleSize() {
         return turnoutCircleSize;
     }
@@ -9273,6 +9316,29 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             turnoutCircleColor = color;
             JmriColorChooser.addRecentColor(color);
+        }
+    }
+
+    /**
+     * @param color new color for turnout circle.
+     */
+    public void setTurnoutCircleThrownColor(Color color) {
+        if (color == null) {
+            turnoutCircleThrownColor = ColorUtil.stringToColor(getDefaultTrackColor());
+        } else {
+            turnoutCircleThrownColor = color;
+            JmriColorChooser.addRecentColor(color);
+        }
+    }
+
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
+    public void setTurnoutFillControlCircles(boolean state) {
+        if (turnoutFillControlCircles != state) {
+            turnoutFillControlCircles = state;
+            turnoutFillControlCirclesCheckBoxMenuItem.setSelected(turnoutFillControlCircles);
         }
     }
 
@@ -10128,6 +10194,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private void drawTurnoutControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
+        g2.setBackground(turnoutCircleThrownColor);
+
         // loop over all turnouts
         boolean editable = isEditable();
         layoutTrackList.forEach((tr) -> {

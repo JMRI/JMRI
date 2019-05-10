@@ -21,10 +21,8 @@
     <row>
       <column>
         <display item="Distance controlled stopping Distance"/>
-        <label>
-          <text> </text>
-        </label>
         <display item="Distance controlled stopping speed correction (ABC)"/>
+        <display item="Distance controlled stopping speed correction (HLU)"/>
         <label>
           <text> </text>
         </label>
@@ -33,10 +31,10 @@
         <display item="Distance controlled stopping Distance" format="hslider" label="">
           <label/>
         </display>
-        <label>
-          <text> </text>
-        </label>
         <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
+          <label/>
+        </display>
+        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider">
           <label/>
         </display>
         <label>

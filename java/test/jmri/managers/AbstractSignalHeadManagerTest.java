@@ -10,22 +10,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AbstractSignalHeadManagerTest {
+public class AbstractSignalHeadManagerTest extends AbstractManagerTestBase<jmri.SignalHeadManager,jmri.SignalHead> {
 
     @Test
     public void testCTor() {
-        AbstractSignalHeadManager t = new AbstractSignalHeadManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",l);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new AbstractSignalHeadManager();
     }
 
     @After
     public void tearDown() {
+        l = null;
         JUnitUtil.tearDown();
     }
 

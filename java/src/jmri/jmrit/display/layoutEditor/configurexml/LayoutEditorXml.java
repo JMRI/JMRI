@@ -93,7 +93,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("defaultoccupiedtrackcolor", p.getDefaultOccupiedTrackColor());
         panel.setAttribute("defaultalternativetrackcolor", p.getDefaultAlternativeTrackColor());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
-        panel.setAttribute("turnoutcirclecolor", p.getTurnoutCircleColor());
+        String turnoutCircleColor = p.getTurnoutCircleColor();
+        panel.setAttribute("turnoutcirclecolor", turnoutCircleColor);
+        String turnoutCircleThrownColor = p.getTurnoutCircleThrownColor();
+        // optional attributes
+        if (!turnoutCircleColor.equals(turnoutCircleThrownColor)) {
+            panel.setAttribute("turnoutcirclethrowncolor", turnoutCircleThrownColor);
+        }
+        if (p.isTurnoutFillControlCircles()) {
+            panel.setAttribute("turnoutfillcontrolcircles", "yes");
+        }
+
         panel.setAttribute("turnoutcirclesize", "" + p.getTurnoutCircleSize());
         panel.setAttribute("turnoutdrawunselectedleg", (p.isTurnoutDrawUnselectedLeg() ? "yes" : "no"));
         panel.setAttribute("turnoutbx", Float.toString((float) p.getTurnoutBX()));
@@ -361,6 +371,21 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         panel.setTurnoutCircleColor(ColorUtil.stringToColor(turnoutCircleColor));
 
+        String turnoutCircleThrownColor = turnoutCircleColor;  //default to using use turnoutCircleColor
+        if ((a = shared.getAttribute("turnoutcirclethrowncolor")) != null) {
+            turnoutCircleThrownColor = a.getValue();
+        }
+        panel.setTurnoutCircleThrownColor(ColorUtil.stringToColor(turnoutCircleThrownColor));
+
+        try {   // the "turnoutfillcontrolcircles" attribute has a default="no" value in the schema;
+            // it will always return a "no" attribute if the attribute is not present.
+            panel.setTurnoutFillControlCircles(shared.getAttribute("turnoutfillcontrolcircles").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert turnoutfillcontrolcircles attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing turnoutfillcontrolcircles attribute");
+        }
+
         if ((a = shared.getAttribute("turnoutcirclesize")) != null) {
             try {
                 panel.setTurnoutCircleSize(a.getIntValue());
@@ -374,6 +399,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert turnoutdrawunselectedleg attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing turnoutdrawunselectedleg attribute");
         }
 
         // turnout size parameters
@@ -453,6 +479,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert positionable attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing positionable attribute");
+
         }
 
         try {
@@ -460,6 +488,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert controlling attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing controlling attribute");
         }
 
         try {
@@ -467,6 +496,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert animating attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing animating attribute");
         }
 
         try {
@@ -474,6 +504,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert drawgrid attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing drawgrid attribute");
         }
 
         try {
@@ -481,6 +512,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert snaponadd attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing snaponadd attribute");
         }
 
         try {
@@ -488,6 +520,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert snaponmove attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing snaponmove attribute");
         }
 
         try {
@@ -495,6 +528,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert turnoutcircles attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing turnoutcircles attribute");
         }
 
         try {
@@ -502,6 +536,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert tooltipsnotedit attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing tooltipsnotedit attribute");
         }
 
         try {
@@ -509,6 +544,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert autoblkgenerate attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing autoblkgenerate attribute");
         }
 
         try {
@@ -516,6 +552,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert tooltipsinedit attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing tooltipsinedit attribute");
         }
 
         // set default track color
@@ -540,6 +577,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
+            log.debug("missing backbround color attributes");
         }
 
         try {
@@ -547,6 +585,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert Layout Editor useDirectTurnoutControl attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing useDirectTurnoutControl attribute");
         }
 
         // Set editor's option flags, load content after
@@ -597,6 +636,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert editable attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing editable attribute");
         }
 
         try {
@@ -604,6 +644,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert showhelpbar attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing showhelpbar attribute");
         }
 
         try {
@@ -611,6 +652,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert antialiasing attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing antialiasing attribute");
         }
 
         // set contents state
@@ -621,6 +663,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("unable to convert sliders attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing sliders attribute");
         }
         if ((a = shared.getAttribute("scrollable")) != null) {
             slValue = a.getValue();
@@ -649,6 +692,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             } catch (DataConversionException e) {
                 log.warn("unable to convert openDispatcher attribute");
             } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                log.debug("missing openDispatcher attribute");
             }
         }
         return result;

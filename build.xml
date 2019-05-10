@@ -285,7 +285,7 @@
         <pathelement location="${libdir}/typetools-0.5.0.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
-        <pathelement location="${libdir}/webdrivermanager-2.0.1.jar"/>
+        <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
         <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
@@ -1359,9 +1359,36 @@
         </java>
     </target>
 
-    <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="${jacocoexec}">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
+    <target name="headlesstest" depends="debug, tests, runtime-library-selection" description="build and run HeadLessTest suite">
+        <java classname="jmri.HeadLessTest"
+          dir="."
+          fork="yes" >
+
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <sysproperty key="java.awt.headless" value="true"/>
+
+            <sysproperty key="user.language" value="en"/>
+            <sysproperty key="user.country" value="US"/>
+
+            <classpath refid="test.class.path"/>
+
+            <jvmarg value="-Xmx512m"/><!-- checking that memory doesnt run away -->
+            <jvmarg line="${jvm.args}"/>
+            
+            <arg value="${antargline}"/>
+        </java>
+
+    </target>
+
+    <target name="logheadlesstest" depends="tests, runtime-library-selection" description="run headlesstest test suite with jacoco output">
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1380,6 +1407,9 @@
 
             <classpath refid="test.class.path"/>
 
+            <!-- use different log4j settings to pick up additional coverage -->
+            <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
+
             <test name="jmri.HeadLessTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
@@ -1388,7 +1418,7 @@
         </jacoco:coverage>
     </target>
 
-    <target name="headless-coveragereport" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <target name="headless-coveragereport" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1408,7 +1438,7 @@
        </jacoco:report>
     </target>
 
-    <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <target name="headless-coveragecheck" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -1531,7 +1561,7 @@
 
     <!-- Note if modifying the alltest target, please be sure to up date the -->
     <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
-    <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run test suite">
+    <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run AllTest suite">
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
@@ -1554,9 +1584,8 @@
 
     </target>
 
-    <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite with jacaco output">
+    <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1568,6 +1597,9 @@
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
+
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg line="${jvm.args}"/>
 
             <classpath refid="test.class.path"/>
 

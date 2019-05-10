@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>11</minor>
-    <test>2</test>
+    <minor>15</minor>
+    <test>6</test>
     <modifier>ish</modifier>
   </jmriversion>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -209,7 +209,7 @@
       <mainBallastWidth>0</mainBallastWidth>
       <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
       <mainBlockLineWidth>4</mainBlockLineWidth>
-      <mainRailColor>#000000</mainRailColor>
+      <mainRailColor>#404040</mainRailColor>
       <mainRailCount>1</mainRailCount>
       <mainRailGap>0</mainRailGap>
       <mainRailWidth>4</mainRailWidth>
@@ -221,7 +221,7 @@
       <sideBallastWidth>0</sideBallastWidth>
       <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
       <sideBlockLineWidth>2</sideBlockLineWidth>
-      <sideRailColor>#000000</sideRailColor>
+      <sideRailColor>#404040</sideRailColor>
       <sideRailCount>1</sideRailCount>
       <sideRailGap>0</sideRailGap>
       <sideRailWidth>2</sideRailWidth>
@@ -320,5 +320,5 @@
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.11.2ish+geowar+20180120T2059Z+R0628e98319 on Sat Jan 20 13:00:25 PST 2018-->
+  <!--Written by JMRI version 4.15.6ish+geowar+20190501T0314Z+R445b7129e3 on Tue Apr 30 20:14:11 PDT 2019-->
 </layout-config>

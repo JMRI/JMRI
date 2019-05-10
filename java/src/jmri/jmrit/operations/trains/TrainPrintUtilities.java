@@ -106,6 +106,7 @@ public class TrainPrintUtilities {
             }
         }
         Color c = null;
+        boolean printingComment = false;
         while (true) {
             try {
                 line = in.readLine();
@@ -166,7 +167,6 @@ public class TrainPrintUtilities {
                         .getPickupCarPrefix()))
                         || (!Setup.getSwitchListPickupCarPrefix().equals("") && line
                         .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
-                    // log.debug("found a pickup line");
                     c = Setup.getPickupColor();
                 } else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
                         .getDropEnginePrefix()))
@@ -174,15 +174,22 @@ public class TrainPrintUtilities {
                         .getDropCarPrefix()))
                         || (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup
                         .getSwitchListDropCarPrefix()))) {
-                    // log.debug("found a drop line");
                     c = Setup.getDropColor();
                 } else if ((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup
                         .getLocalPrefix()))
                         || (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup
                         .getSwitchListLocalPrefix()))) {
-                    // log.debug("found a drop line");
                     c = Setup.getLocalColor();
-                } else if (!line.startsWith(TrainCommon.TAB)) {
+                } else if (line.contains(TrainCommon.COMMENT_COLOR_START)) {
+                    c = TrainCommon.getTextColor(line);
+                    if (!line.endsWith(TrainCommon.COMMENT_COLOR_END)) {
+                        printingComment = true;
+                    }
+                    line = TrainCommon.getTextColorString(line);
+                } else if (line.endsWith(TrainCommon.COMMENT_COLOR_END)) {
+                    printingComment = false;
+                    line = TrainCommon.getTextColorString(line);
+                } else if (!line.startsWith(TrainCommon.TAB) && !printingComment) {
                     c = null;
                 }
                 if (c != null) {

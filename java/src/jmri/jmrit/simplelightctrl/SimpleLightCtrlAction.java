@@ -5,7 +5,7 @@ import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a SimpleTurnoutCtrlFrame
- * object
+ * object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */

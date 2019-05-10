@@ -576,9 +576,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['state'] = UNKNOWN;  //add a state member for this block
                                 $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                                 //store these blocks in a persistent var
-                                //id is username, because references use it
-                                $gBlks[$widget.username] = $widget;
-                                jmri.getLayoutBlock($widget.username);
+                                //by both username and systemname since references may be by either
+                                $gBlks[$widget.username] = $widget
+                                $gBlks[$widget.systemname] = $widget;
+                                jmri.getLayoutBlock($widget.systemname);
                                 break;
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name

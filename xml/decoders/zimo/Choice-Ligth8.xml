@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="not used">
+        <choice>not used</choice>
+        <choice xml:lang="de">nicht verwendet</choice>
+      </enumChoice>
+      <enumChoice choice="Slow fade in/out">
+        <choice>Slow fade in/out</choice>
+        <choice xml:lang="de">Langsames Auf- und Abdimmen</choice>
+      </enumChoice>
+      <enumChoice choice="Flourescent lamp">
+        <choice>Flourescent lamp</choice>
+        <choice xml:lang="de">Leuchtstoffröhren-Effekt</choice>
+      </enumChoice>
+      <enumChoice choice="sparks with hevy braking">
+        <choice>Sparks with hevy braking</choice>
+        <choice xml:lang="de">Bremsfunken bei starkem Bremsen</choice>
+      </enumChoice>
+</enumChoiceGroup>
