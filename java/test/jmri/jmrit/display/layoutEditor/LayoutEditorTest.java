@@ -2,14 +2,12 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
-
 import org.junit.*;
 import org.junit.rules.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
@@ -275,13 +273,13 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testGetDefaultTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Track Color",ColorUtil.ColorDarkGray, e.getDefaultTrackColor());
+        Assert.assertEquals("Default Track Color", ColorUtil.ColorDarkGray, e.getDefaultTrackColor());
     }
 
     @Test
     public void testSetDefaultTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setDefaultTrackColor(ColorUtil.ColorPink);
+        e.setDefaultTrackColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
         Assert.assertEquals("Default Track Color after Set", ColorUtil.ColorPink, e.getDefaultTrackColor());
     }
 
@@ -294,47 +292,78 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testSetDefaultOccupiedTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setDefaultOccupiedTrackColor(ColorUtil.ColorPink);
+        e.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
         Assert.assertEquals("Default Occupied Track Color after Set", ColorUtil.ColorPink, e.getDefaultOccupiedTrackColor());
     }
 
     @Test
     public void testGetDefaultAlternativeTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Alternative Track Color",ColorUtil.ColorWhite, e.getDefaultAlternativeTrackColor());
+        Assert.assertEquals("Default Alternative Track Color", ColorUtil.ColorWhite, e.getDefaultAlternativeTrackColor());
     }
 
     @Test
     public void testSetDefaultAlternativeTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setDefaultAlternativeTrackColor(ColorUtil.ColorPink);
-        Assert.assertEquals("Default Alternative Track Color after Set",ColorUtil.ColorPink, e.getDefaultAlternativeTrackColor());
+        e.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
+        Assert.assertEquals("Default Alternative Track Color after Set", ColorUtil.ColorPink, e.getDefaultAlternativeTrackColor());
     }
 
     @Test
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Text Color",ColorUtil.ColorBlack, e.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, e.getDefaultTextColor());
     }
 
     @Test
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setDefaultTextColor(ColorUtil.ColorPink);
-        Assert.assertEquals("Default Text Color after Set",ColorUtil.ColorPink, e.getDefaultTextColor());
+        e.setDefaultTextColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
+        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, e.getDefaultTextColor());
     }
 
     @Test
     public void testGetTurnoutCircleColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Turnout Circle Color",ColorUtil.ColorBlack, e.getTurnoutCircleColor());
+        Assert.assertEquals("Turnout Circle Color", ColorUtil.ColorBlack, e.getTurnoutCircleColor());
     }
 
     @Test
     public void testSetTurnoutCircleColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setTurnoutCircleColor(ColorUtil.ColorPink);
-        Assert.assertEquals("Turnout Circle after Set",ColorUtil.ColorPink, e.getTurnoutCircleColor());
+        e.setTurnoutCircleColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
+        Assert.assertEquals("Turnout Circle after Set", ColorUtil.ColorPink, e.getTurnoutCircleColor());
+    }
+
+    @Test
+    public void testGetTurnoutCircleThrownColor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Turnout Circle Thrown Color", ColorUtil.ColorBlack, e.getTurnoutCircleThrownColor());
+    }
+
+    @Test
+    public void testSetTurnoutCircleThrownColor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setTurnoutCircleThrownColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
+        Assert.assertEquals("Turnout Circle after Set", ColorUtil.ColorPink, e.getTurnoutCircleThrownColor());
+    }
+
+    @Test
+    public void testIsTurnoutFillControlCircles() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("isTurnoutFillControlCircles", e.isTurnoutFillControlCircles());
+    }
+
+    @Test
+    public void testSetTurnoutFillControlCircles() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false, so set to true.
+        e.setTurnoutFillControlCircles(true);
+        Assert.assertTrue("isTurnoutFillControlCircles after set true", e.isTurnoutFillControlCircles());
+        // set back to default (false) and confirm new value
+        e.setTurnoutFillControlCircles(false);
+        Assert.assertFalse("isTurnoutFillControlCircles after set false", e.isTurnoutFillControlCircles());
     }
 
     @Test
@@ -415,7 +444,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         });
         ThreadingUtil.runOnGUI(() -> {
             e.setShowHelpBar(true);
-         });
+        });
         ThreadingUtil.runOnGUI(() -> {
             Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
         });
@@ -760,9 +789,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
-        Assert.assertNotNull("Options Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",18,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+        Assert.assertNotNull("Options Menu Exists", jmo);
+        Assert.assertEquals("Menu Item Count", 18, jmo.getItemCount());
     }
 
     @Test
@@ -770,9 +799,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuTools"));
-        Assert.assertNotNull("Tools Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",16,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuTools"));
+        Assert.assertNotNull("Tools Menu Exists", jmo);
+        Assert.assertEquals("Menu Item Count", 16, jmo.getItemCount());
     }
 
     @Test
@@ -780,9 +809,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuZoom"));
-        Assert.assertNotNull("Zoom Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",16,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuZoom"));
+        Assert.assertNotNull("Zoom Menu Exists", jmo);
+        Assert.assertEquals("Menu Item Count", 16, jmo.getItemCount());
     }
 
     @Test
@@ -790,9 +819,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuMarker"));
-        Assert.assertNotNull("Marker Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",3,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuMarker"));
+        Assert.assertNotNull("Marker Menu Exists", jmo);
+        Assert.assertEquals("Menu Item Count", 3, jmo.getItemCount());
     }
 
     @Test
@@ -800,44 +829,43 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuDispatcher"));
-        Assert.assertNotNull("Dispatcher Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",2,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuDispatcher"));
+        Assert.assertNotNull("Dispatcher Menu Exists", jmo);
+        Assert.assertEquals("Menu Item Count", 2, jmo.getItemCount());
     }
 
     @Test
-    public void testToolBarPostionOptions(){
+    public void testToolBarPostionOptions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         // try each possible option for toolbar location
-
         //Top
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                             + Bundle.getMessage("ToolBar") + "/"
-                             + Bundle.getMessage("ToolBarSideTop"), "/");
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
 
         //Left
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                             + Bundle.getMessage("ToolBar") + "/"
-                             + Bundle.getMessage("ToolBarSideLeft"), "/");
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSideLeft"), "/");
 
         //Right
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                             + Bundle.getMessage("ToolBar") + "/"
-                             + Bundle.getMessage("ToolBarSideRight"), "/");
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSideRight"), "/");
 
         //Bottom
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                             + Bundle.getMessage("ToolBar") + "/"
-                             + Bundle.getMessage("ToolBarSideBottom"), "/");
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSideBottom"), "/");
 
         //float
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                             + Bundle.getMessage("ToolBar") + "/"
-                             + Bundle.getMessage("ToolBarSideFloat"), "/");
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSideFloat"), "/");
     }
 
     @Test
@@ -856,7 +884,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             e = new LayoutEditor("Layout Editor Test Layout");
-            jmri.InstanceManager.setDefault(LayoutBlockManager.class,new LayoutBlockManager());
+            jmri.InstanceManager.setDefault(LayoutBlockManager.class, new LayoutBlockManager());
         }
     }
 
