@@ -511,15 +511,6 @@ in the CTC system and verify that a definition exists for it within JMRI already
 This is just a sanity check, and normally you should not encounter any errors.  If you
 do, then define the missing object(s) in JMRI.
 </p>
-
-
-
-      <p>===The basic process is set the configuration options, do the file export process, load
-      sensors, save JMRI and restart with the updated panel xml file.  Now setting up OS sections and related Edit buttons
-      can be validated. ===
-      </p>
-
-    
       <h3>Action buttons (to the right of the "Presently defined CTC O.S. sections:")</h3>
       <p>
       These buttons are dynamically enabled or disabled based upon the selected item.  Button "Add" is always available.
@@ -921,18 +912,36 @@ do, then define the missing object(s) in JMRI.
 
     <a name="ctcFiles" id="ctcFiles"></a>
     <h2>Files</h2>
-    <p>
-    === Discuss file storage located at user files location, ctc directory. ===
-    Say that it's in the user files location .  See "Help/Locations..."
-    That within Help/Locations you have a "ctc" directory which is under "user files location"
-    The 3 files are there.
-    </p>
-
-    <p>
-    === Describe the 3 Editor files, especially CTCSystem.xml ===
-    DON'T DESCRIBE 3rd file of virtual signals, its deprecated.
-    </p>
-
+    All files for the CTC system are stored in the "ctc" directory under the User Files Location.
+    In order to access this directory, on the main JMRI screen, press "Help", then
+    select "Locations".  This will bring up a JMRI screen with all of the possible locations.  Press
+    "Open User Files Location".  That will open up a browser at that location.  You should notice
+    a "ctc" directory under it.  Navigate to it.  What follows is a discussion of the files located there.
+    <h3>CTCSystem.xml and all CTCSystem.xml?.bup files</h3>
+    CTCSystem.xml contains all of your information that you've entered for the CTC system.  The "bup" files
+    are prior versions made each time you save the CTCSystem.xml file.
+    <h3>ProgramProperties.xml and all ProgramProperties.xml.?.bup files</h3>
+    ProgramProperties.xml contains all of the configurable parameters of the CTC system.  Primarily it contains
+    the parameters specfied under all of the "Configure" options on the main CTCEditor screen.
+    The "bup" files are prior versions of this file.
+    <h3>AwtWindowProperties.txt</h3>
+    This file contains location and size information for all CTCEditor dialogs, so that when you locate
+    a dialog on the screen, the next time you either resize or relocate it, it will be opened at this
+    same location and size.  You can freely delete it at any time.
+    <h3>Optional files</h3>
+    All of the following files may or may not exist.  Once the
+    "Write .xml files for JMRI GUI support" is pressed on the main CTCEditor screen, they are created.  They are created anew
+    each time the "Write .xml files for JMRI GUI support" is pressed.
+    <h3>GUIObjects.xml</h3>
+    It contains all of the basic GUI JMRI objects necessary for creating a "raw" CTC panel in the Panel
+    Editor.  It can be loaded at any time by pressing (on the main JMRI screen) "Panels / Open Panels..."
+    and specifying this location and filename to load.
+    <h3>InternalSensors.xml</h3>
+    It contains <strong>all</strong> of the sensors created by the CTCEditor.  These sensors are required
+    for proper operation of the CTC panel.  It can be loaded at any time by pressing (on the main JMRI
+    screen) "Panels / Open Panels..." and specifying this location and filename to load.
+    <h3>VirtualSignals.xml</h3>
+    Deprecated and obsolete.  You may freely delete it.
     <p>
     === Describe the CTC integration of sensors and a populated PE panel.  Warn
     about the "GUI Generated before" feature and its side effects.  Namely, a different panel
@@ -944,10 +953,6 @@ do, then define the missing object(s) in JMRI.
     file, and re-iterate the process (i.e. CTCEditor, write files, etc.).
     </p>
 
-    <p>
-    === The virtual signal file may no longer be needed.  The recommendation of
-    a functional ABS implementation means that the required signals already exist. ===
-    </p>
 
 
     <a name="ctcMain" id="ctcMain"></a>

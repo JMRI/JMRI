@@ -44,7 +44,8 @@ public class SwitchDirectionIndicators {
         _mActualTurnout = new NBHTurnout("SwitchDirectionIndicators", userIdentifier, "actualTurnout", actualTurnout, feedbackDifferent);                       // NOI18N
         _mActualTurnoutHasFeedback = _mActualTurnout.getFeedbackMode() != Turnout.DIRECT && _mActualTurnout.getFeedbackMode() != Turnout.MONITORING;
         
-        if (_mActualTurnoutHasFeedback) { // Let real sensor that drives turnout feedback set indicators:
+        if (_mActualTurnoutHasFeedback) {
+            // Let real sensor that drives turnout feedback set indicators:
             _mActualTurnoutPropertyChangeListener = (PropertyChangeEvent e) -> { if (e.getPropertyName().equals("KnownState")) setSwitchIndicationSensorsToPresentState(); };   // NOI18N
             _mActualTurnout.addPropertyChangeListener(_mActualTurnoutPropertyChangeListener);
             setSwitchIndicationSensorsToPresentState();
