@@ -2791,8 +2791,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
-    /**
-     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+    /***************************************************************************
+     * Getter Layout Track Drawing Options.
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor <br>
+     * blockDefaultColor, blockOccupiedColor and blockAlternativeColor added to LayoutTrackDrawingOptions <br>
      * @return LayoutTrackDrawingOptions object
      */
     @Nonnull
@@ -2806,6 +2808,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
             layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
+            layoutTrackDrawingOptions.setBlockDefaultColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            layoutTrackDrawingOptions.setBlockAlternativeColor(defaultAlternativeTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
@@ -9106,12 +9111,36 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultTrackColor.
+     * @return block default color as Color
+     */
+    public Color getDefaultTrackColorColor() {
+        return defaultTrackColor;
+    }
+
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultOccupiedTrackColor.
+     * @return block default occupied color as Color
+     */
+    public Color getDefaultOccupiedTrackColorColor() {
+        return defaultOccupiedTrackColor;
+    }
+
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
+    }
+
+    /***************************************************************************
+     * Getter defaultAlternativeTrackColor.
+     * @return block default alternetive color as Color
+     */
+    public Color getDefaultAlternativeTrackColorColor() {
+        return defaultAlternativeTrackColor;
     }
 
     public String getDefaultTextColor() {
