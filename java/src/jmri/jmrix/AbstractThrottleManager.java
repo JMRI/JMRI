@@ -38,6 +38,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     protected String userName = "Internal";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getUserName() {
         if (adapterMemo != null) {
@@ -65,11 +68,17 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return prot.getPeopleName();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
         return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC, LocoAddress.Protocol.DCC_SHORT, LocoAddress.Protocol.DCC_LONG};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocoAddress getAddress(String value, LocoAddress.Protocol protocol) {
         if (value == null) {
@@ -96,6 +105,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return new DccLocoAddress(num, protocol);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocoAddress getAddress(String value, String protocol) {
         if (value == null) {
@@ -109,6 +121,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return getAddress(value, p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocoAddress.Protocol getProtocolFromString(String selection) {
         return LocoAddress.Protocol.getByPeopleName(selection);
@@ -158,6 +173,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         
     }
+    
     /**
      * listenerOnly is indexed by the address, and contains as elements an
      * ArrayList of propertyChangeListeners objects that have requested
@@ -166,8 +182,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     private final HashMap<LocoAddress, ArrayList<WaitingThrottle>> listenerOnly = new HashMap<>(5);
 
-    //This keeps a map of all the current active DCC loco Addresses that are in use.
     /**
+     * Keeps a map of all the current active DCC loco Addresses that are in use.
+     * <p>
      * addressThrottles is indexed by the address, and contains as elements a
      * subclass of the throttle assigned to an address and the number of
      * requests and active users for this address.
@@ -177,6 +194,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Does this DCC system allow a Throttle (e.g. an address) to be used by
      * only one user at a time?
+     * <p>
+     * Note that no core JMRI code currently checks this hardware setting
      * @return true or false
      */
     protected boolean singleUse() {
@@ -367,6 +386,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
                     throttle.setRosterEntry(a.get(i).getRosterEntry());
                 }
+                updateNumUsers(addr,addressThrottles.get(addr).getUseCount());
             }
             throttleListeners.remove(addr);
         }
@@ -456,6 +476,24 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128);
+    }
+    
+    /**
+     * Hardware that has a stealing implementation will need to override
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean enablePrefSilentStealOption() {
+        return false;
+    }
+    
+    /**
+     * Hardware that has a sharing implementation will need to override
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean enablePrefSilentShareOption() {
+        return false;
     }
     
     /**
@@ -607,11 +645,24 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).getUseCount() > 0) {
+                updateNumUsers(la,addressThrottles.get(la).getUseCount());
                 log.debug("addressReleased still has at least one listener");
                 return true;
             }
         }
         return false;
+    }
+    
+    /**
+     * The number of users of this throttle has been updated
+     * <p>
+     * Typically used to update dispatch / release availablility
+     * specific implementations can override this function to get updates
+     *
+     * @param la the Loco Address which has been updated
+     */
+    protected void updateNumUsers( LocoAddress la, int numUsers ){
+        log.debug("Throttle {} now has {} users",la,numUsers);
     }
 
     /**
