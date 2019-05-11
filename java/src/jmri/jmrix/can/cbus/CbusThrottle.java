@@ -1,14 +1,11 @@
 package jmri.jmrix.can.cbus;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.Throttle;
 import jmri.ThrottleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,24 +106,11 @@ public class CbusThrottle extends AbstractThrottle {
     protected void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
 
         log.debug("Setting throttle initial values");
-
-        // cache settings
-        this.speedSetting = speed & 0x7f;
-        this.f0 = (f0f4 & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0;
-        this.f1 = (f0f4 & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1;
-        this.f2 = (f0f4 & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2;
-        this.f3 = (f0f4 & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3;
-        this.f4 = (f0f4 & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4;
-        this.f5 = (f5f8 & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5;
-        this.f6 = (f5f8 & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6;
-        this.f7 = (f5f8 & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7;
-        this.f8 = (f5f8 & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8;
-        this.f9 = (f9f12 & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9;
-        this.f10 = (f9f12 & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10;
-        this.f11 = (f9f12 & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11;
-        this.f12 = (f9f12 & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12;
-
-        this.isForward = (speed & 0x80) == 0x80;
+        updateSpeedSetting( speed & 0x7f );
+        updateIsForward ( (speed & 0x80) == 0x80 );
+        updateFunctionGroup1(f0f4);
+        updateFunctionGroup2(f5f8);
+        updateFunctionGroup3(f9f12);
     }
 
     /**
@@ -248,11 +232,11 @@ public class CbusThrottle extends AbstractThrottle {
      * to a message from the hardware
      */
     protected void updateFunctionGroup1(int fns) {
-        this.f0 = ((fns & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0);
-        this.f1 = ((fns & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1);
-        this.f2 = ((fns & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2);
-        this.f3 = ((fns & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3);
-        this.f4 = ((fns & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4);
+        updateFunction( 0, (fns & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0 );
+        updateFunction( 1, (fns & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1);
+        updateFunction( 2, (fns & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2);
+        updateFunction( 3, (fns & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3);
+        updateFunction( 4, (fns & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4);
     }
 
     /**
@@ -260,10 +244,10 @@ public class CbusThrottle extends AbstractThrottle {
      * message from the hardware
      */
     protected void updateFunctionGroup2(int fns) {
-        this.f5 = ((fns & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5);
-        this.f6 = ((fns & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6);
-        this.f7 = ((fns & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7);
-        this.f8 = ((fns & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8);
+        updateFunction( 5, (fns & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5);
+        updateFunction( 6, (fns & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6);
+        updateFunction( 7, (fns & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7);
+        updateFunction( 8, (fns & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8);
     }
 
     /**
@@ -271,10 +255,10 @@ public class CbusThrottle extends AbstractThrottle {
      * a message from the hardware
      */
     protected void updateFunctionGroup3(int fns) {
-        this.f9 = ((fns & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9);
-        this.f10 = ((fns & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10);
-        this.f11 = ((fns & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11);
-        this.f12 = ((fns & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12);
+        updateFunction( 9, (fns & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9);
+        updateFunction( 10, (fns & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10);
+        updateFunction( 11, (fns & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11);
+        updateFunction( 12, (fns & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12);
     }
 
     /**
@@ -282,14 +266,15 @@ public class CbusThrottle extends AbstractThrottle {
      * F19, F20 in response to a message from the hardware
      */
     protected void updateFunctionGroup4(int fns) {
-        this.f13 = ((fns & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13);
-        this.f14 = ((fns & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14);
-        this.f15 = ((fns & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15);
-        this.f16 = ((fns & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16);
-        this.f17 = ((fns & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17);
-        this.f18 = ((fns & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18);
-        this.f19 = ((fns & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19);
-        this.f20 = ((fns & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20);
+        
+        updateFunction( 13 , ((fns & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13));
+        updateFunction( 14 , ((fns & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14));
+        updateFunction( 15 , ((fns & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15));
+        updateFunction( 16 , ((fns & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16));
+        updateFunction( 17 , ((fns & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17));
+        updateFunction( 18 , ((fns & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18));
+        updateFunction( 19 , ((fns & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19));
+        updateFunction( 20 , ((fns & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20));
     }
 
     /**
@@ -297,14 +282,14 @@ public class CbusThrottle extends AbstractThrottle {
      * F27, F28 in response to a message from the hardware
      */
     protected void updateFunctionGroup5(int fns) {
-        this.f21 = ((fns & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21);
-        this.f22 = ((fns & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22);
-        this.f23 = ((fns & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23);
-        this.f24 = ((fns & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24);
-        this.f25 = ((fns & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25);
-        this.f26 = ((fns & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26);
-        this.f27 = ((fns & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27);
-        this.f28 = ((fns & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28);
+        updateFunction( 21 , ((fns & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
+        updateFunction( 22 , ((fns & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22));
+        updateFunction( 23 , ((fns & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23));
+        updateFunction( 24 , ((fns & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24));
+        updateFunction( 25 , ((fns & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25));
+        updateFunction( 26 , ((fns & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26));
+        updateFunction( 27 , ((fns & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27));
+        updateFunction( 28 , ((fns & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28));
     }
 
     /**
@@ -314,91 +299,178 @@ public class CbusThrottle extends AbstractThrottle {
     protected void updateFunction(int fn, boolean state) {
         switch (fn) {
             case 0:
-                this.f0 = state;
+                if ( this.f0 != state ){
+                    this.f0 = state;
+                    notifyPropertyChangeListener(Throttle.F0, !state, state);
+                }
                 break;
             case 1:
-                this.f1 = state;
+                if ( this.f1 != state ){
+                    this.f1 = state;
+                    notifyPropertyChangeListener(Throttle.F1, !state, state);
+                }
                 break;
             case 2:
-                this.f2 = state;
+                if ( this.f2 != state ){
+                    this.f2 = state;
+                    notifyPropertyChangeListener(Throttle.F2, !state, state);
+                }
                 break;
             case 3:
-                this.f3 = state;
+                if ( this.f3 != state ){
+                    this.f3 = state;
+                    notifyPropertyChangeListener(Throttle.F3, !state, state);
+                }
                 break;
             case 4:
-                this.f4 = state;
+                if ( this.f4 != state ){
+                    this.f4 = state;
+                    notifyPropertyChangeListener(Throttle.F4, !state, state);
+                }
                 break;
             case 5:
-                this.f5 = state;
+                if ( this.f5 != state ){
+                    this.f5 = state;
+                    notifyPropertyChangeListener(Throttle.F5, !state, state);
+                }
                 break;
             case 6:
-                this.f6 = state;
+                if ( this.f6 != state ){
+                    this.f6 = state;
+                    notifyPropertyChangeListener(Throttle.F6, !state, state);
+                }
                 break;
             case 7:
-                this.f7 = state;
+                if ( this.f7 != state ){
+                    this.f7 = state;
+                    notifyPropertyChangeListener(Throttle.F7, !state, state);
+                }
                 break;
             case 8:
-                this.f8 = state;
+                if ( this.f8 != state ){
+                    this.f8 = state;
+                    notifyPropertyChangeListener(Throttle.F8, !state, state);
+                }
                 break;
             case 9:
-                this.f9 = state;
+                if ( this.f9 != state ){
+                    this.f9 = state;
+                    notifyPropertyChangeListener(Throttle.F9, !state, state);
+                }
                 break;
             case 10:
-                this.f10 = state;
+                if ( this.f10 != state ){
+                    this.f10 = state;
+                    notifyPropertyChangeListener(Throttle.F10, !state, state);
+                }
                 break;
             case 11:
-                this.f11 = state;
+                if ( this.f11 != state ){
+                    this.f11 = state;
+                    notifyPropertyChangeListener(Throttle.F11, !state, state);
+                }
                 break;
             case 12:
-                this.f12 = state;
+                if ( this.f12 != state ){
+                    this.f12 = state;
+                    notifyPropertyChangeListener(Throttle.F12, !state, state);
+                }
                 break;
             case 13:
-                this.f13 = state;
+                if ( this.f13 != state ){
+                    this.f13 = state;
+                    notifyPropertyChangeListener(Throttle.F13, !state, state);
+                }
                 break;
             case 14:
-                this.f14 = state;
+                if ( this.f14 != state ){
+                    this.f14 = state;
+                    notifyPropertyChangeListener(Throttle.F14, !state, state);
+                }
                 break;
             case 15:
-                this.f15 = state;
+                if ( this.f15 != state ){
+                    this.f15 = state;
+                    notifyPropertyChangeListener(Throttle.F15, !state, state);
+                }
                 break;
             case 16:
-                this.f16 = state;
+                if ( this.f16 != state ){
+                    this.f16 = state;
+                    notifyPropertyChangeListener(Throttle.F16, !state, state);
+                }
                 break;
             case 17:
-                this.f17 = state;
+                if ( this.f17 != state ){
+                    this.f17 = state;
+                    notifyPropertyChangeListener(Throttle.F17, !state, state);
+                }
                 break;
             case 18:
-                this.f18 = state;
+                if ( this.f18 != state ){
+                    this.f18 = state;
+                    notifyPropertyChangeListener(Throttle.F18, !state, state);
+                }
                 break;
             case 19:
-                this.f19 = state;
+                if ( this.f19 != state ){
+                    this.f19 = state;
+                    notifyPropertyChangeListener(Throttle.F19, !state, state);
+                }
                 break;
             case 20:
-                this.f20 = state;
+                if ( this.f20 != state ){
+                    this.f20 = state;
+                    notifyPropertyChangeListener(Throttle.F20, !state, state);
+                }
                 break;
             case 21:
-                this.f21 = state;
+                if ( this.f21 != state ){
+                    this.f21 = state;
+                    notifyPropertyChangeListener(Throttle.F21, !state, state);
+                }
                 break;
             case 22:
-                this.f22 = state;
+                if ( this.f22 != state ){
+                    this.f22 = state;
+                    notifyPropertyChangeListener(Throttle.F22, !state, state);
+                }
                 break;
             case 23:
-                this.f23 = state;
+                if ( this.f23 != state ){
+                    this.f23 = state;
+                    notifyPropertyChangeListener(Throttle.F23, !state, state);
+                }
                 break;
             case 24:
-                this.f24 = state;
+                if ( this.f24 != state ){
+                    this.f24 = state;
+                    notifyPropertyChangeListener(Throttle.F24, !state, state);
+                }
                 break;
             case 25:
-                this.f25 = state;
+                if ( this.f25 != state ){
+                    this.f25 = state;
+                    notifyPropertyChangeListener(Throttle.F25, !state, state);
+                }
                 break;
             case 26:
-                this.f26 = state;
+                if ( this.f26 != state ){
+                    this.f26 = state;
+                    notifyPropertyChangeListener(Throttle.F26, !state, state);
+                }
                 break;
             case 27:
-                this.f27 = state;
+                if ( this.f27 != state ){
+                    this.f27 = state;
+                    notifyPropertyChangeListener(Throttle.F27, !state, state);
+                }
                 break;
             case 28:
-                this.f28 = state;
+                if ( this.f28 != state ){
+                    this.f28 = state;
+                    notifyPropertyChangeListener(Throttle.F28, !state, state);
+                }
                 break;
             default:
                 log.warn("Unhandled function number: {}", fn);
@@ -438,17 +510,14 @@ public class CbusThrottle extends AbstractThrottle {
                 cs.setSpeedDir(_handle, new_spd);
             }    
             
-            
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
             
             if ( this.speedSetting <= 0 ) {
-                notifyThrottleReleaseEnabled(true);
-                notifyThrottleDispatchEnabled(false);
+                setDispatchActive(false);
             }
             else {
-                notifyThrottleDispatchEnabled(true);
-                notifyThrottleReleaseEnabled(false);
+                setDispatchActive(true);
             }
             
         }
@@ -459,29 +528,11 @@ public class CbusThrottle extends AbstractThrottle {
      * Update the throttles speed setting without sending to hardware. Used to
      * support CBUS sharing by taking speed received <b>from</b> the hardware in
      * an OPC_DSPD message.
-     *
+     * <p>
+     * No compensation required for a direction flag
      * @param speed integer speed value
      */
-    public void updateSpeedSetting(int speed) {
-        
-        
-        
-        // as we may be asking the steal / share question, starting throttle preferences
-        // so that each ThrottleListener does not have to start a new ThrottlesPreferences
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-            
-            
-            log.info("new tp created");
-            
-        } else {
-            
-            log.info("tp found");
-            
-        }
-        
-        
+    protected void updateSpeedSetting(int speed) {
         
         log.debug("Updated speed/dir for speed:{}",speed);
         
@@ -499,24 +550,12 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
-            
-            
-            
-            if ( this.speedSetting <= 0 ) {
-                notifyThrottleReleaseEnabled(true);
-                notifyThrottleDispatchEnabled(false);
-            }
-            else {
-                notifyThrottleDispatchEnabled(true);
-                notifyThrottleReleaseEnabled(false);
-            }
-            
-            
         }
     }
 
     /**
      * Set the direction and reset speed.
+     * Forwards to the layout
      */
     @Override
     public void setIsForward(boolean forward) {
@@ -534,10 +573,10 @@ public class CbusThrottle extends AbstractThrottle {
      * hardware in an OPC_DSPD message.
      *
      */
-    public void updateIsForward(boolean forward) {
+    protected void updateIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        updateSpeedSetting(intSpeed(speedSetting));
+        // updateSpeedSetting(intSpeed(speedSetting));
         if (old != isForward) {
             notifyPropertyChangeListener("IsForward", old, isForward);
         }
@@ -553,7 +592,7 @@ public class CbusThrottle extends AbstractThrottle {
      *
      * @return integer session handle
      */
-    public int getHandle() {
+    protected int getHandle() {
         return _handle;
     }
 
@@ -561,47 +600,11 @@ public class CbusThrottle extends AbstractThrottle {
      * Release session from a command station
      * ie throttle with clean full dispose called from releaseThrottle
      */
-    public void releaseFromCommandStation(){
+    protected void releaseFromCommandStation(){
         if ( cs != null ) {
             cs.releaseSession(_handle);
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-   
-    
-    /**
-     * Remove notification listener
-     *
-     * Check if The Abstract implementation defaults to attempt a steal when all listeners are removed ????
-     *
-     * @param l the propertychangelistener instance
-     *
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        log.debug("Removing property change {}", l);
-        if (getListeners().contains(l)) {
-            getListeners().removeElement(l);
-        }
-        log.debug("remove listeners size is {}", getListeners().size());
-        if ((getListeners().isEmpty())) {
-            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
-            jmri.InstanceManager.throttleManagerInstance().disposeThrottle(this, null );
-    
-        }
-    
-    }
-    
-    
-    
-    
 
     /**
      * Dispose when finished with this object. After this, further usage of this
@@ -643,7 +646,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Internal routine to resend the speed on a timeout
      */
-    synchronized protected void keepAlive() {
+    synchronized private void keepAlive() {
         if (cs != null) { // cs can be null if in process of terminating?
             cs.sendKeepAlive(_handle);
 
@@ -654,9 +657,42 @@ public class CbusThrottle extends AbstractThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocoAddress getLocoAddress() {
         return dccAddress;
+    }
+    
+    /**
+     * Adds extra check for num of this JMRI throttle users before notifying
+     * and makes sure these always get sent as a pair
+     * the abstracts only send to ThrottleListeners if value has been changed
+     * @param newval set true if dispatch can be enabled, else false
+     */
+    protected void setDispatchActive( boolean newval){
+        
+        // feature disabled if command station not listed in CBUS node table,
+        // could be CANCMD v3 or in test
+        if ( cs == null ) {
+            return;
+        }
+        if ( cs.getMasterCommandStation() == null ) {
+            return;
+        }
+        
+        if (newval == true){
+            int numThrottles = jmri.InstanceManager.throttleManagerInstance().getThrottleUsageCount(dccAddress);
+            log.debug("numThrottles {}",numThrottles);
+            if ( numThrottles == 1 ){
+                notifyThrottleReleaseEnabled(false);
+                notifyThrottleDispatchEnabled(true);
+                return;
+            }
+        }
+        notifyThrottleReleaseEnabled(true);
+        notifyThrottleDispatchEnabled(false);
     }
 
     // initialize logging

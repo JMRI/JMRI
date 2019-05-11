@@ -4,6 +4,7 @@ import jmri.CommandStation;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
 import org.slf4j.Logger;
@@ -142,23 +143,54 @@ public class CbusCommandStation implements CommandStation {
     }
 
     /**
-     * Check if the main command station is capable of the full CBUS Throttle commands
+     * Get the master command station from the CBUS Node Table
      * <p>
-     * Full spec is defined as to comply with CBUS Developers Guide Version 6b
+     * Full CBUS spec is defined as to comply with CBUS Developers Guide Version 6b
      * <p>
-     * eg. CANCMD FW v3 supports the main loco OPCs but not full spec.
-     * eg. CANCMD FW v4 supports the full steal / share spec. 
+     * eg. CANCMD FW v3 supports the main loco OPCs but not full spec, will return null.
+     * eg. CANCMD FW v4 supports the full steal / share spec, will return the CbusNode.
      *
-     * @return true if able to support steal, share, dispatch, else false
+     * @return the Master Command Station, else null if not found
      */
-    protected boolean isFullCbusThrottleSpec(){
-        try {
-            CbusNodeTableDataModel cs =  jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            if ( cs.getCsByNum(0) != null ) {
-                return true;
+    protected CbusNode getMasterCommandStation(){
+        if ( jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class) != null ) {
+            CbusNodeTableDataModel nodeModel =  jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+            return nodeModel.getCsByNum(0);
+        }
+        return null;
+    }
+    
+    // we can't rely on the command station flags at present so instead we check the
+    // node variables of master command station 0
+    
+    /**
+     * Get if Steal is available on the Command Station
+     * <p>
+     * Steal availability can change, so CbusThrottleManager checks this value
+     * when it struggles on initial attempt to obtain a throttle 
+     */
+    protected boolean isStealAvailable() {
+        if ( getMasterCommandStation() != null ) {
+            log.debug("found master command sttaion");
+            if ( getMasterCommandStation().getNV(2) > -1 ){
+                log.debug("nv 2 has a value");
+                return (( getMasterCommandStation().getNV(2) >> 1 ) & 1) != 0; // NV2 bit 1 set
             }
-        } catch (NullPointerException e) {
-            return false;
+        }
+        return false;
+    }
+    
+    /**
+     * Get if Share is available on the Command Station
+     * <p>
+     * Share availability can change, so CbusThrottleManager checks this value
+     * when it struggles on initial attempt to obtain a throttle 
+     */
+    protected boolean isShareAvailable() {
+        if ( getMasterCommandStation() != null ) { // command station found
+            if ( getMasterCommandStation().getNV(2) > -1 ){ // NV2 is set
+                return (( getMasterCommandStation().getNV(2) >> 2 ) & 1) != 0; // NV2 bit 2 set
+            }
         }
         return false;
     }
