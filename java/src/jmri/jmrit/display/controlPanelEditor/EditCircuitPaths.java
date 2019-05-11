@@ -3,6 +3,8 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -55,6 +57,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private boolean _pathChange = false;
     private final JTextField _length = new JTextField();
+    private boolean _lengthKeyedIn = false;
     private JToggleButton _units;
 
     static int STRUT_SIZE = 10;
@@ -154,7 +157,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
         addButton.addActionListener((ActionEvent a) -> {
-            addPath(true);
+            addNewPath(true);
         });
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddPath"));
         panel.add(addButton);
@@ -177,14 +180,20 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel pp = new JPanel();
-//      pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        _length.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                _lengthKeyedIn = true;
+            }
+            public void keyTyped(KeyEvent e) {
+            }
+            public void keyPressed(KeyEvent e) {
+            }
+          });
+
         _length.setText("0.0");
         pp.add(CircuitBuilder.makeTextBoxPanel(
                 false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
-        _length.addActionListener((ActionEvent event) -> {
-            _pathChange = true;
-        });
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener((ActionEvent event) -> {
@@ -314,9 +323,10 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("makePath"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (answer == JOptionPane.YES_OPTION) {
-                    addPath(false);
+                    addNewPath(false);
                 }
                 _pathChange = false;
+                _lengthKeyedIn = false;
             }
         }
         clearPath();
@@ -522,6 +532,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         if (_currentPath != null) {
             if (!pathIconsEqual(_pathGroup, _savePathGroup)) {
                 _pathChange = true;
+            } else if (_lengthKeyedIn && 
+                    Math.abs(_currentPath.getLengthMm() - getPathLength()) > 0.49) {
+                _pathChange = true;
             }
         } else if(_pathGroup != null && _pathGroup.size() > 0){
             _pathChange = true;
@@ -636,8 +649,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
      * Create or update the selected path named in the text field Checks that
      * icons have been selected for the path
      */
-    private boolean addPath(boolean fromButton) {
+    private boolean addNewPath(boolean fromButton) {
         String name = _pathName.getText();
+        _lengthKeyedIn = false;
         if (log.isDebugEnabled()) {
             log.debug("addPath({}) for path \"{}\"", fromButton, name);
         }
@@ -741,29 +755,30 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return true;
     }
 
-    private boolean setPathLength(OPath path) {
-        float f;
+    private float getPathLength() {
         try {
             String num = _length.getText();
             if (num == null || num.length() == 0) {
                 num = "0.0";
             }
-            f = Float.parseFloat(num);
+            return Float.parseFloat(num);
+        } catch (NumberFormatException nfe) {
+            return -1.0f;
+        }
+        
+    }
+    private void setPathLength(OPath path) {
+        float f = getPathLength();
+        if (f < 0.0f) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", _length.getText()),
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+        } else {
             if (_units.isSelected()) {
                 path.setLength(f * 25.4f);
             } else {
                 path.setLength(f * 10f);
             }
-        } catch (NumberFormatException nfe) {
-            f = -1.0f;
         }
-        if (f < 0.0f) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", _length.getText()),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
-            return false;
-        }
-
-        return true;
     }
 
     private void changePathName() {
