@@ -33,7 +33,6 @@ public class StealingThrottleManager extends DebugThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the steal callback.
-        DccLocoAddress address = (DccLocoAddress) a;
         notifyDecisionRequest(a,ThrottleListener.DecisionType.STEAL);
     }
 
