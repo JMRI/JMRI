@@ -744,8 +744,6 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Trigger the notification of all PropertyChangeListeners
-     * <p>
-     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
