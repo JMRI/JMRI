@@ -68,6 +68,11 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     }
 
     @Override
+    protected void doDelete(Reporter reporter, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+        super.deleteBean(reporter, name, type, data, locale, id);
+    }
+
+    @Override
     public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case REPORTER:

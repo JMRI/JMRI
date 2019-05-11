@@ -8,11 +8,14 @@ import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrix.internal.InternalReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -133,6 +136,40 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         } catch (JsonException ex) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for reporter");
             assertEquals("400 name was invalid", 400, ex.getCode());
+        }
+    }
+
+    @Test
+    @Override
+    public void testDoDelete() throws JsonException {
+        ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
+        Reporter reporter1 = manager.provide("IR1");
+        Location location1 = new Location("1", "Location 1");
+        location1.setReporter(reporter1);
+        InstanceManager.getDefault(LocationManager.class).register(location1);
+        ObjectNode message = mapper.createObjectNode();
+        // add a reporter
+        assertNotNull(manager.getReporter("IR1"));
+        message = mapper.createObjectNode().put(JSON.NAME, "IR1");
+        try {
+            service.doDelete(REPORTER, "IR1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+        }
+        assertNotNull(manager.getReporter("IR1"));
+        // will throw if prior catch failed
+        service.doDelete(REPORTER, "IR1", message, locale, 0);
+        assertNull(manager.getBeanBySystemName("IR1"));
+        try {
+            // deleting again should throw an exception
+            service.doDelete(REPORTER, "IR1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
         }
     }
 
