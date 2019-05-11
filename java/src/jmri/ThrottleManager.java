@@ -74,7 +74,21 @@ public interface ThrottleManager {
      * @since 4.9.2
      */
     public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision);
-
+    
+    /**
+     * Test if the Silent Steal Throttles preference option should be enabled.
+     *
+     * @return true if steal is possible; false otherwise
+     */
+    public boolean enablePrefSilentStealOption();
+    
+    /**
+     * Test if the Silent Share Throttles preference option should be enabled.
+     *
+     * @return true if steal is possible; false otherwise
+     */
+    public boolean enablePrefSilentShareOption();
+    
     /**
      * Test if the Dispatch Button should be enabled or not.
      *
