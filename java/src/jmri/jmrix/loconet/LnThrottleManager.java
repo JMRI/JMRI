@@ -41,12 +41,21 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     /**
      * LocoNet allows multiple throttles for the same device.
-     *
+     * <p>
+     * {@inheritDoc}
      * @return false always
      */
     @Override
     protected boolean singleUse() {
         return false;
+    }
+    
+    /**
+     * Display the Silent Stealing checkbox option in Throttles Preferences
+     */
+    @Override
+    public boolean enablePrefSilentStealOption() {
+        return true;
     }
 
     /**
@@ -552,7 +561,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 log.error("Address {} not found in list of slots", address.getNumber());
             }
         } else {
-            log.error("Invalid DecisionType for this hardware type.");
+            log.error("Invalid DecisionType {} for LnThrottleManager.",decision);
         }
     }
 
