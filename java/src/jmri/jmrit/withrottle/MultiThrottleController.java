@@ -263,6 +263,7 @@ public class MultiThrottleController extends ThrottleController {
      * Will initiate a steal only if this MTC is flagged to do so.
      * Otherwise, it will remove the request for the address.
      *
+     * {@inheritDoc}
      */
     @Override
     public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
@@ -278,6 +279,23 @@ public class MultiThrottleController extends ThrottleController {
                 notifyFailedThrottleRequest(address, "Steal Required");
             }
         }
+        else if ( question == DecisionType.STEAL_OR_SHARE ){ // using the same process as a Steal
+            if (isStealAddress) {
+                //  Address is now staged in ThrottleManager and has been requested as a steal
+                //  Complete the process
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL);
+                isStealAddress = false;
+            } else {
+                //  Address has not been requested as a steal yet
+                sendStealAddress();
+                notifyFailedThrottleRequest(address, "Steal Required");
+            }
+        }
+        else { // if encountered likely to be DecisionType.SHARE
+            log.info("{} question not supported by WiThrottle.",question );
+        }
+        
+        
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);
