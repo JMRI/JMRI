@@ -294,7 +294,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     @Override
     public void cancelThrottleRequest(LocoAddress la, ThrottleListener l) {
-        failedThrottleRequest(la, "Throttle request was cancelled."); // needs I18N
+        // failedThrottleRequest(la, "Throttle request was cancelled."); // needs I18N
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(la);
             if (a == null || l == null ) {
