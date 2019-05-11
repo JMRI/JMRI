@@ -915,7 +915,7 @@ do, then define the missing object(s) in JMRI.
     All files for the CTC system are stored in the "ctc" directory under the User Files Location.
     In order to access this directory, on the main JMRI screen, press "Help", then
     select "Locations".  This will bring up a JMRI screen with all of the possible locations.  Press
-    "Open User Files Location".  That will open up a browser at that location.  You should notice
+    "Open User Files Location".  That will open up the file manager at that location.  You should notice
     a "ctc" directory under it.  Navigate to it.  What follows is a discussion of the files located there.
     <h3>CTCSystem.xml and all CTCSystem.xml?.bup files</h3>
     CTCSystem.xml contains all of your information that you've entered for the CTC system.  The "bup" files
