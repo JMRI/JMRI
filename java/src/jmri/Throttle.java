@@ -390,6 +390,23 @@ public interface Throttle {
     // register for notification if any of the properties change
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p);
 
+    /**
+     * Add a PropertyChangeListener to the Throttle
+     * <p>
+     * Property Change Events Include
+     * <P>
+     * SpeedSetting, SpeedSteps, isForward
+     * <p>
+     * F0, F1, F2 .. F27, F28
+     * <p>
+     * F0Momentary, F1Momentary, F2Momentary .. F28Momentary
+     * <p>
+     * ThrottleAssigned, throttleRemoved, throttleConnected, throttleNotFoundInRemoval
+     * <P>
+     * DispatchEnabled, ReleaseEnabled
+     *
+     * @param p the PropertyChangeListener to add
+     */
     public void addPropertyChangeListener(java.beans.PropertyChangeListener p);
 
     public Vector<java.beans.PropertyChangeListener> getListeners();
