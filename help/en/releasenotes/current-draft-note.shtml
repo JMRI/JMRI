@@ -61,7 +61,8 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Increased support for stealing / sharing command station sessions</li>
+                <li>Increased support for stealing / sharing command station sessions, see 
+                    <a href="http://jmri.org/help/en/html/hardware/can/cbus/index.shtml#dcc">CBUS Hardware Support</a></li>
             </ul>
 
         <h4>MQTT</h4>
