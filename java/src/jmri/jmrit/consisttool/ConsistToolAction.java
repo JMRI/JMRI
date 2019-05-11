@@ -6,7 +6,7 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
 /**
- * Swing action to create and register a ConsistToolFrame object
+ * Swing action to create and register a ConsistToolFrame object.
  *
  * @author Paul Bender Copyright (C) 2003
  */
@@ -39,7 +39,7 @@ public class ConsistToolAction extends JmriAbstractAction {
     }
 
     public ConsistToolAction() {
-        this("Consist Tool");
+        this(Bundle.getMessage("MenuItemConsistTool"));
     }
 
     @Override
@@ -47,7 +47,6 @@ public class ConsistToolAction extends JmriAbstractAction {
 
         ConsistToolFrame f = new ConsistToolFrame();
         f.setVisible(true);
-
     }
 
     // never invoked, because we overrode actionPerformed above

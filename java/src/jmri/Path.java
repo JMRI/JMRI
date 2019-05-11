@@ -10,15 +10,15 @@ import jmri.util.MathUtil;
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
  * path through trackwork to a Block.
- * <P>
+ * <p>
  * Directions are defined for traffic along this path "to" the block, and "from"
  * the block. Being more specific:
- * <UL>
- * <LI>The "to" direction is the direction that a train is going when it
- * traverses this path "to" the final block.
- * <LI>The "from" direction is the direction that a train is going when it
- * traverses this path "from" the final block.
- * </UL>
+ * <ul>
+ *   <li>The "to" direction is the direction that a train is going when it
+ *   traverses this path "to" the final block.
+ *   <li>The "from" direction is the direction that a train is going when it
+ *   traverses this path "from" the final block.
+ * </ul>
  * Although useful constants are defined, you don't have to restrict to those,
  * and there's no assumption that they have to be opposites; NORTH for "to" does
  * not imply SOUTH for "from". This allows you to e.g. handle a piece of curved
@@ -26,10 +26,10 @@ import jmri.util.MathUtil;
  * constants are defined as bits, so you can use more than one at a time, for
  * example a direction can simultanously be EAST and RIGHT if desired. What that
  * means needs to be defined by whatever object is using this Path.
- * <P>
+ * <p>
  * This implementation handles paths with a list of bean settings. This has been
  * extended from the initial implementation.
- * <P>
+ * <p>
  * The length of the path may also optionally be entered if desired. This
  * attribute is for use in automatic running of trains. Length should be the
  * actual length of model railroad track in the path. It is always stored here
@@ -206,47 +206,59 @@ public class Path {
     public static final int DOWN = 0x02000;
 
     /**
-     * Decode the direction constants into a human-readable form. This should
-     * eventually be internationalized.
+     * Decode the direction constants into a human-readable form.
      *
      * @param d the direction
      * @return the direction description
      */
     static public String decodeDirection(int d) {
         if (d == NONE) {
-            return "None";
+            return Bundle.getMessage("None"); // UI strings i18n using NamedBeanBundle.properties
         }
-
         StringBuffer b = new StringBuffer();
-        if ((d & NORTH) != 0) {
-            appendOne(b, "North");
+        if (((d & NORTH) != 0) && ((d & EAST) != 0) ) {
+            appendOne(b, Bundle.getMessage("NorthEast"));
         }
-        if ((d & SOUTH) != 0) {
-            appendOne(b, "South");
+        else if (((d & NORTH) != 0) && ((d & WEST) != 0) ) {
+            appendOne(b, Bundle.getMessage("NorthWest"));
         }
-        if ((d & EAST) != 0) {
-            appendOne(b, "East");
+        else if (((d & SOUTH) != 0) && ((d & EAST) != 0) ) {
+            appendOne(b, Bundle.getMessage("SouthEast"));
         }
-        if ((d & WEST) != 0) {
-            appendOne(b, "West");
+        else if (((d & SOUTH) != 0) && ((d & WEST) != 0) ) {
+            appendOne(b, Bundle.getMessage("SouthWest"));
+        }
+        else {
+            if ((d & NORTH) != 0) {
+                appendOne(b, Bundle.getMessage("North"));
+            }
+            if ((d & SOUTH) != 0) {
+                appendOne(b, Bundle.getMessage("South"));
+            }
+            if ((d & EAST) != 0) {
+                appendOne(b, Bundle.getMessage("East"));
+            }
+            if ((d & WEST) != 0) {
+                appendOne(b, Bundle.getMessage("West"));
+            }
         }
         if ((d & CW) != 0) {
-            appendOne(b, "CW");
+            appendOne(b, Bundle.getMessage("Clockwise"));
         }
         if ((d & CCW) != 0) {
-            appendOne(b, "CCW");
+            appendOne(b, Bundle.getMessage("CounterClockwise"));
         }
         if ((d & LEFT) != 0) {
-            appendOne(b, "Left");
+            appendOne(b, Bundle.getMessage("Leftward"));
         }
         if ((d & RIGHT) != 0) {
-            appendOne(b, "Right");
+            appendOne(b, Bundle.getMessage("Rightward"));
         }
         if ((d & UP) != 0) {
-            appendOne(b, "Up");
+            appendOne(b, Bundle.getMessage("ButtonUp")); // reuse "Up" in NBB
         }
         if ((d & DOWN) != 0) {
-            appendOne(b, "Down");
+            appendOne(b, Bundle.getMessage("ButtonDown")); // reuse "Down" in NBB
         }
         final int mask = NORTH | SOUTH | EAST | WEST | CW | CCW | LEFT | RIGHT | UP | DOWN;
         if ((d & ~mask) != 0) {
@@ -257,7 +269,8 @@ public class Path {
 
     /**
      * Set path length.
-     * Length may override the block length default
+     * Length may override the block length default.
+     *
      * @param l length in millimeters
      */
     public void setLength(float l) {
@@ -265,7 +278,7 @@ public class Path {
     }
 
     /**
-     * Return actual stored length.
+     * Get actual stored length.
      *
      * @return length in millimeters or 0
      */
@@ -274,7 +287,7 @@ public class Path {
     }
 
     /**
-     * Return length in millimeters.
+     * Get length in millimeters.
      *
      * @return the stored length if greater than 0 or the block length
      */
@@ -286,7 +299,7 @@ public class Path {
     }
 
     /**
-     * Return length in centimeters.
+     * Get length in centimeters.
      *
      * @return the stored length if greater than 0 or the block length
      */
@@ -298,7 +311,7 @@ public class Path {
     }
 
     /**
-     * Return length in inches.
+     * Get length in inches.
      *
      * @return the stored length if greater than 0 or the block length
      */
@@ -394,7 +407,7 @@ public class Path {
     private float _length = 0.0f;  // always stored in millimeters
 
     /**
-     * compute octagonal direction of vector from p1 to p2
+     * Compute octagonal direction of vector from p1 to p2.
      * <p>
      * Note: the octagonal (8) directions are: North, North-East, East,
      * South-East, South, South-West, West and North-West
@@ -420,7 +433,7 @@ public class Path {
     }   // computeOctagonalDirection
 
     /**
-     * return the reverse octagonal direction
+     * Get the reverse octagonal direction.
      *
      * @param inDir the direction
      * @return the reverse direction or {@value #NONE} if inDir is not a
@@ -448,4 +461,5 @@ public class Path {
                 return NONE;
         }
     }
+
 }
