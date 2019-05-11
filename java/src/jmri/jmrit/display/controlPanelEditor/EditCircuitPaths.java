@@ -181,11 +181,14 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JPanel pp = new JPanel();
         _length.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent e) {
                 _lengthKeyedIn = true;
             }
+            @Override
             public void keyTyped(KeyEvent e) {
             }
+            @Override
             public void keyPressed(KeyEvent e) {
             }
           });
