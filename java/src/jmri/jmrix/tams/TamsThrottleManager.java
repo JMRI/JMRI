@@ -82,6 +82,11 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return true;
     }
 
+    /**
+     * Returns false
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean singleUse() {
         return false;

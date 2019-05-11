@@ -70,6 +70,8 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
     /**
      * XpressNet based systems can have multiple throttles for the same
      * device.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected boolean singleUse() {
