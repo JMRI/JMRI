@@ -3,7 +3,7 @@
  * RESTful interface over HTTP or via JSON messages via a socket interface over
  * TCP or WebSockets.
  * 
- * <h2>Schema</h2>
+ * <h2 id="schema">Schema</h2>
  * 
  * The JMRI JSON protocol has two sets of schema, one for messages from clients
  * to a JMRI server, and one for messages from a JMRI server to clients. The
@@ -21,7 +21,7 @@
  * and individual schema for each data object type at <a href=
  * "http://localhost:12080/json/schema/type">http://my-jmri-server:12080/json/schema/<em>type</em></a>
  * 
- * <h2>Methods</h2>
+ * <h2 id="methods">Methods</h2>
  * 
  * The JMRI JSON services accept four methods, all of which directly correspond
  * to HTTP 1.1 methods. The socket services accept one non-HTTP 1.1 method
@@ -52,7 +52,7 @@
  * <code>GET</code> request to <code>/json/&lt;type&gt;</code>.</dd>
  * </dl>
  *
- * <h2>Messages</h2>
+ * <h2 id="messages">Messages</h2>
  * <p>
  * Fundamentally, the JSON server passes messages as JSON Objects between a JMRI
  * server and one or more clients. In the TCP Socket and WebSocket interfaces, a
@@ -81,7 +81,7 @@
  * corresponds to the <code>data</code> object in the socket interfaces.
  * </p>
  * 
- * <h3>Exceptions</h3>
+ * <h3 id="exceptions">Exceptions</h3>
  * <p>
  * Exceptions to the above form for the socket interfaces are:
  * </p>
@@ -131,7 +131,7 @@
  * generally safer to always use system names.
  * </p>
  *
- * <h2>Version History</h2>
+ * <h2 id="history">Version History</h2>
  * <p>
  * Changes to the major number represent a backwards incompatible change in the
  * protocol, while changes to the minor number represent an addition to the
@@ -190,7 +190,7 @@
  * <dd>Initial release of JMRI JSON Protocol.</dd>
  * </dl>
  * 
- * <h2>Notes</h2>
+ * <h2 id="notes">Notes</h2>
  * <p>
  * The JMRI JSON services are defined using {@link jmri.spi.JsonServiceFactory}
  * objects which may be loaded as third-party plug-ins to JMRI (see <a href=

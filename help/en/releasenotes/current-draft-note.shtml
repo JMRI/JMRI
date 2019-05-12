@@ -453,7 +453,14 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>JSON clients can now add, edit, or remove IdTags, Reporters, Operations Locations, Operations Cars, Operations
+                Engines, and Operations Tracks.</li>
+            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
+                to a message to the original message.</li>
+            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
+                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
+                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version History</a>
+                for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
