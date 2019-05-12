@@ -71,7 +71,7 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
             Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named non-existant not found.", ex.getLocalizedMessage());
+            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named \"non-existant\" not found.", ex.getLocalizedMessage());
             Assert.assertEquals("Message Id", 0, ex.getId());
         }
     }
@@ -93,7 +93,7 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
             Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named non-existant not found.", ex.getLocalizedMessage());
+            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named \"non-existant\" not found.", ex.getLocalizedMessage());
             Assert.assertEquals("Message Id", 42, ex.getId());
         }
     }

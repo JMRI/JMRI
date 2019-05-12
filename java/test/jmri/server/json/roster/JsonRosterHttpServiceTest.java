@@ -185,7 +185,7 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
             Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is \"not found\"", "Object type rosterGroup named non-existant-group not found.", ex.getMessage());
+            Assert.assertEquals("Error message is \"not found\"", "Object type rosterGroup named \"non-existant-group\" not found.", ex.getMessage());
         }
     }
 

@@ -54,7 +54,7 @@ public class JsonSchemaServiceCacheTest {
                             ex.getCode()
                     );
                     Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
-                            "No messages from servers of type \"" + type + "\" are allowed.",
+                            "No messages from servers of type " + type + " are allowed.",
                             ex.getMessage());
                 }
                 try {
@@ -66,7 +66,7 @@ public class JsonSchemaServiceCacheTest {
                             400,
                             ex.getCode());
                     Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
-                            "No messages from clients of type \"" + type + "\" are allowed.",
+                            "No messages from clients of type " + type + " are allowed.",
                             ex.getMessage());
                 }
                 // test that every service throws an expected exception

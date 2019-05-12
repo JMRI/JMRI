@@ -19,6 +19,7 @@ import jmri.InstanceManager;
 import jmri.ReporterManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
@@ -59,7 +60,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
-        assertEquals(car.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
         assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
@@ -110,7 +111,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
-        assertEquals(car.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
         assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
@@ -196,7 +197,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
-        assertEquals(car.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
         assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
@@ -256,7 +257,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(engine.getRfid(), data.path(JSON.RFID).asText());
-        assertEquals(engine.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals(engine.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
         assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
@@ -288,7 +289,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(engine.getRfid(), data.path(JSON.RFID).asText());
-        assertEquals(engine.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals(engine.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
         assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
@@ -351,7 +352,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals("216", data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals("1234567890AB", data.path(JSON.RFID).asText());
-        assertEquals(engine.getTypeName(), data.path(JSON.TYPE).asText());
+        assertEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals(0, data.path(JSON.LENGTH).asInt());
         assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
         assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
@@ -386,19 +387,25 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Location", 6, data.size());
+        assertEquals("Number of properties in Location", 7, data.size());
         assertEquals(location.getId(), data.path(JSON.NAME).asText());
         assertEquals(location.getName(), data.path(JSON.USERNAME).asText());
         assertTrue(data.path(JSON.COMMENT).isValueNode());
         assertEquals(location.getComment(), data.path(JSON.COMMENT).asText());
         assertTrue(data.path(JsonReporter.REPORTER).isValueNode());
         assertTrue(data.path(JsonReporter.REPORTER).isNull());
-        assertTrue(data.path(JSON.TYPE).isArray());
-        assertEquals(4, data.path(JSON.TYPE).size());
-        assertEquals("Boxcar", data.path(JSON.TYPE).path(0).asText());
-        assertEquals("Caboose", data.path(JSON.TYPE).path(1).asText());
-        assertEquals("Flat", data.path(JSON.TYPE).path(2).asText());
-        assertEquals("Diesel", data.path(JSON.TYPE).path(3).asText());
+        assertTrue(data.path(JsonOperations.CAR_TYPE).isArray());
+        assertEquals(4, data.path(JsonOperations.CAR_TYPE).size());
+        assertEquals("Boxcar", data.path(JsonOperations.CAR_TYPE).path(0).asText());
+        assertEquals("Caboose", data.path(JsonOperations.CAR_TYPE).path(1).asText());
+        assertEquals("Flat", data.path(JsonOperations.CAR_TYPE).path(2).asText());
+        assertEquals("Diesel", data.path(JsonOperations.CAR_TYPE).path(3).asText());
+        assertTrue(data.path(JsonOperations.TRACK).isArray());
+        assertEquals(1, data.path(JsonOperations.TRACK).size());
+        assertEquals("20s1", data.path(JsonOperations.TRACK).path(0).path(JSON.NAME).asText());
+        assertEquals("NI Yard", data.path(JsonOperations.TRACK).path(0).path(JSON.USERNAME).asText());
+        assertTrue(data.path(JsonOperations.TRACK).path(0).path(JsonReporter.REPORTER).isValueNode());
+        assertTrue(data.path(JsonOperations.TRACK).path(0).path(JsonReporter.REPORTER).isNull());
         // add (PUT) a location
         data = mapper.createObjectNode().put(JSON.USERNAME, "Test Site");
         validateData(JsonOperations.LOCATION, data, false);
@@ -412,7 +419,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Location", 6, data.size());
+        assertEquals("Number of properties in Location", 7, data.size());
         assertEquals(location.getId(), data.path(JSON.NAME).asText());
         assertEquals(location.getName(), data.path(JSON.USERNAME).asText());
         // delete a location
@@ -463,13 +470,156 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Location", 6, data.size());
+        assertEquals("Number of properties in Location", 7, data.size());
         assertEquals(id, data.path(JSON.NAME).asText());
         assertEquals("Editted Site", data.path(JSON.USERNAME).asText());
         assertEquals("A comment", data.path(JSON.COMMENT).asText());
         assertEquals("IR1", data.path(JsonReporter.REPORTER).asText());
-        assertTrue(data.path(JSON.TYPE).isArray());
-        assertEquals(4, data.path(JSON.TYPE).size());
+        assertTrue(data.path(JsonOperations.CAR_TYPE).isArray());
+        assertEquals(4, data.path(JsonOperations.CAR_TYPE).size());
+        assertTrue(data.path(JsonOperations.TRACK).isArray());
+        assertEquals(0, data.path(JsonOperations.TRACK).size());
+    }
+
+    @Test
+    public void testTrack() throws JsonException {
+        // try not including a location property
+        try {
+            service.doGet(JsonOperations.TRACK, "", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(400, ex.getCode());
+            assertEquals("Property \"location\" is required for type track.", ex.getMessage());
+        }
+        // try a non-existent track in existing location
+        ObjectNode message = mapper.createObjectNode().put(JsonOperations.LOCATION, "20");
+        try {
+            service.doGet(JsonOperations.TRACK, "", message, locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+            assertEquals("Object type track named \"\" not found.", ex.getMessage());
+        }
+        // try a non-existent track in non-existent location
+        message = mapper.createObjectNode().put(JsonOperations.LOCATION, "");
+        try {
+            service.doGet(JsonOperations.TRACK, "", message, locale, 0);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+            assertEquals("Object type location named \"\" not found.", ex.getMessage());
+        }
+        // get a known track from a known location
+        LocationManager manager = InstanceManager.getDefault(LocationManager.class);
+        Location location = manager.getLocationById("20");
+        assertNotNull(location);
+        Track track = location.getTrackById("20s1");
+        assertNotNull(track);
+        message = mapper.createObjectNode().put(JsonOperations.LOCATION, "20");
+        JsonNode result = service.doGet(JsonOperations.TRACK, track.getId(), message, locale, 42);
+        validate(result);
+        assertEquals(JsonOperations.TRACK, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        JsonNode data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Track", 8, data.size());
+        assertEquals(track.getId(), data.path(JSON.NAME).asText());
+        assertEquals(track.getName(), data.path(JSON.USERNAME).asText());
+        assertTrue(data.path(JSON.COMMENT).isValueNode());
+        assertEquals(track.getComment(), data.path(JSON.COMMENT).asText());
+        assertTrue(data.path(JsonReporter.REPORTER).isValueNode());
+        assertTrue(data.path(JsonReporter.REPORTER).isNull());
+        assertTrue(data.path(JsonOperations.CAR_TYPE).isArray());
+        assertEquals(4, data.path(JsonOperations.CAR_TYPE).size());
+        assertEquals("Boxcar", data.path(JsonOperations.CAR_TYPE).path(0).asText());
+        assertEquals("Caboose", data.path(JsonOperations.CAR_TYPE).path(1).asText());
+        assertEquals("Flat", data.path(JsonOperations.CAR_TYPE).path(2).asText());
+        assertEquals("Diesel", data.path(JsonOperations.CAR_TYPE).path(3).asText());
+        assertEquals(432, data.findPath(JSON.LENGTH).asInt());
+        assertEquals("20", data.path(JsonOperations.LOCATION).asText());
+        assertEquals("Yard", data.path(JSON.TYPE).asText());
+        // add (PUT) a track
+        data = mapper.createObjectNode()
+                .put(JSON.USERNAME, "Test Site")
+                .put(JSON.TYPE, "Siding")
+                .put(JsonOperations.LOCATION, "20");
+        validateData(JsonOperations.TRACK, data, false);
+        result = service.doPut(JsonOperations.TRACK, "42", data, locale, 42);
+        track = location.getTrackById("42");
+        assertNull(track);
+        track = location.getTrackByName("Test Site", "Siding");
+        assertNotNull(track);
+        validate(result);
+        assertEquals(JsonOperations.TRACK, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Track", 8, data.size());
+        assertEquals(track.getId(), data.path(JSON.NAME).asText());
+        assertEquals(track.getName(), data.path(JSON.USERNAME).asText());
+        // delete a location
+        data = mapper.createObjectNode()
+                .put(JSON.NAME, track.getId())
+                .put(JsonOperations.LOCATION, location.getId());
+        validateData(JsonOperations.TRACK, data, false);
+        service.doDelete(JsonOperations.TRACK, track.getId(), data, locale, 0);
+        assertNull(location.getTrackById(track.getId()));
+        // (re)create a location
+        // add (PUT) a location
+        data = mapper.createObjectNode()
+                .put(JSON.USERNAME, "Test Site")
+                .put(JsonOperations.LOCATION, "20")
+                .put(JSON.TYPE, "Siding");
+        validateData(JsonOperations.TRACK, data, false);
+        result = service.doPut(JsonOperations.TRACK, "42", data, locale, 42);
+        track = location.getTrackByName("Test Site", "Siding");
+        assertNotNull(track);
+        validate(result);
+        // add (PUT) the same track again with same name (id)
+        try {
+            service.doPut(JsonOperations.TRACK, track.getId(), data, locale, 42);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(42, ex.getId());
+            assertEquals("Unable to create object type track with name \"20s3\" since already exists.", ex.getMessage());
+        }
+        // add (PUT) the same track again with same user name, different name (id)
+        try {
+            service.doPut(JsonOperations.TRACK, "42", data, locale, 42);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(42, ex.getId());
+            assertEquals("Unable to create object type track with user name \"Test Site\" since already exists.", ex.getMessage());
+        }
+        // edit (POST) the added location
+        String id = track.getId();
+        data = mapper.createObjectNode()
+                .put(JSON.NAME, id) // can't change this
+                .put(JSON.USERNAME, "Editted Site")
+                .put(JSON.COMMENT, "A comment")
+                .put(JSON.LENGTH, 1000)
+                .put(JsonOperations.LOCATION, location.getId())
+                .put(JsonReporter.REPORTER, InstanceManager.getDefault(ReporterManager.class).provide("IR1").getSystemName());
+        // TODO: put change to types?
+        validateData(JsonOperations.TRACK, data, false);
+        result = service.doPost(JsonOperations.TRACK, id, data, locale, 42);
+        track = location.getTrackById(id);
+        assertNotNull(location);
+        validate(result);
+        assertEquals(JsonOperations.TRACK, result.path(JSON.TYPE).asText());
+        assertTrue(result.path(JSON.METHOD).isMissingNode());
+        assertEquals(42, result.path(JSON.ID).asInt());
+        data = result.path(JSON.DATA);
+        assertEquals("Number of properties in Track", 8, data.size());
+        assertEquals(id, data.path(JSON.NAME).asText());
+        assertEquals("Editted Site", data.path(JSON.USERNAME).asText());
+        assertEquals("A comment", data.path(JSON.COMMENT).asText());
+        assertEquals(1000, data.path(JSON.LENGTH).asInt());
+        assertEquals("IR1", data.path(JsonReporter.REPORTER).asText());
+        assertTrue(data.path(JsonOperations.CAR_TYPE).isArray());
+        assertEquals(4, data.path(JsonOperations.CAR_TYPE).size());
     }
 
     @Test

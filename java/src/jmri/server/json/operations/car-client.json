@@ -16,7 +16,7 @@
             "type": "string",
             "description": "The car number"
         },
-        "type": {
+        "carType": {
             "type": "string",
             "description": "The car type"
         },

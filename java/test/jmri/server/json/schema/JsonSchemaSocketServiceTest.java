@@ -76,7 +76,7 @@ public class JsonSchemaSocketServiceTest {
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 404", 404, ex.getCode());
-            Assert.assertEquals("Object type type named invalid-type not found.", ex.getMessage());
+            Assert.assertEquals("Object type type named \"invalid-type\" not found.", ex.getMessage());
         }
         // POST should fail
         try {

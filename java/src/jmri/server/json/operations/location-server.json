@@ -12,9 +12,12 @@
             "type": "string",
             "description": "Operations name for location"
         },
-        "type": {
+        "carType": {
             "type": "array",
-            "description": "The types of rolling stock accepted at location"
+            "description": "The types of rolling stock accepted at location",
+            "items": {
+                "type": "string"
+            }
         },
         "length": {
             "type": "integer",
@@ -27,8 +30,15 @@
         "reporter": {
             "type": ["string", "null"],
             "description": "The system name of the reporter for this location"
+        },
+        "track": {
+            "type": "array",
+            "description": "The tracks at this location",
+            "items": {
+                "type": "object"
+            }
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "reporter", "type"]
+    "required": ["name", "userName", "comment", "reporter", "carType"]
 }

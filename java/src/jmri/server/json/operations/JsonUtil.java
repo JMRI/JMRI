@@ -16,6 +16,7 @@ import static jmri.server.json.JSON.SEQUENCE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.operations.JsonOperations.CAR;
+import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
@@ -26,6 +27,7 @@ import static jmri.server.json.reporter.JsonReporter.REPORTER;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -162,17 +164,17 @@ public class JsonUtil {
         data.put(JSON.KERNEL, car.getKernel() != null ? car.getKernelName() : null);
         data.put(JSON.UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
-            data.set(JSON.FINAL_DESTINATION, this.getLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
+            data.set(JSON.FINAL_DESTINATION, this.getRSLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
         } else if (car.getFinalDestination() != null) {
-            data.set(JSON.FINAL_DESTINATION, this.getLocation(car.getFinalDestination(), (RouteLocation) null, locale));
+            data.set(JSON.FINAL_DESTINATION, this.getRSLocation(car.getFinalDestination(), (RouteLocation) null, locale));
         } else {
             data.set(JSON.FINAL_DESTINATION, null);
         }
         if (car.getReturnWhenEmptyDestTrack() != null) {
-            data.set(JSON.RETURN_WHEN_EMPTY, this.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null, locale));
+            data.set(JSON.RETURN_WHEN_EMPTY, this.getRSLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null, locale));
         } else if (car.getReturnWhenEmptyDestination() != null) {
             data.set(JSON.RETURN_WHEN_EMPTY,
-                    this.getLocation(car.getReturnWhenEmptyDestination(), (RouteLocation) null, locale));
+                    this.getRSLocation(car.getReturnWhenEmptyDestination(), (RouteLocation) null, locale));
         } else {
             data.set(JSON.RETURN_WHEN_EMPTY, null);
         }
@@ -182,6 +184,9 @@ public class JsonUtil {
 
     /**
      * Get the JSON representation of a Location.
+     * <p>
+     * <strong>Note:</strong>use {@link #getRSLocation(Location, Locale)} if
+     * including in rolling stock or train.
      * 
      * @param location the location
      * @param locale   the client's locale
@@ -196,9 +201,13 @@ public class JsonUtil {
         Reporter reporter = location.getReporter();
         data.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
         // note type defaults to all in-use rolling stock types 
-        ArrayNode types = data.putArray(TYPE);
+        ArrayNode types = data.putArray(CAR_TYPE);
         for (String type : location.getTypeNames()) {
             types.add(type);
+        }
+        ArrayNode tracks = data.putArray(TRACK);
+        for (Track track : location.getTrackList()) {
+            tracks.add(getTrack(track, locale));
         }
         return data;
     }
@@ -221,8 +230,53 @@ public class JsonUtil {
         }
     }
 
-    private ObjectNode getLocation(Location location, RouteLocation routeLocation, Locale locale) {
-        ObjectNode node = getLocation(location, locale);
+    /**
+     * Get a Track in JSON.
+     * <p>
+     * <strong>Note:</strong>use {@link #getRSTrack(Track, Locale)} if
+     * including in rolling stock or train.
+     * 
+     * @param track the track to get
+     * @param locale the client's locale
+     * @return a JSON representation of the track
+     */
+    public ObjectNode getTrack(Track track, Locale locale) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(USERNAME, track.getName());
+        node.put(NAME, track.getId());
+        node.put(COMMENT, track.getComment());
+        node.put(LENGTH, track.getLength());
+        node.put(LOCATION, track.getLocation().getId()); // only includes ID to avoid recursion
+        Reporter reporter = track.getReporter();
+        node.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
+        node.put(TYPE, track.getTrackType());
+        // note type defaults to all in-use rolling stock types 
+        ArrayNode types = node.putArray(CAR_TYPE);
+        for (String type : track.getTypeNames()) {
+            types.add(type);
+        }
+        return node;
+    }
+
+    /**
+     * Get the JSON representation of a Location for use in rolling stock or train.
+     * <p>
+     * <strong>Note:</strong>use {@link #getLocation(Location, Locale)} if not
+     * including in rolling stock or train.
+     * 
+     * @param location the location
+     * @param locale   the client's locale
+     * @return the JSON representation of location
+     */
+    public ObjectNode getRSLocation(@Nonnull Location location, Locale locale) {
+        ObjectNode data = mapper.createObjectNode();
+        data.put(USERNAME, location.getName());
+        data.put(NAME, location.getId());
+        return data;
+    }
+
+    private ObjectNode getRSLocation(Location location, RouteLocation routeLocation, Locale locale) {
+        ObjectNode node = getRSLocation(location, locale);
         if (routeLocation != null) {
             node.put(ROUTE, routeLocation.getId());
         } else {
@@ -231,13 +285,23 @@ public class JsonUtil {
         return node;
     }
 
-    private ObjectNode getLocationAndTrack(Track track, RouteLocation routeLocation, Locale locale) {
-        ObjectNode node = this.getLocation(track.getLocation(), routeLocation, locale);
-        node.set(TRACK, this.getTrack(track, locale));
+    private ObjectNode getRSLocationAndTrack(Track track, RouteLocation routeLocation, Locale locale) {
+        ObjectNode node = this.getRSLocation(track.getLocation(), routeLocation, locale);
+        node.set(TRACK, this.getRSTrack(track, locale));
         return node;
     }
 
-    private ObjectNode getTrack(Track track, Locale locale) {
+    /**
+     * Get a Track in JSON for use in rolling stock or train.
+     * <p>
+     * <strong>Note:</strong>use {@link #getTrack(Track, Locale)} if
+     * not including in rolling stock or train.
+     * 
+     * @param track the track to get
+     * @param locale the client's locale
+     * @return a JSON representation of the track
+     */
+    public ObjectNode getRSTrack(Track track, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
         node.put(USERNAME, track.getName());
         node.put(NAME, track.getId());
@@ -252,23 +316,23 @@ public class JsonUtil {
         String[] type = rs.getTypeName().split("-"); // second half of string
         // can be anything
         node.put(RFID, rs.getRfid());
-        node.put(TYPE, type[0]);
+        node.put(CAR_TYPE, type[0]);
         node.put(LENGTH, rs.getLengthInteger());
         node.put(COLOR, rs.getColor());
         node.put(OWNER, rs.getOwner());
         node.put(COMMENT, rs.getComment());
         node.put(OUT_OF_SERVICE, rs.isOutOfService());
         if (rs.getTrack() != null) {
-            node.set(LOCATION, this.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation(), locale));
+            node.set(LOCATION, this.getRSLocationAndTrack(rs.getTrack(), rs.getRouteLocation(), locale));
         } else if (rs.getLocation() != null) {
-            node.set(LOCATION, this.getLocation(rs.getLocation(), rs.getRouteLocation(), locale));
+            node.set(LOCATION, this.getRSLocation(rs.getLocation(), rs.getRouteLocation(), locale));
         } else {
             node.set(LOCATION, null);
         }
         if (rs.getDestinationTrack() != null) {
-            node.set(DESTINATION, this.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination(), locale));
+            node.set(DESTINATION, this.getRSLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination(), locale));
         } else if (rs.getDestination() != null) {
-            node.set(DESTINATION, this.getLocation(rs.getDestination(), rs.getRouteDestination(), locale));
+            node.set(DESTINATION, this.getRSLocation(rs.getDestination(), rs.getRouteDestination(), locale));
         } else {
             node.set(DESTINATION, null);
         }
@@ -378,7 +442,7 @@ public class JsonUtil {
             root.put(SEQUENCE, rl.getSequenceNumber());
             root.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             root.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
-            root.set(LOCATION, getLocation(rl.getLocation(), locale));
+            root.set(LOCATION, getRSLocation(rl.getLocation(), locale));
             array.add(root); //add this routeLocation to the routeLocation array
         });
         return array; //return array of routeLocations

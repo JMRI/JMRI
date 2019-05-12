@@ -158,6 +158,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
+            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
             assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }

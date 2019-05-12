@@ -72,7 +72,7 @@
             ],
             "description": "RFID tag attached to car; null if none"
         },
-        "type": {
+        "carType": {
             "type": "string",
             "description": "The engine type"
         }
@@ -92,6 +92,6 @@
         "outOfService",
         "owner",
         "rfid",
-        "type"
+        "carType"
     ]
 }

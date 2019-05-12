@@ -68,7 +68,7 @@
             ],
             "description": "RFID tag attached to car; null if none"
         },
-        "type": {
+        "carType": {
             "type": "string",
             "description": "The engine type"
         }
