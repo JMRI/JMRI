@@ -1,7 +1,5 @@
 package jmri.util;
 
-import apps.gui.GuiLafPreferencesManager;
-
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
@@ -11,15 +9,49 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
-import jmri.*;
+import org.apache.log4j.Level;
+import org.junit.Assert;
+import org.netbeans.jemmy.FrameWaiter;
+import org.netbeans.jemmy.TestOut;
+import org.netbeans.jemmy.operators.AbstractButtonOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import apps.gui.GuiLafPreferencesManager;
+import jmri.AddressedProgrammerManager;
+import jmri.ConditionalManager;
+import jmri.ConfigureManager;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.LightManager;
+import jmri.LogixManager;
+import jmri.MemoryManager;
+import jmri.NamedBean;
+import jmri.PowerManager;
+import jmri.PowerManagerScaffold;
+import jmri.ReporterManager;
+import jmri.RouteManager;
+import jmri.SensorManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
+import jmri.SignalHeadManager;
+import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
+import jmri.ThrottleManager;
+import jmri.TurnoutManager;
+import jmri.TurnoutOperationManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -55,15 +87,6 @@ import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
 import jmri.util.zeroconf.MockZeroConfServiceManager;
 import jmri.util.zeroconf.ZeroConfServiceManager;
-import org.apache.log4j.Level;
-import org.junit.Assert;
-import org.netbeans.jemmy.FrameWaiter;
-import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.operators.AbstractButtonOperator;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JUnit.
@@ -1141,6 +1164,13 @@ public class JUnitUtil {
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;
+        }
+        return null;
+    }
+    
+    public static Thread getThreadStartsWithName(String threadName) {
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().startsWith(threadName)) return t;
         }
         return null;
     }
