@@ -140,16 +140,26 @@
  * {@code hello} message. Within test releases between to two production
  * releases, breaking changes only reset the major number once (for example,
  * breaking changes in JMRI 4.15.4 to JSON protocol version 4.1 followed by
- * breaking changes to 5.0.0 in 4.15.6 result in JSON protocol version 5.0.0,
- * not 6.0.0, since 4.15.4 and 4.15.6 are between JMRI production releases 4.14
- * and 4.16).
+ * breaking changes to 5.0.0 in 4.15.6 will result in JMRI release 4.16
+ * including JSON protocol version 5.0.0, not 6.0.0, since 4.15.4 and 4.15.6 are
+ * both between JMRI production releases 4.14 and 4.16).
  * <p>
  * Starting with 5.0.0, the JSON protocol version follows semantic version
  * rules, prior to that the version is just a major.minor version.
  * <dl>
  * <dt>5.0.0 (JMRI 4.15.4 with further changes in 4.15.6)</dt>
- * <dd>Adds the ability for a client to specify a message ID that will be
- * included in messages returned in direct response to the identified message.
+ * <dd>
+ * <ul>
+ * <li>Adds the ability for a client to specify a message ID that will be
+ * included in messages returned in direct response to the identified
+ * message</li>
+ * <li>Adds a framework for allowing a client to delete objects and handle
+ * conflicts (mostly object is in use elsewhere types) when deleting
+ * objects</li>
+ * <li>Adds schemas that define valid JSON message for all types except consists; <a
+ * href="https://github.com/JMRI/JMRI/issues/5002">#5002</a> is being used to track
+ * progress on allowing schema validation at all times.</li>
+ * </ul>
  * <p>
  * Introduces backwards-incompatible changes of:
  * <ul>
