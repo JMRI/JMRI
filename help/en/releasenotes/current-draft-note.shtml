@@ -61,7 +61,10 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li><a href="http://jmri.org/help/en/html/hardware/can/cbus/Names.shtml#reporters"
+                >CBUS Reporters</a> are no longer automatically created when hearing a DDES or ACDAT CBUS OPC.
+                    <br>New CBUS Reporters can now be created in a sequential range.
+                </li>
             </ul>
 
         <h4>MQTT</h4>
