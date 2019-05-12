@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.ThrottleListener;
 import jmri.ThrottleListener.DecisionType;
 import jmri.ThrottleManager;
 import jmri.jmrit.throttle.ThrottlesPreferences;
@@ -581,10 +582,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         // no need to check if share / steal currently enabled on command station,
         // this has already been done to produce the correct question
         if ( question == DecisionType.STEAL ){ // share has been disabled in command station
-            responseThrottleDecision(address, DecisionType.STEAL );
+            responseThrottleDecision(address, null, DecisionType.STEAL );
         }
         else if ( question == DecisionType.SHARE ){ // steal has been disabled in command station
-            responseThrottleDecision(address, DecisionType.SHARE );
+            responseThrottleDecision(address, null, DecisionType.SHARE );
         }
         else if ( question == DecisionType.STEAL_OR_SHARE ){
             if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
@@ -593,10 +594,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
             }
             ThrottlesPreferences tp = jmri.InstanceManager.getDefault(ThrottlesPreferences.class);
             if ( tp.isSilentSteal() ){
-                responseThrottleDecision(address, DecisionType.STEAL );
+                responseThrottleDecision(address, null, DecisionType.STEAL );
             }
             else {
-                responseThrottleDecision(address, DecisionType.SHARE );
+                responseThrottleDecision(address, null, DecisionType.SHARE );
             }
         } else {
             log.error("Question type {} unknown",question);
@@ -610,9 +611,15 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      *
      */
     @Override
-    public void responseThrottleDecision(LocoAddress address, DecisionType decision) {
-        log.debug("Received response for Loco {}, {}",address,decision);
-        requestThrottleSetup(address,decision);
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, DecisionType decision) {
+        log.debug("Received {} response for Loco {}, listener {}",decision,address,l);
+        if ( decision == DecisionType.CANCEL ){
+            cancelThrottleRequest(address,l);
+            failedThrottleRequest(address, "User cancelled request.");
+        }
+        else {
+            requestThrottleSetup(address,decision);
+        }
     }
 
     /**

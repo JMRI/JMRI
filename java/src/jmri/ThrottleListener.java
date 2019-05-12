@@ -42,7 +42,11 @@ public interface ThrottleListener extends EventListener {
         /**
          * Notification for decision needed Steal OR Share OR Cancel
          */
-        STEAL_OR_SHARE
+        STEAL_OR_SHARE,
+        /**
+         * Notification of wish to Cancel
+         */
+        CANCEL
     }
 
     /**
@@ -137,17 +141,17 @@ public interface ThrottleListener extends EventListener {
  *      note over ThrottleListener : The listener might query user prefs. to reach decision
  *
  *      group If the Listener wishes to steal
- *            ThrottleListener --> ThrottleManager : responseThrottleDecision(LocoAddress, ThrottleListener.DecisionType.STEAL)
+ *            ThrottleListener --> ThrottleManager : responseThrottleDecision(LocoAddress, ThrottleListener, ThrottleListener.DecisionType.STEAL)
  *            note over ThrottleManager : Throttle creation continues normally.
  *      end
  *        
  *      group If the Listener wishes to share
- *            ThrottleListener --> ThrottleManager : responseThrottleDecision(LocoAddress, ThrottleListener.DecisionType.SHARE )
+ *            ThrottleListener --> ThrottleManager : responseThrottleDecision(LocoAddress, ThrottleListener, ThrottleListener.DecisionType.SHARE )
  *            note over ThrottleManager : Throttle creation continues normally.
  *      end
  *        
  *      group If the Listener does not wish to steal or share
- *            ThrottleListener --> ThrottleManager : cancelThrottleRequest(LocoAddress, ThrottleListener) CAN BE CALLED ANY TIME IN THROTTLE CREATION
+ *            ThrottleListener --> ThrottleManager : responseThrottleDecision(LocoAddress, ThrottleListener, ThrottleListener.DecisionType.CANCEL )
  *            note over ThrottleListener : Request ends here
  *      end
  * 

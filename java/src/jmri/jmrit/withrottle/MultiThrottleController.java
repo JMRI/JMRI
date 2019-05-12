@@ -271,7 +271,7 @@ public class MultiThrottleController extends ThrottleController {
             if (isStealAddress) {
                 //  Address is now staged in ThrottleManager and has been requested as a steal
                 //  Complete the process
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL);
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
                 isStealAddress = false;
             } else {
                 //  Address has not been requested as a steal yet
@@ -283,7 +283,7 @@ public class MultiThrottleController extends ThrottleController {
             if (isStealAddress) {
                 //  Address is now staged in ThrottleManager and has been requested as a steal
                 //  Complete the process
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL);
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
                 isStealAddress = false;
             } else {
                 //  Address has not been requested as a steal yet

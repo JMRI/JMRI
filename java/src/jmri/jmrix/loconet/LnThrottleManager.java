@@ -544,12 +544,23 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * @since 4.9.2
      */
     @Override
-    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision){
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision){
         
-        if ( decision == ThrottleListener.DecisionType.STEAL ) {
+        log.debug("{} decision invoked for address {}",decision,address.getNumber() );
+        
+        if ( decision == ThrottleListener.DecisionType.CANCEL ) {
             
-            log.debug("steal invoked for address {}",address.getNumber() );
-            
+            if (address instanceof DccLocoAddress) {
+                cancelThrottleRequest(address,l);
+                failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
+                
+            } else {
+                log.error("not a DccLocoAddress.");
+                requestOutstanding = false;
+                processQueuedThrottleSetupRequest();
+            }
+        }
+        else if ( decision == ThrottleListener.DecisionType.STEAL ) {
             // Steal is currently implemented by using the same method
             // we used to aquire the slot prior to the release of 
             // Digitrax command stations with expanded slots.

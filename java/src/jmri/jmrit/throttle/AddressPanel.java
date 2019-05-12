@@ -246,42 +246,42 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
         if ( question == DecisionType.STEAL ){
             if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() ){
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL );
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
                 return;
             }
             jmri.util.ThreadingUtil.runOnGUI(() -> {
                 if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
                     this, Bundle.getMessage("StealQuestionText",address.toString()), 
                     Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL );
+                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
                 } else {
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
                 }
             });
         }
         else if ( question == DecisionType.SHARE ){
             if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentShare() ){
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.SHARE );
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
                 return;
             }
             jmri.util.ThreadingUtil.runOnGUI(() -> {
                 if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
                     this, Bundle.getMessage("ShareQuestionText",address.toString()), 
                     Bundle.getMessage("ShareRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.SHARE );
+                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
                 } else {
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
                 }
             });
         }
         else if ( question == DecisionType.STEAL_OR_SHARE ){
             
             if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() ){
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL );
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
                 return;
             }
             if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentShare() ){
-                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.SHARE );
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
                 return;
             }
             
@@ -296,14 +296,14 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             
                 if (response == 0){
                     log.debug("steal clicked");
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.STEAL );
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
                 } else if ( response == 1 ) {
                     log.debug("share clicked");
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, DecisionType.SHARE );
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
                 }
                 else {
                     log.debug("cancel clicked");
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
                 }
             });
         }

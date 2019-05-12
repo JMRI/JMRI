@@ -312,11 +312,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * Steal a requested throttle.
      *
      * @param address desired LocoAddress
+     * @param l the ThottleListener sending back the decision
      * @param decision either STEAL or SHARE
      * @since 4.9.2
      */
     @Override
-    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision) {
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision) {
         log.error("Received response form ThrottleListener, this method should be overridden by a hardware type");
     }
 
@@ -422,7 +423,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * @param question The Question to be put to the ThrottleListener
      */
     protected void makeHardwareDecision(LocoAddress address, ThrottleListener.DecisionType question){
-        responseThrottleDecision(address, ThrottleListener.DecisionType.STEAL );
+        responseThrottleDecision(address, null, ThrottleListener.DecisionType.STEAL );
     }
 
     /**

@@ -69,11 +69,12 @@ public interface ThrottleManager {
     /**
      * Steal or Share a requested throttle.
      *
-     * @param address desired LocoAddress 
+     * @param address desired LocoAddress
+     * @param l The ThrottleListener which has made the decision
      * @param decision from the ThrottleListener, STEAL or SHARE.
      * @since 4.9.2
      */
-    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision);
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision);
     
     /**
      * Test if the Silent Steal Throttles preference option should be enabled.

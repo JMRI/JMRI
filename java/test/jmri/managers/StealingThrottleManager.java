@@ -40,7 +40,7 @@ public class StealingThrottleManager extends DebugThrottleManager {
      * {@inheritDoc}
      */
     @Override
-    public void responseThrottleDecision(LocoAddress address, ThrottleListener.DecisionType decision){
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision){
         if ( decision == ThrottleListener.DecisionType.STEAL ) {
             DccLocoAddress a = (DccLocoAddress) address;
             notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
