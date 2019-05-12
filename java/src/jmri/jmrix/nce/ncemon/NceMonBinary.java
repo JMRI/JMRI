@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * published November 2007 and is used with NCE's permission.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- *
  */
 public class NceMonBinary {
 
@@ -547,4 +546,5 @@ public class NceMonBinary {
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});
     }
+
 }

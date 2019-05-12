@@ -217,7 +217,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      * Default when a NCE USB isn't selected in user system preferences.
-     * <br><br>
      * Also the case when Serial or Simulator is selected.
      */
     public static final int USB_SYSTEM_NONE = 0;
