@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2009
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener {
 
@@ -52,7 +53,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         }
     }
 
-    TrafficController tc;
+    private TrafficController tc;
 
     /**
      * CBUS allows Throttle sharing, both internally within JMRI and externally by command stations
@@ -73,7 +74,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         requestThrottleSetup(address, DecisionType.STEAL_OR_SHARE);
     }
     
-    private synchronized void requestThrottleSetup(LocoAddress address, DecisionType decision) {
+    private void requestThrottleSetup(LocoAddress address, DecisionType decision) {
         
         if ( !( address instanceof DccLocoAddress)) {
             log.error("{} is not a DccLocoAddress",address);
@@ -200,7 +201,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      * {@inheritDoc}
      */
     @Override
-    synchronized public void reply(CanReply m) {
+    public void reply(CanReply m) {
         if ( m.isExtended() || m.isRtr() ) {
             return;
         }
@@ -372,7 +373,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         // won't match so you will ignore it, then a PLOC will come with that
                         // session id and your requested loco number which is giving it to you.
                         
-                        errStr = Bundle.getMessage("ERR_SESSION_CANCELLED",handle);
                         log.info(Bundle.getMessage("ERR_SESSION_CANCELLED",handle));
 
                         // Inform the throttle associated with this session handle, if any
@@ -625,7 +625,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * Start timer to wait for command station to respond to RLOC
      */
-    protected void startThrottleRequestTimer() {
+    private void startThrottleRequestTimer() {
         throttleRequestTimer = new javax.swing.Timer(5000, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -639,7 +639,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * Internal routine to notify failed throttle request a timeout
      */
-    synchronized protected void timeout() {
+    private void timeout() {
         log.debug("Throttle request (RLOC or PLOC) timed out");
         failedThrottleRequest(_dccAddr, Bundle.getMessage("ERR_THROTTLE_TIMEOUT"));
         throttleRequestTimer.stop();
