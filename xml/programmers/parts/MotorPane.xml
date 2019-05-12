@@ -113,9 +113,24 @@
     <display item="EMF Option 2"/>
     <display item="EMF Option 3"/>
     <display item="EMF Option 4"/>
+    <display item="EMF Option 5"/>
+    <display item="EMF Option 6"/>
+    <display item="EMF Option 7"/>
+    <display item="EMF Option 8"/>
+    <display item="EMF Option 9"/>
+    <display item="EMF Option 10"/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Motor Option 1"/>
     <display item="Motor Option 2"/>
     <display item="Motor Option 3"/>
     <display item="Motor Option 4"/>
+    <display item="Motor Option 5"/>
+    <display item="Motor Option 6"/>
+    <display item="Motor Option 7"/>
+    <display item="Motor Option 8"/>
+    <display item="Motor Option 9"/>
+    <display item="Motor Option 10"/>
   </column>
 </pane>
