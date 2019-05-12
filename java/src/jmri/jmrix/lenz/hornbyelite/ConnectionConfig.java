@@ -8,7 +8,7 @@ package jmri.jmrix.lenz.hornbyelite;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2008
-  *
+ *
  * @see EliteAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
@@ -22,7 +22,8 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -33,6 +34,9 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         return Bundle.getMessage("HornbyElitePortTitle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

@@ -32,6 +32,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

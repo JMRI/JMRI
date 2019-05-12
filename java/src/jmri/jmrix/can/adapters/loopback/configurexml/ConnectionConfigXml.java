@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle XML persistance of layout connections by persistening the CAN
  * simulator (and connections).
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -28,7 +28,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * A simulated connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
-     * @return Formatted element containing no attributes except the class name
+     * @return formatted element containing no attributes except the class name
      */
     @Override
     public Element store(Object o) {

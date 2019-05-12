@@ -25,7 +25,8 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     // Needed for instantiation by reflection, do not remove.
     /**
-     * Create a connection configuration without a preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -36,10 +37,14 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         return "CAN via Lawicell CANUSB";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new CanUsbDriverAdapter();
         }
     }
+
 }

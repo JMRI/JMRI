@@ -19,7 +19,7 @@ public class ConnectionConfig extends AbstractSimulatorConnectionConfig {
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Ctor for a functional Swing object with no existing adapter.
      */
     public ConnectionConfig() {
         super();
@@ -33,10 +33,14 @@ public class ConnectionConfig extends AbstractSimulatorConnectionConfig {
 //        return Bundle.getMessage("NoConnectionChoice");
 //    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new InternalAdapter();
         }
     }
+
 }

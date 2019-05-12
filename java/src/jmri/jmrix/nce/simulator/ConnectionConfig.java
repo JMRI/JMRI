@@ -4,18 +4,19 @@ import javax.swing.JPanel;
 
 /**
  * Definition of objects to handle configuring a layout connection via an NCE
- * SerialDriverAdapter object.
+ * SerialDriverAdapter object, set up as Simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Convert to multiple connection
  * @author kcameron Copyright (C) 2010
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
-    public final static String NAME = "Simulator";
+    public final static String NAME = "NCE Simulator"; // NOI18N
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     *
      * @param p SerialPortAdapter for existing adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
@@ -23,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Ctor for a functional Swing object with no existing adapter.
      */
     public ConnectionConfig() {
         super();
@@ -34,15 +35,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         return NAME;
     }
 
-    @Override
-    public void loadDetails(JPanel details) {
-        super.loadDetails(details);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SimulatorAdapter();
         }
     }
+
 }

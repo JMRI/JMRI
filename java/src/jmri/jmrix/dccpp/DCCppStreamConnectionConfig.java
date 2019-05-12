@@ -3,12 +3,12 @@ package jmri.jmrix.dccpp;
 /**
  * Handle configuring an DCC++ layout connection via an DCCppStreamPortController
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link DCCppStreamPortController} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see DCCppStreamPortController
  */
 public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
@@ -22,7 +22,8 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public DCCppStreamConnectionConfig() {
         super();
@@ -45,10 +46,14 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppStreamPortController();
         }
     }
+
 }

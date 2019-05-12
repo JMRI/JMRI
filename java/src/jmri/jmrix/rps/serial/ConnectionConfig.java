@@ -18,7 +18,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -34,6 +35,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.rps.RpsActionListBundle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("deprecation") // updated to multi-connection though RPS hardware obsolete
     @Override
     protected void setInstance() {

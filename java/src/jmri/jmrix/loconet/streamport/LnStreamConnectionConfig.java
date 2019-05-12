@@ -3,12 +3,12 @@ package jmri.jmrix.loconet.streamport;
 /**
  * Handle configuring an LocoNet layout connection via an LnStreamPortController
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link LnStreamPortController} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see LnStreamPortController
  */
 public class LnStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
@@ -22,7 +22,8 @@ public class LnStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectio
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public LnStreamConnectionConfig() {
         super();
@@ -45,6 +46,9 @@ public class LnStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectio
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

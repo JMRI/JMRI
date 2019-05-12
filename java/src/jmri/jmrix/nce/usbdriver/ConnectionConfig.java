@@ -38,6 +38,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
@@ -52,4 +55,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
         return new String[]{};
     }
+
 }

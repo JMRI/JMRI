@@ -83,6 +83,7 @@ public class Bundle extends jmri.jmrix.cmri.serial.Bundle {
    
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
+
     protected static jmri.Bundle getBundle() { return b; }
 
     @Override 

@@ -8,12 +8,12 @@ import javax.swing.JPanel;
 /**
  * Handle configuring a standalone RFID layout connection via an RfidStreamPortController
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link RfidStreamPortController} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see RfidStreamPortController
  */
 public class RfidStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
@@ -27,12 +27,16 @@ public class RfidStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public RfidStreamConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void loadDetails(JPanel details) {
@@ -117,6 +121,9 @@ public class RfidStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

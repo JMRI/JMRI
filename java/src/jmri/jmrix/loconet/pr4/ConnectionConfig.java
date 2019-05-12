@@ -7,7 +7,7 @@ import jmri.util.SystemType;
  * PR2Adapter object.
  * <p>
  * Copied from loconet.pr3.ConnectionConfig
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
  * @author B. Milhaupt Copyright (C) 2019
  */
@@ -25,7 +25,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -56,10 +57,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new PR4Adapter();
         }
     }
+
 }

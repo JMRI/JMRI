@@ -14,7 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Provides standard access for resource bundles in a package.
- * 
+ * <p>
  * Convention is to provide a subclass of this name
  * in each package, working off the local resource bundle name.
  *

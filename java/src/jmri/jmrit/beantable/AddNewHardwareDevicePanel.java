@@ -15,7 +15,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
+ * JPanel to create a new JMRI hardware devices (used to add Turnout, Sensor, Reporter).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
@@ -51,7 +51,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
         c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
         c.gridy = 0;
         p.add(prefixBox, c);
         c.gridx = 3;

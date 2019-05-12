@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  * Powerline Simulator object.
  *
  * @author Ken Cameron Copyright (C) 2011 based on NceSimulator by Bob Jacobson
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     public final static String NAME = "Simulator";
@@ -22,7 +22,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Ctor for a functional Swing object with no existing adapter.
      */
     public ConnectionConfig() {
         super();
@@ -33,15 +33,22 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SimulatorAdapter();
         }
     }
+
 }
