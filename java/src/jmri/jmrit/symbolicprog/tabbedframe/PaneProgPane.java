@@ -94,7 +94,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
- * @author Dave Heap Copyright (C) 2014
+ * @author Dave Heap Copyright (C) 2014, 2019
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  */
 /*
@@ -2214,7 +2214,7 @@ public class PaneProgPane extends javax.swing.JPanel
         Attribute a = modelElem.getAttribute("extFnsESU");
         try {
             if (a != null) {
-                extFnsESU = (a.getValue()).equalsIgnoreCase("yes");
+                extFnsESU = !(a.getValue()).equalsIgnoreCase("no");
             }
         } catch (Exception ex) {
             log.error("error handling decoder's extFnsESU value");

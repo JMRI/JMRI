@@ -286,6 +286,7 @@
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
         <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
+        <pathelement location="${libdir}/jarchivelib-1.0.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
         <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
@@ -1614,6 +1615,32 @@
         </jacoco:coverage>
     </target>
 
+    <target name="cucumber" depends="tests, runtime-library-selection" description="run Cucumber tests">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <sysproperty key="user.language" value="en"/>
+            <sysproperty key="user.country" value="US"/>
+
+            <classpath refid="test.class.path"/>
+
+            <test name="jmri.RunCucumberTest">
+                <formatter usefile="no" type="brief"/>
+            </test>
+        </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
 
     <target name="alltest-coveragereport" depends="logalltest, coveragereport" description="Generate Test Coverage Report from logalltest" />
 

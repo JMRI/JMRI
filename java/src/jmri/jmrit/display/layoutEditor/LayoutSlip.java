@@ -1120,8 +1120,8 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Check if either turnout is inconsistent.
-     * This is used to create an alternate slip image.
+     * Check if either turnout is inconsistent. This is used to create an
+     * alternate slip image.
      *
      * @return true if either turnout is inconsistent.
      */
@@ -1527,12 +1527,61 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
-        // drawHidden left/right turnout control circles
-        Point2D leftCircleCenter = getCoordsLeft();
-        g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+        if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            // TODO: query user base if this is "acceptable" (can obstruct state)
+            if (false) {
+                int stateA = UNKNOWN;
+                Turnout toA = getTurnout();
+                if (toA != null) {
+                    stateA = toA.getKnownState();
+                }
 
-        Point2D rightCircleCenter = getCoordsRight();
-        g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                Color foregroundColor = g2.getColor();
+                Color backgroundColor = g2.getBackground();
+
+                if (stateA == Turnout.THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateA != Turnout.CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                Point2D rightCircleCenter = getCoordsRight();
+                if (layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                } else {
+                    g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                }
+                if (stateA != Turnout.CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+
+                int stateB = UNKNOWN;
+                Turnout toB = getTurnoutB();
+                if (toB != null) {
+                    stateB = toB.getKnownState();
+                }
+
+                if (stateB == Turnout.THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateB != Turnout.CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                // drawHidden left/right turnout control circles
+                Point2D leftCircleCenter = getCoordsLeft();
+                if (layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                } else {
+                    g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                }
+                if (stateB != Turnout.CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+            } else {
+                Point2D rightCircleCenter = getCoordsRight();
+                g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                Point2D leftCircleCenter = getCoordsLeft();
+                g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+            }
+        }
     }   // drawTurnoutControls
 
     static class TurnoutState {

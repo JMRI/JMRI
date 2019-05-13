@@ -2380,14 +2380,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @return distance in millimeters
      */
     private float rampLengthOfEntrance(int idxBlockOrder, String toSpeedType) {
-        if (_curSpeedType.equals(toSpeedType)) {
+/*        if (_curSpeedType.equals(toSpeedType)) {
             return 0.0f;
-        }
+        }*/
         BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         float throttleSetting = blkSpeedInfo.getEntranceSpeed();
-        float fromSpeed = _speedUtil.modifySpeed(throttleSetting, _curSpeedType);
-        float toSpeed = _speedUtil.modifySpeed(throttleSetting, toSpeedType);
-        float rampLen = _speedUtil.getRampForSpeedChange(fromSpeed, toSpeed).getRampLength();
+        float rampLen = _speedUtil.rampLengthForRampDown(throttleSetting, _curSpeedType, toSpeedType);
         if (_waitForBlock || _waitForWarrant) {    // occupied or foreign track ahead.
             rampLen *= RAMP_ADJUST;    // provide more space to avoid collisions
         } else if (_waitForSignal) {        // signal restricting speed

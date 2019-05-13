@@ -392,12 +392,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             builtBeforeTextField.setText(_train.getBuiltEndYear());
             setBuiltRadioButton();
             enableButtons(true);
-            // does this train depart staging?
-            if (_train.getTrainDepartsRouteLocation() != null
-                    && _train.getTrainDepartsRouteLocation().getLocation() != null
-                    && _train.getTrainDepartsRouteLocation().getLocation().isStaging()) {
-                buildConsistCheckBox.setEnabled(false); // can't build a consist out of staging
-            }
             // does train depart and return to same staging location?
             if (_train.getTrainDepartsRouteLocation() != null
                     && _train.getTrainTerminatesRouteLocation() != null
