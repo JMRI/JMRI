@@ -19,6 +19,7 @@
 		<table>
 		<tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/Development/">Development</a>:</td><td>
+		<a href='http://builds.jmri.org/jenkins/job/Development/job/AllTest/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/AllTest'></a>
 		<a href='http://builds.jmri.org/jenkins/job/Development/job/Builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Builds'></a>
 		<a href='http://builds.jmri.org/jenkins/job/Development/job/Deprecations/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Deprecations'></a>
         <a href='http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/HTML%20Scan'></a>

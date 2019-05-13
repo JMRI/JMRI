@@ -1,5 +1,14 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -8,13 +17,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-
-import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -62,12 +64,17 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         // test save button
         JemmyUtil.enterClickAndLeave(splf.saveButton);
         
+        // should cause a popup window to appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonNo"));
+        
         // test close button
         JemmyUtil.enterClickAndLeave(splf.closeButton);
         
         JUnitUtil.dispose(plf);
+        
+        log.debug("test done");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
+     private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
 
 }
