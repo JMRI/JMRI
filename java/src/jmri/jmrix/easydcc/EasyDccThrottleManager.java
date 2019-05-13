@@ -36,8 +36,13 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
          This was tested on v418 - also appears as an issue with the
          radio throttles. 
          */
-        log.debug("new EasyDccThrottle for {}", address);
-        notifyThrottleKnown(new EasyDccThrottle(_memo, (DccLocoAddress) address), address);
+        if (address instanceof DccLocoAddress ) {
+            log.debug("new EasyDccThrottle for {}", address);
+            notifyThrottleKnown(new EasyDccThrottle(_memo, (DccLocoAddress) address), address);
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",address);
+        }
     }
 
     // EasyDcc does not have a 'dispatch' function.
@@ -113,9 +118,14 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
             }
 
             _memo.getTrafficController().sendEasyDccMessage(m, null);
-            EasyDccThrottle lnt = (EasyDccThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof EasyDccThrottle) {
+                EasyDccThrottle lnt = (EasyDccThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
+            else {
+                log.error("DccThrottle {} is not an EasyDccThrottle",t);
+            }
         }
         return false;
     }
