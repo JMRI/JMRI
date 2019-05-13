@@ -142,6 +142,11 @@
                 <li></li>
             </ul>
 
+        <h4>XpressNet</h4>
+            <ul>
+                <li>Added support for Idle mode to the power manager.  This indicates a global emergency stop (track power on, all locomotives stopped)</li>
+            </ul>
+
         <h4>Zimo MXULF</h4>
             <ul>
                 <li></li>
