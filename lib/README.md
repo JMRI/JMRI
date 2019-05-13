@@ -227,9 +227,9 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://patrick.lidstone.net/html/dev_tools.html
 - See license http://patrick.lidstone.net/html/xap.html
 
-##### xbee-api-0.9.jar
-- PBender 03-Mar-2014 This version comes from the XBee library source repository
-- (we needed some of the functionality, but the pre-compiled library has not been updated).
+##### xbee-java-library-1.2.1.jar
+- Official XBee support library from Digi
+- from https://github.com/digidotcom/XBeeJavaLibrary
 
 ##### xercesImpl.jar
 - version Xerces-J 2.11.0

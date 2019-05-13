@@ -3,6 +3,11 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -15,9 +20,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -104,6 +106,15 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         pla.printAnalysis.setSelected(true);
         pla.printErrorAnalysis.setSelected(true);
         pla.printLocations();
+        
+        // confirm print preview window is showing
+        ResourceBundle rb = ResourceBundle
+                .getBundle("jmri.util.UtilBundle");
+        JmriJFrame printPreviewFrame =
+                JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + "Locations");
+        
+        Assert.assertNotNull("exists", printPreviewFrame);
+        JUnitUtil.dispose(printPreviewFrame);
     }
 
     @Test
@@ -126,6 +137,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
                 JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + Bundle.getMessage("TitleLocationsTable"));
         Assert.assertNotNull("exists", printPreviewFrame);
 
+        JUnitUtil.dispose(f);
         JUnitUtil.dispose(printPreviewFrame);
     }
 

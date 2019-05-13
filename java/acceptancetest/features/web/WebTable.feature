@@ -1,7 +1,7 @@
 @webtest @webtable
-Feature: JMRI Web Panel 
+Feature: JMRI Web Table 
 
-Scenario Outline: Web Panel requests
+Scenario Outline: Web Table requests
    Given I am using <browser>
    When panel <panel> is loaded
    Then <table> has item <item> with state <state>
