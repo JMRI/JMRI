@@ -1165,7 +1165,7 @@ function $drawIcon($widget) {
         //add in overlay text if specified  (append "overlay" to id to keep them unique)
         if (typeof $widget.text !== "undefined") {
             $("#panel-area").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
-            $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level - 1)});
+            $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level + 1)});
         }
     } else {
         jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
