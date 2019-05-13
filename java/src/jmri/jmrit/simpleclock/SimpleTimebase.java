@@ -15,15 +15,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide basic Timebase implementation from system clock.
- * <P>
+ * <p>
  * This implementation provides for the internal clock and for one hardware
  * clock. A number of hooks and comments are provided below for implementing
  * multiple hardware clocks should that ever be done.
- * <P>
+ * <p>
  * The setTimeValue member is the fast time when the clock started. The
  * startAtTime member is the wall-clock time when the clock was started.
  * Together, those can be used to calculate the current fast time.
- * <P>
+ * <p>
  * The pauseTime member is used to indicate that the Timebase was paused. If
  * non-null, it indicates the current fast time when the clock was paused.
  *
@@ -599,7 +599,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     /**
      * Handle an "alarm", which is used to count off minutes.
-     * <P>
+     * <p>
      * Listeners won't be notified if the minute value hasn't changed since the
      * last time.
      */

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements PortAdapter for a network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *

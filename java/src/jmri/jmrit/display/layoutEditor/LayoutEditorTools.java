@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Layout Editor Tools provides tools making use of layout connectivity
  * available in Layout Editor panels.
- * <P>
+ * <p>
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  *
  * @author Dave Duchamp Copyright (c) 2007
@@ -181,10 +181,10 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a turnout, including placing the signal icons and
      * optionally setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * This tool assumes left facing signal head icons have been selected, and
      * will rotate the signal head icons accordingly.
-     * <P>
+     * <p>
      * This tool will place throat icons on the right side of the track, and
      * continuing and diverging icons on the outside edge of the turnout.
      */
@@ -1976,7 +1976,7 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a block boundary, including placing the signal
      * icons and setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * Block boundary must be at an Anchor Point on the LayoutEditor panel.
      */
     // operational variables for Set Signals at Block Boundary tool
@@ -2547,12 +2547,12 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a double crossover turnout, including placing the
      * signal icons and setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * This tool assumes left facing signal head icons have been selected, and
      * will rotate the signal head icons accordingly.
-     * <P>
+     * <p>
      * This tool will place icons on the outside edge of the turnout.
-     * <P>
+     * <p>
      * At least one signal at each of the four connection points is required. A
      * second signal at each is optional.
      */
@@ -3622,15 +3622,15 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a level crossing, including placing the signal
      * icons and setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * This tool assumes left facing signal head icons have been selected, and
      * will rotate the signal head icons accordingly.
-     * <P>
+     * <p>
      * This tool will place icons on the right side of each track.
-     * <P>
+     * <p>
      * Both tracks do not need to be signalled. If one signal for a track, A-C
      * or B-D, the other must also be present.
-     * <P>
+     * <p>
      * Some user adjustment of turnout positions may be needed.
      */
     // operational variables for Set Signals at Level Crossing tool
@@ -4402,16 +4402,16 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at throat-to-throat turnouts, including placing the
      * signal icons and setup of signal logic for each signal head
-     * <P>
+     * <p>
      * This tool can only be accessed from the Tools menu. There is no access
      * from a turnout pop-up menu.
-     * <P>
+     * <p>
      * This tool requires a situation where two turnouts are connected throat-
      * to-throat by a single "short" track segment. The actual length of the
      * track segment is not tested. If this situation is not found, and error
      * message is sent to the user. To get started with this the user needs to
      * enter at least one of the two connected turnouts.
-     * <P>
+     * <p>
      * This tool assumes two turnouts connected throat-to-throat, as would be
      * used to represent a double slip turnout. The turnouts may be either
      * left-handed, right-handed, wye, or any pair of these. This tool also
@@ -4419,13 +4419,13 @@ public class LayoutEditorTools {
      * heads will be rotated to face outward--away from the throats. Four sets
      * of one or two signal heads will be placed, one at each of the converging
      * and diverging for each turnout.
-     * <P>
+     * <p>
      * This tool assumes that each of the four tracks is contained in a
      * different block. Things work best if the two throat-to-throat turnouts
      * are in their own separate block, but this is not necessary.
-     * <P>
+     * <p>
      * This tool will place icons on the outside edges of each turnout.
-     * <P>
+     * <p>
      * At least one signal at each of the four connection points is required. A
      * second signal at each is optional.
      */
@@ -5872,16 +5872,16 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a three-way turnout, including placing the signal
      * icons and setup of signal logic for each signal head
-     * <P>
+     * <p>
      * This tool can only be accessed from the Tools menu. There is no access
      * from a turnout pop-up menu.
-     * <P>
+     * <p>
      * This tool requires a situation where two turnouts are connected to model
      * a 3-way turnout, with the throat of the second turnout connected to the
      * continuing leg of the first turnout by a very short track segment. The
      * actual length of the track segment is not tested. If this situation is
      * not found, and error message is sent to the user.
-     * <P>
+     * <p>
      * This tool assumes two turnouts connected with the throat of the second
      * turnout connected to the continuing leg of the first turnou, as used to
      * represent a 3-way turnout. The turnouts may be either left-handed, or
@@ -5890,7 +5890,7 @@ public class LayoutEditorTools {
      * the continuing leg of the second turnout, at each of the diverging legs,
      * and at the throat. At the throat, either one or three heads are provided
      * for. So four or six heads will be placed.
-     * <P>
+     * <p>
      * This tool assumes that each of the four tracks, the continuing, the two
      * diverging, and the throat is contained in a different block. The two
      * turnouts used to model the 3-way turnout must be in the same block.

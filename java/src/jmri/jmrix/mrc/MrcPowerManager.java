@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * PowerManager implementation for controlling layout power
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright MRC, Inc. and
  * used with permission as part of the JMRI project. That permission does not
  * extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Mrc Inc
  * for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * 
  */

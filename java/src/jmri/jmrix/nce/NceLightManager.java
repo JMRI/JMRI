@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for NCE systems
- * <P>
+ * <p>
  * System names are "NLnnnnn", where N is the user configurable system prefix,
  * nnnnn is the stationary decoder address.
- * <P>
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Dave Duchamp Copyright (C) 2010

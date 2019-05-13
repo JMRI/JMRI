@@ -15,7 +15,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * option settings for the Digitrax DCS52's USB interface
  * <p>
  * Based on PR3Adapter.java
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
   */

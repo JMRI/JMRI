@@ -153,7 +153,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Is this property event announcing a change this table should display?
-     * <P>
+     * <p>
      * Note that events will come both from the NamedBeans and also from the
      * manager
      *

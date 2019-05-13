@@ -303,7 +303,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
 
     /**
      * Remember a NamedBean Object created outside the manager.
-     * <P>
+     * <p>
      * The non-system-specific SignalHeadManagers use this method extensively.
      *
      * @param n the bean
@@ -314,7 +314,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
 
     /**
      * Forget a NamedBean Object created outside the manager.
-     * <P>
+     * <p>
      * The non-system-specific RouteManager uses this method.
      *
      * @param n the bean

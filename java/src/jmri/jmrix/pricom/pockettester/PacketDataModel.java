@@ -233,7 +233,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     /**
      * Find the display key from the current input line. A later input line that
      * maps to the same key will overwrite the earlier line.
-     * <P>
+     * <p>
      * The current implementation is address+type, so that separate lines will
      * be used for each type sent to the same address.
      *

@@ -13,7 +13,7 @@ import jmri.jmrix.can.CanReply;
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the CBUS command
  * station object.
- * <P>
+ * <p>
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer

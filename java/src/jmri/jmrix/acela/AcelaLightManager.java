@@ -38,7 +38,6 @@ public class AcelaLightManager extends AbstractLightManager {
      * <p>
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
-     * </p>
      *
      * @return null if the system name is not in a valid format
      */

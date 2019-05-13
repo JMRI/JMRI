@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 /**
  * A singlet providing access to information about existing Automat instances.
- * <P>
+ * <p>
  * It might not always be a singlet, however, so for now we're going through an
  * explicit instance() reference.
- * <P>
+ * <p>
  * This can be invoked from various threads, so switches to the Swing thread to
  * notify it's own listeners.
  *

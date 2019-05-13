@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
- * <P>
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005

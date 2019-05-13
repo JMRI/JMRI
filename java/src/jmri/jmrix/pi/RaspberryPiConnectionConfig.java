@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuring a Raspberry Pi layout connection.
- * <P>
+ * <p>
  * This uses the {@link RaspberryPiAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2015

@@ -560,7 +560,7 @@ public class DefaultConditional extends AbstractNamedBean
 
     /**
      * Compares action options, and takes action if appropriate
-     * <P>
+     * <p>
      * Only get here if a change in state has occurred when calculating this
      * Conditional
      */

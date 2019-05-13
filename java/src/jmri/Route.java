@@ -2,14 +2,14 @@ package jmri;
 
 /**
  * Routes represent a collection of Turnouts that may be set at the same time.
- * <P>
+ * <p>
  * When a user adds a Turnout to a Route, the user specifies whether the Turnout
  * state is to be set to CLOSED or THROWN when the Route is invoked (set).
- * <P>
+ * <p>
  * Initially, Routes will have a fixed maximum number of sensors for simplicity
  * of implementation. We can revise this later to use Java Collections if this
  * becomes a problem.
- * <P>
+ * <p>
  * To allow control via fascia panel pushbuttons, Routes may optionally be
  * invoked by one or more Sensors (up to the maximum allowed).
  * <p>
@@ -22,15 +22,14 @@ package jmri;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007

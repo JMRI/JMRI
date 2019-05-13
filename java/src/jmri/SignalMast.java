@@ -7,10 +7,10 @@ import javax.annotation.Nonnull;
  * Represent a signal mast. A signal mast is one or more signal heads that are
  * treated as a single signal. (Imagine several heads attached to a single mast,
  * though other implementations are possible)
- * <P>
+ * <p>
  * A mast presents an Aspect, as that's a composite of the appearance(s) of the
  * entire signal.
- * <P>
+ * <p>
  * This class has three bound parameters:
  * <DL>
  * <DT>Aspect<DD>The specific aspect being shown.
@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
  * logic.
  * <DT>Held<DD>Whether the mast's lamps should be forced to a specific aspect,
  * e.g. Stop, in higher-level logic.
- * <P>
+ * <p>
  * For use in signaling systems, this is a convenient way of storing whether a
  * higher-level of control (e.g. non-vital system or dispatcher) has "held" the
  * signal at stop. It does not effect how this signal mast actually works; any
@@ -34,15 +34,14 @@ import javax.annotation.Nonnull;
  * in the list of all defined aspects.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  * @author Pete Cressman Copyright (C) 2009

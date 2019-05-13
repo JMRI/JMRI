@@ -673,7 +673,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Check/Update Path objects for the attached Block
-     * <P>
+     * <p>
      * If multiple panels are present, Paths are set according to the panel with
      * the highest connectivity (most LayoutConnectivity objects);
      */

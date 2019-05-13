@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * User interface for creating and editing sensor groups.
- * <P>
+ * <p>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  *
  * @author Bob Jacobsen Copyright (C) 2007

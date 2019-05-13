@@ -6,7 +6,7 @@ import jmri.jmrix.nce.NceTrafficController;
 
 /**
  * Implements SerialPortAdapter for the NCE system network connection.
- * <P>
+ * <p>
  * This connects an NCE command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *

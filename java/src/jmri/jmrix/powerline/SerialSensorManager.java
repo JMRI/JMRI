@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the system-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are: Powerline - "PSann", where a is the house code and nn is
  * the unit number without padding.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection

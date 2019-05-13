@@ -4,7 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Create a "Systems" menu containing the Jmri NCE-specific tools.
- * <P>
+ * <p>
  * Some of the tools used here are also used directly by the Wangrow support in
  * {@link jmri.jmrix.wangrow}.
  *

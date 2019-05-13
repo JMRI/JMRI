@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * <P>
+ *
  * @author Pete Cressman Copyright: Copyright (c) 2011
  *
  */

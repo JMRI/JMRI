@@ -3,7 +3,7 @@ package jmri.jmrix.lenz;
 /**
  * Handle configuring an XpressNet layout connection via an XNetStreamPortController
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link XNetStreamPortController} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

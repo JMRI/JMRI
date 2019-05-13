@@ -29,13 +29,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
  * Provide a graphical representation of the ESU mapping table. Each row
  * represents a possible mapping between input conditions (function keys, etc.)
- * and logical, physical or sound outputs.</p>
+ * and logical, physical or sound outputs.
  * <p>
  * Uses data from the "model" and "family" elements from the decoder definition
- * file to configure the number of rows and set up any custom item names:</p>
+ * file to configure the number of rows and set up any custom item names:
  * <dl>
  * <dt>extFnsESU</dt>
  * <dd>Uses the ESU-style function map rather than the NMRA style.</dd>
@@ -154,7 +153,7 @@ public final class FnMapPanelESU extends JPanel {
      * </dl>
      * <p>
      * Item labels can be overridden by the "output" element of the "model" or
-     * "family" element from the decoder definition file.</p>
+     * "family" element from the decoder definition file.
      */
     String[] itemLabel;
     String[][] itemName;
@@ -786,10 +785,10 @@ public final class FnMapPanelESU extends JPanel {
     }
 
     /**
-     * Moves rows up or down
+     * Moves rows up or down.
      * <p>
      * Row moves are for convenience purposes only. Decoder functioning is
-     * unaffected by row position in mapping table.</p>
+     * unaffected by row position in mapping table.
      *
      * @param increment number of rows to move by
      */

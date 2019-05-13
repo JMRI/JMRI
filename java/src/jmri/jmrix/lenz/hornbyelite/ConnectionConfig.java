@@ -3,7 +3,7 @@ package jmri.jmrix.lenz.hornbyelite;
 /**
  * Handle configuring an XpressNet layout connection via the built in USB port
  * on the Hornby Elite.
- * <P>
+ * <p>
  * This uses the {@link EliteAdapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

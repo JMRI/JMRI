@@ -2,7 +2,7 @@ package jmri.jmrix.pricom.pockettester;
 
 /**
  * Receive notification when data arrives from a Pocket Tester.
- * <P>
+ * <p>
  * You register this listener with a DataSource object
  *
  * @see jmri.jmrix.pricom.pockettester.DataSource

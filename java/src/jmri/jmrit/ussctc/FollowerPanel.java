@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface frame for creating and editing "Follower" logic on USS CTC
  * machines.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class FollowerPanel extends BasePanel {

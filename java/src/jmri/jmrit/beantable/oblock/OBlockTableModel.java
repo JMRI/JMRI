@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define OBlocks
- * <P>
+ * <p>
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
  *

@@ -4,7 +4,7 @@ import jmri.Sensor;
 
 /**
  * Implement sensor manager for JMRIClient systems
- * <P>
+ * <p>
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the sensor number without padding.
  *

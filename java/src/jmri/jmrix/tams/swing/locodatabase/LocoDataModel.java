@@ -48,7 +48,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
      * Returns the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed, and whether the system slots
      * should be displayed.
-     * <P>
+     * <p>
      * This should probably use a local cache instead of counting/searching each
      * time.
      */

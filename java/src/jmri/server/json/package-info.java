@@ -58,7 +58,6 @@
  * server and one or more clients. In the TCP Socket and WebSocket interfaces, a
  * message from the client generally has three properties (full details are in
  * the schema):
- * </p>
  * <dl>
  * <dt><code>type</code></dt>
  * <dd>The type of object in the <em>data</em> property.</dd>
@@ -74,12 +73,10 @@
  * JSON Array of objects. In the RESTful interface, messages from the client in
  * <em>POST</em> and <em>PUT</em> requests may contain a JSON object that
  * cooresponds to the <code>data</code> object in the socket interfaces.
- * </p>
- * 
+ *
  * <h3>Exceptions</h3>
  * <p>
  * Exceptions to the above form for the socket interfaces are:
- * </p>
  * <dl>
  * <dt>Get Requests</dt>
  * <dd>When using a get method, specifying the method is optional.</dd>
@@ -121,7 +118,6 @@
  * using a {@code put} method and the {@link jmri.Manager} for that class of
  * NamedBean supports creating a NamedBean without a system name. It is
  * generally safer to always use system names.
- * </p>
  *
  * <h2>Version History</h2>
  * <p>
@@ -129,7 +125,6 @@
  * protocol, while changes to the minor number represent an addition to the
  * protocol. The JSON protocol version is available to clients in the {@code hello}
  * message.
- * </p>
  * <dl>
  * <dt>5.0 (JMRI 4.15.4)</dt>
  * <dd>Introduces a backwards-incompatible changes of:

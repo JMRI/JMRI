@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * some use absolute dimming. Some people set the dim level of their Lights and
  * then just use on/off to turn control the lamps; in that case we don't want to
  * send dim commands. Further, X10 communications is very slow, and sending a
- * complete set of dim operations can take a long time. So the algorithm is: </p>
+ * complete set of dim operations can take a long time. So the algorithm is:
  * <ul>
  * <li>Until the intensity has been explicitly set different from 1.0 or 0.0, no
  * intensity commands are to be sent over the power line.
@@ -346,7 +346,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
 
     /**
      * Check if this object can handle variable intensity.
-     * <P>
+     * <p>
      * @return true, as this abstract class implements variable intensity.
      */
     @Override
@@ -372,7 +372,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     /**
      * Set the fast-clock duration for a transition from full ON to full OFF or
      * vice-versa.
-     * <P>
+     * <p>
      * Bound property
      * <p>
      * @throws IllegalArgumentException if minutes is not valid

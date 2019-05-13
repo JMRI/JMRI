@@ -11,14 +11,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single signal head via two "Turnout" objects.
- * <P>
+ * <p>
  * After much confusion, the user-level terminology was changed to call these
  * "Double Output"; the class name remains the same to reduce recoding.
- * <P>
+ * <p>
  * The two Turnout objects are provided during construction, and each drives a
  * specific color (RED and GREEN). Normally, "THROWN" is on, and "CLOSED" is
  * off. YELLOW is provided by turning both on ("THROWN")
- * <P>
+ * <p>
  * This class also listens to the Turnouts to see if they've been
  * changed via some other mechanism.
  *

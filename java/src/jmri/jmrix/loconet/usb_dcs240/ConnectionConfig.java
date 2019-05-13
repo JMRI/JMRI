@@ -7,7 +7,7 @@ import jmri.util.SystemType;
  * PR2Adapter object.
  * <p>
  * Copied from loconet.pr3.ConnectionConfig.java
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
  * @author B. Milhaupt Copyright (C) 2019
  */

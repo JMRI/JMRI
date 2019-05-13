@@ -10,7 +10,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  * Provide a JFrame to display the Roster Data Based upon BeanTableFrame.
- * <P>
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>

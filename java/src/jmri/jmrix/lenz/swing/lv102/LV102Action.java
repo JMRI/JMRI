@@ -5,7 +5,7 @@ import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register an LV102Frame object.
- * <P>
+ * <p>
  * The {@link LV102Frame} is a configuration tool for the LV102 booster, and the
  * booster portion of an LZV100 command station.
  *

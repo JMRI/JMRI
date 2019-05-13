@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Control Packet Format</B>
  * and outputs that packet to the DCC System via the generic CommandStation
  * interface
- * <P>
+ * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.

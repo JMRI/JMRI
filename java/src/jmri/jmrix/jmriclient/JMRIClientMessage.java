@@ -4,7 +4,7 @@ package jmri.jmrix.jmriclient;
 /**
  * Encodes a message to an JMRIClient server. The JMRIClientReply class handles
  * the response from the server.
- * <P>
+ * <p>
  * The {@link JMRIClientReply} class handles the response from the server.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008

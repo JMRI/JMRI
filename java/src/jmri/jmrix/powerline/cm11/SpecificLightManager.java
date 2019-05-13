@@ -5,7 +5,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
 
 /**
  * Implement light manager for powerline serial systems with CM11 adapters
- * <P>
+ * <p>
  * Just provide the specific objects at creation time.
  *
  * @author Dave Duchamp Copyright (C) 2004

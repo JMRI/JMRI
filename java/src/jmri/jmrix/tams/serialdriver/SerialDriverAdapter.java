@@ -18,10 +18,9 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the TAMS system.
- * <P>
+ * <p>
  * This connects an TAMS command station via a serial com port.
- * <P>
- *
+ * <p>
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012

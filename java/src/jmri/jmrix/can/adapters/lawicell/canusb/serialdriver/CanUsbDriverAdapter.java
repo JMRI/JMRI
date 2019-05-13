@@ -3,10 +3,10 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
 /**
  * Implements SerialPortAdapter for the CAN-USB.
- * <P>
+ * <p>
  * This connects a CAN-USB CAN adapter via a serial com port. Normally
  * controlled by the SerialDriverFrame class.
- * <P>
+ * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2010

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Definition of objects to handle configuring an Anyma DMX layout connection
  * via a AnymaDMX_UsbPortAdapter object.
- * <P>
+ * <p>
  * This uses the {@link AnymaDMX_UsbPortAdapter} class to do the actual
  * connection.
  *

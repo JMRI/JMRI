@@ -4,7 +4,7 @@ import jmri.Turnout;
 
 /**
  * Implement turnout manager for JMRIClient systems
- * <P>
+ * <p>
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the turnout number without padding.
  *

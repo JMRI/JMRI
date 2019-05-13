@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This class implements a SignalMast that use <B>OpenLCB Events</B>
  * to set aspects
- * <P>
+ * <p>
  * This implementation writes out to the OpenLCB when it's commanded to
  * change appearance, and updates its internal state when it hears Events from
  * the network (including its own events).
