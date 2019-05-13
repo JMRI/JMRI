@@ -21,7 +21,6 @@ import jmri.util.JmriJFrame;
 
 /**
  * Creates a JFrame containing an analog clockface and hands.
- *
  * <p>
  * Time code copied from code for the Nixie clock by Bob Jacobsen
  *

@@ -1821,9 +1821,10 @@
    <a name="AddLogo" id="AddLogo"></a>
    <h3>Add Logo</h3>
    If you want a logo in the top right hand corner of your Manifests and switch lists, press the
-   "Add Logo" button and select a file with the image you want to display. You can also have a
+   "Add Logo" button and select a file with the image you want to display. The supported
+   image file extensions are .gif, .png, .jpg, plus others. You can also have a
    different logo for every train in your roster, see <a href="#TrainManifestOptions">Train
-    Manifest Options</a> for details. 
+    Manifest Options</a> for details.
     
    <a name="MisplacedCarsComment" id="MisplacedCarsComment"></a>
 

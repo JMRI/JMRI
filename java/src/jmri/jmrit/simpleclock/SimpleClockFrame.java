@@ -509,7 +509,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate()) {
+        if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate() && !clock.getInternalMaster()) {
             double frac = rate - (int) rate;
             if (frac > 0.001) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerError"),
@@ -541,6 +541,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
 
     /**
      * Handle time source change
+     *
+     * Only changes the time source if the rate is OK (typically: Integer) for new source
      */
     private void setTimeSourceChanged() {
         int index = timeSourceBox.getSelectedIndex();
@@ -556,6 +558,17 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         if (index == internalSourceIndex) {
             clock.setInternalMaster(true, true);
         } else {
+	    // only change if new source is okay with current rate
+	    if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate()) {
+		double rate = clock.userGetRate();
+		double frac = rate - (int) rate;
+		if (frac > 0.001) {
+		    JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerErrorCantChangeSource"),
+		            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+		    timeSourceBox.setSelectedIndex(internalSourceIndex);
+		    return;
+		}
+            }
             clock.setInternalMaster(false, true);
         }
         changed = true;

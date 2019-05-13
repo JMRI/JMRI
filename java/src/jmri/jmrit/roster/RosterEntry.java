@@ -62,6 +62,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author Dennis Miller Copyright 2004
  * @author Egbert Broerse Copyright (C) 2018
+ * @author Dave Heap Copyright (C) 2019
  * @see jmri.jmrit.roster.LocoFile
  */
 public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
@@ -120,14 +121,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return MAXFNNUM;
     }
 
-    public final static int MAXSOUNDNUM = 32;
-
-    public int getMAXSOUNDNUM() {
-        return MAXSOUNDNUM;
-    }
-
     protected String[] functionLabels;
-    protected String[] soundLabels;
+    protected Map<Integer, String> soundLabels;
     protected String[] functionSelectedImages;
     protected String[] functionImages;
     protected boolean[] functionLockables;
@@ -145,6 +140,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Construct a blank object.
      */
     public RosterEntry() {
+        this.soundLabels = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -190,7 +186,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _isShuntingOn = pEntry._isShuntingOn;
 
         functionLabels = new String[MAXFNNUM + 1];
-        soundLabels = new String[MAXSOUNDNUM + 1];
         functionSelectedImages = new String[MAXFNNUM + 1];
         functionImages = new String[MAXFNNUM + 1];
         functionLockables = new boolean[MAXFNNUM + 1];
@@ -210,10 +205,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             }
         }
 
-        for (int i = 0; i < MAXSOUNDNUM; i++) {
-            if ((pEntry.soundLabels != null) && (pEntry.soundLabels[i] != null)) {
-                soundLabels[i] = pEntry.soundLabels[i];
-            }
+        if (pEntry.soundLabels != null) {
+            pEntry.soundLabels.forEach((key, value) -> {
+                if (value != null) {
+                    this.soundLabels.put(key, value);
+                }
+            });
         }
     }
 
@@ -614,6 +611,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param e Locomotive XML element
      */
     public RosterEntry(Element e) {
+        this.soundLabels = Collections.synchronizedMap(new HashMap<>());
         if (log.isDebugEnabled()) {
             log.debug("ctor from element " + e);
         }
@@ -928,12 +926,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param label display label for the sound function
      */
     public void setSoundLabel(int fn, String label) {
-        if (soundLabels == null) {
-            soundLabels = new String[MAXSOUNDNUM + 1]; // counts zero
+        if (this.soundLabels == null) {
+        this.soundLabels = Collections.synchronizedMap(new HashMap<>());
         }
-        String old = this.soundLabels[fn];
-        soundLabels[fn] = label;
-        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, this.soundLabels[fn]);
+        String old = this.soundLabels.get(fn);
+        this.soundLabels.put(fn, label);
+        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, this.soundLabels.get(fn));
     }
 
     /**
@@ -944,13 +942,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return sound label or null
      */
     public String getSoundLabel(int fn) {
-        if (soundLabels == null) {
+        if (this.soundLabels == null) {
             return null;
         }
-        if (fn < 0 || fn > MAXSOUNDNUM) {
-            throw new IllegalArgumentException("number out of range: " + fn);
-        }
-        return soundLabels[fn];
+        return this.soundLabels.get(fn);
     }
 
     public void setFunctionImage(int fn, String s) {
@@ -1187,19 +1182,19 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             e.addContent(d);
         }
 
-        if (soundLabels != null) {
-            d = new Element("soundlabels");
+        if (this.soundLabels != null) {
+            Element s = new Element("soundlabels");
 
             // loop to copy non-null elements
-            for (int i = 0; i < MAXSOUNDNUM; i++) {
-                if (soundLabels[i] != null && !soundLabels[i].isEmpty()) {
+            this.soundLabels.forEach((key, value) -> {
+                if (value != null && !value.isEmpty()) {
                     Element fne = new Element(RosterEntry.SOUND_LABEL);
-                    fne.setAttribute("num", "" + i);
-                    fne.addContent(soundLabels[i]);
-                    d.addContent(fne);
+                    fne.setAttribute("num", "" + key);
+                    fne.addContent(this.soundLabels.get(key));
+                    s.addContent(fne);
                 }
-            }
-            e.addContent(d);
+            });
+            e.addContent(s);
         }
 
         if (!getAttributes().isEmpty()) {

@@ -27,7 +27,8 @@
 
         <ul class="snav">
         <li><a href="#events">Event Name and Numbering</a></li>
-        <li><a href="#sysname">System Names</a></li>        
+        <li><a href="#reporters">Reporters</a></li>
+        <li><a href="#sysname">System Names</a></li>
         <li><a href="#summary">Summary of MERG CBUS Events</a></li>
         <li><a href="#namingspec">Event Naming Specification</a></li>
         <li><a href="#hex">Sending hex strings</a></li>
@@ -159,32 +160,36 @@
       <p>See <a href="../../../doc/Technical/TurnoutFeedback.shtml">JMRI : Turnout Feedback</a> for more info.</p>
       
       
-      <h4><a name="reporters" id="reporters">Reporter ( RFID ) data from CBUS</a></h4>
-      <p><a href="../../../tools/Reporters.shtml">JMRI Reporters</a> do not have Off or On events, they just use a device ( short event ) or node number.</p>
-      <p>A typical system name for a reporter would be <code>MR123</code> or <code>MR1234</code> ( no event On or Off ) .</p>
+      <h4><a name="reporters" id="reporters">Reporter ( incl. RFID ) data from CBUS</a></h4>
+      <p><a href="../../../tools/Reporters.shtml">JMRI Reporters</a> do not have Off or On events,
+        they just use a device ( short event ) or node number.</p>
+        
+        <p>Reporters are created by clicking the New button within the 
+        <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>.</p>
+        <p>You can create multiple reporters by checking the Add Sequential Range option.</p>
+        
+        <p>Like Turnouts Sensors and Lights, these are not created automatically in CBUS.</p>
+        
+      <p>A typical system name for a reporter would be 
+        <code>MR123</code> or <code>MR1234</code> ( no event On or Off ) .</p>
       <p>The DDES and ACDAT OPC's are used for reporter data.</p>
-      <p>When a DDES or ACDAT OPC is heard on the network, 
-      JMRI will look for a reporter matching the device or node number in the 
-      <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>.</p>
+      <p>When an incoming DDES or ACDAT OPC is heard on the network, 
+        JMRI will look for a reporter matching the device or node number in the Reporter Table.</p>
       
       <p>If a reporter exists, the <a href="../../../tools/IdTags.shtml">ID tag</a> 
-      within the 5 data bytes will be looked up from the 
+        within the 5 data bytes will be looked up from the 
       <a href="../../../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag table</a>.</p>
       
       <p>If there's no matching ID Tag on the table, one will be created and updated.</p>
       
       <p>If the ID tag was previously active for another reporter, 
-      the previous reporter will have the tag removed from its report.</p>
+        the previous reporter will have the tag removed from its report.</p>
       
-      <p>If the DDES or ACDAT message is coming FROM JMRI, the previous reporter will not be updated,
-      the existing reporeter is only cleared by messages coming in to JMRI. </p>
-      <p>Reporters are created automatically and will populate the Reporter table when 
-      a DDES or ACDAT OPC is heard on the network.</p>
-      <p>Valid reporter numbers are minimum 1, maximum 65535.</p>
-      <p>The DDES ( device number ) and ACDAT ( node number ) messages are 
-      currently handled in exactly the same way, ie the first 2 bytes are used as the Reporter identifier.</p>
-      <p>This means that a reporter created via a DDES of device 77 will respond to a ACDAT of node 77,
-      and vice versa.</p>
+      <p>Valid reporter numbers are minimum 0, to maximum 65535.</p>
+      <p>The DDES ( device number data ) and ACDAT ( node data ) messages are 
+        currently handled in exactly the same way, ie the first 2 bytes are used as the Reporter identifier.</p>
+      <p>This means that a reporter created via a number of 77 will respond to 
+        both DDES device 77 and ACDAT of node 77.</p>
       
       <p>Reporters are saved in your main panel file, along with turnouts and sensors etc.</p>
       <p>ID Tags cross-session automatically, no saving is necessary.</p>
@@ -193,8 +198,8 @@
       <h2><a name="sysname" id="sysname">System Names</a></h2>
        <div>
         <p>When adding an item to your JMRI
-        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>,
         <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>,
         <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a> or
         <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>,
 
@@ -576,8 +581,13 @@
       while future uses of this may also be for local media streaming ( eg. transferring 
       pictures of trains or sound files between modules. )
       <br>The extended frames do not interfere with the standard frames, 
-      hence modules can be targetted for boatloading by module number, without affecting Standard CAN event frames.
-      </p>
+      hence modules can be targetted for boatloading by module number, 
+      without affecting normal layout messaging.</p>
+      
+      <p>Extended CAN frames ( which are not CBUS messages ) can be monitored in the 
+      <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
+        >CBUS console</a>,
+        and are filtered from all other JMRI objects ( Sensors, Turnouts etc. ).</p>
       
       <p>Although module firmware updates are not currently available within JMRI, 
       full support for this is available via 3rd party software ( FCU - FLiM Configuration Utility ), 

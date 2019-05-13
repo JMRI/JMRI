@@ -156,6 +156,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      */
     @Override
     public void message(CanMessage f) {
+        if ( f.isExtended() || f.isRtr() ) {
+            return;
+        }
         if (addrThrown.match(f)) {
             int state = (!getInverted() ? THROWN : CLOSED);
             newCommandedState(state);
@@ -184,6 +187,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      */
     @Override
     public void reply(CanReply f) {
+        if ( f.isExtended() || f.isRtr() ) {
+            return;
+        }
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrThrown.match(f)) {

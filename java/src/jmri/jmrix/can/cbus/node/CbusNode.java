@@ -1408,7 +1408,9 @@ public class CbusNode implements CanListener {
     // so we monitor them the same
     @Override
     public void message(CanMessage m) {
-        
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         switch ( CbusMessage.getOpcode(m) ) {
             case CbusConstants.CBUS_NVSET:
             case CbusConstants.CBUS_NNREL:
@@ -1430,6 +1432,9 @@ public class CbusNode implements CanListener {
     // also parses outgoing messages
     @Override
     public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         int nn = ( m.getElement(1) * 256 ) + m.getElement(2);
         

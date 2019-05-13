@@ -18,10 +18,6 @@ public class LocationTrackBlockingOrderAction extends AbstractAction {
         _location = location;
     }
 
-    public LocationTrackBlockingOrderAction() {
-        super(Bundle.getMessage("TitleModifyLocations"));
-    }
-
     Location _location;
 
     LocationTrackBlockingOrderFrame _frame = null;

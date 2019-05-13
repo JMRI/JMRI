@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for CBUS controls.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
@@ -163,6 +163,9 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      */
     @Override
     public void message(CanMessage f) {
+        if ( f.isExtended() || f.isRtr() ) {
+            return;
+        }
         if (addrActive.match(f)) {
             setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
         } else if (addrInactive.match(f)) {
@@ -176,6 +179,9 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      */
     @Override
     public void reply(CanReply f) {
+        if ( f.isExtended() || f.isRtr() ) {
+            return;
+        }
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrActive.match(f)) {
