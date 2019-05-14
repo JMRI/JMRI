@@ -16,6 +16,13 @@
             "type": "string",
             "description": "The engine number"
         },
+        "built": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Month and year engine was built in MM-YY, MM-YYYY, or YYYY format"
+        },
         "color": {
             "type": "string",
             "description": "The color of the engine"
@@ -71,6 +78,14 @@
         "carType": {
             "type": "string",
             "description": "The engine type"
+        },
+        "weight": {
+            "type": "number",
+            "description": "Weight of car in onces"
+        },
+        "weightTons": {
+            "type": "number",
+            "description": "Weight of car in tons"
         }
     },
     "additionalProperties": false,

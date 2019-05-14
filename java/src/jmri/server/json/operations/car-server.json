@@ -16,6 +16,13 @@
             "type": "string",
             "description": "The car number"
         },
+        "built": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Month and year car was built in MM-YY, MM-YYYY, or YYYY format"
+        },
         "carType": {
             "type": "string",
             "description": "The car type"
@@ -121,6 +128,14 @@
         "rename": {
             "type": "string",
             "description": "Old name of car if road or number has changed"
+        },
+        "weight": {
+            "type": "number",
+            "description": "Weight of car in onces"
+        },
+        "weightTons": {
+            "type": "number",
+            "description": "Weight of car in tons"
         }
     },
     "additionalProperties": false,
@@ -130,6 +145,8 @@
         "number",
         "carType",
         "length",
+        "weight",
+        "weightTons",
         "load",
         "caboose",
         "fred",
@@ -138,6 +155,7 @@
         "removeComment",
         "addComment",
         "owner",
+        "built",
         "comment",
         "kernel",
         "utility",

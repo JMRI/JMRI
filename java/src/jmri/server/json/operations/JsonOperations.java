@@ -53,8 +53,20 @@ public class JsonOperations {
     public static final String TRAIN = "train"; // NOI18N
     /**
      * {@value #WEIGHT}
+     * <p>
+     * Used for actual weight of rolling stock in onces or a train's weight in tons
      */
     public static final String WEIGHT = "weight"; // NOI18N
+    /**
+     * {@value #WEIGHT_TONS}
+     * <p>
+     * Used for model weight of rolling stock in tons
+     */
+    public static final String WEIGHT_TONS = "weightTons"; // NOI18N
+    /**
+     * {@value #BUILT}
+     */
+    public static final String BUILT = "built"; // NOI18N
     /**
      * {@value #LEAD_ENGINE}
      */

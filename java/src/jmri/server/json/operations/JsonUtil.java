@@ -15,6 +15,7 @@ import static jmri.server.json.JSON.ROUTE;
 import static jmri.server.json.JSON.SEQUENCE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.operations.JsonOperations.BUILT;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
@@ -22,6 +23,8 @@ import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
 import static jmri.server.json.operations.JsonOperations.TRACK;
+import static jmri.server.json.operations.JsonOperations.WEIGHT;
+import static jmri.server.json.operations.JsonOperations.WEIGHT_TONS;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -318,8 +321,19 @@ public class JsonUtil {
         node.put(RFID, rs.getRfid());
         node.put(CAR_TYPE, type[0]);
         node.put(LENGTH, rs.getLengthInteger());
+        try {
+            node.put(WEIGHT, Double.parseDouble(rs.getWeight()));
+        } catch (NumberFormatException ex) {
+            node.put(WEIGHT, 0.0);
+        }
+        try {
+            node.put(WEIGHT_TONS, Double.parseDouble(rs.getWeightTons()));
+        } catch (NumberFormatException ex) {
+            node.put(WEIGHT_TONS, 0.0);
+        }
         node.put(COLOR, rs.getColor());
         node.put(OWNER, rs.getOwner());
+        node.put(BUILT, rs.getBuilt());
         node.put(COMMENT, rs.getComment());
         node.put(OUT_OF_SERVICE, rs.isOutOfService());
         if (rs.getTrack() != null) {

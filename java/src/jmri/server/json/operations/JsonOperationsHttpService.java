@@ -6,30 +6,36 @@ import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORCE_DELETE;
 import static jmri.server.json.JSON.HAZARDOUS;
 import static jmri.server.json.JSON.LENGTH;
+import static jmri.server.json.JSON.MODEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
 import static jmri.server.json.JSON.OWNER;
 import static jmri.server.json.JSON.RENAME;
 import static jmri.server.json.JSON.RFID;
 import static jmri.server.json.JSON.ROAD;
-import static jmri.server.json.JSON.*;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.JSON.UTILITY;
+import static jmri.server.json.operations.JsonOperations.BUILT;
 import static jmri.server.json.operations.JsonOperations.CABOOSE;
 import static jmri.server.json.operations.JsonOperations.CAR;
-import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.CARS;
+import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
+import static jmri.server.json.operations.JsonOperations.FRED;
 import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.LEAD;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
+import static jmri.server.json.operations.JsonOperations.PASSENGER;
 import static jmri.server.json.operations.JsonOperations.ROLLING_STOCK;
 import static jmri.server.json.operations.JsonOperations.TRACK;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 import static jmri.server.json.operations.JsonOperations.WEIGHT;
-import static jmri.server.json.operations.JsonOperations.*;
+import static jmri.server.json.operations.JsonOperations.WEIGHT_TONS;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import java.io.IOException;
@@ -566,8 +572,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * @throws JsonException if unable to set location
      */
     public ObjectNode postEngine(@Nonnull Engine engine, JsonNode data, Locale locale, int id) throws JsonException {
-        ObjectNode result = postRollingStock(engine, data, locale, id);
+        // set model early, since setting other values depend on it
         engine.setModel(data.path(MODEL).asText(engine.getModel()));
+        ObjectNode result = postRollingStock(engine, data, locale, id);
         return utilities.getEngine(engine, result, locale);
     }
 
@@ -585,15 +592,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      */
     public ObjectNode postRollingStock(@Nonnull RollingStock rs, JsonNode data, Locale locale, int id) throws JsonException {
         String name = rs.getId();
-        // set properties using the existing property as the default
-        rs.setRoadName(data.path(ROAD).asText(rs.getRoadName()));
-        rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
-        rs.setColor(data.path(COLOR).asText(rs.getColor()));
-        rs.setComment(data.path(COMMENT).asText(rs.getComment()));
-        rs.setOwner(data.path(OWNER).asText(rs.getOwner()));
-        rs.setRfid(data.path(RFID).asText(rs.getRfid()));
-        rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
-        rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
+        // make changes that can throw an exception first
         JsonNode node = data.path(LOCATION);
         if (!node.isMissingNode() && !node.path(NAME).isMissingNode()) {
             Location location = locationManager().getLocationById(node.path(NAME).asText());
@@ -618,6 +617,22 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
             }
         }
+        // set properties using the existing property as the default
+        rs.setRoadName(data.path(ROAD).asText(rs.getRoadName()));
+        rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
+        rs.setColor(data.path(COLOR).asText(rs.getColor()));
+        rs.setComment(data.path(COMMENT).asText(rs.getComment()));
+        rs.setOwner(data.path(OWNER).asText(rs.getOwner()));
+        rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));
+        if (data.path(WEIGHT).isValueNode()) {
+            rs.setWeight(Double.toString(data.path(WEIGHT).asDouble()));
+        }
+        if (data.path(WEIGHT_TONS).isValueNode()) {
+            rs.setWeightTons(Double.toString(data.path(WEIGHT_TONS).asDouble()));
+        }
+        rs.setRfid(data.path(RFID).asText(rs.getRfid()));
+        rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
+        rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
         ObjectNode result = utilities.getRollingStock(rs, locale);
         if (!rs.getId().equals(name)) {
             result.put(RENAME, name);

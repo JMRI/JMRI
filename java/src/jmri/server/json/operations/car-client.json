@@ -16,6 +16,13 @@
             "type": "string",
             "description": "The car number"
         },
+        "built": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Month and year car was built in MM-YY, MM-YYYY, or YYYY format"
+        },
         "carType": {
             "type": "string",
             "description": "The car type"
@@ -117,6 +124,14 @@
         "status": {
             "type": "string",
             "description": "The status symbol of the car"
+        },
+        "weight": {
+            "type": "number",
+            "description": "Weight of car in onces"
+        },
+        "weightTons": {
+            "type": "number",
+            "description": "Weight of car in tons"
         }
     },
     "additionalProperties": false,
