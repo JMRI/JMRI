@@ -17,7 +17,7 @@ abstract public class AbstractXNetSerialConnectionConfig extends jmri.jmrix.Abst
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public AbstractXNetSerialConnectionConfig() {
         super();

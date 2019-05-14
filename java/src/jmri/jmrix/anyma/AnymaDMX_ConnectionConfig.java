@@ -31,7 +31,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public AnymaDMX_ConnectionConfig() {
         this(new AnymaDMX_UsbPortAdapter());

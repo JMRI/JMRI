@@ -128,9 +128,8 @@ public class CbusThrottle extends AbstractThrottle {
      * setSpeedStepMode - set the speed step value.
      * <p>
      * Overridden to capture mode changes to be forwarded to the hardware.
-     * New throttles default to 128 step
-     * mode
-     * <p>
+     * New throttles default to 128 step mode
+     *
      * @param Mode the current speed step mode - default should be 128
      *              speed step mode in most cases
      */

@@ -23,7 +23,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -31,8 +31,8 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
 
     @Override
     public String name() {
-        return "Lenz LIUSB";
-    } // NOI18N
+        return "Lenz LIUSB"; // NOI18N
+    }
 
     @Override
     protected String[] getPortFriendlyNames() {

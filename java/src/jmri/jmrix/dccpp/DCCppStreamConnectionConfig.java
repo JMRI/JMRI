@@ -23,7 +23,7 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public DCCppStreamConnectionConfig() {
         super();

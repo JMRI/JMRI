@@ -199,7 +199,7 @@ public class Z21Message extends AbstractMRMessage {
      * <li>0x00040000 Automatically send updates for Railcom data to the client</li>
      * <li>0x00080000 send can detector messages to the client</li>
      * </ul>
-     * <p>
+     *
      * @param flags integer representing the flags (32 bits).
      * @return z21 message for LAN_SET_BROADCAST_FLAGS request.
      */

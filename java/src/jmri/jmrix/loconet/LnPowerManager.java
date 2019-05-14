@@ -213,7 +213,7 @@ public class LnPowerManager
 
     /**
      * Returns whether command station supports IDLE funcitonality
-     * <p>
+     *
      * @return true if connection's command station supports IDLE state, else false
      */
     @Override

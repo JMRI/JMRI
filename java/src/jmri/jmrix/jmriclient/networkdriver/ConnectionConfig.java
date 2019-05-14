@@ -13,7 +13,7 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
  * instance via the JMRI Network Protocol.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     protected JLabel transmitPrefixLabel = new JLabel("Server Connection Prefix");
@@ -29,7 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();

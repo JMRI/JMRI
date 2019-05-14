@@ -26,7 +26,7 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public Z21XNetConnectionConfig() {
         super();

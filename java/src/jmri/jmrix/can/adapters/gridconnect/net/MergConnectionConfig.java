@@ -30,7 +30,7 @@ public class MergConnectionConfig extends ConnectionConfig {
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public MergConnectionConfig() {
         super();

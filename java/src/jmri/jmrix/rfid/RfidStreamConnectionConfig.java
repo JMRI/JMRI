@@ -28,7 +28,7 @@ public class RfidStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public RfidStreamConnectionConfig() {
         super();

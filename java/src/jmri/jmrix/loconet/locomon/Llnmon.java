@@ -91,7 +91,7 @@ public class Llnmon {
      * When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
      * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
      * } may need to be called manually to set the correct device managers.
-     * <p>
+     *
      * @deprecated since 4.5.6 and then even more in 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}
@@ -109,8 +109,7 @@ public class Llnmon {
      * included in messages with the system names.
      *
      * @param memo the system connection memo
-     * <p>
-     * @deprecated since 4.13.5; use the 
+     * @deprecated since 4.13.5; use the
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter.
@@ -123,11 +122,11 @@ public class Llnmon {
     /**
      * Create a LocoNet Message Formatter. The managers allow the user names of
      * managed devices to be included in messages with the system names.
-     * <p>
+     *
      * @param turnoutManager  turnout manager
      * @param sensorManager   sensor manager
      * @param reporterManager reporter manager
-     * <p>
+     *
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}
@@ -146,9 +145,9 @@ public class Llnmon {
     /**
      * Create a LocoNet Message Formatter. The managers allow the user names of
      * managed devices to be included in messages with the system names.
-     * <p>
+     *
      * @param prefix  system connection prefix (i.e. "L")
-     * <p>
+     *
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}

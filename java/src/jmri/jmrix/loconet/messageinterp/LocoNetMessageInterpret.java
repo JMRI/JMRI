@@ -4336,7 +4336,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
-     * <p>
+     *
      * @param l LocoNet Message to interpret
      * @return String containing interpreted message or empty string if
      *      message is not interpretable.

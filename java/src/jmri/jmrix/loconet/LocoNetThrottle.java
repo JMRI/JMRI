@@ -43,7 +43,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Constructor
-     * <p>
+     *
      * @param memo connection details
      * @param slot The LocoNetSlot this throttle will talk on.
      */
@@ -139,7 +139,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Convert a LocoNet speed integer to a float speed value
-     * <p>
+     *
      * @param lSpeed LocoNet style speed value
      * @return speed as float 0-&gt;1.0, or -1.0 to indicate E-Stop
      */
@@ -176,7 +176,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * <p>
      * Values between 0.0+ and 1.0 imply speed step values between 2 and the 
      * maximum value allowed for the loco's speed step mode.
-     * <p>
+     *
      * @param fSpeed is the floating-point speed value to be converted
      * @return an integer which represents the speed step value
      */

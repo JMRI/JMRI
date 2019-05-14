@@ -510,7 +510,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * it needs to notify the listener of this situation.
      * <p>
      * This applies only to those systems where "stealing" applies, such as LocoNet.
-     * <p>
+     *
      * @param address The DCC Loco Address where controlling requires a steal
      */
     public void notifyStealRequest(DccLocoAddress address) {

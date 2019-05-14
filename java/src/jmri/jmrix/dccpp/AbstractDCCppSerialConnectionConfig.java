@@ -20,7 +20,7 @@ abstract public class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.Abs
 
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public AbstractDCCppSerialConnectionConfig() {
         super();

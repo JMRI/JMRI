@@ -26,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
     // Needed for instantiation by reflection, do not remove.
     /**
      * Ctor for a connection configuration with no preexisting adapter.
-     * {@link setInstance()} will fill the adapter member.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
