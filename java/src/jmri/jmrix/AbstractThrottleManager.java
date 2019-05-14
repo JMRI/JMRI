@@ -318,7 +318,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision) {
-        log.error("Received response form ThrottleListener, this method should be overridden by a hardware type");
+        log.debug("Received response from ThrottleListener, this method should be overridden by a hardware type");
     }
 
     /**

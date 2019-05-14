@@ -613,13 +613,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, DecisionType decision) {
         log.debug("Received {} response for Loco {}, listener {}",decision,address,l);
-        if ( decision == DecisionType.CANCEL ){
-            cancelThrottleRequest(address,l);
-            failedThrottleRequest(address, "User cancelled request.");
-        }
-        else {
-            requestThrottleSetup(address,decision);
-        }
+        requestThrottleSetup(address,decision);
     }
 
     /**
@@ -696,5 +690,20 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         }
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void cancelThrottleRequest(LocoAddress address, ThrottleListener l) {
+        
+        // calling super removes the ThrottleListener from the callback list,
+        // The listener which has just sent the cancel doesn't need notification
+        // of the cancel but other listeners might
+        super.cancelThrottleRequest(address, l);
+        
+        failedThrottleRequest(address, "Throttle Request " + address + " Cancelled.");
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class);
 }

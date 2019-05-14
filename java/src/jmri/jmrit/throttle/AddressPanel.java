@@ -255,7 +255,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                     Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
                         InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
                 } else {
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
                 }
             });
         }
@@ -270,7 +270,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                     Bundle.getMessage("ShareRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
                         InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
                 } else {
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
                 }
             });
         }
@@ -303,7 +303,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 }
                 else {
                     log.debug("cancel clicked");
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
                 }
             });
         }

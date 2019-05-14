@@ -299,7 +299,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL);
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
                     log.error("1: Got a steal request");
                 }
             }
@@ -345,7 +345,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL);
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
                     log.error("2: Got a steal request");
                 }
             }
@@ -390,7 +390,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL);
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
                     log.error("3: Got a steal request");
                 }
             }

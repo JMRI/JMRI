@@ -651,7 +651,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     @Override
     public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoStealing"));
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.CANCEL );
+        InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
         setButtonStates(true);
         throttleState = -1;
     }

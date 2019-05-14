@@ -462,7 +462,14 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     @Override
     public void cancelThrottleRequest(LocoAddress address, ThrottleListener l) {
+        
+        // calling super removes the ThrottleListener from the callback list,
+        // The listener which has just sent the cancel doesn't need notification
+        // of the cancel but other listeners might
         super.cancelThrottleRequest(address, l);
+        
+        failedThrottleRequest(address, "Throttle Request " + address + " Cancelled.");
+        
         int loconumber = address.getNumber();
         log.debug("cancelThrottleRequest - loconumber {}", loconumber);
         if (waitingForNotification.containsKey(loconumber)) {
@@ -548,19 +555,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         
         log.debug("{} decision invoked for address {}",decision,address.getNumber() );
         
-        if ( decision == ThrottleListener.DecisionType.CANCEL ) {
-            
-            if (address instanceof DccLocoAddress) {
-                cancelThrottleRequest(address,l);
-                failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
-                
-            } else {
-                log.error("not a DccLocoAddress.");
-                requestOutstanding = false;
-                processQueuedThrottleSetupRequest();
-            }
-        }
-        else if ( decision == ThrottleListener.DecisionType.STEAL ) {
+        if ( decision == ThrottleListener.DecisionType.STEAL ) {
             // Steal is currently implemented by using the same method
             // we used to aquire the slot prior to the release of 
             // Digitrax command stations with expanded slots.
