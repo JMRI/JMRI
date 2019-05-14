@@ -7281,9 +7281,9 @@ public class LayoutEditorTools {
             eastBoundSensor.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
             if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 } else {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 }
             }
             eastBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
@@ -7292,9 +7292,9 @@ public class LayoutEditorTools {
             westBoundSensor.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
             if (setSensorsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 } else {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 }
             }
             westBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
@@ -7302,11 +7302,11 @@ public class LayoutEditorTools {
         } else {
             if (setSensorsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     eastBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
                     sensorBlockPanel.add(eastBoundSensor.getDetailsPanel());
                 } else {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     westBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
                     sensorBlockPanel.add(westBoundSensor.getDetailsPanel());
                 }
@@ -7576,20 +7576,20 @@ public class LayoutEditorTools {
 
         if (boundary.getType() != PositionablePoint.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             } else {
-                eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             }
         } else {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westBoundSensor.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westBoundSensor.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                eastBoundSensor.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
         }
 
@@ -7863,9 +7863,9 @@ public class LayoutEditorTools {
             }
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 } else {
-                    eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 }
             }
             eastSignalMast.getDetailsPanel().setBackground(new Color(255, 255, 200));
@@ -7877,9 +7877,9 @@ public class LayoutEditorTools {
             }
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 } else {
-                    westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 }
             }
             westSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
@@ -7887,11 +7887,11 @@ public class LayoutEditorTools {
         } else {    // End Bumper
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     eastSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
                     signalMastBlockPanel.add(eastSignalMast.getDetailsPanel());
                 } else {
-                    westSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     westSignalMast.getDetailsPanel().setBackground(new Color(255, 255, 200));
                     signalMastBlockPanel.add(westSignalMast.getDetailsPanel());
                 }
@@ -8121,20 +8121,20 @@ public class LayoutEditorTools {
 
         if (boundary.getType() != PositionablePoint.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             } else {
-                eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             }
         } else {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
         }
         setSignalMastsAtBlockBoundaryFrame.setPreferredSize(null);

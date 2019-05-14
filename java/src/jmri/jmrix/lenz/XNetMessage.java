@@ -1343,6 +1343,16 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
+     * Build an EmergencyStop Message.
+     */
+    public static XNetMessage getEmergencyStopMsg() {
+        XNetMessage msg = new XNetMessage(2);
+        msg.setElement(0, XNetConstants.ALL_ESTOP);
+        msg.setParity();
+        return (msg);
+    }
+
+    /**
      * Generate the message to request the Command Station Hardware/Software
      * Version.
      */
@@ -2113,6 +2123,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             int address = (baseaddress * 4) + subaddress + 1;
             int output = (getElement(2) & 0x01);
             text = Bundle.getMessage(messageKey,address, baseaddress,subaddress,output);
+        } else if (getElement(0) == XNetConstants.ALL_ESTOP) {
+            text = Bundle.getMessage("XNetMessageRequestEmergencyStop");
         } else {
             text = toString();
         }

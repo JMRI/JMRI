@@ -142,6 +142,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JPanel editToolBarContainerPanel = null;
     private transient JPanel helpBarPanel = null;
     private transient JPanel helpBar = new JPanel();
+    private transient boolean editorUseOldLocSize;
 
     private transient Font toolBarFont = null;
 
@@ -524,7 +525,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public LayoutEditor(@Nonnull String name) {
         super(name);
+        setSaveSize(true);
         layoutName = name;
+
+        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();
@@ -1060,34 +1064,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //setupToolBarFontSizes(toolBarFontSize);
                 //}
                 updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
-
-                //this doesn't work as expected (1st one called messes up 2nd?)
-                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                log.debug("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-                log.debug("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
-
-                //Point prefsWindowLocation = null;
-                //Dimension prefsWindowSize = null;
-                //use this instead?
-                if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
-                    prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                    log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
-
-                    if (prefsProp != null) {
-                        Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
-                        prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
-                        prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
-                    }
-                }
-
-                if ((prefsWindowLocation != null) && (prefsWindowSize != null)
-                        && (prefsWindowSize.width >= 640) && (prefsWindowSize.height >= 480)) {
-                    //note: panel width & height comes from the saved (xml) panel (file) on disk
-                    setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
-                            prefsWindowLocation.x, prefsWindowLocation.y,
-                            panelWidth, panelHeight, true);
-                }
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
@@ -2517,15 +2493,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
-        //
-        //  save location and size
-        //
-        JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
-        optionMenu.add(locationItem);
-        locationItem.addActionListener((ActionEvent event) -> {
-            setCurrentPositionAndSize();
-            log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
-        });
+        if (editorUseOldLocSize) {
+            //
+            //  save location and size
+            //
+            JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
+            optionMenu.add(locationItem);
+            locationItem.addActionListener((ActionEvent event) -> {
+                setCurrentPositionAndSize();
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+            });
+        }
 
         //
         // Add Options
@@ -2815,8 +2793,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
-    /**
-     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+    /***************************************************************************
+     * Getter Layout Track Drawing Options.
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor <br>
+     * blockDefaultColor, blockOccupiedColor and blockAlternativeColor added to LayoutTrackDrawingOptions <br>
      * @return LayoutTrackDrawingOptions object
      */
     @Nonnull
@@ -2830,6 +2810,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
             layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
+            layoutTrackDrawingOptions.setBlockDefaultColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            layoutTrackDrawingOptions.setBlockAlternativeColor(defaultAlternativeTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
@@ -4794,37 +4777,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Point pt = getLocationOnScreen();
         upperLeftX = pt.x;
         upperLeftY = pt.y;
-
-        // TODO: figure out why this isn't working...
-        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-            String windowFrameRef = getWindowFrameRef();
-
-            //the restore code for this isn't working...
-            prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
-            prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
-
-            if (true) {
-                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-
-                if ((prefsWindowLocation.x != upperLeftX) || (prefsWindowLocation.y != upperLeftY)) {
-                    log.error("setWindowLocation failure.");
-                }
-                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-
-                if ((prefsWindowSize.width != windowWidth) || (prefsWindowSize.height != windowHeight)) {
-                    log.error("setWindowSize failure.");
-                }
-            }
-
-            //we're going to use this instead
-            if (true) { //(Nope, it's not working ether)
-                //save it in the user preferences for the window
-                Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
-                prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
-                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                log.debug("testing prefsProp: {}", prefsProp);
-            }
-        });
 
         log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
         setDirty();
@@ -9130,12 +9082,36 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultTrackColor.
+     * @return block default color as Color
+     */
+    public Color getDefaultTrackColorColor() {
+        return defaultTrackColor;
+    }
+
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultOccupiedTrackColor.
+     * @return block default occupied color as Color
+     */
+    public Color getDefaultOccupiedTrackColorColor() {
+        return defaultOccupiedTrackColor;
+    }
+
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
+    }
+
+    /***************************************************************************
+     * Getter defaultAlternativeTrackColor.
+     * @return block default alternetive color as Color
+     */
+    public Color getDefaultAlternativeTrackColorColor() {
+        return defaultAlternativeTrackColor;
     }
 
     public String getDefaultTextColor() {
