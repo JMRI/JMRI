@@ -64,7 +64,9 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             log.error(e.toString());
             throw e;
         }
+        // validate (adds + to int)
         String newAddress = CbusAddress.validateSysName(addr);
+        // OK, make
         Turnout t = new CbusTurnout(getSystemPrefix(), newAddress, memo.getTrafficController());
         t.setUserName(userName);
         return t;
@@ -72,7 +74,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /** 
      * {@inheritDoc} 
-     * systemName M
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -90,7 +91,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // prefix + as service to user
+        // prefix with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
         return getSystemPrefix() + typeLetter() + newAddress;
     }
@@ -107,19 +108,19 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         Turnout s = getBySystemName(prefix + typeLetter() + testAddr);
         if (s == null) {
             return testAddr;
         }
         // build local addresses
         String newaddr = CbusAddress.getIncrement(testAddr);
-        if (newaddr==null) {
+        if (newaddr == null) {
             return null;
         }
-        //If the new hardware address does not already exist then this can
-        //be considered the next valid address.
+        // If the new hardware address does not already exist then this can
+        // be considered the next valid address.
         Turnout snew = getBySystemName(prefix + typeLetter() + newaddr);
         if (snew == null) {
             return newaddr;
@@ -147,7 +148,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Work out the details for Cbus hardware address validation
+     * Work out the details for Cbus hardware address validation.
      * Logging of handled cases no higher than WARN.
      *
      * @param address the hardware address to check
@@ -155,7 +156,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
-        log.debug("validated system name {}",newAddress);
+        log.debug("validated system name {}", newAddress);
     }
 
 

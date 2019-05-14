@@ -264,7 +264,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         try {
             iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
             return null;

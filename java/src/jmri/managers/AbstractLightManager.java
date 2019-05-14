@@ -204,7 +204,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * get bean type handled
+     * Get bean type handled.
      *
      * @return a string for the type of object handled by this manager
      */
@@ -222,7 +222,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(AbstractLightManager.class);
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);
 
 }

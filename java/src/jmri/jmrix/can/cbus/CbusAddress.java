@@ -50,7 +50,7 @@ public class CbusAddress {
     static final int NODEFACTOR = 100000;
 
     /**
-     * Construct from string without leading system or type letters
+     * Construct from string without leading system or type letters.
      */
     public CbusAddress(String s) {
         aString = s;
@@ -113,9 +113,9 @@ public class CbusAddress {
                 aFrame[1] = (node >> 8) & 0xff;
 
                 // add command
-                if (( hCode.group(6)!= null ) && (hCode.group(6).equals("+"))) {
+                if ((hCode.group(6)!= null) && (hCode.group(6).equals("+"))) {
                     aFrame[0] = CbusConstants.CBUS_ACON;
-                } else if (( hCode.group(6)!= null ) && (hCode.group(6).equals("-"))) {
+                } else if ((hCode.group(6)!= null) && (hCode.group(6).equals("-"))) {
                     aFrame[0] = CbusConstants.CBUS_ACOF;
                 } else // default
                 {
@@ -168,7 +168,7 @@ public class CbusAddress {
     }
 
     /**
-     * Does the CbusAddress match a CanReply ( CanFrame being received by JMRI )
+     * Does the CbusAddress match a CanReply (CanFrame being received by JMRI).
      *
      * @param r CanReply being tested
      * @return true if matches
@@ -198,7 +198,7 @@ public class CbusAddress {
     }
 
     /**
-     * Does the CbusAddress match a CanMessage ( CanFrame being sent by JMRI )
+     * Does the CbusAddress match a CanMessage (CanFrame being sent by JMRI).
      *
      * @param r CanMessage being tested
      * @return true if matches
@@ -261,11 +261,11 @@ public class CbusAddress {
      * Increments a CBUS address by 1
      * eg +123 to +124
      * eg -N123E456 to -N123E457
-     * returns null if unable to make the address
      *
+     * @return null if unable to make the address
      */
-    public static String getIncrement( @Nonnull String testAddr ) {
-        log.debug("testing address {}",testAddr);
+    public static String getIncrement(@Nonnull String testAddr) {
+        log.debug("testing address {}", testAddr);
         CbusAddress a = new CbusAddress(testAddr);
         CbusAddress[] v = a.split();
         String newString="";
@@ -277,18 +277,18 @@ public class CbusAddress {
                 sb.append(StringUtil.replaceLast(v[0].toString(), String.valueOf(lasta), String.valueOf(lasta+1)));
                 sb.append(";");
                 sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb+1)));
-                newString= sb.toString();
+                newString = sb.toString();
                 break;
             default:
                 // get last part and increment
                 int last =  StringUtil.getLastIntFromString(v[0].toString());
-                newString= StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
+                newString = StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
                 break;
         }
         try {
             return validateSysName(newString);
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            log.error(e);
         }
         return null;
     }
@@ -300,13 +300,13 @@ public class CbusAddress {
      * @param address the hardware address to check
      * @throws IllegalArgumentException when delimiter is not found
      */
-    public static String validateSysName( String address ) throws IllegalArgumentException  {
+    public static String validateSysName(String address) throws IllegalArgumentException  {
         
-        if ( address == null ) {
+        if (address == null) {
             throw new IllegalArgumentException("No address Passed ");
         }        
         
-        if ( address.endsWith(";") ) {
+        if (address.endsWith(";")) {
             throw new IllegalArgumentException("Should not end with ; " + address);
         }
         
@@ -327,13 +327,13 @@ public class CbusAddress {
         CbusAddress[] v = a.split();
         switch (v.length) {
             case 1:
-                if ( address.startsWith("+") || address.startsWith("-") ) {
+                if (address.startsWith("+") || address.startsWith("-")) {
                     break;
                 }
                 int unsigned = 0;
                 try {
                     unsigned = Integer.parseInt(address); // accept unsigned integer, will add "+" upon creationz
-                    if ( unsigned > 100000 ) {
+                    if (unsigned > 100000) {
                         break;
                     }
                 } catch (NumberFormatException ex) {
@@ -348,24 +348,24 @@ public class CbusAddress {
         return address;
     }
     
-    private static String checkPartOfName( String testpart, String plusOrMinus ){
+    private static String checkPartOfName(String testpart, String plusOrMinus){
         int unsigned = 0;
         String part = testpart;
         try {
-            unsigned = Integer.parseInt(part); // accept unsigned single integer, will add "+" upon creationz
+            unsigned = Integer.parseInt(part); // accept unsigned single integer, will add "+" upon creation
             log.debug("part {} is integer {}", part, unsigned);
-            if ( unsigned == 0 ){
+            if (unsigned == 0){
                 throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
             }
-            if ( (part.charAt(0) != '+') && ( (part.charAt(0) != '-') ) ) {
-                if ( unsigned > 0 && unsigned < 65536 ) {
+            if ((part.charAt(0) != '+') && (part.charAt(0) != '-')) {
+                if (unsigned > 0 && unsigned < 65536) {
                     part = plusOrMinus + part;
                 }
             }
-            if ( unsigned > 65535 && unsigned < 100000 ) {
+            if (unsigned > 65535 && unsigned < 100000) {
                 throw new IllegalArgumentException("On Too big for an event, too low for node + event : " + part);
             }
-            if ( unsigned < -65535 && unsigned > -100000 ) {
+            if (unsigned < -65535 && unsigned > -100000) {
                 throw new IllegalArgumentException("Off Too big for an event, too low for node + event : " + part);
             }
             if (part == "+0") {
@@ -378,26 +378,26 @@ public class CbusAddress {
         } catch (NumberFormatException ex) {
             log.debug("Unable to convert {} into Cbus format +nn", part);
         }
-        if ( unsigned == 0 ) {
+        if (unsigned == 0) {
             // so it's a string.
             // ignoring anything starting with x or X as it may be a HEX value
             // which is checked by core CbusAddress
             try {
-                if ( (part.toUpperCase().charAt(0) != 'X') ) {
-                    log.debug("not an int or hex {}",part);
+                if (part.toUpperCase().charAt(0) != 'X') {
+                    log.debug("not an int or hex {}", part);
                     
                     // it's got a string in somewhere, start by checking event number
                     int lasta =  StringUtil.getLastIntFromString(part);
-                    log.debug("last string {}",lasta);
-                    if ( lasta == 0 ){
+                    log.debug("last string {}", lasta);
+                    if (lasta == 0){
                         throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
                     }
-                    if ( lasta > 65535 ){
+                    if (lasta > 65535){
                         throw new IllegalArgumentException("Event Too Large in address: " + part);
                     }
                     int firsta =  StringUtil.getFirstIntFromString(part);
-                    log.debug("first string {}",firsta);
-                    if ( firsta > 65535 ){
+                    log.debug("first string {}", firsta);
+                    if (firsta > 65535){
                         throw new IllegalArgumentException("Node Too Large in address: " + part);
                     }
                 }
@@ -405,14 +405,12 @@ public class CbusAddress {
             catch ( StringIndexOutOfBoundsException ex ) {
                 throw new IllegalArgumentException("Address Too Short? : " + part);
             }
-            
-            
         }
         return part;
     }
 
     /**
-     * Used in Testing
+     * Used in Testing.
      *
      */
     public boolean checkSplit() {
@@ -449,5 +447,7 @@ public class CbusAddress {
         }
         return retval;
     }
+
     private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
+
 }
