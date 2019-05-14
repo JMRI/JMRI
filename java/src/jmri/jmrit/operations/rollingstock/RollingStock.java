@@ -4,6 +4,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -17,8 +21,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
@@ -435,17 +437,17 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
      *         "length" if the rolling stock length didn't fit.
      */
     public String setLocation(Location location, Track track, boolean force) {
+        Location oldLocation = _location;
+        Track oldTrack = _trackLocation;
         // first determine if rolling stock can be move to the new location
-        if (!force) {
+        if (!force && (oldLocation != location || oldTrack != track)) {
             String status = testLocation(location, track);
             if (!status.equals(Track.OKAY)) {
                 return status;
             }
         }
         // now update
-        Location oldLocation = _location;
-        _location = location;
-        Track oldTrack = _trackLocation;
+        _location = location;    
         _trackLocation = track;
 
         if (oldLocation != location || oldTrack != track) {

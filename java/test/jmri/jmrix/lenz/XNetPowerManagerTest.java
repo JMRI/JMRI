@@ -47,7 +47,11 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Override
     protected void sendIdleReply() {
-        return;
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x00);
+        m.setElement(2, 0x81);
+        pm.message(m);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Override
     protected void hearIdle() {
-        return;
+        sendIdleReply();
     }
 
     @Override
@@ -84,7 +88,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Override
     protected boolean outboundIdleOK(int index) {
-        return true;
+        XNetMessage m = XNetMessage.getEmergencyStopMsg();
+        return tc.outbound.elementAt(index).equals(m);
     }
 
     @Test
@@ -143,8 +148,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         m.setElement(2, 0x81);
 
         pm.message(m);
-        // and now verify power is off.
-        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
+        // and now verify power is IDLE.
+        Assert.assertEquals("Power", jmri.PowerManager.IDLE, pm.getPower());
     }
 
     @Test
@@ -210,8 +215,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         m.setElement(3, 0x42);
 
         pm.message(m);
-        // and now verify power is off.
-        Assert.assertEquals("Power", jmri.PowerManager.OFF, pm.getPower());
+        // and now verify power is IDLE.
+        Assert.assertEquals("Power", jmri.PowerManager.IDLE, pm.getPower());
     }
 
     @Test
@@ -265,6 +270,12 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         // now trigger another change, and make sure the count doesn't change.
         sendOnReply();
         Assert.assertEquals("PropertyChangeCount", 1, propertyChangeCount);
+    }
+
+    @Test
+    @Override
+    public void testImplementsIdle() {
+        Assert.assertTrue(p.implementsIdle());
     }
 
     // The minimal setup for log4J
