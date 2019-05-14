@@ -13,7 +13,6 @@ import org.junit.Test;
  */
 public class CbusTableEventTest {
 
-
     @Test
     public void testCTor() {
         // int,int,EvState,int,String,String,String,int,int,int,int,Date
@@ -56,7 +55,6 @@ public class CbusTableEventTest {
         Assert.assertEquals("getSessionOff 1", 1,(t.getSessionOff()) );
         Assert.assertEquals("getSessionIn 1", 1,(t.getSessionIn()) );
         Assert.assertEquals("getSessionOut 1", 1,(t.getSessionOut()) );
-        
     }    
     
 

@@ -1,4 +1,4 @@
-package jmri.jmrix.mrc.simulator;
+package jmri.jmrix.mrc.serialdriver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
