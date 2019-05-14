@@ -53,7 +53,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Acela";
+        return "Acela"; // NOI18N
     }
 
     /**

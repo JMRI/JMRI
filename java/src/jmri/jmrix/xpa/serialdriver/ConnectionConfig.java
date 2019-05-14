@@ -27,7 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "XPA-MODEM";
+        return "XPA-MODEM"; // NOI18N
     }
 
     /**

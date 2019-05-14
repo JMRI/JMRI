@@ -45,7 +45,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "CM11";
+        return "CM11"; // NOI18N
     }
 
     public boolean isOptList1Advanced() {

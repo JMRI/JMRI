@@ -10,7 +10,7 @@ import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = "Serial";
+    public final static String NAME = Bundle.getMessage("TypeSerial");
 
     /**
      * Create a connection configuration with a preexisting adapter.

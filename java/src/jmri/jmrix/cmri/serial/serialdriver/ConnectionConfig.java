@@ -12,11 +12,10 @@ import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Chuck Catania Copyright (C) 2017
-
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = "Serial";
+    public final static String NAME = Bundle.getMessage("TypeSerial");
 
     /**
      * Ctor for an object being created during load process; Swing init is

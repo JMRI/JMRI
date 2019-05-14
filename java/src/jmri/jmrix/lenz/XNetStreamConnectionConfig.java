@@ -8,7 +8,7 @@ package jmri.jmrix.lenz;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see XNetStreamPortController
  */
 public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {

@@ -513,7 +513,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     /* Internal class extends a JComboBox so that its color is consistent with
      * an underlying variable; we return one of these in getNewRep.
-     *<p>
+     * <p>
      * Unlike similar cases elsewhere, this doesn't have to listen to
      * value changes.  Those are handled automagically since we're sharing the same
      * model between this object and the real JComboBox value.

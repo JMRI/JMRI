@@ -5,7 +5,7 @@ package jmri.jmrix.mrc.serialdriver;
  * connection via a MRC SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Serial"; // TO I18N
+        return Bundle.getMessage("TypeSerial");
     }
 
     /**

@@ -1198,7 +1198,7 @@ public class Llnmon {
     /**
      * Create a string representation of a LocoNet buffer. The
      * string may be more than one line, and is terminated with a newline.
-     *<p>
+     *
      * @param l the message
      * @return The created string representation.
      */
@@ -1220,7 +1220,7 @@ public class Llnmon {
     /**
      * Set the LocoNet turnout manager used to find turnout "user names" from
      * turnout "system names"
-     *<p>
+     *
      * @param turnoutManager the manager
      * @deprecated since 4.13.5; use the {@link LocoNetMessage#toMonitorString(String)} (preferred) 
      * or {@link LocoNetMessage#toMonitorString()}
@@ -1236,7 +1236,7 @@ public class Llnmon {
     /**
      * Set the LocoNet sensor manager used to find sensor "user names" from
      * sensor "system names".
-     *<p>
+     *
      * @param sensorManager the manager
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
@@ -1253,7 +1253,7 @@ public class Llnmon {
     /**
      * Set the LocoNet reporter manager used to find reported "user names" from
      * reporter "system names".
-     *<p>
+     *
      * @param reporterManager the manager
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or

@@ -14,7 +14,7 @@ package jmri.jmrix.loconet;
  *  <li>STAT1 - bits in status byte 1
  *  <li>STAT2 - bits in status byte 2
  *  </ul>
- *<p>
+ * <p>
  * Slot Status byte definitions and macros
  * <ul>
  * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)

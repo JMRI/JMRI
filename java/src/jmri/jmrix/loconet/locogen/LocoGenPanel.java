@@ -172,8 +172,8 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Run button pressed down, start the sequence operation
-     *<p>
+     * Run button pressed down, start the sequence operation.
+     *
      * @param e  a {@link java.awt.event.ActionEvent} to be triggered
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {

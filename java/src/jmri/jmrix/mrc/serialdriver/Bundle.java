@@ -1,5 +1,4 @@
-
-package jmri.jmrix.sprog.sprogCS;
+package jmri.jmrix.mrc.simulator;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -15,14 +14,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Provides standard access for resource bundles in a package.
- * 
+ * <p>
  * Convention is to provide a subclass of this name
  * in each package, working off the local resource bundle name.
  *
  * @author      Bob Jacobsen  Copyright (C) 2012
- * @since       3.7.2
+ * @since       4.9.5
  */
-public class Bundle extends jmri.jmrix.sprog.Bundle {
+public class Bundle extends jmri.jmrix.mrc.Bundle {
 
     @Nullable private static final String name = null; // No local resources
 

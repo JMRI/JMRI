@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "SPROG";
+        return "SPROG"; // NOI18N
     }
 
     @Override

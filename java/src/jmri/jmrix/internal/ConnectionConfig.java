@@ -4,14 +4,15 @@ import jmri.jmrix.AbstractSimulatorConnectionConfig;
 import jmri.jmrix.SerialPortAdapter;
 
 /**
- * Definition of objects to handle configuring a virtual layout connection
+ * Definition of objects to handle configuring a virtual layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
 public class ConnectionConfig extends AbstractSimulatorConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
+     * Ctor for an object being created during load process.
+     *
      * @param p serial port adapter
      */
     public ConnectionConfig(SerialPortAdapter p) {

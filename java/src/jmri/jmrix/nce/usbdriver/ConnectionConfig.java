@@ -8,10 +8,10 @@ import jmri.util.SystemType;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Daniel Boudreau Copyright (C) 2007
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = "NCE USB";
+    public final static String NAME = "NCE USB"; // NOI18N
 
     /**
      * Ctor for an object being created during load process; Swing init is

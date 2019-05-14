@@ -364,7 +364,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     /**
      * Returns the user-readable name of the type of NamedBean 
      * handled by this manager.
-     *<p>
+     * <p>
      * For instance, in the code where we are dealing with just a bean and a
      * message that needs to be passed to the user or in a log.
      *

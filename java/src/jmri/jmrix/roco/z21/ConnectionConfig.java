@@ -32,7 +32,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "Roco Z21";
+        return "Roco Z21"; // NOI18N
     }
 
     /**

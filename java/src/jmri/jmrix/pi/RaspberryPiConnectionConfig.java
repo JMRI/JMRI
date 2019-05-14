@@ -182,7 +182,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
     @Override
     public String getConnectionName() {
-        return "Raspberry Pi GPIO";
+        return "Raspberry Pi GPIO"; // NOI18N
     }
 
     @Override
