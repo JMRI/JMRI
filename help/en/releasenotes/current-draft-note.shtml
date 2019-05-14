@@ -199,7 +199,11 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added the Essential Sound Unit (an OEM-only decoder).</li>
+                <li>Added the LokSound 5 family.</li>
+                <li>Added the SUSI Map to those V4/5 decoders that support it.</li>
+                <li>Split the Sound Pane into two panes - &quot;Sound&quot; and &quot;Sound Levels&quot;.</li>
+                <li>Improved the speed of Import-&gt;LokProgrammer CV list file.</li>
             </ul>
 
         <h4>Hornby</h4>

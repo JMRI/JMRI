@@ -46,11 +46,11 @@ public abstract class BeanTableModel extends AbstractTableModel {
     public String getColumnName(int c) {
         switch (c) {
             case SNAME_COLUMN:
-                return "System Name";
+                return Bundle.getMessage("ColumnSystemName");
             case UNAME_COLUMN:
-                return "User Name";
+                return Bundle.getMessage("ColumnUserName");
             case INCLUDE_COLUMN:
-                return "Included";
+                return Bundle.getMessage("ColumnIncluded");
             default:
                 return "";
         }
