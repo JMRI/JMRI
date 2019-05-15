@@ -56,7 +56,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             log.error(e.toString());
             throw e;
         }
-        // validate (adds + to int)
+        // validate (adds "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
         Sensor s = new CbusSensor(getSystemPrefix(), newAddress, memo.getTrafficController());
@@ -75,7 +75,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // prefix with "+" as service to user
+        // prefix unsigned int with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
         return getSystemPrefix() + typeLetter() + newAddress;
     }
@@ -89,7 +89,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /** 
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -100,24 +100,27 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
+        testAddr = CbusAddress.validateSysName(testAddr); // normalize Merg address
         Sensor s = getBySystemName(prefix + typeLetter() + testAddr);
-        if (s == null) {
+        if (s != null) {
+            // build local addresses
+            for (int x = 1; x < 10; x++) {
+                testAddr = CbusAddress.getIncrement(testAddr); // getIncrement will perform a max check on the numbers
+                s = getBySystemName(prefix + typeLetter() + testAddr);
+                if (s == null) {
+                    // If the hardware address + x does not already exist,
+                    // then this can be considered the next valid address.
+                    return testAddr;
+                }
+            }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new {} Sensors added", curAddress, memo.getUserName());
+            return null;
+        } else {
+            // If the initially requested hardware address does not already exist,
+            // then this can be considered the next valid address.
             return testAddr;
         }
-        // getIncrement will have performed a max check on the numbers
-        String newaddr = CbusAddress.getIncrement(testAddr);
-        if (newaddr == null) {
-            return null;
-        }
-        // If the new hardware address does not already exist then this can
-        // be considered the next valid address.
-        Sensor snew = getBySystemName(prefix + typeLetter() + newaddr);
-        if (snew == null) {
-            return newaddr;
-        }
-        return null;
     }
 
     /** 

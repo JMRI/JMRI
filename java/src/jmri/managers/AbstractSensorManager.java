@@ -112,8 +112,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.debug("Invalid system name for sensor: {} needed {}{}", systemName,
-                    getSystemPrefix(), typeLetter());
+            log.debug("Invalid system name for sensor: {} needed {}{} followed by a suffix",
+                    systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
         }
 
@@ -232,6 +232,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

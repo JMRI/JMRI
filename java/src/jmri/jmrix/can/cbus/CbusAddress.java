@@ -274,21 +274,21 @@ public class CbusAddress {
                 int lasta =  StringUtil.getLastIntFromString(v[0].toString());
                 int lastb =  StringUtil.getLastIntFromString(v[1].toString());
                 StringBuilder sb = new StringBuilder();
-                sb.append(StringUtil.replaceLast(v[0].toString(), String.valueOf(lasta), String.valueOf(lasta+1)));
+                sb.append(StringUtil.replaceLast(v[0].toString(), String.valueOf(lasta), String.valueOf(lasta + 1)));
                 sb.append(";");
-                sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb+1)));
+                sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb + 1)));
                 newString = sb.toString();
                 break;
             default:
                 // get last part and increment
                 int last =  StringUtil.getLastIntFromString(v[0].toString());
-                newString = StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
+                newString = StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last + 1));
                 break;
         }
         try {
             return validateSysName(newString);
         } catch (IllegalArgumentException e) {
-            log.error(e);
+            log.error(e.toString());
         }
         return null;
     }
@@ -315,6 +315,7 @@ public class CbusAddress {
         switch (addressArray.length) {
             case 1:
                 address = checkPartOfName(addressArray[0],"+");
+                // when addressArray[0] is unsigned int (eg. "4"), address is updated to "+4"
                 break;
             case 2:                    
                 address = checkPartOfName(addressArray[0],"+") + ";" + checkPartOfName(addressArray[1],"-");
@@ -332,7 +333,7 @@ public class CbusAddress {
                 }
                 int unsigned = 0;
                 try {
-                    unsigned = Integer.parseInt(address); // accept unsigned integer, will add "+" upon creationz
+                    unsigned = Integer.parseInt(address); // accept unsigned integer
                     if (unsigned > 100000) {
                         break;
                     }

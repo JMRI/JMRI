@@ -937,7 +937,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (uName.isEmpty()) {
             uName = null;   // a blank field means no user name
         }
-        // Does System Name have a valid format
+        // Does System Name have a valid format?
         if (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName) != Manager.NameValidity.VALID) {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: {}", suName);
@@ -1126,7 +1126,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
                 try {
                     g = InstanceManager.getDefault(LightManager.class).newLight(sxName, uxName);
-                    // TODO: setup this light the same as the first light?
+                    // TODO: set up this light the same as the first light?
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName);

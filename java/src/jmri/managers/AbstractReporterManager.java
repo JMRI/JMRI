@@ -178,6 +178,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Reporters added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

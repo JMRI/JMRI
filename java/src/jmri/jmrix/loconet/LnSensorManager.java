@@ -237,6 +237,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next 10 addresses are also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new LocoNet Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

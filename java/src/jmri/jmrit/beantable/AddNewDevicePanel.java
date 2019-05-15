@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI devices (used to add IdTag).
+ * JPanel to create a new JMRI device (used to add IdTag).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010

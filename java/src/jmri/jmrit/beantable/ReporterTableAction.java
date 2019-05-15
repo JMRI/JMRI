@@ -390,6 +390,11 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         addButton.removePropertyChangeListener(colorChangeListener);
     }
 
+    /**
+     * Respond to Create new item button pressed on Add Reporter pane.
+     *
+     * @param e the click event
+     */
     void createPressed(ActionEvent e) {
 
         int numberOfReporters = 1;
@@ -493,8 +498,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
     /**
      * Activate Add a rangeCheckBox option if manager accepts adding more than 1
- Reporter and set a manager specific tooltip on the AddNewHardwareDevice
- pane.
+     * Reporter and set a manager specific tooltip on the AddNewHardwareDevice pane.
      */
     private void canAddRange(ActionEvent e) {
         rangeCheckBox.setEnabled(false);

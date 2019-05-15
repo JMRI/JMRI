@@ -91,7 +91,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // prefix with "+" as service to user
+        // prefix unsigned int with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
         return getSystemPrefix() + typeLetter() + newAddress;
     }
@@ -108,24 +108,27 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        Turnout s = getBySystemName(prefix + typeLetter() + testAddr);
-        if (s == null) {
+        testAddr = CbusAddress.validateSysName(testAddr); // normalize Merg address
+        Turnout t = getBySystemName(prefix + typeLetter() + testAddr);
+        if (t != null) {
+            // build local addresses
+            for (int x = 1; x < 10; x++) {
+                testAddr = CbusAddress.getIncrement(testAddr); // getIncrement will perform a max check on the numbers
+                t = getBySystemName(prefix + typeLetter() + testAddr);
+                if (t == null) {
+                    // If the hardware address + x does not already exist,
+                    // then this can be considered the next valid address.
+                    return testAddr;
+                }
+            }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new {} Turnouts added", curAddress, memo.getUserName());
+            return null;
+        } else {
+            // If the initially requested hardware address does not already exist,
+            // then this can be considered the next valid address.
             return testAddr;
         }
-        // build local addresses
-        String newaddr = CbusAddress.getIncrement(testAddr);
-        if (newaddr == null) {
-            return null;
-        }
-        // If the new hardware address does not already exist then this can
-        // be considered the next valid address.
-        Turnout snew = getBySystemName(prefix + typeLetter() + newaddr);
-        if (snew == null) {
-            return newaddr;
-        }
-        return null;
     }
     
     /** 

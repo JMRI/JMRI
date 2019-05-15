@@ -97,14 +97,13 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("newLight:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+        log.debug("newLight: {};{}",
+                ((systemName == null) ? "null" : systemName),
+                ((userName == null) ? "null" : userName));
         // is system name in correct format?
         if (validSystemNameFormat(systemName) != NameValidity.VALID) {
-            log.error("Invalid system name for newLight: {}", systemName);
+            log.debug("Invalid system name for newLight: {} needed {}{} followed by a suffix",
+                    systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("\"" + systemName + "\" is invalid");
         }
 
@@ -164,7 +163,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                 = getNamedBeanSet().iterator();
         while (iter.hasNext()) {
             Light l = iter.next();
-            log.debug("Activated Light system name is " + l.getSystemName());
+            log.debug("Activated Light system name is {}", l.getSystemName());
             l.activateLight();
         }
     }

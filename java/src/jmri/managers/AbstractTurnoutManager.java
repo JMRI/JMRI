@@ -77,12 +77,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         // add normalize? see AbstractSensor
-        log.debug("newTurnout: {};{}",systemName, userName);
+        log.debug("newTurnout: {};{}", systemName, userName);
 
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.error("Invalid system name for turnout: {} needed {}{}",
+            log.error("Invalid system name for turnout: {} needed {}{} followed by a suffix",
                     systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
@@ -283,6 +283,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Turnouts added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

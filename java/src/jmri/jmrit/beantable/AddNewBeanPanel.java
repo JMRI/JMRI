@@ -16,7 +16,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI devices (used to add Memory, Block).
+ * JPanel to create a new JMRI device (used to add Memory, Block).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
