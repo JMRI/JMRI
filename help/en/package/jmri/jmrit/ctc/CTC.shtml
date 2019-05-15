@@ -943,17 +943,30 @@ do, then define the missing object(s) in JMRI.
     <h3>VirtualSignals.xml</h3>
     Deprecated and obsolete.  You may freely delete it.
     <p>
-    === Describe the CTC integration of sensors and a populated PE panel.  Warn
-    about the "GUI Generated before" feature and its side effects.  Namely, a different panel
-    object. ===
-    GUi file (don't load more than once), sensors(no danger here, can merge at will). 
-    
-    Get your O.S. section list DONE to the BEST of your knowledge, then load GUIObjects.xml panel
-    in, and review the results.  If you are not happy, then DELETE the panel, save the panel
-    file, and re-iterate the process (i.e. CTCEditor, write files, etc.).
+    <h2>CTC integration of sensors and a populated Panel Editor panel</h2>
+    There are two basic types of sensors needed by the CTC system: sensors that are backed by real objects
+    on the layout and are <strong>not</strong> created by this system, and "soft" sensors that are created
+    as needed by this program for objects on the CTC Panel Editor panel (indicators, levers, toggles, push
+    buttons, etc.).  These "soft" sensors definitions are created in the InternalSensors.xml file (mentioned
+    above), which you can load via "Open Panel".  You may load this file multiple times, there is no danger
+    doing this.
+    <h2>CTC integration of panel objects created in the GUIObjects.xml file</h2>
+    Each time a new CTC column is defined, and the "Write .xml files for JMRI GUI support" button is pressed,
+    <strong>only</strong> the NEW column(s) <strong>since</strong> the button was last pressed are written
+    to the file.
+    <p>
+    If you select an existing O.S. section and press "Change Switch and Signal Etc. #'s:", the next screen
+    contains a checkbox "GUI Generated before".  As each entry is written to the GUIObjects.xml file, this
+    checkbox is automatically checked.  If you want, you may clear the checkbox and the next time GUIObjects.xml
+    is generated, those O.S. section(s) will appear again in it, and the checkbox will be re-checked again.
     </p>
-
-
+    <p>
+    Do not load the GUIObjects.xml file more than once, otherwise you will have many duplicate items on the screen.
+    <h2>Proper development cycle</h2>
+    Using the CTCEditor, first define all of your O.S. sections to the <strong>best</strong> of your knowledge,
+    then create and then load the GUIObjects.xml panel in, and review the results.  If you are not happy, then
+    <strong>delete</strong> the panel, save the panel file, and re-iterate the process
+    (i.e. CTCEditor, write files, etc.).
 
     <a name="ctcMain" id="ctcMain"></a>
     <h2>CTCMain</h2>
