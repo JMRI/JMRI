@@ -1,5 +1,6 @@
 package jmri.server.json;
 
+import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamedBeanHttpService<T>> extends JsonSocketService<H> {
 
-    protected final HashMap<String, NamedBeanListener> beanListeners = new HashMap<>();
+    protected final HashMap<T, NamedBeanListener> beanListeners = new HashMap<>();
     protected final ManagerListener managerListener = new ManagerListener();
     private final static Logger log = LoggerFactory.getLogger(JsonNamedBeanSocketService.class);
 
@@ -46,9 +47,10 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             throws IOException, JmriException, JsonException {
         setLocale(locale);
         String name = data.path(NAME).asText();
+        T bean = null;
         // protect against a request made with a user name instead of a system name
         if (!method.equals(PUT)) {
-            T bean = service.getManager().getBeanBySystemName(name);
+            bean = service.getManager().getBeanBySystemName(name);
             if (bean == null) {
                 bean = service.getManager().getBeanByUserName(name);
                 if (bean != null) {
@@ -66,14 +68,16 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
                 connection.sendMessage(service.doPost(type, name, data, locale, id), id);
                 break;
             case PUT:
-                connection.sendMessage(service.doPut(type, name, data, locale, id), id);
+                JsonNode message = service.doPut(type, name, data, locale, id);
+                connection.sendMessage(message, id);
+                bean = service.getManager().getBeanBySystemName(message.path(DATA).path(NAME).asText());
                 break;
             case GET:
             default:
                 connection.sendMessage(service.doGet(type, name, data, locale, id), id);
         }
-        if (!beanListeners.containsKey(name)) {
-            addListenerToBean(name);
+        if (!beanListeners.containsKey(bean)) {
+            addListenerToBean(bean);
         }
     }
 
@@ -93,21 +97,21 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     }
 
     protected void addListenerToBean(String name) {
-        addListenerToBean(service.getManager().getBeanBySystemName(name), name);
+        addListenerToBean(service.getManager().getBeanBySystemName(name));
     }
 
-    protected void addListenerToBean(T bean, String name) {
+    protected void addListenerToBean(T bean) {
         if (bean != null) {
             NamedBeanListener listener = new NamedBeanListener(bean);
             bean.addPropertyChangeListener(listener);
-            this.beanListeners.put(name, listener);
+            this.beanListeners.put(bean, listener);
         }
     }
 
     protected void removeListenersFromRemovedBeans() {
-        for (String name : new HashSet<>(beanListeners.keySet())) {
-            if (service.getManager().getBeanBySystemName(name) == null) {
-                beanListeners.remove(name);
+        for (T bean : new HashSet<>(beanListeners.keySet())) {
+            if (service.getManager().getBeanBySystemName(bean.getSystemName()) == null) {
+                beanListeners.remove(bean);
             }
         }
     }
@@ -129,7 +133,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
                     JsonException ex) {
                 // if we get an error, unregister as listener
                 this.bean.removePropertyChangeListener(this);
-                beanListeners.remove(this.bean.getSystemName());
+                beanListeners.remove(this.bean);
             }
         }
     }
