@@ -61,6 +61,10 @@
 
       <h3>CTCEditor</h3>
       <p>
+      To start the CTCEditor, on the main PanelPro screen select Tools/CTC,
+      then press "Open CTC Configuration Editor".
+      </p>
+      <p>
       The CTCEditor is used to define the CTC components and the rules that will
       be used by the run time component.  The resulting data is stored in an XML
       file:  <strong>CTCSystem.xml</strong>.  This file is located at the
@@ -942,7 +946,6 @@ do, then define the missing object(s) in JMRI.
     screen) "Panels / Open Panels..." and specifying this location and filename to load.
     <h3>VirtualSignals.xml</h3>
     Deprecated and obsolete.  You may freely delete it.
-    <p>
     <h2>CTC integration of sensors and a populated Panel Editor panel</h2>
     There are two basic types of sensors needed by the CTC system: sensors that are backed by real objects
     on the layout and are <strong>not</strong> created by this system, and "soft" sensors that are created
@@ -970,35 +973,261 @@ do, then define the missing object(s) in JMRI.
 
     <a name="ctcMain" id="ctcMain"></a>
     <h2>CTCMain</h2>
-    <p>
-    === Needs to cover starting CTCMain from either the Tools menu or using
-    a startup action, which can be either real time or delayed by adding a
-    button to the PP main panel. ===
-    (See my 3 captured images in xfer!)
-    REMEMBER: Before you start CTC runtime, you NEED to load the panel.
-    IDEALLY: Before you start CTC Editor, you ALSO load the panel to get
+    <strong>Remember:</strong> Before you start CTC runtime, you <strong>need</strong> to load the panel.
+    <strong>Ideally:</strong> Before you start CTCEditor, you also should load the panel to get
     reference checking of your JMRI objects (turnouts, sensors, etc.).
-    Also, explain how to put up the "two buttons" on the main JMRI screen
-    for convienence during development.
+    <h3>Starting it up</h3>
+    After defining the CTC system using the CTCEditor, you'll need to start it up.
+    On the main PanelPro screen, under Tools/CTC, you will see the selection
+    "Run CTC Logic".  This will start it up right now (on demand real time).
+    <p>
+    For ease of access during development: if you want to define button(s) on the main PanelPro screen to do this (or
+    to also invoke the CTCEditor via another button), do the following: From
+    the main PanelPro screen: "Edit/Preferences...", then press "Start Up",
+    at the bottom you will see an "Add", press it and select "Add button
+    to main window...", scroll to "Start CTC Runtime" and select it.  For CTCEditor,
+    do the same but instead scroll to "Open CTC Editor" and select it.
     </p>
     <p>
-    === Include the three global icons:  Debug, Reload and Fleeting. Mention
-    using the system console to look for errors, especially during CTCMain
-    startup.===
-    Explain purpose of buttons, and whether or not they want them at all?
-    Reload and debug are a convience and can be removed once development is complete.
-    Fleeting is a concept within "normal" CTC, and may or not be useful.  Why?
-    Most MODEL (not prototype) dispatchers don't use it even if available.
+    To start it up as part of the startup of JMRI: Edit/Preferences...",
+    press Start Up, press Add, select "Perform Action", and select
+    "Start CTC Runtime".
     </p>
+    <h2>Global sensors and the icons associated with them</h2>
+    Debug (default: IS:DEBUGCTC), Reload (default: IS:RELOADCTC) and Fleeting (default: IS:FLEETING).
+    <p>
+    Debug and Reload can be accessed via CTCEditor Configure/Debugging.  Fleeting
+    can be accessed via CTCEditor Configure/Fleeting.
+    </p>
+    <p>
+    These are convenience functions, and can be removed at any time.
+    </p>
+    <h3>Debug</h3>
+    When this toggle switch is turned on (not off), it will dump out all of the
+    presently locked routes in the system, and for each route will list the
+    resource(s) still allocated to the route onto the JMRI System console screen.
+    <p>
+    While this toggle is on, each time a code button is pressed and a signal direction
+    lever for that code button selects a direction of travel, the program will
+    list out the single rule that was satisfied (if any).  If none are listed,
+    then none were satisfied.  Note: Even if a rule is valid, the ABS system
+    may not clear up a signal in the direction indicated, and the CTC system
+    will re-lock that O.S. section.
+    </p>
+    <h3>Reload</h3>
+    When this button is pressed, the CTC system will reload the last saved
+    CTCEditor session.  Remember: When you make changes to the CTC system
+    via the CTCEditor, save the results before pressing this button.
+    <p>
+    After this button is pressed, the CTC system will be <strong>completely</strong> 
+    re-initialized to it's starting position(s).  Also, remember to look at
+    the JMRI System console for any new errors.
+    </p>
+    <p>
+    You <strong>should</strong> remove this button after all debugging is completed,
+    so that your dispatcher doesn't accidentally push it during a session.
+    </p>
+    <h3>Fleeting</h3>
+    Fleeting is a concept within "normal" CTC, and may not be useful.  Most
+    model (not prototype) dispatchers don't use it even if available, due to the
+    "speed" of the layout's status changing.
+    <h2></h2>
 
     <a name="ctcDefinitions" id="ctcDefinitions"></a>
     <h2>Definitions</h2>
     <dl>
-      <dt>Interlocking</dt>
-      <dd>ddd</dd>
-
       <dt>Running time</dt>
-      <dd>ddd</dd>
+      <dd>
+          When a dispatcher had previously cleared a route thru an interlocking or O.S. Section, and it is still clear,
+          and then the dispatcher now attempts to change their mind and bring signals to stop, the system will run time
+          and lock the route and signals during that time.  At the end of that time, the CTC system will release and
+          then allow a new route and signal state to be established.
+          <p></p><p>
+          Why? Locomotive engineers always expect a yellow
+          signal of some form before an absolute stop red signal at a Home signal of an O.S. section.  This gives the
+          engineer time to begin slowing the train upon approaching the yellow approach signal expecting a possible
+          red signal at the next home signal.
+          </p>
+          <p></p><p>
+          If the dispatcher was allowed to immediately change a Green home
+          signal to a Red signal it is possible that a locomotive engineer just passed that prior approach signal
+          and saw Green, and now expects at worst to see Yellow at the home signal.  In this situation, the train
+          may be traveling too fast to stop in time at the Home signal's red signal, and actually overshoot it
+          and enter the interlocking.  By locking down the plant during this time, the route and signals already
+          established may allow this overshooting train to enter the interlocking in a safe manner.  The amount
+          time associated with this "running time" depends on many factors in real life: Train speed on the
+          segment of track, sighting distances, etc.
+          </p>
+          <p></p><p>
+          On a model railroad, due to such short distances and the fact that our models can "stop on a dime"
+          relative to a real train, and the fact that we are running typically with fast clocks, you may want
+          to limit this time to say (my default) 5 seconds.  Otherwise a busy layout may come to a screeching
+          halt.  Some layouts use 30 seconds or 1 minute to "force" Dispatchers to think ahead and prevent
+          this situation.  Your choice.
+          </p>
+          <p></p>
+      </dd>
+      <dt>Signal locking (route locking)</dt>
+      <dd>
+          When a route is cleared thru an interlocking, no changes to the route or other signals may occur
+          so long as a signal protecting the interlocking allows movement thru that interlocking.
+          <p></p>
+      </dd>
+      <dt>Interlocking</dt>
+      <dd>
+          An arrangement of signal apparatus that prevents conflicting movements through an arrangement
+          of tracks such as junctions or crossings.  The signaling appliances and tracks are sometimes
+          collectively referred to as an interlocking plant. An interlocking is designed so that it is
+          impossible to display a signal to proceed unless the route to be used is proven safe.  An
+          interlocking may consist of one or more O.S. Section(s).
+          <p></p>
+      </dd>
+      <dt>Interlocking plant</dt>
+      <dd>
+          See Interlocking.  The terms are used interchangeably in this document.
+          <p></p>
+      </dd>
+      <dt>Indication locking</dt>
+      <dd>
+          Same as Signal locking
+          <p></p>
+      </dd>
+      <dt>Code button</dt>
+      <dd>
+          Button to press to being the process of throwing switches / setting signals by sending
+          control codes to the field to effect those changes requested by the operator.  This
+          button may have no or partial effect if there are rule conflict(s) i.e. unsafe condition(s)
+          associated with the requested change(s).
+          <p></p>
+      </dd>
+      <dt>Call on</dt>
+      <dd>
+          Used to allow "back to train" movements.  Normally, CTC systems prevent signals being
+          cleared into an occupied section of track.  Example: When an engineer is attempting a
+          run around move, and as the last part of the run around attempts to rejoin their train.  The
+          CTC system and trackside signals (the vital signal logic) will actively prevent that.  Pressing
+          (or toggling) the Call on feature while pressing the code button bypasses the safety checks of
+          the Vital signal logic and CTC systems, and allows that signal to go to its most restrictive
+          aspect.  Now the engineer will get a non-red indication which allows them to rejoin their train.
+          <p></p>
+      </dd>
+      <dt>Vital signal logic</dt>
+      <dd>
+          The trackside "relay" logic (on the prototype) that actively prevents unsafe situations in
+          the field.  CTC can only force signals to Red (their most restrictive aspect).  Other than
+          that, CTC has absolutely no effect on this Vital Signal Logic (except in a Call on situation).  CTC
+          systems "sit on top of" the Vital signal logic trackside.  CTC cannot clear a signal.  CTC can
+          only allow the vital signal logic to allow a signal to go "non-Red".  Most of the time this
+          vital signal logic is implemented by ABS or APB systems.  In JMRI, this is known as "SSL" - Simple
+          Signal Logic, and is ABS.
+          <p></p>
+      </dd>
+      <dt>Fleeting</dt>
+      <dd>
+          When enabled, will allow interlocking signals to automatically maintain an already
+          established direction of traffic.  Normally, all signals in an interlocking drop to
+          red and remain there after train movement thru the interlocking.
+          <p></p>
+      </dd>
+      <dt>Signal Direction Indicators</dt>
+      <dd>
+          Summarizes the state of all the signals in the field associated with this O.S.
+          Section.  If the center red indicator is lit (indicating "signals normal"), all
+          entrances into the O.S. Section are displaying stop.  A green in either direction
+          indicates signal(s) in the indicated direction are not displaying stop, and
+          traffic may proceed in that direction.  If all 3 indicators are unlit
+          ("out of correspondence"), the signals are either running time, or the CTC
+          system has sent commands to the signals in the field and is waiting for
+          replies from those signals as to their status.
+          <p></p>
+      </dd>
+      <dt>Signals Normal</dt>
+      <dd>
+          The "normal" state of an O.S. section is "all stop", i.e. all home signals
+          protecting entry in the O.S. Section are at Red.
+          <p></p>
+      </dd>
+      <dt>Signal Direction Lever</dt>
+      <dd>
+          Lever used to establish a direction of traffic thru an O.S. Section.  Moving
+          this lever has no effect on the signal in the field <strong>until</strong> the
+          code button is pressed, and all rules are valid for allowing the change to occur.
+          <p></p><p>
+          It is <strong>not valid</strong> to attempt to change from one direction to the other.  The
+          CTC system instead will interpret this as a request for "Signals normal" (all
+          stop) first, and then (after probably running time) with <strong>another</strong> code button
+          press to change direction to the requested direction.
+          </p>
+          <p></p>
+      </dd>
+      <dt>Switch Direction Indicators</dt>
+      <dd>
+          Shows the current state of the turnout in the field.  Green indicator is lit
+          is for the normal route, and the yellow indicator is lit for the non-normal
+          route.  If both indicators are unlit ("out of correspondence"), the CTC
+          system has sent a command to the turnout to change and is awaiting the
+          acknowledgement of movement to the new position.
+          <p></p>
+      </dd>
+      <dt>Switch Direction Lever</dt>
+      <dd>
+          Lever used to change the position of the indicated turnout.  Moving this
+          lever has no effect on the switch in the field <strong>until</strong> the code button is
+          pressed and all rules for allowing change in the switch orientation are valid.
+          <p></p>
+      </dd>
+      <dt>Traffic Locking</dt>
+      <dd>
+          The set of rules that prevent adjacent O.S. Sections (reached by a possible
+          series of track switches, i.e. routes) from directing traffic in opposite
+          directions into the common track between them.
+          <p></p>
+      </dd>
+      <dt>Turnout Locking</dt>
+      <dd>
+          When signals are cleared over a specific turnout, or the O.S. section controlling
+          that turnout is occupied, that turnout is considered locked and its orientation cannot be changed.
+          <p></p>
+      </dd>
+      <dt>Coding District</dt>
+      <dd>
+          A grouping of signals, track switches etc. that have a single CTC "wire" to
+          them.  Unused in my system, so I will not elaborate on this further.
+          <p></p>
+      </dd>
+      <dt>O.S. Section</dt>
+      <dd>
+          A single control point on the CTC panel.  Contains at minimum a code button, and other assorted features.
+          <p></p>
+      </dd>
+      <dt>Home Signal(s)</dt>
+      <dd>
+          All Signals that protect entry into an O.S. section from all possible directions and routes.
+          <p></p>
+      </dd>
+      <dt>Coding and response time</dt>
+      <dd>
+          A real CTC machine has a single wire set out to the field installation.  This time
+          delay simulates the delay between when a code button is pressed, and a response
+          from the field occurs.  During this time, all of the indicators for the changed
+          items (switch, signal) are "Out of correspondence".
+          <p></p>
+      </dd>
+      <dt>Out of correspondence</dt>
+      <dd>
+          The state of display indicators (either switch or signal) whereby a command by
+          the CTC operator has been initiated by pressing the code button, and the CTC system
+          is awaiting response(s) from the field.  Also may be present for a long time
+          if "running time" as relates to a signal change.  This is indicated on the panel
+          by all indicators for the changed system (switch, signal) being out until the
+          response is received.
+          <p></p>
+      </dd>
+      <dt>Time locking</dt>
+      <dd>
+          See "Running time" definition.
+          <p></p>
+      </dd>
     </dl>
 
       <!--#include virtual="/Footer" -->
