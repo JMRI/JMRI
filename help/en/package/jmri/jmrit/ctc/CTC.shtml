@@ -1031,7 +1031,6 @@ do, then define the missing object(s) in JMRI.
     Fleeting is a concept within "normal" CTC, and may not be useful.  Most
     model (not prototype) dispatchers don't use it even if available, due to the
     "speed" of the layout's status changing.
-    <h2></h2>
 
     <a name="ctcDefinitions" id="ctcDefinitions"></a>
     <h2>Definitions</h2>
@@ -1042,13 +1041,13 @@ do, then define the missing object(s) in JMRI.
           and then the dispatcher now attempts to change their mind and bring signals to stop, the system will run time
           and lock the route and signals during that time.  At the end of that time, the CTC system will release and
           then allow a new route and signal state to be established.
-          <p></p><p>
+          <p>&nbsp;</p><p>
           Why? Locomotive engineers always expect a yellow
           signal of some form before an absolute stop red signal at a Home signal of an O.S. section.  This gives the
           engineer time to begin slowing the train upon approaching the yellow approach signal expecting a possible
           red signal at the next home signal.
           </p>
-          <p></p><p>
+          <p>&nbsp;</p><p>
           If the dispatcher was allowed to immediately change a Green home
           signal to a Red signal it is possible that a locomotive engineer just passed that prior approach signal
           and saw Green, and now expects at worst to see Yellow at the home signal.  In this situation, the train
@@ -1058,20 +1057,20 @@ do, then define the missing object(s) in JMRI.
           time associated with this "running time" depends on many factors in real life: Train speed on the
           segment of track, sighting distances, etc.
           </p>
-          <p></p><p>
+          <p>&nbsp;</p><p>
           On a model railroad, due to such short distances and the fact that our models can "stop on a dime"
           relative to a real train, and the fact that we are running typically with fast clocks, you may want
           to limit this time to say (my default) 5 seconds.  Otherwise a busy layout may come to a screeching
           halt.  Some layouts use 30 seconds or 1 minute to "force" Dispatchers to think ahead and prevent
           this situation.  Your choice.
           </p>
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Signal locking (route locking)</dt>
       <dd>
           When a route is cleared thru an interlocking, no changes to the route or other signals may occur
           so long as a signal protecting the interlocking allows movement thru that interlocking.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Interlocking</dt>
       <dd>
@@ -1080,17 +1079,17 @@ do, then define the missing object(s) in JMRI.
           collectively referred to as an interlocking plant. An interlocking is designed so that it is
           impossible to display a signal to proceed unless the route to be used is proven safe.  An
           interlocking may consist of one or more O.S. Section(s).
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Interlocking plant</dt>
       <dd>
           See Interlocking.  The terms are used interchangeably in this document.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Indication locking</dt>
       <dd>
           Same as Signal locking
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Code button</dt>
       <dd>
@@ -1098,7 +1097,7 @@ do, then define the missing object(s) in JMRI.
           control codes to the field to effect those changes requested by the operator.  This
           button may have no or partial effect if there are rule conflict(s) i.e. unsafe condition(s)
           associated with the requested change(s).
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Call on</dt>
       <dd>
@@ -1109,7 +1108,7 @@ do, then define the missing object(s) in JMRI.
           (or toggling) the Call on feature while pressing the code button bypasses the safety checks of
           the Vital signal logic and CTC systems, and allows that signal to go to its most restrictive
           aspect.  Now the engineer will get a non-red indication which allows them to rejoin their train.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Vital signal logic</dt>
       <dd>
@@ -1120,14 +1119,14 @@ do, then define the missing object(s) in JMRI.
           only allow the vital signal logic to allow a signal to go "non-Red".  Most of the time this
           vital signal logic is implemented by ABS or APB systems.  In JMRI, this is known as "SSL" - Simple
           Signal Logic, and is ABS.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Fleeting</dt>
       <dd>
           When enabled, will allow interlocking signals to automatically maintain an already
           established direction of traffic.  Normally, all signals in an interlocking drop to
           red and remain there after train movement thru the interlocking.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Signal Direction Indicators</dt>
       <dd>
@@ -1139,26 +1138,26 @@ do, then define the missing object(s) in JMRI.
           ("out of correspondence"), the signals are either running time, or the CTC
           system has sent commands to the signals in the field and is waiting for
           replies from those signals as to their status.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Signals Normal</dt>
       <dd>
           The "normal" state of an O.S. section is "all stop", i.e. all home signals
           protecting entry in the O.S. Section are at Red.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Signal Direction Lever</dt>
       <dd>
           Lever used to establish a direction of traffic thru an O.S. Section.  Moving
           this lever has no effect on the signal in the field <strong>until</strong> the
           code button is pressed, and all rules are valid for allowing the change to occur.
-          <p></p><p>
+          <p>&nbsp;</p><p>
           It is <strong>not valid</strong> to attempt to change from one direction to the other.  The
           CTC system instead will interpret this as a request for "Signals normal" (all
           stop) first, and then (after probably running time) with <strong>another</strong> code button
           press to change direction to the requested direction.
           </p>
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Switch Direction Indicators</dt>
       <dd>
@@ -1167,43 +1166,43 @@ do, then define the missing object(s) in JMRI.
           route.  If both indicators are unlit ("out of correspondence"), the CTC
           system has sent a command to the turnout to change and is awaiting the
           acknowledgement of movement to the new position.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Switch Direction Lever</dt>
       <dd>
           Lever used to change the position of the indicated turnout.  Moving this
           lever has no effect on the switch in the field <strong>until</strong> the code button is
           pressed and all rules for allowing change in the switch orientation are valid.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Traffic Locking</dt>
       <dd>
           The set of rules that prevent adjacent O.S. Sections (reached by a possible
           series of track switches, i.e. routes) from directing traffic in opposite
           directions into the common track between them.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Turnout Locking</dt>
       <dd>
           When signals are cleared over a specific turnout, or the O.S. section controlling
           that turnout is occupied, that turnout is considered locked and its orientation cannot be changed.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Coding District</dt>
       <dd>
           A grouping of signals, track switches etc. that have a single CTC "wire" to
           them.  Unused in my system, so I will not elaborate on this further.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>O.S. Section</dt>
       <dd>
           A single control point on the CTC panel.  Contains at minimum a code button, and other assorted features.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Home Signal(s)</dt>
       <dd>
           All Signals that protect entry into an O.S. section from all possible directions and routes.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Coding and response time</dt>
       <dd>
@@ -1211,7 +1210,7 @@ do, then define the missing object(s) in JMRI.
           delay simulates the delay between when a code button is pressed, and a response
           from the field occurs.  During this time, all of the indicators for the changed
           items (switch, signal) are "Out of correspondence".
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Out of correspondence</dt>
       <dd>
@@ -1221,12 +1220,12 @@ do, then define the missing object(s) in JMRI.
           if "running time" as relates to a signal change.  This is indicated on the panel
           by all indicators for the changed system (switch, signal) being out until the
           response is received.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
       <dt>Time locking</dt>
       <dd>
           See "Running time" definition.
-          <p></p>
+          <p>&nbsp;</p>
       </dd>
     </dl>
 
