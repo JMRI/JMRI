@@ -3118,8 +3118,6 @@
 
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveThrottlePreferences" url="html/tools/throttle/ThrottleChapter4.shtml#SaveThrottlePreferences"/>
 
-<mapID target="package.jmri.jmrit.display.CircuitBuilder_circuitediting" url="package/jmri/jmrit/display/CircuitBuilder.shtml#circuitediting"/>
-
 <mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
 
 <mapID target="html.hardware.maple.index_limitations" url="html/hardware/maple/index.shtml#limitations"/>
