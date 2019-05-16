@@ -98,7 +98,7 @@ function displayCellValue(type, colName, value) {
 	//convert known states to human-readable strings, if not known show as is
 	if ((colName == "state") || (colName == "occupiedSense")) {
 		switch (type) {
-			case "turnouts":
+			case "turnout":
 				switch (value) {
 					case 0: return "unknown";
 					case 2: return "closed";
@@ -106,9 +106,9 @@ function displayCellValue(type, colName, value) {
 					case 8: return "inconsistent";
 					default: return value;
 				}
-			case "routes":
-			case "sensors":
-			case "layoutBlocks":
+			case "route":
+			case "sensor":
+			case "layoutBlock":
 				switch (value) {
 					case 0: return "unknown";
 					case 2: return "active";
@@ -116,14 +116,14 @@ function displayCellValue(type, colName, value) {
 					case 8: return "inconsistent";
 					default: return value;
 				}
-			case "blocks":
+			case "block":
 				switch (value) {
 					case jmri.UNKNOWN: return "unknown";
 					case 2: return "occupied";
 					case 4: return "unoccupied";
 					default: return value;
 				}
-			case "lights":
+			case "light":
 				switch (value) {
 					case 0: return "unknown";
 					case 2: return "on";
