@@ -751,29 +751,29 @@ do, then define the missing object(s) in JMRI.
         <strong>Specifying a rule:</strong>
         </p>
         <p>
-        Under "--- ROUTE ---", you specify the O.S. section(s) traversed, and the switch alignment associated with the
-        O.S. section for that route.  Order of specified O.S. section(s) is irrelevant.  Include <strong>both</strong> switch alignments for this
-        O.S. section here, along with (at least) all alignments of the "terminating" O.S. section too.  Therefore, for a passing
-        siding (for instance), there should be 4 rules in the direction of the other O.S. section associated with the passing siding.
+        Under "--- ROUTE ---", you specify the O.S. section(s) traversed, and the switch alignment associated with each
+        O.S. section for that route.  Order of specified O.S. section(s) is irrelevant.  For a simple route,
+        such as a passing siding, there will only be one switch.  A complex interlocking will normally have several
+        switches.  An O.S. section that contains a turnout will have at least two routes, a closed route and a thrown route.
         </p>
         <p>
-        Under "Occupancy sensors ... allowed." you specify other sensor(s) that also will be locked long that route.  Mostly
-        none are needed, except in complex interlocking situations which is supported by this feature.
+        Under "Occupancy sensors ... allowed." you specify the sensor(s) that will be locked for that route.  For simple routes, the O.S.
+        section occupancy sensor and the occupancy sensor for the destination block will be specified.
         </p>
         <p>
-        Under "--- Optional sensors... valid ---", specify any sensors that must be VALID to allow this rule to be valid.
+        Under "--- Optional sensors... valid ---", specify any sensors that must be ACTIVE to allow this rule to be valid.
         You may (for instance) use JMRI Logix to create such a sensor for specific unusual situations.
         <strong>Important:</strong> These optional sensors are <strong>not</strong> allocated as part of the rule.
         They are just checked at the moment the dispatcher codes the O.S. section.
         </p>
-        
         <p>
-        <strong>Final result: </strong> When the dispatcher codes this O.S. section, and a rule is selected as valid, the whole "path"
-        of that rule specified is fully <strong>allocated</strong>.  The path consists of all of the O.S. occupancy sensors
-        specified in the individual O.S. sections, along with all of the occupancy sensors specified on this screen at the bottom for
-        this rule.  <strong>Only</strong> as each of these occupancy sensors <strong>transition</strong> from occupied
-        to unoccupied is that corresponding occupancy sensor removed from the allocated list.  This prevents other conflicting paths
-        in any rule anywhere from allocating any of these occupancy sensor(s).
+        <strong>Final result: </strong> When the dispatcher codes this O.S. section,
+        the <strong>Left</strong> or <strong>Right</strong> rule set is selected based on
+        the position of the signal lever.  A specific rule is then selected based on the
+        turnout positions.  If all of the occupancy sensors defined in the rule are inactive
+        <strong>and</strong> not already allocated to another route,
+        along with optional sensors if defined, then the occupancy sensors are allocated.  The allocation for each occupancy sensor is removed
+        after it becomes occupied and then unoccupied.
         </p>
         <p>
         In complex interlocking situations: as a train traverses the rule's occupancy sensor(s) and transited occupancy sensor(s) are released,
