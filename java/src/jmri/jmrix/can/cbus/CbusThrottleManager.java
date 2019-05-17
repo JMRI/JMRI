@@ -34,7 +34,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     private int _intAddr;
     private DccLocoAddress _dccAddr;
     private CanSystemConnectionMemo _memo;
-    private boolean _hideStealNotifications;
 
     private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
 
@@ -380,23 +379,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         while (itr.hasNext()) {
                             CbusThrottle throttle = softThrottles.get(itr.next());
                             if (throttle.getHandle() == handle) {
-                                log.info("JMRI Throttle Session {} Cancelled for loco {}",
-                                    handle, throttle.getLocoAddress() );
+                                
+                                log.warn("CBUS Throttle Steal / Cancel for loco {} Session {} ",
+                                    throttle.getLocoAddress(), handle );
                                 throttle.throttleDispose();
                                 forceDisposeThrottle( throttle.getLocoAddress() ); 
-                                
-                                if (!java.awt.GraphicsEnvironment.isHeadless() && !_hideStealNotifications ){
-                                        jmri.util.ThreadingUtil.runOnGUI(() -> {
-                                        javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
-                                            Bundle.getMessage("PopupSessionConfirm"));
-                                        Object[] params = {Bundle.getMessage("ERR_SESSION_CANCELLED",handle), checkbox};
-                                        JOptionPane.showMessageDialog(
-                                            null, params,
-                                            Bundle.getMessage("SessionCancelled", throttle.getLocoAddress()),
-                                            JOptionPane.WARNING_MESSAGE);
-                                        _hideStealNotifications = checkbox.isSelected();
-                                    });
-                                }
                                 break;
                             }
                         }
