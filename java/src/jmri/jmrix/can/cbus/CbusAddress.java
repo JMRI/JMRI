@@ -321,6 +321,7 @@ public class CbusAddress {
                 address = checkPartOfName(addressArray[0],"+") + ";" + checkPartOfName(addressArray[1],"-");
                 break;
             default:
+                log.debug("validateSysName switch 1 found > 2 events");
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
         
@@ -344,6 +345,7 @@ public class CbusAddress {
             case 2:
                 break;
             default:
+                log.debug("validateSysName switch 2 found > 2 events");
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
         return address;
@@ -353,8 +355,8 @@ public class CbusAddress {
      * Check part of a CbusAddress. Will add "+" or "-" if not present in part.
      *
      * @param testpart string part of Cbus address to check, will accept unsigned single integer
-     * @param plusOrMinus charachter to add in front if not yet present
-     * @return part of Cbus address including + or - (on or off) sign
+     * @param plusOrMinus character to add in front if not yet present
+     * @return part of Cbus address including + or - (on off) sign
      */
     private static String checkPartOfName(String testpart, String plusOrMinus){
         int unsigned = 0;

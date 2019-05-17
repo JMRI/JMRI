@@ -527,7 +527,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                             // The first case is that we receive a message for
                             // this turnout and this turnout provides feedback.
                             // In this case, we want to check to see if the
-                            // turnout has completed it's movement before doing
+                            // turnout has completed its movement before doing
                             // anything else.
                             if (!motionComplete(reply, i)) {
                                 log.debug("Turnout {} EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion not complete", mNumber);
@@ -682,7 +682,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /**
      * Determine if this feedback message says the turnout has completed
-     * it's motion or not.  Returns true for mostion complete, false
+     * its motion or not.  Returns true for mostion complete, false
      * otherwise.
      *
      * @param l  feedback broadcast message

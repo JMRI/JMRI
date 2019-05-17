@@ -14,7 +14,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  * <p>
  * A route can be enabled or not. By default it is enabled, and will act when
- * it's specified input conditions become satisfied. When not enabled (the
+ * its specified input conditions become satisfied. When not enabled (the
  * enabled parameter is false), the route will not act even if the specified
  * input conditions are satisfied. When the route transitions from disabled to
  * enabled, it may act, depending on the conditions: Edge triggered conditions
@@ -394,7 +394,7 @@ public interface Route extends NamedBean {
      * Deactivate the Route.
      * <p>
      * This disconnects the Route from all other objects and stops it from
-     * processing. A Route must be deactivated before it's input and output
+     * processing. A Route must be deactivated before its input and output
      * definitions are changed.
      */
     public void deActivateRoute();

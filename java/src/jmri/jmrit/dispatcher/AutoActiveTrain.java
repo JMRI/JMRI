@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * follows signals, provided the next Section is allocated to it, and its
  * ActiveTrain's status is RUNNING.
  * <p>
- * This class is linked via it's parent ActiveTrain object.
+ * This class is linked via its parent ActiveTrain object.
  * <p>
  * This file is part of JMRI.
  * <p>

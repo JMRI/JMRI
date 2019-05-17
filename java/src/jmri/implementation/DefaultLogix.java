@@ -785,7 +785,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Deactivate the Logix. This method disconnects the Logix from all input
      * objects and stops it from being triggered to calculate.
      * <p>
-     * A Logix must be deactivated before it's Conditionals are changed.
+     * A Logix must be deactivated before its Conditionals are changed.
      */
     @Override
     public void deActivateLogix() {

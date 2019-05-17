@@ -21,7 +21,7 @@ package jmri;
 public interface ConsistListListener extends java.util.EventListener {
 
     /**
-     * Receive notification that the consist manager has changed it's consist
+     * Receive notification that the consist manager has changed its consist
      * list.
      */
     public void notifyConsistListChanged();

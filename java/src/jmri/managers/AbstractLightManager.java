@@ -102,7 +102,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                 ((userName == null) ? "null" : userName));
         // is system name in correct format?
         if (validSystemNameFormat(systemName) != NameValidity.VALID) {
-            log.debug("Invalid system name for newLight: {} needed {}{} followed by a suffix",
+            log.error("Invalid system name for newLight: {} needed {}{} followed by a suffix",
                     systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("\"" + systemName + "\" is invalid");
         }

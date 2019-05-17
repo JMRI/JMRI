@@ -474,7 +474,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
+     * Service method to setup a column so that it will hold a button for its
      * values
      *
      * @param table  {@link JTable} to use

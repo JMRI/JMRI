@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * interface when the Intensity is variable.
  * <p>
  * Now it includes the transition code, but it only does the steps on the fast
- * minute clock. Later it may do it's own timing but this was simple to piggy
+ * minute clock. Later it may do its own timing but this was simple to piggy
  * back on the fast minute listener.
  * <p>
  * The structure is in part dictated by the limitations of the X10 protocol and
@@ -355,7 +355,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     }
 
     /**
-     * Can the Light change it's intensity setting slowly?
+     * Can the Light change its intensity setting slowly?
      * <p>
      * If true, this Light supports a non-zero value of the transitionTime
      * property, which controls how long the Light will take to change from one

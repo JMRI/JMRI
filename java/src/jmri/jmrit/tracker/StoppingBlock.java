@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Stop a train in a block if required.
  * <p>
- * Watches a Block object that is passing around a Throttle object as it's
+ * Watches a Block object that is passing around a Throttle object as its
  * value. When the Block goes OCCUPIED, check whether a signal is telling the
  * train to stop; if so, force the Throttle to zero speed.
  * <p>
  * This contains multiple SignalHead objects, each associated with a Path that
  * contains one or more BeanSettings (e.g. Turnout positions) and directions.
- * When needed, this consults the paths to see which one is active (has it's
+ * When needed, this consults the paths to see which one is active (has its
  * Turnouts set) and corresponds to the current direction of the block. There
  * should be exactly one of these, which will then identify which signal to
  * monitor.

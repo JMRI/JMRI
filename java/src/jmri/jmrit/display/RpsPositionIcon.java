@@ -360,11 +360,11 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     }
 
     /**
-     * Matches the icon position on the screen to it's position in the RPS
+     * Matches the icon position on the screen to its position in the RPS
      * coordinate system.
      * <p>
      * Typically invoked from the popup menu, you move the icon (e.g. via drag
-     * and drop) to the correct position on the screen for it's current measured
+     * and drop) to the correct position on the screen for its current measured
      * position, and then invoke this method.
      * <p>
      * Requires the origin to have been set, and some other measurement to have

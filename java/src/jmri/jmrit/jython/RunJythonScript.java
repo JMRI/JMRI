@@ -100,7 +100,7 @@ public class RunJythonScript extends JmriAbstractAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            // Run the script from it's filename
+            // Run the script from its filename
             return file;
         }
         return null;

@@ -3053,7 +3053,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         //try to get the preference
                         ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
                         if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
+                            ddldoPref = ddldoProp.toString(); //get its (string value
                         } else { //otherwise...
                             //save it in the users preferences
                             prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);

@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * <DT>Lit<DD>Whether the mast's lamps are lit or left dark.
  * This differs from the DARK color defined for the appearance parameter, in
  * that it's independent of that. Lit is intended to allow you to extinquish a
- * signal mast for approach lighting, while still allowing it's color to be set
+ * signal mast for approach lighting, while still allowing its color to be set
  * to a definite value for e.g. display on a panel or evaluation in higher level
  * logic.
  * <DT>Held<DD>Whether the mast's lamps should be forced to a specific aspect,

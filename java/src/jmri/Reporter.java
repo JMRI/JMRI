@@ -20,7 +20,7 @@ package jmri;
  * which can be displayed, printed, equated, etc.
  * <p>
  * A Reporter might also not be able to report all the time. The previous value
- * remains available, but it's also possible to distinquish this case by using
+ * remains available, but it's also possible to distinguish this case by using
  * the getCurrentReport member function.
  * <br>
  * <hr>

@@ -1351,7 +1351,7 @@ public class LayoutTurntable extends LayoutTrack {
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
             // for all the rays with matching blocks in this turnout
-            //  #1) if it's track segment's block is in this block
+            //  #1) if its track segment's block is in this block
             //  #2)     add turntable to TrackNameSet (if not already there)
             //  #3)     if the track segment isn't in the TrackNameSet
             //  #4)         flood it

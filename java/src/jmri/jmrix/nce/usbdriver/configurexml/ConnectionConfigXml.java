@@ -5,7 +5,7 @@ import jmri.jmrix.nce.usbdriver.ConnectionConfig;
 import jmri.jmrix.nce.usbdriver.UsbDriverAdapter;
 
 /**
- * Handle XML persistance of layout connections by persistening the
+ * Handle XML persistance of layout connections by persisting the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.

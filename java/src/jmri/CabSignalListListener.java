@@ -21,7 +21,7 @@ package jmri;
 public interface CabSignalListListener extends java.util.EventListener {
 
     /**
-     * Receive notification that the cab signal manager has changed it's signal 
+     * Receive notification that the cab signal manager has changed its signal
      * list.
      */
     public void notifyCabSignalListChanged();

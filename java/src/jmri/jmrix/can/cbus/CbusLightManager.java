@@ -44,17 +44,19 @@ public class CbusLightManager extends AbstractLightManager {
     @Nonnull
     public Light provideLight(@Nonnull String key) {
         String name = normalizeSystemName(key);
-        Light t = getLight(name);
-        if (t == null) {
+        //log.warn("passed name {}", name);
+        Light result = getLight(name);
+        if (result == null) {
             if (name.startsWith(prefix + typeLetter())) {
-                return newLight(name, null);
+                return newLight(name, null); // checks for validity
             } else if (name.length() > 0) {
-                return newLight(makeSystemName(name), null);
+                return newLight(makeSystemName(name), null); // checks for validity
             } else {
+                //log.error("invalid key \"" + name + "\" is invalid");
                 throw new IllegalArgumentException("\"" + name + "\" is invalid");
             }
         }
-        return t;
+        return result;
     }
 
     /**
@@ -137,7 +139,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc} 
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) { // TEST EBR ALWAYS VALID
         String addr;
         try {
             addr = systemName.substring(prefix.length() + 1); // get only the address part

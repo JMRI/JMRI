@@ -16,7 +16,7 @@ import jmri.util.ThreadingUtil;
  * method.
  * <p>
  * Siglets may not run in their own thread; they should not use wait() in any of
- * it's various forms.
+ * its various forms.
  * <p>
  * Siglet was separated from AbstractAutomaton in JMRI 4.9.2
  * <p>
