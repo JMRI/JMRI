@@ -62,8 +62,11 @@ public class LinkedWarrantTest {
 
         Warrant warrant = _warrantMgr.getWarrant("LoopDeLoop");
         Assert.assertNotNull("warrant", warrant);
-       
-        tableFrame.runTrain(warrant, Warrant.MODE_RUN); // start run
+      
+        // WarrantTable.runTrain() returns a string that is null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
@@ -138,7 +141,10 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("Loop&Fred");
         Assert.assertNotNull("warrant", warrant);
        
-        tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        // WarrantTable.runTrain() returns a string that is null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
 
         Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -226,8 +232,10 @@ public class LinkedWarrantTest {
         String[] routeBack = {"OB11", "OB9", "OB7", "OB6", "OB5", "OB3", "OB1"};
         String backEndSensorName = _OBlockMgr.getOBlock("OB1").getSensor().getDisplayName();
 
-
-        tableFrame.runTrain(outWarrant, Warrant.MODE_RUN);  // start run
+        // WarrantTable.runTrain() returns a string that is null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(outWarrant, Warrant.MODE_RUN)); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  outWarrant.getRunningMessage();
@@ -261,7 +269,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
 
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause for to start next leg
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause for to start next leg
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");
@@ -311,7 +319,10 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("Tinker");
         Assert.assertNotNull("warrant", warrant);
        
-        tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        // WarrantTable.runTrain() returns a string that is null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
 
         Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
