@@ -50,11 +50,21 @@ public abstract class AbstractThrottleManagerTestBase {
         public void notifyFailedThrottleRequest(LocoAddress address, String reason){
             throttleNotFoundResult = true;
         }
+        
+        /**
+         * {@inheritDoc}
+         * @Deprecated since 4.15.7; use #notifyDecisionRequired
+         */
+        @Deprecated
+        @Override
+        public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+            notifyDecisionRequired(address,DecisionType.STEAL);
+        }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-        if ( question == DecisionType.STEAL ){
-            throttleStealResult = true;
+            if ( question == DecisionType.STEAL ){
+                throttleStealResult = true;
             }
         }
     }
@@ -148,6 +158,7 @@ public abstract class AbstractThrottleManagerTestBase {
     public void testGetThrottleInfo() {
         DccLocoAddress addr = new DccLocoAddress(42,false);
 		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
+        Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(42,false));
 		Assert.assertNull("NULL",tm.getThrottleInfo(addr,Throttle.F28));
         ThrottleListener throtListen = new ThrottleListen();
         tm.requestThrottle(addr,throtListen, true);
@@ -188,8 +199,8 @@ public abstract class AbstractThrottleManagerTestBase {
         Assert.assertNotNull("F28",tm.getThrottleInfo(addr,Throttle.F28));
         Assert.assertNull("NULL",tm.getThrottleInfo(addr,"NOT A VARIABLE"));
         Assert.assertEquals("throttle use 1 addr", 1, tm.getThrottleUsageCount(addr));
-        Assert.assertEquals("throttle use 1 new DccAddr", 1, tm.getThrottleUsageCount(new DccLocoAddress(42,false)));
-		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(new DccLocoAddress(77,true)));
+        Assert.assertEquals("throttle use 1 int b", 1, tm.getThrottleUsageCount(42,false));
+		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(77,true));
 
     }
     // private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManagerTestBase.class);

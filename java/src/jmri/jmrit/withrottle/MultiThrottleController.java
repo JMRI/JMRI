@@ -252,7 +252,16 @@ public class MultiThrottleController extends ThrottleController {
             listener.sendPacketToDevice(message.toString());
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        notifyDecisionRequired(address, DecisionType.STEAL);
+    }
 
     /**
      * A decision is required for Throttle creation to continue.

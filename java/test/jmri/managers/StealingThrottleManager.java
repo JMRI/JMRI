@@ -35,6 +35,19 @@ public class StealingThrottleManager extends DebugThrottleManager {
         // Immediately trigger the steal callback.
         notifyDecisionRequest(a,ThrottleListener.DecisionType.STEAL);
     }
+    
+    /**
+     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     */
+    @Override
+    public void stealThrottleRequest(LocoAddress a, ThrottleListener l,boolean steal){
+        if(steal) {
+            responseThrottleDecision(a, l, ThrottleListener.DecisionType.STEAL);
+        } else {
+            cancelThrottleRequest(a,l);
+            failedThrottleRequest(a,"user declined to steal");
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -44,6 +57,10 @@ public class StealingThrottleManager extends DebugThrottleManager {
         if ( decision == ThrottleListener.DecisionType.STEAL ) {
             DccLocoAddress a = (DccLocoAddress) address;
             notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
+        }
+        else {
+            cancelThrottleRequest(address,l);
+            failedThrottleRequest(address,"user declined to steal");
         }
     }
 

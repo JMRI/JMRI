@@ -13,7 +13,7 @@
 #
 # Customize at will.
 
-listenToDCCThrottle = jmri.DccLocoAddress(3,False) # use True for a Long DCC Address.
+listenToDCCThrottle = 3
 
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
@@ -38,7 +38,7 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         self.add(self.label)
         # create a dcc throttle and request one from the ThrottleManager
         self.masterThrottle = None
-        if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self, false) == False):
+        if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
             print "Couldn't request a throttle for "+locoAddress        
         # Advanced functions
         self.advFunctions = AdvFunctions()
@@ -134,8 +134,9 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         except BaseException:
             pass
         if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
-            print "Couldn't request a throttle for "+locoAddress     
-           
+            print "Couldn't request a throttle for "+locoAddress
+    def notifyStealThrottleRequired(LocoAddress):
+        pass # Throttle steal decisions are delegated to the Hardware
     def notifyDecisionRequired(LocoAddress, decision):
         pass # Throttle steal / share decisions are delegated to the ThrottleManager
     

@@ -194,12 +194,50 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Does this DCC system allow a Throttle (e.g. an address) to be used by
      * only one user at a time?
-     * <p>
-     * Note that no core JMRI code currently checks this hardware setting
      * @return true or false
      */
     protected boolean singleUse() {
         return true;
+    }
+    
+    /**
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(BasicRosterEntry, ThrottleListener, boolean) instead
+     */
+    @Deprecated
+    @Override
+    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l) {
+        return requestThrottle(re, l, false);
+    }
+    
+    /**
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(BasicRosterEntry, ThrottleListener, boolean) instead
+     */
+    @Deprecated
+    @Override
+    public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l) {
+        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+        return requestThrottle(la, l, false);
+    }
+    
+    /**
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(LocoAddress, ThrottleListener, boolean) instead
+     */
+    @Deprecated
+    @Override
+    public boolean requestThrottle(LocoAddress la, ThrottleListener l) {
+        return requestThrottle(la, l, false);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l, boolean canHandleDecisions) {
+        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+        return requestThrottle(la, null, l, canHandleDecisions);
     }
     
     /**
@@ -216,6 +254,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     @Override
     public boolean requestThrottle(LocoAddress la, ThrottleListener l, boolean canHandleDecisions) {
         return requestThrottle(la, null, l, canHandleDecisions);
+    }
+    
+    /**
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(LocoAddress, ThrottleListener, boolean) instead
+     */
+    @Deprecated
+    @Override
+    public boolean requestThrottle(LocoAddress la, BasicRosterEntry re, ThrottleListener l) {
+        return requestThrottle(re, l, false);
     }
 
     /**
@@ -272,6 +320,32 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return throttleFree;
     }
 
+
+    /**
+     * Request Throttle with no Steal / Share Callbacks
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean requestThrottle(int address, ThrottleListener l) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        return requestThrottle(new DccLocoAddress(address,isLong), null, l, false);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean requestThrottle(int address, ThrottleListener l, boolean canHandleDecisions) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        return requestThrottle(new DccLocoAddress(address,isLong), null, l, canHandleDecisions);
+    }
+
     /**
      * Abstract member to actually do the work of configuring a new throttle,
      * usually via interaction with the DCC system
@@ -293,6 +367,23 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * {@inheritDoc}
      */
     @Override
+    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
+        DccLocoAddress la = new DccLocoAddress(address, isLong);
+        cancelThrottleRequest(la, l);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void cancelThrottleRequest(BasicRosterEntry re, ThrottleListener l) {
+            cancelThrottleRequest(re.getDccLocoAddress(), l);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void cancelThrottleRequest(LocoAddress la, ThrottleListener l) {
         // failedThrottleRequest(la, "Throttle request was cancelled."); // needs I18N
         if (throttleListeners != null) {
@@ -307,14 +398,119 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             }
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void cancelThrottleRequest(int address, ThrottleListener l) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        cancelThrottleRequest(address, isLong, l);
+    }
+    
+    /**
+     * Steal a requested throttle.
+     *
+     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     *
+     */
+    @Deprecated
+    @Override
+    public void stealThrottleRequest(BasicRosterEntry re, ThrottleListener l,boolean steal){
+        if (steal) {
+            responseThrottleDecision(re.getDccLocoAddress(), l, ThrottleListener.DecisionType.STEAL);
+        }
+        else {
+            cancelThrottleRequest(re.getDccLocoAddress(), l);
+        }
+    }
+    
+    /**
+     * Steal a requested throttle.
+     *
+     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     *
+     */
+    @Deprecated
+    @Override
+    public void stealThrottleRequest(int address, ThrottleListener l,boolean steal){
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        DccLocoAddress la = new DccLocoAddress(address, isLong);
+        if (steal) {
+            responseThrottleDecision(la, l, ThrottleListener.DecisionType.STEAL);
+        }
+        else {
+            cancelThrottleRequest(la, l);
+        }
+    }
 
     /**
      * Steal a requested throttle.
      *
-     * @param address desired LocoAddress
-     * @param l the ThottleListener sending back the decision
-     * @param decision either STEAL or SHARE
+     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     *
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
+     */
+    @Deprecated
+    @Override
+    public void stealThrottleRequest(int address, boolean isLong, ThrottleListener l,boolean steal){
+        DccLocoAddress la = new DccLocoAddress(address, isLong);
+        if (steal) {
+            responseThrottleDecision(la, l, ThrottleListener.DecisionType.STEAL);
+        }
+        else {
+            cancelThrottleRequest(la, l);
+        }
+    }
+    
+    /**
+     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     */
+    @Deprecated
+    @Override
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
+        if (steal) {
+            responseThrottleDecision(address, l, ThrottleListener.DecisionType.STEAL);
+        }
+        else {
+            cancelThrottleRequest(address, l);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void responseThrottleDecision(int address, ThrottleListener l, ThrottleListener.DecisionType decision) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        responseThrottleDecision(address, isLong, l, decision);
+
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void responseThrottleDecision(int address, boolean isLong, ThrottleListener l, ThrottleListener.DecisionType decision) {
+        DccLocoAddress la = new DccLocoAddress(address, isLong);
+        responseThrottleDecision(la,l,decision);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision) {
@@ -480,7 +676,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
     
     /**
-     * Hardware that has a stealing implementation will need to override
+     * Hardware that uses the Silent Steal preference
+     * will need to override
      * {@inheritDoc}
      */
     @Override
@@ -489,7 +686,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
     
     /**
-     * Hardware that has a sharing implementation will need to override
+     * Hardware that uses the Silent Share preference
+     * will need to override
      * {@inheritDoc}
      */
     @Override
@@ -547,6 +745,35 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             }
         }
         return false;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean addressStillRequired(int address, boolean isLongAddress) {
+        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+        return addressStillRequired(la);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean addressStillRequired(int address) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        return addressStillRequired(address, isLong);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean addressStillRequired(BasicRosterEntry re) {
+        return addressStillRequired(re.getDccLocoAddress());
     }
 
     /**
@@ -625,6 +852,35 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return addressThrottles.get(la).getUseCount();
         }
         return 0;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getThrottleUsageCount(int address, boolean isLongAddress) {
+        DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+        return getThrottleUsageCount(la);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getThrottleUsageCount(int address) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        return getThrottleUsageCount(address, isLong);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getThrottleUsageCount(BasicRosterEntry re) {
+        return getThrottleUsageCount(re.getDccLocoAddress());
     }
 
     /**

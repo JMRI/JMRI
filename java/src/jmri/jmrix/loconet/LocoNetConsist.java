@@ -505,6 +505,16 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         removeFromConsistList((DccLocoAddress) address);
         consistRequestState = IDLESTATE;
     }
+    
+    /**
+     * {@inheritDoc}
+     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
 
     /**
      * No steal or share decisions made locally

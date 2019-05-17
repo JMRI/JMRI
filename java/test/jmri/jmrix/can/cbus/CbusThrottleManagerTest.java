@@ -380,22 +380,33 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     private class CbusThrottleListen implements ThrottleListener {
 
-       @Override
-       public void notifyThrottleFound(DccThrottle t){
+        @Override
+        public void notifyThrottleFound(DccThrottle t){
              // throttleFoundResult = true;
-       }
+        }
 
-       @Override
-       public void notifyFailedThrottleRequest(LocoAddress address, String reason){
+        @Override
+        public void notifyFailedThrottleRequest(LocoAddress address, String reason){
              // throttleNotFoundResult = true;
-       }
+        }
+       
+        /**
+         * {@inheritDoc}
+         * @Deprecated since 4.15.7; use #notifyDecisionRequired
+         */
+        @Override
+        @Deprecated
+        public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+            notifyDecisionRequired(address,DecisionType.STEAL);
+        }
 
-       @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-                // this is a WIP impelementation.
-                if ( question == DecisionType.STEAL ){
-                }
+
+        @Override
+        public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            // this is a WIP impelementation.
+            if ( question == DecisionType.STEAL ){
             }
+        }
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);

@@ -523,7 +523,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      *
      * @param locoAddr address of DCC loco or consist
      */
-    private void notifyStealRequest(int locoAddr) {
+    public void notifyStealRequest(int locoAddr) {
         // need to find the "throttleListener" associated with the request for locoAddr, and
         // send that "throttleListener" a notification that the command station needs
         // permission to "steal" the loco address.

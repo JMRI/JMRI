@@ -338,6 +338,16 @@ public class AutoActiveTrain implements ThrottleListener {
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
     }
+    
+    /**
+     * {@inheritDoc}
+     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
 
     /**
      * No steal or share decisions made locally

@@ -28,7 +28,7 @@ public interface ThrottleListener extends EventListener {
      * A decision type requested from ThrottleManager to ThrottleListener,
      * or decision made from ThrottleListener to ThrottleManager
      *
-     * @since 4.15.6
+     * @since 4.15.7
      */
     enum DecisionType {
         /**
@@ -44,6 +44,15 @@ public interface ThrottleListener extends EventListener {
          */
         STEAL_OR_SHARE
     }
+    
+    /**
+     * Get notification that a throttle request requires is in use by another
+     * device, and a "steal" may be required.
+     * @deprecated since 4.15.7; use
+     * #notifyDecisionRequired(LocoAddress, DecisionType) instead
+     */
+    @Deprecated
+    public void notifyStealThrottleRequired(LocoAddress address);
 
     /**
      * Get notification that a throttle has been found as you requested.

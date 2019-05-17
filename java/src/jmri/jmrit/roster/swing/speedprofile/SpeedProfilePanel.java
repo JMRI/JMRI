@@ -644,6 +644,21 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
     
     /**
+     * Profiling on a stolen or shared throttle is invalid
+     * <p>
+     * {@inheritDoc}
+     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoStealing"));
+        InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+        setButtonStates(true);
+        throttleState = -1;
+    }
+    
+    /**
     * Profiling on a stolen or shared throttle is invalid
     * <p>
     * {@inheritDoc}

@@ -719,6 +719,15 @@ abstract public class AbstractThrottle implements DccThrottle {
                 @Override
                 public void notifyThrottleFound(DccThrottle t) {
                 }
+                
+                /**
+                 * {@inheritDoc}
+                 * @Deprecated since 4.15.7; use #notifyDecisionRequired
+                 */
+                @Override
+                @Deprecated
+                public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+                }
     
                 @Override
                 public void notifyDecisionRequired(LocoAddress address, DecisionType question){

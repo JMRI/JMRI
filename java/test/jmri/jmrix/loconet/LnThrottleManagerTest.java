@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
-import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
@@ -56,14 +55,23 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
-        tm.requestThrottle( new DccLocoAddress(1203,true), throtListen,true);
+        tm.requestThrottle(1203, throtListen,true);
 
         Assert.assertEquals("address request message",
                 "BF 09 33 00",
@@ -118,18 +126,27 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
-        tm.requestThrottle(new DccLocoAddress(1204,true), throtListen, true);
+        tm.requestThrottle(1204, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 09 34 00",
@@ -205,18 +222,27 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
-        tm.requestThrottle(new DccLocoAddress(1203,true), throtListen, true);
+        tm.requestThrottle(1203, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 09 33 00",
@@ -288,14 +314,23 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for " + address + " because " + reason);
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -304,7 +339,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(129,true), throtListen, true);
+        tm.requestThrottle(129, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 01 01 00",
@@ -335,13 +370,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for " + address + " because " + reason);
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -350,7 +394,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(5,false), throtListen, true);
+        tm.requestThrottle(5, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 00 05 00",
@@ -380,13 +424,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for " + address + " because " + reason);
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -395,7 +448,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(85,false), throtListen, true);
+        tm.requestThrottle(85, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 00 55 00",
@@ -426,13 +479,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 if ( question == DecisionType.STEAL ){
                     // this is an always-stealing impelementation.
                     flagGotStealRequest = address.getNumber();
@@ -441,7 +503,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(256,true), throtListen, true);
+        tm.requestThrottle(256, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 00 00",
@@ -474,13 +536,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 if ( question == DecisionType.STEAL ){
                     // this is an always-stealing impelementation.
                     flagGotStealRequest = address.getNumber();
@@ -489,7 +560,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(257,true), throtListen, true);
+        tm.requestThrottle(257, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 01 00",
@@ -519,13 +590,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -533,7 +613,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 }
             }
         };
-        tm.requestThrottle(new DccLocoAddress(259,true), throtListen, true);
+        tm.requestThrottle(259, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 03 00",
@@ -573,13 +653,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -596,13 +685,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest2 = address.getNumber();
@@ -611,7 +709,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen, true);
+        tm.requestThrottle(260, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 04 00",
@@ -627,7 +725,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen2, true);  // An additional user of the same throttle
+        tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -643,7 +741,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("No loconet traffic at throttle2 release", netTxMsgCount +1, lnis.outbound.size()-1);
 
         Assert.assertTrue("Address still required",
-                InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
+                InstanceManager.throttleManagerInstance().addressStillRequired(260));
 
         tm.releaseThrottle(throttle, throtListen);
         Assert.assertFalse("Address no longer required",
@@ -679,13 +777,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -702,13 +809,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 if ( question == DecisionType.STEAL ){
                     // this is an always-stealing impelementation.
                     flagGotStealRequest2 = address.getNumber();
@@ -718,7 +834,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen, true);
+        tm.requestThrottle(260, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 04 00",
@@ -734,7 +850,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(260,true), throtListen2, true);  // An additional user of the same throttle
+        tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -805,13 +921,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest = address.getNumber();
@@ -828,13 +953,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest2 = address.getNumber();
@@ -851,13 +985,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle3 request failed for " + address + " because " + reason);
                 failedThrottleRequest3 = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest3 = address.getNumber();
@@ -866,7 +1009,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(261,true), throtListen, true);
+        tm.requestThrottle(261, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 05 00",
@@ -882,7 +1025,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(261,true), throtListen2, true);  // An additional user of the same throttle
+        tm.requestThrottle(261, throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -900,7 +1043,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertTrue("Address still required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(261, true)));
 
-        tm.requestThrottle(new DccLocoAddress(261,true), throtListen3, true);  // An additional user of the same throttle
+        tm.requestThrottle(261, throtListen3, true);  // An additional user of the same throttle
 
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle3");
 
@@ -964,13 +1107,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 if ( question == DecisionType.STEAL ){
                     // this is an always-stealing impelementation.
                     flagGotStealRequest = address.getNumber();
@@ -988,13 +1140,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for " + address + " because " + reason);
                 failedThrottleRequest2 = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest2 = address.getNumber();
@@ -1003,7 +1164,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
         };
 
-        tm.requestThrottle(new DccLocoAddress(262,true), throtListen, true);
+        tm.requestThrottle(262, throtListen, true);
 
         Assert.assertEquals("address request message",
                 "BF 02 06 00",
@@ -1023,7 +1184,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
-        tm.requestThrottle(new DccLocoAddress(262,true), throtListen2, true);  // An additional user of the same throttle
+        tm.requestThrottle(262, throtListen2, true);  // An additional user of the same throttle
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
 
         Assert.assertNotNull("Throttle should be created and non-null", throttle2);
@@ -1088,13 +1249,22 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
 
             @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle4 request failed for " + address + " because " + reason);
                 failedThrottleRequest4 = true;
             }
+            
+            /**
+             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             */
+            @Deprecated
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                notifyDecisionRequired(address, DecisionType.STEAL);
+            }
 
             @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+            public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
                     flagGotStealRequest4 = address.getNumber();
@@ -1139,10 +1309,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         Assert.assertTrue("Address still is not still required",
-                InstanceManager.throttleManagerInstance().addressStillRequired(re.getDccLocoAddress() ));
+                InstanceManager.throttleManagerInstance().addressStillRequired(re));
 
         Assert.assertEquals("Throttle usage 1",1,
-                InstanceManager.throttleManagerInstance().getThrottleUsageCount(re.getDccLocoAddress() ));
+                InstanceManager.throttleManagerInstance().getThrottleUsageCount(re));
 
         
         throttle4.release(throtListen);

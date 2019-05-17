@@ -212,6 +212,16 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.debug("Notify TCListener address declined in-use: {}", l.getClass());
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        notifyDecisionRequired(address, DecisionType.STEAL);
+    }
 
     /**
      * calls notifyFailedThrottleRequest, Steal Required
