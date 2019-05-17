@@ -41,14 +41,8 @@ function rebuildTable(data) {
 		//build all data rows for table body, store item name in rows for later lookup
 		var tbody = '';
 		data.forEach(function (item) {
-			if (typeof item.data["id"] !== "undefined") {
-				key = item.data.id; //use id for row key if exists, else use name
-				jmri.socket.send(item.type, { id: key });
-			} else {
-				key = item.data.name;
-				jmri.socket.send(item.type, { name: key });
-			}
-			tbody += '<tr data-name="' + key + '">';
+			jmri.socket.send(item.type, { name: item.data.name });
+			tbody += '<tr data-name="' + item.data.name + '">';
 			$.each(item.data, function (index, value) {
 				tbody += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
 			});
@@ -98,7 +92,7 @@ function displayCellValue(type, colName, value) {
 	//convert known states to human-readable strings, if not known show as is
 	if ((colName == "state") || (colName == "occupiedSense")) {
 		switch (type) {
-			case "turnouts":
+			case "turnout":
 				switch (value) {
 					case 0: return "unknown";
 					case 2: return "closed";
@@ -106,9 +100,9 @@ function displayCellValue(type, colName, value) {
 					case 8: return "inconsistent";
 					default: return value;
 				}
-			case "routes":
-			case "sensors":
-			case "layoutBlocks":
+			case "route":
+			case "sensor":
+			case "layoutBlock":
 				switch (value) {
 					case 0: return "unknown";
 					case 2: return "active";
@@ -116,14 +110,14 @@ function displayCellValue(type, colName, value) {
 					case 8: return "inconsistent";
 					default: return value;
 				}
-			case "blocks":
+			case "block":
 				switch (value) {
 					case jmri.UNKNOWN: return "unknown";
 					case 2: return "occupied";
 					case 4: return "unoccupied";
 					default: return value;
 				}
-			case "lights":
+			case "light":
 				switch (value) {
 					case 0: return "unknown";
 					case 2: return "on";
@@ -181,12 +175,7 @@ $(document).ready(function () {
 			} else if ((data.type) && (data.type === "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (data.type !== "hello") && (data.type !== "pong")) {
-				if (typeof data.data["id"] !== "undefined") {
-					key = data.data.id; //use id for row key if exists, else use name
-				} else {
-					key = data.data.name;
-				}
-				replaceRow(key, data.data); //if single item, update the row
+				replaceRow(data.data.name, data.data); //if single item, update the row
 			}
 		},
 	});

@@ -517,7 +517,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                         !_rs.getNumber().equals(roadNumberTextField.getText()))) {
             String road = (String) roadComboBox.getSelectedItem();
             String number = roadNumberTextField.getText();
-            manager.changeId((T) _rs, road, number);
             _rs.setRoadName(road);
             _rs.setNumber(number);
         }

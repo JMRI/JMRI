@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-carType-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for operations type \"carType\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of car type"
+        },
+        "cars": {
+            "type": "array",
+            "description": "The cars using this type",
+            "items": {
+                "type": "object"
+            }
+        },
+        "locations": {
+            "type": "array",
+            "description": "The locations using this type",
+            "items": {
+                "type": "object"
+            }
+        },
+        "rename": {
+            "type": "string",
+            "description": "Old name of type if just renamed"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "cars", "locations"]
+}

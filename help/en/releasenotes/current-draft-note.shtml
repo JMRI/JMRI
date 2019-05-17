@@ -1,19 +1,4 @@
 
-<p>Note:  Include the following content in the "New Warnings for this release:" section:</p>
-
-    <li><span class="since">Since <a href="jmri4.15.6.shtml">JMRI 4.15.6</a></span>
-        Remembering the location and size of layout panels created and maintained
-        using Layout Editor, Panel Editor, Control Panel Editor, and Switchboard
-        Editor is no longer dependent on saving the panel.  The location and size
-        values are retained using the same processes used by other JMRI windows.  This
-        makes the window management behavior consistent.  To continue using the
-        old behavior, go to <strong>Preferences >> Display</strong> and enable
-        <strong>Use old location and size logic for editor panels</strong>.
-    </li>
-
-
-
-
     <h3>Hardware Support</h3>
         <ul>
           <li></li>
@@ -23,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -78,10 +63,6 @@
             <ul>
                 <li>Increased support for stealing / sharing command station sessions, see 
                     <a href="http://jmri.org/help/en/html/hardware/can/cbus/index.shtml#dcc">CBUS Hardware Support</a></li>
-                <li><a href="http://jmri.org/help/en/html/hardware/can/cbus/Names.shtml#reporters"
-                >CBUS Reporters</a> are no longer automatically created when hearing a DDES or ACDAT CBUS OPC.
-                    <br>New CBUS Reporters can now be created in a sequential range.
-                </li>
             </ul>
 
         <h4>MQTT</h4>
@@ -142,11 +123,6 @@
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>XpressNet</h4>
-            <ul>
-                <li>Added support for Idle mode to the power manager.  This indicates a global emergency stop (track power on, all locomotives stopped)</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -283,7 +259,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -321,7 +297,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Ronald Kuhn did a lot of work on the Zimo definitions, including adding V37 definitions</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -344,15 +320,13 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>Petr Šídlo improved the Czech translation</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-          <li>The <strong>Save Location and Size</strong> Options menu item is
-          not displayed when automatic location and size behavior is active.
-          See the above warning.</li>
+	        <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -405,29 +379,12 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>Custom scripts that release throttles may need to be modified.</strong><br>
-            <ul>
-                <li>AutoDispatcher2</li>
-                <li>RobotThrottle2</li>
-                <li>RobotThrottle3</li>
-                <li>RocoCrane</li>
-                <li>Zimo Programmers</li>
-            </ul>
-            Old syntax: <code>self.throttle.release()</code> <br>
-            New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
-            <br>
-            </li>
-            <li><strong>4 lines in scripts that use the DCCThrottle.py Jynstrument may need to be modified,</strong><br>
-            Old line 41: <code>if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, 
-                self) == False):</code><br>
-            New line 41: <code>if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, 
-                self, false) == False):</code><br>
-            Old line 139 : <code>def notifyStealThrottleRequired(self, locoAddress):</code><br>
-            Old line 140 : <code>jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(locoAddress, 
-                self, True);</code><br>
+            <li><strong>2 lines in scripts that use the 
+            <a href="https://github.com/JMRI/JMRI/blob/master/jython/Jynstruments/ThrottleWindowToolBar/DCCThrottle.jyn/DCCThrottle.py"
+            >DCCThrottle.py</a> Jynstrument may need to be added,</strong><br>
+            Insert after line 138<br>
             New line 139 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
-            New line 140 : <code>pass # Throttle steal / share decisions are delegated to the ThrottleManager</code><br>
-            Remember to use the existing indents! <br>
+            New line 140 : <code>pass #</code><br>
             These changes were made to enhance the JMRI Steal / Share mechanism for hardware types that support this.<br>
             </li>
         </ul>
@@ -451,7 +408,7 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -487,14 +444,20 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Circuit Builder has more error help and ease of use features. The help page is updated.</li>
-            <li>40 scale feet has been added to the ramp down distance.</li> 
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>JSON clients can now add, edit, or remove IdTags, Reporters, Operations Locations, Operations Cars, Operations
+                Engines, and Operations Tracks.</li>
+            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
+                to a message to the original message.</li>
+            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
+                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
+                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version History</a>
+                for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -502,7 +465,7 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -512,6 +475,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add new <code>TestWaitsForever</code> test class to allow end-of-job debug.</li>
+            <li></li>
         </ul>
 
