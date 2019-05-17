@@ -20,14 +20,16 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusLightManager extends AbstractLightManager {
 
+    /**
+     * Ctor using a given system connection memo
+     */
     public CbusLightManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
         prefix = memo.getSystemPrefix();
     }
 
-    CanSystemConnectionMemo memo;
-
-    String prefix = "M";
+    private CanSystemConnectionMemo memo;
+    private String prefix = "M";
 
     @Override
     public String getSystemPrefix() {
@@ -36,7 +38,7 @@ public class CbusLightManager extends AbstractLightManager {
 
     /**
      * {@inheritDoc}
-     * Overriden to normalize System Name
+     * Override to normalize System Name
      */
     @Override
     @Nonnull
@@ -44,7 +46,7 @@ public class CbusLightManager extends AbstractLightManager {
         String name = normalizeSystemName(key);
         Light t = getLight(name);
         if (t == null) {
-            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+            if (name.startsWith(prefix + typeLetter())) {
                 return newLight(name, null);
             } else if (name.length() > 0) {
                 return newLight(makeSystemName(name), null);
@@ -63,7 +65,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     protected Light createNewLight(String systemName, String userName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        String addr = systemName.substring(prefix.length() + 1);
         // first, check validity
         try {
             validateSystemNameFormat(addr);
@@ -71,10 +73,10 @@ public class CbusLightManager extends AbstractLightManager {
             log.error(e.toString());
             throw e;
         }
-        // validate (adds "+" to unsigned int)
+        // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Light l = new CbusLight(getSystemPrefix(), newAddress, memo.getTrafficController());
+        Light l = new CbusLight(prefix, newAddress, memo.getTrafficController());
         l.setUserName(userName);
         return l;
     }
@@ -87,6 +89,50 @@ public class CbusLightManager extends AbstractLightManager {
         return true;
     }
 
+    /* createSystemName() and getNextValidAddress() are not used in code, or any other LightManager
+    * to be removed. Tests for these in jmri.jmrix.can.cbus.CbusLightManagerTest also commented out.
+    *
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
+        // first, check validity
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        // prefix + as service to user
+        String newAddress = CbusAddress.validateSysName(curAddress);
+        return prefix + typeLetter() + newAddress;
+    }
+
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+        String testAddr = curAddress;
+        // make sure starting name is valid
+        try {
+            validateSystemNameFormat(testAddr);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        //If the hardware address passed does not already exist then this can
+        //be considered the next valid address.
+        Light s = getBySystemName(prefix + typeLetter() + testAddr);
+        if (s == null) {
+            return testAddr;
+        }
+        // build local addresses
+        String newaddr = CbusAddress.getIncrement(testAddr);
+        if (newaddr==null) {
+            return null;
+        }
+        //If the new hardware address does not already exist then this can
+        //be considered the next valid address.
+        Light snew = getBySystemName(prefix + typeLetter() + newaddr);
+        if (snew == null) {
+            return newaddr;
+        }
+        return null;
+    }
+    */
+
     /**
      * {@inheritDoc} 
      */
@@ -94,7 +140,7 @@ public class CbusLightManager extends AbstractLightManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            addr = systemName.substring(prefix.length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e){
             return NameValidity.INVALID;
         }
@@ -123,7 +169,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        String addr = systemName.substring(prefix.length() + 1);
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
@@ -146,15 +192,27 @@ public class CbusLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      * 
-     * Forces upper case and trims leading and trailing whitespace.
+     * Forces upper case and trims leading and trailing whitespace, adding +/- if not present.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) {
         String address = inputName.toUpperCase().trim();
-        address = CbusAddress.getIncrement(address.substring(prefix.length() + 1));
-        return address;
+        // check Cbus hardware address parts
+        if ((!address.startsWith(prefix + typeLetter()) || (address.length() < prefix.length() + 2))) {
+            return address;
+        }
+        try {
+            log.debug("Normalize address = {}", address);
+            address = CbusAddress.validateSysName(address.substring(prefix.length() + 1));
+        } catch (IllegalArgumentException e){
+            return address;
+        } catch (StringIndexOutOfBoundsException e){
+            return address;
+        }
+        return prefix + typeLetter() + address;
     }
 
     /**

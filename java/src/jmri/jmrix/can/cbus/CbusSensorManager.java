@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
@@ -18,12 +20,23 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
 
+    /**
+     * Ctor using a given system connection memo
+     */
+    public CbusSensorManager(CanSystemConnectionMemo memo) {
+        this.memo = memo;
+        prefix = memo.getSystemPrefix();
+    }
+
+    private CanSystemConnectionMemo memo;
+    private String prefix = "M";
+
     /** 
      * {@inheritDoc} 
      */
     @Override
     public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+        return prefix;
     }
 
     /** 
@@ -34,13 +47,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         super.dispose();
     }
 
-    //Implemented ready for new system connection memo
-    public CbusSensorManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-    }
-
-    CanSystemConnectionMemo memo;
-
     // CBUS-specific methods
 
     /** 
@@ -48,7 +54,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        String addr = systemName.substring(prefix.length() + 1);
         // first, check validity
         try {
             validateSystemNameFormat(addr);
@@ -56,16 +62,16 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             log.error(e.toString());
             throw e;
         }
-        // validate (adds "+" to unsigned int)
+        // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Sensor s = new CbusSensor(getSystemPrefix(), newAddress, memo.getTrafficController());
+        Sensor s = new CbusSensor(prefix, newAddress, memo.getTrafficController());
         s.setUserName(userName);
         return s;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
@@ -77,10 +83,10 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         }
         // prefix unsigned int with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
-        return getSystemPrefix() + typeLetter() + newAddress;
+        return prefix + typeLetter() + newAddress;
     }
 
-    /** 
+     /**
      * {@inheritDoc} 
      */
     @Override
@@ -130,7 +136,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            addr = systemName.substring(prefix.length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e){
             return NameValidity.INVALID;
         }
@@ -152,6 +158,31 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
         log.debug("validated system name {}", newAddress);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Forces upper case and trims leading and trailing whitespace, adding +/- if not present.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        String address = inputName.toUpperCase().trim();
+        // check Cbus hardware address parts
+        if ((!address.startsWith(prefix + typeLetter()) || (address.length() < prefix.length() + 2))) {
+            return address;
+        }
+        try {
+            address = CbusAddress.validateSysName(address.substring(prefix.length() + 1));
+        } catch (IllegalArgumentException e) {
+            return address;
+        } catch (StringIndexOutOfBoundsException e) {
+            return address;
+        }
+        return prefix + typeLetter() + address;
     }
 
     /**

@@ -294,11 +294,11 @@ public class CbusAddress {
     }
 
     /**
-     * Work out the details for Cbus hardware address validation
+     * Work out the details for Cbus hardware address validation.
      * Logging of handled cases no higher than WARN.
      *
      * @param address the hardware address to check
-     * @throws IllegalArgumentException when delimiter is not found
+     * @throws IllegalArgumentException when delimiter is not found or contains too many parts
      */
     public static String validateSysName(String address) throws IllegalArgumentException  {
         
@@ -315,7 +315,7 @@ public class CbusAddress {
         switch (addressArray.length) {
             case 1:
                 address = checkPartOfName(addressArray[0],"+");
-                // when addressArray[0] is unsigned int (eg. "4"), address is updated to "+4"
+                // adds sign when addressArray[0] is unsigned int (eg. "4" address is updated to "+4")
                 break;
             case 2:                    
                 address = checkPartOfName(addressArray[0],"+") + ";" + checkPartOfName(addressArray[1],"-");
@@ -348,12 +348,19 @@ public class CbusAddress {
         }
         return address;
     }
-    
+
+    /**
+     * Check part of a CbusAddress. Will add "+" or "-" if not present in part.
+     *
+     * @param testpart string part of Cbus address to check, will accept unsigned single integer
+     * @param plusOrMinus charachter to add in front if not yet present
+     * @return part of Cbus address including + or - (on or off) sign
+     */
     private static String checkPartOfName(String testpart, String plusOrMinus){
         int unsigned = 0;
         String part = testpart;
         try {
-            unsigned = Integer.parseInt(part); // accept unsigned single integer, will add "+" upon creation
+            unsigned = Integer.parseInt(part);
             log.debug("part {} is integer {}", part, unsigned);
             if (unsigned == 0){
                 throw new IllegalArgumentException("Event cannot be 0 in address: " + part);

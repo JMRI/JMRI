@@ -32,7 +32,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNotNull("exists",t);
     }
 
-
     public String getSystemName(int i){
         return "MTX0A;+N123E3" + i;
     }
@@ -65,7 +64,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName("MT+123"));
-
     }
 
     @Test
@@ -157,7 +155,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
-        
     }
     
     @Test
@@ -174,7 +171,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         try {
             l.provideTurnout("T+N156E77;+N123E456");
-            Assert.fail("S Should have thrown an exception");
+            Assert.fail("Missing M Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
@@ -200,7 +197,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usabl");
             Assert.assertTrue(true);
         }
-
     }
     
     public void testBadCbusTurnoutAddressesPt5() {
@@ -273,7 +269,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertTrue(x.contains("<html>"));
         
         Assert.assertTrue(l.allowMultipleAdditions("M77"));
-        
     }
 
     @Test
@@ -301,7 +296,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("MT-0",NameValidity.INVALID,l.validSystemNameFormat("MT-0"));
         Assert.assertEquals("MT7;0",NameValidity.INVALID,l.validSystemNameFormat("MT7;0"));
         Assert.assertEquals("MT0;7",NameValidity.INVALID,l.validSystemNameFormat("MT0;7"));
-        
     }
 
     @Test
@@ -317,8 +311,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             Turnout ta =  l.provideTurnout("MT+N45E22");
             Assert.assertNotNull("exists",ta);
             Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
-        
-        
+
             Assert.assertTrue(true);
         } catch (Exception e) {
             Assert.assertTrue(false);
@@ -367,20 +360,19 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testgetNextValidAddressPt4() {
 
-        Turnout t =  l.provideTurnout("MT+9");
-        Turnout ta =  l.provideTurnout("MT+10");
+        Turnout t = l.provideTurnout("MT+9");
+        Turnout ta = l.provideTurnout("MT+10");
         Assert.assertNotNull("exists",t);
         Assert.assertNotNull("exists",ta);
 
         try {
-            Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
+            Assert.assertEquals(" null +9 +10","+11",l.getNextValidAddress("+9","M"));
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         } catch (Exception e) {
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(false);
         }
-        
     }
     
     @Test
@@ -414,8 +406,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             Assert.assertTrue(true);
         }
     }
-    
-    
+
     @Test
     public void testProvideswhenNotNull() {
         Turnout t = l.provideTurnout("+4");
@@ -442,4 +433,5 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerTest.class);
+
 }

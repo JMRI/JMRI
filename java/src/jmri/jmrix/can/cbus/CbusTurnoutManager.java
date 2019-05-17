@@ -19,14 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
 
+    /**
+     * Ctor using a given system connection memo
+     */
     public CbusTurnoutManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
         prefix = memo.getSystemPrefix();
     }
 
-    CanSystemConnectionMemo memo;
-
-    String prefix = "M";
+    private CanSystemConnectionMemo memo;
+    private String prefix = "M";
 
     @Override
     public String getSystemPrefix() {
@@ -35,14 +37,15 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /** 
      * {@inheritDoc} 
-     * Overriden to normalize System Name
+     * Override to normalize System Name
      */
     @Override
+    @Nonnull
     public Turnout provideTurnout(@Nonnull String key) {
         String name = normalizeSystemName(key);
         Turnout result = getTurnout(name);
         if (result == null) {
-            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+            if (name.startsWith(prefix + typeLetter())) {
                 result = newTurnout(name, null);
             } else {
                 result = newTurnout(makeSystemName(name), null);
@@ -56,7 +59,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        String addr = systemName.substring(prefix.length() + 1);
         // first, check validity
         try {
             validateSystemNameFormat(addr);
@@ -64,10 +67,10 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             log.error(e.toString());
             throw e;
         }
-        // validate (adds + to int)
+        // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Turnout t = new CbusTurnout(getSystemPrefix(), newAddress, memo.getTrafficController());
+        Turnout t = new CbusTurnout(prefix, newAddress, memo.getTrafficController());
         t.setUserName(userName);
         return t;
     }
@@ -93,7 +96,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
         // prefix unsigned int with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
-        return getSystemPrefix() + typeLetter() + newAddress;
+        return prefix + typeLetter() + newAddress;
     }
 
     /** 
@@ -138,7 +141,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            addr = systemName.substring(prefix.length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e){
             return NameValidity.INVALID;
         }
@@ -172,18 +175,28 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
+     *
+     * Forces upper case and trims leading and trailing whitespace, adding +/- if not present.
      * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
+        String address = inputName.toUpperCase().trim();
+        // check Cbus hardware address parts
+        if ((!address.startsWith(prefix + typeLetter()) || (address.length() < prefix.length() + 2))) {
+            return address;
+        }
+        try {
+            address = CbusAddress.validateSysName(address.substring(prefix.length() + 1));
+        } catch (IllegalArgumentException e){
+            return address;
+        } catch (StringIndexOutOfBoundsException e){
+            return address;
+        }
+        return prefix + typeLetter() + address;
     }
-
 
     /**
      * {@inheritDoc}

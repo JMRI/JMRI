@@ -52,7 +52,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 
