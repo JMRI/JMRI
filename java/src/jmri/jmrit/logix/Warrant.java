@@ -912,7 +912,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

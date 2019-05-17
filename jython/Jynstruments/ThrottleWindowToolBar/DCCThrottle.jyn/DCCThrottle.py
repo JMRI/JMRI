@@ -5,7 +5,7 @@
 #
 # Part of the JMRI distribution
 #
-# Listen for a given (3 short as a default) DCC throttle commands 
+# Listen for a given (3 as a default) DCC throttle commands 
 # and forward them to the curently selected one in throttle window
 # or call advanced function if any defined for curently selected roster entry
 #
@@ -135,8 +135,10 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
             pass
         if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
             print "Couldn't request a throttle for "+locoAddress
+            
     def notifyStealThrottleRequired(LocoAddress):
         pass # Throttle steal decisions are delegated to the Hardware
+        
     def notifyDecisionRequired(LocoAddress, decision):
         pass # Throttle steal / share decisions are delegated to the ThrottleManager
     

@@ -57,7 +57,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -132,7 +132,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -228,7 +228,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -321,7 +321,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -376,7 +376,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -430,7 +430,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -485,7 +485,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -542,7 +542,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -596,7 +596,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -659,7 +659,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -691,7 +691,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -783,7 +783,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -815,7 +815,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -927,7 +927,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -959,7 +959,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -991,7 +991,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -1113,7 +1113,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -1146,7 +1146,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override
@@ -1255,7 +1255,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             }
             
             /**
-             * @Deprecated since 4.15.7; use #notifyDecisionRequired
+             * @deprecated since 4.15.7; use #notifyDecisionRequired
              */
             @Deprecated
             @Override

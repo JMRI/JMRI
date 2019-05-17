@@ -258,7 +258,7 @@ public interface ThrottleManager {
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
      * 
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      */
     @Deprecated
     public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal);
@@ -270,7 +270,7 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      *
      * @param address desired decoder address
      * @param l  ThrottleListener requesting the throttle steal occur.
@@ -286,7 +286,7 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      *
      * @param address desired decoder address
      * @param isLong  true if requesting a DCC long (extended) address
@@ -456,6 +456,13 @@ public interface ThrottleManager {
 
     /**
      * 
+     * @param la Loco address to test
+     * @return true, its still required, false its not.
+     */
+    public boolean addressStillRequired(LocoAddress la);
+
+    /**
+     * 
      * @param address Loco number to test.
      * @param addressIsLong true if long address.
      * @return true, its still required, false its not.
@@ -475,14 +482,6 @@ public interface ThrottleManager {
      * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(BasicRosterEntry re);
-
-    /**
-     * 
-     * @param la Loco address to test
-     * @return true, its still required, false its not.
-     */
-    public boolean addressStillRequired(LocoAddress la);
-
     
     /**
      * The specified Throttle Listener has finished using a given throttle and

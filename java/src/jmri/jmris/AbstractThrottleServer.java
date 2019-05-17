@@ -165,7 +165,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * No steal or share decisions made locally
      * <p>
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

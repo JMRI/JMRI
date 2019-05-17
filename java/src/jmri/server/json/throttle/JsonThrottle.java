@@ -384,7 +384,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

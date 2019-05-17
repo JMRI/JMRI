@@ -255,7 +255,7 @@ public class MultiThrottleController extends ThrottleController {
     
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

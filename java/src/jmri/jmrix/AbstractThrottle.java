@@ -722,7 +722,7 @@ abstract public class AbstractThrottle implements DccThrottle {
                 
                 /**
                  * {@inheritDoc}
-                 * @Deprecated since 4.15.7; use #notifyDecisionRequired
+                 * @deprecated since 4.15.7; use #notifyDecisionRequired
                  */
                 @Override
                 @Deprecated

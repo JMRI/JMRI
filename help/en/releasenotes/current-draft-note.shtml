@@ -382,9 +382,9 @@
             <li><strong>2 lines in scripts that use the 
             <a href="https://github.com/JMRI/JMRI/blob/master/jython/Jynstruments/ThrottleWindowToolBar/DCCThrottle.jyn/DCCThrottle.py"
             >DCCThrottle.py</a> Jynstrument may need to be added,</strong><br>
-            Insert after line 138<br>
-            New line 139 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
-            New line 140 : <code>pass #</code><br>
+            Insert after line 141<br>
+            New line 142 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
+            New line 143 : <code>pass #</code><br>
             These changes were made to enhance the JMRI Steal / Share mechanism for hardware types that support this.<br>
             </li>
         </ul>

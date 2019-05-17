@@ -215,7 +215,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

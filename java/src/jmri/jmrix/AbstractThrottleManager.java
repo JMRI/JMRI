@@ -414,7 +414,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      *
      */
     @Deprecated
@@ -431,7 +431,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      *
      */
     @Deprecated
@@ -453,7 +453,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      *
      * @param address desired decoder address
      * @param isLong  true if requesting a DCC long (extended) address
@@ -474,7 +474,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
     
     /**
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      */
     @Deprecated
     @Override

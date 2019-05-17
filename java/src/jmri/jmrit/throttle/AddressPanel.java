@@ -237,7 +237,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

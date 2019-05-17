@@ -647,7 +647,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
      * Profiling on a stolen or shared throttle is invalid
      * <p>
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated

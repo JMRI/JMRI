@@ -1137,7 +1137,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
     @Deprecated
