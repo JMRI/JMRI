@@ -63,7 +63,7 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("LoopDeLoop");
         Assert.assertNotNull("warrant", warrant);
       
-        // WarrantTable.runTrain() returns a string that is null if the 
+        // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
         Assert.assertNull("Warrant starts",
               tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
@@ -141,7 +141,7 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("Loop&Fred");
         Assert.assertNotNull("warrant", warrant);
        
-        // WarrantTable.runTrain() returns a string that is null if the 
+        // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
         Assert.assertNull("Warrant starts",
               tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
@@ -232,7 +232,7 @@ public class LinkedWarrantTest {
         String[] routeBack = {"OB11", "OB9", "OB7", "OB6", "OB5", "OB3", "OB1"};
         String backEndSensorName = _OBlockMgr.getOBlock("OB1").getSensor().getDisplayName();
 
-        // WarrantTable.runTrain() returns a string that is null if the 
+        // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
         Assert.assertNull("Warrant starts",
               tableFrame.runTrain(outWarrant, Warrant.MODE_RUN)); // start run
@@ -319,7 +319,7 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("Tinker");
         Assert.assertNotNull("warrant", warrant);
        
-        // WarrantTable.runTrain() returns a string that is null if the 
+        // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
         Assert.assertNull("Warrant starts",
               tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
