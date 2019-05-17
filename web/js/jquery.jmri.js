@@ -42,8 +42,8 @@
  * reporter(name, value, data)
  * reporters(data array)
  * roster(data array)
- * rosterEntry(id, data)
- * rosterGroup(id, data)
+ * rosterEntry(name, data)
+ * rosterGroup(name, data)
  * rosterGroups(data array)
  * route(name, state, data)
  * routes(data array)
@@ -55,9 +55,9 @@
  * signalMasts(data array)
  * systemConnection(name, data)
  * systemConnections(data array)
- * throttle(id, data)
+ * throttle(name, data)
  * time(time, data)
- * train(id, data)
+ * train(name, data)
  * trains(data array)
  * turnout(name, state, data)
  * turnouts(data array)
@@ -179,7 +179,7 @@
             };
             jmri.time = function (time, data) {
             };
-            jmri.train = function (id, data) {
+            jmri.train = function (name, data) {
             };
             jmri.trains = function (data) {
             };
@@ -446,20 +446,20 @@
                     });
                 }
             };
-            jmri.getRosterGroup = function (id) {
+            jmri.getRosterGroup = function (name) {
                 if (jmri.socket) {
-                    jmri.socket.send("rosterGroup", { name: id });
+                    jmri.socket.send("rosterGroup", { name: name });
                 } else {
-                    $.getJSON(jmri.url + "rosterGroup/" + id, function (json) {
+                    $.getJSON(jmri.url + "rosterGroup/" + name, function (json) {
                         jmri.rosterGroup(json.data.name, json.data);
                     });
                 }
             };
-            jmri.getRosterEntry = function (id) {
+            jmri.getRosterEntry = function (name) {
                 if (jmri.socket) {
-                    jmri.socket.send("rosterEntry", { name: id });
+                    jmri.socket.send("rosterEntry", { name: name });
                 } else {
-                    $.getJSON(jmri.url + "rosterEntry/" + id, function (json) {
+                    $.getJSON(jmri.url + "rosterEntry/" + name, function (json) {
                         jmri.rosterEntry(json.data.name, json.data);
                     });
                 }
@@ -582,7 +582,7 @@
              * Set some aspect of a throttle as defined in data
              *
              * Call this method with the data elements address:[dcc address]
-             * or id:[roster entry id] to create a JMRI throttle. Include the
+             * or rosterEntry:[roster entry id] to create a JMRI throttle. Include the
              * data element status:true to get the complete throttle status.
              *
              * @param {string} throttle the throttle identity
@@ -607,12 +607,12 @@
                     });
                 }
             };
-            jmri.getTrain = function (id) {
+            jmri.getTrain = function (name) {
                 if (jmri.socket) {
-                    jmri.socket.send("train", { id: id });
+                    jmri.socket.send("train", { name: name });
                 } else {
-                    $.getJSON(jmri.url + "train/" + id, function (json) {
-                        jmri.train(json.data.id, json.data);
+                    $.getJSON(jmri.url + "train/" + name, function (json) {
+                        jmri.train(json.data.name, json.data);
                     });
                 }
             };
@@ -856,7 +856,7 @@
                     jmri.time(e.data.time, e.data);
                 },
                 train: function (e) {
-                    jmri.train(e.data.id, e.data);
+                    jmri.train(e.data.name, e.data);
                 },
                 trains: function (e) {
                     jmri.trains(e.data);

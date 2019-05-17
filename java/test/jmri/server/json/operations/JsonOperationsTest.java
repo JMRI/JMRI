@@ -37,7 +37,7 @@ public class JsonOperationsTest {
             // that is thrown by newInstance() into an InvocationTargetException
             // we pass an InvocationTargetException that is caused by an
             // UnsupportedOperationException and fail everything else by
-            // rethrowing the unexepected exception to get a stack trace
+            // rethrowing the unexpected exception to get a stack trace
             if (!ex.getCause().getClass().equals(UnsupportedOperationException.class)) {
                 throw ex;
             }
