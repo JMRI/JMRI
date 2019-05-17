@@ -4,7 +4,7 @@ import jmri.Light;
 import jmri.jmrix.powerline.SerialTrafficController;
 
 /**
- * Implement light manager for powerline serial systems with CM11 adapters
+ * Implement light manager for powerline serial systems with CM11 adapters.
  * <p>
  * Just provide the specific objects at creation time.
  *
@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
     public SpecificLightManager(SerialTrafficController tc) {

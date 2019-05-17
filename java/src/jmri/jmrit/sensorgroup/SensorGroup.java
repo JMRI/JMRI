@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * They are not (currently) NamedBean objects.
  *
  * @author Bob Jacobsen Copyright (C) 2007
-  */
+ */
 public class SensorGroup {
 
     /**

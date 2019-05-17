@@ -92,8 +92,8 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     /* createSystemName() and getNextValidAddress() are not used in code, or any other LightManager
-    * to be removed. Tests for these in jmri.jmrix.can.cbus.CbusLightManagerTest also commented out.
-    *
+    * to be removed. Tests for these in jmri.jmrix.can.cbus.CbusLightManagerTest also commented out @since 4.15.7
+
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         // first, check validity
         try {
@@ -122,7 +122,7 @@ public class CbusLightManager extends AbstractLightManager {
         }
         // build local addresses
         String newaddr = CbusAddress.getIncrement(testAddr);
-        if (newaddr==null) {
+        if (newaddr == null) {
             return null;
         }
         //If the new hardware address does not already exist then this can

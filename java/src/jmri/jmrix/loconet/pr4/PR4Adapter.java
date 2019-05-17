@@ -18,7 +18,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
-  */
+ */
 public class PR4Adapter extends LocoBufferAdapter {
 
     public PR4Adapter() {

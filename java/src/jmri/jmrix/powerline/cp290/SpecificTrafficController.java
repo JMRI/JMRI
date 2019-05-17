@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SpecificTrafficController extends SerialTrafficController {
 
     private boolean cmdOutstanding;
@@ -207,6 +207,3 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 }
-
-
-

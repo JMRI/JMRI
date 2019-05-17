@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
-    public final static String NAME = "Simulator";
+    public final static String NAME = "Simulator"; // TODO I18N using Bundle.getMessage("key")
 
     /**
      * Create a connection configuration with a preexisting adapter. This is

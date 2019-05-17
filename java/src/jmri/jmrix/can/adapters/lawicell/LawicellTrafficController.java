@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class LawicellTrafficController extends jmri.jmrix.can.TrafficController {
 
     public LawicellTrafficController() {

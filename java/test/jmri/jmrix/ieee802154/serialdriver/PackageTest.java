@@ -14,9 +14,9 @@ import org.junit.runners.Suite;
 })
 
 /**
- * Tests for the jmri.jmrix.ieee802154.serialdriver package
+ * Tests for the jmri.jmrix.ieee802154.serialdriver package.
  *
  * @author	Paul Bender
-  */
+ */
 public class PackageTest  {
 }

@@ -57,7 +57,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
                 }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -70,10 +70,10 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(50);  // Set to 50 was 10 mSec timeout before sending chars
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: ", et);
             }
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -94,8 +94,8 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
 
             // report status
             if (log.isInfoEnabled()) {
-                log.info("TAMS " + portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud");
+                log.info("TAMS {} port opened at {} baud", portName,
+                        activeSerialPort.getBaudRate());
             }
             opened = true;
 
@@ -107,7 +107,6 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         }
 
         return null; // indicates OK return
-
     }
 
     /**
@@ -143,7 +142,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }
@@ -158,7 +157,9 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    private final String[] validSpeeds = new String[]{"57,600 baud", "2,400 baud", "9,600 baud", "19,200 baud"};
+    private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
+            Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud9600"),
+            Bundle.getMessage("Baud19200")};
     private final int[] validSpeedValues = new int[]{57600, 2400, 9600, 19200};
 
     // private control members

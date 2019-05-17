@@ -36,7 +36,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) o).getAdapter();
         Element e = new Element("connection");
 
-        if (adapter.getCurrentPortName() != null) {
+        if (adapter.getCurrentPortName() != null) { // port not functional in loopback Sim, hidden in UI. Remove in store?
             e.setAttribute("port", adapter.getCurrentPortName());
         } else {
             e.setAttribute("port", Bundle.getMessage("noneSelected"));
@@ -87,7 +87,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String mfg = shared.getAttribute("manufacturer").getValue();
             adapter.setManufacturer(mfg);
         }
-        if (shared.getAttribute("port") != null) {
+        if (shared.getAttribute("port") != null) { // port not functional in loopback Sim, hidden in UI. Remove in load?
             String portName = shared.getAttribute("port").getValue();
             adapter.setPort(portName);
         }
@@ -137,7 +137,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
                 shared.getParentElement(), perNode.getParentElement(), adapter);
-
     }
 
     @Override

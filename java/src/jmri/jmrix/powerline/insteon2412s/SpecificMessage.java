@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author Ken Cameron Copyright (C) 2010
-  */
+ */
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 
@@ -308,6 +308,5 @@ public class SpecificMessage extends SerialMessage {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SpecificMessage.class);
+
 }
-
-

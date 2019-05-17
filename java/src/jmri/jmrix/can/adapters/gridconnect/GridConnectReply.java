@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008, 2009
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class GridConnectReply extends AbstractMRReply {
 
     static final int MAXLEN = 27;

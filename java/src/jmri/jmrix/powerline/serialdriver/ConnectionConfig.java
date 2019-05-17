@@ -4,7 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 /**
- * Definition of objects to handle configuring a layout connection
+ * Definition of objects to handle configuring a layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  */
@@ -48,7 +48,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Powerline Device Connection";
+        return Bundle.getMessage("PlDeviceConnectionTitle");
     }
 
     public boolean isOptList1Advanced() {

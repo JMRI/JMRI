@@ -38,7 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
-        portBoxLabel.setVisible(false); // hide portBoxLabel during config, cf. as when extending jmri.jmrix.AbstractSimulatorConnectionConfig
+        portBoxLabel.setVisible(false); // hide portBoxLabel during config, as when extending jmri.jmrix.AbstractSimulatorConnectionConfig
         portBox.setVisible(false);      // hide portBox combo idem
         baudBoxLabel.setVisible(false); // hide baudBoxLabel idem
         baudBox.setVisible(false);      // hide baudBox combo idem

@@ -21,7 +21,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class MergReply extends GridConnectReply {
 
     public MergReply() {

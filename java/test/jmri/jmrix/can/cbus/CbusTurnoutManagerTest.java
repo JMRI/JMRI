@@ -29,7 +29,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         CbusTurnoutManager t = new CbusTurnoutManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     public String getSystemName(int i){
@@ -244,23 +244,23 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testLowerLower() {
         Turnout t = l.provideTurnout("mt+n1e77;-n1e45");
-        Assert.assertNotNull("exists",t);
-        Assert.assertTrue("Retrievable lowercase",t == l.getTurnout(t.getSystemName()));
+        Assert.assertNotNull("exists", t);
+        Assert.assertTrue("Retrievable lowercase", t == l.getTurnout(t.getSystemName()));
     }
 
     @Test
     public void testLowerUpper() {
         Turnout t = l.provideTurnout("mt+n1e77;-n1e45");
-        Assert.assertNotNull("exists",t);
-        Assert.assertTrue("Retrievable lowercase",t == l.getTurnout(t.getSystemName())); // case not changed
+        Assert.assertNotNull("exists", t);
+        Assert.assertTrue("Retrievable lowercase", t == l.getTurnout(t.getSystemName())); // case not changed
     }
 
     @Test
     public void testUpperLower() {
         Turnout t = l.provideTurnout("MTXABCDEF01;XFFEDCCBA");
-        Assert.assertTrue("Same hex getTurnout",t == l.getTurnout(t.getSystemName().toLowerCase()));
+        Assert.assertTrue("Same hex getTurnout", t == l.getTurnout(t.getSystemName().toLowerCase()));
         Turnout t2 = l.provideTurnout("MT-N66E1;+N15E789");
-        Assert.assertTrue("Same long getTurnout",t2 == l.getTurnout(t2.getSystemName().toLowerCase()));
+        Assert.assertTrue("Same long getTurnout", t2 == l.getTurnout(t2.getSystemName().toLowerCase()));
     }
 
     @Test
@@ -274,43 +274,43 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testvalidSystemNameFormat() {
         
-        Assert.assertEquals("MT+123",NameValidity.VALID,l.validSystemNameFormat("MT+123"));
-        Assert.assertEquals("MT+N123E123",NameValidity.VALID,l.validSystemNameFormat("MT+N123E123"));
-        Assert.assertEquals("MT+123;456",NameValidity.VALID,l.validSystemNameFormat("MT+123;456"));
-        Assert.assertEquals("MT1",NameValidity.VALID,l.validSystemNameFormat("MT1"));
-        Assert.assertEquals("MT1;2",NameValidity.VALID,l.validSystemNameFormat("MT1;2"));
-        Assert.assertEquals("MT65535",NameValidity.VALID,l.validSystemNameFormat("MT65535"));
-        Assert.assertEquals("MT-65535",NameValidity.VALID,l.validSystemNameFormat("MT-65535"));
-        Assert.assertEquals("MT100001",NameValidity.VALID,l.validSystemNameFormat("MT100001"));
-        Assert.assertEquals("MT-100001",NameValidity.VALID,l.validSystemNameFormat("MT-100001"));
+        Assert.assertEquals("MT+123", NameValidity.VALID, l.validSystemNameFormat("MT+123"));
+        Assert.assertEquals("MT+N123E123", NameValidity.VALID, l.validSystemNameFormat("MT+N123E123"));
+        Assert.assertEquals("MT+123;456", NameValidity.VALID, l.validSystemNameFormat("MT+123;456"));
+        Assert.assertEquals("MT1", NameValidity.VALID, l.validSystemNameFormat("MT1"));
+        Assert.assertEquals("MT1;2", NameValidity.VALID, l.validSystemNameFormat("MT1;2"));
+        Assert.assertEquals("MT65535", NameValidity.VALID, l.validSystemNameFormat("MT65535"));
+        Assert.assertEquals("MT-65535", NameValidity.VALID, l.validSystemNameFormat("MT-65535"));
+        Assert.assertEquals("MT100001", NameValidity.VALID, l.validSystemNameFormat("MT100001"));
+        Assert.assertEquals("MT-100001", NameValidity.VALID, l.validSystemNameFormat("MT-100001"));
 
-        Assert.assertEquals("M",NameValidity.INVALID,l.validSystemNameFormat("M"));
-        Assert.assertEquals("MT",NameValidity.INVALID,l.validSystemNameFormat("MT"));
-        Assert.assertEquals("MT-65536",NameValidity.INVALID,l.validSystemNameFormat("MT-65536"));        
-        Assert.assertEquals("MT65536",NameValidity.INVALID,l.validSystemNameFormat("MT65536"));
-        Assert.assertEquals("MT+1;+0",NameValidity.INVALID,l.validSystemNameFormat("MT+1;+0"));
-        Assert.assertEquals("MT+1;-0",NameValidity.INVALID,l.validSystemNameFormat("MT+1;-0"));        
-        Assert.assertEquals("MT+0;+17",NameValidity.INVALID,l.validSystemNameFormat("MT+0;+17"));
-        Assert.assertEquals("MT+0;-17",NameValidity.INVALID,l.validSystemNameFormat("MT+0;-17"));
-        Assert.assertEquals("MT+0",NameValidity.INVALID,l.validSystemNameFormat("MT+0"));
-        Assert.assertEquals("MT-0",NameValidity.INVALID,l.validSystemNameFormat("MT-0"));
-        Assert.assertEquals("MT7;0",NameValidity.INVALID,l.validSystemNameFormat("MT7;0"));
-        Assert.assertEquals("MT0;7",NameValidity.INVALID,l.validSystemNameFormat("MT0;7"));
+        Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
+        Assert.assertEquals("MT", NameValidity.INVALID, l.validSystemNameFormat("MT"));
+        Assert.assertEquals("MT-65536", NameValidity.INVALID, l.validSystemNameFormat("MT-65536"));        
+        Assert.assertEquals("MT65536", NameValidity.INVALID, l.validSystemNameFormat("MT65536"));
+        Assert.assertEquals("MT+1;+0", NameValidity.INVALID, l.validSystemNameFormat("MT+1;+0"));
+        Assert.assertEquals("MT+1;-0", NameValidity.INVALID, l.validSystemNameFormat("MT+1;-0"));        
+        Assert.assertEquals("MT+0;+17", NameValidity.INVALID, l.validSystemNameFormat("MT+0;+17"));
+        Assert.assertEquals("MT+0;-17", NameValidity.INVALID, l.validSystemNameFormat("MT+0;-17"));
+        Assert.assertEquals("MT+0", NameValidity.INVALID, l.validSystemNameFormat("MT+0"));
+        Assert.assertEquals("MT-0", NameValidity.INVALID, l.validSystemNameFormat("MT-0"));
+        Assert.assertEquals("MT7;0", NameValidity.INVALID, l.validSystemNameFormat("MT7;0"));
+        Assert.assertEquals("MT0;7", NameValidity.INVALID, l.validSystemNameFormat("MT0;7"));
     }
 
     @Test
     public void testgetNextValidAddress() {
         
         try {
-            Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
+            Assert.assertEquals("+17", "+17", l.getNextValidAddress("+17", "M"));
             Turnout t =  l.provideTurnout("MT+17");
-            Assert.assertNotNull("exists",t);
-            Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
+            Assert.assertNotNull("exists", t);
+            Assert.assertEquals("+18", "+18", l.getNextValidAddress("+17", "M"));
         
-            Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
+            Assert.assertEquals("+N45E22", "+N45E22", l.getNextValidAddress("+N45E22", "M"));
             Turnout ta =  l.provideTurnout("MT+N45E22");
-            Assert.assertNotNull("exists",ta);
-            Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
+            Assert.assertNotNull("exists", ta);
+            Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));        
 
             Assert.assertTrue(true);
         } catch (Exception e) {
@@ -318,7 +318,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         }
         
         try {
-            Assert.assertEquals("null",null,l.getNextValidAddress(null,"M"));
+            Assert.assertEquals("null", null, l.getNextValidAddress(null, "M"));
             
         } catch (Exception e) {
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
@@ -329,10 +329,10 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testgetNextValidAddressPt2() {
         Turnout t =  l.provideTurnout("MT+65535");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
             
         try {
-            Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
+            Assert.assertEquals("+65535", null, l.getNextValidAddress("+65535", "M"));
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         } catch (Exception e) {
@@ -345,10 +345,10 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testgetNextValidAddressPt3() {
         
         Turnout t =  l.provideTurnout("MT+10");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
             
         try {
-            Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
+            Assert.assertEquals("+10", "+11", l.getNextValidAddress("+10", "M"));
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         } catch (Exception e) {
@@ -362,11 +362,11 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         Turnout t = l.provideTurnout("MT+9");
         Turnout ta = l.provideTurnout("MT+10");
-        Assert.assertNotNull("exists",t);
-        Assert.assertNotNull("exists",ta);
+        Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("exists", ta);
 
         try {
-            Assert.assertEquals(" null +9 +10","+11",l.getNextValidAddress("+9","M"));
+            Assert.assertEquals(" null +9 +10", "+11", l.getNextValidAddress("+9", "M"));
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         } catch (Exception e) {
@@ -379,27 +379,27 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testcreateSystemName() {
         
         try {
-            Assert.assertEquals("MT+10","MT+10",l.createSystemName("10","M"));
-            Assert.assertEquals("MT+N34E610","MT+N34E610",l.createSystemName("+N34E610","M"));
-            Assert.assertEquals("MT5;6","MT+5;-6",l.createSystemName("5;6","M"));
+            Assert.assertEquals("MT+10", "MT+10", l.createSystemName("10", "M"));
+            Assert.assertEquals("MT+N34E610", "MT+N34E610", l.createSystemName("+N34E610", "M"));
+            Assert.assertEquals("MT5;6", "MT+5;-6", l.createSystemName("5;6", "M"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }
         
         try {
-            Assert.assertEquals("M2T+10","MT+10",l.createSystemName("+10","M2"));
+            Assert.assertEquals("M2T+10", "M2T+10", l.createSystemName("+10", "M2"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }
 
         try {
-            Assert.assertEquals("M2T+10","MT+10",l.createSystemName("+10","ZZZZZZZZZ"));
+            Assert.assertEquals("ZZZZZZZZZ2T+10", "ZZZZZZZZZT+10", l.createSystemName("+10", "ZZZZZZZZZ"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }
         
         try {
-            Assert.assertEquals("MTT",null,l.createSystemName("S","M"));
+            Assert.assertEquals("MTT", null, l.createSystemName("S", "M"));
             Assert.assertTrue(false);
         } catch (Exception e) {
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");

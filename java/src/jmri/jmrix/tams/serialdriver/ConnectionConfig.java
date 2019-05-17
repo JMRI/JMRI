@@ -8,7 +8,7 @@ package jmri.jmrix.tams.serialdriver;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = "MasterControl";
+    public final static String NAME = "MasterControl"; // NOI18N
 
     /**
      * Create a connection configuration with a preexisting adapter. This is

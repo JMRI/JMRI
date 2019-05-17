@@ -9,7 +9,7 @@ import jmri.Light;
  * the light number without padding.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -57,5 +57,3 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     }
 
 }
-
-

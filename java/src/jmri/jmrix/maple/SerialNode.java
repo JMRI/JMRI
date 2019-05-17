@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, revised for Maple, 2009
-  */
+ */
 public class SerialNode extends AbstractNode {
 
     /**

@@ -7,7 +7,7 @@ import jmri.util.SystemType;
  * connection via a LocoBufferIIAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -50,4 +50,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
         return new String[]{};
     }
+
 }

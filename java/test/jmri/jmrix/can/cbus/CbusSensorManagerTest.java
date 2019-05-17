@@ -460,13 +460,13 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         }
         
         try {
-            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","M2"));
+            Assert.assertEquals("M2S+10","M2S+10",l.createSystemName("+10","M2"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }
 
         try {
-            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","ZZZZZZZZZ"));
+            Assert.assertEquals("ZZZZZZZZZS+10","ZZZZZZZZZS+10",l.createSystemName("+10","ZZZZZZZZZ"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }

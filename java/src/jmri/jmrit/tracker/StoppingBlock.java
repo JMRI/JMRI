@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2006
-  */
+ */
 public class StoppingBlock {
 
     public StoppingBlock(Block b) {
@@ -183,4 +183,5 @@ public class StoppingBlock {
     float fast = 0.6f;
 
     private final static Logger log = LoggerFactory.getLogger(StoppingBlock.class);
+
 }

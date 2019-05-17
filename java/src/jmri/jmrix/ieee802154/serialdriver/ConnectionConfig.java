@@ -7,12 +7,13 @@ import javax.swing.JPanel;
  * Definition of objects to handle configuring a layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     *
      * @param p serial port adapter for connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {

@@ -61,6 +61,6 @@ import org.junit.runners.Suite;
  * Tests for the jmri.jmrix.lenz package
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class PackageTest  {
 }

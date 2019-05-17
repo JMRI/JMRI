@@ -9,7 +9,7 @@ import jmri.Turnout;
  * the turnout number without padding.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     private JMRIClientSystemConnectionMemo memo = null;

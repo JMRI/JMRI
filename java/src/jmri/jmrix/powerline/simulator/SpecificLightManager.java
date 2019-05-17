@@ -13,7 +13,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
     public SpecificLightManager(SerialTrafficController tc) {
@@ -38,4 +38,5 @@ public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManage
     boolean isInsteon(String systemName) {
         return tc.getAdapterMemo().getSerialAddress().isInsteon(systemName);
     }
+
 }

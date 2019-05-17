@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * booster portion of an LZV100 command station.
  *
  * @author Paul Bender Copyright (C) 2004
-  */
+ */
 public class LV102Action extends AbstractAction {
 
     public LV102Action(String s) {

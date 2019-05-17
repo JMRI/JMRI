@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
     SerialTrafficController tc = null;

@@ -236,7 +236,7 @@ public class UsbDriverAdapter extends NcePortController {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    private String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+    private String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200")};
     private int[] validSpeedValues = new int[]{9600, 19200};
 
     // private control members
