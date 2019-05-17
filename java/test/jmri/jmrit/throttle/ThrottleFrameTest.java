@@ -319,8 +319,8 @@ public class ThrottleFrameTest {
         to.setAddressValue(new DccLocoAddress(1234,true));
         
         Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
-        ssert.assertFalse("Dispatch button NOT enabled",to.dispatchButtonEnabled());
         
+        to.getAttachedThrottle().notifyThrottleReleaseEnabled(true);
         to.getAttachedThrottle().notifyThrottleDispatchEnabled(true);
         
         Assert.assertTrue("Dispatch button enabled",to.dispatchButtonEnabled());
@@ -331,9 +331,6 @@ public class ThrottleFrameTest {
         
         Assert.assertFalse("Release button NOT enabled",to.releaseButtonEnabled());
         Assert.assertFalse("Dispatch button NOT enabled",to.dispatchButtonEnabled());
-        
-        to.getAttachedThrottle().notifyThrottleReleaseEnabled(true);
-        Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
     }
 
     @Before
