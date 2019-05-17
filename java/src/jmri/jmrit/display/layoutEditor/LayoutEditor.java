@@ -9134,15 +9134,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return turnoutCircleSize;
     }
 
-    /**
-     * @deprecated since 4.11.2 use {@link #isTurnoutDrawUnselectedLeg()}
-     * instead.
-     */
-    @Deprecated
-    public boolean getTurnoutDrawUnselectedLeg() {
-        return turnoutDrawUnselectedLeg;
-    }
-
     public boolean isTurnoutDrawUnselectedLeg() {
         return turnoutDrawUnselectedLeg;
     }
@@ -9274,29 +9265,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultTrackColor(@Nonnull String colorName) {
-        setDefaultTrackColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
-        setDefaultOccupiedTrackColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
@@ -9308,32 +9282,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use
-     * {@link #setDefaultAlternativeTrackColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
-        setDefaultAlternativeTrackColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default alternate track color to.
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setTurnoutCircleColor(@Nonnull String colorName) {
-        if (colorName.equals("track")) {
-            colorName = getDefaultTrackColor();
-        }
-        setTurnoutCircleColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
@@ -9394,28 +9347,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultTextColor(@Nonnull String colorName) {
-        setDefaultTextColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default text color to.
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setDefaultBackgroundColor(@Nonnull String colorName) {
-        setDefaultBackgroundColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
