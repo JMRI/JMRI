@@ -17,7 +17,7 @@ public class JsonRouteSocketService extends JsonNamedBeanSocketService<Route, Js
     }
     
     @Override
-    protected void addListenerToBean(Route bean, String name) {
+    protected void addListenerToBean(Route bean) {
         if (bean != null) {
             NamedBeanListener listener = new NamedBeanListener(bean);
             bean.addPropertyChangeListener(listener);
@@ -25,7 +25,7 @@ public class JsonRouteSocketService extends JsonNamedBeanSocketService<Route, Js
             if (sensor != null) {
                 sensor.addPropertyChangeListener(listener);
             }
-            this.beanListeners.put(name, listener);
+            this.beanListeners.put(bean, listener);
         }
     }
 

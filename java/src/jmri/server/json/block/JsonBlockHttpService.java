@@ -34,8 +34,8 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     }
 
     @Override
-    public ObjectNode doGet(Block block, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(block, name, type, locale); // throws JsonException if block == null
+    public ObjectNode doGet(Block block, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = this.getNamedBean(block, name, type, locale, id); // throws JsonException if block == null
         ObjectNode data = root.with(JSON.DATA);
         if (block != null) {
             switch (block.getState()) {
@@ -66,7 +66,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     }
 
     @Override
-    public ObjectNode doPost(Block block, String name, String type, JsonNode data, Locale locale) throws JsonException {
+    public ObjectNode doPost(Block block, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 block.setValue(null);
@@ -86,7 +86,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", BLOCK, state));
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", BLOCK, state), id);
         }
         if (!data.path(JsonSensor.SENSOR).isMissingNode()) {
             JsonNode node = data.path(JsonSensor.SENSOR);
@@ -97,7 +97,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 if (sensor != null) {
                     block.setSensor(sensor.getSystemName());
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()));
+                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()), id);
                 }
             }
         }
@@ -110,24 +110,25 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 if (reporter != null) {
                     block.setReporter(reporter);
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()));
+                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()), id);
                 }
             }
         }
-        return this.doGet(block, name, type, locale);
+        return this.doGet(block, name, type, locale, id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case BLOCK:
             case BLOCKS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/block/block-server.json",
-                        "jmri/server/json/block/block-client.json");
+                        "jmri/server/json/block/block-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 

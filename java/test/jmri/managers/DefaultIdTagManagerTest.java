@@ -9,7 +9,7 @@ import org.junit.*;
  *
  * @author	Matthew Harris Copyright (C) 2011
  */
-public class DefaultIdTagManagerTest extends AbstractManagerTestBase<IdTagManager,IdTag> {
+public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<IdTagManager,IdTag> {
 
     @Test
     public void testIdTagCreation() {
