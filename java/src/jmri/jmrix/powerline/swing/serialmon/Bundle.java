@@ -1,4 +1,4 @@
-package jmri.jmrix.powerline.swing.packetgen;
+package jmri.jmrix.powerline.swing.serialmon;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.powerline.swing.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.powerline.swing.packetgen.SerialPacketGenBundle"; // NOI18N
+    private static final String name = "jmri.jmrix.powerline.swing.serialmon.SerialMonBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
