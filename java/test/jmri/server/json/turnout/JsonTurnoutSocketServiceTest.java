@@ -33,6 +33,8 @@ import org.junit.Test;
  */
 public class JsonTurnoutSocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testTurnoutChange() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -41,7 +43,7 @@ public class JsonTurnoutSocketServiceTest {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         Turnout turnout1 = manager.provideTurnout("IT1");
         turnout1.setCommandedState(Turnout.UNKNOWN);
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, Locale.ENGLISH);
+        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, locale, 42);
         // TODO: test that service is listener in TurnoutManager
         message = connection.getMessage();
         assertNotNull("message is not null", message);
@@ -76,22 +78,22 @@ public class JsonTurnoutSocketServiceTest {
         // Turnout CLOSED
         message =
                 connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.CLOSED);
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, locale, 42);
         assertEquals(Turnout.CLOSED, turnout1.getState());
         // Turnout THROWN
         message =
                 connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.THROWN);
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, locale, 42);
         assertEquals(Turnout.THROWN, turnout1.getState());
         // Turnout UNKNOWN - remains THROWN
         message =
                 connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.UNKNOWN);
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, locale, 42);
         assertEquals(Turnout.THROWN, turnout1.getState());
         // Turnout Invalid State
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, 42); // invalid state
         try {
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, locale, 42);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(Turnout.THROWN, turnout1.getState());
@@ -105,13 +107,13 @@ public class JsonTurnoutSocketServiceTest {
         JsonNode message;
         JsonTurnoutSocketService service = new JsonTurnoutSocketService(connection);
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-        // use register instead of provide in tests to avoid messages from the Turnouts themselves
+        // provide and deregister in tests to avoid messages from the Turnouts themselves
         Turnout turnout1 = manager.provide("IT1");
         Turnout turnout2 = manager.provide("IT2");
         manager.deregister(turnout1);
         manager.deregister(turnout2);
         service.onList(JsonTurnoutServiceFactory.TURNOUT, connection.getObjectMapper().createObjectNode(),
-                Locale.ENGLISH);
+                locale, 0);
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());
@@ -149,16 +151,16 @@ public class JsonTurnoutSocketServiceTest {
         Turnout t1 = manager.provide("IT1");
         t1.setUserName(userName);
         // request with user name should log a warning
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, Locale.ENGLISH);
+        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, locale, 42);
         JUnitAppender.assertWarnMessage("get request for turnout made with user name \"" + userName + "\"; should use system name");
         // request with system name should not log a warning
         message.put(JSON.NAME, "IT1");
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, Locale.ENGLISH);
+        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, locale, 42);
         assertTrue(JUnitAppender.verifyNoBacklog());
         // request with name of non-existant bean should not log a warning (but should throw exception)
         try {
             message.put(JSON.NAME, "IT2");
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, locale, 42);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());

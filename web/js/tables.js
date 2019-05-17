@@ -41,14 +41,8 @@ function rebuildTable(data) {
 		//build all data rows for table body, store item name in rows for later lookup
 		var tbody = '';
 		data.forEach(function (item) {
-			if (typeof item.data["id"] !== "undefined") {
-				key = item.data.id; //use id for row key if exists, else use name
-				jmri.socket.send(item.type, { id: key });
-			} else {
-				key = item.data.name;
-				jmri.socket.send(item.type, { name: key });
-			}
-			tbody += '<tr data-name="' + key + '">';
+			jmri.socket.send(item.type, { name: item.data.name });
+			tbody += '<tr data-name="' + item.data.name + '">';
 			$.each(item.data, function (index, value) {
 				tbody += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
 			});
@@ -181,12 +175,7 @@ $(document).ready(function () {
 			} else if ((data.type) && (data.type === "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (data.type !== "hello") && (data.type !== "pong")) {
-				if (typeof data.data["id"] !== "undefined") {
-					key = data.data.id; //use id for row key if exists, else use name
-				} else {
-					key = data.data.name;
-				}
-				replaceRow(key, data.data); //if single item, update the row
+				replaceRow(data.data.name, data.data); //if single item, update the row
 			}
 		},
 	});
