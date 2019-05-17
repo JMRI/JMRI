@@ -92,10 +92,10 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     
     /**
      * {@inheritDoc}
-     * @Deprecated since 4.15.7; use #notifyDecisionRequired
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
-    @deprecated
+    @Deprecated
     public void notifyStealThrottleRequired(jmri.LocoAddress address) {
         jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
