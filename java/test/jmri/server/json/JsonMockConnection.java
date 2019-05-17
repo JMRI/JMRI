@@ -56,7 +56,7 @@ public class JsonMockConnection extends JsonConnection {
      * {@link #isThrowIOException()} will return false.
      */
     @Override
-    public void sendMessage(@Nullable JsonNode message) throws IOException {
+    public void sendMessage(@Nullable JsonNode message, int id) throws IOException {
         if (this.throwIOException) {
             this.throwIOException = false;
             throw new IOException();
@@ -64,7 +64,7 @@ public class JsonMockConnection extends JsonConnection {
         if (message != null) {
             if (this.preferences.getValidateServerMessages()) {
                 try {
-                    this.schemas.validateMessage(message, true, this.getLocale());
+                    this.schemas.validateMessage(message, true, this.getLocale(), id);
                 } catch (JsonException ex) {
                     this.messages.add(ex.getJsonMessage());
                     Assert.fail(ex.getMessage());

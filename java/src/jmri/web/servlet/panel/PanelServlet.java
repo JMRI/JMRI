@@ -43,6 +43,10 @@ public class PanelServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
+            if (editor == null) {
+                log.warn("Requested Panel [" + name + "] does not exist.");
+                return "ERROR Requested panel [" + name + "] does not exist.";
+            }
 
             Element panel = new Element("panel");
 
@@ -95,6 +99,10 @@ public class PanelServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
+            if (editor == null) {
+                log.warn("Requested Panel [" + name + "] does not exist.");
+                return "ERROR Requested panel [" + name + "] does not exist.";
+            }
 
             ObjectNode root = this.mapper.createObjectNode();
             ObjectNode panel = root.putObject("panel");

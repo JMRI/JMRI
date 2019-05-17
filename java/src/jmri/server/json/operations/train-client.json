@@ -6,11 +6,11 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "Id of the train being requested"
+            "description": "Operations id for train being requested"
         },
         "location": {
-            "type": "string",
-            "description": "Name of location to move train to; if null, train is terminated; if absent, no action is taken"
+            "type": ["string", "null"],
+            "description": "Operations id of location to move train to; if null, train is terminated; if absent, no action is taken"
         }
     },
     "additionalProperties": false,

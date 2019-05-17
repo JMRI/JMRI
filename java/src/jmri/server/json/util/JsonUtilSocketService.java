@@ -37,26 +37,26 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
         switch (type) {
             case JSON.LOCALE:
                 // do nothing - we only want to prevent an error at this point
                 break;
             case JSON.PING:
-                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.PONG));
+                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.PONG), id);
                 break;
             case JSON.GOODBYE:
-                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), id);
                 break;
             case JSON.RAILROAD:
-                this.connection.sendMessage(this.service.doGet(type, name, data, locale));
+                this.connection.sendMessage(this.service.doGet(type, name, data, locale, id), id);
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
                         try {
-                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale()));
+                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale(), id), id);
                         } catch (JsonException ex) {
-                            this.connection.sendMessage(ex.getJsonMessage());
+                            this.connection.sendMessage(ex.getJsonMessage(), id);
                         }
                     } catch (IOException ex) {
                         InstanceManager.getDefault(WebServerPreferences.class).removePropertyChangeListener(this.rrNameListener);
@@ -67,14 +67,14 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                 });
                 break;
             default:
-                this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+                this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
                 break;
         }
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(this.service.doGetList(type, data, locale));
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
     }
 
     @Override
