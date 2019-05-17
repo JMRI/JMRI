@@ -54,5 +54,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["address", "isLongAddress", "type", "id", "sizeLimit", "engines"]
+    "required": ["address", "isLongAddress", "type", "name", "sizeLimit", "engines"]
 }

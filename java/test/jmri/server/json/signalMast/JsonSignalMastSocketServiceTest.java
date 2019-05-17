@@ -27,6 +27,8 @@ import org.junit.Test;
  */
 public class JsonSignalMastSocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testSignalMastChange() {
         try {
@@ -41,7 +43,7 @@ public class JsonSignalMastSocketServiceTest {
             JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
             JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
 
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
             // TODO: test that service is listener in SignalMastManager
             message = connection.getMessage();
             Assert.assertNotNull("Message is not null", message);
@@ -87,7 +89,7 @@ public class JsonSignalMastSocketServiceTest {
         try {
             // SignalMast Stop
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
             Assert.assertEquals("Stop", s.getAspect()); //aspect should be Stop
         } catch (IOException | JmriException | JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -97,7 +99,7 @@ public class JsonSignalMastSocketServiceTest {
         Exception exception = null;
         try {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
             Assert.assertEquals("Stop", s.getAspect());
         } catch (IOException | JmriException | JsonException ex) {
             exception = ex;
@@ -108,7 +110,7 @@ public class JsonSignalMastSocketServiceTest {
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
         exception = null;
         try {
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
         } catch (JsonException ex) {
             exception = ex;
         } catch (IOException | JmriException ex) {

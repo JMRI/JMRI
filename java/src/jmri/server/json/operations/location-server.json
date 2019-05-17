@@ -1,58 +1,44 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-engine-server-message",
+    "title": "jmri-json-location-server-message",
     "type": "object",
-    "description": "Data portion of message from JMRI to client for type \"engine\"",
+    "description": "Data portion of message from JMRI to client for type \"location\"",
     "properties": {
-        "id": {
+        "name": {
             "type": "string",
-            "description": "Id for engine"
+            "description": "Operations id for location"
         },
-        "number": {
+        "userName": {
             "type": "string",
-            "description": "The engine number"
+            "description": "Operations name for location"
         },
-        "road": {
-            "type": "string",
-            "description": "The engine owning railroad"
-        },
-        "type": {
-            "type": "string",
-            "description": "The engine type"
+        "carType": {
+            "type": "array",
+            "description": "The types of rolling stock accepted at location",
+            "items": {
+                "type": "string"
+            }
         },
         "length": {
-            "type": "int",
-            "description": "Current engine length for available siding calculations"
-        },
-        "color": {
-            "type": "string",
-            "description": "The color of the engine"
-        },
-        "owner": {
-            "type": "string",
-            "description": "The engine owner"
+            "type": "integer",
+            "description": "Current location length for available siding calculations"
         },
         "comment": {
             "type": "string",
-            "description": "Freeform comment concerning engine"
+            "description": "Freeform comment concerning location"
         },
-        "location": {
-            "type": "string",
-            "description": "The current location of the engine"
+        "reporter": {
+            "type": ["string", "null"],
+            "description": "The system name of the reporter for this location"
         },
-        "destination": {
-            "type": "string",
-            "description": "the current destination of the engine"
-        },
-        "model": {
-            "type": "string",
-            "description": "The model of engine"
-        },
-        "consist": {
-            "type": "string",
-            "description": "The name of the consist the engine is in"
+        "track": {
+            "type": "array",
+            "description": "The tracks at this location",
+            "items": {
+                "type": "object"
+            }
         }
     },
     "additionalProperties": false,
-    "required": ["id", "number", "road", "type", "length", "owner", "comment", "model", "consist"]
+    "required": ["name", "userName", "comment", "reporter", "carType"]
 }
