@@ -490,7 +490,7 @@ public class CbusEventTableAction {
         
         Element root = new Element("CbusEventDetails");  // NOI18N
         root.setAttribute("noNamespaceSchemaLocation",  // NOI18N
-            "https://merg.org.uk/cbuspublic/schema/MergCBUSEventTable.xsd",  // NOI18N
+            "https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSEventTable.xsd",  // NOI18N
             org.jdom2.Namespace.getNamespace("xsi",
             "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
