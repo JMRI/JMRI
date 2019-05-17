@@ -459,4 +459,22 @@ public interface Throttle {
     public void setRosterEntry(BasicRosterEntry re);
 
     public BasicRosterEntry getRosterEntry();
+    
+    /**
+     * Notify listeners that a Throttle has Release enabled or disabled.
+     * <p>
+     * For systems where release availability is variable.
+     *
+     * @param newVal true if Release enabled, else false
+     */
+    public void notifyThrottleReleaseEnabled( boolean newVal );
+    
+    /**
+     * Notify listeners that a Throttle has Dispatch enabled or disabled.
+     * <p>
+     * For systems where dispatch availability is variable.
+     *
+     * @param newVal true if Dispatch enabled, else false
+     */
+    public void notifyThrottleDispatchEnabled( boolean newVal );
 }

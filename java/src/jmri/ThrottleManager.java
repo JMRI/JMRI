@@ -193,15 +193,10 @@ public interface ThrottleManager {
     /**
      * Cancel a request for a throttle.
      * <P>
-     * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
-     * @deprecated since 4.15.7; use
-     * #cancelThrottleRequest(LocoAddress, ThrottleListener) instead
      *
      * @param re desired Roster Entry
      * @param l  ThrottleListener canceling the request for a throttle
      */
-    @Deprecated
     public void cancelThrottleRequest(BasicRosterEntry re, ThrottleListener l);
     
     /**

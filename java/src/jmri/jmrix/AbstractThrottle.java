@@ -661,6 +661,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * @param newVal true if Dispatch enabled, else false
      *
      */
+    @Override
     public void notifyThrottleDispatchEnabled( boolean newVal ) {
         if (_dispatchEnabled == null){
             _dispatchEnabled = !newVal; // make sure the 1st time is always sent
@@ -684,6 +685,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * @param newVal true if Release enabled, else false
      *
      */
+    @Override
     public void notifyThrottleReleaseEnabled( boolean newVal ) {
         if (_releaseEnabled == null){
             _releaseEnabled = !newVal; // make sure the 1st time is always sent
