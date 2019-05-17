@@ -79,7 +79,7 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
         if (message.getClient() == null) {
             new HashMap<>(this.clients).entrySet().forEach((client) -> {
                 try {
-                    client.getValue().sendMessage(node);
+                    client.getValue().sendMessage(node, 0);
                 } catch (IOException ex) {
                     this.unsubscribe(client.getKey());
                 }
@@ -88,7 +88,7 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
             JsonConnection connection = this.clients.get(message.getClient());
             if (connection != null) {
                 try {
-                    connection.sendMessage(node);
+                    connection.sendMessage(node, 0);
                 } catch (IOException ex) {
                     this.unsubscribe(message.getClient());
                 }
