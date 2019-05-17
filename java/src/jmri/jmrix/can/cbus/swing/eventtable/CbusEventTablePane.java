@@ -323,7 +323,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         newnodenumberSpinner.setToolTipText(Bundle.getMessage("NewNodeTip"));
         
         newev.add(new JLabel(Bundle.getMessage("CbusEvent")));
-        newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 65535, 1));
+        newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 65535, 1));
         JComponent compe = newevnumberSpinner.getEditor();
         JFormattedTextField fielde = (JFormattedTextField) compe.getComponent(0);
         DefaultFormatter formattere = (DefaultFormatter) fielde.getFormatter();
@@ -560,7 +560,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                 if(arg1 != null){
                     string = arg1.toString();
                     try {
-                        if (Integer.parseInt(string)==0){
+                        if ((Integer.parseInt(string)==0) && ( col != CbusEventTableDataModel.EVENT_COLUMN )){
                             string="";
                         }
                     } catch (NumberFormatException ex) {
