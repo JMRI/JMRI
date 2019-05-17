@@ -308,6 +308,33 @@ public class ThrottleFrameTest {
         // right now, just verify no error
         panel.saveThrottle();
     }
+    
+    @Test
+    public void testDispatchReleaseButtonPropertyChangeListener() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Assert.assertFalse("Release button NOT enabled as no loco",to.releaseButtonEnabled());
+        Assert.assertFalse("Dispatch button NOT enabled as no loco",to.dispatchButtonEnabled());
+        
+        to.setAddressValue(new DccLocoAddress(1234,true));
+        
+        Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
+        ssert.assertFalse("Dispatch button NOT enabled",to.dispatchButtonEnabled());
+        
+        to.getAttachedThrottle().notifyThrottleDispatchEnabled(true);
+        
+        Assert.assertTrue("Dispatch button enabled",to.dispatchButtonEnabled());
+        Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
+        
+        to.getAttachedThrottle().notifyThrottleDispatchEnabled(false);
+        to.getAttachedThrottle().notifyThrottleReleaseEnabled(false);
+        
+        Assert.assertFalse("Release button NOT enabled",to.releaseButtonEnabled());
+        Assert.assertFalse("Dispatch button NOT enabled",to.dispatchButtonEnabled());
+        
+        to.getAttachedThrottle().notifyThrottleReleaseEnabled(true);
+        Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
+    }
 
     @Before
     public void setUp() {
