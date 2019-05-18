@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
         QSIConnectionTypeListTest.class,
         QSIMenuTest.class,
         QsiProgrammerTest.class,
-        BundleTest.java,
+        BundleTest.class,
 })
 
 /**

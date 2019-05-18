@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
     SerialMonFrameTest.class,
     SerialMonPaneTest.class,
     SerialMonActionTest.class,
-    BundleTest.java,
+    BundleTest.class,
 })
 
 /**

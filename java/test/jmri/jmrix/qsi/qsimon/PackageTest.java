@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     QsiMonActionTest.class,
     QsiMonFrameTest.class,
-    BundleTest.java,
+    BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.swing package

@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
    ConnectionConfigTest.class,
    SerialDriverAdapterTest.class,
    jmri.jmrix.wangrow.serialdriver.configurexml.PackageTest.class,
-   BundleTest.java,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.wangrow.serialdriver package.
