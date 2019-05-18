@@ -278,7 +278,7 @@
       <a href="https://github.com/JMRI/website/graphs/contributors">the website</a>.
       
       <p>The 
-      <a href="/community/codeflower.shtml">JMRI CodeFlower</a>
+      <a href="/community/visuals/codeflower.shtml">JMRI CodeFlower</a>
       provides a dynamic view of the whole GitHub repository.
       It shows the relative size of the code in each file and the
       structure in which the files are stored.
@@ -290,13 +290,13 @@
       <a href="https://www.openhub.net/p/jmri/commits/summary">commits</a>.
       
       <p>Dennis Miller created a <a href=
-      "http://jmri.org/community/codeswarm.shtml">Code Swarm of
+      "http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm of
       JMRI development</a> that represents activity from inception to January 2009. A
       Code Swarm is a fascinating and dynamic visual representation
       of change as developers come and go and make changes to the
       files that make up a project. More information is available
       on the <a href=
-      "http://jmri.org/community/codeswarm.shtml">Code Swarm</a>
+      "http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a>
       page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
