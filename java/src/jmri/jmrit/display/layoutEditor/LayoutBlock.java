@@ -216,7 +216,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /* initializeLayoutBlockRouting */
-    protected void initializeLayoutBlockRouting() {
+    public void initializeLayoutBlockRouting() {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             return;
         }
@@ -230,6 +230,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /*
      * Accessor methods
      */
+    // TODO: deprecate and just use getUserName() directly
     public String getId() {
         return getUserName();
     }
