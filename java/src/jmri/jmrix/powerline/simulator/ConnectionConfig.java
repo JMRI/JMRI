@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
-    public final static String NAME = "Simulator";
+    public final static String NAME = Bundle.getMessage("PlSimulatorName");
 
     /**
      * Ctor for an object being created during load process; Swing init is

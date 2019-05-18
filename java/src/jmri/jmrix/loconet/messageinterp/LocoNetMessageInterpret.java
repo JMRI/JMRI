@@ -4809,7 +4809,7 @@ public class LocoNetMessageInterpret {
      * @return formated message
      */
     private static String interpretExtendedSlot_StatusData_Slots(LocoNetMessage l, int slot) {
-        //TOD there is still more data in this slot.
+        //TODO there is still more data in this slot.
         double msgInUse;
         double msgIdle;
         double msgFree;

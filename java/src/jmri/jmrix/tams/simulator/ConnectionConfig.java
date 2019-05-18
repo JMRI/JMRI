@@ -6,7 +6,7 @@ import javax.swing.JPanel;
  * Definition of objects to handle configuring a layout connection via a Tams
  * SerialDriverAdapter object.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2003 Copies from NCE
+ * @author Bob Jacobsen Copyright (C) 2001, 2003 Copied from NCE
  * @author kcameron Copyright (C) 2014
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {

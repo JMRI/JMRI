@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     PacketGenActionTest.class,
-    PacketGenFrameTest.class
+    PacketGenFrameTest.class,
+    BundleTest.java,
 })
 /**
  * Tests for the jmri.jmrix.swing package

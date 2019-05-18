@@ -139,7 +139,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc} 
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) { // TEST EBR ALWAYS VALID
+    public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
             addr = systemName.substring(prefix.length() + 1); // get only the address part
