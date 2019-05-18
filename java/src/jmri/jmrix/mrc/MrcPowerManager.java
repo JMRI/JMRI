@@ -26,7 +26,7 @@ public class MrcPowerManager
         super(memo);
         // standard Mrc - connect
         if (memo.getMrcTrafficController() == null) {
-            log.error("Power Manager Created, yet there is no Traffic Controller");
+            log.error("PowerManager Created, yet there is no Traffic Controller");
             return;
         }
         this.tc = memo.getMrcTrafficController();

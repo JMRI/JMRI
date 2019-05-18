@@ -22,7 +22,7 @@ public class NceLight extends AbstractLight {
      * 'systemName' was previously validated in NceLightManager
      * @param systemName system name for light
      * @param tc traffic controller for connection
-     * @param mgr light manager for light
+     * @param mgr LightManager for light
      */
     public NceLight(String systemName, NceTrafficController tc, NceLightManager mgr) {
         super(systemName);
@@ -39,7 +39,7 @@ public class NceLight extends AbstractLight {
      * @param systemName system name for light
      * @param userName userName for light
      * @param tc traffic controller for connection
-     * @param mgr light manager for light
+     * @param mgr LightManager for light
      */
     public NceLight(String systemName, String userName, NceTrafficController tc, NceLightManager mgr) {
         super(systemName, userName);

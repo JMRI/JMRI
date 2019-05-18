@@ -10,9 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * CAN CBUS implementation of a TurnoutManager.
+ * Implement TurnoutManager for CAN CBUS systems.
  * <p>
- * Turnouts must be manually created.
+ * System names are "MT+n;-m", where M is the user configurable system prefix,
+ * n and m are the events (signed for on/off, separated by ;).
+ * <p>
+ * Turnouts must be explicitly created, they are not polled.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1

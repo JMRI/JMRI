@@ -39,7 +39,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 
         /* First, we load things that should work on all systems */
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-        log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
+        log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
 
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
 

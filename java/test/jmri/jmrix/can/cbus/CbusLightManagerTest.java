@@ -351,87 +351,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertEquals("ML0;7", NameValidity.INVALID, l.validSystemNameFormat("ML0;7"));
     }
 
-    /*  method getNextValidAddress() is never used in a LightManager, tests not applicable
-    @Test
-    public void testgetNextValidAddress() {
-        CbusLightManager l = new CbusLightManager(memo);
-        try {
-            Assert.assertEquals("+17", "+17", l.getNextValidAddress("+17", "M"));
-            Light t =  l.provideLight("ML+17");
-            Assert.assertNotNull("exists", t);
-            Assert.assertEquals("+18", "+18", l.getNextValidAddress("+17", "M"));
-
-            Assert.assertEquals("+N45E22", "+N45E22", l.getNextValidAddress("+N45E22", "M"));
-            Light ta =  l.provideLight("ML+N45E22");
-            Assert.assertNotNull("exists", ta);
-            Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));
-
-
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-
-        try {
-            Assert.assertEquals("null", null, l.getNextValidAddress(null, "M"));
-
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            // Assert.assertTrue(true);
-        }
-    }
-
-    @Test
-    public void testgetNextValidAddressPt2() {
-        CbusLightManager l = new CbusLightManager(memo);
-        Light t =  l.provideLight("ML+65535");
-        Assert.assertNotNull("exists", t);
-
-        try {
-            Assert.assertEquals("+65535", null, l.getNextValidAddress("+65535", "M"));
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
-    }
-
-    @Test
-    public void testgetNextValidAddressPt3() {
-        CbusLightManager l = new CbusLightManager(memo);
-        Light t =  l.provideLight("ML+10");
-        Assert.assertNotNull("exists", t);
-
-        try {
-            Assert.assertEquals("+10", "+11", l.getNextValidAddress("+10", "M"));
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
-    }
-
-    @Test
-    public void testgetNextValidAddressPt4() {
-        CbusLightManager l = new CbusLightManager(memo);
-        Light t =  l.provideLight("ML+9");
-        Light ta =  l.provideLight("ML+10");
-        Assert.assertNotNull("exists", t);
-        Assert.assertNotNull("exists", ta);
-
-        try {
-            Assert.assertEquals(" null +9 +10", null, l.getNextValidAddress("+9", "M"));
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
-    }
-    */
-
     @Test
     public void testProvideswhenNotNull() {
         Light t = l.provideLight("+4");
@@ -440,42 +359,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         t = null;
         ta = null;
     }
-
-    /*  method getNextValidAddress() is never use in a LightManager, test not applicable
-    @Test
-    public void testcreateSystemName() {
-
-        CbusLightManager l = new CbusLightManager(memo);
-
-        try {
-            Assert.assertEquals("ML+10", "ML+10", l.createSystemName("+10", "M"));
-            Assert.assertEquals("ML+N34E610", "ML+N34E610", l.createSystemName("+N34E610", "M"));
-
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-
-        try {
-            Assert.assertEquals("M2L+10", "ML+10", l.createSystemName("+10", "M2"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-
-        try {
-            Assert.assertEquals("M2L+10", "ML+10", l.createSystemName("+10", "ZZZZZZZZZ"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-
-        try {
-            Assert.assertEquals("MLL", null, l.createSystemName("L", "M"));
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
-        }
-    }
-    */
 
     @Test
     public void testcreateNewLightException(){

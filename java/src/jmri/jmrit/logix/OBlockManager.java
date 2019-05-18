@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import jmri.managers.AbstractManager;
 
 /**
- * Basic Implementation of a OBlockManager.
+ * Basic Implementation of an OBlockManager.
  * <p>
  * Note that this does not enforce any particular system naming convention.
  * <p>

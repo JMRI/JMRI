@@ -362,9 +362,9 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     private UsbLightManager lightManager;
 
     /**
-     * get the light manager
+     * get the LightManager
      *
-     * @return the light manager
+     * @return the LightManager
      */
     public UsbLightManager getLightManager() {
         log.debug("* getLightManager()");

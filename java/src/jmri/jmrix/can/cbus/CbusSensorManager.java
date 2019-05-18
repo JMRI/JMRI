@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the CBUS-specific Sensor implementation.
+ * Implement SensorManager for CAN CBUS systems.
  * <p>
- * System names are "MSnnn", where M is the user-configurable system prefix,
- * nnn is the sensor number without padding.
+ * System names are "MS+n;-m", where M is the user configurable system prefix,
+ * n and m are the events (signed for on/off, separated by ;).
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */

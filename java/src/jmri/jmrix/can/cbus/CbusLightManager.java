@@ -11,11 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * CAN CBUS implementation of a LightManager.
+ * Implement LightManager for CAN CBUS systems.
  * <p>
- * Lights must be manually created.
+ * System names are "ML+n;-m", where M is the user configurable system prefix,
+ * n and m are the events (signed for on/off, separated by ;).
+ * <p>
+ * Lights must be explicitly created, they are not polled.
  *
  * @author Matthew Harris Copyright (C) 2015
+ * @author Egbert Broerse Copyright (C) 2019
  * @since 3.11.7
  */
 public class CbusLightManager extends AbstractLightManager {
@@ -44,7 +48,7 @@ public class CbusLightManager extends AbstractLightManager {
     @Nonnull
     public Light provideLight(@Nonnull String key) {
         String name = normalizeSystemName(key);
-        //log.warn("passed name {}", name);
+        //log.debug("passed name {}", name);
         Light result = getLight(name);
         if (result == null) {
             if (name.startsWith(prefix + typeLetter())) {
@@ -52,7 +56,6 @@ public class CbusLightManager extends AbstractLightManager {
             } else if (name.length() > 0) {
                 return newLight(makeSystemName(name), null); // checks for validity
             } else {
-                //log.error("invalid key \"" + name + "\" is invalid");
                 throw new IllegalArgumentException("\"" + name + "\" is invalid");
             }
         }
@@ -90,50 +93,6 @@ public class CbusLightManager extends AbstractLightManager {
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
-
-    /* createSystemName() and getNextValidAddress() are not used in code, or any other LightManager
-    * to be removed. Tests for these in jmri.jmrix.can.cbus.CbusLightManagerTest also commented out @since 4.15.7
-
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
-        // first, check validity
-        try {
-            validateSystemNameFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
-        }
-        // prefix + as service to user
-        String newAddress = CbusAddress.validateSysName(curAddress);
-        return prefix + typeLetter() + newAddress;
-    }
-
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
-        String testAddr = curAddress;
-        // make sure starting name is valid
-        try {
-            validateSystemNameFormat(testAddr);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
-        }
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
-        Light s = getBySystemName(prefix + typeLetter() + testAddr);
-        if (s == null) {
-            return testAddr;
-        }
-        // build local addresses
-        String newaddr = CbusAddress.getIncrement(testAddr);
-        if (newaddr == null) {
-            return null;
-        }
-        //If the new hardware address does not already exist then this can
-        //be considered the next valid address.
-        Light snew = getBySystemName(prefix + typeLetter() + newaddr);
-        if (snew == null) {
-            return newaddr;
-        }
-        return null;
-    }
-    */
 
     /**
      * {@inheritDoc} 

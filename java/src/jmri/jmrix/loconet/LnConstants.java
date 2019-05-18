@@ -69,8 +69,8 @@ package jmri.jmrix.loconet;
  * Those parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
  * permission of the copyright holder.
  * <p>
- * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
- * SUMMARY found in the Loconet(r) Personal Edition 1.
+ * Most major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
+ * SUMMARY found in the LocoNet(r) Personal Edition 1.
  * <p>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.

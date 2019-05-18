@@ -4,7 +4,7 @@ import jmri.Light;
 import jmri.jmrix.powerline.SerialTrafficController;
 
 /**
- * Implement light manager for powerline serial systems with Insteon 2412S
+ * Implement LightManager for powerline serial systems with Insteon 2412S
  * adapters
  * <p>
  * Just provide the specific objects at creation time.

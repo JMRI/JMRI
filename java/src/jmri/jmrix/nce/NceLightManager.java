@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for NCE systems
+ * Implement LightManager for NCE systems
  * <p>
  * System names are "NLnnnnn", where N is the user configurable system prefix,
  * nnnnn is the stationary decoder address.

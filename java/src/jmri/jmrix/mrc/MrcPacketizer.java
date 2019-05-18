@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission.
  * <p>
- * This is based upon the Packetizer used for Loconet Connections due to its
+ * This is based upon the Packetizer used for LocoNet Connections due to its
  * speed and efficiency to handle messages. This also takes some code from the
  * AbstractMRTrafficController, when dealing with handling replies to messages
  * sent.

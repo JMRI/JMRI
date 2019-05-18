@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Oak Tree serial systems.
+ * Implement LightManager for Oak Tree serial systems.
  * <p>
  * System names are "OLnnn", where O is the user configurable system prefix,
  * nnn is the bit number without padding.

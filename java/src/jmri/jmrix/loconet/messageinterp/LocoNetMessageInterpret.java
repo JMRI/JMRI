@@ -4662,7 +4662,7 @@ public class LocoNetMessageInterpret {
                 detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
                 break;
             case 251:
-                // Loconet stats
+                // LocoNet stats
                 // Identifying information
                 baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
                 detailInfo = interpretExtendedSlot_StatusData_LocoNet(l,slot);
