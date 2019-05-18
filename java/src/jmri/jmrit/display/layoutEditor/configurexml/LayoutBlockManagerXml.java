@@ -152,13 +152,28 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
 
             if (b != null) {
                 // set attributes
-                Color color = ColorUtil.stringToColor(e.getAttribute("trackcolor").getValue());
-                b.setBlockTrackColor(color);
-                color = ColorUtil.stringToColor(e.getAttribute("occupiedcolor").getValue());
-                b.setBlockOccupiedColor(color);
+                Color color = Color.BLACK;
+                try {
+                    color = ColorUtil.stringToColor(e.getAttribute("trackcolor").getValue());
+                    b.setBlockTrackColor(color);
+                } catch (IllegalArgumentException ex) {
+                    log.error("Invalid trackcolor {}; using black", e.getAttribute("trackcolor").getValue());
+                }
+                try {
+                    color = ColorUtil.stringToColor(e.getAttribute("occupiedcolor").getValue());
+                    b.setBlockOccupiedColor(color);
+                } catch (IllegalArgumentException ex) {
+                    color = Color.BLACK;
+                    log.error("Invalid occupiedcolor {}; using black", e.getAttribute("occupiedcolor").getValue(), color);
+                }
                 Attribute a = e.getAttribute("extracolor");
                 if (a != null) {
-                    b.setBlockExtraColor(ColorUtil.stringToColor(a.getValue()));
+                    try {
+                        b.setBlockExtraColor(ColorUtil.stringToColor(a.getValue()));
+                    } catch (IllegalArgumentException ex) {
+                        b.setBlockExtraColor(Color.BLACK);
+                        log.error("Invalid extracolor {}; using black", a.getValue(), color);
+                    }
                 }
                 a = e.getAttribute("occupancysensor");
                 if (a != null) {

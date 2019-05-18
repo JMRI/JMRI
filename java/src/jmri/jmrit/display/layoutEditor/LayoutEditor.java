@@ -9294,7 +9294,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setTurnoutCircleColor(Color color) {
         if (color == null) {
-            turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
+            turnoutCircleColor = getDefaultTrackColorColor();
         } else {
             turnoutCircleColor = color;
             JmriColorChooser.addRecentColor(color);
@@ -9306,7 +9306,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setTurnoutCircleThrownColor(Color color) {
         if (color == null) {
-            turnoutCircleThrownColor = ColorUtil.stringToColor(getDefaultTrackColor());
+            turnoutCircleThrownColor = getDefaultTrackColorColor();
         } else {
             turnoutCircleThrownColor = color;
             JmriColorChooser.addRecentColor(color);

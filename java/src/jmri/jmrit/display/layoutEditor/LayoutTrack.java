@@ -80,7 +80,7 @@ public abstract class LayoutTrack {
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;
-        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
+        defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
     }
 
     /**
