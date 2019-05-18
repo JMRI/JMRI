@@ -3094,6 +3094,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void setDecorations(Map<String, String> decorations) {
+        Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
         super.setDecorations(decorations);
         if (decorations != null) {
             for (Map.Entry<String, String> entry : decorations.entrySet()) {

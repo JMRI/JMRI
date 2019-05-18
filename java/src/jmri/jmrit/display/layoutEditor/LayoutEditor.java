@@ -9268,7 +9268,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
-        LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
         JmriColorChooser.addRecentColor(color);
     }
