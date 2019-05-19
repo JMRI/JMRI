@@ -8,6 +8,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
 
 import java.io.IOException;
 import jmri.Block;
@@ -184,7 +185,6 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         }
     }
 
-    @SuppressWarnings("null")
     @Test
     public void testDoPut() throws IOException, JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
@@ -198,11 +198,28 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             // add an invalid block by using a turnout name instead of a block name
             assertNull(manager.getBlock("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JSON.STATE, Block.UNOCCUPIED);
-            service.doPut(JsonBlock.BLOCK, null, message, locale, 0); // use null for @Nonnull parameter to force failure
+            service.doPut(JsonBlock.BLOCK, "", message, locale, 0); // use an empty name to trigger exception
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
-            assertEquals(500, ex.getCode());
+            assertEquals(404, ex.getCode()); // should be 400 or 500
         }
+    }
+
+    @Test
+    @Override
+    public void testDoDelete() throws JsonException {
+        BlockManager manager = InstanceManager.getDefault(BlockManager.class);
+        try {
+            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
+            service.doDelete(service.getType(), "non-existant", NullNode.getInstance(), locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
+            assertEquals("Message", "Object type block named \"non-existant\" not found.", ex.getMessage());
+            assertEquals("ID is 42", 42, ex.getId());
+        }
+        manager.createNewBlock("IB1", null);
+        
     }
 
     /**

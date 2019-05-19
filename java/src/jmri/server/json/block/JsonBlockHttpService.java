@@ -25,7 +25,7 @@ import jmri.server.json.sensor.JsonSensor;
 /**
  *
  * @author mstevetodd Copyright 2018
- * @author Randall Wood Copyright 2018
+ * @author Randall Wood Copyright 2018, 2019
  */
 public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
@@ -37,31 +37,17 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     public ObjectNode doGet(Block block, String name, String type, Locale locale, int id) throws JsonException {
         ObjectNode root = this.getNamedBean(block, name, type, locale, id); // throws JsonException if block == null
         ObjectNode data = root.with(JSON.DATA);
-        if (block != null) {
-            switch (block.getState()) {
-                case Block.UNDETECTED:
-                case Block.UNKNOWN:
-                    data.put(JSON.STATE, JSON.UNKNOWN);
-                    break;
-                default:
-                    data.put(JSON.STATE, block.getState());
-            }
-            if (block.getValue() == null) {
-                data.putNull(JSON.VALUE);
-            } else {
-                data.put(JSON.VALUE, block.getValue().toString());
-            }
-            if (block.getSensor() == null) {
-                data.putNull(JsonSensor.SENSOR);
-            } else {
-                data.put(JsonSensor.SENSOR, block.getSensor().getSystemName());
-            }
-            if (block.getReporter() == null) {
-                data.putNull(JsonReporter.REPORTER);
-            } else {
-                data.put(JsonReporter.REPORTER, block.getReporter().getSystemName());
-            }
+        switch (block.getState()) {
+            case Block.UNDETECTED:
+            case Block.UNKNOWN:
+                data.put(JSON.STATE, JSON.UNKNOWN);
+                break;
+            default:
+                data.put(JSON.STATE, block.getState());
         }
+        data.put(JSON.VALUE, block.getValue() != null ? block.getValue().toString() : null);
+        data.put(JsonSensor.SENSOR, block.getSensor() != null ? block.getSensor().getSystemName() : null);
+        data.put(JsonReporter.REPORTER, block.getReporter() != null ? block.getReporter().getSystemName() : null);
         return root;
     }
 
@@ -115,6 +101,12 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
             }
         }
         return this.doGet(block, name, type, locale, id);
+    }
+
+    @Override
+    protected void doDelete(Block bean, String name, String type, JsonNode data, Locale locale, int id)
+            throws JsonException {
+        deleteBean(bean, name, type, data, locale, id);
     }
 
     @Override
