@@ -103,7 +103,7 @@
       <a name="addBlock" id="addBlock"></a>
       <h3>Saving Blocks to disk</h3>
 
-      <p>Memories are saved in your layout configuration file, along
+      <p>Memories are is kept in your <i>layout configuration</i>, along
       with Turnouts, Sensors, Signal Heads, etc. To store this
       information on disk, use <b>Store Configuration...</b> in the
       <b>File</b> menu at the top of the Memory Variable Table (or other

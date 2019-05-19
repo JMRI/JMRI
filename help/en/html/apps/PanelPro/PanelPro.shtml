@@ -271,9 +271,11 @@
       "../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel
       Editor help page</a>.
 
-      <p>After getting the Panel the way you want, you can use the
+      <p>After getting the Panel the way you want, you use the
       "Store panel..." entry in the "Panels" menu to write it to an
-      .xml file. More information about the <a href=
+      .xml file, allowing to reload it the next ime you run JMRI
+      and see all your turnouts, sensors etc as you configured them.
+      More information about the <a href=
       "../../setup/Files.shtml">JMRI Configuration Files</a></p>
 
       <h3>Available Icons</h3>The JMRI library contains lots of
@@ -317,12 +319,11 @@
       prototypical, or can be simplified for easier and faster
       operation, as you prefer.
 
-      <p>It's also possible to create a panel where the "track"
-      lines change color to indicate whether the track is occupied.
-      The procedure for doing that is described on a <a href=
-      "ColorTrack.shtml">separate page</a>. <a name="cpe" id=
-      "cpe"></a></p>
+      <p>In JMRI it's also possible to create a panel where the "track"
+      lines change color to indicate whether the block is occupied.
+      In fact that is the scope of the next paragraph.</a>.
 
+      <a name="cpe" id="cpe"></a></p>
       <h2>The Control Panel Editor</h2>
 
       <p><b>Control Panel Editor</b> is simply an alternative view
@@ -388,14 +389,14 @@
       "../../../package/apps/TabbedPreferences.shtml">Preferences
       panel Help page</a>.</p>
 
-      <p>If you add a turnout, sensor or signal to a panel using
-      just a number, e.g. "23", it will be assigned to the first
-      system on the Preference panel. To access the 2nd system, you
-      have to use JMRI <a href=
-      "../../doc/Technical/Names.shtml">System Names</a>. For
-      example, if the second attachment is to a LocoNet system,
-      you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor as
-      LS21, etc. See the page on <a href=
+      <p>If you add a Turnout, Sensor or Signal Mast to a Panel
+      using just a number, e.g. "23" in the Add... pane of a table,
+      its System Name will be created using the System Connection
+      Prefix as set in the Preferences panel -&gt; Connections tab
+      (e.g. LT1 for a turnout on the L LocoNet connection).
+      As a second system connection is required to use a different
+      prefix, it is simple to use more than one hardware
+      system at the same time. See the page on <a href=
       "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for
       more information.</p>
       <!--#include virtual="/Footer" -->

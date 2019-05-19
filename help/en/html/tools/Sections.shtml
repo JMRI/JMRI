@@ -191,7 +191,7 @@
       direction being set as FORWARD travel, going from the source
       to destination Signal Mast. Please note that the Block
       details are not saved when the Panel is stored, but are
-      re-created when the file is loaded.</p>
+      re-created when the file is reloaded from disk.</p>
 
       <p>The tool will also automatically create forward and
       reverse direction Sensors and places them in the Section,

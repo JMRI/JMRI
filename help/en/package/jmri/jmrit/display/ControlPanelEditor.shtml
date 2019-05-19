@@ -29,57 +29,26 @@
 
       <p><b>Control Panel Editor</b> (CPE) is simply an alternative
       view and controller with exactly the same content data as
-      <b>Panel Editor</b> (PE). Storage and loading can be done
-      from either editor. You may change the view and control
-      of your Panel whenever and as often as you please (explained
-      below). The editor used to store the panel will
+      <b><a href="PanelEditor.shtml">Panel Editor</a></b> (PE).
+      Storage and loading can be done from either editor.
+      You may change the view and control of your Panel whenever
+      and as often as you please (explained below).
+      The editor used to store the panel will
       be the editor used at the next load of your Panel.</p>
 
-      <h2>Quick Reference for using the Mouse</h2>
-      When in edit mode, the following keystroke patterns are
-      available:
-
-      <ul>
-        <li>Click(left) - Select and Drag top item</li>
-
-        <li>Shift-Click(left) - Select and Drag item under top
-        item, i.e. 2nd item</li>
-
-        <li>Control-Click(left) - Select and Drag bottom item</li>
-
-        <li>Control-Shift-Click(left) - Show list of all selected
-        items, for superimposed item stacks</li>
-
-        <li>Click(right) - Select and Popup item property
-        changes</li>
-
-        <li>Shift-Click(right) - Select and Popup item property
-        changes for 2nd item</li>
-
-        <li>Control-Click(right) - Select and Popup item property
-        changes for bottom item</li>
-
-        <li>Control-Shift-Click(right) - Select and Popup item
-        property changes of selected item from stack<br>
-        Note: For Control-Shift-Click, keep holding the Control
-        and Shift keys down through the entire process of selecting
-        the item and the subsequent drag or popup on that item.
-        </li>
-      </ul>
-
-      <h2>Changing the View between Editors</h2>In either editor,
-      when in edit mode, the last item in the <b>File</b> menu is
-      <b>Change view to "xx"</b> ("xx" being the other editor).
-      Selecting this item switches the view from one editor mode to
-      the other editor mode.
-
-      <h2>Differences in the View between Editors</h2>Panel Editor
+      <h3>Differences in the View between Editors</h3>Panel Editor
       has a separate window for its editing functions. Control
       Panel Editor does not. In Panel Editor the <b>Edit</b> menu
       opens an edit window. In Control Panel Editor the <b>Edit</b>
       menu adds three additional menus to the panel: <b>File</b>,
       <b>Options</b>, <b>Zoom</b>, <b>Add Items</b>, <b>Circuit
       Builder</b> and <b>Draw Shapes</b>.
+
+      <h3>Changing the View between Editors</h3>In either editor,
+      when in edit mode, the last item in the <b>File</b> menu is
+      <b>Change view to "xx"</b> ("xx" being the other editor).
+      Selecting this item switches the view from one editor mode to
+      the other editor mode.
 
       <h2>Control Panel Editor Menus</h2>
       When in Edit mode, the following menus are displayed:
@@ -244,12 +213,12 @@
 
         <li><b>Disable Selecting Shapes</b></li>
       </ul>With the exception of Draw Polygon, each of the draw
-      items is make with a mouse click and drag. Polygon shapes are
+      items is made with a mouse click and drag. Polygon shapes are
       made with a sequence of mouse clicks and the polygon
       terminated with a double click or pressing the 'Done' button.
 
-      <p>When a shape is created or edited a window is displayed to
-      set shape attributes. Colors can be chosen for both the
+      <p>When a shape is created or edited a small pane is displayed
+      to set shape attributes. Colors can be chosen for both the
       outline and the fill. Also the line thickness of the outline
       and the transparency of the fill can be set. Precise
       dimensions can be set with the text fields at the bottom.</p>
@@ -260,6 +229,38 @@
       change the level of the shape when in operating (not editing)
       mode. This feature can be used to mask and unmask help
       information to your panel or to highlight items.</p>
+
+      <h2>Quick Reference for using the Mouse</h2>
+      When in edit mode, the following keystroke patterns are
+      available:
+
+      <ul>
+        <li>Click(left) - Select and Drag top item</li>
+
+        <li>Shift-Click(left) - Select and Drag item under top
+        item, i.e. 2nd item</li>
+
+        <li>Control-Click(left) - Select and Drag bottom item</li>
+
+        <li>Control-Shift-Click(left) - Show list of all selected
+        items, for superimposed item stacks</li>
+
+        <li>Click(right) - Select and Popup item property
+        changes</li>
+
+        <li>Shift-Click(right) - Select and Popup item property
+        changes for 2nd item</li>
+
+        <li>Control-Click(right) - Select and Popup item property
+        changes for bottom item</li>
+
+        <li>Control-Shift-Click(right) - Select and Popup item
+        property changes of selected item from stack<br>
+        Note: For Control-Shift-Click, keep holding the Control
+        and Shift keys down through the entire process of selecting
+        the item and the subsequent drag or popup on that item.
+        </li>
+      </ul>
 
       <h2>Mouse operation in Control Panel Editor</h2>
       Control Panel Editor does not implement the rollover
@@ -295,7 +296,7 @@
       <p>A background icon (i.e. an icon at level 1) can be moved
       by dragging it with the control key held down.</p>
 
-      <h2>Duplicating Selections Within Control Panel
+      <h2>Duplicating Selections in Control Panel
       Editor</h2>
       Copying an item or selection group is done by
       bringing up the popup for one of the selected items. When the
@@ -327,6 +328,7 @@
       font size is changed in all items in the group. If say, a
       fast clock were included in this group, then no change would
       be made to the clock.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

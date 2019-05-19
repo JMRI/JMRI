@@ -136,14 +136,19 @@
 
       <p>There's a <a href=
       "../../html/setup/Dropbox.shtml">separate Help page</a> with
-      information on sharing files between computers using Dropbox.
-      <a name="Startup" id="Startup"></a></p>
+      information on sharing files between computers using Dropbox.</p>
 
+      <a name="Startup" id="Startup"></a>
       <h2>Start Up</h2>
 
       <p><em>Start Up</em> preferences allow windows and files to
       be opened, scripts to be run, and additional buttons to be
-      placed on the main window when the application starts.</p>
+      placed on the main window when the application starts.<br>
+      A very common use is an Open File action (see below) to
+      automatically load your last stored <a href=
+      "../jmri/jmrit/display/PanelMenuHelp.shtml">layout
+      configuration file</a> at startup, so all your turnouts,
+      sensors, panels etc. are available again.</p>
 
       <p>Click the <strong>Add &#9662;</strong> button and select
       the type of start up action to add. The new action will be
@@ -153,7 +158,9 @@
       should be the last items in the start up order. Start up
       order can be changed by selecting a start up item and moving
       it <em>up</em> or <em>down</em> in the list.</p>
-
+      <a href="images/PrefsStartup4_15.png"><img src=
+      "images/PrefsStartup4_15.png" height="232" width="466" align=
+      "right" alt="JMRI v4.2 Roster Prefs tab"></a>
       <p>There are five types of start up actions:</p>
 
       <dl>
@@ -190,10 +197,15 @@
         many routes as you like; each will be set in order. Note
         that any files the route depends upon need to be opened
         before setting the route.</dd>
-      </dl><a name="Display" id="Display"></a>
+      </dl>
 
+      <a name="Display" id="Display"></a>
       <h2>Display</h2>
 
+      <a href="images/PrefsGui4_15.png"><img src=
+      "images/PrefsGui4_15.png" height="194" width="478" align=
+      "right" alt="JMRI v4.15 GUI Prefs tab"></a>
+      <a name="Gui" id="Gui"></a>
       <dl>
         <dt>GUI</dt>
 
@@ -258,10 +270,11 @@
         size and style. Also, you can choose to save both the size
         and location of the System Console window so that it always
         appears in the same place and at the same size.</dd>
-      </dl><a href="images/PrefsMsgPane421.png"><img src=
-      "images/PrefsMsgPane421.png" height="214" width="375" align=
-      "right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name=
-      "Messages" id="Messages"></a>
+        </dl>
+        <a href="images/PrefsMessages.png"><img src=
+        "images/PrefsMessages.png" height="194" width="479" align=
+        "right" alt="JMRI v4.17 Messages Prefs tab"></a> <a name=
+        "Messages" id="Messages"></a>
 
       <h2>Messages</h2>This allows you to change the way that
       information and warning messages are displayed in JMRI.<br>
@@ -277,7 +290,7 @@
 
       <a id="programmer" name="programmer"></a>
       <dl>
-        <dt>Programmer</dt>
+        <dt>Programmer tab</dt>
 
         <dd>
           The DecoderPro programmer allows you to select how much
@@ -355,7 +368,7 @@
           will pick up new values of the options, without having to close and restart the program.
         </dd>
 
-        <dt>Roster</dt>
+        <dt>Roster tab</dt>
 
         <dd>
           Normally, the Roster is stored in a standard location as

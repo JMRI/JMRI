@@ -612,8 +612,6 @@
 
 <mapID target="html.hardware.modbus.index_documentation" url="html/hardware/modbus/index.shtml#documentation"/>
 
-<mapID target="html.apps.PanelPro.ColorTrack" url="html/apps/PanelPro/ColorTrack.shtml"/>
-
 <mapID target="html.tools.Logix_variable" url="html/tools/Logix.shtml#variable"/>
 
 <mapID target="html.hardware.powerline.Names" url="html/hardware/powerline/Names.shtml"/>
