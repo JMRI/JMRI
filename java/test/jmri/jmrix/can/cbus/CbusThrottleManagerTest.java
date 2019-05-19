@@ -47,15 +47,11 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         _cs = new CbusDummyCS(memo); // we are testing the tm, not the command station
         _cs.setDelay(0); // no need to simulate network delay
         
-        DccThrottle throttle = null;
-        boolean failedThrottleRequest = false;
-        int flagGotStealRequest = -1;
-        
     }
     
-    private DccThrottle throttle;
-    private boolean failedThrottleRequest = false;
-    private int flagGotStealRequest = -1;
+    DccThrottle throttle;
+    boolean failedThrottleRequest = false;
+    int flagGotStealRequest = -1;
 
     @After
     public void tearDown() {
