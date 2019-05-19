@@ -33,7 +33,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     private boolean _handleExpectedSecondLevelRequest = false;
     private int _intAddr;
     private DccLocoAddress _dccAddr;
-    private CanSystemConnectionMemo _memo;
 
     private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
 
@@ -41,7 +40,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         super(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
-        _memo = memo;
     }
     
     public void dispose() {

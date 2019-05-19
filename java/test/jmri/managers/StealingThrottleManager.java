@@ -37,8 +37,9 @@ public class StealingThrottleManager extends DebugThrottleManager {
     }
     
     /**
-     * @Deprecated since 4.15.7; use #responseThrottleDecision
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      */
+    @Deprecated
     @Override
     public void stealThrottleRequest(LocoAddress a, ThrottleListener l,boolean steal){
         if(steal) {
