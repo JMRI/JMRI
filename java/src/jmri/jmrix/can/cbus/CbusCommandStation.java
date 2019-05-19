@@ -171,7 +171,7 @@ public class CbusCommandStation implements CommandStation {
      */
     protected boolean isStealAvailable() {
         if ( getMasterCommandStation() != null ) {
-            log.debug("found master command sttaion");
+            log.debug("found master command station");
             if ( getMasterCommandStation().getNV(2) > -1 ){
                 log.debug("nv 2 has a value");
                 return (( getMasterCommandStation().getNV(2) >> 1 ) & 1) != 0; // NV2 bit 1 set

@@ -1,14 +1,12 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * Test steal or sharing functionality of ThrottleFrame
@@ -36,8 +34,8 @@ public class StealingOrSharingThrottleTest {
         // request is expected next, and we want to steal.
         to.answerStealShareQuestionSteal();
 
-        Assert.assertEquals("address set",new DccLocoAddress(42,false),
-		                    to.getAddressValue());
+        Assert.assertEquals("address set",new DccLocoAddress(42,false),to.getAddressValue());
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a steal decision");
 
         to.pushReleaseButton();	
     }
@@ -50,11 +48,11 @@ public class StealingOrSharingThrottleTest {
         to.pushSetButton();
 
         // because of the throttle manager we are using, a steal or share
-        // request is expected next, and we want to steal.
+        // request is expected next, and we want to share.
         to.answerStealShareQuestionShare();
 
-        Assert.assertEquals("address set",new DccLocoAddress(42,false),
-		                    to.getAddressValue());
+        Assert.assertEquals("address set",new DccLocoAddress(42,false),to.getAddressValue());
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a share decision");
 
         to.pushReleaseButton();	
     }
@@ -68,7 +66,7 @@ public class StealingOrSharingThrottleTest {
 
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we want to cancel.
-        to.answerStealShareQuestionCancel(); 
+        to.answerStealShareQuestionCancel();
  
         Assert.assertFalse("release button disabled",to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled",to.setButtonEnabled());
@@ -93,12 +91,40 @@ public class StealingOrSharingThrottleTest {
 
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we want to share.
-        to.answerStealShareQuestionShare(); 
+        to.answerStealShareQuestionShare();
 
-        Assert.assertEquals("address set",new DccLocoAddress(4245,true),
-		                    to.getAddressValue());
+        Assert.assertEquals("address set",new DccLocoAddress(4245,true),to.getAddressValue());
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a share decision");
 
         to.pushReleaseButton();	
+    }
+    
+    @Test
+    public void testPreferenceSteal() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // set preference to silent steal
+        ThrottlesPreferences tp = jmri.InstanceManager.getDefault(ThrottlesPreferences.class);
+        tp.setSilentSteal(true);
+
+        to.typeAddressValue(42);
+        to.pushSetButton();
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a steal decision");
+        
+    }
+    
+    @Test
+    public void testPreferenceShare() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // set preference to silent share
+        ThrottlesPreferences tp = jmri.InstanceManager.getDefault(ThrottlesPreferences.class);
+        tp.setSilentShare(true);
+
+        to.typeAddressValue(42);
+        to.pushSetButton();
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a share decision");
+        
     }
 
 
@@ -106,7 +132,7 @@ public class StealingOrSharingThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        // these tests use the SharingThrottleManager.
+        // these tests use the StealingOrSharingThrottleManager.
         jmri.ThrottleManager m = new jmri.managers.StealingOrSharingThrottleManager();
         jmri.InstanceManager.setThrottleManager(m);
         

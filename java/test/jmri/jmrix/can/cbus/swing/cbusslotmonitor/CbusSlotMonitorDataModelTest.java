@@ -500,7 +500,7 @@ public class CbusSlotMonitorDataModelTest {
         t.tablefeedback().setText("");
         r.setElement(3, 2); // error byte 3 loco address taken
         t.reply(r);
-        Assert.assertTrue(t.tablefeedback().getText().contains("Loco address taken for address 777"));
+        Assert.assertTrue(t.tablefeedback().getText().contains("Loco address 777 taken"));
         
         
         t.tablefeedback().setText("");

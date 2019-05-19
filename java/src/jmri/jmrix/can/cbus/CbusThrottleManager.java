@@ -248,7 +248,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             errStr = Bundle.getMessage("ERR_LOCO_STACK_FULL") + " " + rcvdIntAddr;
                         }
                         else if ( errCode == CbusConstants.ERR_LOCO_ADDRESS_TAKEN ){
-                            errStr = Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN") + " " + rcvdIntAddr;
+                            errStr = Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN",rcvdIntAddr);
                         }
                         
                         log.debug("handlexpected {} _dccAddr {} got {} ",_handleExpected,_dccAddr,rcvdDccAddr);
@@ -263,7 +263,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             // if this is the result of a share or steal request,
                             // we need to stop here and inform the ThrottleListener
                             if ( _handleExpectedSecondLevelRequest ){
-                                failedThrottleRequest(_dccAddr, Bundle.getMessage("CBUS_ERROR") + errStr);
+                                failedThrottleRequest(_dccAddr, errStr);
                                 return;
                             }
                             
@@ -274,15 +274,16 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             boolean steal = false;
                             boolean share = false;
                             
-                            if ( jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) != null ) {
-                                CbusCommandStation cs = (CbusCommandStation) _memo.get(jmri.CommandStation.class);
+                            CbusCommandStation cs = (CbusCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
+        
+                            if ( cs != null ) {
                                 log.debug("cs says can steal {}, can share {}", cs.isStealAvailable(),cs.isShareAvailable() );
                                 steal = cs.isStealAvailable();
                                 share = cs.isShareAvailable();
                             }
                             
                             if ( !steal && !share ){
-                                failedThrottleRequest(_dccAddr, Bundle.getMessage("CBUS_ERROR") + errStr);
+                                failedThrottleRequest(_dccAddr, errStr);
                                 return;
                             }
                             else if ( steal && share ){
@@ -297,7 +298,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                                 notifyDecisionRequest(_dccAddr,DecisionType.SHARE);
                                 return;
                             }
-                            
                         } else {
                             log.debug("ERR address not matched");
                         }
@@ -576,7 +576,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         }
         else if ( question == DecisionType.STEAL_OR_SHARE ){
             if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-                log.info("Creating new ThrottlesPreference Instance");
+                log.debug("Creating new ThrottlesPreference Instance");
                 jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
             }
             ThrottlesPreferences tp = jmri.InstanceManager.getDefault(ThrottlesPreferences.class);

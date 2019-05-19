@@ -742,8 +742,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 buf.append(rcvdIntAddr);
                 break;
             case 2:
-                buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
-                buf.append(rcvdIntAddr);
+                buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN",rcvdIntAddr));
                 break;
             case 3:
                 buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT",one));

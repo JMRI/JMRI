@@ -77,8 +77,8 @@ public class CbusOpCodes {
                     buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
                     break;
                 case 2:
-                    buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
-                    buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
+                    buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN", 
+                    locoFromBytes(msg.getElement(1),msg.getElement(2))));
                     break;
                 case 3:
                     buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT",msg.getElement(1)));

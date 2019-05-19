@@ -7,6 +7,9 @@ import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.LocoAddress;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This is an extension of the DebugThrottleManager that always requires
  * the calling throttle object to share to get a valid throttle.
@@ -56,10 +59,12 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision){
         if ( decision == ThrottleListener.DecisionType.STEAL ) {
+            log.error("1: Got a steal decision");
             DccLocoAddress a = (DccLocoAddress) address;
             notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
         }
         else if ( decision == ThrottleListener.DecisionType.SHARE ) {
+            log.error("1: Got a share decision");
             DccLocoAddress a = (DccLocoAddress) address;
             notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
         }
@@ -68,5 +73,5 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
             failedThrottleRequest(address,"user declined to steal or share");
         }
     }
-
+    private final static Logger log = LoggerFactory.getLogger(StealingOrSharingThrottleManager.class);
 }

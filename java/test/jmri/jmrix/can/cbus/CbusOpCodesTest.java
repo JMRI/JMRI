@@ -48,7 +48,7 @@ public class CbusOpCodesTest {
         m.setElement(3, 0x01);
         Assert.assertEquals("CBUS_ERR 1","Command Station Error Loco stack full for address 3215 L",CbusOpCodes.decode(m));
         m.setElement(3, 0x02);
-        Assert.assertEquals("CBUS_ERR 2","Command Station Error Loco address taken for address 3215 L",CbusOpCodes.decode(m));
+        Assert.assertEquals("CBUS_ERR 2","Command Station Error Loco address 3215 L taken",CbusOpCodes.decode(m));
         m.setElement(3, 0x03);
         Assert.assertEquals("CBUS_ERR 3","Command Station Error Session 204 not present on Command Station",CbusOpCodes.decode(m));
         m.setElement(3, 0x04);
