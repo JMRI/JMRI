@@ -74,9 +74,10 @@ public class ProxyTurnoutManagerTest {
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;
+            System.out.println(ex.getMessage());
         }
         Assert.assertTrue("Exception thrown properly", correct);
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT");
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"\" needed non-empty name to follow " + l.getSystemNamePrefix());
     }
 
     @Test

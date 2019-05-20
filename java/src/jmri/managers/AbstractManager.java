@@ -80,7 +80,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
-        return getSystemPrefix() + typeLetter() + s;
+        String prefix = getSystemNamePrefix();
+        if (s.isEmpty()) {
+            log.error("Invalid system name for {}: \"\" needed non-empty name to follow {}", getBeanTypeHandled(), prefix);
+            throw new IllegalArgumentException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty name to follow " + prefix);
+        }
+        return prefix + s;
     }
 
     /** {@inheritDoc} */
