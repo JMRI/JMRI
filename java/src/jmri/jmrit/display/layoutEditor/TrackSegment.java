@@ -1721,7 +1721,7 @@ public class TrackSegment extends LayoutTrack {
             if (type == 2) return lt.getBeanReferences("A");  // NOI18N
             if (type == 3) return lt.getBeanReferences("B");  // NOI18N
             if (type == 4) return lt.getBeanReferences("C");  // NOI18N
-            if (type == 5) return lt.getBeanReferences("D");  // NOI18N
+            return lt.getBeanReferences("D");  // NOI18N
         }
 
         if (type > 5 && type < 10 && conn instanceof LevelXing) {
@@ -1729,7 +1729,7 @@ public class TrackSegment extends LayoutTrack {
             if (type == 6) return lx.getBeanReferences("A");  // NOI18N
             if (type == 7) return lx.getBeanReferences("B");  // NOI18N
             if (type == 8) return lx.getBeanReferences("C");  // NOI18N
-            if (type == 9) return lx.getBeanReferences("D");  // NOI18N
+            return lx.getBeanReferences("D");  // NOI18N
         }
 
         if (type > 20 && type < 25 && conn instanceof LayoutSlip) {
@@ -1737,7 +1737,7 @@ public class TrackSegment extends LayoutTrack {
             if (type == 21) return ls.getBeanReferences("A");  // NOI18N
             if (type == 22) return ls.getBeanReferences("B");  // NOI18N
             if (type == 23) return ls.getBeanReferences("C");  // NOI18N
-            if (type == 24) return ls.getBeanReferences("D");  // NOI18N
+            return ls.getBeanReferences("D");  // NOI18N
         }
 
         return items;
