@@ -116,7 +116,7 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         DefaultFormatter formatterNd = (DefaultFormatter) fieldNd.getFormatter();
         formatterNd.setCommitsOnValidEdit(true);
 
-        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(1,_ndEv.getEn()), 1, 65535, 1));
+        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getEn()), 0, 65535, 1));
         JComponent compEv = numberSpinnerEv.getEditor();
         JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
