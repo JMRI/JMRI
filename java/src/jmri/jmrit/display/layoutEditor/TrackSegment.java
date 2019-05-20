@@ -1702,7 +1702,7 @@ public class TrackSegment extends LayoutTrack {
     public ArrayList<String> getPointReferences(int type, LayoutTrack conn) {
         ArrayList<String> items = new ArrayList<>();
 
-        if (type == 1 && conn instanceof PositionablePoint) {
+        if (type == POS_POINT && conn instanceof PositionablePoint) {
             PositionablePoint pt = (PositionablePoint) conn;
             if (!pt.getEastBoundSignal().isEmpty()) items.add(pt.getEastBoundSignal());
             if (!pt.getWestBoundSignal().isEmpty()) items.add(pt.getWestBoundSignal());
@@ -1716,27 +1716,27 @@ public class TrackSegment extends LayoutTrack {
             return items;
         }
 
-        if (type > 1 && type < 6 && conn instanceof LayoutTurnout) {
+        if ((type == TURNOUT_A || type == TURNOUT_B || type == TURNOUT_C || type == TURNOUT_D) && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
-            if (type == 2) return lt.getBeanReferences("A");  // NOI18N
-            if (type == 3) return lt.getBeanReferences("B");  // NOI18N
-            if (type == 4) return lt.getBeanReferences("C");  // NOI18N
+            if (type == TURNOUT_A) return lt.getBeanReferences("A");  // NOI18N
+            if (type == TURNOUT_B) return lt.getBeanReferences("B");  // NOI18N
+            if (type == TURNOUT_C) return lt.getBeanReferences("C");  // NOI18N
             return lt.getBeanReferences("D");  // NOI18N
         }
 
-        if (type > 5 && type < 10 && conn instanceof LevelXing) {
+        if ((type == LEVEL_XING_A || type == LEVEL_XING_B || type == LEVEL_XING_C || type == LEVEL_XING_D) && conn instanceof LevelXing) {
             LevelXing lx = (LevelXing) conn;
-            if (type == 6) return lx.getBeanReferences("A");  // NOI18N
-            if (type == 7) return lx.getBeanReferences("B");  // NOI18N
-            if (type == 8) return lx.getBeanReferences("C");  // NOI18N
+            if (type == LEVEL_XING_A) return lx.getBeanReferences("A");  // NOI18N
+            if (type == LEVEL_XING_B) return lx.getBeanReferences("B");  // NOI18N
+            if (type == LEVEL_XING_C) return lx.getBeanReferences("C");  // NOI18N
             return lx.getBeanReferences("D");  // NOI18N
         }
 
-        if (type > 20 && type < 25 && conn instanceof LayoutSlip) {
+        if ((type == SLIP_A || type == SLIP_B || type == SLIP_C || type == SLIP_D) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
-            if (type == 21) return ls.getBeanReferences("A");  // NOI18N
-            if (type == 22) return ls.getBeanReferences("B");  // NOI18N
-            if (type == 23) return ls.getBeanReferences("C");  // NOI18N
+            if (type == SLIP_A) return ls.getBeanReferences("A");  // NOI18N
+            if (type == SLIP_B) return ls.getBeanReferences("B");  // NOI18N
+            if (type == SLIP_C) return ls.getBeanReferences("C");  // NOI18N
             return ls.getBeanReferences("D");  // NOI18N
         }
 
