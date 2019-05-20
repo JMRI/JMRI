@@ -22,6 +22,7 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.reporter.JsonReporter;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -142,6 +143,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
         }
+        JUnitAppender.assertErrorMessage("Invalid system name for Reporter: \"\" needed non-empty name to follow ID");
     }
 
     @Test
