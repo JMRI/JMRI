@@ -25,7 +25,7 @@ public class TrainIconXml extends LocoIconXml {
      *
      * @param o Object to store, of type TrainIcon
      * @return Element containing the complete info
-     * @deprecated Never ever used in operations or anywhere else
+     * @deprecated Never ever used in operations or anywhere else, since 4.15.7
      */
     @Deprecated
     @Override
@@ -65,6 +65,7 @@ public class TrainIconXml extends LocoIconXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @deprecated Never ever used in operations or anywhere else, since 4.15.7
      */
     @Override
     @Deprecated
