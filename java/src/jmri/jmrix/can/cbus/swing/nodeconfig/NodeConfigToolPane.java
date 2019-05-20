@@ -115,7 +115,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         _memo = memo;
         _selectedNode = -1;
         
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        try {
+            preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        } catch (NullPointerException e) {
+            log.warn("Unable to get CBUS Preferences from Instance Manager");
+        }
         init();
         
     }

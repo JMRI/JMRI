@@ -5,6 +5,7 @@ import jmri.CabSignalManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.ThrottleManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
@@ -68,6 +69,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
         
+        InstanceManager.setDefault(CbusEventTableDataModel.class,getCbusEventTableDataModel());
+        
     }
 
     /**
@@ -105,6 +108,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         } else if (type.equals(CbusNodeTableDataModel.class)) {
             return true;
         } else if (type.equals(CabSignalManager.class)) {
+            return true;
+        } else if (type.equals(CbusEventTableDataModel.class)) {
             return true;
         }
         
@@ -144,6 +149,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getCbusNodeTableDataModel();
         } else if (T.equals(CabSignalManager.class)) {
             return (T) getCabSignalManager();
+        } else if (T.equals(CbusEventTableDataModel.class)) {
+            return (T) getCbusEventTableDataModel();
         }
         return null; // nothing, by default
     }
@@ -299,7 +306,18 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return cbusNodeTableDataModel;
     }
     
+    private CbusEventTableDataModel cbusEventTable = null;
     
+    public CbusEventTableDataModel getCbusEventTableDataModel(){
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (cbusEventTable == null) {
+            cbusEventTable = new CbusEventTableDataModel(adapterMemo, 5, CbusEventTableDataModel.MAX_COLUMN);
+            InstanceManager.store(cbusEventTable, CbusEventTableDataModel.class);
+        }
+        return cbusEventTable;
+    }
     
     protected CbusCabSignalManager cabSignalManager;
 
@@ -316,6 +334,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     @Override
     public void dispose() {
+        
+        if ( cbusEventTable != null ){
+            InstanceManager.deregister(cbusEventTable, CbusEventTableDataModel.class);
+        }
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
