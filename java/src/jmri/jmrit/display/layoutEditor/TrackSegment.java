@@ -1586,9 +1586,11 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.removeTrackSegment(TrackSegment.this);
-                remove();
-                dispose();
+                if (canRemoveTrackSegment(TrackSegment.this)) {
+                    layoutEditor.removeTrackSegment(TrackSegment.this);
+                    remove();
+                    dispose();
+                }
             }
         });
         popupMenu.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
@@ -1662,6 +1664,97 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popupMenu;
     }   // showPopup
+
+    /**
+     * Check for active block boundaries.
+     * <p>
+     * If either end of the track segment has attached objects, such as signal
+     * masts signal heads or NX sensors, the track segment cannot be deleted.
+     * @param ts The track segment that is going to be deleted if possible.
+     * @return true if the track segment can be deleted.
+     */
+    public boolean canRemoveTrackSegment(TrackSegment ts) {
+        List<String> itemList = new ArrayList<>();
+
+        int type1 = ts.getType1();
+        log.info("type1 = {}", type1);
+        LayoutTrack conn1 = ts.getConnect1();
+        itemList.addAll(getPointReferences(type1, conn1));
+
+        int type2 = ts.getType2();
+        log.info("type2 = {}", type2);
+        LayoutTrack conn2 = ts.getConnect2();
+        itemList.addAll(getPointReferences(type2, conn2));
+
+        if (!itemList.isEmpty()) {
+            itemList.sort(null);
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",
+                    Bundle.getMessage("DeleteTrackItem", Bundle.getMessage("TrackSegment"))));  // NOI18N
+            for (String item : itemList) {
+                msg.append("\n    " + item);  // NOI18N
+            }
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+        return itemList.isEmpty();
+    }
+
+    public ArrayList<String> getPointReferences(int type, LayoutTrack conn) {
+        ArrayList<String> items = new ArrayList<>();
+        switch (type) {
+            case 1:
+                if (conn instanceof PositionablePoint) {
+                    PositionablePoint pt = (PositionablePoint) conn;
+                    if (!pt.getEastBoundSignal().isEmpty()) items.add(pt.getEastBoundSignal());
+                    if (!pt.getWestBoundSignal().isEmpty()) items.add(pt.getWestBoundSignal());
+                    if (!pt.getEastBoundSignalMastName().isEmpty()) items.add(pt.getEastBoundSignalMastName());
+                    if (!pt.getWestBoundSignalMastName().isEmpty()) items.add(pt.getWestBoundSignalMastName());
+                    if (!pt.getEastBoundSensorName().isEmpty()) items.add(pt.getEastBoundSensorName());
+                    if (!pt.getWestBoundSensorName().isEmpty()) items.add(pt.getWestBoundSensorName());
+                    if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
+                        items.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
+                    }
+                    return items;
+                }
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                if (conn instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) conn;
+                    if (type == 2) return lt.getBeanReferences("A");  // NOI18N
+                    if (type == 3) return lt.getBeanReferences("B");  // NOI18N
+                    if (type == 4) return lt.getBeanReferences("C");  // NOI18N
+                    if (type == 5) return lt.getBeanReferences("D");  // NOI18N
+                }
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                if (conn instanceof LevelXing) {
+                    LevelXing lx = (LevelXing) conn;
+                    if (type == 6) return lx.getBeanReferences("A");  // NOI18N
+                    if (type == 7) return lx.getBeanReferences("B");  // NOI18N
+                    if (type == 8) return lx.getBeanReferences("C");  // NOI18N
+                    if (type == 9) return lx.getBeanReferences("D");  // NOI18N
+                }
+            case 21:
+            case 22:
+            case 23:
+            case 24:
+                if (conn instanceof LayoutSlip) {
+                    LayoutSlip ls = (LayoutSlip) conn;
+                    if (type == 21) return ls.getBeanReferences("A");  // NOI18N
+                    if (type == 22) return ls.getBeanReferences("B");  // NOI18N
+                    if (type == 23) return ls.getBeanReferences("C");  // NOI18N
+                    if (type == 24) return ls.getBeanReferences("D");  // NOI18N
+                }
+            default:
+                return items;
+        }
+    }
 
     /**
      * split track segment into two track segments with an anchor between

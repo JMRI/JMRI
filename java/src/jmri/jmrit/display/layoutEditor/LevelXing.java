@@ -1038,6 +1038,59 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    /**
+     * Check the connection points for object assignments.  Notify user if there
+     * are assigned objects.
+     * @return true if ok to delete
+     */
+    public boolean canDeleteLevelCrossing() {
+        ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
+        if (!beanReferences.isEmpty()) {
+            // The level crossing currently has sensors, heads, and/or masts assigned.
+            beanReferences.sort(null);
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+                    Bundle.getMessage("DeleteTrackItem", Bundle.getMessage("LevelCrossing"))));  // NOI18N
+            for (String item : beanReferences) {
+                msg.append("\n    " + item);  // NOI18N
+            }
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+        return beanReferences.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a level crossing point.
+     * @param pointName Specify the point (A-D) or all (All) points.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getBeanReferences(String pointName) {
+        ArrayList<String> references = new ArrayList<>();
+        if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
+            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
+            if (!getSignalAName().isEmpty()) references.add(getSignalAName());
+        }
+        if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
+            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
+            if (!getSignalBName().isEmpty()) references.add(getSignalBName());
+        }
+        if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
+            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
+            if (!getSignalCName().isEmpty()) references.add(getSignalCName());
+        }
+        if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
+            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
+            if (!getSignalDName().isEmpty()) references.add(getSignalDName());
+        }
+        return references;
+    }
+
     JPopupMenu popup = null;
 
     /**
@@ -1154,7 +1207,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLevelXing(LevelXing.this)) {
+                    if (canDeleteLevelCrossing() && layoutEditor.removeLevelXing(LevelXing.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

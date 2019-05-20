@@ -881,7 +881,7 @@ public class LayoutSlip extends LayoutTurnout {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
+                    if (canDeleteSlip() && layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -996,6 +996,29 @@ public class LayoutSlip extends LayoutTurnout {
         }
         return popup;
     }   // showPopup
+
+    /**
+     * Check the connection points for object assignments.  Notify user if there
+     * are assigned objects.
+     * @return true if ok to delete
+     */
+    public boolean canDeleteSlip() {
+        ArrayList<String> beanReferences = getBeanReferences("All");
+        if (!beanReferences.isEmpty()) {
+            // The slip currently has sensors, heads, and/or masts assigned.
+            beanReferences.sort(null);
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+                    Bundle.getMessage("DeleteTrackItem", Bundle.getMessage("SlipTurnout"))));  // NOI18N
+            for (String item : beanReferences) {
+                msg.append("\n    " + item);  // NOI18N
+            }
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+        return beanReferences.isEmpty();
+    }
 
     @Override
     public String[] getBlockBoundaries() {

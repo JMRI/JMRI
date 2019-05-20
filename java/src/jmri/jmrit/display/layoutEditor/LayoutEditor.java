@@ -2817,7 +2817,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return layoutTrackDrawingOptions;
     }
 
-    /** 
+    /**
      * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
      * @param ltdo LayoutTrackDrawingOptions object
      */
@@ -7798,15 +7798,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             //remove connections if any
-            TrackSegment t = o.getConnect1();
+            TrackSegment t1 = o.getConnect1();
+            TrackSegment t2 = o.getConnect2();
 
-            if (t != null) {
-                removeTrackSegment(t);
+            if (t1 != null) {
+                removeTrackSegment(t1);
             }
-            t = o.getConnect2();
 
-            if (t != null) {
-                removeTrackSegment(t);
+            if (t2 != null) {
+                removeTrackSegment(t2);
             }
 
             //delete from array
@@ -9125,7 +9125,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public String getTurnoutCircleThrownColor() {
         return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }
-    
+
     public boolean isTurnoutFillControlCircles() {
         return turnoutFillControlCircles;
     }
