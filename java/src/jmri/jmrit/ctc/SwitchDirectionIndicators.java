@@ -53,10 +53,11 @@ public class SwitchDirectionIndicators {
             _mSimulatedTurnoutFeedbackTimerActionListener = (ActionEvent) -> { setSwitchIndicationSensorsToPresentState(); };
             _mSimulatedTurnoutFeedbackTimer = new Timer(codingTimeInMilliseconds, _mSimulatedTurnoutFeedbackTimerActionListener);
             _mSimulatedTurnoutFeedbackTimer.setRepeats(false);
-/*      Due to a timing issue in JMRI, all turnouts that don't have a "real" feedback are reported as getKnownState() == UNKNOWN
-        when this code runs.  Since we can't determine the proper alignment of the turnout, just FORCE SWITCHNORMAL on the indicators:
-        I tried doing sensors.getSensor("IS25:TIN").setKnownState(ACTIVE) in scripts, but they ran before the original code in here,
-        and turned it off again.  Ergo this "poor" solution:
+/*      IF AND ONLY IF the layout owner DOES NOT initialize all DIRECT or MONITORING turnouts BEFORE
+        starting this CTC system, we wind up with turnouts that have KnownState = UNKNOWN
+        Here, IF AND ONLY IF the layout owner initialized those turnouts prior to starting this CTC system,
+        we now "give a chance" for us to find out the real state, and update the state if know, otherwise,
+        we ASSUME it is SWITCHNORMAL for those people who don't.
 */
             setSwitchIndicationSensorsToPresentState();
             if (_mLastActualTurnoutState == CTCConstants.CTC_UNKNOWN) {
