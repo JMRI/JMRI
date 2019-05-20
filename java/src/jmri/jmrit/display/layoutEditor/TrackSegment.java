@@ -1677,12 +1677,10 @@ public class TrackSegment extends LayoutTrack {
         List<String> itemList = new ArrayList<>();
 
         int type1 = ts.getType1();
-        log.info("type1 = {}", type1);
         LayoutTrack conn1 = ts.getConnect1();
         itemList.addAll(getPointReferences(type1, conn1));
 
         int type2 = ts.getType2();
-        log.info("type2 = {}", type2);
         LayoutTrack conn2 = ts.getConnect2();
         itemList.addAll(getPointReferences(type2, conn2));
 
@@ -1703,57 +1701,46 @@ public class TrackSegment extends LayoutTrack {
 
     public ArrayList<String> getPointReferences(int type, LayoutTrack conn) {
         ArrayList<String> items = new ArrayList<>();
-        switch (type) {
-            case 1:
-                if (conn instanceof PositionablePoint) {
-                    PositionablePoint pt = (PositionablePoint) conn;
-                    if (!pt.getEastBoundSignal().isEmpty()) items.add(pt.getEastBoundSignal());
-                    if (!pt.getWestBoundSignal().isEmpty()) items.add(pt.getWestBoundSignal());
-                    if (!pt.getEastBoundSignalMastName().isEmpty()) items.add(pt.getEastBoundSignalMastName());
-                    if (!pt.getWestBoundSignalMastName().isEmpty()) items.add(pt.getWestBoundSignalMastName());
-                    if (!pt.getEastBoundSensorName().isEmpty()) items.add(pt.getEastBoundSensorName());
-                    if (!pt.getWestBoundSensorName().isEmpty()) items.add(pt.getWestBoundSensorName());
-                    if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
-                        items.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
-                    }
-                    return items;
-                }
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                if (conn instanceof LayoutTurnout) {
-                    LayoutTurnout lt = (LayoutTurnout) conn;
-                    if (type == 2) return lt.getBeanReferences("A");  // NOI18N
-                    if (type == 3) return lt.getBeanReferences("B");  // NOI18N
-                    if (type == 4) return lt.getBeanReferences("C");  // NOI18N
-                    if (type == 5) return lt.getBeanReferences("D");  // NOI18N
-                }
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                if (conn instanceof LevelXing) {
-                    LevelXing lx = (LevelXing) conn;
-                    if (type == 6) return lx.getBeanReferences("A");  // NOI18N
-                    if (type == 7) return lx.getBeanReferences("B");  // NOI18N
-                    if (type == 8) return lx.getBeanReferences("C");  // NOI18N
-                    if (type == 9) return lx.getBeanReferences("D");  // NOI18N
-                }
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-                if (conn instanceof LayoutSlip) {
-                    LayoutSlip ls = (LayoutSlip) conn;
-                    if (type == 21) return ls.getBeanReferences("A");  // NOI18N
-                    if (type == 22) return ls.getBeanReferences("B");  // NOI18N
-                    if (type == 23) return ls.getBeanReferences("C");  // NOI18N
-                    if (type == 24) return ls.getBeanReferences("D");  // NOI18N
-                }
-            default:
-                return items;
+
+        if (type == 1 && conn instanceof PositionablePoint) {
+            PositionablePoint pt = (PositionablePoint) conn;
+            if (!pt.getEastBoundSignal().isEmpty()) items.add(pt.getEastBoundSignal());
+            if (!pt.getWestBoundSignal().isEmpty()) items.add(pt.getWestBoundSignal());
+            if (!pt.getEastBoundSignalMastName().isEmpty()) items.add(pt.getEastBoundSignalMastName());
+            if (!pt.getWestBoundSignalMastName().isEmpty()) items.add(pt.getWestBoundSignalMastName());
+            if (!pt.getEastBoundSensorName().isEmpty()) items.add(pt.getEastBoundSensorName());
+            if (!pt.getWestBoundSensorName().isEmpty()) items.add(pt.getWestBoundSensorName());
+            if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
+                items.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
+            }
+            return items;
         }
+
+        if (type > 1 && type < 6 && conn instanceof LayoutTurnout) {
+            LayoutTurnout lt = (LayoutTurnout) conn;
+            if (type == 2) return lt.getBeanReferences("A");  // NOI18N
+            if (type == 3) return lt.getBeanReferences("B");  // NOI18N
+            if (type == 4) return lt.getBeanReferences("C");  // NOI18N
+            if (type == 5) return lt.getBeanReferences("D");  // NOI18N
+        }
+
+        if (type > 5 && type < 10 && conn instanceof LevelXing) {
+            LevelXing lx = (LevelXing) conn;
+            if (type == 6) return lx.getBeanReferences("A");  // NOI18N
+            if (type == 7) return lx.getBeanReferences("B");  // NOI18N
+            if (type == 8) return lx.getBeanReferences("C");  // NOI18N
+            if (type == 9) return lx.getBeanReferences("D");  // NOI18N
+        }
+
+        if (type > 20 && type < 25 && conn instanceof LayoutSlip) {
+            LayoutSlip ls = (LayoutSlip) conn;
+            if (type == 21) return ls.getBeanReferences("A");  // NOI18N
+            if (type == 22) return ls.getBeanReferences("B");  // NOI18N
+            if (type == 23) return ls.getBeanReferences("C");  // NOI18N
+            if (type == 24) return ls.getBeanReferences("D");  // NOI18N
+        }
+
+        return items;
     }
 
     /**
