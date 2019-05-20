@@ -9,12 +9,12 @@ Scenario Outline: Web Table requests
    @firefox 
    Examples: Firefox Table Tests
    | browser | panel | table | item | state | 
-   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | 2 | 
-   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | 0 | 
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | closed | 
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | unknown | 
 
    @chrome
    Examples: Chrome TableTests
    | browser | panel | table | item | state | 
-   | chrome| java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | 2 | 
-   | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | 0 | 
+   | chrome| java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | closed | 
+   | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | unknown | 
 

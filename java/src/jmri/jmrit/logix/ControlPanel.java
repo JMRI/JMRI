@@ -61,7 +61,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private long trackSliderMinInterval = 500;          // milliseconds
     private long lastTrackedSliderMovementTime = 0;
 
-    // LocoNet really only has 126 speed steps i.e. 0..127 - 1 for em stop
+    // DCC really only has 126 speed steps i.e. 0..127 - 1 for em stop
     private int MAX_SPEED = 126;
 
     // Save the speed step mode to aid in storage of the throttle.

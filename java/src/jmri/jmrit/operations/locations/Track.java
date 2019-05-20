@@ -3013,7 +3013,7 @@ public class Track {
      *
      * @param reader jmri.Reporter object.
      */
-    protected void setReporter(Reporter r) {
+    public void setReporter(Reporter r) {
         Reporter old = _reader;
         _reader = r;
         if (old != r) {

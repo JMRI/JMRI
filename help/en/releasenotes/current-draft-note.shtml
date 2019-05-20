@@ -1,19 +1,4 @@
 
-<p>Note:  Include the following content in the "New Warnings for this release:" section:</p>
-
-    <li><span class="since">Since <a href="jmri4.15.6.shtml">JMRI 4.15.6</a></span>
-        Remembering the location and size of layout panels created and maintained
-        using Layout Editor, Panel Editor, Control Panel Editor, and Switchboard
-        Editor is no longer dependent on saving the panel.  The location and size
-        values are retained using the same processes used by other JMRI windows.  This
-        makes the window management behavior consistent.  To continue using the
-        old behavior, go to <strong>Preferences >> Display</strong> and enable
-        <strong>Use old location and size logic for editor panels</strong>.
-    </li>
-
-
-
-
     <h3>Hardware Support</h3>
         <ul>
           <li></li>
@@ -23,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -76,10 +61,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li><a href="http://jmri.org/help/en/html/hardware/can/cbus/Names.shtml#reporters"
-                >CBUS Reporters</a> are no longer automatically created when hearing a DDES or ACDAT CBUS OPC.
-                    <br>New CBUS Reporters can now be created in a sequential range.
-                </li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -175,6 +157,12 @@
         <h4>BNM Hobbies</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>CT Elektronik</h4>
+            <ul>
+                <li>Nigel Cliffe added a decoder definition for the 
+                    NGS custom CT decoder</li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -276,7 +264,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -314,7 +302,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Ronald Kuhn did a lot of work on the Zimo definitions, including adding V37 definitions</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -337,15 +325,13 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>Petr Šídlo improved the Czech translation</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-          <li>The <strong>Save Location and Size</strong> Options menu item is
-          not displayed when automatic location and size behavior is active.
-          See the above warning.</li>
+	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
         </ul>
 
     <h3>Logix</h3>
@@ -398,18 +384,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>Custom scripts that release throttles may need to be modified.</strong><br>
-            <ul>
-                <li>AutoDispatcher2</li>
-                <li>RobotThrottle2</li>
-                <li>RobotThrottle3</li>
-                <li>RocoCrane</li>
-                <li>Zimo Programmers</li>
-            </ul>
-            <br>
-            Old syntax: <code>self.throttle.release()</code> <br>
-            New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -431,7 +406,7 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -467,14 +442,20 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Circuit Builder has more error help and ease of use features. The help page is updated.</li>
-            <li>40 scale feet has been added to the ramp down distance.</li> 
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
+                Engines, Operations Tracks, and Reporters.</li>
+            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
+                to a message to the original message.</li>
+            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
+                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
+                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version
+                    History</a> for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -482,7 +463,7 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -492,6 +473,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add new <code>TestWaitsForever</code> test class to allow end-of-job debug.</li>
+            <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
+                <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
+            </li>
         </ul>
 

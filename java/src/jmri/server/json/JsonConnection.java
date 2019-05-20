@@ -53,12 +53,13 @@ public class JsonConnection extends JmriConnection {
      * validated.
      *
      * @param message the object or array to send as a message
+     * @param id      the message id set by the client
      * @throws IOException if unable to send the message
      */
-    public void sendMessage(@Nonnull JsonNode message) throws IOException {
+    public void sendMessage(@Nonnull JsonNode message, int id) throws IOException {
         if (this.preferences.getValidateServerMessages()) {
             try {
-                this.schemas.validateMessage(message, true, this.getLocale());
+                this.schemas.validateMessage(message, true, this.getLocale(), id);
             } catch (JsonException ex) {
                 super.sendMessage(this.getObjectMapper().writeValueAsString(ex.getJsonMessage()));
                 return;

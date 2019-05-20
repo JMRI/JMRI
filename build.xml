@@ -182,6 +182,7 @@
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
+        <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.9.8.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.9.8.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.9.8.jar"/>
@@ -286,6 +287,7 @@
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
         <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
+        <pathelement location="${libdir}/jarchivelib-1.0.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
         <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>

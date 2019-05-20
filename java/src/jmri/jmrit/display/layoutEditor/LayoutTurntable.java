@@ -1108,7 +1108,7 @@ public class LayoutTurntable extends LayoutTrack {
             Color color = g2.getColor();
             // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.setColor(defaultTrackColor);
+            g2.setColor(layoutEditor.getDefaultTrackColorColor());
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
             g2.setStroke(stroke);
             g2.setColor(color);
@@ -1123,7 +1123,7 @@ public class LayoutTurntable extends LayoutTrack {
             }
             if (isBlock) {
                 if (ts == null) {
-                    g2.setColor(defaultTrackColor);
+                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
                 } else {
                     setColorForTrackBlock(g2, ts.getLayoutBlock());
                 }
@@ -1224,7 +1224,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
-        g2.setColor(defaultTrackColor);
+        g2.setColor(layoutEditor.getDefaultTrackColorColor());
         g2.draw(layoutEditor.trackControlCircleAt(pt));
 
         for (int j = 0; j < getNumberRays(); j++) {

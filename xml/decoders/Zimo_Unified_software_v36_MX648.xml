@@ -144,6 +144,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <!-- Begin sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundLevels.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundSamples.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>

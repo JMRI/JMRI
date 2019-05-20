@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-track-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"track\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Operations id of the track being requested; required except when PUTing a track"
+        },
+        "userName": {
+            "type": "string",
+            "description": "Operations name of the track being requested; required if PUTing a track"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning track"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Track length for available siding calculations"
+        },
+        "location": {
+            "type": "string",
+            "description": "Operations Id of parent location"
+        },
+        "reporter": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The system name of the reporter for this track"
+        },
+        "type": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The type of track",
+            "enum": [
+                "Interchange",
+                "Siding",
+                "Staging",
+                "Yard"
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "anyOf": [
+        {
+            "required": [
+                "name", "location"
+            ]
+        },
+        {
+            "required": [
+                "userName", "location", "type"
+            ]
+        }
+    ]
+}
