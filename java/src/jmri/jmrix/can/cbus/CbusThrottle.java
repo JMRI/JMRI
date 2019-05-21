@@ -24,6 +24,8 @@ public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;
     private int _handle = -1;
     private DccLocoAddress dccAddress = null;
+    private boolean _isStolen;
+    private int _recoveryAttempts;
 
     /**
      * Constructor
@@ -32,6 +34,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
         super(memo);
+        log.debug("creating new CbusThrottle address {} handle {}",address,handle);
         DccLocoAddress castaddress=null;
         try {
             castaddress = (DccLocoAddress) address;
@@ -41,6 +44,8 @@ public class CbusThrottle extends AbstractThrottle {
         log.debug("Throttle created");
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
         _handle = handle;
+        _isStolen = false;
+        _recoveryAttempts = 0;
 
         // cache settings
         this.speedSetting = 0;
@@ -104,7 +109,6 @@ public class CbusThrottle extends AbstractThrottle {
      *
      */
     protected void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
-
         log.debug("Setting throttle initial values");
         updateSpeedSetting( speed & 0x7f );
         updateIsForward ( (speed & 0x80) == 0x80 );
@@ -493,8 +497,14 @@ public class CbusThrottle extends AbstractThrottle {
         if (speed < 0) {
             this.speedSetting = -1.f;
         }
-
         
+        if ( this.speedSetting <= 0 ) {
+                setDispatchActive(false);
+        }
+        else {
+            setDispatchActive(true);
+        }
+
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             
             int new_spd = intSpeed(speed);
@@ -512,13 +522,6 @@ public class CbusThrottle extends AbstractThrottle {
             
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
-            
-            if ( this.speedSetting <= 0 ) {
-                setDispatchActive(false);
-            }
-            else {
-                setDispatchActive(true);
-            }
             
         }
         
@@ -540,6 +543,13 @@ public class CbusThrottle extends AbstractThrottle {
         this.speedSetting = floatSpeed(speed);
         if (speed < 0) {
             this.speedSetting = -1.f;
+        }
+        
+        if ( this.speedSetting <= 0 ) {
+                setDispatchActive(false);
+        }
+        else {
+            setDispatchActive(true);
         }
 
         // int new_spd = speed;
@@ -595,6 +605,72 @@ public class CbusThrottle extends AbstractThrottle {
     protected int getHandle() {
         return _handle;
     }
+    
+    /**
+     * Set the handle for this throttle
+     * <p>
+     * This is normally done on Throttle Construction but certain
+     * operations, eg recovering from an external steal
+     * may need to change this.
+     * @param newHandle session handle
+     */
+    protected void setHandle(int newHandle){
+        _handle = newHandle;
+    }
+
+    /**
+     * Set Throttle Stolen Flag
+     * <p>
+     * This is false on Throttle Construction but certain
+     * operations may need to change this, eg. an external steal.
+     * <p>
+     * Sends IsAvailable Property Change Notification
+     * @param isStolen true if Throttle has been stolen, else false
+     */
+    protected void setStolen(boolean isStolen){
+        if (isStolen != _isStolen){
+            notifyPropertyChangeListener("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
+            _isStolen = isStolen;
+        }
+        if (isStolen){ // stop keep-alive messages
+            if ( mRefreshTimer != null ) {
+                mRefreshTimer.stop();
+            }
+            mRefreshTimer = null;
+        }
+        else {
+            startRefresh(); // resume keep-alive messages
+        }
+    }
+    
+    /**
+     * Get Throttle Stolen Flag
+     * <p>
+     * This is false on Throttle Construction but certain
+     * operations may need to change this, eg. an external steal.
+     * @return true if Throttle has been stolen, else false
+     */
+    protected boolean isStolen(){
+        return _isStolen;
+    }
+
+    /**
+     * Get the number of external steal recovery attempts
+     */
+    protected int getNumRecoverAttempts(){
+        return _recoveryAttempts;
+    }
+
+    /**
+     * Increase a count of external steal recovery attempts
+     */
+    protected void increaseNumRecoverAttempts(){
+        _recoveryAttempts++;
+    }
+    
+    protected void resetNumRecoverAttempts(){
+        _recoveryAttempts = 0;
+    }
 
     /**
      * Release session from a command station
@@ -622,7 +698,6 @@ public class CbusThrottle extends AbstractThrottle {
         if ( mRefreshTimer != null ) {
             mRefreshTimer.stop();
         }
-
         mRefreshTimer = null;
         cs = null;
         _handle = -1;
@@ -685,7 +760,7 @@ public class CbusThrottle extends AbstractThrottle {
         if (newval == true){
             int numThrottles = jmri.InstanceManager.throttleManagerInstance().getThrottleUsageCount(dccAddress);
             log.debug("numThrottles {}",numThrottles);
-            if ( numThrottles == 1 ){
+            if ( numThrottles < 2 ){
                 notifyThrottleReleaseEnabled(false);
                 notifyThrottleDispatchEnabled(true);
                 return;
@@ -695,6 +770,38 @@ public class CbusThrottle extends AbstractThrottle {
         notifyThrottleDispatchEnabled(false);
     }
 
+    /**
+     * If not headless, display a session stolen dialogue box with
+     * checkbox to hide notifications for rest of JMRI session
+     */
+    protected void showSessionCancelDialogue(LocoAddress address){
+        if (!java.awt.GraphicsEnvironment.isHeadless()){
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
+                    Bundle.getMessage("PopupSessionConfirm"));
+                Object[] params = {Bundle.getMessage("ERR_LOCO_STOLEN",address), checkbox};
+                
+                
+                javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
+                
+                pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
+                
+                javax.swing.JDialog dialog = pane.createDialog(null, Bundle.getMessage("ERR_LOCO_STOLEN", getLocoAddress()));
+                
+                dialog.setModal(false);
+                dialog.setVisible(true);
+                dialog.requestFocus();
+                dialog.toFront();
+                
+                java.awt.event.ActionListener stolenpopupcheckbox = (java.awt.event.ActionEvent evt) -> {
+                    CbusThrottleManager cbtm = (CbusThrottleManager) jmri.InstanceManager.throttleManagerInstance();
+                    log.info("sending checkbox");
+                    cbtm.hideStealNotifications(checkbox.isSelected());
+                };
+                checkbox.addActionListener(stolenpopupcheckbox);
+            });
+        }
+    }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(CbusThrottle.class);
 
