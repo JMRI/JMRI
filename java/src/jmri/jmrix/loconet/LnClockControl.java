@@ -7,15 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Hardware Fast Clock for Loconet
+ * Implementation of the Hardware Fast Clock for LocoNet.
  * <p>
  * This module is based on a GUI module developed by Bob Jacobsen and Alex
- * Shepherd to correct the Loconet fast clock rate and synchronize it with the
+ * Shepherd to correct the LocoNet fast clock rate and synchronize it with the
  * internal JMRI fast clock Timebase. The methods that actually send, correct,
- * or receive information from the Loconet hardware are repackaged versions of
+ * or receive information from the LocoNet hardware are repackaged versions of
  * their code.
  * <p>
- * The Loconet Fast Clock is controlled by the user via the Fast Clock Setup GUI
+ * The LocoNet Fast Clock is controlled by the user via the Fast Clock Setup GUI
  * that is accessed from the JMRI Tools menu.
  * <p>
  * For this implementation, "internal clock" and "synchronize" means we act as a LocoNet master/server",
@@ -46,7 +46,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
 
 
     /**
-     * Create a ClockControl object for a Loconet clock
+     * Create a ClockControl object for a LocoNet clock.
+     *
      * @param scm  the LocoNet System Connection Memo to associate with this
      *              Clock Control object
      */
@@ -55,7 +56,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     }
 
     /**
-     * Create a ClockControl object for a Loconet clock
+     * Create a ClockControl object for a LocoNet clock.
+     *
      * @deprecated 4.11.5
      * @param sm the Slot Manager associated with this object
      * @param tc the Traffic Controller associated with this object
@@ -66,10 +68,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     }
 
     /**
-     * Create a ClockControl object for a Loconet clock
+     * Create a ClockControl object for a LocoNet clock.
+     *
      * @param sm the Slot Manager associated with this object
      * @param tc the Traffic Controller associated with this object
-     * @param pm the Power Manager associated with this object
+     * @param pm the PowerManager associated with this object
      */
     public LnClockControl(SlotManager sm, LnTrafficController tc, LnPowerManager pm) {
         super();
@@ -499,7 +502,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     }
 
     /**
-     * Requests read of the Loconet fast clock
+     * Requests read of the LocoNet fast clock
      */
     public void initiateRead() {
         sm.sendReadSlot(LnConstants.FC_SLOT);
@@ -574,7 +577,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * Handle changed slot contents, due to clock changes. Can get here three
      * ways: 1) clock slot as a result of action by a throttle and 2) clock slot
      * responding to a read from this module 3) a slot not involving the clock
-     * changing
+     * changing.
      *
      * @param s the LocoNetSlot object which has been changed
      */
@@ -624,6 +627,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
 
         // re-set timeout
         fastClockCounter = curRate;
+
     }
 
     /**

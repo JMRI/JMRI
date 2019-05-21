@@ -865,7 +865,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
                     if (e.getPropertyName().equals("whereLastSeen")) {
                         log.debug("Tag Reader Position update received for {}", this);
                         // update the position of this piece of rolling
-                        // stock when it's IdTag is seen, but only if
+                        // stock when its IdTag is seen, but only if
                         // the actual location changes.
                         if (e.getNewValue() != null) {
                             // first, check to see if this reader is
@@ -905,7 +905,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
                     if (e.getPropertyName().equals("whenLastSeen")) {
                         log.debug("Tag Reader Time at Location update received for {}", this);
                         // update the time when this car was last moved
-                        // stock when it's IdTag is seen.
+                        // stock when its IdTag is seen.
                         if (e.getNewValue() != null) {
                             Date newDate = ((Date) e.getNewValue());
                             setLastDate(newDate);

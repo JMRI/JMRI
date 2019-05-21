@@ -38,7 +38,7 @@ public interface SystemConnectionAction {
      * <p>
      * If the implementing class is a subclass of a class that does accept
      * SystemConnectionMemos, but the implementing class does not accept any,
-     * return an empty array instead of null.</p>
+     * return an empty array instead of null.
      *
      * @return Set of SystemConnectionMemo subclasses or empty array.
      */

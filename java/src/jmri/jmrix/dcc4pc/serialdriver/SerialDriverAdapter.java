@@ -21,9 +21,8 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Dcc4Pc system.
- * <P>
+ * <p>
  * This connects an Dcc4Pc command station via a serial com port.
- * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */

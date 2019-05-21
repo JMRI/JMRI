@@ -5,10 +5,10 @@ import java.util.Vector;
 /**
  * A Throttle object can be manipulated to change the speed, direction and
  * functions of a single locomotive.
- * <P>
+ * <p>
  * A Throttle implementation provides the actual control mechanism. These are
  * obtained via a {@link ThrottleManager}.
- * <P>
+ * <p>
  * With some control systems, there are only a limited number of Throttle's
  * available.
  * <p>
@@ -16,15 +16,14 @@ import java.util.Vector;
  * which have some additional DCC-specific capabilities.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
@@ -400,10 +399,10 @@ public interface Throttle {
      * <p>
      * Dispose of object when finished it. This does not free any hardware
      * resources used; rather, it just cleans up the software implementation.
-     * <P>
+     * <p>
      * Used for handling certain internal error conditions, where the object
      * still exists but hardware is not associated with it.
-     * <P>
+     * <p>
      * After this, further usage of this Throttle object will result in a
      * JmriException.
      *
@@ -414,10 +413,10 @@ public interface Throttle {
     /**
      * Finished with this Throttle, tell the layout that the locomotive is
      * available for reuse/reallocation by somebody else.
-     * <P>
+     * <p>
      * After this, further usage of this Throttle object will result in a
      * JmriException. Do not call dispose after release.
-     * <P>
+     * <p>
      * Normally, release ends with a call to dispose.
      *
      * @param l {@link ThrottleListener} to release. May be null if no {@link ThrottleListener} is currently held.
@@ -429,10 +428,10 @@ public interface Throttle {
      * available for reuse/reallocation by somebody else. If possible, tell the
      * layout that this locomotive has been dispatched to another user. Not all
      * layouts will implement this, in which case it is synomous with release();
-     * <P>
+     * <p>
      * After this, further usage of this Throttle object will result in a
      * JmriException.
-     * <P>
+     * <p>
      * Normally, dispatch ends with a call to dispose.
      *
      * @param l {@link ThrottleListener} to dispatch

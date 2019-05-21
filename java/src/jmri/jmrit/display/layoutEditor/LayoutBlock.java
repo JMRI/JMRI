@@ -123,10 +123,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private NamedBeanHandle<Sensor> occupancyNamedSensor = null;
     private NamedBeanHandle<Memory> namedMemory = null;
 
-    //private Memory memory = null;
     private Block block = null;
 
-    //private int maxBlockNumber = 0;
     private final List<LayoutEditor> panels = new ArrayList<>(); //panels using this block
     private PropertyChangeListener mBlockListener = null;
     private int jmriblknum = 1;
@@ -218,7 +216,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /* initializeLayoutBlockRouting */
-    protected void initializeLayoutBlockRouting() {
+    public void initializeLayoutBlockRouting() {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             return;
         }
@@ -232,6 +230,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /*
      * Accessor methods
      */
+    // TODO: deprecate and just use getUserName() directly
     public String getId() {
         return getUserName();
     }
@@ -673,7 +672,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Check/Update Path objects for the attached Block
-     * <P>
+     * <p>
      * If multiple panels are present, Paths are set according to the panel with
      * the highest connectivity (most LayoutConnectivity objects);
      */
@@ -3183,12 +3182,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     @Override
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        if (l == this) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        if (listener == this) {
             log.debug("adding ourselves as a listener for some strange reason! Skipping");
             return;
         }
-        super.addPropertyChangeListener(l);
+        super.addPropertyChangeListener(listener);
     }
 
     @Override

@@ -337,6 +337,7 @@ public class CbusNodeConstants {
         result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "CANDISP"); // NOI18N
         result.put(60, "CANCOMPUTE"); // NOI18N
+        result.put(61, "CANCMDDC"); // NOI18N
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -467,6 +468,7 @@ public class CbusNodeConstants {
         result.put(58, "CBUS module based on Raspberry Pi");
         result.put(59, "25K80 version of CANLED64");
         result.put(60, "Event processing engine");
+        result.put(61, "8-Channel DC command station");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -592,6 +594,7 @@ public class CbusNodeConstants {
         // result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:candisp"); // NOI18N
         result.put(60, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cancompute"); // NOI18N
+        result.put(61, "https://www.merg.org.uk/forum/viewtopic.php?f=45&t=6376"); // NOI18N
         
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N

@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
 /*
  * Demo app that shows how to construct and send an RFC822
  * (singlepart) message.
- * *
+ *
  * @author Max Spivak
  * @author Bill Shannon
  */

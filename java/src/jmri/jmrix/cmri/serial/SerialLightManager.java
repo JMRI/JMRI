@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for CMRI serial systems.
+ * Implement LightManager for CMRI serial systems.
  * <p>
  * System names are "CLnnn", where C is the user-configurable system prefix,
  * nnn is the bit number without padding.

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A Portal is a boundary between two Blocks.
  *
- * <P>
+ * <p>
  * A Portal has Lists of the OPaths that connect through it. The direction of
  * trains passing through the portal is managed from the BlockOrders of the
  * Warrant the train is running under. The Portal fires a PropertyChangeEvent

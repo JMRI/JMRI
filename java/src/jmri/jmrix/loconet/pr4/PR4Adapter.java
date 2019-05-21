@@ -15,10 +15,10 @@ import purejavacomm.UnsupportedCommOperationException;
  * switch settings on the Digitrax PR4
  * <p>
  * Based on PR3Adapter.java
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
-  */
+ */
 public class PR4Adapter extends LocoBufferAdapter {
 
     public PR4Adapter() {

@@ -19,8 +19,8 @@ import org.openide.util.lookup.ServiceProvider;
  * Each method of this Servlet responds to a unique URL pattern.
  *
  * @author mstevetodd
- * 
- *  */
+ */
+
 /*
  *
  */

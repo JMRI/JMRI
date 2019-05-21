@@ -15,55 +15,53 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handles automatic allocation of Sections for Dispatcher
- * <P>
+ * <p>
  * AutoAllocate.java is an extension of DispatcherFrame.java.
- * <P>
+ * <p>
  * When AutoAllocate is triggered, it scans the list of Allocation Requests, in
  * order of the priorities of ActiveTrains with pending AllocationRequests,
  * testing if a requested allocation can be made. AutoAllocate returns when
  * either: A Section has been allocated -or- All AllocationRequests have been
  * tested, and no allocation is indicated.
- * <P>
+ * <p>
  * If AutoAllocate needs to save information related to a plan requiring
  * multiple allocations, an AllocationPlan object is created. When the plan is
  * complete, the AllocationPlan object is disposed of. Multiple AllocationPlan
  * objects may be active at any one time.
- * <P>
+ * <p>
  * AutoAllocate is triggered by each of the following events: An
  * AllocatedSection has been released, freeing up a Section. A new
  * AllocationRequest has been entered into the queue of AllocationRequests. A
  * Section has been allocated, either by AutoAllocate or manually by the
  * dispatcher.
- * <P>
+ * <p>
  * AutoAllocate requires that AutoRelease is active and that Dispatcher has a
  * LayoutEditor panel.
- * <P>
+ * <p>
  * AutoAllocate operates conservatively, that is, if there is any doubt that a
  * Section should be allocated, it will not allocate the Section.
- * <P>
+ * <p>
  * AutoAllocate develops plans for meets when multiple ActiveTrains are using
  * the same Sections of track. These plans are automatically created and
  * removed. They are stored in AllocationPlan objects to avoid having to
  * continually recreate them, since the logic to create them is rather
  * complicated.
- * <P>
+ * <p>
  * The dispatcher is free to switch AutoAllocate on or off at any tine in
  * DispatcherFrame. When AutoAllocate is switched off, all existing
  * AllocationPlan objects are discarded.
  * <p>
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P>
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Dave Duchamp Copyright (C) 2011
  */

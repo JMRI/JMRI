@@ -6,8 +6,7 @@ import jmri.jmrit.Sound;
 
 /**
  * The consequent of the antecedent of the conditional proposition. The data for
- * the action to be taken when a Conditional calculates to True
- * <P>
+ * the action to be taken when a Conditional calculates to True.
  *
  * @author Pete Cressman Copyright (C) 2009
  */

@@ -35,28 +35,28 @@ import org.slf4j.LoggerFactory;
 /**
  * A LayoutTurntable is a representation used by LayoutEditor to display a
  * turntable.
- * <P>
+ * <p>
  * A LayoutTurntable has a variable number of connection points, called
  * RayTracks, each radiating from the center of the turntable. Each of these
  * points should be connected to a TrackSegment.
- * <P>
+ * <p>
  * Each radiating segment (RayTrack) gets its Block information from its
  * connected track segment.
- * <P>
+ * <p>
  * Each radiating segment (RayTrack) has a unique connection index. The
  * connection index is set when the RayTrack is created, and cannot be changed.
  * This connection index is used to maintain the identity of the radiating
  * segment to its connected Track Segment as ray tracks are added and deleted by
  * the user.
- * <P>
+ * <p>
  * The radius of the turntable circle is variable by the user.
- * <P>
+ * <p>
  * Each radiating segment (RayTrack) connecting point is a fixed distance from
  * the center of the turntable. The user may vary the angle of the radiating
  * segment. Angles are measured from the vertical (12 o'clock) position in a
  * clockwise manner. For example, 30 degrees is 1 o'clock, 60 degrees is 2
  * o'clock, 90 degrees is 3 o'clock, etc.
- * <P>
+ * <p>
  * Each radiating segment is drawn from its connection point to the turntable
  * circle in the direction of the turntable center.
  *
@@ -1108,7 +1108,7 @@ public class LayoutTurntable extends LayoutTrack {
             Color color = g2.getColor();
             // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.setColor(defaultTrackColor);
+            g2.setColor(layoutEditor.getDefaultTrackColorColor());
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
             g2.setStroke(stroke);
             g2.setColor(color);
@@ -1123,7 +1123,7 @@ public class LayoutTurntable extends LayoutTrack {
             }
             if (isBlock) {
                 if (ts == null) {
-                    g2.setColor(defaultTrackColor);
+                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
                 } else {
                     setColorForTrackBlock(g2, ts.getLayoutBlock());
                 }
@@ -1224,7 +1224,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
-        g2.setColor(defaultTrackColor);
+        g2.setColor(layoutEditor.getDefaultTrackColorColor());
         g2.draw(layoutEditor.trackControlCircleAt(pt));
 
         for (int j = 0; j < getNumberRays(); j++) {
@@ -1351,7 +1351,7 @@ public class LayoutTurntable extends LayoutTrack {
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
             // for all the rays with matching blocks in this turnout
-            //  #1) if it's track segment's block is in this block
+            //  #1) if its track segment's block is in this block
             //  #2)     add turntable to TrackNameSet (if not already there)
             //  #3)     if the track segment isn't in the TrackNameSet
             //  #4)         flood it

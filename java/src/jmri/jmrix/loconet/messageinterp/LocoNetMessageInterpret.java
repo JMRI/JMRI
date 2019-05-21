@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * Reverse-engineering of device-specific OpSw messages, throttle text message,
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
- * <p>
+ *
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
@@ -4336,7 +4336,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
-     * <p>
+     *
      * @param l LocoNet Message to interpret
      * @return String containing interpreted message or empty string if
      *      message is not interpretable.
@@ -4662,7 +4662,7 @@ public class LocoNetMessageInterpret {
                 detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
                 break;
             case 251:
-                // Loconet stats
+                // LocoNet stats
                 // Identifying information
                 baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
                 detailInfo = interpretExtendedSlot_StatusData_LocoNet(l,slot);
@@ -4806,7 +4806,7 @@ public class LocoNetMessageInterpret {
      * @return formated message
      */
     private static String interpretExtendedSlot_StatusData_Slots(LocoNetMessage l, int slot) {
-        //TOD there is still more data in this slot.
+        //TODO there is still more data in this slot.
         double msgInUse;
         double msgIdle;
         double msgFree;

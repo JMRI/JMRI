@@ -319,8 +319,8 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
      * Creates a Menu List
      * <p>
      * File - Print, Print Preview, Save, SaveAs csv
+     * <p>
      * Display - show / hide Create new event pane, show/hide bottom feedback pane
-     * </p>
      */
     @Override
     public List<JMenu> getMenus() {

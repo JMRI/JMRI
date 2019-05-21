@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to the DCC4PC Interface.
- * <P>
+ * <p>
  * The {@link Dcc4PcReply} class handles the response from the command station.
  *
  * @author Bob Jacobsen Copyright (C) 2001

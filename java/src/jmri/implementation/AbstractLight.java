@@ -335,7 +335,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     /**
-     * Can the Light change it's intensity setting slowly?
+     * Can the Light change its intensity setting slowly?
      * <p>
      * If true, this Light supports a non-zero value of the transitionTime
      * property, which controls how long the Light will take to change from one
