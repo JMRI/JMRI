@@ -572,11 +572,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-
-    /**
-     * Update the state of this panel if any of the properties change
-     * Does not allow user to edit on Throttle PCL IsAvailable false
-     */
+    // update the state of this panel if any of the properties change
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         for (int i = 0; i <= 28; i++) {
@@ -591,10 +587,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 break; // stop the loop, only one function property
                 // will be matched.
             }
-        }
-        if ("IsAvailable".compareTo(e.getPropertyName()) == 0) {
-            log.debug("propertyChange: Throttle IsAvailable {}" , e.getNewValue() );
-            setEnabled( (Boolean) e.getNewValue() );
         }
     }
 
