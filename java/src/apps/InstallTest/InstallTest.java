@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for testing JMRI installation.
- * <P>
+ * <p>
  * If an argument is provided at startup, it will be used as the name of the
  * configuration file. Note that this is just the name, not the path; the file
  * is searched for in the usual way, first in the preferences tree and then in
@@ -23,11 +23,11 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.

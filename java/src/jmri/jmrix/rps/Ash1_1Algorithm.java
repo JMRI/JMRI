@@ -120,7 +120,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Robert Ashenfelter Copyright (C) 2006
  * @author	Bob Jacobsen Copyright (C) 2006
-  */
+ */
 public class Ash1_1Algorithm implements Calculator {
 
     public Ash1_1Algorithm(Point3d[] sensors, double vsound) {

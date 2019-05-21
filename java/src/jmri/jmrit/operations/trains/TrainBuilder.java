@@ -5251,14 +5251,17 @@ public class TrainBuilder extends TrainCommon {
         log.debug(msg);
 
         if (trainManager.isBuildMessagesEnabled()) {
+            // don't pass the object _train to the GUI, can cause thread lock
+            String trainName = _train.getName();
+            String trainDescription = _train.getDescription();
             if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
                 JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                        new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
+                        new Object[]{trainName, trainDescription}), JOptionPane.ERROR_MESSAGE);
             } else {
                 // build error, could not find destinations for cars departing staging
                 Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
                 int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
-                        .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
+                        .getMessage("buildErrorMsg"), new Object[]{trainName, trainDescription}),
                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
                 if (results == 0) {
                     log.debug("User requested that cars be removed from staging track");
@@ -5269,7 +5272,7 @@ public class TrainBuilder extends TrainCommon {
             if (size > 0) {
                 if (JOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
-                                new Object[]{size, _train.getName()}),
+                                new Object[]{size, trainName}),
                         Bundle.getMessage("buildResetTrain"),
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     _train.reset();
@@ -5277,7 +5280,7 @@ public class TrainBuilder extends TrainCommon {
             } else if ((size = engineManager.getList(_train).size()) > 0) {
                 if (JOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
-                                new Object[]{size, _train.getName()}),
+                                new Object[]{size, trainName}),
                         Bundle.getMessage("buildResetTrain"),
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     _train.reset();

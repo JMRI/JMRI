@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single command or response on the XpressNet.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
@@ -412,7 +412,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(3, AL);
         /* Element 4 is 0xEC + the upper two  bits of the 10 bit CV address.
          NOTE: This is the track packet CV, not the human readable CV, so 
-         it's value actually is one less than what we normally think of it as.*/
+         its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
         m.setElement(4, 0xEC + temp);
@@ -431,7 +431,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(3, AL);
         /* Element 4 is 0xE4 + the upper two  bits of the 10 bit CV address.
          NOTE: This is the track packet CV, not the human readable CV, so 
-         it's value actually is one less than what we normally think of it as.*/
+         its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
         m.setElement(4, 0xE4 + temp);
@@ -450,7 +450,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(3, AL);
         /* Element 4 is 0xE8 + the upper two  bits of the 10 bit CV address.
          NOTE: This is the track packet CV, not the human readable CV, so 
-         it's value actually is one less than what we normally think of it as.*/
+         its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
         m.setElement(4, 0xE8 + temp);
@@ -478,7 +478,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(3, AL);
         /* Element 4 is 0xE8 + the upper two  bits of the 10 bit CV address.
          NOTE: This is the track packet CV, not the human readable CV, so 
-         it's value actually is one less than what we normally think of it as.*/
+         its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
         m.setElement(4, 0xE8 + temp);

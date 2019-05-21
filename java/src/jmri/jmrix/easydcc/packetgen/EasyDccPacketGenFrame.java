@@ -10,7 +10,7 @@ import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
  * Frame for user input of EasyDCC messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.easydcc.EasyDccListener {
 
     // member declarations

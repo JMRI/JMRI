@@ -1407,7 +1407,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     
     /**
      * Parse a string for binary, decimal or hex byte value
-     * <P>
+     * <p>
      * 0b, 0d or 0x prefix will force parsing of binary, decimal or hex,
      * respectively. Entries with no prefix are parsed as decimal if decimal
      * flag is true, otherwise hex.

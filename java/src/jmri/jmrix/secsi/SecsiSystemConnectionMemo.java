@@ -73,9 +73,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Provide access to the Sensor Manager for this particular connection.
+     * Provide access to the SensorManager for this particular connection.
      * <p>
-     * NOTE: Sensor manager defaults to NULL
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -90,9 +90,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
 
 
     /**
-     * Provide access to the Turnout Manager for this particular connection.
+     * Provide access to the TurnoutManager for this particular connection.
      * <p>
-     * NOTE: Turnout manager defaults to NULL
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -106,9 +106,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
     private TurnoutManager turnoutManager = null;
 
     /**
-     * Provide access to the Light Manager for this particular connection.
+     * Provide access to the LightManager for this particular connection.
      * <p>
-     * NOTE: Light manager defaults to NULL
+     * NOTE: LightManager defaults to NULL
      */
     public LightManager getLightManager() {
         return lightManager;

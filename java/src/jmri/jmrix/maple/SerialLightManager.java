@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Maple serial systems.
+ * Implement LightManager for Maple serial systems.
  * <p>
  * System names are "KLnnn", where K is the user configurable system prefix,
  * nnn is the bit number without padding.

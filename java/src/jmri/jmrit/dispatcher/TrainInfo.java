@@ -7,10 +7,10 @@ import jmri.SensorManager;
 /**
  * TrainInfo is a temporary object specifying New Train information just read
  * from disk, or to be written to disk
- * <P>
+ * <p>
  * Used in conjunction with TrainInfoFile.java to save and retrieve New Train
  * information
- * <P>
+ * <p>
  * When adding a new item of New Train information, modifications need to be
  * made to TrainInfoFile.java and dispatcher-traininfo.DTD as well as this
  * module.

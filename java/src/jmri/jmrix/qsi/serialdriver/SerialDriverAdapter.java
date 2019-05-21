@@ -17,11 +17,11 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the QSI system.
- * <P>
+ * <p>
  * This connects an QSI command station via a serial com port. Also used for the
  * USB QSI, which appears to the computer as a serial port. Normally controlled
  * by the SerialDriverFrame class.
- * <P>
+ * <p>
  * The current implementation only handles the 19,200 baud rate, and does not
  * use any other options at configuration time.
  *
@@ -52,7 +52,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             try {
                 activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -61,8 +61,8 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -81,7 +81,6 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-
             opened = true;
 
         } catch (NoSuchPortException p) {
@@ -90,9 +89,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
-
         return null; // indicates OK return
-
     }
 
     public void setHandshake(int mode) {
@@ -101,11 +98,10 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         } catch (UnsupportedCommOperationException ex) {
             log.error("Unexpected exception while setting COM port handshake mode", ex);
         }
-
     }
 
     /**
-     * set up all of the other objects to operate with an QSI command station
+     * Set up all of the other objects to operate with an QSI command station
      * connected to this port
      */
     @Override
@@ -143,7 +139,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }

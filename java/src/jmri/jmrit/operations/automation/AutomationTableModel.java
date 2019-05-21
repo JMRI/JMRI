@@ -364,7 +364,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         JComboBox<Action> cb = AutomationItem.getActionComboBox();
         //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work, class?
         for (int index = 0; index < cb.getItemCount(); index++) {
-            // select the action based on it's action code
+            // select the action based on its action code
             if (item.getAction() != null && (cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
                 cb.setSelectedIndex(index);
                 break;
@@ -522,7 +522,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         _automation.deleteItem(item);
     }
 
-    // this table listens for changes to a automation and it's car types
+    // this table listens for changes to a automation and its car types
     // TODO removed synchronized from propertyChange, it may cause a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     @Override
     public void propertyChange(PropertyChangeEvent e) {

@@ -12,15 +12,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for Zimo Mx-1. Currently paged mode is implemented.
- * <P>
+ * <p>
  * The read operation state sequence is:
- * <UL>
- * <LI>Reset Mx-1
- * <LI>Send paged mode read/write request
- * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request
- * <LI>Wait for Normal Operations Resumed broadcast
- * </UL>
+ * <ul>
+ * <li>Reset Mx-1
+ * <li>Send paged mode read/write request
+ * <li>Wait for results reply, interpret
+ * <li>Send Resume Operations request
+ * <li>Wait for Normal Operations Resumed broadcast
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (c) 2002
  *

@@ -438,7 +438,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * ** Methods that return user interface strings ****
+     * Methods that return user interface strings ****
      */
 
     /**

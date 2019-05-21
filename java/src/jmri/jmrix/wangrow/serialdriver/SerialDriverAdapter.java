@@ -17,13 +17,13 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Wangrow system.
- * <P>
+ * <p>
  * Note that this still uses a significant number of classes from the
  * {@link jmri.jmrix.nce} package.
- * <P>
+ * <p>
  * This connects an Wangrow command station via a serial com port. Normally
  * controlled by the SerialDriverFrame class.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuring a Raspberry Pi layout connection.
- * <P>
+ * <p>
  * This uses the {@link RaspberryPiAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2015
@@ -36,7 +36,8 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public RaspberryPiConnectionConfig() {
         super();
@@ -45,11 +46,12 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -111,6 +113,9 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     protected void showAdvancedItems() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final javax.swing.JPanel details) {
         _details = details;
@@ -127,6 +132,9 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
@@ -174,7 +182,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
     @Override
     public String getConnectionName() {
-        return "Raspberry Pi GPIO";
+        return "Raspberry Pi GPIO"; // NOI18N
     }
 
     @Override

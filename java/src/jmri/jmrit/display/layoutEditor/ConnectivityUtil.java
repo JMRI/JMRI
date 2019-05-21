@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * available in Layout Editor panels. These tools allow outside classes to
  * inquire into connectivity information contained in a specified Layout Editor
  * panel.
- * <P>
+ * <p>
  * Connectivity information is stored in the track diagram of a Layout Editor
  * panel. The "connectivity graph" of the layout consists of nodes
  * (LayoutTurnouts, LevelXings, and PositionablePoints) connected by lines
@@ -30,16 +30,16 @@ import org.slf4j.LoggerFactory;
  * and make it available. Each instance of ConnectivityUtil is associated with a
  * specific Layout Editor panel, and is accessed via that LayoutEditor panel's
  * 'getConnectivityUtil' method.
- * <P>
+ * <p>
  * The methods in this module do not modify the Layout in any way, or change the
  * state of items on the layout. They only provide information to allow other
  * modules to do so as appropriate. For example, the "getTurnoutList" method
  * provides information about the turnouts in a block, but does not test the
  * state, or change the state, of any turnout.
- * <P>
+ * <p>
  * The methods in this module are accessed via direct calls from the inquiring
  * method.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
@@ -1238,7 +1238,7 @@ public class ConnectivityUtil {
     /**
      * Get the next TrackNode following the specified TrackNode, assuming that
      * TrackNode was reached via the specified TrackSegment.
-     * <P>
+     * <p>
      * If the specified track node can lead to different paths to the next node,
      * for example, if the specified track node is a turnout entered at its
      * throat, then "cNodeState" must be specified to choose between the
@@ -1246,18 +1246,18 @@ public class ConnectivityUtil {
      * 'continuing' track; if cNodeState = 1, the search will follow the
      * 'diverging' track; if cNodeState = 2 (3-way turnouts only), the search
      * will follow the second 'diverging' track.
-     * <P>
+     * <p>
      * In determining which track is the 'continuing' track for RH, LH, and WYE
      * turnouts, this search routine uses the layout turnout's
      * 'continuingState'.
-     * <P>
+     * <p>
      * When following track, this method skips over anchor points that are not
      * block boundaries.
-     * <P>
+     * <p>
      * When following track, this method treats a modeled 3-way turnout as a
      * single turnout. It also treats two THROAT_TO_THROAT turnouts as a single
      * turnout, but with each turnout having a continuing sense.
-     * <P>
+     * <p>
      * Returns a TrackNode if a node or end_of-track is reached. Returns null if
      * trouble following the track.
      *

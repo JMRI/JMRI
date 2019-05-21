@@ -263,7 +263,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         switch (l.getOpCode()) {
             case LnConstants.OPC_SW_ACK:
             case LnConstants.OPC_SW_REQ: {
-                /* page 9 of Loconet PE */
+                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -288,7 +288,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 return;
             }
             case LnConstants.OPC_SW_REP: {
-                /* page 9 of Loconet PE */
+                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);

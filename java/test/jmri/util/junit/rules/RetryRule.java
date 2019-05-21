@@ -9,9 +9,9 @@ package jmri.util.junit.rules;
  * <li>If the test fails all the retries, an error is logged, and the test is marked as failing.
  * </ul>
  *
- * <p>based on code at
+ * <p>
+ * based on code at
  * http://www.swtestacademy.com/rerun-failed-test-junit/
- * </P>
  *
  * @author ONUR BASKIRT 27.03.2016.
  */

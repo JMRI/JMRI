@@ -103,9 +103,7 @@ public class CbusNodeInfoPane extends JPanel {
             }
             nodePartTwobuilder.append ("</p>");
         }
-        
-        
-        
+
         if (nodeOfInterest.getParameter(6)>0) {
             nodePartTwobuilder.append ("<p>Total Node Variables: ");
             nodePartTwobuilder.append ( nodeOfInterest.getParameter(6) );
