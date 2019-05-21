@@ -4224,7 +4224,7 @@ public class LayoutTurnout extends LayoutTrack {
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             Color foregroundColor = g2.getColor();
-            if (!isInContinuingSenseState()) {
+            if (getState() == Turnout.CLOSED) {
                 Color backgroundColor = g2.getBackground();
                 g2.setColor(backgroundColor);
             }
@@ -4233,7 +4233,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.draw(layoutEditor.trackControlCircleAt(center));
             }
-            if (!isInContinuingSenseState()) {
+            if (getState() == Turnout.CLOSED) {
                 g2.setColor(foregroundColor);
             }
         }
