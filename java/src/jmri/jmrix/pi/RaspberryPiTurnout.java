@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Turnout interface to RaspberryPi GPIO pins.
- * <P>
+ * <p>
  * 
  * @author Paul Bender Copyright (C) 2015 
  */

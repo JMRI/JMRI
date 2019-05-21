@@ -1239,7 +1239,8 @@ public class CbusNode implements CanListener {
                 int index = _nodeEvents.get(i).getIndex();
                 int nextevvar = _nodeEvents.get(i).getNextOutstanding();
                 
-                if ( index > 0 ) {
+                // index from NERD / ENRSP indexing may start at 0
+                if ( index > -1 ) {
                 
                     // start timer
                     setNextEvVarTimeout();
@@ -1407,7 +1408,9 @@ public class CbusNode implements CanListener {
     // so we monitor them the same
     @Override
     public void message(CanMessage m) {
-        
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         switch ( CbusMessage.getOpcode(m) ) {
             case CbusConstants.CBUS_NVSET:
             case CbusConstants.CBUS_NNREL:
@@ -1429,6 +1432,9 @@ public class CbusNode implements CanListener {
     // also parses outgoing messages
     @Override
     public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         int nn = ( m.getElement(1) * 256 ) + m.getElement(2);
         

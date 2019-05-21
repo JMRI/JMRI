@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Turnout implementation for XBee systems.
- * <p>
+ *
  * @author Paul Bender Copyright (C) 2014
  */
 public class XBeeTurnout extends AbstractTurnout {

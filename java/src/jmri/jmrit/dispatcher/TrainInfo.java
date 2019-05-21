@@ -7,10 +7,10 @@ import jmri.SensorManager;
 /**
  * TrainInfo is a temporary object specifying New Train information just read
  * from disk, or to be written to disk
- * <P>
+ * <p>
  * Used in conjunction with TrainInfoFile.java to save and retrieve New Train
  * information
- * <P>
+ * <p>
  * When adding a new item of New Train information, modifications need to be
  * made to TrainInfoFile.java and dispatcher-traininfo.DTD as well as this
  * module.
@@ -48,7 +48,9 @@ public class TrainInfo {
     private int departureTimeHr = 8;
     private int departureTimeMin = 00;
     private String delaySensorName = null;
+    private boolean resetStartSensor = true;
     private String restartSensorName = null;
+    private boolean resetRestartSensor = true;
     private int restartDelayMin = 0;
     private String trainType = "";
     private boolean terminateWhenDone = false;
@@ -311,6 +313,14 @@ public class TrainInfo {
         return InstanceManager.getDefault(SensorManager.class).getSensor(delaySensorName);
     }
 
+    protected boolean getResetStartSensor() {
+        return resetStartSensor;
+    }
+
+    protected void setResetStartSensor(boolean b) {
+        resetStartSensor = b;
+    }
+
     protected void setTrainType(String s) {
         trainType = s;
     }
@@ -352,6 +362,14 @@ public class TrainInfo {
         return jmri.InstanceManager.sensorManagerInstance().getSensor(restartSensorName);
     }
 
+    protected boolean getResetRestartSensor() {
+        return resetRestartSensor;
+    }
+
+    protected void setResetRestartSensor(boolean b) {
+        resetRestartSensor = b;
+    }
+    
     /**
      * number of minutes to delay between restarting for continuous runs
      *

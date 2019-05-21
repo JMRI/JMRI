@@ -4,7 +4,7 @@ import jmri.implementation.AbstractSensor;
 
 /**
  * Implement a Sensor via Tams communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Tams communications. This is because the
  * sensor manager will handle all the messages as some sensor updates will come
  * bundled together in one message. It also saves having multiple sensor beans

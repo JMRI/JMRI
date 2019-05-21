@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-carType-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for operations type \"carType\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of car type being requested"
+        },
+        "rename": {
+            "type": "string",
+            "description": "New name for the car type being requested"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

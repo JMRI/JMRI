@@ -52,7 +52,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 
@@ -96,12 +95,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    protected Sensor getInstanceBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public Sensor getByUserName(String key) {
         return _tuser.get(key);
     }
@@ -118,8 +111,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.debug("Invalid system name for sensor: " + systemName
-                    + " needed " + getSystemPrefix() + typeLetter());
+            log.debug("Invalid system name for sensor: {} needed {}{} followed by a suffix",
+                    systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
         }
 
@@ -127,7 +120,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         Sensor s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
             }
             return s;
         }
@@ -135,9 +128,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found sensor via system name (" + systemName
-                        + ") with non-null user name (" + s.getUserName() + "). Sensor \""
-                        + systemName + "(" + userName + ")\" cannot be used.");
+                log.warn("Found sensor via system name ({}) with non-null user name ({}). Sensor \"{}({})\" cannot be used.",
+                        systemName, s.getUserName(), systemName, userName);
             }
             return s;
         }
@@ -145,7 +137,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
@@ -200,7 +192,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         String tmpSName = "";
@@ -209,7 +201,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
             return null;
         }
         Sensor s = getBySystemName(tmpSName);
@@ -222,14 +214,14 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         try {
             iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         s = getBySystemName(prefix + typeLetter() + iName);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -239,6 +231,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

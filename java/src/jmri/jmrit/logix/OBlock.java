@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
  * sensor and the OBlock will pass state changes of the sensor on to its
  * warrant.
  *
- * <P>
+ * <p>
  * Entrances (exits when train moves in opposite direction) to OBlocks have
  * Portals. A Portal object is a pair of OBlocks. Each OBlock has a list of its
  * Portals.
  *
- * <P>
+ * <p>
  * When an OBlock (Detection Circuit) has a Portal whose entrance to the OBlock
  * has a signal, then the OBlock and its chains of adjacent OBlocks up to the
  * next OBlock having an entrance Portal with a signal, can be considered a
@@ -41,24 +41,23 @@ import org.slf4j.LoggerFactory;
  * the "Block" should have entrance Portals with a signal.
  *
  *
- * <P>
+ * <p>
  * A Portal has a list of paths (OPath objects) for each OBlock it separates.
  * The paths are determined by the turnout settings of the turnouts contained in
  * the block. Paths are contained within the Block boundaries. Names of OPath
  * objects only need be unique within an OBlock.
  *
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman (C) 2009
  */
@@ -835,7 +834,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void removePath(Path path) {
-        if (!getSystemName().equals(path.getBlock().getSystemName())) {
+        jmri.Block block = path.getBlock();
+        if (block != null && !getSystemName().equals(block.getSystemName())) {
             return;
         }
 //        if (log.isDebugEnabled()) log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
@@ -970,7 +970,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             Portal portal = iter.next();
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
-            opBlock.removePortal(portal);
+            if (opBlock != null) {
+                opBlock.removePortal(portal);
+            }
             portal.dispose();
         }
         _portals.clear();

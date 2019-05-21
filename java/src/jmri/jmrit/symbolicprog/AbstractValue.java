@@ -6,15 +6,15 @@ import java.beans.PropertyChangeSupport;
 
 /**
  * Define common base class methods for CvValue and VariableValue classes
- * <P>
+ * <p>
  * The ToRead parameter (boolean, unbound) is used to remember whether this
  * object has been read during a "read all" operation. This allows removal of
  * duplicate operations.
- * <P>
+ * <p>
  * The ToWrite parameter (boolean, unbound) is used to remember whether this
  * object has been read during a "write all" operation. This allows removal of
  * duplicate operations.
- * <P>
+ * <p>
  * The Available parameter (boolean, unbound) remembers whether the variable
  * should be displayed, programmed, etc.
  *

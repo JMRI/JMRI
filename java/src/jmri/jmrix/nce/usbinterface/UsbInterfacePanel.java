@@ -22,16 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Panel for configuring a NCE USB interface
+ * Panel for configuring an NCE USB interface.
  *
  * @author ken cameron Copyright (C) 2013
  */
 public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.usbinterface.UsbInterfaceBundle");
-
-    private int replyLen = 0;      // expected byte length
-    private int waiting = 0;      // to catch responses not
+    private int replyLen = 0;    // expected byte length
+    private int waiting = 0;     // to catch responses not
     // intended for this module
     private int minCabNum = -1;  // either the USB or serial size depending on what we connect to
     private int maxCabNum = -1;  // either the USB or serial size depending on what we connect to
@@ -56,7 +54,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     JTextField newCabId = new JTextField(5);
     JLabel oldCabId = new JLabel("     ");
-    JButton setButton = new JButton(rb.getString("ButtonSet"));
+    JButton setButton = new JButton(Bundle.getMessage("ButtonSet"));
 
     JLabel space1 = new JLabel(" ");
     JLabel space2 = new JLabel("  ");
@@ -91,7 +89,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("TitleUsbInterface"));
+        x.append(Bundle.getMessage("TitleUsbInterface"));
         return x.toString();
     }
 
@@ -127,7 +125,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         p1.setLayout(new GridBagLayout());
         p1.setPreferredSize(new Dimension(400, 75));
 
-        addItem(p1, new JLabel(rb.getString("LabelSetCabId")), 1, 2);
+        addItem(p1, new JLabel(Bundle.getMessage("LabelSetCabId")), 1, 2);
         newCabId.setText(" ");
         addItem(p1, newCabId, 2, 2);
         addItem(p1, setButton, 3, 2);
@@ -135,7 +133,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         JPanel p2 = new JPanel();
         p2.setLayout(new GridBagLayout());
-        addItem(p2, new JLabel(rb.getString("LabelStatus")), 1, 1);
+        addItem(p2, new JLabel(Bundle.getMessage("LabelStatus")), 1, 1);
         statusText.setText(" ");
         addItem(p2, statusText, 2, 1);
         add(p2);
@@ -146,7 +144,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         addButtonAction(setButton);
     }
 
-    // validate if a value is a legal cab id for the system
+    // validate value as legal cab id for the system
     // needed since there are gaps in the USB based command stations
     public boolean validateCabId(int id) {
         if ((id < minCabNum) || (id > maxCabNum)) {
@@ -179,7 +177,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             if (validateCabId(i)) {
                 processMemory(true, i);
             } else {
-                statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabIdEntered"), i));
+                statusText.setText(MessageFormat.format(Bundle.getMessage("StatusInvalidCabIdEntered"), i));
             }
         } catch (RuntimeException e) {
             // presume it failed to convert.
@@ -206,7 +204,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         });
-        nceCabUpdateThread.setName(rb.getString("ThreadTitle"));
+        nceCabUpdateThread.setName(Bundle.getMessage("ThreadTitle"));
         nceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
         nceCabUpdateThread.start();
     }
@@ -228,15 +226,15 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         recChar = -1;
         setRequested = false;
         if (validateCabId(setCabId)) {
-            statusText.setText(MessageFormat.format(rb.getString("StatusSetIdStart"), setCabId));
+            statusText.setText(MessageFormat.format(Bundle.getMessage("StatusSetIdStart"), setCabId));
             writeUsbCabId(setCabId);
             if (!waitNce()) {
                 return;
             }
             if (recChar != '!') {
-                statusText.setText(MessageFormat.format(rb.getString("StatusUsbErrorCode"), recChars[0]));
+                statusText.setText(MessageFormat.format(Bundle.getMessage("StatusUsbErrorCode"), recChars[0]));
             } else {
-                statusText.setText(MessageFormat.format(rb.getString("StatusSetIdFinished"), setCabId));
+                statusText.setText(MessageFormat.format(Bundle.getMessage("StatusSetIdFinished"), setCabId));
             }
             synchronized (this) {
                 try {
@@ -246,7 +244,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         } else {
-            statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabId"), setCabId, minCabSetNum, maxCabSetNum));
+            statusText.setText(MessageFormat.format(Bundle.getMessage("StatusInvalidCabId"), setCabId, minCabSetNum, maxCabSetNum));
         }
         this.setVisible(true);
         this.repaint();
@@ -272,7 +270,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         waiting--;
         if (r.getNumDataElements() != replyLen) {
-            statusText.setText(rb.getString("StatusError"));
+            statusText.setText(Bundle.getMessage("StatusError"));
             return;
         }
         // Read one byte
@@ -316,7 +314,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             }
             count--;
             if (count < 0) {
-                statusText.setText(rb.getString("StatusReplyTimeout"));
+                statusText.setText(Bundle.getMessage("StatusReplyTimeout"));
                 return false;
             }
         }
@@ -336,7 +334,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     /**
-     * add item to a panel
+     * Add item to a panel.
      *
      * @param p Panel Id
      * @param c Component Id
@@ -361,6 +359,6 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         });
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(UsbInterfacePanel.class);
+    private final static Logger log = LoggerFactory.getLogger(UsbInterfacePanel.class);
+
 }

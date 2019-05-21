@@ -190,6 +190,9 @@ public class CbusAllocateNodeNumber implements CanListener {
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN) {
             if (!NODE_NUM_DIALOGUE_OPEN) {
                 send.nodeRequestParamSetup();
@@ -203,6 +206,9 @@ public class CbusAllocateNodeNumber implements CanListener {
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
 
         if (opc==CbusConstants.CBUS_RQNN){ // node requesting a number, nn is existing number

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Does configuration for various CAN-based communications implementations.
  * <p>
- * It would be good to replace this with properties-based method for redirecting
+ * TODO It would be good to replace this with properties-based method for redirecting
  * to classes in particular subpackages.
  *
  * @author Bob Jacobsen Copyright (C) 2009
@@ -30,7 +30,7 @@ abstract public class ConfigurationManager {
     }
 
     /**
-     * Set the list of protocols to start with OpenLCB
+     * Set the list of protocols to start with OpenLCB.
      */
     static public void setOpenLCB() {
         log.debug("setOpenLCB");
@@ -38,7 +38,7 @@ abstract public class ConfigurationManager {
     }
 
     /**
-     * Set the list of protocols to start with MERG
+     * Set the list of protocols to start with MERG.
      */
     static public void setMERG() {
         log.debug("setMERG");

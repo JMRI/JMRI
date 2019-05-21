@@ -1403,6 +1403,19 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testGetEmergencyStopMsg() {
+       msg = XNetMessage.getEmergencyStopMsg();
+       Assert.assertEquals(0x80,msg.getElement(0));
+       Assert.assertEquals(0x80,msg.getElement(1));
+    }
+
+    @Test
+    public void testToMonitorStringEmergencyStopMsg(){
+       msg = XNetMessage.getEmergencyStopMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Emergency Stop",msg.toMonitorString());
+    }
+
+    @Test
     public void testGetCSVersionRequestMessage() {
        msg = XNetMessage.getCSVersionRequestMessage();
        Assert.assertEquals(0x21,msg.getElement(0));

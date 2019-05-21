@@ -82,6 +82,15 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
     }
 
+    /**
+     * Complete connection adapter initialization, adding desired options to the
+     * Connection Configuration pane. Required action: set init to true.
+     * Optional actions:
+     * <ul>
+     *     <li>fill in connectionNameField</li>
+     *     <li>add ActionListeners to config fields eg. systemPrefixField to update adapter after change by the user</li>
+     * </ul>
+     */
     abstract protected void checkInitDone();
 
     abstract public void updateAdapter();
@@ -175,7 +184,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     /**
      * Load the adapter with an appropriate object
-     * <i>unless</I> it's already been set.
+     * <i>unless</i> it's already been set.
      */
     abstract protected void setInstance();
 
@@ -191,7 +200,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      * JPanel contents need to handle their own gets/sets to the underlying
      * Connection content.
      *
-     * @param details The specific Swing object to be configured and filled.
+     * @param details the specific Swing object to be configured and filled
      */
     @Override
     abstract public void loadDetails(final JPanel details);

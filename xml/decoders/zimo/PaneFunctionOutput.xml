@@ -5,6 +5,7 @@
            - added Dim function output 10-12
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
+<!-- version 1.3 - Ronald Kuhn - add options for v37+ -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>Function Output</name>
     <name xml:lang="it">Funzione Uscita</name>
@@ -41,17 +42,27 @@
         <text> </text>
        </label>
        <row>
-      <column>
-       <display item="SUSI"/>
-      </column>
-      <column>
-       <label>
-        <text> </text>
-       </label>
-      </column>
-    <column>
+        <column>
+         <display item="SUSI"/>
+         <label>
+          <text> </text>
+         </label>
+        <display item="SUSI as In"/>
+        </column>
+        <column>
+         <label>
+          <text> </text>
+         </label>
+        </column>
+        <column>
          <display item="Special Output Configuration"/>
-    </column>
+         <label>
+          <text> </text>
+         </label>
+         <label>
+          <text> </text>
+         </label>
+        </column>
        </row>
        <label>
         <text> </text>
@@ -210,6 +221,14 @@
         <text> </text>
        </label>
        <display item="Ditch Light Off Time"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Ditch Light with Bell"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Ditch Light with Horn"/>
        <label>
         <text> </text>
        </label>

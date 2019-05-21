@@ -70,7 +70,7 @@ public class CTCMain {
             log.info(Bundle.getMessage("CTCMainSuttingDown"));          // NOI18N
             shutdown();
             startup();
-            log.info("CTC " + CTCSerialData.CTCVersion + " " + Bundle.getMessage("CTCMainReloadedFile") + " {}", _mFilenameRead);   // NOI18N
+            log.info("CTC {} {} {}", CTCSerialData.CTCVersion, Bundle.getMessage("CTCMainReloadedFile"), _mFilenameRead);   // NOI18N
         }
         else
         {
@@ -264,4 +264,5 @@ public class CTCMain {
             externalLockTurnout();
         }
     };
+
 }

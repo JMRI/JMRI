@@ -72,15 +72,16 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
         
-        setBackgroundAllocateListener( preferences.getAllocateNNListener() );
-        
-        if ( preferences.getStartupSearchForCs() ) {
-            send.searchForCommandStations();
+        if ( preferences != null ) {
+            
+            setBackgroundAllocateListener( preferences.getAllocateNNListener() );
+            if ( preferences.getStartupSearchForCs() ) {
+                send.searchForCommandStations();
+            }
+            if ( preferences.getStartupSearchForNodes() ) {
+                send.searchForNodes();
+            }
         }
-        
-        if ( preferences.getStartupSearchForNodes() ) {
-            send.searchForNodes();
-        }        
         
     }
     
@@ -122,7 +123,13 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public int getRowCount() {
-        return _mainArray.size();
+        if ( _mainArray == null ) {
+            log.error("Node Table Array _mainArray not initialised");
+            return 0;
+        }
+        else {
+            return _mainArray.size();
+        }
     }
 
     @Override
@@ -135,7 +142,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -335,6 +341,9 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         int nodenum = ( m.getElement(1) * 256 ) + m.getElement(2);
         if (opc==CbusConstants.CBUS_STAT) {

@@ -108,10 +108,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         Kernel kernel = getKernelByName(name);
         if (kernel == null && !name.equals(NONE)) {
             kernel = new Kernel(name);
-            Integer oldSize = Integer.valueOf(_kernelHashTable.size());
+            int oldSize = _kernelHashTable.size();
             _kernelHashTable.put(name, kernel);
-            setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, _kernelHashTable
+                    .size());
         }
         return kernel;
     }

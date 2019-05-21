@@ -17,6 +17,8 @@ import org.junit.Test;
  */
 public class JsonSchemaServiceCacheTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,7 +45,7 @@ public class JsonSchemaServiceCacheTest {
             }
             services.forEach((service) -> {
                 try {
-                    service.doSchema(type, true, Locale.ENGLISH);
+                    service.doSchema(type, true, locale, 0);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();
                     Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
@@ -52,11 +54,11 @@ public class JsonSchemaServiceCacheTest {
                             ex.getCode()
                     );
                     Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
-                            "No messages from servers of type \"" + type + "\" are allowed.",
+                            "No messages from servers of type " + type + " are allowed.",
                             ex.getMessage());
                 }
                 try {
-                    service.doSchema(type, false, Locale.ENGLISH);
+                    service.doSchema(type, false, locale, 0);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();
                     Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
@@ -64,12 +66,12 @@ public class JsonSchemaServiceCacheTest {
                             400,
                             ex.getCode());
                     Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
-                            "No messages from clients of type \"" + type + "\" are allowed.",
+                            "No messages from clients of type " + type + " are allowed.",
                             ex.getMessage());
                 }
                 // test that every service throws an expected exception
                 try {
-                    service.doSchema("invalid-type", true, Locale.ENGLISH);
+                    service.doSchema("invalid-type", true, locale, 0);
                     Assert.fail("Expected exception for type \"invalid-type\" not thrown by " + service);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();

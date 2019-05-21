@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -46,32 +46,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li><p>JMRI's support for the Digitrax PR4 has been updated to
-                    reflect the PR4's inability to provide
-                    "LocoNet Data Signal termination". <span class="since">since
-                    4.15.5</span></p>
-
-                    <p>This is a correction to JMRI's previous implementation of
-                    PR4 functionality.  It reflects a a more-accurate understanding
-                    of PR4 features by the JMRI development team.</p>
-
-                    <p>When configuring a JMRI "connection" for the PR4, the "Command
-                    station type" of "Stand-alone LocoNet" is no longer available.
-                    Users with an existing PR4 connection which has been configured
-                    for a "Command station type" of "Stand-alone LocoNet" should
-                    change their "Command station type" to some other selection,
-                    such as "DCS100", and save the configuration profile.</p>
-
-                    <p>Because LocoNet requires some source of "LocoNet Data Signal
-                    termination", and because the PR4 is not capable of providing
-                    that feature, it will be necessary to provide it using some
-                    other piece of LocoNet hardware.  Both commercially-available and
-                    do-it-yourself options are available, as described in the
-                    "<a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml#dataterm">
-                    LocoNet Data Signal termination</a>" section of the JMRI
-                    <a href="http://jmri.org/help/en/html/hardware/loconet/StandaloneLocoNet.shtml">
-                    Standalone LocoNet</a>" help page.</p>
-                </li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -86,27 +61,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li><a
-                href="http://jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">CBUS
-                Node Manager</a> provides a Node Table with further Node Configuration tools.</li>
-                <li>CBUS Event Table name import from MERG FCU file has moved to the Node Manager,
-                where a file preview and further import tools are now available.</li>
-                <li>Track Current meter avaiable for supported Command Stations via
-                PanelPro > Tools > Track Current Meter</li>
-                <li>Fixed issue with Roster speed-profiling</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>The updated MQTT support in this release
-                    <ul>
-                    <li>allows you to change the topic string used for publishing and subscribing and
-                    <li>allows changing the payload
-                    of MqttTurnouts, i.e. to use JSON instead of fixed strings.
-                    </ul>
-                    For more information, see the description at the bottom of the
-                    <a href="http://jmri.org/help/en/hardware/mqtt/index.shtml">MQTT page</a>.
-                    </li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -199,6 +159,12 @@
                 <li></li>
             </ul>
 
+        <h4>CT Elektronik</h4>
+            <ul>
+                <li>Nigel Cliffe added a decoder definition for the 
+                    NGS custom CT decoder</li>
+            </ul>
+
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -216,15 +182,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>
-                    ESU LokSound decoder users can now read the loaded Sound Project Name
-                    (and other decoder information) on the Information Pane.
-                    <br><br>
-                    This allows cross-referencing to the ESU website
-                    (copy the "Loco Name" to search the Projects section) in order to
-                    find the ESU bulletin and hence determine
-                    Sound Slot and Function Key names. (Dave Heap)
-                </li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -304,12 +262,9 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>
-		   Add Trim CV to Basic Speed Control pane
-		   Add WOW Ver 4 Prime decoder (Michael Mosher)
-		</li>
+                <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -358,41 +313,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>
-                Changes to
-                <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#splitval"
-                   target="_blank">Split Variables</a>.
-                <ul>
-                    <li>
-                        More than 2 CVs can be specified for
-                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
-                           target="_blank">splitVal</a>
-                        and the other new types, using a new notation format.
-                    </li>
-                    <li>
-                        A new
-                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html"
-                           target="_blank">splitHexVal</a>
-                        type for hexadecimal entry/display.
-                    </li>
-                    <li>
-                        A new
-                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html"
-                           target="_blank">splitDateTimeVal</a>
-                        type for Date/Time information stored across CVs
-                        (e.g. dates in the RailCom&reg; CV page).
-                    </li>
-                    <li>
-                        A new
-                        <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html"
-                           target="_blank">splitTextVal</a>
-                        type for entry and display of text strings stored across CVs .
-                    </li>
-                </ul>
-                For more information see
-                <a href="/help/en/html/apps/DecoderPro/CreateDecoderAdvanced.shtml#splitval"
-                   target="_blank">Advanced Decoder Definitions</a>. (Dave Heap)
-            </li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -410,7 +331,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
         </ul>
 
     <h3>Logix</h3>
@@ -430,6 +351,11 @@
         <ul>
             <li></li>
         </ul>
+        <h4>CTC Tool</h4>
+            <a id="PE-CTC" name="PE-CTC"></a>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -452,20 +378,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>The handling of Turnout system names has been updated
-                to be (more, hopefully completely) consistent with the
-                <a href="../html/doc/Technical/Names.shtml">planned approach</a>.
-                Specifically, case now (generally) matters in system names:
-                <ul>
-                    <li>You can now have an internal turnout named "ITsome lower case name".
-                    <li>But note you can no longer refer to "ITSOME LOWER CASE NAME" or
-                        "ITSome LoWeR cAse Name" and get the same one.
-                </ul>
-                This should not require any migration for stored configurations or
-                panel files, as they have been automatically been being kept consistent
-                since JMRI 4.8.  But you might have case errors in i.e. scripts which
-                will fixing inconsistent references in your scripts.
-                </li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -491,12 +404,9 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Better messages when a Turnout Signal Mast encounters errors
-                    due to part of its configuration not completed.</li>
-                <li>Better reporting of issues when Signal Mast Logic encounters
-                    a problem with a Signal Mast</li>
+                <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -514,12 +424,7 @@
 
 	    <h4>USS CTC Logic</h4>
             <ul>
-                <li>Updated how lock information is
-                    stored in the 'logging memory'
-                    so that it can be displayed e.g.
-                    on a panel.  For more info,
-                    see the
-                    <a href="/help/en//html/tools/uss/index.shtml">help page</a></li>
+                <li></li>
             </ul>
 
    <h3>Switchboard Editor</h3>
@@ -537,41 +442,20 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Down ramps used by NXWarrants and are also used when speed changes required by signals, occupancy 
-            	conditions or user interventions occur. The throttle settings generated for down ramps have been modified. 
-            	The throttle setting is increased by 10% at each time interval. Also, the last throttle interval now is always the throttle
-            	interval as specified in Warrant Preferences. Accuracy of the position where the train stops should be improved.
-            </li>
-            <li>A bug where looped routes ending at an adjacent block could be missed by the Find Route algorithm has been fixed.
-            </li>
-            <li>A stop button to halt execution of the Find Route Operation has been added.
-            </li>
-            <li>The dynamic recording of speeds during sessions has been extended. A weighted average of the speed over a block is recorded to
-            	the session speed profile.  These speeds may be edited and merger into the Roster SpeedProfile according to the settings
-            	selected in WarrantPreferences. 
-            </li>
-            <li>A bug where a Halt at zero speed would not restart has been fixed. Scripts now resume at any command where the user does a Halt.
-            </li>
-            <li>The "Run Warrant" command linking warrants now executes for all cases.
-            </li>
-            <li>A bug when dragging an unnamed Portal icon in CircuitBuilder might cause a freeze has been fixed.
-            </li>
-            <li>Deleting an OBlock will also delete all other elements (Portals and Paths using the block). Previously when saved after such editing, 
-			    any warrants referencing the deleted block would re-register the OBlock when the panel was re-loaded. Now such warrants are loaded, but 
-		        will indicate that editing is needed to establish a correct route for them.  
-            </li>
-            <li>A checkBox to suppress the generation of sound commands has been added to the create NXWarrant window.
-            </li>
-            <li>TextFields have been added to the create NXWarrant window so ramp parameters can be modified.
-            </li>
-            <li>Missing help pages have been added to the sidebar index.
-            </li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
+                Engines, Operations Tracks, and Reporters.</li>
+            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
+                to a message to the original message.</li>
+            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
+                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
+                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version
+                    History</a> for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -579,7 +463,7 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -589,14 +473,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>JSON protocol documentation updated. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
-            <li>JSON services no longer automatically listen for changes to objects provided to a client unless the client explicitly requests the object. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
-            <li>NamedBeans now allow property change listeners to listen only to specified properties. (<a href="https://github.com/JMRI/JMRI/pull/6777">#6777</a>)</li>
-            <li>A new CTC tool has been added to JMRI.  An Editor component uses
-            a set of screens to define the CTC system.  The resulting data can
-            be used to create a USS CTC Panel (Panel Editor) with all of the
-            levers, indicators, and a minimal track plan with turnouts and
-            signals.  A run time component uses the configuration to implement
-            prototype CTC logic with no scripting or Logix.</li>
+            <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
+                <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
+            </li>
         </ul>
 

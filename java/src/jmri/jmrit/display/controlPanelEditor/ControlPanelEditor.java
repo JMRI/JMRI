@@ -81,25 +81,25 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
  * JFrame.
- * <P>
+ * <p>
  * GUI is structured as a band of common parameters across the top, then a
  * series of things you can add.
- * <P>
+ * <p>
  * All created objects are put specific levels depending on their type (higher
  * levels are in front):
- * <UL>
- * <LI>BKG background
- * <LI>ICONS icons and other drawing symbols
- * <LI>LABELS text labels
- * <LI>TURNOUTS turnouts and other variable track items
- * <LI>SENSORS sensors and other independently modified objects
- * </UL>
+ * <ul>
+ * <li>BKG background
+ * <li>ICONS icons and other drawing symbols
+ * <li>LABELS text labels
+ * <li>TURNOUTS turnouts and other variable track items
+ * <li>SENSORS sensors and other independently modified objects
+ * </ul>
  * Note that higher numbers appear behind lower numbers.
- * <P>
+ * <p>
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation. Extends the behavior it shares with PanelPro DnD
  * implemented at JDK 1.2 for backward compatibility
- * <P>
+ *
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
@@ -156,7 +156,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _circuitBuilder = new CircuitBuilder(this);
         _shapeDrawer = new ShapeDrawer(this);
         makeDrawMenu();
-        makeWarrantMenu(false);
+        makeWarrantMenu(false, true);
         makeIconMenu();
         makeZoomMenu();
         makeMarkerMenu();
@@ -246,11 +246,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void makeCircuitMenu(boolean edit) {
-        _circuitMenu = _circuitBuilder.makeMenu();
         if (edit) {
-            int idx = _menuBar.getComponentIndex(_warrantMenu);
-            _menuBar.add(_circuitMenu, ++idx);
-            _menuBar.revalidate();
+            if (_circuitMenu == null) {
+                _circuitMenu = _circuitBuilder.makeMenu();
+                int idx = _menuBar.getComponentIndex(_warrantMenu);
+                _menuBar.add(_circuitMenu, ++idx);
+                _menuBar.revalidate();
+            }
+        } else if (_circuitMenu != null) {
+            _circuitMenu = null;
         }
     }
 
@@ -300,7 +304,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         });
     }
 
-    protected void makeWarrantMenu(boolean edit) {
+    protected void makeWarrantMenu(boolean edit, boolean addMenu) {
+        JMenu oldMenu = _warrantMenu;
         _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu(edit);
         if (_warrantMenu == null) {
             _warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
@@ -318,7 +323,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         } else {
             makeCircuitMenu(edit);
         }
-        _menuBar.add(_warrantMenu, 0);
+        if (addMenu) {
+            _menuBar.add(_warrantMenu, 0);
+        } else if (oldMenu != null) {
+            int idx = _menuBar.getComponentIndex(oldMenu);
+            _menuBar.remove(oldMenu);
+            _menuBar.add(_warrantMenu, idx);
+            
+        }
+        _menuBar.revalidate();
     }
 
     protected void makeMarkerMenu() {
@@ -806,13 +819,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (_circuitMenu != null) {
                 _menuBar.remove(_circuitMenu);
+                _circuitMenu = null;
             }
             if (_drawMenu == null) {
                 makeDrawMenu();
             } else {
                 _menuBar.add(_drawMenu, 0);
             }
-            makeWarrantMenu(edit);
+            makeWarrantMenu(edit, true);
 
             if (_iconMenu == null) {
                 makeIconMenu();
@@ -865,7 +879,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _menuBar.remove(_drawMenu);
             }
             if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getNamedBeanSet().size() > 1) {
-                makeWarrantMenu(edit);
+                makeWarrantMenu(edit, true);
+                _circuitMenu = null;
             }
             if (_markerMenu == null) {
                 makeMarkerMenu();
@@ -1032,6 +1047,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     ////////////////// Overridden methods of Editor //////////////////
     private boolean _manualSelection = false;
+
+    @Override 
+    public void deselectSelectionGroup() {
+        _circuitBuilder.hidePortalIcons();
+        super.deselectSelectionGroup();
+    }
 
     protected Positionable getCurrentSelection(MouseEvent event) {
         if (_pastePending && !event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {

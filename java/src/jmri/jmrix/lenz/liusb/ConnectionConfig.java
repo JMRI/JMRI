@@ -4,11 +4,11 @@ import jmri.util.SystemType;
 
 /**
  * Handle configuring an XpressNet layout connection via a Lenz LIUSBadapter.
- * <P>
+ * <p>
  * This uses the {@link LIUSBAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2005
-  *
+ *
  * @see LIUSBAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
@@ -22,7 +22,8 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -30,8 +31,8 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
 
     @Override
     public String name() {
-        return "Lenz LIUSB";
-    } // NOI18N
+        return "Lenz LIUSB"; // NOI18N
+    }
 
     @Override
     protected String[] getPortFriendlyNames() {
@@ -41,10 +42,14 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         return new String[]{};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBAdapter();
         }
     }
+
 }

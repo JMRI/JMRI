@@ -595,6 +595,32 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return s.toString();
     }
 
+    /**
+     * since 4.15.4
+     */
+    public String getCurrentRosterIdString() {
+        StringBuilder s = new StringBuilder("");
+        if (throttleController != null) {
+            s.append(throttleController.getCurrentRosterIdString());
+            s.append(" ");
+        }
+        if (secondThrottleController != null) {
+            s.append(secondThrottleController.getCurrentRosterIdString());
+            s.append(" ");
+        }
+        if (multiThrottles != null) {
+            for (MultiThrottle mt : multiThrottles.values()) {
+                if (mt.throttles != null) {
+                    for (MultiThrottleController mtc : mt.throttles.values()) {
+                        s.append(mtc.getCurrentRosterIdString());
+                        s.append(" ");
+                    }
+                }
+            }
+        }
+        return s.toString();
+    }
+
     public static String getWiTVersion() {
         return VERSION_NUMBER;
     }

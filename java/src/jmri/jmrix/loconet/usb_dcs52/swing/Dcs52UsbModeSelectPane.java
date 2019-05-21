@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Pane for downloading software updates to PRICOM products
  *
  * @author Bob Jacobsen Copyright (C) 2005
-  */
+ */
 public class Dcs52UsbModeSelectPane extends jmri.jmrix.loconet.pr3.swing.Pr3SelectPane {
 
     @Override

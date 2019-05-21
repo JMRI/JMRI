@@ -49,6 +49,6 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
-  */
+ */
 public class PackageTest  {
 }

@@ -5,7 +5,7 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
 /**
- * Swing action to create and register a CtcEditor
+ * Swing action to create and register a CtcEditor.
  *
  * @author Dave Sand Copyright (C) 2019
  */
@@ -34,4 +34,5 @@ public class CtcEditorAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");  // NOI18N
     }
+
 }

@@ -114,6 +114,9 @@ public class CbusPowerManager implements PowerManager, CanListener {
     // to listen for status changes from Cbus system
     @Override
     public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if (CbusMessage.isTrackOff(m)) {
             power = OFF;
             firePropertyChange("Power", null, null);

@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * Common utility methods for working with Files.
  * <p>
  * All methods in this class call the identical method from the default instance
- * of {@link FileUtilSupport}.</p>
+ * of {@link FileUtilSupport}.
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
  * @author Randall Wood Copyright 2012, 2013, 2014, 2016

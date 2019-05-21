@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement Turnout Manager for DCC++ systems.
+ * Implement TurnoutManager for DCC++ systems.
  * <p>
  * System names are "DxppTnnn", where Dx is the system prefix and nnn is the turnout number without padding.
  *

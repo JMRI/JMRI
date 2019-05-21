@@ -115,7 +115,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         _memo = memo;
         _selectedNode = -1;
         
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        try {
+            preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        } catch (NullPointerException e) {
+            log.warn("Unable to get CBUS Preferences from Instance Manager");
+        }
         init();
         
     }
@@ -367,11 +371,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     }
     
     /**
-     * Creates a Menu List
+     * Creates a Menu List.
      * <p>
      * File - Print, Print Preview, Save, SaveAs csv
-     * Display - show / hide Create new event pane, show/hide bottom feedback pane
-     * </p>
+     * <p>
+     * Display - show / hide Create new event pane, show/hide bottom feedback pane.
      */
     @Override
     public List<JMenu> getMenus() {

@@ -10,14 +10,14 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * Z21 Programmer support for Lenz XpressNet.
  * <p>
  * The read operation state sequence is:
- * <UL>
- * <LI>Send Register Mode / Paged mode /Direct Mode read request
- * <LI>Wait for Broadcast Service Mode Entry message
- * <LI>Send Request for Service Mode Results request
- * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request
- * <LI>Wait for Normal Operations Resumed broadcast
- * </UL>
+ * <ul>
+ * <li>Send Register Mode / Paged mode /Direct Mode read request
+ * <li>Wait for Broadcast Service Mode Entry message
+ * <li>Send Request for Service Mode Results request
+ * <li>Wait for results reply, interpret
+ * <li>Send Resume Operations request
+ * <li>Wait for Normal Operations Resumed broadcast
+ * </ul>
  *
  * @author Paul Bender Copyright (c) 2014
  */

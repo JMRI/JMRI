@@ -122,6 +122,7 @@ abstract public class AbstractMRTrafficController {
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
+
     protected boolean getSynchronizeRx() {
         return synchronizeRx;
     }

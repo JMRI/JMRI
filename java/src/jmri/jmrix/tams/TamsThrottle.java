@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a TAMS connection.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottle implementation and work by
  * Kevin Dickerson
  *
@@ -172,7 +172,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
