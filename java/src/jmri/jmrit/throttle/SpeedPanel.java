@@ -94,7 +94,8 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     /**
-     * update the state of this panel if direction or speed change
+     * Update the state of this panel if direction or speed change
+     * Does not allow user to edit if Throttle IsAvailable is false
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -104,6 +105,10 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
         } else if (e.getPropertyName().equals("IsForward")) {
             currentIsForward = (boolean) e.getNewValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
+        }
+        else if ("IsAvailable".compareTo(e.getPropertyName()) == 0) {
+            log.debug("propertyChange: Throttle IsAvailable {}" , e.getNewValue() );
+            this.setEnabled( (Boolean) e.getNewValue() );
         }
         if (log.isDebugEnabled()) {
             log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
