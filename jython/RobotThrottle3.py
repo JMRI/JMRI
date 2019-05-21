@@ -1435,8 +1435,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     isOk = False
         if (isOk) :
             # clear id from any existing blocks
-            for x in blocks.getSystemNameList().toArray() :
-                b = blocks.getBySystemName(x)
+            for b in blocks.getNamedBeanSet() :
                 if (b != blocks.getBlock(self.blockStart.text) and b.getValue() == self.locoAddress.text) :
                     b.setValue("")
             if (self.blockDirection.isSelected()) :
@@ -1705,10 +1704,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findCurrentBlocks(self) :
         # search the block list for the matching loco
         blockList = []
-        blockArray = blocks.getSystemNameList().toArray()
-        #self.msgText("blocks #: " + str(len(blockArray)))
-        for x in blockArray :
-            b = blocks.getBySystemName(x)
+        for b in blocks.getNamedBeanSet() :
             if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
         return blockList
