@@ -407,9 +407,9 @@
         so all of JMRI appears to the command station as a single CANCAB for any single address.</p>
 
         <p>JMRI ( via the CBUS Node Manager ) can tell if a command station is available which 
-        supports the CBUS steal or share feature ( eg. supported with CANCMD v4 + )</p>
+        supports the CBUS steal or share feature ( eg. supported with CANCMD v4 + ).</p>
         
-        <p>The Steal / Share feature is for when throttles are requested which are already in use 
+        <p>The Steal / Share features are for when throttles are requested which are already in use 
         by something external to JMRI.</p>
         
         <p>When a JMRI application requests a loco ( which is already in a CBUS session ), 
@@ -421,8 +421,8 @@
         <p>If neither have been checked and you are using the main JMRI Throttle, you will be asked
         if you want to Steal, Share, or cancel.</p>
         
-        <img src="images/web/cbus-throttle-steal-share-dialogue-278x128.png"
-        width="278" height="128" alt="JMRI MERG CBUS Steal Share Dialogue">
+        <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png"
+        width="322" height="128" alt="JMRI MERG CBUS Steal Share Dialogue">
         
         <p>If you are using an automation script and neither option is checked, the system will
         attempt to acquire a Share on the session.</p>
@@ -431,14 +431,36 @@
         so even if you have a preferred option, an automation script may attempt to use
         the non-preferred option to obtain the session.</p>
         
-        <p>When a Throttle has been stolen from JMRI, the single JMRI throttle window for that loco 
-        ( if open ) returns to address selection mode, ie throttle slider and function keys greyed out.</p>
+        <h4>Throttles Stolen from JMRI</h4>
         
-        <p>A message explaining the steal will also be displayed in the main JMRI Console log.</p>
+        <p>When a Throttle session has been stolen / cancelled from outside of JMRI, 
+        any open JMRI throttle window for that loco
+        will cease to accept commands, ie throttle slider and function keys greyed out.</p>
+        
+        <p>If Silent Share is enabled in the Throttle Preferences, 
+        and share is available on the Command Station,
+        after a short delay JMRI will attempt to share the throttle.</p>
+        
+       <p>For most users, silent sharing enables most layouts to operate with minimum of fuss.</p>
+        
+        <p>If Silent Steal is enabled in the Throttle Preferences, 
+        and steal is available on the Command Station,
+        after a short delay JMRI will attempt to steal the throttle back.</p>
+        
+        <p>Beware of creating Steal loops if more than 1 CAB is capable of auto-stealback!
+        If you find this is happening, disable the Silent Stealing option to stop the loop.</p>
+        
+        <p>If neither option is enabled, or the steal / share is not possible, a notification will be displayed:</p>
+        
+        <img src="images\web\cbus-throttle-stolen-dialogue-278x138.png"
+        width="278" height="138" alt="JMRI MERG CBUS Stolen Throttle Dialogue">
+        
+        <p>Ticking the checkbox before closing the popup will supress loco steal notifications for
+        the rest of the JMRI session, for all loco sessions.</p>
+        
+        <p>Relevant information can be viewed in the main JMRI Console log.</p>
         
         <p>Note that not all JMRI applications currently have a method for dealing with a stolen throttle.</p>
-
-        <p>The main JMRI Throttle can be used as a reference for full feature implementation.</p>
         
         <h4>Dispatch / Release</h4>
         <p>Dispatch is available according to Command Station Firmware ( eg. supported with CANCMD v4 + )</p>
