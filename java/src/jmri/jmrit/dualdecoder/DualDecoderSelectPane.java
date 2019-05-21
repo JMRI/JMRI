@@ -259,7 +259,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
      * <ol>
      * <li>Write 1 to CV16, which will write both decoders
      * <li>Write 7 to CV15, which will turn off Digitrax
-     * <LI>Write 7 to CV16, which will be stored in the legacy decoder only
+     * <li>Write 7 to CV16, which will be stored in the legacy decoder only
      * </ol>
      */
     void doInit() {

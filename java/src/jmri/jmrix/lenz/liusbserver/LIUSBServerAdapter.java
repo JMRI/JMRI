@@ -258,9 +258,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
      * @param istream character source.

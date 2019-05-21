@@ -54,13 +54,15 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for ()", name());
         if (init) {
             return;
         }
-
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.addActionListener(new ActionListener() {
                 @Override
@@ -138,8 +140,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> it's already been set.
+     * {@inheritDoc}
      */
     @Override
     abstract protected void setInstance();
@@ -156,6 +157,9 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         return Bundle.getMessage("none");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;

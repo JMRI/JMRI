@@ -13,12 +13,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007, 2012
- *
  */
 public class EngineRosterMenu extends JMenu {
 

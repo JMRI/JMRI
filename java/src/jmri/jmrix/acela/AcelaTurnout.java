@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AcelaLight.java
- * <p>
- * Implementation of the Light Object for Acela
+ * Implementation of the Turnout Object for Acela
  * <p>
  * Based in part on SerialTurnout.java
  *

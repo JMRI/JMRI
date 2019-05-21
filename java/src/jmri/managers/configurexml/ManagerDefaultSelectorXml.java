@@ -9,7 +9,7 @@ import org.jdom2.Element;
 
 /**
  * Handle XML persistence of ManagerDefaultSelector
- * <P>
+ * <p>
  * This class is named as being the persistent form of the
  * ManagerDefaultSelector class, but there's no object of that form created or
  * used.

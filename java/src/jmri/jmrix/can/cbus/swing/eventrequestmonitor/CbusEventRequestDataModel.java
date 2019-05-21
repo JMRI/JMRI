@@ -105,7 +105,6 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns

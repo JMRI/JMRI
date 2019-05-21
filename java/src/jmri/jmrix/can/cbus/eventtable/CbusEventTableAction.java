@@ -257,11 +257,10 @@ public class CbusEventTableAction {
      * <p>
      * Copied from BeanTableDataModel modified to print variable column widths.
      * Final column with size zero runs to extent of page width.
-     *
+     * <p>
      * Printed with headings and vertical lines between each column. Data is
      * word wrapped within a column. Can handle data as strings, integers,
-     * comboboxes or booleans
-     * </p>
+     * comboboxes or booleans.
      */
     public void printTable(HardcopyWriter w) {
         // [AC] variable column sizes

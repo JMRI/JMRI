@@ -34,14 +34,14 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * </ul>
  * QSI decoders generally use the 1st format, and ESU LokSound decoders the second.
- *<p>
+ * <p>
  * The specific CV numbers for PI and SI are provided when constructing the object.
  * They can be read from a decoder definition file by e.g. {@link jmri.implementation.ProgrammerFacadeSelector}.
- *<p>
+ * <p>
  * Alternately the PI and/or SI CV numbers can be set by using a "nn=nn" syntax when specifying
  * PI and/or SI.  For example, using a cvFirst false syntax, "101=12.80" sets CV101 to 12 before
  * accessing CV 80, regardless of the PI value configured into the facade.
- *<p>
+ * <p>
  * If skipDupIndexWrite is true, sequential operations with the same PI and SI values
  * (and only immediately sequential operations with both PI and SI unchanged) will
  * skip writing of the PI and SI CVs.  This might not work for some decoders, hence is

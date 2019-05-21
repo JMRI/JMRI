@@ -48,18 +48,18 @@ import org.slf4j.LoggerFactory;
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
  * layout. A node may be a LayoutTurnout, a LevelXing or a PositionablePoint.
- * <P>
+ * <p>
  * PositionablePoints have 1 or 2 connection points. LayoutTurnouts have 3 or 4
  * (crossovers) connection points, designated A, B, C, and D. LevelXing's have 4
  * connection points, designated A, B, C, and D.
- * <P>
+ * <p>
  * TrackSegments carry the connectivity information between the three types of
  * nodes. Track Segments serve as the lines in a graph which shows layout
  * connectivity. For the connectivity graph to be valid, all connections between
  * nodes must be via TrackSegments.
- * <P>
+ * <p>
  * TrackSegments carry Block information, as do LayoutTurnouts and LevelXings.
- * <P>
+ * <p>
  * TrackSegments may be drawn as dashed lines or solid lines. In addition
  * TrackSegments may be hidden when the panel is not in EditMode.
  *

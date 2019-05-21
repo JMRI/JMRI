@@ -266,7 +266,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Add a slot listener, if it is not already registered
      * <p>
      * The slot listener will be invoked every time a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be added
      */
     public synchronized void addSlotListener(SlotListener l) {
@@ -281,7 +281,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * The slot listener will be removed from the list of listeners which are
      * invoked whenever a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be removed
      */
     public synchronized void removeSlotListener(SlotListener l) {
@@ -388,7 +388,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Checks a LocoNet message to see if it encodes a DCC "direct function" packet.
-     * <p>
+     *
      * @param m  a LocoNet Message
      * @return the loco address if the LocoNet message encodes a "direct function" packet,
      * else returns -1

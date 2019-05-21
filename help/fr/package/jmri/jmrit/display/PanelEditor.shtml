@@ -449,7 +449,7 @@
       <a href="../../../../html/doc/Technical/Names.shtml">noms de
       syst&egrave;me</a>. Par exemple, si la seconde connexion est
       pour un syst&egrave;me LocoNet, r&eacute;f&eacute;rerez vous
-      au aiguillage Loconet LTnn; ou un capteur Loconet LSnn, etc
+      au aiguillage LocoNet LTnn; ou un capteur LocoNet LSnn, etc
       (ou nn est le num&eacute;ro de l'&eacute;l&eacute;ment)</p>
       <!--#include virtual="/Footer" -->
     </div>

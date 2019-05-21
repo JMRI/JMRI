@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display the loco database of the Tams MC
+ * Table data model for display the loco database of the Tams MC.
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
@@ -31,8 +31,6 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
     static public final int DELCOLUMN = 4;
 
     static public final int NUMCOLUMN = 5;
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tams.swing.locodatabase.TamsLocoBundle");
 
     jmri.jmrix.tams.TamsSystemConnectionMemo memo;
 
@@ -48,7 +46,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
      * Returns the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed, and whether the system slots
      * should be displayed.
-     * <P>
+     * <p>
      * This should probably use a local cache instead of counting/searching each
      * time.
      */
@@ -66,15 +64,15 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
     public String getColumnName(int col) {
         switch (col) {
             case ADDRCOLUMN:
-                return rb.getString("ColAddress");
+                return Bundle.getMessage("ColAddress");
             case SPDCOLUMN:
-                return rb.getString("ColSteps");
+                return Bundle.getMessage("ColSteps");
             case FMTCOLUMN:
-                return rb.getString("ColFormat");
+                return Bundle.getMessage("ColFormat");
             case NAMECOLUMN:
-                return rb.getString("ColName");
+                return Bundle.getMessage("ColName");
             case DELCOLUMN:
-                return rb.getString("ColDelete");
+                return Bundle.getMessage("ColDelete"); // TODO reuse existing key in jmri.NBBundle
             default:
                 return "unknown";
         }
@@ -118,9 +116,9 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
                 case NAMECOLUMN:  //
                     return loco[3];
                 case DELCOLUMN:
-                    return "delete";
+                    return "delete"; // NOI18N
                 default:
-                    log.error("internal state inconsistent with table requst for " + row + " " + col);
+                    log.error("internal state inconsistent with table request for {} {}", row, col);
                     return null;
             }
         } catch (RuntimeException ex) {
@@ -142,9 +140,9 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
             case NAMECOLUMN:
                 return new JTextField(12).getPreferredSize().width;
             case DELCOLUMN:
-                return new JButton(rb.getString("DeleteLoco")).getPreferredSize().width;
+                return new JButton(Bundle.getMessage("DeleteLoco")).getPreferredSize().width;
             default:
-                return new JLabel(" <unknown> ").getPreferredSize().width;
+                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
 

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
- * <P>
+ * <p>
  * This connects an SRCP server (daemon) via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *

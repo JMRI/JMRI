@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon that displays the position of a train icon on a panel.
- * <P>
+ * <p>
  * The icon can always be repositioned and its popup menu is always active.
  *
  * @author Bob Jacobsen Copyright (c) 2002

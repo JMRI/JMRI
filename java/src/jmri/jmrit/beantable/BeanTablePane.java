@@ -12,7 +12,7 @@ import jmri.swing.RowSorterUtil;
 
 /**
  * Provide a JPanel to display a table of NamedBeans.
- * <P>
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>
