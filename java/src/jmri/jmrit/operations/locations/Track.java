@@ -1539,9 +1539,17 @@ public class Track {
             }
             log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
                     .getName(), getName()); // NOI18N
+            // calculate the available space
+            int available = getLength() -
+                    (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
+                            getReserved());
+            // could be less based on track length
+            int available2 = getLength() - getReservedLengthDrops();
+            if (available2 < available) {
+                available = available2;
+            }
             return MessageFormat.format(Bundle.getMessage("lengthIssue"), new Object[]{LENGTH, length,
-                    Setup.getLengthUnit().toLowerCase(),
-                    getLength() - (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 + getReserved())});
+                    Setup.getLengthUnit().toLowerCase(), available});
         }
         return OKAY;
     }
@@ -3005,7 +3013,7 @@ public class Track {
      *
      * @param reader jmri.Reporter object.
      */
-    protected void setReporter(Reporter r) {
+    public void setReporter(Reporter r) {
         Reporter old = _reader;
         _reader = r;
         if (old != r) {

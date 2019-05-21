@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.server.json.JSON;
+import jmri.server.json.JsonHttpService;
 
 /**
  * A message to be sent by the JMRI JSON message service.
@@ -63,7 +64,7 @@ public class JsonMessage {
      * @param locale  the locale of the message
      */
     public JsonMessage(@Nonnull String message, @Nonnull Locale locale) {
-        this(JsonMessage.TYPE.INFO, message, null, null, locale);
+        this(TYPE.INFO, message, null, null, locale);
     }
 
     /**
@@ -147,14 +148,14 @@ public class JsonMessage {
     public String getType() {
         switch (this.type) {
             case SUCCESS:
-                return JsonMessage.SUCCESS;
+                return SUCCESS;
             case WARNING:
-                return JsonMessage.WARNING;
+                return WARNING;
             case ERROR:
-                return JsonMessage.ERROR;
+                return ERROR;
             case INFO:
             default:
-                return JsonMessage.INFO;
+                return INFO;
         }
     }
 
@@ -165,17 +166,15 @@ public class JsonMessage {
      * @return the JSON node
      */
     public JsonNode toJSON(ObjectMapper mapper) {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, JsonMessage.MESSAGE);
-        ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JsonMessage.MESSAGE, this.getMessage());
+        ObjectNode data = mapper.createObjectNode();
+        data.put(MESSAGE, this.getMessage());
         if (this.getContext() != null) {
-            data.set(JsonMessage.CONTEXT, this.getContext());
+            data.set(CONTEXT, this.getContext());
         } else {
-            data.putNull(JsonMessage.CONTEXT);
+            data.putNull(CONTEXT);
         }
         data.put(JSON.TYPE, this.getType());
         data.put(JSON.LOCALE, this.getLocale().toLanguageTag());
-        return root;
+        return JsonHttpService.message(mapper, MESSAGE, data, null, 0);
     }
 }

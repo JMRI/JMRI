@@ -14,7 +14,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.List;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,9 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.MultiSensorIcon;
+import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
@@ -148,7 +155,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             response.setContentType(UTF8_APPLICATION_JSON);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
-            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML));
+            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML, 0));
         } else {
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
@@ -299,5 +306,45 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             icons.addContent(ea);
         }
         return icons;
+    }
+
+    protected Element positionableElement(@Nonnull Positionable sub) {
+        Element e = ConfigXmlManager.elementFromObject(sub);
+        if (e != null) {
+            switch (e.getName()) {
+                case "signalmasticon":
+                    e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast"),
+                            e.getAttributeValue("imageset")));
+                    break;
+                case "multisensoricon":
+                    if (sub instanceof MultiSensorIcon) {
+                        List<Sensor> sensors = ((MultiSensorIcon) sub).getSensors();
+                        for (Element a : e.getChildren()) {
+                            String s = a.getAttributeValue("sensor");
+                            if (s != null) {
+                                for (Sensor sensor : sensors) {
+                                    if (s.equals(sensor.getUserName())) {
+                                        a.setAttribute("sensor", sensor.getSystemName());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    // nothing to do
+            }
+            try {
+                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+            } catch (NullPointerException ex) {
+                if (sub.getNamedBean() == null) {
+                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                } else {
+                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                }
+            }
+            parsePortableURIs(e);
+        }
+        return e;
     }
 }

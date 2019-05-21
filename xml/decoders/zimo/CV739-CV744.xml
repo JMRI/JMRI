@@ -7,11 +7,13 @@
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
+  <!-- v1.2,  Added some german translation.   Ronald Kuhn, 26 Apr 2019 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="738" item="Switch input 1 Sound Sample" include="208,210,214,215,221,222,224,227,230">
     <decVal/>
     <label>Switch input 1 Sound Sample</label>
+    <label xml:lang="de">Sample Nummer für S1</label>
     <label xml:lang="cs">Zvukový vzorek spínací vstup 1</label>
   </variable>
   <variable CV="739" item="Zimo Sound Setting 51" include="208,210,214,215,221,222,224,227,230">
@@ -24,6 +26,7 @@
   <variable CV="740" item="Switch input 2 Sound Sample" include="208,210,224,227,230">
     <decVal/>
     <label>Switch input 2 Sound Sample</label>
+    <label xml:lang="de">Sample Nummer für S2</label>
   </variable>
   <variable CV="741" item="Zimo Sound Setting 52" include="208,210,224,227,230">
     <decVal/>
@@ -35,6 +38,7 @@
   <variable CV="742" item="Switch input 3 Sound Sample" include="208,224,227,230">
     <decVal/>
     <label>Switch input 3 Sound Sample</label>
+    <label xml:lang="de">Sample Nummer für S3</label>
   </variable>
   <variable CV="743" item="Zimo Sound Setting 53" include="208,224,227,230">
     <decVal/>

@@ -16,7 +16,7 @@ public class CabSignalPaneTest extends jmri.util.swing.JmriPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         panel = new CabSignalPane();
-        title = Bundle.getMessage("MenuItemCabSignalPane");
+        title = Bundle.getMessage("CabSignalPaneTitle");
         helpTarget = "package.jmri.jmrit.cabsignals.CabSignalPane";
     }
 

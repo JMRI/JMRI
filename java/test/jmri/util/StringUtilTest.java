@@ -453,5 +453,16 @@ public class StringUtilTest {
         Assert.assertEquals("010F03 3", 15, StringUtil.getHexDigit(3,"010F03") );
         
     }
+
+    // The minimal setup for log4J
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
+    }
     
 }

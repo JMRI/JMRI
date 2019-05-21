@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling CBUS addresses.
- * <P>
+ * <p>
  * CBUS frames have a one byte command and length, optionally followed by data
  * bytes. JMRI maps these into address strings.
  * <p>
@@ -353,7 +353,7 @@ public class CbusAddress {
         String part = testpart;
         try {
             unsigned = Integer.parseInt(part); // accept unsigned single integer, will add "+" upon creationz
-            log.debug("part {} is integer {}",part,unsigned);
+            log.debug("part {} is integer {}", part, unsigned);
             if ( unsigned == 0 ){
                 throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
             }

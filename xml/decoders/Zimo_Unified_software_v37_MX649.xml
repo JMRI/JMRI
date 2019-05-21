@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110628"/>
+  <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
+  <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
+  <!--                                                                                       -->
+  <!-- Based on the "2010 03 01" English version of the ZIMO MX640                           -->
+  <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
+  <!-- for the translations!)with updates from "2010 10 15" German version                   -->
+  <!-- and the decoder software update page of the Zimo website.                             -->
+  <!--                                                                                       -->
+  <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
+  <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
+  <!-- variables on the proper pane of the Comprehensive programmer.                         -->
+  <!-- V 1 new file -->
+  <!-- v1.1,  small change to refer CV's 260-355 to the "version 30" file,  Nigel Cliffe. 9th Dec 2011 -->
+  <!-- v1.2,  "version 32 firmware" inclusion of sound control CV's and "coast" function for diesels  Nigel Cliffe. 17th Nov 2012 -->
+  <!-- v1.3,  Extended Sound Volume controls to cover FnKeys F20-F28.   Nigel Cliffe, 7 March 2014 -->
+  <!-- v1.4,  added version 34 firmware capabilities,  Nigel Cliffe, 23 Jan 2015             -->
+  <!-- v1.5,  updated to hide V34 as v34 updates are included in v32 files   Mark Waters, 03 Jan 2016 -->
+  <!-- v1.6,  version 36 Firmware based on hidden v34, no other changes, as no updated documents from ZIMO updated to allow FW version up to 40, Alain Carasso, 29 Jul 2017 -->
+  <!-- v1.6.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
+  <!-- v1.7,  added version 37 firmware capabilities,  Ronald Kuhn, 28 Feb 2018              -->
+  <!--                                                                                       -->
+  <decoder>
+    <family name="Zimo Unified software (version 37+)" mfg="Zimo">
+      <model  model="MX649 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="253">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+        <size length="23" width="9" height="4" units="mm"/>
+      </model>
+      <model  model="MX649F version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="253">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+      <size length="23" width="9" height="4" units="mm"/>
+      </model>
+      <model  model="MX649L version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="253">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+       <size length="23" width="9" height="4" units="mm"/>
+      </model>
+      <model  model="MX649N version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="253">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+      <size length="23" width="9" height="4" units="mm"/>
+      </model>
+      <model  model="MX649R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="253">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+        </output>
+        <size length="23" width="9" height="4" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV20.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
+      <!-- CV158 has both sound and Railcom information -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+     <!-- CV7 set to default 37 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
+      <variable CV="7" readOnly="yes" default="37">
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable> 
+      <variable item="Decoder ID 1" CV="250" default="253" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 2" CV="251" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 2</label>
+        <label xml:lang="it">ID 2 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 2:</label>
+      </variable>
+      <variable item="Decoder ID 3" CV="252" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 3</label>
+        <label xml:lang="it">ID 3 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 3:</label>
+      </variable>
+      <variable item="Decoder ID 4" CV="253" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 4</label>
+        <label xml:lang="it">ID 4 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 4:</label>
+      </variable>
+      <!-- Begin sound-only variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV356.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV357-CV365sound_version28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV366-CV371sound.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV372-CV399sound.xml"/>
+      <!-- End sound-only variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
+      <!-- more sound variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>
+      <!-- end of more sound variables -->
+      <!-- Begin constant stopping distance variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV830-CV833.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV835.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version37.xml"/>
+    </variables>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap6.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
+  <!-- Begin sound-only panes -->
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundLevels.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundSamples.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRandomSounds.xml"/>
+  <!-- End sound-only panes -->
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
+</decoder-config>

@@ -1011,6 +1011,15 @@ public class LayoutTurnout extends LayoutTrack {
         return continuingSense;
     }
 
+    /**
+     * isInContinuingSenseState
+     *
+     * @return true is the continuingSense matches the known state
+     */
+    public boolean isInContinuingSenseState() {
+        return getState() == continuingSense;
+    }
+
     public void setTurnout(@Nullable String tName) {
         if (namedTurnout != null) {
             deactivateTurnout();
@@ -3227,10 +3236,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         int state = UNKNOWN;
         if (layoutEditor.isAnimating()) {
-            Turnout to = getTurnout();
-            if (to != null) {
-                state = to.getKnownState();
-            }
+            state = getState();
         }
 
         int type = getTurnoutType();
@@ -3572,10 +3578,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         int state = UNKNOWN;
         if (layoutEditor.isAnimating()) {
-            Turnout to = getTurnout();
-            if (to != null) {
-                state = to.getKnownState();
-            }
+            state = getState();
         }
 
         switch (type) {
@@ -4220,7 +4223,19 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
-            g2.draw(layoutEditor.trackControlCircleAt(center));
+            Color foregroundColor = g2.getColor();
+            if (!isInContinuingSenseState()) {
+                Color backgroundColor = g2.getBackground();
+                g2.setColor(backgroundColor);
+            }
+            if (layoutEditor.isTurnoutFillControlCircles()) {
+                g2.fill(layoutEditor.trackControlCircleAt(center));
+            } else {
+                g2.draw(layoutEditor.trackControlCircleAt(center));
+            }
+            if (!isInContinuingSenseState()) {
+                g2.setColor(foregroundColor);
+            }
         }
     }
 

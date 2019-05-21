@@ -33,18 +33,12 @@ public class CbusNameServiceTest {
         CbusNameService t = new CbusNameService();
         Assert.assertEquals("no ev name no ev table","",t.getEventName(123,456));
         
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tcis);
-        
         CbusEventTableDataModel m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
-        Assert.assertNotNull("exists",m);
+        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
         
         m.addEvent(123,456, 0, null, "Event Name", "Comment", 0, 0, 0, 0);
         Assert.assertEquals("Event and Node Name","Event Name",t.getEventName(123,456));
         
-        memo = null;
-        tcis = null;
         t = null;
     }
 
@@ -58,15 +52,12 @@ public class CbusNameServiceTest {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
         
-        jmri.InstanceManager.setDefault(jmri.SensorManager.class,new CbusSensorManager(memo));
-        
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
+        CbusEventTableDataModel m = new CbusEventTableDataModel(
+            memo, 5, CbusEventTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
         
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
-        
-        CbusEventTableDataModel m = new CbusEventTableDataModel(memo, 3,CbusEventTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
         
         nodeModel.provideNodeByNodeNum(123).setUserName("Node Name");
         nodeModel.provideNodeByNodeNum(69).setUserName("My Node");
@@ -80,21 +71,30 @@ public class CbusNameServiceTest {
         Assert.assertEquals("alonso evstr Event Name","EN:357 Alonso ",t.getEventNodeString(0,357));
         
         m = null;
-        memo = null;
-        tcis = null;
         nodeModel = null;
         t = null;
     }
 
+    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        tcis = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcis);
+        
     }
 
     @After
     public void tearDown() {
+        
+        tcis = null;
+        memo = null;
+        
         JUnitUtil.tearDown();
     }
 

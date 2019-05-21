@@ -274,12 +274,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setRestartDelay(info.getRestartDelayMin()); //this is number of minutes to delay between runs
             at.setDelaySensor(info.getDelaySensor());
+            at.setResetStartSensor(info.getResetStartSensor());
             if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) &&
                     info.getDelayedStart() != ActiveTrain.SENSORDELAY) ||
                     info.getDelayedStart() == ActiveTrain.NODELAY) {
                 at.setStarted();
             }
             at.setRestartSensor(info.getRestartSensor());
+            at.setResetRestartSensor(info.getResetRestartSensor());
             at.setTrainType(info.getTrainType());
             at.setTerminateWhenDone(info.getTerminateWhenDone());
             if (info.getAutoRun()) {

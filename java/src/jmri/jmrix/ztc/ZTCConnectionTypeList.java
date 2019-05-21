@@ -5,11 +5,10 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid ZTC Connection Types.  Note that
- * most ZTC Connection types are Lenz (ZTC uses XpressNet )
+ * most ZTC Connection types are Lenz (ZTC uses XpressNet).
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class ZTCConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

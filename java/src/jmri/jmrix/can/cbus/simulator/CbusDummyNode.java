@@ -429,6 +429,9 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
             passMessage(m);
         }
@@ -436,6 +439,9 @@ public class CbusDummyNode extends CbusNode implements CanListener {
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
             CanMessage msg = new CanMessage(r);
             passMessage(msg);
