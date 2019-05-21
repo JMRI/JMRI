@@ -452,7 +452,7 @@
         
         <p>If neither option is enabled, or the steal / share is not possible, a notification will be displayed:</p>
         
-        <img src="images\web\cbus-throttle-stolen-dialogue-278x138.png"
+        <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png"
         width="278" height="138" alt="JMRI MERG CBUS Stolen Throttle Dialogue">
         
         <p>Ticking the checkbox before closing the popup will supress loco steal notifications for
@@ -503,10 +503,6 @@
 
         <p>Events do not need to be set up to connect a MERG DCC Command Station CANCMD.</p>
         
-        
-        
-        
-        
         <p>DCC Accessory Decoders can be controlled over MERG CBUS and a CANCMD 
         by creating turnouts with explicit RDCCx Opscode commands, 
         see <a href="Names.shtml#hex">MERG CBUS hex event naming</a>.
@@ -522,8 +518,6 @@
         
         <p>There are definitions within DecoderPro for the MERG CANACC5 and other MERG DCC decoders.</p>
         
-        
-
     </div>
     <h2><a id="signalling" name="signalling">Signalling</a></h2>
       <div>
