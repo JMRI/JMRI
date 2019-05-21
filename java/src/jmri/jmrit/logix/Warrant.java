@@ -26,24 +26,21 @@ import org.slf4j.LoggerFactory;
  * from WarrantFrame who records throttle commands from "_student" throttle.
  * Warrant fires PropertyChanges for WarrantFrame to record when blocks are
  * entered. "_engineer" thread is null.
- * </p>
- * <P>
+ * <p>
  * MODE_RUN - Warrant may be launched from several places. An array of
  * BlockOrders, _savedOrders, and corresponding _throttleCommands allow an
  * "_engineer" thread to execute the throttle commands. The blockOrders
  * establish the route for the Warrant to acquire and reserve OBlocks. The
  * Warrant monitors block activity (entrances and exits, signals, rogue
  * occupancy etc) and modifies speed as needed.
- * </p>
- * <P>
+ * <p>
  * MODE_MANUAL - Warrant may be launched from several places. The Warrant to
  * acquires and reserves the route from the array of BlockOrders. Throttle
  * commands are done by a human operator. "_engineer" and "_throttleCommands"
  * are not used. Warrant monitors block activity but does not set _stoppingBlock
  * or _shareTOBlock since it cannot control speed. It does attempt to realign
  * the route as needed, but can be thwarted.
- * </p>
- * <P>
+ * <p>
  * Version 1.11 - remove setting of SignalHeads
  *
  * @author Pete Cressman Copyright (C) 2009, 2010

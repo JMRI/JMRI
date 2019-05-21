@@ -7,7 +7,7 @@ import jmri.util.StringUtil;
 
 /**
  * Base class for replies in a CANbus based message/reply protocol.
- * <P>
+ * <p>
  * It is expected that any CAN based system will be based upon basic CANbus
  * concepts such as ID (standard or extended), Normal and RTR frames and a data
  * field.

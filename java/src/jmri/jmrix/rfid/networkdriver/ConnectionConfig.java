@@ -31,6 +31,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void loadDetails(JPanel details) {
@@ -93,6 +96,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

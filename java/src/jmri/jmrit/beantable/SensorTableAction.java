@@ -215,7 +215,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     /**
-     * Respond to Create new item pressed on Add Sensor pane
+     * Respond to Create new item button pressed on Add Sensor pane.
      *
      * @param e the click event
      */
@@ -248,7 +248,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             hardwareAddressTextField.setBackground(Color.white);
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
+        // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
         String errorMessage = null;
         for (int x = 0; x < numberOfSensors; x++) {

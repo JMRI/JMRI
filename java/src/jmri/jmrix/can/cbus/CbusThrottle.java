@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
  * Cbus connection.
- * <P>
+ * <p>
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in CBUS
  * is an int with values from 0 to 127.
- * <P>
+ *
  * @author Andrew Crosland Copyright (C) 2009
  */
 public class CbusThrottle extends AbstractThrottle {
@@ -119,11 +119,10 @@ public class CbusThrottle extends AbstractThrottle {
 
     /**
      * setSpeedStepMode - set the speed step value.
-     * <P>
+     * <p>
      * Overridden to capture mode changes to be forwarded to the hardware.
-     * New throttles default to 128 step
-     * mode
-     * <P>
+     * New throttles default to 128 step mode
+     *
      * @param Mode the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
@@ -484,7 +483,7 @@ public class CbusThrottle extends AbstractThrottle {
 
     /**
      * Set the speed.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop

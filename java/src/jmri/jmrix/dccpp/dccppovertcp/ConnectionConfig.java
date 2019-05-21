@@ -25,7 +25,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
@@ -41,6 +42,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

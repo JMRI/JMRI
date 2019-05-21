@@ -68,7 +68,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -230,7 +230,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         /**
          * Delete the bean after all the checking has been done.
-         * <P>
+         * <p>
          * Deactivate the Logix and remove its conditionals.
          */
         @Override

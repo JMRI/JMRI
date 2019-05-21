@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Simple TransferHandler that overwrites the text in a JTextField component.
- * Use JTextField default handler if you want insertion
- * <P>
+ * Use JTextField default handler if you want insertion.
  *
  * @author Pete Cressman Copyright 2010
  */

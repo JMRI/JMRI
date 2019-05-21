@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 /**
  * A singlet providing access to information about existing Automat instances.
- * <P>
+ * <p>
  * It might not always be a singlet, however, so for now we're going through an
  * explicit instance() reference.
- * <P>
+ * <p>
  * This can be invoked from various threads, so switches to the Swing thread to
- * notify it's own listeners.
+ * notify its own listeners.
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
@@ -41,7 +41,7 @@ public class AutomatSummary {
 
     /**
      * A newly-created AbstractAutomaton instance uses this method to notify
-     * interested parties of it's existence.
+     * interested parties of its existence.
      *
      * @param a the automaton to register
      */
@@ -57,7 +57,7 @@ public class AutomatSummary {
 
     /**
      * Just before exiting, an AbstractAutomaton instance uses this method to
-     * notify interested parties of it's departure.
+     * notify interested parties of its departure.
      *
      * @param a the automaton to remove
      */
@@ -91,7 +91,7 @@ public class AutomatSummary {
     }
 
     /**
-     * Provide a convenience method to look up a managed object by it's name.
+     * Provide a convenience method to look up a managed object by its name.
      *
      * @since 1.7.3
      * @param name Name of the automat to be located
@@ -120,7 +120,7 @@ public class AutomatSummary {
 
     /**
      * An AbstractAutomaton instance uses this method to notify interested
-     * parties that it's gone around it's handle loop again.
+     * parties that it's gone around its handle loop again.
      *
      * @param a the looping automaton
      */

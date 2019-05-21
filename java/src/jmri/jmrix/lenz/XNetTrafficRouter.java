@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements an XNetInterface by doing a scatter-gather to another, simpler
  * implementation.
- * <P>
+ * <p>
  * This is intended for remote operation, where only one copy of each message
  * should go to/from another node. By putting a LnTrafficRouter implementation
  * at the remote node, all of the routing of messages to multiple consumers can

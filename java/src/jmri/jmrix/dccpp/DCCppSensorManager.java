@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement Sensor Manager for DCC++ systems.
+ * Implement SensorManager for DCC++ systems.
  * <p>
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.

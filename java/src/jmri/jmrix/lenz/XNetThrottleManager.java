@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * XNet implementation of a ThrottleManager based on the
  * AbstractThrottleManager.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2002-2004
  * @navassoc 1 - * jmri.jmrix.lenz.XNetThrottle
  */

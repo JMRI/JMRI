@@ -34,8 +34,8 @@
       internal options of a Digitrax SE8c Signaling Decoder Board
       directly from your computer.</p>
 
-      <p>To open this tool from the JMRI start page select the
-      Loconet tab and then find the tool on the drop down list.</p>
+      <p>To open this tool from the JMRI pane select the
+      LocoNet menu and then find the tool on the list.</p>
 
       <p>To use it, you put the address of an SE8c board in the
       text field and click "Read from SE8c". The tool will read
@@ -52,7 +52,7 @@
         can't change the basic address of the unit.</li>
 
         <li>The SE8c can be configured to send Sensor status on the
-        Loconet in response to a "track power on" command. The SE8c
+        LocoNet in response to a "track power on" command. The SE8c
         does not send Turnout status in response to a "track power
         on" command.</li>
 

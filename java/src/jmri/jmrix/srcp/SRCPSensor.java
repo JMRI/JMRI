@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SRCPSensor implementation of the Sensor interface.
- * <P>
- *
- * Description:	extend jmri.AbstractSensor for SRCP layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2010

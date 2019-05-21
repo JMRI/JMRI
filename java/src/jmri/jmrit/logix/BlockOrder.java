@@ -8,7 +8,6 @@ package jmri.jmrit.logix;
  * where the warranted train enters a block, the path it takes and
  * where it exits the block.
  * The Engineer is notified when the train enters the block.
- * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
  */

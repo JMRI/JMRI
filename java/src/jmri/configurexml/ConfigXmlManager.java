@@ -801,13 +801,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /**
      * Find a file by looking
-     * <UL>
-     * <LI> in xml/layout/ in the preferences directory, if that exists
-     * <LI> in xml/layout/ in the application directory, if that exists
-     * <LI> in xml/ in the preferences directory, if that exists
-     * <LI> in xml/ in the application directory, if that exists
-     * <LI> at top level in the application directory
-     * <LI>
+     * <ul>
+     * <li> in xml/layout/ in the preferences directory, if that exists
+     * <li> in xml/layout/ in the application directory, if that exists
+     * <li> in xml/ in the preferences directory, if that exists
+     * <li> in xml/ in the application directory, if that exists
+     * <li> at top level in the application directory
      * </ul>
      *
      * @param f Local filename, perhaps without path information

@@ -30,13 +30,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing access to a speedometer.
- * <P>
+ * <p>
  * This contains very simple debouncing logic:
- * <UL>
- * <LI>The clock starts when the "start" sensor makes the correct transition.
- * <LI>When a "stop" sensor makes the correct transition, the speed is computed
+ * <ul>
+ * <li>The clock starts when the "start" sensor makes the correct transition.
+ * <li>When a "stop" sensor makes the correct transition, the speed is computed
  * and displayed.
- * </UL>
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2007
  * @author Adapted for metric system - S.K. Bosch

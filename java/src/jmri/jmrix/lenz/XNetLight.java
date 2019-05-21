@@ -20,7 +20,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in LnLightManager
      *
      * @param tc         the traffic controller for the connection

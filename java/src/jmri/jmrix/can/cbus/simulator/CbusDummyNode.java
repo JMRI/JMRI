@@ -12,12 +12,12 @@ import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.swing.simulator.NdPane;
 import jmri.jmrix.can.TrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Node
+ * Simulating a MERG CBUS Node.
+ *
  * @author Steve Young Copyright (C) 2018 2019
  * @see CbusSimulator
  * @since 4.15.2
@@ -457,4 +457,5 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyNode.class);
+
 }

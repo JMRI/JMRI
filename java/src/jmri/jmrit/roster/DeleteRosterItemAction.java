@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Remove a locomotive from the roster.
  *
- * <P>
+ * <p>
  * In case of error, this moves the definition file to a backup. This action
  * posts a dialog box to select the loco to be deleted, and then posts an "are
  * you sure" dialog box before acting.

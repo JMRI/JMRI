@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TamsDCC implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on early NCE code.
  * 
  * Based on work by Bob Jacobsen 

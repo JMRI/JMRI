@@ -13,14 +13,14 @@ import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.cbus.simulator.CbusDummyCSSession;
 import jmri.jmrix.can.cbus.swing.simulator.CsPane;
 import jmri.jmrix.can.TrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Command Station
+ * Simulating a MERG CBUS Command Station.
+ * Can operate as stand-alone or managed via @CbusSimulator.
+ *
  * @author Steve Young Copyright (C) 2018 2019
- * Can operate as stand-alone or managed via @CbusSimulator
  * @see CbusSimulator
  * @see CbusDummyCSSession
  * @since 4.15.2
@@ -398,4 +398,5 @@ public class CbusDummyCS implements CanListener {
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyCS.class);
+
 }

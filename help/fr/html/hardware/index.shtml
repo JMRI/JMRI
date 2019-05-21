@@ -425,7 +425,7 @@
           <dt><a href="loconet/Uhlenbrock.shtml">Uhlenbrock</a></dt>
           <dd>
             <p>Les Intellibox peuvent &#234;tre connect&#233;es au programme
-            JMRI soit par leurs connexions Loconet, ou via leurs propres ports s&#233;rie.</p>
+            JMRI soit par leurs connexions LocoNet, ou via leurs propres ports s&#233;rie.</p>
             <p class="dl">Configurer: Uhlenbrock Intellibox-I ou -II via
             <a href="loconet/Digitrax.shtml"> l'interface LocoNet </a></p>
             <p class="dl">Configuration: Uhlenbrock Intellibox-I via un

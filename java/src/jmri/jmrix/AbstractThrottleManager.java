@@ -324,6 +324,19 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Request Throttle with no Steal / Share Callbacks
      * {@inheritDoc}
+     * Request a throttle, given a decoder address. When the decoder address is
+     * located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     * <p>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address The decoder address desired.
+     * @param l       The ThrottleListener awaiting notification of a found
+     *                throttle.
+     * @return True if the request will continue, false if the request will not
+     *         be made. False may be returned if a the throttle is already in
+     *         use.
      */
     @Override
     public boolean requestThrottle(int address, ThrottleListener l) {
@@ -401,6 +414,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     
     /**
      * {@inheritDoc}
+     * Cancel a request for a throttle.
+     * <p>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address The decoder address desired.
+     * @param l       The ThrottleListener cancelling request for a throttle.
+
      */
     @Override
     public void cancelThrottleRequest(int address, ThrottleListener l) {
@@ -413,6 +434,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     
     /**
      * Steal a requested throttle.
+     * <p>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
      *
      * @deprecated since 4.15.7; use #responseThrottleDecision
      *
@@ -430,6 +454,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     
     /**
      * Steal a requested throttle.
+     * <p>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
      *
      * @deprecated since 4.15.7; use #responseThrottleDecision
      *
@@ -554,7 +581,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Handle throttle information when it's finally available, e.g. when a new
      * Throttle object has been created.
-     * <P>
+     * <p>
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      * @param throttle  throttle object
@@ -631,6 +658,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * <p>
      * @param address The LocoAddress the steal / share question relates to
      * @param question The Question to be put to the ThrottleListener
+     * This applies only to those systems where "stealing" applies, such as LocoNet.
+     *
+     * @param address The DCC Loco Address where controlling requires a steal
      */
     protected void notifyDecisionRequest(LocoAddress address, ThrottleListener.DecisionType question) {
         

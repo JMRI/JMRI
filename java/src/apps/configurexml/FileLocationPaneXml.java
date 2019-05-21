@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of directory locations.
- * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
  */

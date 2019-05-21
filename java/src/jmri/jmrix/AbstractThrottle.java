@@ -1216,7 +1216,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -1226,7 +1226,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -1236,7 +1236,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F9, F10, F11, F12
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -1247,7 +1247,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the state of functions F13, F14, F15, F16, F17,
      * F18, F19, F20
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -1280,7 +1280,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the state of functions F21, F22, F23, F24, F25,
      * F26, F27, F28
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -1692,7 +1692,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the momentary state of functions F0, F1, F2, F3,
      * F4.
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1702,7 +1702,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the momentary state of functions F5, F6, F7, F8.
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1713,7 +1713,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F9, F10, F11,
      * F12
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1724,7 +1724,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1735,7 +1735,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.

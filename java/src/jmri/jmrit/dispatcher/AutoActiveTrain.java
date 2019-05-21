@@ -25,23 +25,23 @@ import org.slf4j.LoggerFactory;
  * This class holds information and options for an ActiveTrain when it is
  * running in AUTOMATIC mode. It is an extension to Active Train for automatic
  * running.
- * <P>
+ * <p>
  * This class implements logic that follows a train around a layout. Train
  * follows signals, provided the next Section is allocated to it, and its
  * ActiveTrain's status is RUNNING.
- * <P>
- * This class is linked via it's parent ActiveTrain object.
- * <P>
+ * <p>
+ * This class is linked via its parent ActiveTrain object.
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * The AutoEngineer sub class is based in part on code by Pete Cressman
  * contained in Warrants.java
  *

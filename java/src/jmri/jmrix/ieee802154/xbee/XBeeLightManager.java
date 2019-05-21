@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for XBee connections.
+ * Implement LightManager for XBee connections.
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014

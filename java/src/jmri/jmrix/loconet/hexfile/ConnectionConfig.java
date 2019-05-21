@@ -27,6 +27,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         return "LocoNet Simulator"; // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

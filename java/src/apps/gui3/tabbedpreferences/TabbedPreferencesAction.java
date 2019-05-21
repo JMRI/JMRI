@@ -26,7 +26,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *

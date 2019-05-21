@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Force a set of Qualifiers to work in an AND relationship.
- * <P>
+ * <p>
  * On transition, the qualifiers are evaluated in order, stopping when the
  * outcome is known.
  *

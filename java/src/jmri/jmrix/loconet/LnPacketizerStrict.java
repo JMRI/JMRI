@@ -142,7 +142,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: [{}]", msg.toString());  // NOI18N
+                        log.warn("Ignore LocoNet packet with bad checksum: [{}]", msg.toString());  // NOI18N
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
