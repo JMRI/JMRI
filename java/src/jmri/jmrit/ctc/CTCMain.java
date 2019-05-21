@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CTCMain {
-    private final static Logger LOG = LoggerFactory.getLogger(CTCMain.class);
+    private final static Logger log = LoggerFactory.getLogger(CTCMain.class);
     private final CTCSerialData _mCTCSerialData = new CTCSerialData();
     private final ArrayList<CodeButtonHandler> _mCodeButtonHandlersArrayList = new ArrayList<>();       // "Const" after initialization completes.
     private NBHSensor _mCTCDebugSystemReloadInternalSensor = null;
@@ -67,14 +67,14 @@ public class CTCMain {
 
     public void rereadXMLFile() {
         if (_mFilenameRead != null) { // Safety check that someone loaded a file before.
-            LOG.info(Bundle.getMessage("CTCMainShuttingDown"));          // NOI18N
+            log.info(Bundle.getMessage("CTCMainSuttingDown"));          // NOI18N
             shutdown();
             startup();
-            LOG.info("CTC " + CTCSerialData.CTCVersion + " " + Bundle.getMessage("CTCMainReloadedFile") + " {}", _mFilenameRead);   // NOI18N
+            log.info("CTC " + CTCSerialData.CTCVersion + " " + Bundle.getMessage("CTCMainReloadedFile") + " {}", _mFilenameRead);   // NOI18N
         }
         else
         {
-            LOG.warn(Bundle.getMessage("CTCMainNoFileLoaded")); // NOI18N
+            log.warn(Bundle.getMessage("CTCMainNoFileLoaded")); // NOI18N
         }
     }
 
