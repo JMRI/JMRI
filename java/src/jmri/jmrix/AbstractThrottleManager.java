@@ -659,8 +659,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * @param address The LocoAddress the steal / share question relates to
      * @param question The Question to be put to the ThrottleListener
      * This applies only to those systems where "stealing" applies, such as LocoNet.
-     *
-     * @param address The DCC Loco Address where controlling requires a steal
      */
     protected void notifyDecisionRequest(LocoAddress address, ThrottleListener.DecisionType question) {
         
