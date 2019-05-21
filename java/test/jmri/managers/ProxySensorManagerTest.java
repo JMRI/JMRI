@@ -16,7 +16,7 @@ import org.junit.Test;
  * Test the ProxySensorManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
-  */
+ */
 public class ProxySensorManagerTest implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
     protected ProxySensorManager l = null;	// holds objects under test

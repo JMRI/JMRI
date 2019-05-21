@@ -16,12 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extension of AbstractManagerTestBase base for ProvidingManager test classes
+ * Extension of AbstractManagerTestBase base for ProvidingManager test classes.
  * <p>
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
  * common tests.
- * <p>
  *
  * @author Paul Bender Copyright (C) 2019
  * @param <T> the class being tested
@@ -33,7 +32,7 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
     public void testProvideEmpty() throws IllegalArgumentException {
         ProvidingManager<E> m = l;
         try {
-           m.provide(""); // this should throw an IllegalArugmentException.
+           m.provide(""); // this should throw an IllegalArgumentException.
         } catch( IllegalArgumentException iae){
            JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
            throw iae;  // rethrow the expected exception, after suppressing the error
@@ -119,4 +118,5 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
+
 }

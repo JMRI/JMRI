@@ -14,12 +14,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for the Operations Route class Last manually cross-checked on 20090131
+ * Tests for the Operations Route class. Last manually cross-checked on 20090131.
  * <p>
  * Still to do: Route: Route Location <-- Need to verify Route: XML read/write
  * RouteLocation: get/set Staging Track RouteLocation: location <--Need to
  * verify RouteLocation: XML read/write
- * <p>
+ *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class OperationsRoutesTest extends OperationsTestCase {

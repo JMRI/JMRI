@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * agents to access the data in the internal data structures for the purpose of
  * sending the data to the device to be updated. Supports the Intel "I8HEX" file
  * format and a derivative ".dmf" file format created by Digitrax.
- * <P>
+ * <p>
  * Support for the Intel "I8HEX" format includes support for record types "00"
  * and "01". The "I8HEX" format implements records with a LOAD OFFSET field of
  * 16 bits. To support the full 24-bit addressing range provided by the LocoNet
@@ -116,7 +116,7 @@ import org.slf4j.LoggerFactory;
  * Specification", Revision A, January 6, 1988.
  * <p>
  * Mnemonically, a properly formatted record would appear as:
- * </p><pre>
+ * <pre>
  *     :lloooott{dd}cc
  * where:
  *      ':'     is the RECORD MARK
@@ -126,9 +126,10 @@ import org.slf4j.LoggerFactory;
  *      "{dd}"  is the INFO or DATA field, containing zero or more pairs of 
  *                  characters of Info or Data associated with the record
  *      "cc"    is the CHKSUM
- * </pre><p>
- * and a few examples of complaint record would be:
- * </p><ul>
+ * </pre>
+ * <p>
+ * and a few examples of complaint records would be:
+ * <ul>
  *     <li>:02041000FADE07
  *     <li>:020000024010AC
  *     <li>:00000001FF
@@ -247,7 +248,7 @@ public class MemoryContents {
      * comments for use by the invoking method.
      * <p>
      * Integrity checks include:
-     * </p><ul>
+     * <ul>
      * <li>Identification of LOAD OFFSET field type from first record
      * <li>Verification that all subsequent records use the same LOAD OFFSET
      * field type
@@ -259,7 +260,8 @@ public class MemoryContents {
      * <li>Identification of a file without any data record
      * <li>Identification of any records which have extra characters after the
      * checksum
-     * </ul><p>
+     * </ul>
+     * <p>
      * When reading the file, {@link #readHex} infers the addressing format
      * from the first record found in the file, and future records are
      * interpreted using that addressing format. It is not necessary to

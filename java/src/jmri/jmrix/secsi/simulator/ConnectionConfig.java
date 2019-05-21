@@ -15,7 +15,7 @@ import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
  * @author Mark Underwood Copyright (C) 2015
-  *
+ *
  * @see SimulatorAdapter
  *
  * Based on jmri.jmrix.grapevine.simulator.ConnectionConfig
@@ -31,7 +31,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -39,6 +40,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         setInstance();
@@ -68,6 +72,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

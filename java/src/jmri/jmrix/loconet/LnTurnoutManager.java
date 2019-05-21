@@ -116,7 +116,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         // parse message type
         int addr;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_SW_REQ: {               /* page 9 of Loconet PE */
+            case LnConstants.OPC_SW_REQ: {               /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -125,14 +125,14 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 // store message in case resend is needed
                 lastSWREQ = l;
 
-                // Loconet spec says 0x10 of SW2 must be 1, but we observe 0
+                // LocoNet spec says 0x10 of SW2 must be 1, but we observe 0
                 if (((sw1 & 0xFC) == 0x78) && ((sw2 & 0xCF) == 0x07)) {
                     return;  // turnout interrogate msg
                 }
                 log.debug("SW_REQ received with address {}", addr);
                 break;
             }
-            case LnConstants.OPC_SW_REP: {                /* page 9 of Loconet PE */
+            case LnConstants.OPC_SW_REP: {                /* page 9 of LocoNet PE */
 
                 // clear resend message, indicating not to resend
 

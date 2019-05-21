@@ -35,7 +35,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     TamsMessage tm = myDummy();
     
     public TamsPowerManager(TamsTrafficController ttc) {
-        log.debug("*** Tams Power Manager ***");
+        log.debug("*** Tams PowerManager ***");
         // connect to the TrafficManager
         tc = ttc;
         tc.addTamsListener(this);

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A PerformScriptModel object runs a script when the program is started.
- * <P>
+ *
  * @author Bob Jacobsen Copyright 2003
  * @author Randall Wood (c) 2016
  * @see apps.startup.PerformScriptModelFactory

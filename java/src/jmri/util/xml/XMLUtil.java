@@ -274,7 +274,7 @@ public final class XMLUtil extends Object {
      *
      * <p>
      * Remember that when parsing XML files you often want to set an explicit
-     * entity resolver. For example, consider a file such as this:</p>
+     * entity resolver. For example, consider a file such as this:
      *
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -288,18 +288,17 @@ public final class XMLUtil extends Object {
      * this DTD, you will probably find the parse blocking to make a network
      * connection <em>even when you are not validating</em>. That is because
      * DTDs can be used to define entities and other XML oddities, and are not a
-     * pure constraint language like Schema or RELAX-NG.</p>
-     *
+     * pure constraint language like Schema or RELAX-NG.
      * <p>
-     * There are three basic ways to avoid the network connection.</p>
+     * There are three basic ways to avoid the network connection.
      *
      * <ol>
-     *
-     * <li><p>
+
+     * <li>
      * Register the DTD. This is generally the best thing to do. See
      * EntityCatalog's documentation for details, but for example in your layer
-     * use:</p>
-     *
+     * use:
+     * <br>
      * <pre>
      * &lt;filesystem&gt;
      *   &lt;folder name="xml"&gt;
@@ -322,21 +321,21 @@ public final class XMLUtil extends Object {
      * mounts the "NetBeans Catalog" in the XML Entity Catalogs node in the
      * Runtime tab will be able to use your local copy of the DTD automatically,
      * for validation, code completion, etc. (The network URL should really
-     * exist, though, for the benefit of other tools!)</p></li>
+     * exist, though, for the benefit of other tools!)</li>
      *
-     * <li><p>
+     * <li>
      * You can also set an explicit entity resolver which maps that particular
      * public ID to some local copy of the DTD, if you do not want to register
      * it globally in the system for some reason. If handed other public IDs,
      * just return null to indicate that the system ID should be
-     * loaded.</p></li>
+     * loaded.</li>
      *
-     * <li><p>
+     * <li>
      * In some cases where XML parsing is very performance-sensitive, and you
      * know that you do not need validation and furthermore that the DTD defines
      * no infoset (there are no entity or character definitions, etc.), you can
      * speed up the parse. Turn off validation, but also supply a custom entity
-     * resolver that does not even bother to load the DTD at all:</p>
+     * resolver that does not even bother to load the DTD at all:<br>
      *
      * <pre>
      * public InputSource resolveEntity(String pubid, String sysid)
@@ -443,7 +442,6 @@ public final class XMLUtil extends Object {
      * level all text is likely to end up in one big CDATA section.
      * <br>
      * For nodes that only have one CDATA section this method should work fine.
-     * </p>
      *
      * @param doc DOM document to be written
      * @param out data sink

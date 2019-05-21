@@ -143,7 +143,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Public static method to normalize a anyma dmx system name.
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one anyma dmx channel, by removing any extra zeros inserted by the
      * user.
@@ -362,9 +362,9 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     private UsbLightManager lightManager;
 
     /**
-     * get the light manager
+     * get the LightManager
      *
-     * @return the light manager
+     * @return the LightManager
      */
     public UsbLightManager getLightManager() {
         log.debug("* getLightManager()");

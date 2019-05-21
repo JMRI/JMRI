@@ -12,10 +12,10 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Test the ProxyLightManager
+ * Test the ProxyLightManager.
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
-  */
+ */
 public class ProxyLightManagerTest {
 
     public String getSystemName(int i) {

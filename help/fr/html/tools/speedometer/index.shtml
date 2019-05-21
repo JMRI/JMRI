@@ -31,7 +31,7 @@ Avant que l'outil ne reporte de mesure, vous devrez le configurer .
 Pour ce faire, entrez le nombre de Capteurs dans les trois champs. C'est un
 nombre (comme "23") pour l'adresse du BDL16, DS54, etc. le canal qui
 rapporte le changement d'occupation. La fa&#231;on la plus simple pour obtenir le bon num&#233;ro
- est d'ouvrir une fen&#234;tre "Moniteur Loconet", et d&#233;poser une
+ est d'ouvrir une fen&#234;tre "Moniteur LocoNet", et d&#233;poser une
 locomotive sur le canton qui vous &#234;tes int&#233;resse. Vous verrez 
 le message du capteur, avec le num&#233;ro, dans la fen&#234;tre qui ressemble &#224; 
 quelque chose comme ceci:

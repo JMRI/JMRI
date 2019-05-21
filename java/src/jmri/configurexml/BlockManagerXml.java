@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Persistency implementation for BlockManager persistance.
- * <P>
+ * <p>
  * The Block objects are not yet read in, pending a reliable write out!
  * <p>
  * Every block is written twice. First, the list of blocks is written without

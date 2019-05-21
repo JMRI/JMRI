@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Light implementation for XBee systems.
- * <p>
+ *
  * @author Paul Bender Copyright (C) 2014
  */
 public class XBeeLight extends AbstractLight {

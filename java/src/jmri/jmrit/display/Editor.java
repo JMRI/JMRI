@@ -101,17 +101,17 @@ import org.slf4j.LoggerFactory;
  * attributes of the Positionable objects is done here. However, control of
  * mouse events is passed to the editor views, so control is also done by the
  * editor views.
- * <P>
+ * <p>
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation. This class only locates and moves "target panel"
  * items, and does not control their appearance - that is left for the editor
  * views.
- * <P>
+ * <p>
  * The Editor has tri-state "flags" to control the display of Positionable
  * object attributes globally - i.e. "on" or "off" for all - or as a third
  * state, permits the display control "locally" by corresponding flags in each
  * Positionable object
- * <P>
+ * <p>
  * The title of the target and the editor panel are kept consistent via the
  * {#setTitle} method.
  * <p>
