@@ -56,11 +56,11 @@ public class CTCMain {
         }
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "There's only one!")
+    public boolean _mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = false;
     private void handleLogging(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {         // NOI18N
-            CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;
-            if (CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dump();
+            _mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;
+            if (_mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dump();
         }
     }
 
