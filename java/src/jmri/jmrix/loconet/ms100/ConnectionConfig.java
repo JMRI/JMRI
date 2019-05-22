@@ -5,12 +5,13 @@ package jmri.jmrix.loconet.ms100;
  * via an LocoNet MS100Adapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     *
      * @param p the SerialPortAdapter to associate with this connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
@@ -18,7 +19,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -27,17 +29,21 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Provide this adapter name, if it's available on this system.
      *
-     * @return null if this is a Mac OS X system that can't run MS100
+     * @return null if this is a macOS system that can't run MS100
      */
     @Override
     public String name() {
         return "LocoNet MS100";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new MS100Adapter();
         }
     }
+
 }

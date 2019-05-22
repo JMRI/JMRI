@@ -24,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Ctor for a functional Swing object with no existing adapter.
      */
     public ConnectionConfig() {
         super();
@@ -37,6 +37,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     JButton b;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
 
@@ -47,13 +50,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             additionalItems.add(b);
         }
         super.loadDetails(details);
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();
         }
     }
+
 }

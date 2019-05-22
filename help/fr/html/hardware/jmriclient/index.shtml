@@ -65,15 +65,15 @@ est d'avoir un ordinateur reli&#233; directement au r&#233;seau (l'ordinateur se
 et un second ordinateur (l'ordinateur client) reli&#233; au premier par l'interm&#233;diaire d'un
 r&#233;seau informatique o&#249; vous souhaitez faire fonctionner un panneau.</p>
 
-<p> Pour cet exemple, nous supposerons que le serveur dispose d'une connexion Loconet avec le pr&#233;fixe "L".</p>
+<p> Pour cet exemple, nous supposerons que le serveur dispose d'une connexion LocoNet avec le pr&#233;fixe "L".</p>
 
 <p> Sur l'ordinateur serveur, ouvrez les Pr&#233;f&#233;rences et s&#233;lectionnez le groupe D&#233;marrage.
 cliquez sur le bouton "Ajouter une action", et s&#233;lectionnez "D&#233;marrer serveur simple JMRI" dans la liste
-d'options. Enregistrer les pr&#233;f&#233;rences et red&#233;marrez le programme.</P>
+d'options. Enregistrer les pr&#233;f&#233;rences et red&#233;marrez le programme.</p>
 
 <p>
 <img src="images/simpleserver-autostart.png" alt="Action ajout&#233; &#224; d&#233;marrer automatiquement le JMRI SimpleServer">
-</ p>
+</p>
 
 <p> Sur la machine cliente, ajouter un "(R&#233;seau) JMRI" connexion. Changer le pr&#233;fixe syst&#232;me
 connexion pour "L". et d&#233;finir l'adresse IP &#224; l'adresse IP du serveur. Sauvegarder

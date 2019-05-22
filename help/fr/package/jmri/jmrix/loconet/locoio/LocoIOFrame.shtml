@@ -9,7 +9,7 @@
   <title>JMRI: Configure LocoIO</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help Loconet configurer LocoIO"><!-- Style -->
+  "JMRI help LocoNet configurer LocoIO"><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -27,7 +27,7 @@
     <div id="mainContent">
       <h1>Configure LocoIO (d&eacute;sapprouv&eacute;)</h1>
 
-      <p>Le programmateur LocoIO comme util Loconet n'est pas plus
+      <p>Le programmateur LocoIO comme util LocoNet n'est pas plus
       support&eacute; depuis JMRI version 3.<br>
       Le m&eacute;thode prefer&eacute; pour programmer le LocoIO
       est avec <a href=

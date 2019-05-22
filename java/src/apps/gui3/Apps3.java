@@ -46,11 +46,11 @@ import org.slf4j.LoggerFactory;
  * This is a complete re-implementation of the apps.Apps support for JMRI
  * applications.
  * <p>
- * Each using application provides it's own main() method.
+ * Each using application provides its own main() method.
  * <p>
  * There are a large number of missing features marked with TODO in comments
  * including code from the earlier implementation.
- * <P>
+ *
  * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class Apps3 extends AppsBase {

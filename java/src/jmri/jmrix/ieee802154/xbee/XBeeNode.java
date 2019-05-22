@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a node for XBee networks.
+ * Implementation of a Node for XBee networks.
  * <p>
  * Integrated with {@link XBeeTrafficController}.
  * <p>

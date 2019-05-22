@@ -3,12 +3,12 @@ package jmri.jmrix.lenz;
 /**
  * Handle configuring an XpressNet layout connection via an XNetStreamPortController
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link XNetStreamPortController} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see XNetStreamPortController
  */
 public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
@@ -22,7 +22,8 @@ public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public XNetStreamConnectionConfig() {
         super();
@@ -45,6 +46,9 @@ public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

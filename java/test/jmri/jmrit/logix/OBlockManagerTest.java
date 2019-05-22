@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the OBlockManager class
- * <p>
+ * Tests for the OBlockManager class.
+ *
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
  */
@@ -62,4 +62,5 @@ public class OBlockManagerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

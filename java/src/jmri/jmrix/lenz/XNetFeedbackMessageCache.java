@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * Implement a feedback message cache for XpressNet sensors and turnouts.
  *
  * @author Paul Bender Copyright (C) 2012
-  */
+ */
 public class XNetFeedbackMessageCache implements XNetListener {
 
     protected XNetTrafficController tc = null;

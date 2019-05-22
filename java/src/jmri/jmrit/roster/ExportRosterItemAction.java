@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Export a roster element as a new definition file.
- * <P>
+ * <p>
  * This creates the new file containing the entry, but does <b>not</b> add it to
  * the local {@link Roster} of locomotives. This is intended for making a
  * transportable copy of entry, which can be imported via
@@ -17,15 +17,15 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU Gene ral Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.roster.ImportRosterItemAction
  * @see jmri.jmrit.XmlFile

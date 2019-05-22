@@ -264,7 +264,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
-     * <P>
+     * <p>
      * Here, it sends a request to exit from programming mode. But subclasses
      * may redefine that.
      */

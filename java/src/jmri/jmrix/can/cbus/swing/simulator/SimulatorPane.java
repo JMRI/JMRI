@@ -25,7 +25,7 @@ import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
 /**
  * Pane for viewing and setting simulated network objects.
- * <p>
+ *
  * @see CsPane
  * @see EvResponderPane
  * @see NdPane

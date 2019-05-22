@@ -18,7 +18,7 @@ public class LnTcpServerActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LnTcpServerAction action = new LnTcpServerAction("Loconet test Action");
+        LnTcpServerAction action = new LnTcpServerAction("LocoNet test Action");
         Assert.assertNotNull("exists", action);
     }
 

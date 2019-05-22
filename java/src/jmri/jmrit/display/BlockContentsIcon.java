@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display the value contained within a Block.<P>
+ * An icon to display the value contained within a Block.
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */

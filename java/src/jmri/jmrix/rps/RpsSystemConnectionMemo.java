@@ -53,7 +53,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Provide access to the Sensor Manager for this particular connection.
+     * Provide access to the SensorManager for this particular connection.
      */
     private RpsSensorManager sensorManager = null;
 

@@ -2,7 +2,7 @@ package jmri.jmrix.cmri.serial;
 
 /**
  * Contains the data payload of a CMRI serial packet.
- * <P>
+ * <p>
  * Note that <i>only</i> the payload, not the header or trailer, nor the padding
  * DLE characters are included. These are added during transmission.
  *

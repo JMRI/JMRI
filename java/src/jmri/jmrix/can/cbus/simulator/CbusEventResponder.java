@@ -15,7 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing event request responses.
+ * Simulating event request responses.
+ *
  * @author Steve Young Copyright (C) 2018
  * @see CbusSimulator
  * @since 4.15.2
@@ -72,8 +73,7 @@ public class CbusEventResponder implements CanListener {
         evModes.add(Bundle.getMessage("CbusEventOff"));
         evModesTip.add(null);
         
-        log.info("Simulated Event Responses: {}",evModes.get(_mode) );
-        
+        log.info("Simulated Event Responses: {}", evModes.get(_mode) );
     }
 
     public void setDelay( int newval){
@@ -222,4 +222,5 @@ public class CbusEventResponder implements CanListener {
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusEventResponder.class);
+
 }

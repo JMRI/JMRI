@@ -10,7 +10,7 @@ import org.junit.Test;
  * JUnit tests for the NceReplyclass
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         
     private NceTrafficController tc = null;

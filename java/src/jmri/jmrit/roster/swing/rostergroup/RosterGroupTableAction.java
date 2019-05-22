@@ -12,7 +12,7 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register a Roster Group Table.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Kevin Dickerson Copyright (C) 2009
  */
@@ -28,7 +28,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *

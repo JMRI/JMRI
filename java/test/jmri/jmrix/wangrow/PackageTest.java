@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    jmri.jmrix.wangrow.serialdriver.PackageTest.class,
    WangrowConnectionTypeListTest.class,
-   WangrowMenuTest.class
+   WangrowMenuTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.wangrow package.

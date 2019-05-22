@@ -286,6 +286,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * By default there are no custom properties.
+     *
      * @return empty list
      */
     @Override
@@ -349,7 +350,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return cachedSystemNameArray;
     }
 
-    
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -364,7 +364,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return Collections.unmodifiableList(cachedSystemNameList);
     }
 
-
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -372,7 +371,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
     }
-
 
     /** {@inheritDoc} */
     @Override
