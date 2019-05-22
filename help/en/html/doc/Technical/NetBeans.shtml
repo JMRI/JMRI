@@ -395,37 +395,20 @@
           Windows using NSIS</a></h2>
 
           <p>It is possible for NetBeans users to create a release
-          package for use on the Windows platform.</p>
-          <p>The Windows install package creates two separate exeecutables: one
-          for the Windows "Installer" and one for the program that "launches" JMRI
-          on Windows machines.  The installer portion may be built using the 
-          standard NSIS build from any build platform.  The launcher executable, 
-          however, requires a customized NSIS build which is only distributed for 
-          Windows platforms.</p>
-          <ul>
-              <li>If you need to build the Windows "installer" program but do not 
-              need to build the Windows "launcher" program, or if you are working 
-              with a non-Windows build platform, you may download and install the 
-              latest NSIS version from 
-              <a href="http://sourceforge.net/projects/nsis">the NSIS project
-              web site</a> on SourceForge.</li>
-              <li>If you are working with a Windows-platform build machine and 
-              wish to be able to modify the Windows "launcher", see 
-              <a href="#NsisSpecialBuild">Building the JMRI "Launcher" for Windows platforms</a>
-              below, for downloading the required alternate NSIS package.
-              <i>Re-building the "launcher" is rarely necessary, so most developers 
-                  do not need this capability.</i></li>
-          </ul>
+          package for use on the Windows platform. This requires
+          installation of the Nullsoft Scriptable Install System
+          (NSIS), which can be downloaded from <a href=
+          "http://sourceforge.net/projects/nsis">the NSIS project
+          web site</a> on SourceForge.</p>
 
-          <p>Once the NSIS package is installed on the computer, it is
-          necessary to modify (or create) the <strong>local.properties</strong> 
-          file, which may be found in the
-          same directory as JMRI's build.xml file. The local.properties file is
+          <p>Once NSIS is installed on the computer, it is
+          necessary to create a file called local.properties in the
+          same directory as JMRI's build.xml file. This file is
           specifically <i>not</i> checked in via GitHub, so that your
           machine-specific tool installation paths are <i>not</i>
-          checked in to GitHub. Create (if necessary) the local.properties file, 
-          and add a variable definition which specifies the correct path to the 
-          directory which includes the NSIS executable, such as:</p>
+          checked in to GitHub. Create the file, and add a variable
+          definition with the correct path to the directory which
+          includes the NSIS executable, such as:</p>
 
           <p style="font-family: monospace">nsis.home=C:/Program
           Files (x86)/NSIS/</p>
@@ -437,43 +420,15 @@
           <p><em>Note:</em> Make sure the trailing / is present.</p>
 
           <p>If you will be installing the SpotBugs tool, you will
-          also define spotbugs.home in the local.properties file. You may also
-          define several other machine-specific and user-specific
+              also define spotbugs.home in this file. You may also
+              define several other machine-specific and user-specific
           information as described in various locations in the
           build.xml file.</p>
 
-          <p>With the appropriate NSIS package installed on your computer, and
-          the <strong>local.properties</strong> file properly modified, the 
-          Windows installation package may be created by running the 
-          "package-windows" ant target in build.xml.  This ant target does <i>not</i> build
-          the JMRI Windows "launcher" executable - instead, it will create an install
-          package which simply uses the existing launcher file, which was previously 
-          built by a JMRI developer with the required build tools and which was then 
-          committed to the JMRI repository.</p>
-
-          <h3><a id="NsisSpecialBuild" name="NsisSpecialBuild">Building the JMRI "Launcher" for Windows platforms</a></h3>
-          <p>It is rarelly required to change the JMRI "launcher" program for 
-          Windows platform JMRI installs.  When it is necessary to change the Windows 
-          launcher, such as when the JAVA install process uses different registry keys
-          than previous JAVA versions, it is necessary to re-configure the launcher
-          and re-build using a special NSIS build.  Typically these changes are made
-          by a developer who understands the NSIS process and has the correct NSIS build.
-          The developer then commits the changed launcher to the JMRI repository.</p>
-          <p>Building the "JMRI Launcher" for Windows requires use of 
-          a special NSIS build which is available for Windows-based 
-          machines at <a href="https://nsis.sourceforge.io/Special_Builds">the 
-          NSIS project 'Special Builds' page</a> as the <strong>"Large Strings"</strong>
-          build.  Since the "special build" is not available for non-Windows platforms, 
-          users of other platforms will not be able to create the Launcher.</p>
-          <p>Install this build as described for the standard NSIS package, above, 
-          ensuring that the NSIS.home value in local.properties points to the "large 
-          strings" build NSIS installation instead of the "standard" NSIS installation.</p>
-          <p>The ant target "LaunchJMRI.exe" may then be used to create the JMRI 
-          Windows Launcher.  Create the launcher before creating the Windows 
-          installation package.</p>
-          <p>Note that either the "standard" or the "large strings" version of the NSIS
-          tool may be used to create the Windows "installer", but only the "large strings"
-          version of the NSIS tool will create a fully-functional Windows "launcher".
+          <p>With the NSIS package installed to your computer, and
+          build.xml properly modified, the Windows package may be
+          created by running the "package-windows" ant target in
+          build.xml.</p>
 
           <h2><a id="xmltools" name="xmltools">Using NetBeans XML
           tools</a></h2>NetBeans has nice tools for working with
