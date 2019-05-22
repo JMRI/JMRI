@@ -937,7 +937,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (uName.isEmpty()) {
             uName = null;   // a blank field means no user name
         }
-        // Does System Name have a valid format
+        // Does System Name have a valid format?
         if (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName) != Manager.NameValidity.VALID) {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: {}", suName);
@@ -1007,8 +1007,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         // check if requested Light uses the same address as a Turnout
         String testSN = turnoutPrefix + curAddress;
-        Turnout testT = InstanceManager.turnoutManagerInstance().
-                getBySystemName(testSN);
+
         if (testT != null) {
             // Address is already used as a Turnout
             log.warn("Requested Light {} uses same address as Turnout {}", sName, testT);
@@ -1020,7 +1019,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                             Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                 if (selectedValue == 1) {
-                    return;   // return without creating if "No" response
+                    return;   // return without creating on "No" response
                 }
                 if (selectedValue == 2) {
                     // Suppress future warnings, and continue
@@ -1043,6 +1042,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             // convert numerical hardware address
             try {
                 startingAddress = Integer.parseInt(hardwareAddressTextField.getText().trim()); // N11N
+                
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
@@ -1120,13 +1120,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 uxName = uName;
             }
             for (int i = 1; i < numberOfLights; i++) {
-                sxName = lightPrefix + (startingAddress + i);
+                sxName = lightPrefix + (startingAddress + i); // normalize once more to allow specific connection formatting
                 if (uxName != null) {
                     uxName = nextName(uxName);
                 }
                 try {
                     g = InstanceManager.getDefault(LightManager.class).newLight(sxName, uxName);
-                    // TODO: setup this light the same as the first light?
+                    // TODO: set up this light the same as the first light?
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName);
