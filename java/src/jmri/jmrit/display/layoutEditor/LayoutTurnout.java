@@ -732,24 +732,13 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Check the connection points for object assignments.  Notify user if there
-     * are assigned objects.
-     * @return true if ok to delete
+     * {@inheritDoc}
      */
-    public boolean canDeleteTurnout() {
+    @Override
+    public boolean canRemoveTrackComponent() {
         ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
         if (!beanReferences.isEmpty()) {
-            // The turnout currently has sensors, heads, and/or masts assigned.
-            beanReferences.sort(null);
-            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
-                    Bundle.getMessage("DeleteTrackItem", Bundle.getMessage("BeanNameTurnout"))));  // NOI18N
-            for (String item : beanReferences) {
-                msg.append("\n    " + item);  // NOI18N
-            }
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    msg.toString(),
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            displayRemoveTrackComponentDialog(beanReferences, "BeanNameTurnout");  // NOI18N
         }
         return beanReferences.isEmpty();
     }
@@ -2759,7 +2748,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canDeleteTurnout() && layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
+                    if (canRemoveTrackComponent() && layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

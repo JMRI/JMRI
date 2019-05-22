@@ -81,7 +81,7 @@ public class LayoutTurntable extends LayoutTrack {
         radius = 25.0;
     }
 
-    // 
+    //
     /**
      * get a string that represents this object (this should only be used for
      * debugging...)
@@ -1380,6 +1380,14 @@ public class LayoutTurntable extends LayoutTrack {
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // turntables don't have blocks...
         // nothing to see here, move along...
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemoveTrackComponent() {
+        return true;
     }
 
     private final static Logger log

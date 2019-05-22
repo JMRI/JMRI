@@ -1281,7 +1281,7 @@ public class PositionablePoint extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (canDeletePoint() && layoutEditor.removePositionablePoint(PositionablePoint.this)) {
+                if (canRemoveTrackComponent() && layoutEditor.removePositionablePoint(PositionablePoint.this)) {
                     // user is serious about removing this point from the panel
                     remove();
                     dispose();
@@ -1426,11 +1426,10 @@ public class PositionablePoint extends LayoutTrack {
     }   // showPopup
 
     /**
-     * Check the connection point for object assignments.  Notify user if there
-     * are assigned objects.
-     * @return true if ok to delete
+     * {@inheritDoc}
      */
-    public boolean canDeletePoint() {
+    @Override
+    public boolean canRemoveTrackComponent() {
         List<String> itemList = new ArrayList<>();
         // A has two track segments, EB has one, EC has one plus optional link
 
@@ -1450,33 +1449,22 @@ public class PositionablePoint extends LayoutTrack {
         }
 
         if (!itemList.isEmpty()) {
-            itemList.sort(null);
-
             String typeName = "";
             switch (type) {
                 case ANCHOR:
-                    typeName = Bundle.getMessage("Anchor");
+                    typeName = "Anchor";  // NOI18N
                     break;
                 case END_BUMPER:
-                    typeName = Bundle.getMessage("EndBumper");
+                    typeName = "EndBumper";  // NOI18N
                     break;
                 case EDGE_CONNECTOR:
-                    typeName = Bundle.getMessage("EdgeConnector");
+                    typeName = "EdgeConnector";  // NOI18N
                     break;
                 default:
-                    typeName = "Unknown type (" + type + ")";
+                    typeName = "Unknown type (" + type + ")";  // NOI18N
                     break;
             }
-
-            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DeleteTrackItem", typeName)));  // NOI18N
-            for (String item : itemList) {
-                msg.append("\n    " + item);  // NOI18N
-            }
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    msg.toString(),
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            displayRemoveTrackComponentDialog(itemList, typeName);
         }
         return itemList.isEmpty();
     }

@@ -1586,7 +1586,7 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (canRemoveTrackSegment(TrackSegment.this)) {
+                if (canRemoveTrackComponent()) {
                     layoutEditor.removeTrackSegment(TrackSegment.this);
                     remove();
                     dispose();
@@ -1666,35 +1666,22 @@ public class TrackSegment extends LayoutTrack {
     }   // showPopup
 
     /**
-     * Check for active block boundaries.
-     * <p>
-     * If either end of the track segment has attached objects, such as signal
-     * masts signal heads or NX sensors, the track segment cannot be deleted.
-     * @param ts The track segment that is going to be deleted if possible.
-     * @return true if the track segment can be deleted.
+     * {@inheritDoc}
      */
-    public boolean canRemoveTrackSegment(TrackSegment ts) {
+    @Override
+    public boolean canRemoveTrackComponent() {
         List<String> itemList = new ArrayList<>();
 
-        int type1 = ts.getType1();
-        LayoutTrack conn1 = ts.getConnect1();
+        int type1 = getType1();
+        LayoutTrack conn1 = getConnect1();
         itemList.addAll(getPointReferences(type1, conn1));
 
-        int type2 = ts.getType2();
-        LayoutTrack conn2 = ts.getConnect2();
+        int type2 = getType2();
+        LayoutTrack conn2 = getConnect2();
         itemList.addAll(getPointReferences(type2, conn2));
 
         if (!itemList.isEmpty()) {
-            itemList.sort(null);
-            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DeleteTrackItem", Bundle.getMessage("TrackSegment"))));  // NOI18N
-            for (String item : itemList) {
-                msg.append("\n    " + item);  // NOI18N
-            }
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    msg.toString(),
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            displayRemoveTrackComponentDialog(itemList, "TrackSegment");  // NOI18N
         }
         return itemList.isEmpty();
     }

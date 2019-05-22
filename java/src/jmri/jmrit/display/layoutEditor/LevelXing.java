@@ -1039,24 +1039,13 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Check the connection points for object assignments.  Notify user if there
-     * are assigned objects.
-     * @return true if ok to delete
+     * {@inheritDoc}
      */
-    public boolean canDeleteLevelCrossing() {
+    @Override
+    public boolean canRemoveTrackComponent() {
         ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
         if (!beanReferences.isEmpty()) {
-            // The level crossing currently has sensors, heads, and/or masts assigned.
-            beanReferences.sort(null);
-            StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
-                    Bundle.getMessage("DeleteTrackItem", Bundle.getMessage("LevelCrossing"))));  // NOI18N
-            for (String item : beanReferences) {
-                msg.append("\n    " + item);  // NOI18N
-            }
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    msg.toString(),
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            displayRemoveTrackComponentDialog(beanReferences, "LevelCrossing");  // NOI18N
         }
         return beanReferences.isEmpty();
     }
@@ -1207,7 +1196,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canDeleteLevelCrossing() && layoutEditor.removeLevelXing(LevelXing.this)) {
+                    if (canRemoveTrackComponent() && layoutEditor.removeLevelXing(LevelXing.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
