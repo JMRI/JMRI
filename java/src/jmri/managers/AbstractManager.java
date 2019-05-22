@@ -83,7 +83,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         String prefix = getSystemNamePrefix();
         if (s.isEmpty()) {
             log.error("Invalid system name for {}: \"\" needed non-empty name to follow {}", getBeanTypeHandled(), prefix);
-            throw new IllegalArgumentException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty name to follow " + prefix);
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty name to follow " + prefix);
         }
         return prefix + s;
     }
