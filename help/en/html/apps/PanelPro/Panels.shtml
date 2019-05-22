@@ -25,21 +25,21 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Creating Control Panels</h1>The JMRI libraries
-      contain a system for creating control panels. It's highly
-      customizable, and allows you to control the railroad from the
-      panel directly.
+      <h1>JMRI: Creating Control Panels</h1>
+      <p>The JMRI libraries contain a system for creating control
+      panels. It's highly customizable, and allows you to control
+      the railroad from the panel directly.</p>
 
       <h2>Contents of a panel</h2><img src=
       "../../../images/PiecedPanel.gif" alt="screen shot of panel"
       align="right" width="292" height="107" hspace="0" vspace="0">
 
-      <p>Clicking on a turnout symbol flips it from closed to
-      thrown and vice-versa. A turnout also has "unknown" and
-      "inconsistent" states, represented by an icon with a question
+      <p>Clicking on a turnout symbol flips it from Closed to
+      Thrown and vice-versa. A turnout also has "Unknown" and
+      "Inconsistent" states, represented by an icon with a question
       mark and X respectively. These represent a state where no
       information has been received, and where the information is
-      internally inconsistent (e.g. both closed and thrown at the
+      internally inconsistent (e.g. both Closed and Thrown at the
       same time).</p>
 
       <p>"Sensors" can be used to represent occupancy indicators or
@@ -47,20 +47,16 @@
       used to represent the state of the sensor. In the example
       above there are seven sensors being driven by occupancy
       indicators. Clicking on a sensor causes the sensor to
-      alternate between "active" and "inactive" states. With the
-      default icons, active is a green circle and inactive is an
+      alternate between "Active" and "Inactive" states. With the
+      default icons, Active is a green circle and Inactive is an
       empty circle. These are meant to represent a lit/dark panel
-      indicator. A red circle represents the "unknown" state, used
+      indicator. A red circle represents the "Unknown" state, used
       when no information has yet been received from the
       layout.</p>
 
-      <h2>Creating a panel</h2>(Nick Kulp presented a nice clinic
-      on this topic during March 2004; his slides are <a href=
-      "http://jmri.org/community/clinics/NickKulpMarch2004/index.html">
-      available on the main JMRI web site</a>. Dick Bronson has
-      provided several animated introductions to PanelPro on
-      <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">his
-      own web pages</a>.
+      <h2>Creating a panel</h2>
+      <p>See our <a href="http://jmri.org/community/clinics/">
+      Clinics page</a>.
 
       <p>Panels are made with a "Panel Editor", which allows you to
       place images to represent turnouts, sensors (on some systems)
@@ -69,10 +65,10 @@
       <p>You start the editor by selecting "New Panel...", then
       "Panel Editor" from the "Panels" menu on the main window.
       You'll get a blank control panel, plus the editor window:
-      <a href="../../../images/paneleditor.gif"><img src=
-      "../../../images/paneleditor.gif" alt=
-      "screen shot of panel editor" align="right" width="208"
-      height="364" hspace="0" vspace="0"></a></p>
+      <a href="../../../package/jmri/jmrit/display/images/PanelEditor.png"><img src=
+      "../../../package/jmri/jmrit/display/images/PanelEditor.png" alt=
+      "Screen shot of panel editor" width="299" height="392"
+      hspace="0" vspace="0" align="right"></p>
 
       <p><a name="editor" id="editor">From the top, this
       contains:</a></p>
@@ -85,16 +81,17 @@
         etc) key down.</li>
 
         <li>A button to pick a background image. The editor's
-        drawing capability is rudimentary and likely to stay that
-        way for a long time. To create CTC panels, complex track
-        diagrams, etc, its easier to draw them in some other
-        program and insert them as the background image for a JMRI
-        control panel.</li>
+        drawing capability is rudimentary. To create CTC panels,
+        complex track diagrams, etc, it's easier to draw them in
+        some other program and insert them as the background image
+        for a JMRI control panel, or use <a href=
+        "../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
+        Editor</a>.</li>
 
         <li>A button to add a text label. Put the desired text in
         the field and click the button. You can slide the label
-        around after inserting it, but you currently can't edit the
-        text later.</li>
+        around after inserting it and you can edit the
+        text by context clicking and choosing "Edit Text...".</li>
 
         <li>A button to add an icon as a label. This is a way to
         add track symbols, etc. To see or select the icon, click on
@@ -115,7 +112,7 @@
         head number in the field and click "Add sensor:".</li>
       </ul>
 
-      <p>Each of these also has a "Edit icons..." button, which
+      <p>Each of these also has an "Edit icons..." button, which
       allows you to select which icons will be shown for the
       turnout, sensor, etc that you are about to add.</p>
 
@@ -123,13 +120,14 @@
       "Store panel..." entry in the "Panels" menu to write it to an
       XML file.</p>
 
-      <h3>Icons</h3>The Panel Editor is icon based. The JMRI
+      <h3>Icons</h3>
+      <p>The Panel Editor is icon based. The JMRI
       library contains lots of contributed icons for representing
       CTC panels, LEDs, etc. You can browse through them with the
       tree in the bottom of the editor frame. Perhaps the best way
       to see what each looks like is to select it in the tree, then
       click on the icon next to the "Add icon" button. That will
-      load it.
+      load it.</p>
 
       <p>For little bits of track, e.g. to connect turnouts, you
       might want</p>
@@ -137,28 +135,21 @@
  resources -&gt; icons -&gt; small schematics -&gt;tracksegments
 </pre>then block.gif, etc.
 
-      <p>We do need to do a better job of organizing those...</p>
-
-      <h3>Other types of panels</h3>Because Panel Editor is
+      <h3>Other ideas for panels</h3>
+      <p>Because Panel Editor is
       icon-based, you can create panels that look any way you want.
       For example, instead of using track-schematic icons for
       turnouts, you could use small images of the levers and plates
       on CTC machine. This would give you "mechanical" levers you
-      can flip back and forth with a click.
+      can flip back and forth with a click.</p>
 
-      <p>To make this really easy, we need to have a better editor.
-      And making a "real" CTC panel will require better signal
-      logic to handle the code buttons, etc. If you've got opinions
-      on how this should work, please send comments!</p>
-
-      <h2>Using the panel</h2>To command a turnout to change state
-      (e.g. closed to thrown), click on it.
+      <h2>Using the panel</h2>
+      <p>To command a turnout to change state (e.g. closed to thrown),
+      click on it.</p>
 
       <p>To move it around, you "meta-drag" it. On a Mac, that's
-      "hold the cmd key and drag with the cursor"; on windows, it
-      might be the Windows or control key. Or it might be a
-      right-drag. Sorry, I don't have a Windows machine here to
-      figure it out.</p>
+      "hold the cmd key and drag with the cursor"; on Windows, it
+      might be the Windows key or a right-drag.</p>
 
       <p>There's also a pop-up menu (ctrl-click on a Mac) that will
       let you rotate the icon so that it points in whatever

@@ -136,13 +136,14 @@
       To store this information on disk, allowing to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
       it</a> next time you run JMRI, use <b>Store Configuration...</b>
-      in the <b>File</b> menu at the top of the Lights Table (or other
+      in the <b>File</b> menu at the top of the Light Table (or other
       tables from the Tools menu), or select <b>Store Panel...</b>
       in the <b>Panel</b> menu. Note that the enabled/disabled
       state of each Light is not saved in the configuration file.
       When Lights are loaded from a configuration file, they are
-      all enabled. <a name="addLight" id="addLight"></a></p>
+      all enabled.</p>
 
+      <a name="addLight" id="addLight"></a>
       <h3>Adding a new Light</h3>
 
       <p>To add a new Light, follow this procedure:</p>
