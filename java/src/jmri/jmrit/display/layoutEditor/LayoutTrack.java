@@ -296,25 +296,25 @@ public abstract class LayoutTrack {
     /**
      * Check for active block boundaries.
      * <p>
-     * If any connection point of a track object has attached objects, such as signal
-     * masts, signal heads or NX sensors, the track component cannot be deleted.
-     * @return true if the track component can be deleted.
+     * If any connection point of a layout track object has attached objects, such as
+     * signal masts, signal heads or NX sensors, the layout track object cannot be deleted.
+     * @return true if the layout track item can be deleted.
      */
-    public abstract boolean canRemoveTrackComponent();
+    public abstract boolean canRemoveObject();
 
     /**
-     * Display the attached items that prevent removing the component.
+     * Display the attached items that prevent removing the layout track item.
      * @param itemList A list of the attached heads, masts and/or sensors.
-     * @param componentType The type such as Turnout, Level Crossing, etc.
+     * @param typeKey The object type such as Turnout, Level Crossing, etc.
      */
-    public void displayRemoveTrackComponentDialog(List<String> itemList, String typeKey) {
+    public void displayRemoveObjectDialog(List<String> itemList, String typeKey) {
         itemList.sort(null);
         StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
                 Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
         for (String item : itemList) {
             msg.append("\n    " + item);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(null,
+        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
                 msg.toString(),
                 Bundle.getMessage("WarningTitle"),  // NOI18N
                 javax.swing.JOptionPane.WARNING_MESSAGE);

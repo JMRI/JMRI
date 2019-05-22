@@ -735,10 +735,10 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean canRemoveTrackComponent() {
+    public boolean canRemoveObject() {
         ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
         if (!beanReferences.isEmpty()) {
-            displayRemoveTrackComponentDialog(beanReferences, "BeanNameTurnout");  // NOI18N
+            displayRemoveObjectDialog(beanReferences, "BeanNameTurnout");  // NOI18N
         }
         return beanReferences.isEmpty();
     }
@@ -2748,7 +2748,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemoveTrackComponent() && layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
+                    if (canRemoveObject() && layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
