@@ -1007,7 +1007,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         // check if requested Light uses the same address as a Turnout
         String testSN = turnoutPrefix + curAddress;
-
+        // normalize name before test to compare the string used as Light system name, normalized above
+        testSN = InstanceManager.turnoutManagerInstance().normalizeSystemName(testSN);
+        Turnout testT = InstanceManager.turnoutManagerInstance().
+                getBySystemName(testSN);
         if (testT != null) {
             // Address is already used as a Turnout
             log.warn("Requested Light {} uses same address as Turnout {}", sName, testT);
@@ -1042,7 +1045,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             // convert numerical hardware address
             try {
                 startingAddress = Integer.parseInt(hardwareAddressTextField.getText().trim()); // N11N
-                
+
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
