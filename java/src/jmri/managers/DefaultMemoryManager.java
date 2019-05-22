@@ -22,7 +22,6 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
     @Override
     protected Memory createNewMemory(String systemName, String userName) {
         String prefix = getSystemNamePrefix();
-        systemName = normalizeSystemName(systemName); // enforce triming and uppercase requirements
         if (systemName.isEmpty() || systemName.equals(prefix)) {
             log.error("Invalid system name for memory: \"{}\" but needed IM followed by a suffix", systemName);
             throw new IllegalArgumentException("Invalid system name for memory: \"" + systemName + "\" but needed IM followed by a suffix");
