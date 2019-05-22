@@ -586,12 +586,16 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /**
      * {@inheritDoc}
      *
-     * @return always 'VALID' to let undocumented connection system
-     *         managers pass entry validation.
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name suffix
+     *         is empty or all white space; otherwise returns
+     *         {@link jmri.Manager.NameValidity#VALID} to let undocumented
+     *         connection system managers pass entry validation.
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
+        return !getSystemNamePrefix().equals(systemName.trim())
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
     }
 
     /** {@inheritDoc} */
