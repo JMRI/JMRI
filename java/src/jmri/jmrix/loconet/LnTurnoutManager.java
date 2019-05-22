@@ -1,5 +1,12 @@
 package jmri.jmrix.loconet;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.*;
+import jmri.BooleanPropertyDescriptor;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
+
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -235,6 +242,40 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
+    }
+
+    public static final String BYPASSBUSHBYBITKEY = "Bypass Bushby Bit";
+    public static final String SENDONANDOFFKEY = "Send ON/OFF";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        l.add(new BooleanPropertyDescriptor(BYPASSBUSHBYBITKEY, false) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("LnByPassBushbyHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return bean.getClass().getName().contains("LnTurnout");
+            }
+        });
+        l.add(new BooleanPropertyDescriptor(SENDONANDOFFKEY, _binaryOutput ? false : true) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("SendOnOffHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return bean.getClass().getName().contains("LnTurnout");
+            }
+        });
+        return l;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);

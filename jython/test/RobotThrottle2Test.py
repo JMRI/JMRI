@@ -1,4 +1,4 @@
-#  Minimal test that RobotThrottle3 can load OK
+#  Minimal test that RobotThrottle2 can load OK
 #
 # Author: Bob Jacobsen, copyright 2019
 # Part of the JMRI distribution
@@ -8,7 +8,7 @@ import jmri
 import time
 
 if (not java.awt.GraphicsEnvironment.isHeadless()) : 
-    execfile("jython/RobotThrottle3.py")
+    execfile("jython/RobotThrottle2.py")
 
     # rb1 is the thread from the test
     # wait for it to start
