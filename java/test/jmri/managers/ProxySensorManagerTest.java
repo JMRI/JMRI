@@ -102,7 +102,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty name to follow " + l.getSystemNamePrefix());
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
         Assert.assertTrue("Exception thrown properly", correct);
     }
 

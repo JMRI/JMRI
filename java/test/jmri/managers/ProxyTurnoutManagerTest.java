@@ -76,7 +76,7 @@ public class ProxyTurnoutManagerTest {
             System.out.println(ex.getMessage());
         }
         Assert.assertTrue("Exception thrown properly", correct);
-        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"\" needed non-empty name to follow " + l.getSystemNamePrefix());
+        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
     }
 
     @Test

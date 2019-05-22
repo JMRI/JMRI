@@ -89,7 +89,7 @@ public class SpeedometerFrameTest {
              Throwable cause = ite.getCause();
              Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty name to follow IS");
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty suffix to follow IS");
         JUnitAppender.assertErrorMessage("Start sensor invalid:");
         JUnitUtil.dispose(frame);
     }
