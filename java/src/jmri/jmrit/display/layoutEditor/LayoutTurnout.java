@@ -4226,7 +4226,7 @@ public class LayoutTurnout extends LayoutTrack {
             Color foregroundColor = g2.getColor();
             // if turnout is thrown...
             if (getState() == Turnout.THROWN) {
-                // ...switch to background color 
+                // ...then switch to background color 
                 g2.setColor(g2.getBackground());
             }
             if (layoutEditor.isTurnoutFillControlCircles()) {
@@ -4236,7 +4236,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             // if turnout is thrown...
             if (getState() == Turnout.THROWN) {
-                // ... restore foreground color
+                // ... then restore foreground color
                 g2.setColor(foregroundColor);
             }
         }
