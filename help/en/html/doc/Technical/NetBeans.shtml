@@ -57,11 +57,7 @@
         <li><a href="#jar">Making a Jar File</a></li>
 
         <li><a href="#nsis">Making a release package for Windows
-        using NSIS</a>
-            <ul>
-                <li><a href="#NsisSpecialBuild">Building the JMRI "Launcher" for Windows platforms</a></li>
-            </ul>
-            </li>
+        using NSIS</a></li>
 
         <li><a href="#xmltools">Using NetBeans XML tools</a></li>
 
@@ -416,7 +412,7 @@
           <p>or</p>
 
           <p style="font-family: monospace">
-          nsis.home=/opt/nsis/nsis-3.04/</p>
+          nsis.home=/opt/nsis/nsis-2.46/</p>
           <p><em>Note:</em> Make sure the trailing / is present.</p>
 
           <p>If you will be installing the SpotBugs tool, you will
