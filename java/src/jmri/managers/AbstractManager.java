@@ -580,6 +580,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        if (validSystemNameFormat(inputName) != NameValidity.VALID) {
+            throw new NamedBean.BadSystemNameException();
+        }
         return inputName;
     }
 
