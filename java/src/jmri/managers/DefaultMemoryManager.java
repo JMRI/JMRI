@@ -21,13 +21,13 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
 
     @Override
     protected Memory createNewMemory(String systemName, String userName) {
-        if(systemName.equals("") || systemName.toUpperCase().equals("IM")){
+        if(systemName.equals("") || systemName.equals("IM")){
            log.error("Invalid system name for memory: \"{}\" but needed IM followed by a suffix",systemName);
            throw new IllegalArgumentException("Invalid system name for memory: \"" + systemName + "\" but needed IM followed by a suffix");
         }
         // we've decided to enforce that memory system
         // names start with IM by prepending if not present
-        if (!systemName.toUpperCase().startsWith("IM")) {
+        if (!systemName.startsWith("IM")) {
             systemName = "IM" + systemName;
         }
         return new DefaultMemory(systemName, userName);
