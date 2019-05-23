@@ -70,7 +70,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * System independent operational instance variables (not saved between
      * runs).
      */
-    protected boolean mActive = false; // used locally to indicate if LightControls are active
+    protected boolean mActive = false; // used to indicate if LightControls are active
     protected boolean mEnabled = true;
     protected double mCurrentIntensity = 0.0;
     protected int mState = OFF;
