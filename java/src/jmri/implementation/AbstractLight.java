@@ -492,7 +492,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             lightControlList.stream().forEach((lc) -> {
                 lc.deactivateLightControl();
             });
-            mActive = false; // unset internal flag for control listeners
+            mActive = false; // unset flag for control listeners
         }
     }
 
