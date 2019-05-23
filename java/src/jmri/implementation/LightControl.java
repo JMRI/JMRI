@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.Date;
+import javax.annotation.Nonnull;
 import javax.swing.Timer;
 import jmri.InstanceManager;
 import jmri.Light;
@@ -65,6 +66,33 @@ public class LightControl {
     protected int _timeOnDuration = 0;          // duration (milliseconds) if TIMED_ON_CONTROL
     private String _controlSensor2Name = ""; // second controlling sensor if TWO_SENSOR_CONTROL
 
+    /*
+     * Create a New LightControl from existing,
+     * for use when editing a LightControl
+     *
+     * @param lc the LightControl to be copied
+     */
+    public LightControl(@Nonnull LightControl lc) {
+        this._controlType = lc._controlType;
+        this._controlSensorName = lc._controlSensorName;
+        this._controlSensorSense = lc._controlSensorSense;
+        this._fastClockOnHour = lc._fastClockOnHour;
+        this._fastClockOnMin = lc._fastClockOnMin;
+        this._fastClockOffHour = lc._fastClockOffHour;
+        this._fastClockOffMin = lc._fastClockOffMin;
+        this._controlTurnoutName = lc._controlTurnoutName;
+        this._turnoutState = lc._turnoutState;
+        this._timedSensorName = lc._timedSensorName;
+        this._timeOnDuration = lc._timeOnDuration;
+        this._controlSensor2Name = lc._controlSensor2Name;
+    }
+    
+    /*
+     * Test if a LightControl is equal to this one
+     *
+     * @param o the LightControl object to be checked
+     * @return True if the LightControl is equal, else false
+     */
     @Override
     public boolean equals(Object o) {
         if (o == null) return false;
@@ -117,24 +145,49 @@ public class LightControl {
     }
 
     /*
-     * Accessor methods
+     * Get the control type used by the Control
+     *
+     * @return the Control Type, eg. FAST_CLOCK_CONTROL
      */
     public int getControlType() {
         return _controlType;
     }
 
+    /*
+     * Set the control type used by the Control
+     * Does NOT update any changelisteners
+     *
+     * @param type the Control Type, eg. FAST_CLOCK_CONTROL
+     */
     public void setControlType(int type) {
         _controlType = type;
     }
 
+    /*
+     * Set Sensor 1 used by the 1 Sensor and 2 Sensor Control
+     * Does NOT update any changelisteners
+     *
+     * @param type the Sensor name
+     */
     public void setControlSensorName(String sensorName) {
         _controlSensorName = sensorName;
     }
 
+    /*
+     * Get the Sensor State used by the 1 Sensor Control
+     *
+     * @return Sensor.ACTIVE or Sensor.INACTIVE
+     */
     public int getControlSensorSense() {
         return _controlSensorSense;
     }
 
+    /*
+     * Get the Sensor 1 name for 1 and 2 Sensor Control Types.
+     *
+     * @return  If a Sensor is registered, returns the Sensor.getName()
+     *          else the Sensor Name as set by #setControlSensorName
+     */
     public String getControlSensorName() {
         if (_namedControlSensor != null) {
             return _namedControlSensor.getName();
@@ -142,26 +195,60 @@ public class LightControl {
         return _controlSensorName;
     }
 
+    /*
+     * Set the Sensor State used by the Control
+     * Does NOT update any changelisteners
+     *
+     * @param sense The state to react to, eg. Sensor.ACTIVE or Sensor.INACTIVE
+     */
     public void setControlSensorSense(int sense) {
         _controlSensorSense = sense;
     }
 
+    /*
+     * Get the Fast Clock On Hour.
+     *
+     * @return  On Hour value
+     */
     public int getFastClockOnHour() {
         return _fastClockOnHour;
     }
 
+    /*
+     * Get the Fast Clock On Minute.
+     *
+     * @return  On Minute value
+     */
     public int getFastClockOnMin() {
         return _fastClockOnMin;
     }
 
+    /*
+     * Get the Fast Clock Off Hour.
+     *
+     * @return  Off Hour value
+     */
     public int getFastClockOffHour() {
         return _fastClockOffHour;
     }
 
+    /*
+     * Get the Fast Clock Off Minute.
+     *
+     * @return  Off Minute value
+     */
     public int getFastClockOffMin() {
         return _fastClockOffMin;
     }
 
+    /*
+     * Set a Fast Clock LightControl Schedule.
+     *
+     * @param onHour Hour the Light should switch On
+     * @param onMin Minute the Light should switch On
+     * @param offHour Hour the Light should switch Off
+     * @param offMin Minute the Light should switch Off     * 
+     */
     public void setFastClockControlSchedule(int onHour, int onMin, int offHour, int offMin) {
         _fastClockOnHour = onHour;
         _fastClockOnMin = onMin;
@@ -169,22 +256,50 @@ public class LightControl {
         _fastClockOffMin = offMin;
     }
 
+    /*
+     * Get the LightControl Turnout Name.
+     *
+     * @return  The Turnout name
+     */
     public String getControlTurnoutName() {
         return _controlTurnoutName;
     }
 
+    /*
+     * Set the Turnout used by the Control
+     * Does NOT update any changelisteners
+     *
+     * @param turnoutName The Turnout name
+     */
     public void setControlTurnout(String turnoutName) {
         _controlTurnoutName = turnoutName;
     }
 
+    /*
+     * Get the LightControl Turnout Name.
+     *
+     * @return  The Turnout name
+     */
     public int getControlTurnoutState() {
         return _turnoutState;
     }
 
+    /*
+     * Set the Turnout State used by the Control
+     * Does NOT update any changelisteners
+     *
+     * @param state Turnout state to act on, eg. Turnout.CLOSED or Turnout.THROWN
+     */
     public void setControlTurnoutState(int state) {
         _turnoutState = state;
     }
 
+    /*
+     * Get the Timed On Trigger Sensor name.
+     *
+     * @return  If a Sensor is registered, returns the Sensor.getName()
+     *          else the Sensor Name as set by #setControlTimedOnSensorName
+     */
     public String getControlTimedOnSensorName() {
         if (_namedTimedControlSensor != null) {
             return _namedTimedControlSensor.getName();
@@ -192,18 +307,42 @@ public class LightControl {
         return _timedSensorName;
     }
 
+    /*
+     * Set Sensor used by the Timed On Control
+     * Does NOT update any changelisteners
+     *
+     * @param sensorName the Sensor name to be used for the On Trigger
+     */
     public void setControlTimedOnSensorName(String sensorName) {
         _timedSensorName = sensorName;
     }
 
+    /*
+     * Get the Timed On Control Duration
+     *
+     * @return duration in ms
+     */
     public int getTimedOnDuration() {
         return _timeOnDuration;
     }
 
+    /*
+     * Set Duration used by the Timed On Control
+     * Does NOT update any changeListeners
+     *
+     * @param duration in ms following the Sensor On Trigger
+     */
     public void setTimedOnDuration(int duration) {
         _timeOnDuration = duration;
     }
 
+    /*
+     * Get the Second Sensor name.
+     * as used in the 2 Sensor Control Group.
+     *
+     * @return  If a 2nd Sensor is registered, returns the Sensor.getName()
+     *          else the 2nd Sensor Name as set by #setControlSensor2Name
+     */
     public String getControlSensor2Name() {
         if (_namedControlSensor2 != null) {
             return _namedControlSensor2.getName();
@@ -211,10 +350,22 @@ public class LightControl {
         return _controlSensor2Name;
     }
 
+    /*
+     * Set Sensor 2 used by the 2 Sensor Control
+     * Does NOT update any changelisteners
+     *
+     * @param type the Sensor 2 name
+     */
     public void setControlSensor2Name(String sensorName) {
         _controlSensor2Name = sensorName;
     }
 
+    /*
+     * Set Light to control
+     * Does NOT update any changelisteners
+     *
+     * @param l the Light object to control
+     */
     public void setParentLight(Light l) {
         _parentLight = l;
     }
@@ -243,6 +394,7 @@ public class LightControl {
     /**
      * Activates a Light Control by control type. This method tests the control
      * type, and set up a control mechanism, appropriate for the control type.
+     * Adds PropertyChangeListeners to Sensors / Turnouts / Fast Clock as necessary
      */
     public void activateLightControl() {
         // skip if Light Control is already active
@@ -510,6 +662,10 @@ public class LightControl {
         }
     }
 
+    /**
+     * Internal routine for handling sensor changes
+     * for the 2 Sensor Control Type
+     */
     protected void twoSensorChanged(java.beans.PropertyChangeEvent e) {
         if (!_parentLight.getEnabled()) {
             return;  // ignore property change if user disabled Light
