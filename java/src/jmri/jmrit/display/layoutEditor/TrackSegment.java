@@ -1586,7 +1586,7 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (canRemoveObject()) {
+                if (canRemove()) {
                     layoutEditor.removeTrackSegment(TrackSegment.this);
                     remove();
                     dispose();
@@ -1669,7 +1669,7 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean canRemoveObject() {
+    public boolean canRemove() {
         List<String> itemList = new ArrayList<>();
 
         int type1 = getType1();
@@ -1681,7 +1681,7 @@ public class TrackSegment extends LayoutTrack {
         itemList.addAll(getPointReferences(type2, conn2));
 
         if (!itemList.isEmpty()) {
-            displayRemoveObjectDialog(itemList, "TrackSegment");  // NOI18N
+            displayRemoveWarningDialog(itemList, "TrackSegment");  // NOI18N
         }
         return itemList.isEmpty();
     }

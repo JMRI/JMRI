@@ -1281,7 +1281,7 @@ public class PositionablePoint extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (canRemoveObject() && layoutEditor.removePositionablePoint(PositionablePoint.this)) {
+                if (canRemove() && layoutEditor.removePositionablePoint(PositionablePoint.this)) {
                     // user is serious about removing this point from the panel
                     remove();
                     dispose();
@@ -1429,7 +1429,7 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean canRemoveObject() {
+    public boolean canRemove() {
         List<String> itemList = new ArrayList<>();
         // A has two track segments, EB has one, EC has one plus optional link
 
@@ -1464,7 +1464,7 @@ public class PositionablePoint extends LayoutTrack {
                     typeName = "Unknown type (" + type + ")";  // NOI18N
                     break;
             }
-            displayRemoveObjectDialog(itemList, typeName);
+            displayRemoveWarningDialog(itemList, typeName);
         }
         return itemList.isEmpty();
     }

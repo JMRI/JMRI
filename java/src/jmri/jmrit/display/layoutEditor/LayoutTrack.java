@@ -298,16 +298,16 @@ public abstract class LayoutTrack {
      * <p>
      * If any connection point of a layout track object has attached objects, such as
      * signal masts, signal heads or NX sensors, the layout track object cannot be deleted.
-     * @return true if the layout track item can be deleted.
+     * @return true if the layout track object can be deleted.
      */
-    public abstract boolean canRemoveObject();
+    public abstract boolean canRemove();
 
     /**
      * Display the attached items that prevent removing the layout track item.
      * @param itemList A list of the attached heads, masts and/or sensors.
      * @param typeKey The object type such as Turnout, Level Crossing, etc.
      */
-    public void displayRemoveObjectDialog(List<String> itemList, String typeKey) {
+    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
         itemList.sort(null);
         StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
                 Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N

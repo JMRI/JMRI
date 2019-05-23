@@ -1042,10 +1042,10 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean canRemoveObject() {
+    public boolean canRemove() {
         ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
         if (!beanReferences.isEmpty()) {
-            displayRemoveObjectDialog(beanReferences, "LevelCrossing");  // NOI18N
+            displayRemoveWarningDialog(beanReferences, "LevelCrossing");  // NOI18N
         }
         return beanReferences.isEmpty();
     }
@@ -1196,7 +1196,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemoveObject() && layoutEditor.removeLevelXing(LevelXing.this)) {
+                    if (canRemove() && layoutEditor.removeLevelXing(LevelXing.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

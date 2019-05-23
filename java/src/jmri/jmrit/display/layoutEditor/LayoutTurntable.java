@@ -1386,7 +1386,7 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean canRemoveObject() {
+    public boolean canRemove() {
         return true;
     }
 
