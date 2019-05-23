@@ -336,7 +336,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     /**
-     * This variable needs to be read if any of it's subsidiary variables needs
+     * This variable needs to be read if any of its subsidiary variables needs
      * to be read.
      */
     @Override
@@ -364,7 +364,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     /**
-     * This variable needs to be written if any of it's subsidiary variables
+     * This variable needs to be written if any of its subsidiary variables
      * needs to be written.
      */
     @Override

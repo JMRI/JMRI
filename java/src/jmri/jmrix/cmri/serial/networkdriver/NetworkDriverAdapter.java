@@ -6,7 +6,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
  * Implements SerialPortAdapter for a network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *

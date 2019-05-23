@@ -286,7 +286,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             /**
              * Delete the bean after all the checking has been done.
-             * <P>
+             * <p>
              * Deactivate the Route, then use the superclass to delete it.
              */
             @Override

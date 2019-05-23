@@ -13,8 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for configuring a TransitManager
- * <P>
+ * Provides the functionality for configuring a TransitManager.
  *
  * @author Dave Duchamp Copyright (c) 2008
  */

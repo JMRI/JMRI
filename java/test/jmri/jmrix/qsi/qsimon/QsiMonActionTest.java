@@ -20,7 +20,7 @@ public class QsiMonActionTest {
         QsiTrafficController tc = new QsiTrafficControlScaffold();
         QsiSystemConnectionMemo memo = new QsiSystemConnectionMemo(tc);
         QsiMonAction t = new QsiMonAction(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

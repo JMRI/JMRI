@@ -179,7 +179,7 @@ public class HexFileFrame extends JmriJFrame {
             LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
             LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
         } else {
-            log.info("Sensor Manager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+            log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
         }
 
         // Install a debug programmer, replacing the existing LocoNet one

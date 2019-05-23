@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents and manipulates a decoder definition, both as a file and in
  * memory. The internal storage is a JDOM tree.
- * <P>
+ * <p>
  * This object is created by DecoderIndexFile to represent the decoder
  * identification info _before_ the actual decoder file is read.
  *
@@ -451,7 +451,7 @@ public class DecoderFile extends XmlFile {
 
     /**
      * Convert to a canonical text form for ComboBoxes, etc.
-     * <P>
+     * <p>
      * Must be able to distinguish identical models in different families.
      *
      * @return the title string for the decoder

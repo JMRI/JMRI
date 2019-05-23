@@ -9,7 +9,7 @@ import org.junit.*;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 
     // service routines to simulate receiving on, off from interface

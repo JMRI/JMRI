@@ -7,7 +7,7 @@ import org.junit.*;
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
-  */
+ */
 public class RosterEntryPaneTest {
 
     // statics for test objects
@@ -196,4 +196,5 @@ public class RosterEntryPaneTest {
 
         Assert.assertTrue(p.checkDuplicate());
     }
+
 }

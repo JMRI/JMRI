@@ -2,7 +2,6 @@ package jmri.util;
 
 /**
  * Simple TransferHandler that exports a string value of a cell in a JTable.
- * <P>
  *
  * @author Pete Cressman Copyright 2010
  */

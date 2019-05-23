@@ -585,10 +585,10 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write a graphic to the printout.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Bob
      * Jacobsen. Modified by D Miller.
-     * <P>
+     * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      *
@@ -613,10 +613,10 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write a graphic to the printout.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Kevin
      * Dickerson. it is a copy of the write, but without the scaling.
-     * <P>
+     * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      *
@@ -639,10 +639,10 @@ public class HardcopyWriter extends Writer {
 
     /**
      * A Method to allow a JWindow to print itself at the current line position
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
-     * <P>
+     * <p>
      * Intended to allow for a graphic printout of the speed table, but can be
      * used to print any window. The JWindow is passed to the method and prints
      * itself at the current line and aligned at the left margin. The calling
@@ -675,14 +675,14 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Draw a line on the printout.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
-     * <P>
+     * <p>
      * colStart and colEnd represent the horizontal character positions. The
      * lines actually start in the middle of the character position to make it
      * easy to draw vertical lines and space them between printed characters.
-     * <P>
+     * <p>
      * rowStart and rowEnd represent the vertical character positions.
      * Horizontal lines are drawn underneath the row (line) number. They are
      * offset so they appear evenly spaced, although they don't take into
@@ -710,7 +710,7 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Get the current linenumber.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
      *
@@ -724,7 +724,7 @@ public class HardcopyWriter extends Writer {
      * Print vertical borders on the current line at the left and right sides of
      * the page at character positions 0 and chars_per_line + 1. Border lines
      * are one text line in height
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
      */
@@ -735,12 +735,12 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Increase line spacing by a percentage
-     * <P>
+     * <p>
      * This method should be invoked immediately after a new HardcopyWriter is
      * created.
-     * <P>
+     * <p>
      * This method was added to improve appearance when printing tables
-     * <P>
+     * <p>
      * This was not in the original class, added afterwards by DaveDuchamp.
      *
      * @param percent percentage by which to increase line spacing

@@ -8,14 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Abstract base class for PowerManager tests in specific jmrix. packages
+ * Abstract base class for PowerManager tests in specific jmrix. packages.
  *
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
- * common tests
+ * common tests.
+ *
  * @author	Bob Jacobsen Copyright 2007
  * @author	Bob Jacobsen Copyright (C) 2017
-  */
+ */
 public abstract class AbstractPowerManagerTestBase {
 
     // required setup routine, must set p to an appropriate value.

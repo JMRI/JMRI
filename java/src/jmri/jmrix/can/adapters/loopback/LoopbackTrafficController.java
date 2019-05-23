@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Traffic controller for loopback CAN simulation.
  *
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController {
 
     public LoopbackTrafficController() {
@@ -151,4 +151,5 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoopbackTrafficController.class);
+
 }

@@ -10,7 +10,7 @@ import javax.swing.ListModel;
 
 /**
  * Common utility methods for working with JComboBoxes.
- * <P>
+ * <p>
  * To do vertical sizing of <u>empty</u> JComboBoxen,
  * this will create a dummy object and cast it to the 
  * contents' type.  This can fail.
@@ -23,7 +23,7 @@ public class JComboBoxUtil {
     /**
      * Set the maximum number of rows for a JComboBox so that it always can fit
      * on the screen
-     * <P>
+     * <p>
      * To do vertical sizing of <u>empty</u> JComboBoxen,
      * this will create a temporary Object and cast it to the 
      * contents' type.  This can fail at runtime with a cast-class

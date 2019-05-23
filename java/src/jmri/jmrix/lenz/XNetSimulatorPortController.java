@@ -9,7 +9,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010
-  */
+ */
 public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 
     private boolean timeSlot = true;

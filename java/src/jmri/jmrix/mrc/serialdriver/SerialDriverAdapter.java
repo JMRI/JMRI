@@ -19,7 +19,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Implements SerialPortAdapter for the MRC system. This connects an MRC command
  * station via a serial com port. Normally controlled by the SerialDriverFrame
  * class.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *

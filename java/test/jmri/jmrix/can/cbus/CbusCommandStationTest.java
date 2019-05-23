@@ -17,7 +17,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (c) 2019
- * testSendPacket modified from Loconet SlotManagerTest
+ * testSendPacket modified from LocoNet SlotManagerTest
  */
 public class CbusCommandStationTest {
 

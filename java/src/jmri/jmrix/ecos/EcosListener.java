@@ -5,7 +5,7 @@ package jmri.jmrix.ecos;
  * link.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public interface EcosListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(EcosMessage m);

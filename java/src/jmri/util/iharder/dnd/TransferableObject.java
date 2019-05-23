@@ -34,13 +34,12 @@ import java.awt.datatransfer.DataFlavor;
  * {@code application/x-net.iharder.dnd.TransferableObject}. This data flavor
  * is accessible via the static {@link #DATA_FLAVOR} property.
  *
- *
  * <p>
  * <em>This code is licensed for public use under the Common Public License
  * version 0.5.</em><br>
  * The Common Public License, developed by IBM and modeled after their
  * industry-friendly IBM Public License, differs from other common open source
- * licenses in several important ways:</p>
+ * licenses in several important ways:
  * <ul>
  * <li>You may include this software with other software that uses a different
  * (even non-open source) license.</li>
@@ -48,7 +47,7 @@ import java.awt.datatransfer.DataFlavor;
  * <li>Your patent rights, should you generate patents, are protected.</li>
  * </ul>
  * <p>
- * <em>Copyright 2001 Robert Harder</em></p>
+ * <em>Copyright 2001 Robert Harder</em>
  *
  * @author Robert.Harder copyright 2001
  * @version 1.1

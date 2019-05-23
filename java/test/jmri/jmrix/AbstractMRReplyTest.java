@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for AbstractMRReply
+ * Tests for AbstractMRReply.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class AbstractMRReplyTest extends AbstractMessageTestBase {
 
     AbstractMRReply testMsg;

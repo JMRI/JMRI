@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single signal head via one "Turnout" object.
- * <P>
+ * <p>
  * After much confusion, the user-level terminology was changed to call these
  * "Single Output"; the class name remains the same to reduce recoding.
- * <P>
+ * <p>
  * One Turnout object is provided during construction, and drives the appearance
  * to be either ON or OFF. Normally, "THROWN" is on, and "CLOSED" is off. The
  * facility to set the appearance via any of the basic four appearance colors +
