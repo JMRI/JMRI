@@ -1199,7 +1199,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // get information for this Light
         userName.setText(g.getUserName());
         clearLightControls();
-        controlList = curLight.getLightControlList();
+        
+        // Get a copy of the LightControl list
+        controlList = new ArrayList<>();
+        curLight.getLightControlList().forEach((lightControlList1) -> {
+            controlList.add(new LightControl(lightControlList1));
+        });
+        
         // variable intensity
         if (g.isIntensityVariable()) {
             minIntensity.setValue(g.getMinIntensity()); // displayed as percentage
