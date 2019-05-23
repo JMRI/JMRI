@@ -2,6 +2,7 @@ package jmri.server.json.block;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -201,7 +202,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             service.doPut(JsonBlock.BLOCK, "", message, locale, 0); // use an empty name to trigger exception
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
-            assertEquals(404, ex.getCode()); // should be 400 or 500
+            assertEquals(404, ex.getCode()); // should be 400 or 500, but until BlockManager throws on creating Block with empty system name suffix, is 404
         }
     }
 
@@ -209,9 +210,10 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     @Override
     public void testDoDelete() throws JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
+        ObjectNode message = mapper.createObjectNode();
         try {
             assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-            service.doDelete(service.getType(), "non-existant", NullNode.getInstance(), locale, 42);
+            service.doDelete(service.getType(), "non-existant", message, locale, 42);
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
@@ -219,7 +221,27 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             assertEquals("ID is 42", 42, ex.getId());
         }
         manager.createNewBlock("IB1", null);
-        
+        try {
+            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
+            service.doDelete(service.getType(), "IB1", message, locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+        }
+        assertNotNull(manager.getBeanBySystemName("IB1"));
+        // will throw if prior catch failed
+        service.doDelete(service.getType(), "IB1", message, locale, 0);
+        assertNull(manager.getBeanBySystemName("IB1"));
+        try {
+            // deleting again should throw an exception
+            service.doDelete(service.getType(), "IB1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+        }
     }
 
     /**
