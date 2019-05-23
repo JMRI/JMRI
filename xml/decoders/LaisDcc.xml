@@ -47,152 +47,372 @@
         <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06">
             <!--           old models not showing anymore  -->
             <model show="no" model="860010/LaisDcc-Z2" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
-                <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 5</label>
+                </output>
+                <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 5</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="13.3" width="7.3" height="3.8" units="mm"/>
             </model>
             <model show="no" model="860012" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
-                <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 5</label>
+                </output>
+                <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 5</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="14.5" width="8.2" height="3" units="mm"/>
             </model>
             <model show="no" model="860013" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
-                <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 5</label>
+                </output>
+                <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 5</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="14.5" width="8.2" height="3" units="mm"/>
             </model>
             <model show="no" model="860014" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
-                <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Drát</label>
+                </output>
+                <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Drát</label>
+                </output>
+                <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Drát</label>
+                </output>
+                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Drát</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="15" width="7" height="2.7" units="mm"/>
             </model>
             <model show="no" model="860015" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
-                <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA"/>
-                <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA"/>
-                <output name="6" label="Brown|Pin 13"  connection="plug" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 8</label>
+                </output>
+                <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 17</label>
+                </output>
+                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 3</label>
+                </output>
+                <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Pin 12</label>
+                </output>
+                <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Fialová|Pin 4</label>
+                </output>
+                <output name="6" label="Brown|Pin 13"  connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Hnědá|Pin 13</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="15" width="9.5" height="2.9" units="mm"/>
             </model>
             <model show="no" model="860016" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="PluX22" comment="HO-scale, with Plux22 harness">
-                <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Pin 18" connection="plug" maxcurrent="100 mA"/>
-                <output name="5" label="Pink|Pin 2" connection="plug" maxcurrent="100 mA"/>
-                <output name="6" label="Brown|Pin 19"  connection="plug" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 7</label>
+                </output>
+                <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 13</label>
+                </output>
+                <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 16</label>
+                </output>
+                <output name="4" label="Purple|Pin 18" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Pin 18</label>
+                </output>
+                <output name="5" label="Pink|Pin 2" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Fialová|Pin 2</label>
+                </output>
+                <output name="6" label="Brown|Pin 19"  connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Hnědá|Pin 19</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="16" width="17.5" height="3" units="mm"/>
             </model>
             <!-- Model 860018 replaced by 860020 -->
             <model show="no" model="860018" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
-                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 6</label>
+                </output>
+                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 2</label>
+                </output>
+                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 3</label>
+                </output>
+                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Drát</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="14.2" width="12.5" height="3.5" units="mm"/>
             </model>
             <model show="no" model="860019" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
-                <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA"/>
-                <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA"/>
-                <output name="6" label="Brown|Pin 4"  connection="plug" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 8</label>
+                </output>
+                <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 7</label>
+                </output>
+                <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 15</label>
+                </output>
+                <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Pin 14</label>
+                </output>
+                <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Fialová|Pin 13</label>
+                </output>
+                <output name="6" label="Brown|Pin 4"  connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Hnědá|Pin 4</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="17" width="16" height="3.5" units="mm"/>
             </model>
             <model show="no" model="860020" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
-                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 6</label>
+                </output>
+                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 2</label>
+                </output>
+                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 3</label>
+                </output>
+                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Drát</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="15" width="15" height="3.5" units="mm"/>
             </model>
             <model show="no" model="860021" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
-                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 6</label>
+                </output>
+                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 2</label>
+                </output>
+                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 3</label>
+                </output>
+                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Drát</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
                 <size length="15" width="7" height="2.7" units="mm"/>
             </model>
             <!--      new models based on available outputs defined, without form factor   -->
             <model model="8x00nn - 2 outputs" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
-                <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="|"/>
-                <output name="4" label="|"/>
-                <output name="5" label="|"/>
-                <output name="6" label="|"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 5</label>
+                </output>
+                <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 6</label>
+                </output>
+                <output name="3" label="|" >
+                    <label xml:lang="cs">|</label>
+                </output>
+                <output name="4" label="|" >
+                    <label xml:lang="cs">|</label>
+                </output>
+                <output name="5" label="|" >
+                    <label xml:lang="cs">|</label>
+                </output>
+                <output name="6" label="|" >
+                    <label xml:lang="cs">|</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
             </model>
             <model model="8x00nn - 4 outputs" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
-                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA"/>
-                <output name="5" label="|"/>
-                <output name="6" label="|"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 6</label>
+                </output>
+                <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 2</label>
+                </output>
+                <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 3</label>
+                </output>
+                <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Drát</label>
+                </output>
+                <output name="5" label="|" >
+                    <label xml:lang="cs">|</label>
+                </output>
+                <output name="6" label="|" >
+                    <label xml:lang="cs">|</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
             </model>
             <model model="8x00nn - 6 outputs" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
-                <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA"/>
-                <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA"/>
-                <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA"/>
-                <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA"/>
-                <output name="6" label="Brown|Pin 4"  connection="plug" maxcurrent="100 mA"/>
-                <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
-                <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
-                <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
-                <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+                <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Bílá|Pin 8</label>
+                </output>
+                <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Žlutá|Pin 7</label>
+                </output>
+                <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Zelená|Pin 15</label>
+                </output>
+                <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Purpurová|Pin 14</label>
+                </output>
+                <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Fialová|Pin 13</label>
+                </output>
+                <output name="6" label="Brown|Pin 4"  connection="plug" maxcurrent="100 mA" >
+                    <label xml:lang="cs">Hnědá|Pin 4</label>
+                </output>
+                <output name="7" label="Rule 17|Dimming" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+                </output>
+                <output name="8" label="Ditch|Blink" >		<!-- virtual "output" -->
+                    <label xml:lang="cs">Přeblikávat|Blikat</label>
+                </output>
+                <output name="9" label="Motor|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">Motor|Řízení</label>
+                </output>
+                <output name="10" label="BEMF|Control" >	<!-- virtual "output" -->
+                    <label xml:lang="cs">BEMF|Řízení</label>
+                </output>
             </model>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -204,7 +424,10 @@
                 <label xml:lang="it">Volt Partenza</label>
                 <label xml:lang="fr">V démarr.</label>
                 <label xml:lang="de">Anfahrspannung</label>
+                <label xml:lang="cs">Rozjezdové napětí</label>
                 <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
+                <comment xml:lang="cs">Meze 0-255, 0 v CV2, CV6, CV5 způsobí lineární zrychlení</comment>
+                <tooltip xml:lang="cs">Nastavení napětí na motoru pro rychlostní krok 1. Meze 0-255.</tooltip>
             </variable>
             <variable CV="3" item="Accel" default="3" tooltip="Sets the acceleration rate (delay or momentum), range 0-255">
                 <decVal max="255"/>
@@ -212,7 +435,10 @@
                 <label xml:lang="it">Accellerazione (0-255)</label>
                 <label xml:lang="fr">Accelération (0-255)</label>
                 <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+                <label xml:lang="cs">Zrychlení</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastavení míry zrychlení (prodleva nebo hybnost). Meze 0-255.</tooltip>
             </variable>
             <variable CV="4" item="Decel" default="3" tooltip="Sets the deceleration rate (delay or momentum), range 0-255">
                 <decVal max="255"/>
@@ -220,7 +446,10 @@
                 <label xml:lang="it">Decellerazione (0-255)</label>
                 <label xml:lang="fr">Décélération (0-255)</label>
                 <label xml:lang="de">Bremszeit (0-255)</label>
+                <label xml:lang="cs">Zpomalení</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastavení míry zpomalení (prodleva nebo hybnost). Meze 0-255.</tooltip>
             </variable>
             <variable CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255">
                 <decVal max="255"/>
@@ -228,7 +457,10 @@
                 <label xml:lang="it">Volt Massimi</label>
                 <label xml:lang="fr">Vmax</label>
                 <label xml:lang="de">Höchstgeschwindigkeit</label>
+                <label xml:lang="cs">Maximální napětí</label>
                 <comment>Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration</comment>
+                <comment xml:lang="cs">Meze 0-255. Hodnota 255 odpovídá 100 %. 0 v CV2, CV6, CV5 způsobí lineární zrychlení.</comment>
+                <tooltip xml:lang="cs">Nastavení napětí na motoru pro nejvyšší rychlostní krok. Meze 0-255.</tooltip>
             </variable>
             <variable CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255">
                 <decVal max="255"/>
@@ -236,7 +468,10 @@
                 <label xml:lang="it">Volt Intermedi</label>
                 <label xml:lang="fr">Vmoy</label>
                 <label xml:lang="de">Mittengeschwindigkeit</label>
+                <label xml:lang="cs">Střední napětí</label>
                 <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
+                <comment xml:lang="cs">Meze 0-255. 0 v CV2, CV6, CV5 způsobí lineární zrychlení.</comment>
+                <tooltip xml:lang="cs">Nastavení napětí na motoru pro střední rychlostní krok. Meze 0-255.</tooltip>
             </variable>
             <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="Decoder Version, Read Only">
                 <decVal/>
@@ -244,6 +479,8 @@
                 <label xml:lang="it">Versione Decoder: </label>
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
+                <label xml:lang="cs">Verze dekodéru: </label>
+                <tooltip xml:lang="cs">Verze dekodéru. Pouze pro čtení.</tooltip>
             </variable>
             <variable CV="8" readOnly="yes" item="Manufacturer" default="134" tooltip="Decoder Maker, Read Only">
                 <decVal/>
@@ -251,10 +488,14 @@
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="cs">ID výrobce: </label>
+                <tooltip xml:lang="cs">Výrobce dekodéru. Pouze pro čtení.</tooltip>
             </variable>
             <variable CV="10" default="88" item="EMF Control Reference" tooltip="turn off BEMF above this speed step">
                 <decVal/>
                 <label>BEMF Feedback Cut Out</label>
+                <label xml:lang="cs">BEMF odstřižení zpětné vazby</label>
+                <tooltip xml:lang="cs">Vypne BEMF nad tímto rychlostním krokem.</tooltip>
             </variable>
             <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -262,6 +503,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F1</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F1</label>
                 <label>Analog Mode Function Status - F1</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F1</label>
             </variable>
             <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -269,6 +511,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F2</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F2</label>
                 <label>Analog Mode Function Status - F2</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F2</label>
             </variable>
             <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -276,6 +519,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F3</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F3</label>
                 <label>Analog Mode Function Status - F3</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F3</label>
             </variable>
             <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -283,6 +527,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F4</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F4</label>
                 <label>Analog Mode Function Status - F4</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F4</label>
             </variable>
             <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -290,6 +535,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F5</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F5</label>
                 <label>Analog Mode Function Status - F5</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F5</label>
             </variable>
             <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -297,6 +543,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F6</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F6</label>
                 <label>Analog Mode Function Status - F6</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F6</label>
             </variable>
             <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -304,6 +551,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F7</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F7</label>
                 <label>Analog Mode Function Status - F7</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F7</label>
             </variable>
             <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -311,6 +559,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F8</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F8</label>
                 <label>Analog Mode Function Status - F8</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F8</label>
             </variable>
             <variable item="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -318,6 +567,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F0(f)</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F0(f)</label>
                 <label>Analog Mode Function Status - F0(f)</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F0(vpřed)</label>
             </variable>
             <variable item="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -325,6 +575,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F0(r)</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F0(r)</label>
                 <label>Analog Mode Function Status - F0(r)</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F0(vzad)</label>
             </variable>
             <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -332,6 +583,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F9</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F9</label>
                 <label>Analog Mode Function Status - F9</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F9</label>
             </variable>
             <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -339,6 +591,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F10</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F10</label>
                 <label>Analog Mode Function Status - F10</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F10</label>
             </variable>
             <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -346,6 +599,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F11</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F11</label>
                 <label>Analog Mode Function Status - F11</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F11</label>
             </variable>
             <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -353,6 +607,7 @@
                 <label xml:lang="fr">État  de la fonction en analogique - F12</label>
                 <label xml:lang="de">Funktionsstatus im Analogbetrieb - F12</label>
                 <label>Analog Mode Function Status - F12</label>
+                <label xml:lang="cs">Stav funkce v analogovém režimu - F12</label>
             </variable>
             <!-- CV=16 Decoder Lock -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
@@ -362,10 +617,14 @@
             <variable item="Consist Acceleration Adjustment" CV="23" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
                 <decVal max="255"/>
                 <label>Consist Acceleration Adjustment</label>
+                <label xml:lang="cs">Nastavení zrychlení v soupravě</label>
+                <tooltip xml:lang="cs">Hodnoty nad 128 zvýší nastavení, pod 128 sníží nastavení.</tooltip>
             </variable>
             <variable item="Consist Deceleration Adjustment" CV="24" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
                 <decVal max="255"/>
                 <label>Consist Deceleration Adjustment</label>
+                <label xml:lang="cs">Nastavení zpomalení v soupravě</label>
+                <tooltip xml:lang="cs">Hodnoty nad 128 zvýší nastavení, pod 128 sníží nastavení.</tooltip>
             </variable>
             <!-- CV=29 -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
@@ -378,305 +637,377 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 1</label>
                 <label xml:lang="it">Luci (in avanti) controlla uscita 1</label>
+                <label xml:lang="cs">FL (vpřed) funkční výstup 1</label>
             </variable>
             <variable item="FL(r) controls output 1" CV="33" mask="XXXXXXVX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 1</label>
                 <label xml:lang="it">Luci (in retro) controlla uscita 1</label>
+                <label xml:lang="cs">FL (vzad) funkční výstup 1</label>
             </variable>
             <variable item="F1 controls output 1" CV="33" mask="XXXXXVXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 1</label>
                 <label xml:lang="it">F1 controlla uscita 1</label>
+                <label xml:lang="cs">F1 funkční výstup 1</label>
             </variable>
             <variable item="F2 controls output 1" CV="33" mask="XXXXVXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 1</label>
                 <label xml:lang="it">F2 controlla uscita 1</label>
+                <label xml:lang="cs">F2 funkční výstup 1</label>
             </variable>
             <variable item="F3 controls output 1" CV="33" mask="XXXVXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 1</label>
                 <label xml:lang="it">F3 controlla uscita 1</label>
+                <label xml:lang="cs">F3 funkční výstup 1</label>
             </variable>
             <variable item="F4 controls output 1" CV="33" mask="XXVXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 1</label>
                 <label xml:lang="it">F4 controlla uscita 1</label>
+                <label xml:lang="cs">F4 funkční výstup 1</label>
             </variable>
             <variable item="F5 controls output 1" CV="33" mask="XVXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 1</label>
                 <label xml:lang="it">F5 controlla uscita 1</label>
+                <label xml:lang="cs">F5 funkční výstup 1</label>
             </variable>
             <variable item="F6 controls output 1" CV="33" mask="VXXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 1</label>
                 <label xml:lang="it">F6 controlla uscita 1</label>
+                <label xml:lang="cs">F6 funkční výstup 1</label>
             </variable>
             <variable item="FL(f) controls output 2" CV="34" mask="XXXXXXXV" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 2</label>
                 <label xml:lang="it">Luci (in avanti) controlla uscita 2</label>
+                <label xml:lang="cs">FL (vpřed) funkční výstup 2</label>
             </variable>
             <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 2</label>
                 <label xml:lang="it">Luci (in retro) controlla uscita 2</label>
+                <label xml:lang="cs">FL (vzad) funkční výstup 2</label>
             </variable>
             <variable item="F1 controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 2</label>
                 <label xml:lang="it">F1 controlla uscita 2</label>
+                <label xml:lang="cs">F1 funkční výstup 2</label>
             </variable>
             <variable item="F2 controls output 2" CV="34" mask="XXXXVXXX" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 2</label>
                 <label xml:lang="it">F2 controlla uscita 2</label>
+                <label xml:lang="cs">F2 funkční výstup 2</label>
             </variable>
             <variable item="F3 controls output 2" CV="34" mask="XXXVXXXX" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 2</label>
                 <label xml:lang="it">F3 controlla uscita 2</label>
+                <label xml:lang="cs">F3 funkční výstup 2</label>
             </variable>
             <variable item="F4 controls output 2" CV="34" mask="XXVXXXXX" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 2</label>
                 <label xml:lang="it">F4 controlla uscita 2</label>
+                <label xml:lang="cs">F4 funkční výstup 2</label>
             </variable>
             <variable item="F5 controls output 2" CV="34" mask="XVXXXXXX" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 2</label>
                 <label xml:lang="it">F5 controlla uscita 2</label>
+                <label xml:lang="cs">F5 funkční výstup 2</label>
             </variable>
             <variable item="F6 controls output 2" CV="34" mask="VXXXXXXX" minOut="2">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 2</label>
                 <label xml:lang="it">F6 controlla uscita 2</label>
+                <label xml:lang="cs">F6 funkční výstup 2</label>
             </variable>
             <variable item="FL(f) controls output 3" CV="35" mask="XXXXXXXV" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 3</label>
+                <label xml:lang="cs">FL (vpřed) funkční výstup 3</label>
             </variable>
             <variable item="FL(r) controls output 3" CV="35" mask="XXXXXXVX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 3</label>
+                <label xml:lang="cs">FL (vzad) funkční výstup 3</label>
             </variable>
             <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 3</label>
+                <label xml:lang="cs">F1 funkční výstup 3</label>
             </variable>
             <variable item="F2 controls output 3" CV="35" mask="XXXXVXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 3</label>
+                <label xml:lang="cs">F2 funkční výstup 3</label>
             </variable>
             <variable item="F3 controls output 3" CV="35" mask="XXXVXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 3</label>
+                <label xml:lang="cs">F3 funkční výstup 3</label>
             </variable>
             <variable item="F4 controls output 3" CV="35" mask="XXVXXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 3</label>
+                <label xml:lang="cs">F4 funkční výstup 3</label>
             </variable>
             <variable item="F5 controls output 3" CV="35" mask="XVXXXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 3</label>
+                <label xml:lang="cs">F5 funkční výstup 3</label>
             </variable>
             <variable item="F6 controls output 3" CV="35" mask="VXXXXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 3</label>
+                <label xml:lang="cs">F6 funkční výstup 3</label>
             </variable>
             <variable item="FL(f) controls output 4" CV="36" mask="XXXXXXXV" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 4</label>
+                <label xml:lang="cs">FL (vpřed) funkční výstup 4</label>
             </variable>
             <variable item="FL(r) controls output 4" CV="36" mask="XXXXXXVX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 4</label>
+                <label xml:lang="cs">FL (vzad) funkční výstup 4</label>
             </variable>
             <variable item="F1 controls output 4" CV="36" mask="XXXXXVXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 4</label>
+                <label xml:lang="cs">F1 funkční výstup 4</label>
             </variable>
             <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 4</label>
+                <label xml:lang="cs">F2 funkční výstup 4</label>
             </variable>
             <variable item="F3 controls output 4" CV="36" mask="XXXVXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 4</label>
+                <label xml:lang="cs">F3 funkční výstup 4</label>
             </variable>
             <variable item="F4 controls output 4" CV="36" mask="XXVXXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 4</label>
+                <label xml:lang="cs">F4 funkční výstup 4</label>
             </variable>
             <variable item="F5 controls output 4" CV="36" mask="XVXXXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 4</label>
+                <label xml:lang="cs">F5 funkční výstup 4</label>
             </variable>
             <variable item="F6 controls output 4" CV="36" mask="VXXXXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 4</label>
+                <label xml:lang="cs">F6 funkční výstup 4</label>
             </variable>
             <variable item="F7 controls output 3" CV="37" mask="XXXXXVXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output 3</label>
+                <label xml:lang="cs">F7 funkční výstup 3</label>
             </variable>
             <variable item="F8 controls output 3" CV="37" mask="XXXXVXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 3</label>
+                <label xml:lang="cs">F8 funkční výstup 3</label>
             </variable>
             <variable item="F9 controls output 3" CV="37" mask="XXXVXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 3</label>
+                <label xml:lang="cs">F9 funkční výstup 3</label>
             </variable>
             <variable item="F10 controls output 3" CV="37" mask="XXVXXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 3</label>
+                <label xml:lang="cs">F10 funkční výstup 3</label>
             </variable>
             <variable item="F11 controls output 3" CV="37" mask="XVXXXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 3</label>
+                <label xml:lang="cs">F11 funkční výstup 3</label>
             </variable>
             <variable item="F12 controls output 3" CV="37" mask="VXXXXXXX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 3</label>
+                <label xml:lang="cs">F12 funkční výstup 3</label>
             </variable>
             <variable item="F7 controls output 4" CV="38" mask="XXXXXVXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output 4</label>
+                <label xml:lang="cs">F7 funkční výstup 4</label>
             </variable>
             <variable item="F8 controls output 4" CV="38" mask="XXXXVXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 4</label>
+                <label xml:lang="cs">F8 funkční výstup 4</label>
             </variable>
             <variable item="F9 controls output 4" CV="38" mask="XXXVXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 4</label>
+                <label xml:lang="cs">F9 funkční výstup 4</label>
             </variable>
             <variable item="F10 controls output 4" CV="38" mask="XXVXXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 4</label>
+                <label xml:lang="cs">F10 funkční výstup 4</label>
             </variable>
             <variable item="F11 controls output 4" CV="38" mask="XVXXXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 4</label>
+                <label xml:lang="cs">F11 funkční výstup 4</label>
             </variable>
             <variable item="F12 controls output 4" CV="38" mask="VXXXXXXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 4</label>
+                <label xml:lang="cs">F12 funkční výstup 4</label>
             </variable>
             <variable item="FL(f) controls output 5" CV="39" mask="XXXXXXXV" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 5</label>
+                <label xml:lang="cs">FL (vpřed) funkční výstup 5</label>
             </variable>
             <variable item="FL(r) controls output 5" CV="39" mask="XXXXXXVX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 5</label>
+                <label xml:lang="cs">FL (vzad) funkční výstup 5</label>
             </variable>
             <variable item="F1 controls output 5" CV="39" mask="XXXXXVXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 5</label>
+                <label xml:lang="cs">F1 funkční výstup 5</label>
             </variable>
             <variable item="F2 controls output 5" CV="39" mask="XXXXVXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 5</label>
+                <label xml:lang="cs">F2 funkční výstup 5</label>
             </variable>
             <variable item="F3 controls output 5" CV="39" mask="XXXVXXXX" minOut="5" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 5</label>
+                <label xml:lang="cs">F3 funkční výstup 5</label>
             </variable>
             <variable item="F4 controls output 5" CV="39" mask="XXVXXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 5</label>
+                <label xml:lang="cs">F4 funkční výstup 5</label>
             </variable>
             <variable item="F5 controls output 5" CV="39" mask="XVXXXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 5</label>
+                <label xml:lang="cs">F5 funkční výstup 5</label>
             </variable>
             <variable item="F6 controls output 5" CV="39" mask="VXXXXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 5</label>
+                <label xml:lang="cs">F6 funkční výstup 5</label>
             </variable>
             <variable item="FL(f) controls output 6" CV="40" mask="XXXXXXXV" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 6</label>
+                <label xml:lang="cs">FL (vpřed) funkční výstup 6</label>
             </variable>
             <variable item="FL(r) controls output 6" CV="40" mask="XXXXXXVX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 6</label>
+                <label xml:lang="cs">FL (vzad) funkční výstup 6</label>
             </variable>
             <variable item="F1 controls output 6" CV="40" mask="XXXXXVXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 6</label>
+                <label xml:lang="cs">F1 funkční výstup 6</label>
             </variable>
             <variable item="F2 controls output 6" CV="40" mask="XXXXVXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 6</label>
+                <label xml:lang="cs">F2 funkční výstup 6</label>
             </variable>
             <variable item="F3 controls output 6" CV="40" mask="XXXVXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 6</label>
+                <label xml:lang="cs">F3 funkční výstup 6</label>
             </variable>
             <variable item="F4 controls output 6" CV="40" mask="XXVXXXXX" minOut="6" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 6</label>
+                <label xml:lang="cs">F4 funkční výstup 6</label>
             </variable>
             <variable item="F5 controls output 6" CV="40" mask="XVXXXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 6</label>
+                <label xml:lang="cs">F5 funkční výstup 6</label>
             </variable>
             <variable item="F6 controls output 6" CV="40" mask="VXXXXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 6</label>
+                <label xml:lang="cs">F6 funkční výstup 6</label>
             </variable>
             <variable item="F7 controls output 5" CV="41" mask="XXXXXVXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output 5</label>
+                <label xml:lang="cs">F7 funkční výstup 5</label>
             </variable>
             <variable item="F8 controls output 5" CV="41" mask="XXXXVXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 5</label>
+                <label xml:lang="cs">F8 funkční výstup 5</label>
             </variable>
             <variable item="F9 controls output 5" CV="41" mask="XXXVXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 5</label>
+                <label xml:lang="cs">F9 funkční výstup 5</label>
             </variable>
             <variable item="F10 controls output 5" CV="41" mask="XXVXXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 5</label>
+                <label xml:lang="cs">F10 funkční výstup 5</label>
             </variable>
             <variable item="F11 controls output 5" CV="41" mask="XVXXXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 5</label>
+                <label xml:lang="cs">F11 funkční výstup 5</label>
             </variable>
             <variable item="F12 controls output 5" CV="41" mask="VXXXXXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 5</label>
+                <label xml:lang="cs">F12 funkční výstup 5</label>
             </variable>
             <variable item="F7 controls output 6" CV="42" mask="XXXXXVXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output 6</label>
+                <label xml:lang="cs">F7 funkční výstup 6</label>
             </variable>
             <variable item="F8 controls output 6" CV="42" mask="XXXXVXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 6</label>
+                <label xml:lang="cs">F8 funkční výstup 6</label>
             </variable>
             <variable item="F9 controls output 6" CV="42" mask="XXXVXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 6</label>
+                <label xml:lang="cs">F9 funkční výstup 6</label>
             </variable>
             <variable item="F10 controls output 6" CV="42" mask="XXVXXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 6</label>
+                <label xml:lang="cs">F10 funkční výstup 6</label>
             </variable>
             <variable item="F11 controls output 6" CV="42" mask="XVXXXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 6</label>
+                <label xml:lang="cs">F11 funkční výstup 6</label>
             </variable>
             <variable item="F12 controls output 6" CV="42" mask="VXXXXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 6</label>
+                <label xml:lang="cs">F12 funkční výstup 6</label>
             </variable>
             <!-- End of function map CVs-->
             <!-- LaisDcc specifics -->
@@ -684,16 +1015,21 @@
                 <enumVal>
                     <enumChoice choice="Disabled">
                         <choice>Disabled</choice>
+                        <choice xml:lang="cs">Zakázán</choice>
                     </enumChoice>
                     <enumChoice choice="Only Aux 1 and 2">
                         <choice>Only Aux 1 and 2</choice>
+                        <choice xml:lang="cs">Pouze pomocný 1 a 2</choice>
                     </enumChoice>
                     <enumChoice choice="All lights">
                         <choice>All lights</choice>
+                        <choice xml:lang="cs">Všechna světla</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Fluorescent Flicker</label>
+                <label xml:lang="cs">Fluorescenční blikání</label>
                 <tooltip>&lt;html&gt;- Only Aux 1 and 2: Front and rear lighting normal,&lt;br&gt;Aux 1 (green) and Aux 2 (purple) on,&lt;br&gt;fluorescent flicker is active. All lighting controlled by F0.&lt;br&gt;&lt;br&gt;-All lights: Front and Rear lighting become linked to Aux 1 and Aux 2,&lt;br&gt;and fluorescent flicker is active on all light outputs.&lt;br&gt;All lighting is simultaneously on or off. All are controlled by F0.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;- Pouze pomocný 1 a 2: Přední a zadní světla normálně,&lt;br&gt;Pomocný 1 (zelený) a pomocný 2 (purpurový) zapnuto,&lt;br&gt;fluorescenční blikání je aktivní. Všechna světla řízená F0.&lt;br&gt;&lt;br&gt;-Všechna světla: Přední a zadní světla se připojí na pomocný 1 a pomocný 2,&lt;br&gt;a fluorescenční blikání je aktivní na všech světelných výstupech.&lt;br&gt;Všechny světla jsou současně zapnuta nebo vypnuta. Všechna jsou řízena F0.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
                 <enumVal>
@@ -749,12 +1085,16 @@
                     End of full description using manufacturer's labels -->
                 </enumVal>
                 <label>"White Wire" (F0f) Effect</label>
+                <label xml:lang="cs">"Bílý drát" (F0 vpřed) Efekty</label>
                 <tooltip>&lt;html&gt;Physical output "White" (default F0f)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Fyzický výstup "Bílá" (výchozí F0 vpřed)&lt;br&gt;Nezdokumentováno, hodnoty které mají být potvrzeny.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="49" mask="XXVVXXXX" item="Output 1 behavior">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
                 <label>"White Wire" (F0f) Effect Direction</label>
+                <label xml:lang="cs">"Bílý drát" (F0 vpřed) Efekty směrové</label>
                 <tooltip>Physical output "White" (default F0f)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Bílá" (výchozí F0 vpřed)</tooltip>
             </variable>
             <variable CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
                 <enumVal>
@@ -766,12 +1106,16 @@
                     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
                 </enumVal>
                 <label>"Yellow Wire" (F0r) Effect</label>
+                <label xml:lang="cs">"Žlutý drát" (F0 vzad) Efekty</label>
                 <tooltip>&lt;html&gt;Physical output "Yellow" (default F0r)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Fyzický výstup "Žlutá" (výchozí F0 vzad)&lt;br&gt;Nezdokumentováno, hodnoty které mají být potvrzeny.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="50" mask="XXVVXXXX" item="Output 2 behavior" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
                 <label>"Yellow Wire" (F0r) Effect Direction</label>
+                <label xml:lang="cs">"Žlutý drát" (F0 vzad) Efekty směrové</label>
                 <tooltip>Physical output "Yellow" (default F0r)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Žlutá" (výchozí F0 vzad)</tooltip>
             </variable>
             <variable CV="51" mask="XXXXVVVV" item="Output 3 effect generated" minOut="3">
                 <enumVal>
@@ -783,12 +1127,16 @@
                     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
                 </enumVal>
                 <label>"Green Wire" (F1) Effect</label>
+                <label xml:lang="cs">"Zelený drát" (F1) Efekty</label>
                 <tooltip>&lt;html&gt;Physical output "Green" (default F1)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Fyzický výstup "Zelená" (výchozí F1)&lt;br&gt;Nezdokumentováno, hodnoty které mají být potvrzeny.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="51" mask="XXVVXXXX" item="Output 3 behavior" default="2" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
                 <label>"Green Wire" (F1) Effect Direction</label>
+                <label xml:lang="cs">"Zelený drát" (F1) Efekty směrové</label>
                 <tooltip>Physical output "Green" (default F1)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Zelená" (výchozí F1)</tooltip>
             </variable>
             <variable CV="52" mask="XXXXVVVV" item="Output 4 effect generated" minOut="4">
                 <enumVal>
@@ -800,12 +1148,16 @@
                     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
                 </enumVal>
                 <label>"Purple Wire" (F2) Effect</label>
+                <label xml:lang="cs">"Purpurový drát" (F2) Efekty</label>
                 <tooltip>&lt;html&gt;Physical output "Purple" (default F2)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Fyzický výstup "Purpurová" (výchozí F2)&lt;br&gt;Nezdokumentováno, hodnoty které mají být potvrzeny.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="52" mask="XXVVXXXX" item="Output 4 behavior" default="2" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
                 <label>"Purple Wire" (F2) Effect Direction</label>
+                <label xml:lang="cs">"Purpurový drát" (F2) Efekty směrové</label>
                 <tooltip>Physical output "Purple" (default F2)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Purpurová" (výchozí F2)</tooltip>
             </variable>
             <!-- Not Documented - guessing - for Buddha -->
             <variable CV="53" mask="XXXXVVVV" item="Output 5 effect generated" minOut="5">
@@ -818,12 +1170,16 @@
                     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
                 </enumVal>
                 <label>"Pink Wire" (F3) Effect</label>
+                <label xml:lang="cs">"Fialový drát" (F3) Efekty</label>
                 <tooltip>Physical output "Pink" (default F3)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Fialová" (výchozí F3)</tooltip>
             </variable>
             <variable CV="53" mask="XXVVXXXX" item="Output 5 behavior" default="2" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
                 <label>"Pink Wire" (F3) Effect Direction</label>
+                <label xml:lang="cs">"Fialový drát" (F3) Efekty směrové</label>
                 <tooltip>Physical output "Pink" (default F3)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Fialová" (výchozí F3)</tooltip>
             </variable>
             <variable CV="54" mask="XXXXVVVV" item="Output 6 effect generated" minOut="6">
                 <enumVal>
@@ -835,78 +1191,104 @@
                     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
                 </enumVal>
                 <label>"Brown Wire" (F4) Effect</label>
+                <label xml:lang="cs">"Hnědý drát" (F4) Efekty</label>
                 <tooltip>Physical output "Brown" (default F4)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Hnědá" (výchozí F4)</tooltip>
             </variable>
             <variable CV="54" mask="XXVVXXXX" item="Output 6 behavior" default="2" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
                 <label>"Brown Wire" (F4) Effect Direction</label>
+                <label xml:lang="cs">"Hnědý drát" (F4) Efekty směrové</label>
                 <tooltip>Physical output "Brown" (default F4)</tooltip>
+                <tooltip xml:lang="cs">Fyzický výstup "Hnědá" (výchozí F4)</tooltip>
             </variable>
             <!-- CV 56 - 57 -->
             <variable CV="56" default="3" item="Dither frequency" tooltip="Range 1 (high) to 10 (low)">
                 <decVal/>
                 <label>Dither Frequency</label>
                 <label xml:lang="it">Frequenza oscillazione</label>
+                <label xml:lang="cs">Frekvence pomalé jízdy</label>
                 <tooltip xml:lang="it">Valori da 1 (alto) a 10 (basso)</tooltip>
+                <tooltip xml:lang="cs">Meze od 1 (vyská) do 10 (nízká)</tooltip>
             </variable>
             <variable CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
                 <decVal/>
                 <label>Dither Amplitude</label>
                 <label xml:lang="it">Ampiezza Oscillazione</label>
+                <label xml:lang="cs">Amplituda pomalé jízdy</label>
                 <tooltip xml:lang="it">Valori pratici da 5 (basso) a 50 (alto)</tooltip>
+                <tooltip xml:lang="cs">Praktické meze jsou od 5 (nízká) do 50 (vysoká)</tooltip>
             </variable>
             <!-- LaisDcc specifics -->
             <variable CV="60" default="1" item="Production Place/1=CN, 2=HK, 3=VN, 4=PH, 5=MY">
                 <decVal/>
                 <label>Production Place</label>
+                <label xml:lang="cs">Místo výroby</label>
                 <tooltip>Production Place/1=CN, 2=HK, 3=VN, 4=PH, 5=MY</tooltip>
+                <tooltip xml:lang="cs">Místo výroby / 1=CN, 2=HK, 3=VN, 4=PH, 5=MY</tooltip>
             </variable>
             <!-- Motor & Light options -->
             <variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither/Stimulation">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>BEMF Enable</label>
+                <label xml:lang="cs">BEMF povoleno</label>
+                <tooltip xml:lang="cs">Přepnout vypnuto/zapnuto (výchozí) BEMF, povolení BEMF zakáže pomalou jízdu/simulace</tooltip>
             </variable>
             <variable CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Enable BEMF button control</label>
+                <label xml:lang="cs">Povolit BEMF řízení tlačítkem</label>
                 <tooltip>&lt;html&gt;Disable(default)/Enable button control of BEMF&lt;br&gt;BEMF control button to be selected on function map.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Zakázáno(výchozí)/Povoleno řízení tlačítkem BEMF&lt;br&gt;BEMF řídící tlačítko se vybírá na mapě funkcí.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Headlight Dim When Stopped</label>
+                <label xml:lang="cs">Zhasnout reflektor při zastavení</label>
             </variable>
             <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Opposite Headlight Dim</label>
+                <label xml:lang="cs">Zhasnout opačný reflektor</label>
             </variable>
             <variable CV="61" mask="XVXXXXXX" item="Motor Option 1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Motor Button Control</label>
+                <label xml:lang="cs">Tlačítko řízení motoru</label>
                 <tooltip>&lt;html&gt;Motor controlled by Function button&lt;br&gt;Motor control button to be selected on function map.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Motor řízený funkčním tlačítkem&lt;br&gt;Tlačítko řízení motoru se vybere na mapě funkcí.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="61" mask="XXXXXVXX" item="Motor Option 2">
                 <enumVal>
                     <enumChoice choice="Manual F2 for, F3 rev">
                         <choice>F2 Forward, F3 Reverse</choice>
+                        <choice xml:lang="cs">F2 Vpřed, F3 vzad</choice>
                     </enumChoice>
                     <enumChoice choice="Auto F2 for/rev">
                         <choice>F2 On/Off</choice>
+                        <choice xml:lang="cs">F2 Zap/Vyp</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Button Control Direction</label>
+                <label xml:lang="cs">Tlačítko řízení směru</label>
                 <tooltip>&lt;html&gt;If motor button control is enabled.&lt;br&gt;Use forward/reverse buttons if "F2 On/Off" selected.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Pokud je povoleno řízení tlačítkem.&lt;br&gt;Pokud zvolíte "F2 Zap/Vyp" bude tlačítko použito na vpřed/vzad.&lt;/html&gt;</tooltip>
             </variable>
             <!-- CV62 not used in LaisDcc Decoders-->
             <variable CV="63" default="63" item="Function 2 effect generated">
                 <decVal/>
                 <label>Ditch Light Blink Rate Timing</label>
+                <label xml:lang="cs">Míra časování pomalého blikání světla</label>
                 <tooltip>1 second = about 12 (tbc)</tooltip>
+                <tooltip xml:lang="cs">1 vteřina = okolo 12 (bude upřesněno)</tooltip>
             </variable>
 
             <variable CV="64" default="6" item="Global lighting option 2">
                 <decVal min="1" max="30"/>
                 <label>Constant Dimming Light Level</label>
+                <label xml:lang="cs">Úroveň konstantního pohasínání světla</label>
                 <tooltip>Range: 1-30</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-30</tooltip>
             </variable>
             <!-- Speed Table -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
@@ -916,280 +1298,373 @@
             <variable CV="112" default="1" item="Function F0F effect generated">
                 <decVal min="1" max="5"/>
                 <label>Mars/Gyra Min Brightness</label>
+                <label xml:lang="cs">Mars/Gyra minimální jas</label>
                 <tooltip>Range: 1-5</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-5</tooltip>
             </variable>
             <variable CV="113" default="9" item="Function F0F option 2">
                 <decVal/>
                 <label>Mars/Gyra Max Bright Time</label>
+                <label xml:lang="cs">Mars/Gyra maximální čas jasu</label>
             </variable>
             <variable CV="114" default="1" item="Function F0F option 3">
                 <decVal min="1" max="3"/>
                 <label>Mars/Gyra Total Cycle Time</label>
+                <label xml:lang="cs">Mars/Gyra celkový čas cyklu</label>
                 <tooltip>Range: 1-3</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-3</tooltip>
             </variable>
             <variable CV="115" default="6" item="Function F0F behavior">
                 <decVal min="1" max="24"/>
                 <label>Mars/Gyra Mid Brightness</label>
+                <label xml:lang="cs">Mars/Gyra střední jas</label>
                 <tooltip>Range: 1-24</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-24</tooltip>
             </variable>
             <variable CV="116" default="22" item="Function F0F options">
                 <decVal min="1" max="24"/>
                 <label>Mars/Gyra Max Brightness</label>
+                <label xml:lang="cs">Mars/Gyra maximální jas</label>
                 <tooltip>Range: 1-24</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-24</tooltip>
             </variable>
             <variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
                 <decVal min="1" max="128"/>
                 <label>Ditch Light Blink Rate</label>
+                <label xml:lang="cs">Míra pomalého blikání světla</label>
                 <tooltip>Range: 1-128</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-128</tooltip>
             </variable>
             <variable CV="118" default="1" item="Function F0R effect generated">
                 <decVal min="1" max="24"/>
                 <label>Beacon Min Brightness</label>
+                <label xml:lang="cs">Beacon minimální jas</label>
                 <tooltip>Range: 1-24</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-24</tooltip>
             </variable>
             <variable CV="119" default="5" item="Function F0R option 2">
                 <decVal min="1" max="24"/>
                 <label>Beacon Max Bright Time</label>
+                <label xml:lang="cs">Beacon maximální čas jasu</label>
                 <tooltip>Range: 1-24</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-24</tooltip>
             </variable>
             <variable CV="120" default="1" item="Function F0R option 3">
                 <decVal min="1" max="3"/>
                 <label>Beacon Total Cycle Time</label>
+                <label xml:lang="cs">Beacon celkový čas cyklu</label>
                 <tooltip>Range: 1-3</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-3</tooltip>
             </variable>
             <variable CV="121" default="15" item="Function F0R behavior">
                 <decVal min="1" max="24"/>
                 <label>Beacon Mid Brightness</label>
+                <label xml:lang="cs">Beacon střední jas</label>
                 <tooltip>Range: 1-24</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-24</tooltip>
             </variable>
             <variable CV="122" default="25" item="Function F0R options">
                 <decVal min="1" max="25"/>
                 <label>Beacon Max Brightness</label>
+                <label xml:lang="cs">Beacon maximální jas</label>
                 <tooltip>Range: 1-24</tooltip>
+                <tooltip xml:lang="cs">Meze: 1-24</tooltip>
             </variable>
             <!-- Function map for virtual outputs -->
             <variable item="FL(f) controls output 7" CV="123" mask="XXXXXXXV" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 7</label>
+                <label xml:lang="cs">FL (vpřed) řídí výstup 7</label>
             </variable>
             <variable item="FL(r) controls output 7" CV="123" mask="XXXXXXVX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 7</label>
+                <label xml:lang="cs">FL (vzad) řídí výstup 7</label>
             </variable>
             <variable item="F1 controls output 7" CV="123" mask="XXXXXVXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 7</label>
+                <label xml:lang="cs">F1 řídí výstup 7</label>
             </variable>
             <variable item="F2 controls output 7" CV="123" mask="XXXXVXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 7</label>
+                <label xml:lang="cs">F2 řídí výstup 7</label>
             </variable>
             <variable item="F3 controls output 7" CV="123" mask="XXXVXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 7</label>
+                <label xml:lang="cs">F3 řídí výstup 7</label>
             </variable>
             <variable item="F4 controls output 7" CV="123" mask="XXVXXXXX" minOut="1" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 7</label>
+                <label xml:lang="cs">F4 řídí výstup 7</label>
             </variable>
             <variable item="F5 controls output 7" CV="123" mask="XVXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 7</label>
+                <label xml:lang="cs">F5 řídí výstup 7</label>
             </variable>
             <variable item="F6 controls output 7" CV="123" mask="VXXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 7</label>
+                <label xml:lang="cs">F6 řídí výstup 7</label>
             </variable>
             <variable item="FL(f) controls output 8" CV="124" mask="XXXXXXXV" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 8</label>
+                <label xml:lang="cs">FL (vpřed) řídí výstup 8</label>
             </variable>
             <variable item="FL(r) controls output 8" CV="124" mask="XXXXXXVX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 8</label>
+                <label xml:lang="cs">FL (vzad) řídí výstup 8</label>
             </variable>
             <variable item="F1 controls output 8" CV="124" mask="XXXXXVXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 8</label>
+                <label xml:lang="cs">F1 řídí výstup 8</label>
             </variable>
             <variable item="F2 controls output 8" CV="124" mask="XXXXVXXX" minOut="1" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 8</label>
+                <label xml:lang="cs">F2 řídí výstup 8</label>
             </variable>
             <variable item="F3 controls output 8" CV="124" mask="XXXVXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 8</label>
+                <label xml:lang="cs">F3 řídí výstup 8</label>
             </variable>
             <variable item="F4 controls output 8" CV="124" mask="XXVXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 8</label>
+                <label xml:lang="cs">F4 řídí výstup 8</label>
             </variable>
             <variable item="F5 controls output 8" CV="124" mask="XVXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 8</label>
+                <label xml:lang="cs">F5 řídí výstup 8</label>
             </variable>
             <variable item="F6 controls output 8" CV="124" mask="VXXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 8</label>
+                <label xml:lang="cs">F6 řídí výstup 8</label>
             </variable>
             <!-- Momentum variables -->
             <variable item="Accel Rate 2 Start Point" CV="125" default="0" tooltip="Sets the Acceleration Rate 2 Starting point, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Accel. Rate 2 Start Point</label>
+                <label xml:lang="cs">Míra zrychlení 2 počáteční bod</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zrychlení 2 počáteční bod, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Accel Rate 2" CV="126" default="0" tooltip="Sets the Acceleration Rate 2, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Acceleration Rate 2</label>
+                <label xml:lang="cs">Míra zrychlení 2</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zrychlení 2, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Accel Rate 3 Start Point" CV="127" default="0" tooltip="Sets the Acceleration Rate 3 Starting point, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Accel. Rate 3 Start Point</label>
+                <label xml:lang="cs">Míra zrychlení 3 počáteční bod</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zrychlení 3 počáteční bod, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Accel Rate 3" CV="128" default="0" tooltip="Sets the Acceleration Rate 3, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Acceleration Rate 3</label>
+                <label xml:lang="cs">Míra zrychlení 3</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zrychlení 3, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Decel Rate 5 End Point" CV="129" default="0" tooltip="Sets the Deceleration Rate 5 Ending Point, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Decel. Rate 5 End Point</label>
+                <label xml:lang="cs">Míra zpomalení 5 koncový bod</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zpomalení 5 koncový bod, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Decel Rate 5" CV="130" default="0" tooltip="Sets the Sets the Deceleration Rate 5, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Deceleration Rate 5</label>
+                <label xml:lang="cs">Míra zpomalení 5</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zpomalení 5, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Decel Rate 4 End Point" CV="131" default="0" tooltip="Sets the Deceleration Rate 4 Ending Point, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Decel. Rate 4 End Point</label>
+                <label xml:lang="cs">Míra zpomalení 4 koncový bod</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zpomalení 4 koncový bod, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <variable item="Decel Rate 4" CV="132" default="0" tooltip="Sets the Deceleration Rate 4, range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
                 <label>Deceleration Rate 4</label>
+                <label xml:lang="cs">Míra zpomalení 4</label>
                 <comment>Range 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <tooltip xml:lang="cs">Nastaví míru zpomalení 4, meze 0 (výchozí) - 255</tooltip>
             </variable>
             <!-- Power level -->
             <variable CV="133" default="0" item="Motor Option 3" >
                 <decVal/>
                 <label>Power to button controlled motor</label>
+                <label xml:lang="cs">Motor řízený tlačítkem napájení</label>
                 <tooltip>&lt;html&gt;If motor button control is enabled.&lt;br&gt;Power level (drive voltage) for button control of the motor circuit (range 0-255)&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Pokud je povoleno tlačítko řízení motoru.&lt;br&gt;Úroveň napájení (napětí pohonu) pro ovládací tlačítko obvodu motoru (meze 0-255)&lt;/html&gt;</tooltip>
             </variable>
             <!-- Function map for virtual outputs -->
             <variable item="FL(f) controls output 9" CV="134" mask="XXXXXXXV" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(f) controls output 9</label>
+                <label xml:lang="cs">FL (vpřed) řídí výstup 9</label>
             </variable>
             <variable item="FL(r) controls output 9" CV="134" mask="XXXXXXVX" minOut="1" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>FL(r) controls output 9</label>
+                <label xml:lang="cs">FL (vzad) řídí výstup 9</label>
             </variable>
             <variable item="F1 controls output 9" CV="134" mask="XXXXXVXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F1 controls output 9</label>
+                <label xml:lang="cs">F1 řídí výstup 9</label>
             </variable>
             <variable item="F2 controls output 9" CV="134" mask="XXXXVXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F2 controls output 9</label>
+                <label xml:lang="cs">F2 řídí výstup 9</label>
             </variable>
             <variable item="F3 controls output 9" CV="134" mask="XXXVXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F3 controls output 9</label>
+                <label xml:lang="cs">F3 řídí výstup 9</label>
             </variable>
             <variable item="F4 controls output 9" CV="134" mask="XXVXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F4 controls output 9</label>
+                <label xml:lang="cs">F4 řídí výstup 9</label>
             </variable>
             <variable item="F5 controls output 9" CV="134" mask="XVXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 9</label>
+                <label xml:lang="cs">F5 řídí výstup 9</label>
             </variable>
             <variable item="F6 controls output 9" CV="134" mask="VXXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 9</label>
+                <label xml:lang="cs">F6 řídí výstup 9</label>
             </variable>
             <variable CV="135" default="16" item="Function 4 effect generated" tooltip="Random Flicker for fireboxes">
                 <decVal/>
                 <label>Random Flicker Control</label>
+                <label xml:lang="cs">Řízení náhodného blikání</label>
                 <tooltip>&lt;html&gt;adjusting this CV can make firebox flicker work differently&lt;br&gt;to emulate gas or oil lamp flicker&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Nastavení tohoto CV umožní, že poblikávání lampy bude fungovat jinak&lt;br&gt;pro emulaci poblikávání plynových nebo olejových lamp&lt;/html&gt;</tooltip>
             </variable>
             <!-- BEMF control button - valid if CV61=3 -->
             <variable item="F5 controls output 10" CV="136" mask="XXXXXXXV" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 10</label>
+                <label xml:lang="cs">F5 řídí výstup 10</label>
             </variable>
             <variable item="F6 controls output 10" CV="136" mask="XXXXXXVX" minOut="1" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 10</label>
+                <label xml:lang="cs">F6 řídí výstup 10</label>
             </variable>
             <variable item="F7 controls output 10" CV="136" mask="XXXXXVXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output 10</label>
+                <label xml:lang="cs">F7 řídí výstup 10</label>
             </variable>
             <variable item="F8 controls output 10" CV="136" mask="XXXXVXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 10</label>
+                <label xml:lang="cs">F8 řídí výstup 10</label>
             </variable>
             <variable item="F9 controls output 10" CV="136" mask="XXXVXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 10</label>
+                <label xml:lang="cs">F9 řídí výstup 10</label>
             </variable>
             <variable item="F10 controls output 10" CV="136" mask="XXVXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 10</label>
+                <label xml:lang="cs">F10 řídí výstup 10</label>
             </variable>
             <variable item="F11 controls output 10" CV="136" mask="XVXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 10</label>
+                <label xml:lang="cs">F11 řídí výstup 10</label>
             </variable>
             <variable item="F12 controls output 10" CV="136" mask="VXXXXXXX" minOut="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 10</label>
+                <label xml:lang="cs">F12 řídí výstup 10</label>
             </variable>
             <!--Time of Manufacture -->
             <variable CV="137" readOnly="yes" item="mfgYear1" tooltip="Date LaisDcc made this decoder">
                 <decVal/>
                 <label>Year of Decoder Manufacture</label>
                 <label xml:lang="it">Anno di produzione Decoder</label>
+                <label xml:lang="cs">Rok výroby dekodéru</label>
                 <tooltip xml:lang="it">Data in cui LaisDcc ha prodotto il decoder</tooltip>
+                <tooltip xml:lang="cs">Datum výroby tohoto LaisDcc dekdéru</tooltip>
             </variable>
             <variable CV="138" readOnly="yes" item="mfgYear2" tooltip="Date LaisDcc made this decoder">
                 <decVal/>
                 <label>Year of Decoder Manufacture</label>
                 <label xml:lang="it">Anno di produzione Decoder</label>
+                <label xml:lang="cs">Rok výroby dekodéru</label>
                 <tooltip xml:lang="it">Data in cui LaisDcc ha prodotto il decoder</tooltip>
+                <tooltip xml:lang="cs">Datum výroby tohoto LaisDcc dekdéru</tooltip>
             </variable>
             <variable CV="139" readOnly="yes" item="mfgMonth" tooltip="Date LaisDcc made this decoder">
                 <decVal/>
                 <label>Month of Decoder Manufacture</label>
                 <label xml:lang="it">Mese di produzione Decoder</label>
+                <label xml:lang="cs">Měsíc výroby dekodéru</label>
                 <tooltip xml:lang="it">Data in cui LaisDcc ha prodotto il decoder</tooltip>
+                <tooltip xml:lang="cs">Datum výroby tohoto LaisDcc dekdéru</tooltip>
             </variable>
             <variable CV="140" readOnly="yes" item="mfgDay" tooltip="Date LaisDcc made this decoder">
                 <decVal/>
                 <label>Day of Decoder Manufacture</label>
                 <label xml:lang="it">Giorno di produzione Decoder</label>
+                <label xml:lang="cs">Den výroby dekodéru</label>
                 <tooltip xml:lang="it">Data in cui LaisDcc ha prodotto il decoder</tooltip>
+                <tooltip xml:lang="cs">Datum výroby tohoto LaisDcc dekdéru</tooltip>
             </variable>
         </variables>
         <resets>
             <factReset label="Reset All CVs" CV="8" default="4">
                 <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+                <label xml:lang="cs">Reset všech CV</label>
             </factReset>
         </resets>
     </decoder>
     <pane>
         <name>Momentum</name>
+        <name xml:lang="cs">Kinetická energie</name>
         <column>
             <label>
                 <text>If Acceleration Rates 2 &amp; 3 and Deceleration Rates 5 &amp; 4 are all set to zero,</text>
+                <text xml:lang="cs">Pokud jsou všechny míry zrychlení 2 &amp; 3 a míry zpomalení 5 &amp; 4 nastaveny na nulu,</text>
             </label>
             <label>
                 <text>then Base accel/decel rates (CV3 &amp; CV4) apply to the whole speed range.</text>
+                <text xml:lang="cs">potom jsou základní míry zrychlení/zpomalení (CV3 &amp; CV4) použity na celý rozsah rychlostí.</text>
             </label>
             <label>
                 <text> </text>
@@ -1259,7 +1734,10 @@
                 <label>
                     <text> </text>
                 </label>
-                <display item="Accel" layout="above" label="Base Acceleration Rate" format="hslider"/>
+                <display item="Accel" layout="above" format="hslider">
+                    <label>Base Acceleration Rate</label>
+                    <label xml:lang="cs">Základní míra zrychlení</label>
+                </display>
             </row>
             <label>
                 <text> </text>
@@ -1312,7 +1790,10 @@
                 <label>
                     <text> </text>
                 </label>
-                <display item="Decel" layout="above" label="Base Deceleration Rate" format="hslider"/>
+                <display item="Decel" layout="above" format="hslider">
+                    <label>Base Deceleration Rate</label>
+                    <label xml:lang="cs">Základní míra zpomalení</label>
+                </display>
             </row>
             <label>
                 <text> </text>
@@ -1324,18 +1805,23 @@
     </pane>
     <pane>
         <name>Decoder Locking</name>
+        <name xml:lang="cs">Zámek dekodéru</name>
         <column>
             <label>
                 <text>LaisDcc Decoders offer a decoder locking mechanism</text>
+                <text xml:lang="cs">Dekodéry LaisDcc poskytuje machanizmus zamykání dekodéru</text>
             </label>
             <label>
                 <text>which can be useful when several decoders are used in one loco</text>
+                <text xml:lang="cs">který může být užitečný pro použití více dekodérů v jedné lokomotivě</text>
             </label>
             <label>
                 <text>on the same address, e.g. for adding sound</text>
+                <text xml:lang="cs">na stejné adrese, např. pro přidání zvuku</text>
             </label>
             <label>
                 <text>LaisDcc suggests values of 1=mobile, 2=sound, 3=light/function only</text>
+                <text xml:lang="cs">LaisDcc navrhuje hodnoty 1=pohon, 2=zvuk, 3=pouze světla/funkce</text>
             </label>
             <label>
                 <text> </text>
@@ -1343,35 +1829,43 @@
             <display item="Decoder Lock ID number"/>
             <label>
                 <text>Set CV15 equal to this number to unlock the decoder for programming</text>
+                <text xml:lang="cs">Nastavete CV15 na toto číslo pro odemčení dekodéru pro programování</text>
             </label>
             <label>
                 <text> </text>
             </label>
             <label>
                 <text>To use the Decoder Lock (CV15) must be set manually from the single CV programmer, or make use of the multi-decoder tool</text>
+                <text xml:lang="cs">Pro použití zámku dekodéru (CV15) musí být nastaveno ručně programátorem jednotlivých CV nebo použít nástroj pro vícedekodéry</text>
             </label>
         </column>
     </pane>
     <pane>
         <name>LaisDcc</name>
+        <name xml:lang="cs">LaisDcc</name>
         <column>
             <label>
                 <text>WARNING: </text>
+                <text xml:lang="cs">VAROVÁNÍ: </text>
             </label>
             <label>
                 <text> </text>
             </label>
             <label>
                 <text>Several CVs are not documented in the available manufacturer's official documentation.</text>
+                <text xml:lang="cs">Několik CV není popsáno v dostupné oficiální dokumentaci výrobce.</text>
             </label>
             <label>
                 <text>Therefore some default values, ranges and meaning have been extrapolated from previous LaisDcc range of decoder.</text>
+                <text xml:lang="cs">Proto některé výchozí hodnoty, meze a význam byl vadedukován z předchozí řady dekodérů LaisDcc.</text>
             </label>
             <label>
                 <text>LaisDcc reserves the right to modify several CVs values and usage in the future,</text>
+                <text xml:lang="cs">LaisDcc si vyhrazuje právo na změnu některých CV hodnot a jejich použití v budoucnosti,</text>
             </label>
             <label>
                 <text>and invites users to carefully check the decoder version in CV7.</text>
+                <text xml:lang="cs">a vyzývá uživatele aby si pečlivě zkontrolovali verzi dekodéru v CV7.</text>
             </label>
             <label>
                 <text> </text>
@@ -1382,6 +1876,7 @@
             </label>
             <label>
                 <text>This decoder definition is intended only for versions CV7 = 2 or 3.</text>
+                <text xml:lang="cs">Tato definice dekodéru je určena pouze pro verze CV7 = 2 nebo 3.</text>
             </label>
             <label>
                 <text> </text>

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  * <p>
- * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
@@ -125,7 +125,7 @@ public class SprogThrottle extends AbstractThrottle {
      * Set the speed step value and the related
      * speedIncrement value.
      *
-     * @param Mode - the current speed step mode - default should be 128 speed
+     * @param Mode  the current speed step mode - default should be 128 speed
      *             step mode in most cases
      */
     @Override

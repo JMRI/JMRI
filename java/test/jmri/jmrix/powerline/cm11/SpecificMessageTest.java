@@ -1,23 +1,23 @@
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
-  */
-public class SpecificMessageTest extends TestCase {
+ */
+public class SpecificMessageTest {
 
+    @Test
     public void testCreate() {
         SerialMessage m = new SpecificMessage(4);
         Assert.assertNotNull("exists", m);
     }
 
+    @Test
     public void testBytesToString() {
         SerialMessage m = new SpecificMessage(4);
         m.setOpCode(0x81);
@@ -25,23 +25,6 @@ public class SpecificMessageTest extends TestCase {
         m.setElement(2, (byte) 0xA2);
         m.setElement(3, (byte) 0x00);
         Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
-    }
-
-    // from here down is testing infrastructure
-    public SpecificMessageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SpecificMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SpecificMessageTest.class);
-        return suite;
     }
 
 }

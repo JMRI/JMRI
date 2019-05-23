@@ -68,7 +68,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // parse message type
         LnSensorAddress a;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_INPUT_REP:                /* page 9 of Loconet PE */
+            case LnConstants.OPC_INPUT_REP:                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -172,6 +172,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     /**
      * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Sensor System Name
+     * @return the sensor number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -235,6 +237,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next 10 addresses are also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new LocoNet Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

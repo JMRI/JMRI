@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JMRIClient implementation of the Turnout interface.
- * <P>
- *
- * Description: extend jmri.AbstractTurnout for JMRIClient layouts
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
@@ -30,7 +27,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
      * JMRIClient turnouts use the turnout number on the remote host.
      */
     public JMRIClientTurnout(int number, JMRIClientSystemConnectionMemo memo) {
-        super(memo.getSystemPrefix() + "t" + number);
+        super(memo.getSystemPrefix() + "T" + number);
         _number = number;
         tc = memo.getJMRIClientTrafficController();
         prefix = memo.getSystemPrefix();

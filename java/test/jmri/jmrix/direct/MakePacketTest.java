@@ -1,21 +1,22 @@
 package jmri.jmrix.direct;
 
 import jmri.NmraPacket;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * JUnit tests for the MakePacketTest class
  *
  * @author	Bob Jacobsen Copyright 2004
-  */
-public class MakePacketTest extends TestCase {
+ */
+public class MakePacketTest {
 
+    @Test
     public void testCreate() {
     }
 
+    @Test
     public void testSimplePacket() {
         int[] result = new int[100];
 
@@ -51,6 +52,7 @@ public class MakePacketTest extends TestCase {
         Assert.assertEquals("Simple 15 ", 92, result[16]);
     }
 
+    @Test
     public void testPreamble() {
         int[] result = new int[100];
         byte buffer[] = new byte[3];
@@ -86,7 +88,9 @@ public class MakePacketTest extends TestCase {
      * included in normal runs. Hence it's name has been modified so that JUnit
      * will not routinely select it to be run.
      */
-    public void suppressTestAll3BytePacket() {
+    @Test
+    @Ignore("Disabled in JUnit 3")
+    public void testAll3BytePacket() {
         int[] result = new int[100];
         byte i, j;
         byte buffer[] = new byte[3];
@@ -117,7 +121,9 @@ public class MakePacketTest extends TestCase {
      * included in normal runs. Hence it's name has been modified so that JUnit
      * will not routinely select it to be run.
      */
-    public void suppressTestAllSpeed128Packets() {
+    @Test
+    @Ignore("Disabled in JUnit 3")
+    public void testAllSpeed128Packets() {
         int[] result = new int[100];
         int addressRange, speedRange;
         byte buffer[] = new byte[6];
@@ -167,7 +173,9 @@ public class MakePacketTest extends TestCase {
      * included in normal runs. Hence it's name has been modified so that JUnit
      * will not routinely select it to be run.
      */
-    public void suppressTestAllOpsCvWrite() {
+    @Test
+    @Ignore("Disabled in JUnit 3")
+    public void testAllOpsCvWrite() {
         int[] result = new int[100];
         int addressRange, cvNum, data;
         byte buffer[] = new byte[6];
@@ -198,23 +206,6 @@ public class MakePacketTest extends TestCase {
                 }
             }
         }
-    }
-
-    // from here down is testing infrastructure
-    public MakePacketTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {MakePacketTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MakePacketTest.class);
-        return suite;
     }
 
 }

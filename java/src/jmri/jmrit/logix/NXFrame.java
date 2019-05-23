@@ -3,9 +3,11 @@ package jmri.jmrit.logix;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -15,7 +17,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import jmri.JmriException;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,33 +30,29 @@ import org.slf4j.LoggerFactory;
  * Frame for defining and launching an entry/exit warrant. An NX warrant is a
  * warrant that can be defined on the run without a pre-recorded learn mode
  * session using a set script for ramping startup and stop throttle settings.
- * <P>
+ * <p>
  * The route can be defined in a form or by mouse clicking on the OBlock
  * IndicatorTrack icons.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2015
  */
 public class NXFrame extends WarrantRoute {
 
     private float _scale = 87.1f;
-    private int _intervalTime = 0;     // milliseconds
-    private float _throttleIncr = 0.0f;
     private float _maxThrottle = 0.75f;
     private float _startDist;   // mm start distance to portal
     private float _stopDist;    // mm stop distance from portal
-    private float _totalLen;    // route length of warrant
 
     private final JTextField _maxThrottleBox = new JTextField(6);
     private final JTextField _maxSpeedBox = new JTextField(6);
@@ -59,9 +61,12 @@ public class NXFrame extends WarrantRoute {
     private JButton _originUnits;
     private final JTextField _destDist = new JTextField(6);
     private JButton _destUnits;
+    private JSpinner _timeIncre = new JSpinner(new SpinnerNumberModel(750, 200, 9000, 1));
+    private JTextField _rampIncre = new JTextField(6);
     private final JRadioButton _forward = new JRadioButton();
     private final JRadioButton _reverse = new JRadioButton();
     private final JCheckBox _noRamp = new JCheckBox();
+    private final JCheckBox _noSound = new JCheckBox();
     private final JCheckBox _stageEStop = new JCheckBox();
     private final JCheckBox _shareRouteBox = new JCheckBox();
     private final JCheckBox _haltStartBox = new JCheckBox();
@@ -74,21 +79,9 @@ public class NXFrame extends WarrantRoute {
     private JPanel _switchPanel;
     private JPanel _trainPanel;
     
-    public static float INCRE_RATE = 1.10f;  // multiplier to increase throttle increments
-
-
     protected NXFrame() {
         super();
         init();
-    }
-    
-    private WarrantPreferences updatePreferences() {
-        WarrantPreferences preferences = WarrantPreferences.getDefault();
-        setScale(preferences.getLayoutScale());
-        setTimeInterval(preferences.getTimeIncrement());
-        setThrottleIncrement(preferences.getThrottleIncrement());
-        if (log.isDebugEnabled()) log.debug("Ramp parameters: deltaTime={} deltaThrottle={}", _intervalTime, _throttleIncr);
-        return preferences;
     }
     
     private void init() {
@@ -97,7 +90,6 @@ public class NXFrame extends WarrantRoute {
         if (f != null) {    // only edit one warrant at a time.
             WarrantTableAction.closeWarrantFrame(f);
         }
-        updatePreferences();
         makeMenus();
 
         _routePanel = new JPanel();
@@ -330,21 +322,59 @@ public class NXFrame extends WarrantRoute {
 
         p1.add(makeTextAndButtonPanel(_originDist, _originUnits, "startDistance", "ToolTipStartDistance"));
         p1.add(makeTextAndButtonPanel(_destDist, _destUnits, "stopDistance", "ToolTipStopDistance"));
+        p1.add(WarrantPreferencesPanel.timeIncrementPanel(false, _timeIncre));
+        p1.add(WarrantPreferencesPanel.throttleIncrementPanel(false, _rampIncre));
+        _rampIncre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = _rampIncre.getText();
+                boolean showdialog = false;
+                try {
+                    float incr = NumberFormat.getNumberInstance().parse(text).floatValue();
+                    showdialog = (incr < 0.5f || incr > 25f);
+                } catch (java.text.ParseException pe) {
+                    showdialog = true;
+                }
+                if (showdialog) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(_forward);
+        bg.add(_reverse);
+        JPanel pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
+        pp.add(Box.createHorizontalGlue());
+        pp.add(makeTextBoxPanel(false, _forward, "forward", null));
+        pp.add(makeTextBoxPanel(false, _reverse, "reverse", null));
+        pp.add(Box.createHorizontalGlue());
+        p1.add(pp);
 
         __trainHolder.setLayout(new BoxLayout(__trainHolder, BoxLayout.PAGE_AXIS));
         _trainPanel = makeTrainIdPanel(null);
         __trainHolder.add(_trainPanel);
 
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));      
+        p2.add(__trainHolder);
+        p2.add(makeTextBoxPanel(_noRamp, "NoRamping", "ToolTipNoRamping"));
+        p2.add(makeTextBoxPanel(_noSound, "NoSound", "ToolTipNoSound"));
+        p2.add(makeTextBoxPanel(_stageEStop, "StageEStop", null));
+        p2.add(makeTextBoxPanel(_haltStartBox, "HaltAtStart", null));
+        p2.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+
         JPanel autoRunPanel = new JPanel();
         autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.PAGE_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(p1);
-        pp.add(Box.createHorizontalGlue());
-        pp.add(__trainHolder);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        autoRunPanel.add(pp);
+        JPanel ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.LINE_AXIS));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(p1);
+        ppp.add(Box.createHorizontalGlue());
+        ppp.add(p2);
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        autoRunPanel.add(ppp);
 
         _forward.addActionListener((ActionEvent evt)-> {
             maxThrottleEventAction();
@@ -352,42 +382,7 @@ public class NXFrame extends WarrantRoute {
         _reverse.addActionListener((ActionEvent evt)-> {
             maxThrottleEventAction();
         });
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(_forward);
-        bg.add(_reverse);
-        p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
-        p1.add(Box.createHorizontalGlue());
-        p1.add(makeTextBoxPanel(false, _forward, "forward", null));
-        p1.add(makeTextBoxPanel(false, _reverse, "reverse", null));
-        p1.add(Box.createHorizontalGlue());
-        
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));      
-        p2.add(Box.createHorizontalGlue());
-        p2.add(makeTextBoxPanel(_noRamp, "NoRamping", "ToolTipNoRamping"));
 
-        pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
-        pp.add(Box.createHorizontalGlue());
-//        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(p1);
-        pp.add(Box.createHorizontalGlue());
-        pp.add(p2);
-//        pp.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        pp.add(Box.createHorizontalGlue());
-        autoRunPanel.add(pp);
-
-        JPanel ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.LINE_AXIS));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(makeTextBoxPanel(false, _stageEStop, "StageEStop", null));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(makeTextBoxPanel(false, _haltStartBox, "HaltAtStart", null));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(makeTextBoxPanel(false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        autoRunPanel.add(ppp);
         return autoRunPanel;
     }
     
@@ -469,6 +464,7 @@ public class NXFrame extends WarrantRoute {
         warrant.setBlockOrders(_orders);
         warrant.setTrainName(getTrainName());
         warrant.setNoRamp(_noRamp.isSelected());
+        _speedUtil.setIsForward(_forward.isSelected());
         // position distance from start of path
         _speedUtil.setDistanceTravelled(getPathLength(_orders.get(0)) - _startDist);
         warrant.setSpeedUtil(_speedUtil);   // transfer SpeedUtil to warrant
@@ -542,19 +538,6 @@ public class NXFrame extends WarrantRoute {
     }
 
     // for the convenience of testing
-    protected void setTimeInterval(int s) {
-        _intervalTime = s;
-    }
-
-    /**
-     * for the convenience of testing
-     * @param increment the throttle increment
-     */
-    protected void setThrottleIncrement(float increment) {
-        this._throttleIncr = increment;
-    }
-
-    // for the convenience of testing
     protected void setScale(float s) {
         _scale = s;
     }
@@ -575,6 +558,9 @@ public class NXFrame extends WarrantRoute {
             text = _maxThrottleBox.getText();
             maxSpeed = formatter.parse(text).floatValue();
         } catch (java.text.ParseException pe) {
+            if (text==null) {
+                text = "\"\"";
+            }
             return Bundle.getMessage("badSpeed", text);
         }
         try {
@@ -586,98 +572,93 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("MustBeFloat", text);
         }
 
-        BlockOrder bo = _orders.get(0);
-        float len = getPathLength(bo);
-        if (len <= 0) {
-            return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
+        try {
+            _startDist = checkDistance(_originUnits.getText().equals("In"), oDist, _orders.get(0));
+        } catch (JmriException je) {
+            displayDistance(_destUnits.getText().equals("In"), oDist, _originDist, _orders.get(0));
+            return je.getMessage();
         }
-        if (oDist < 0) {
-            return Bundle.getMessage("MustBeFloat", oDist);
+
+        try {
+            _stopDist = checkDistance(_destUnits.getText().equals("In"), dDist, _orders.get(_orders.size()-1));
+        } catch (JmriException je) {
+            displayDistance(_destUnits.getText().equals("In"), dDist, _destDist, _orders.get(_orders.size()-1));
+            return je.getMessage();
         }
-        if (_originUnits.getText().equals("In")){
-            oDist *= 25.4f;
-            if (oDist > 0 && oDist < len) {
-                _startDist = oDist;
-            } else {
-                if (oDist >= len) {
-                    float num = Math.round((len-1) * 100 / 25.4f);
-                    _originDist.setText(formatter.format(num / 100f));
-                }else if (oDist <= 0) {
-                    _originDist.setText(formatter.format(0.1f));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
-            }
-        } else {
-            oDist *= 10f;
-            if (oDist > 0 && oDist < len) {
-                _startDist = oDist;
-            } else {
-                if (oDist >= len) {
-                    float num = Math.round((len-1) * 100);
-                    _originDist.setText(formatter.format(num / 1000f));
-                } else if (oDist <= 0) {
-                    _originDist.setText(formatter.format(.1));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
-            }
-        }
-        bo = _orders.get(_orders.size()-1);
-        len = getPathLength(bo);
-        if (len <= 0) {
-            return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
-        }
-        if (dDist < 0) {
-            return Bundle.getMessage("MustBeFloat", dDist);
-        }
-        if (_destUnits.getText().equals("In")) {
-            dDist *= 25.4f;
-            if (dDist >= 0 && dDist <= len) {
-                _stopDist = dDist;
-            } else {
-                if (dDist > len) {
-                    float num = Math.round(len * 100 / 25.4f);
-                    _destDist.setText(formatter.format(num / 100f));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
-            }
-        } else {
-            dDist *= 10f;
-            if (dDist >= 0 && dDist <= len) {
-                _stopDist = dDist;
-            } else {
-                if (dDist > len) {
-                    float num = Math.round(len * 100);
-                    _destDist.setText(formatter.format(num / 1000f));
-                }
-                return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
-            }
-        }
-        
+
         if (maxSpeed > 1.0f || maxSpeed < 0.008f) {
             return Bundle.getMessage("badSpeed", maxSpeed);
         }
         _maxThrottle = maxSpeed;
-        if (log.isDebugEnabled()) log.debug("_startDist= {}, _stopDist= {}, _maxThrottle= {}", _startDist, _stopDist, _maxThrottle);
+
         setAddress();
+
+        int time = (Integer)_timeIncre.getValue();
+        _speedUtil.setRampTimeIncrement(time);
+
+        try {
+            text = _rampIncre.getText();
+            float incre = NumberFormat.getNumberInstance().parse(text).floatValue();
+            if (incre < 0.5f || incre > 25f) {
+                return Bundle.getMessage("rampIncrWarning", text);                
+            } else {
+                _speedUtil.setRampThrottleIncrement(incre/100);
+            }
+        } catch (java.text.ParseException pe) {
+            return Bundle.getMessage("MustBeFloat", text);
+        }
+        
+        _speedUtil.resetSpeedProfile();
         return null;
     }
-    private String lengthError(String pathName, String blockName, float pathLen, float dist, boolean isInches) {
+
+    private float checkDistance(boolean isInches, float distance, BlockOrder bo) throws JmriException {
+        float pathLen = getPathLength(bo);
         if (pathLen <= 0) {
-            return Bundle.getMessage("zeroPathLength", pathName, blockName);
-        } else if (dist <= 0) {
-            return Bundle.getMessage("MustBeFloat", dist);  // positive message                                    
-        } else {
-            if (isInches) {
+            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));                        
+        }
+        if (isInches){
+            distance *= 25.4f;
+            if (distance < 0 || distance > pathLen) {
                 pathLen /= 25.4;
-                dist /= 25.4;
-                return Bundle.getMessage("BadLengthIn", pathName, blockName, pathLen, dist);                                        
-            } else {
+                distance /= 25.4;
+                throw new JmriException(Bundle.getMessage(
+                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen, distance));                                        
+            }
+        } else {
+            distance *= 10f;
+            if (distance < 0 || distance > pathLen) {
                 pathLen /= 10;
-                dist /= 10;
-                return Bundle.getMessage("BadLengthCm", pathName, blockName, pathLen, dist);                                        
+                distance /= 10;
+                throw new JmriException(Bundle.getMessage(
+                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen, distance));                                        
             }
         }
-     }
+        return distance;
+    }
+
+    private void displayDistance(boolean isInches, float distance, JTextField textBox, BlockOrder bo) {
+        float pathLen = getPathLength(bo);
+        if (pathLen <= 0) {
+            return;                        
+        }
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        if (distance < 0f) {
+            textBox.setText(formatter.format(0f));
+        } else {
+            if (isInches) {
+                float num = Math.round(pathLen * 100 / 25.4f);
+                if (distance*25.4f > pathLen) {
+                    textBox.setText(formatter.format(num / 100));
+                }
+            } else {
+                float num = Math.round(pathLen * 100);
+                if (distance*10 > pathLen) {
+                    textBox.setText(formatter.format(num / 1000));
+                }
+            }
+        }
+    }
 
     private float getPathLength(BlockOrder bo) {
         float len = bo.getPath().getLengthMm();
@@ -700,116 +681,45 @@ public class NXFrame extends WarrantRoute {
         }
        return len;
     }
+    private float adjustdistance(float fromSpeed, float toSpeed, float distance, BlockOrder bo) throws JmriException {
+        float pathLen = getPathLength(bo);
+        if (pathLen <= 0) {
+            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
+        }
+        int timeIncrement = _speedUtil.getRampTimeIncrement();
+        float minDist = _speedUtil.getDistanceOfSpeedChange(fromSpeed, toSpeed, timeIncrement) +.1f;
+        if (distance < minDist) {
+            distance = minDist;
+        } else if (distance > pathLen - minDist) {
+            distance = pathLen - minDist;
+        }
+        return distance;
+    }
     /*
      * Return length of warrant route in mm.  Assume start and end is in the middle of first
      * and last blocks.  Use a default length for blocks with unspecified length.
      */
-    private String getTotalLength() {
-        _totalLen = 0.0f;
+    private float getTotalLength() throws JmriException {
+        float totalLen = 0.0f;
         List<BlockOrder> orders = getOrders();
-        _totalLen = _startDist;
-        for (int i = 1; i < orders.size() - 1; i++) {
-            BlockOrder bo = orders.get(i);
-            float len = getPathLength(bo);
-            if (len <= 0) {
-                return Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName());
-             }
-            _totalLen += len;
-        }
-        _totalLen += _stopDist;
-        return null;
-    }
-
-    private float getUpRampLength() {
-        float speed = 0.0f;     // throttle setting
-        float rampLength = 0.0f;
-        int numSteps = 0;
-        float incre = _throttleIncr;
-        boolean isForward = _forward.isSelected();
-        while (speed < _maxThrottle) {
-            float dist = _speedUtil.getDistanceFromSpeedChange(speed, speed + incre, isForward, _intervalTime);
-            if (rampLength + dist <= _totalLen / 2) {
-                if ((speed + incre) > _maxThrottle) {
-                    dist = dist * (_maxThrottle - speed) / incre;
-                    speed = _maxThrottle;
-                } else {
-                    speed += incre;
+        float throttleIncrement = _speedUtil.getRampThrottleIncrement();
+        try {
+            _startDist = adjustdistance(0f, throttleIncrement, _startDist, orders.get(0));
+            totalLen = _startDist;
+            for (int i = 1; i < orders.size() - 1; i++) {
+                BlockOrder bo = orders.get(i);
+                float pathLen = getPathLength(bo);
+                if (pathLen <= 0) {
+                    throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
                 }
-                rampLength += dist;
-                numSteps++;
-                if (log.isDebugEnabled()) {
-                    log.debug("step {} incr= {}, dist= {} upRampLength= {} ", numSteps, incre, dist, rampLength);
-                }
-                incre *= INCRE_RATE;
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("cannot reach max Speed and have enough length to decelerate. _maxThrottle set to {}",
-                            _maxThrottle);
-                    _maxThrottle = speed;      // modify
-                }
-                break;
+                totalLen += pathLen;
             }
+            _stopDist = adjustdistance(throttleIncrement, 0f, _stopDist, orders.get(0));
+            totalLen += _stopDist;
+        } catch (JmriException je) {
+            throw je;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("{} speed steps of delta= {} for upRampLength= {} to maxThrottle= {}",
-                    numSteps, _throttleIncr, rampLength, _maxThrottle);
-        }
-        return rampLength;
-    }
-
-    private float getDownRampLength() {
-        
-        float speed = 0;     // throttle setting
-        float rampLength = 0.0f;
-        int numSteps = 0;
-        float incre = _throttleIncr;
-        boolean isForward = _forward.isSelected();
-        while (speed + incre <= _maxThrottle) {
-            speed += incre;
-            incre *= INCRE_RATE;
-        }
-        speed = _maxThrottle;     // throttle setting
-        float maxIncre = incre;
-        while (speed > 0.0f) {
-            float dist = _speedUtil.getDistanceFromSpeedChange(speed, speed - incre, isForward, _intervalTime);
-           if (dist <= 0.0f) {
-               break;
-           }
-           if (rampLength + dist >= _totalLen / 2) {
-               // remove first step's distance
-               float d = _speedUtil.getDistanceFromSpeedChange(_maxThrottle, _maxThrottle - incre, isForward, _intervalTime);
-               if (rampLength >= d) {
-                   rampLength -= d;                    
-               } else {
-                   rampLength = 0f;
-               }
-              _maxThrottle -= maxIncre;      // modify
-              maxIncre /= INCRE_RATE;
-              numSteps--;
-              if (log.isDebugEnabled()) {
-                  log.debug("cannot reach max Speed and have enough length to decelerate. _maxThrottle set to {}",
-                          _maxThrottle);
-              }
-           }
-           if (speed >= 0.0f) {
-               rampLength += dist;
-           } else {
-               rampLength += (speed + incre) * dist / incre;
-               speed = 0.0f;
-           }
-           speed -= incre;
-           numSteps++;            
-           if (log.isDebugEnabled()) {
-                    log.debug("step {} incr= {}, to speed= {}, dist= {} dnRampLength= {}",
-                            numSteps, incre, speed, dist, rampLength);
-           }
-           incre /= INCRE_RATE; 
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("{} speed steps of delta= {} for dnRampLength= {} from maxThrottle= {}",
-                    numSteps, _throttleIncr, rampLength, _maxThrottle);
-        }
-        return rampLength;
+        return totalLen;
     }
 
     private String makeCommands(Warrant w) {
@@ -818,127 +728,141 @@ public class NXFrame extends WarrantRoute {
         List<BlockOrder> orders = getOrders();
         BlockOrder bo = orders.get(nextIdx++);
         String blockName = bo.getBlock().getDisplayName();
-        boolean isForward = _forward.isSelected();
-//        getProfileForDirection(isForward);  // establish a SpeedProfile and present anomaly dialog. if needed
         boolean hasProfileSpeeds = _speedUtil.profileHasSpeedInfo();
 
         int cmdNum;
         w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
-        if (isForward) {
+        if (_forward.isSelected()) {
             w.addThrottleCommand(new ThrottleSetting(100, "Forward", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
-            cmdNum = 7;
+            if (!_noSound.isSelected()) {
+                w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+                w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+                cmdNum = 7;
+            } else {
+                cmdNum = 3;
+            }
         } else {
             w.addThrottleCommand(new ThrottleSetting(100, "Forward", "false", blockName));
-            w.addThrottleCommand(new ThrottleSetting(1000, "F3", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(500, "F3", "false", blockName));
-            w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
-            w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
-            cmdNum = 6;
+            if (!_noSound.isSelected()) {
+                w.addThrottleCommand(new ThrottleSetting(1000, "F3", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, "F3", "false", blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
+                w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
+                cmdNum = 6;
+            } else {
+                cmdNum = 2;
+            }
         }
 
-        String msg = getTotalLength();
-        if (msg != null) {
-            return msg;
+        float totalLen;
+        try {
+            totalLen = getTotalLength();
+        } catch (JmriException je) {
+            return je.getMessage();
         }
-        float increment = _throttleIncr;
-        int deltaTime = _intervalTime;
-        float upRampLength;
-        float dnRampLength ;
-        // do longer ramp first
-        if (deltaTime >= _speedUtil.getMomentumTime(increment, false)) { 
-            dnRampLength = getDownRampLength();            
-            upRampLength = getUpRampLength();            
-        } else {
-            upRampLength = getUpRampLength();
-            dnRampLength = getDownRampLength();            
-        }
+
+        RampData upRamp;
+        RampData downRamp;
+        ListIterator<Float> downIter;
+        float intervalDist;
+        do {
+            upRamp = _speedUtil.getRampForSpeedChange(0f, _maxThrottle);
+            downRamp = _speedUtil.getRampForSpeedChange(_maxThrottle, 0f);
+            downIter = downRamp.speedIterator(false);
+            float prevSetting = downIter.previous().floatValue();   // top value is _maxThrottle 
+            _maxThrottle -= prevSetting  - downIter.previous().floatValue();    // last throttle increment
+            // distance attaining final speed
+            intervalDist = _speedUtil.getDistanceOfSpeedChange(_maxThrottle, prevSetting, downRamp.getRampTimeIncrement());
+            log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}",
+                    totalLen, upRamp.getRampLength(), downRamp.getRampLength());
+        } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
+        _maxThrottle = downRamp.getMaxSpeed();
 
         if (log.isDebugEnabled()) {
             if (hasProfileSpeeds) {
                 log.debug("maxThrottle= {} ({} meters per sec), scale= {}", 
-                        _maxThrottle, _speedUtil.getTrackSpeed(_maxThrottle, isForward), _scale);                
+                        _maxThrottle, _speedUtil.getTrackSpeed(_maxThrottle), _scale);                
             } else {
                 log.debug("maxThrottle= {} scale= {} no SpeedProfile data", _maxThrottle, _scale);                                
             }
-            log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}, startDist={}, stopDist={}",
-                    _totalLen, upRampLength, dnRampLength, _startDist, _stopDist);
         }
-
         float blockLen = _startDist;    // length of path in current block
 
         // start train
         float speedTime = 0;    // ms time to complete speed step from last block
         float noopTime = 0;     // ms time for entry into next block
-        float curThrottle = 0;  // throttle setting
-        // each speed step will last for _intervalTime ms
-        float curDistance = 0;  // distance traveled in current block mm
+        ListIterator<Float> iter = upRamp.speedIterator(true);
+        float curThrottle = iter.next();  // throttle setting
+        float nextThrottle = 0f;
+        float curDistance = 0;  // current distance traveled mm
+        float blkDistance = 0;  // distance traveled in current block mm
+        float upRampLength = upRamp.getRampLength();
         float remRamp = upRampLength;
+        float remTotal = totalLen;
+        float dnRampLength = downRamp.getRampLength();
+        int timeInterval = downRamp.getRampTimeIncrement();
+        boolean rampsShareBlock = false;
+
         if (log.isDebugEnabled()) {
-            log.debug("Start Ramp Up in block \"" + blockName + "\" in "
-                    + (int) speedTime + "ms, remRamp= " + remRamp + ", blockLen= " + blockLen);
+            log.debug("Start in block \"{}\" startDist= {} stopDist= {}", blockName, _startDist, _stopDist);
         }
+        while (iter.hasNext()) {       // ramp up loop
 
-        if (_maxThrottle < increment) {
-            return Bundle.getMessage("BadSettings", bo.getPathName(), bo.getBlock().getDisplayName());
-        }
-
-        while (remRamp > 0.0f) {       // ramp up loop
-
-            curDistance = _speedUtil.getDistanceTraveled(curThrottle, Warrant.Normal, speedTime, isForward);
-            while (curDistance < blockLen && curThrottle < _maxThrottle) {
-                float dist = _speedUtil.getDistanceFromSpeedChange(curThrottle, curThrottle + increment, isForward, deltaTime);
-                float prevSpeed = curThrottle;
-                if ((curThrottle + increment) > _maxThrottle) {
-                    dist = dist * (_maxThrottle - curThrottle) / increment;
-                    curThrottle = _maxThrottle;
-                } else {
-                    curThrottle += increment;
-                }
-                if (curDistance + dist <= blockLen && remRamp > 0.0f) {
-                    curDistance += dist;
+            while (blkDistance < blockLen && iter.hasNext()) {
+                nextThrottle = iter.next().floatValue();
+                float dist = _speedUtil.getDistanceOfSpeedChange(curThrottle, nextThrottle, timeInterval);
+                if (blkDistance + dist <= blockLen) {
+                    blkDistance += dist;
                     remRamp -= dist;
+                    curThrottle = nextThrottle;
                     w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed",
                             Float.toString(curThrottle), blockName, 
-                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
+                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
                     if (log.isDebugEnabled()) {
-                        log.debug("{}. Ramp Up in block \"{}\" to speed {} in {}ms to distance= {}, remRamp= {}",
-                                ++cmdNum, blockName, curThrottle, (int) speedTime, curDistance, remRamp);
+                        log.debug("{}. Ramp Up in block \"{}\" to speed {} in {}ms to distance= {}mm, remRamp= {}",
+                                ++cmdNum, blockName, curThrottle, (int) speedTime, blkDistance, remRamp);
                     }
-                    speedTime = deltaTime;
-                    increment *= INCRE_RATE;
+                    speedTime = timeInterval;
                 } else {
-                    curThrottle = prevSpeed;
+                    iter.previous();
                     break;
                 }
             }
+            curDistance += blkDistance;
 
-            // Possible case where curDistance can exceed the length of a block that was just entered.
-            // Move to next block and adjust the distance times into that block
-            if (curDistance >= blockLen) {
-                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen, isForward);   // time overrunning block
-                speedTime = _speedUtil.getTimeForDistance(curThrottle, curDistance - blockLen, isForward); // time to next block
+            if (blkDistance >= blockLen) {
+                // Possible case where blkDistance can exceed the length of a block that was just entered.
+                // Skip over block and move to next block and adjust the distance times into that block
+                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen);   // noop distance to run through block 
+                speedTime = _speedUtil.getTimeForDistance(curThrottle, blkDistance - blockLen);
+                curDistance += blockLen;
             } else {
-                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen - curDistance, isForward);   // time to next block
-                speedTime = deltaTime - noopTime;   // time to next speed change
-                if (speedTime < 0) {
-                    speedTime = 0;
+                // typical case where next speed change broke out of above loop
+                noopTime = _speedUtil.getTimeForDistance(curThrottle, (blockLen - blkDistance));   // time to next block
+                if (noopTime > timeInterval) {  // after last speed change
+                    speedTime = 0;  // irrelevant, loop will end
+                    if (!iter.hasNext()) {
+                        noopTime += timeInterval;   // add time to complete last speed change
+                    }
+                } else {
+                    speedTime = timeInterval - noopTime;   // time to next speed change
                 }
+                curDistance += blockLen - blkDistance;  // noop distance
             }
 
-            // break out here if deceleration is to be started in this block
-            if (_totalLen - blockLen <= dnRampLength || curThrottle >= _maxThrottle) {
+            // break out here if done or deceleration is to be started in this block
+            if (!iter.hasNext() || remTotal - blockLen <= dnRampLength) {
                 break;
             }
-            if (remRamp > 0.0f && nextIdx < orders.size()) {
-                _totalLen -= blockLen;
-                if (log.isDebugEnabled()) {
-                    log.debug("Leave RampUp block \"{}\"  curDistance= {}, blockLen= {} curThrottle = {} remRamp= {}",
-                            blockName, curDistance, blockLen, curThrottle, remRamp);
-                }
+
+            remTotal -= blockLen;
+            if (log.isDebugEnabled()) {
+                log.debug("Leave RampUp block \"{}\"  blkDistance= {}, blockLen= {} remRamp= {} curDistance= {} remTotal={}",
+                        blockName, blkDistance, blockLen, remRamp, curDistance, remTotal);
+            }
+            if (nextIdx < orders.size()) {
                 bo = orders.get(nextIdx++);
                 blockLen = getPathLength(bo);
                 if (blockLen <= 0) {
@@ -946,21 +870,22 @@ public class NXFrame extends WarrantRoute {
                  }
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
+                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
-                        cmdNum++, blockName, noopTime, speedTime, blockLen);
+                    log.debug("{}. Enter RampUp block \"{}\" noopTime= {}, speedTime= {} blockLen= {}, remTotal= {}",
+                        cmdNum++, blockName, noopTime, speedTime, blockLen, remTotal);
                 }
             }
+            blkDistance = _speedUtil.getDistanceTraveled(curThrottle, Warrant.Normal, speedTime);
         }
         if (log.isDebugEnabled()) {
-            log.debug("Ramp Up done at block \"{}\" curThrottle={} curDistance={} totalLen={} remRamp={}", 
-                    blockName, curThrottle, curDistance, _totalLen, remRamp);
+            log.debug("Ramp Up done at block \"{}\" curThrottle={} blkDistance={} curDistance={} remTotal= {} remRamp={}", 
+                    blockName, curThrottle, blkDistance, curDistance, remTotal, remRamp);
         }
 
-        if (_totalLen - blockLen > dnRampLength) {    // At  maxThrottle, remainder of block at max speed
-            _totalLen -= blockLen;
+        if (remTotal - blockLen > dnRampLength) {    // At maxThrottle, remainder of block at max speed
             if (nextIdx < orders.size()) {    // not the last block
+                remTotal -= blockLen;
                 bo = orders.get(nextIdx++);
                 blockLen = getPathLength(bo);
                 if (blockLen <= 0) {
@@ -968,21 +893,23 @@ public class NXFrame extends WarrantRoute {
                  }
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
+                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("{}. Enter block \"{}\" noopTime= {}, blockLen= {}", cmdNum++, blockName, noopTime, blockLen);
+                    log.debug("{}. Enter block \"{}\" noopTime= {}, blockLen= {}, curDistance={}",
+                            cmdNum++, blockName, noopTime, blockLen, curDistance);
                 }
-                curDistance = 0;
+                blkDistance = 0;
             }
 
             // run through mid route at max speed
-            while (nextIdx < orders.size() && _totalLen - blockLen > dnRampLength) {
-                _totalLen -= blockLen;
+            while (nextIdx < orders.size() && remTotal - blockLen > dnRampLength) {
+                remTotal -= blockLen;
                 // constant speed, get time to next block
-                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen - curDistance, isForward);   // time to next block
+                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen);   // time to next block
+                curDistance += blockLen;
                 if (log.isDebugEnabled()) {
-                    log.debug("Leave MidRoute block \"" + blockName + "\" noopTime= " + noopTime
-                            + ", curDistance=" + curDistance + ", blockLen= " + blockLen + ", totalLen= " + _totalLen);
+                    log.debug("Leave MidRoute block \"{}\" noopTime= {} blockLen= {} curDistance={} remTotal= {}",
+                            blockName, noopTime, blockLen, curDistance, remTotal);
                 }
                 bo = orders.get(nextIdx++);
                 blockLen = getPathLength(bo);
@@ -994,74 +921,104 @@ public class NXFrame extends WarrantRoute {
                     blockLen = _stopDist;
                 }
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
+                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("{}. Enter block \"{}\" noopTime= {}, blockLen= {}", cmdNum++, blockName, noopTime, blockLen);
+                    log.debug("{}. Enter MidRoute block \"{}\" noopTime= {}, blockLen= {}, curDistance={}",
+                            cmdNum++, blockName, noopTime, blockLen, curDistance);
                 }
-                curDistance = 0;
-            }
-        } // else Start ramp down in current block
-
-        // Ramp down.  use negative delta
-        remRamp = dnRampLength;
-        speedTime = _speedUtil.getTimeForDistance(curThrottle, _totalLen - dnRampLength, isForward); // time to next block
-        curDistance = _totalLen - dnRampLength;
-        if (log.isDebugEnabled()) {
-            log.debug("Begin Ramp Down at block \"" + blockName + "\" curDistance= "
-                    + curDistance + " SpeedTime= " + (int) speedTime + "ms, blockLen= " + blockLen + ", totalLen= " + _totalLen
-                    + ", dnRampLength= " + dnRampLength + " curThrottle= " + curThrottle);
+             }
+            blkDistance = 0;
+       } else {
+            // else Start ramp down in current block
+            rampsShareBlock = true;
         }
 
-        while (curThrottle > 0) {
+        // Ramp down.
+        remRamp = dnRampLength;
+        iter = downRamp.speedIterator(false);
+        iter.previous();   // discard, equals curThrottle
+        float remMaxSpeedDist;
+        if (!rampsShareBlock) {
+            remMaxSpeedDist = remTotal - dnRampLength;
+        } else {
+            remMaxSpeedDist = totalLen - upRampLength - dnRampLength;
+        }
+        // distance in block where down ramp is started
+        blkDistance += remMaxSpeedDist;
+        // time to start down ramp
+        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist) + timeInterval;
+
+        if (log.isDebugEnabled()) {
+            log.debug("Begin Ramp Down at block \"{}\" blockLen={}, at distance= {} curDistance = {} remTotal= {} curThrottle= {} ({})",
+                    blockName, blockLen, blkDistance, curDistance, remTotal, curThrottle, remMaxSpeedDist);
+        }
+
+        while (iter.hasPrevious()) {
+            boolean atLastBlock = false;
             if (nextIdx == orders.size()) { // at last block
+                atLastBlock = true;
                 if (_stageEStop.isSelected()) {
                     w.addThrottleCommand(new ThrottleSetting(50, "Speed", "-0.5", blockName,
-                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
-                    deltaTime = 0;
+                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
                     curThrottle = -0.5f;
                     if (log.isDebugEnabled()) {
-                        log.debug("{}. At block \"{}\" set speed= {}", cmdNum++, blockName, -0.5);
+                        log.debug("{}. At block \"{}\" EStop set speed= {}", cmdNum++, blockName, -0.5);
                     }
                     break;
                 }
             }
 
-//            while (curDistance < blockLen && curThrottle >= _speedUtil.getThrottleSpeedStepIncrement()) {
-            do {
-                float dist = _speedUtil.getDistanceFromSpeedChange(curThrottle, curThrottle - increment, isForward, deltaTime);
-                curDistance += dist;
-                curThrottle -= increment;
-                if (curThrottle < _throttleIncr && nextIdx < orders.size()) {
-                    break;  // don't set speed 0 until last block
+            do /*while (blkDistance < blockLen && iter.hasPrevious())*/ {
+                boolean hasPrevious = false;
+                if (iter.hasPrevious()) {
+                    nextThrottle = iter.previous();
+                    hasPrevious = true;
                 }
-                if (curThrottle <.00397) {   // fraction less than 1/2 step
-                    curThrottle = 0.0f;
+                float dist = _speedUtil.getDistanceOfSpeedChange(curThrottle, nextThrottle, timeInterval);
+                blkDistance += dist;
+                remRamp -= dist;                
+                curThrottle = nextThrottle;
+                if (curThrottle <= 0f && !atLastBlock) {
+                    log.warn("Set curThrottle = {} in block \"{}\" (NOT the last block)!", curThrottle, blockName);
+                    break;
                 }
-                remRamp -= dist;
-                w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", Float.toString(curThrottle), blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
-                if (log.isDebugEnabled()) {
-                    log.debug("{}. Ramp Down in block \"{}\" incr= {} to curThrottle {} in {}ms to reach curDistance= {}, remRamp= {}",
-                            ++cmdNum, blockName, increment, curThrottle, (int) speedTime, curDistance, remRamp);
-                }
-                if (curDistance >= blockLen) {
-                    speedTime = _speedUtil.getTimeForDistance(curThrottle, curDistance - blockLen, isForward); // time to next block
+                if (hasPrevious) {
+                    w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", Float.toString(curThrottle), blockName,
+                            (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
+                    if (log.isDebugEnabled()) {
+                        log.debug("{}. Ramp Down in block \"{}\" to curThrottle {} in {}ms to distance= {}mm, remRamp= {}",
+                                ++cmdNum, blockName, curThrottle, (int) speedTime, blkDistance, remRamp);
+                    }
                 } else {
-                    speedTime = deltaTime;
+                    if (curThrottle > 0f) {
+                        log.warn("No speed setting after command {} in block \"{}\". curThrottle= {} blkDistance= {}mm",
+                                cmdNum, blockName, curThrottle, blkDistance);
+                    }
+                    break;
                 }
-                increment /= INCRE_RATE;
-                noopTime = deltaTime - speedTime;
-                if (noopTime < 0) {
-                    noopTime = 0;
-                }
-            } while (curDistance < blockLen && curThrottle >= _throttleIncr);
+                speedTime = timeInterval;
+            } while (blkDistance < blockLen);
+            curDistance += blkDistance;
 
-            if (nextIdx < orders.size()) {
-                _totalLen -= blockLen;
-                if (log.isDebugEnabled()) {
-                    log.debug("Leave RampDown block \"{}\"  curDistance= {}, blockLen= {} curThrottle = {} remRamp= {}",
-                            blockName, curDistance, blockLen, curThrottle, remRamp);
+            if (log.isDebugEnabled()) {
+                log.debug("Leave RampDown block \"{}\"  blkDistance= {}, blockLen= {} remRamp= {} curDistance= {} remTotal= {}",
+                        blockName, blkDistance, blockLen, remRamp, curDistance, remTotal);
+            }
+            if (blkDistance >= blockLen) {
+                // typical case where next speed change broke out of above loop
+                speedTime = _speedUtil.getTimeForDistance(curThrottle, blkDistance - blockLen); // time to run in next block
+                if (speedTime > timeInterval) {
+                    noopTime = 0;
+                } else {
+                    noopTime = timeInterval - speedTime;
                 }
+            } else {
+                speedTime = timeInterval - noopTime;
+            }
+
+            remTotal -= blockLen;
+            if (!atLastBlock) {
+                curDistance += blockLen - blkDistance;  // noop distance
                 bo = orders.get(nextIdx++);
                 if (nextIdx == orders.size()) {
                     blockLen = _stopDist;
@@ -1073,28 +1030,25 @@ public class NXFrame extends WarrantRoute {
                 }
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
-                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
+                        (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("{}. Enter block \"{}\" noopTime= {}ms, blockLen= {}",
-                            cmdNum++, blockName, noopTime, blockLen);
+                    log.debug("{}. Enter block \"{}\" noopTime= {}ms, blockLen= {}, curDistance={}",
+                            cmdNum++, blockName, noopTime, blockLen, curDistance);
                 }
-                curDistance = _speedUtil.getDistanceTraveled(curThrottle, Warrant.Normal, speedTime, isForward);
+                blkDistance = _speedUtil.getDistanceTraveled(curThrottle, Warrant.Normal, speedTime);
             } else {
-                if (blockLen == 0) {
-                    speedTime = 0;
-                }
-                break;
+                blkDistance = 0f;
             }
         }
+
         // Ramp down finished
-        if (curThrottle > 0) {   // cleanup fractional speeds. insure speed != 0
-            log.debug("LAST speed change in block \"{}\" to speed 0  after {}ms. curThrottle= {}, curDistance= {}, remRamp= {}",
-                    blockName, (int) speedTime, curThrottle, curDistance, remRamp);
-            w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", "0.0", blockName, 0.0f));
+        log.debug("Ramp down done at block \"{}\",  remRamp= {}, curDistance= {} remRamp= {}",
+                blockName, remRamp, curDistance, remTotal);
+        if (!_noSound.isSelected()) {
+            w.addThrottleCommand(new ThrottleSetting(500, "F1", "false", blockName));
+            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
         }
-        w.addThrottleCommand(new ThrottleSetting(500, "F1", "false", blockName));
-        w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-        w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
         w.addThrottleCommand(new ThrottleSetting(1000, "F0", "false", blockName));
         /*      if (_addTracker.isSelected()) {
             WarrantTableFrame._defaultAddTracker = true;

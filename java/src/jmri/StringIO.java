@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Represent an string I/O on the layout.
- * <P>
+ * <p>
  * A StringIO could for example be a display connected to an Arduino
  * microcomputer that shows train departures of a station.
  *

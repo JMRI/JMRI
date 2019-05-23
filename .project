@@ -6,12 +6,12 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -22,16 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1509186953632</id>
-			<name></name>
-			<type>10</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-nbproject</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1509186953914</id>
+			<id>1551662639376</id>
 			<name></name>
 			<type>10</type>
 			<matcher>

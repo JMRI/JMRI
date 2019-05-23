@@ -15,7 +15,7 @@ import org.junit.*;
  * Tests for the jmrit.roster.RosterEntry class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2018
-  */
+ */
 public class RosterEntryTest {
 
     @Test
@@ -161,7 +161,7 @@ public class RosterEntryTest {
         }
         
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
-        Assert.assertEquals("2015-10-03T18:19:12Z", r.getDateUpdated());
+        Assert.assertEquals("2015-10-03T18:19:12.000+0000", r.getDateUpdated());
     }
 
     @Test
@@ -172,7 +172,7 @@ public class RosterEntryTest {
         r.setDateUpdated("2018-03-05T02:34:55Z");
         
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
-        Assert.assertEquals("2018-03-05T02:34:55Z", r.getDateUpdated());
+        Assert.assertEquals("2018-03-05T02:34:55.000+0000", r.getDateUpdated());
     }
 
     @Test
@@ -192,7 +192,7 @@ public class RosterEntryTest {
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
         
         // convert that same local time in ISO format and compare
-        Assert.assertEquals("2016-03-02T16:57:04Z", r.getDateUpdated());
+        Assert.assertEquals("2016-03-02T16:57:04.000+0000", r.getDateUpdated());
     }
 
     @Test

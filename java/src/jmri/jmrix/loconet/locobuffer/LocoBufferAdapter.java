@@ -108,8 +108,12 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout() // NOI18N
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} enabled: {} threshold: {} enabled: {}", // NOI18N
+                    activeSerialPort.getReceiveTimeout(), 
+                    activeSerialPort.isReceiveTimeoutEnabled(),
+                    activeSerialPort.getReceiveThreshold(),
+                    activeSerialPort.isReceiveThresholdEnabled()                                        
+                );
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et); // NOI18N
             }
@@ -256,7 +260,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200LB"), Bundle.getMessage("Baud57600LB")};
     protected int[] validSpeedValues = new int[]{19200, 57600};
 
     // meanings are assigned to these above, so make sure the order is consistent
@@ -286,9 +290,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     /**
      * for a given readable choice return internal value
      * or the default
-     * <p>
-     * @param s - string containing ?a packetizer name?
-     * @return - internal value
+     *
+     * @param s  string containing ?a packetizer name?
+     * @return internal value
      */
     protected String getPacketizerOption(String s) {
         for (int i=0;i < packetizers.length; i++) {

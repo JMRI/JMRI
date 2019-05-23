@@ -24,7 +24,7 @@ public class SampleFunctionalClassXml extends jmri.configurexml.AbstractXmlAdapt
 
     /**
      * Default implementation for storing the contents of a SampleFunctionalClassXml.
-     * <P>
+     *
      * @param o Object to store
      * @return Element containing the complete info
      */

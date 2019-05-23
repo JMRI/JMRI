@@ -42,18 +42,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * WarrantFame creates and edits Warrants
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
+ *
  * @author  Pete Cressman Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends WarrantRoute {
@@ -76,7 +76,6 @@ public class WarrantFrame extends WarrantRoute {
 
     JTextField _sysNameBox;
     JTextField _userNameBox;
-    JButton _stopButton;
 
     JTabbedPane _tabbedPane;
     JPanel _routePanel;
@@ -166,9 +165,10 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(warrant.getTrainName());
         
         SpeedUtil spU = warrant.getSpeedUtil();
-        String trainId = spU.getRosterId();
-        setTrainInfo(trainId);
-        _warrant.getSpeedUtil().setDccAddress(trainId);
+        setSpeedUtil(_warrant.getSpeedUtil());
+        _speedUtil.setRosterId(spU.getRosterId());
+        _speedUtil.setDccAddress(spU.getDccAddress());
+        setTrainInfo(warrant.getTrainName());
     }
 
     private void init() {
@@ -252,16 +252,6 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
         panel.add(calculatePanel(true));
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
-
-        _stopButton = new JButton(Bundle.getMessage("Stop"));
-        _stopButton.setMaximumSize(_stopButton.getPreferredSize());
-        _stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopRouteFinder();
-            }
-        });
-
         panel.add(searchDepthPanel(true));
 
         JPanel p = new JPanel();
@@ -273,12 +263,6 @@ public class WarrantFrame extends WarrantRoute {
 
         _searchStatus.setBackground(Color.white);
         _searchStatus.setEditable(false);
-        p = new JPanel();
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(_stopButton);
-        p.add(pp, BorderLayout.SOUTH);
-        panel.add(p);
         panel.add(Box.createRigidArea(new Dimension(10,
                 topLeft.getPreferredSize().height - panel.getPreferredSize().height)));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -725,7 +709,7 @@ public class WarrantFrame extends WarrantRoute {
         _throttlePane = new JScrollPane(_commandTable);
         _rowHeight = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
-        dim.height = _rowHeight * 8;
+        dim.height = _rowHeight * 10;
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
@@ -1282,12 +1266,15 @@ public class WarrantFrame extends WarrantRoute {
                 bName = block.getDisplayName();
             }
         }
+        if  (cmd.equals("Forward")) {
+            _speedUtil.setIsForward(Boolean.parseBoolean(value));
+        }
         setThrottleCommand(cmd, value, bName);
     }
     
-    protected void setSpeedCommand(float speed, boolean isForward) {
+    protected void setSpeedCommand(float speed) {
         if (_warrant.getSpeedUtil().profileHasSpeedInfo()) {
-            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms            
+            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed);  // mm/ms            
         } else {
             _speed = 0.0f;
         }
@@ -1326,8 +1313,7 @@ public class WarrantFrame extends WarrantRoute {
         msg = checkLocoAddress();
         if (msg==null && !_isSCWarrant.isSelected()) {
             List<BlockOrder> orders = getOrders();  // valid orders
-            if (_throttleCommands.size() <= orders.size() ||
-                    !_throttleCommands.get(_throttleCommands.size()-1).getBeanDisplayName().equals(orders.get(orders.size()-1).getBlock().getDisplayName())) {
+            if (_throttleCommands.size() <= orders.size() + 1) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             } else {
                 for (int i=0; i<_throttleCommands.size(); i++) {
@@ -1466,7 +1452,7 @@ public class WarrantFrame extends WarrantRoute {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (row == ROW_NUM || row == SPEED_COLUMN) {
+            if (col == ROW_NUM || col == SPEED_COLUMN) {
                 return false;
             }
             return true;

@@ -4,22 +4,25 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2015
-  */
-public class OsIndicatorTest extends TestCase {
+ */
+public class OsIndicatorTest {
 
+    @Test
     public void testCreate() {
         new OsIndicator("IT12", "IS34", "IS56");
     }
 
+    @Test
     public void testAccess() {
         OsIndicator os = new OsIndicator("IT12", "IS34", "IS56");
 
@@ -28,6 +31,7 @@ public class OsIndicatorTest extends TestCase {
         Assert.assertEquals("lock", "IS56", os.getLockName());
     }
 
+    @Test
     public void testIntantiateNoLock() throws JmriException {
         OsIndicator os = new OsIndicator("IT12", "IS34", "");
 
@@ -52,6 +56,7 @@ public class OsIndicatorTest extends TestCase {
                 Turnout.CLOSED, t1.getCommandedState());
     }
 
+    @Test
     public void testIntantiateLocked() throws JmriException {
         OsIndicator os = new OsIndicator("IT12", "IS34", "IS56");
 
@@ -84,6 +89,7 @@ public class OsIndicatorTest extends TestCase {
                 Turnout.CLOSED, t1.getCommandedState());
     }
 
+    @Test
     public void testInvokeNoLock() throws JmriException {
         OsIndicator os = new OsIndicator("IT12", "IS34", "");
 
@@ -124,36 +130,17 @@ public class OsIndicatorTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public OsIndicatorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {OsIndicatorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OsIndicatorTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

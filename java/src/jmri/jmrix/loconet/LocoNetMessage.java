@@ -24,23 +24,23 @@ import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
  * refactor it to here.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author B. Milhaupt Copyright (C) 2018
  * @see jmri.jmrix.nce.NceMessage
@@ -69,7 +69,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * Create a new object, representing a specific-length message.
      * <p>
      * Logs an error if len is less than 2
-     * <p>
+     *
      * @param len Total bytes in message, including opcode and error-detection
      *            byte.
      */
@@ -91,6 +91,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * this method of AbstractMessage is not supported.
      * <p>
      * This constructor always logs an error
+     * @param s an unused parameter
      */
     public LocoNetMessage(String s) {
         _nDataChars = 0;
@@ -103,7 +104,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * <p>
      * This method logs an error and returns if the contents are too short to
      * represent a valid LocoNet message.
-     * <p>
+     *
      * @param contents The array of contents for the message. The error check
      *                 word must be present, e.g. a 4-byte message must have
      *                 four values in the array
@@ -127,7 +128,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * <p>
      * This method logs an error and returns if the message length is too short
      * to represent a valid LocoNet message.
-     * <p>
+     *
      * @param contents The array of contents for the message. The error check
      *                 word must be present, e.g. a 4-byte message must have
      *                 four values in the array
@@ -167,7 +168,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
 
     /**
      * Get a String representation of the op code in hex.
-     * <p>
+     *
      * @return string containing a hexadecimal representation of the message OpCode
      */
     public String getOpCodeHex() {
@@ -178,9 +179,9 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * Get a specific byte from the message
      * <p>
      * Logs an error and aborts if the index is beyond the length of the message.
-     * <p>
-     * @param n - the byte index within the message
-     * @return  - the integer value of the byte at the index within the message
+     *
+     * @param n  the byte index within the message
+     * @return integer value of the byte at the index within the message
      */
     @Override
     public int getElement(int n) {
@@ -196,9 +197,9 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * set a specific byte at a specific index in the message
      * <p>
      * Logs an error and aborts if the index is beyond the length of the message.
-     * <p>
-     * @param n - the byte index within the message
-     * @param v - the value to be set
+     *
+     * @param n  the byte index within the message
+     * @param v  the value to be set
      */
     @Override
     public void setElement(int n, int v) {
@@ -212,7 +213,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
 
     /**
      * Get a String representation of the entire message in hex.
-     * <p>
+     *
      * @return a string representation containing a space-delimited set of hexadecimal
      *      values.
      */
@@ -267,7 +268,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
 
     /**
      * Check whether the message has a valid checksum.
-     * <p>
+     *
      * @return true if checksum is correct, else false
      */
     public boolean checkParity() {
@@ -413,7 +414,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * The method is not appropriate when the user has multiple LocoNet connections
      * or when the user has a single LocoNet connection but has changed the connection
      * prefix to something other than the default of "L".
-     * <p>
+     *
      * @return a human readable representation of the message.
      */
     public String toMonitorString(){
@@ -443,8 +444,8 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * there is no associated JMRI object configured, or if the associated JMRI
      * object does not have a user name assigned, then the method does not display 
      * a user name.
-     * <p>
-     * @param prefix - the "System Name" prefix denoting the connection
+     *
+     * @param prefix  the "System Name" prefix denoting the connection
      * @return a human readable representation of the message.
      */
     public String toMonitorString(@Nonnull String prefix){
@@ -524,8 +525,8 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     /**
      * Check if a high bit is set, usually used to store it in some other
      * location (LocoNet does not allow the high bit to be set in data bytes).
-     * <p>
-     * @param val - value to be checked
+     *
+     * @param val  value to be checked
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
@@ -551,7 +552,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     /**
      * Extract sensor address from a sensor message.  Does not verify
      * that the message is a sensor message.
-     * <p>
+     *
      * @return address (in range 0 to n-1)
      */
     public int sensorAddr() {

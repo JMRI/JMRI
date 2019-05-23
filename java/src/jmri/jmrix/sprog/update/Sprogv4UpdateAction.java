@@ -21,12 +21,11 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void actionPerformed(ActionEvent e) {
         Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonContinue")};
         if (1 == JOptionPane.showOptionDialog(null,
-                Bundle.getMessage("SprogXUpdateDialogString", ""),
-                Bundle.getMessage("SprogXFirmwareUpdate", " v3/v4"), JOptionPane.YES_NO_OPTION,
+                Bundle.getMessage("SprogXUpdateDialogString"),
+                Bundle.getMessage("SprogXFirmwareUpdate"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             // create a SprogIIUpdateFrame
             // create a SprogUpdateFrame

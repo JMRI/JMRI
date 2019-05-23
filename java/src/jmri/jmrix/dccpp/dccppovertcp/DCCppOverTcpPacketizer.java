@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
+ * <ul>
+ * <li> RcvHandler - at highest available priority
+ * <li> XmtHandler - down one, which is assumed to be above the GUI
+ * <li> (everything else)
+ * </ul>
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -203,7 +203,6 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
-        @SuppressWarnings("deprecation")
         @Override
         public void run() {
 

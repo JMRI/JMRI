@@ -19,18 +19,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status and state of a color coded turnout.<P>
+ * An icon to display a status and state of a color coded turnout.<p>
  * This responds to only KnownState, leaving CommandedState to some other
  * graphic representation later.
  * <p>
  * "state" is the state of the underlying turnout ("closed", "thrown", etc.)
  * <p>
  * "status" is the operating condition of the track ("clear", "occupied", etc.)
- * <P>
+ * <p>
  * A click on the icon will command a state change. Specifically, it will set
  * the CommandedState to the opposite (THROWN vs CLOSED) of the current
  * KnownState. This will display the setting of the turnout points.
- * <P>
+ * <p>
  * The status is indicated by color and changes are done only done by the
  * occupancy sensing - OBlock or other sensor.
  * <p>
@@ -248,9 +248,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     /**
      * Place icon by its localized bean state name
      *
-     * @param status    - the track condition of the icon
-     * @param stateName - NamedBean name of turnout state
-     * @param icon      - icon corresponding to status and state
+     * @param status     the track condition of the icon
+     * @param stateName  NamedBean name of turnout state
+     * @param icon       icon corresponding to status and state
      */
     public void setIcon(String status, String stateName, NamedIcon icon) {
         if (log.isDebugEnabled()) {

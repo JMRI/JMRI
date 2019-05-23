@@ -18,6 +18,21 @@ public class LnPr2Packetizer extends LnPacketizer {
         super(new LocoNetSystemConnectionMemo());
         echo = true;
     }
+    
+    // 
+    /**
+     * Create a Packetizer against an existing LocoNetSystemConnectionMemo.
+     * <p>
+     * This allows for re-configuring an existing LocoNetSystemConnectionMemo, 
+     * which was created during PR3Adapter initialization, for use in the PR3's 
+     * "PR2 Mode" (i.e. "Standalone Programmer Mode".)
+     *
+     * @param memo pre-existing LocoNetSystemConnectionMemo
+     */    
+    public LnPr2Packetizer(LocoNetSystemConnectionMemo memo) {
+        super(memo);
+        echo = true;
+    }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnPr2Packetizer.class);
 

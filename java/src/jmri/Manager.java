@@ -6,6 +6,8 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.beans.PropertyChangeProvider;
+import jmri.beans.VetoableChangeProvider;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -43,7 +45,7 @@ import javax.annotation.Nonnull;
  * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public interface Manager<E extends NamedBean> {
+public interface Manager<E extends NamedBean> extends PropertyChangeProvider, VetoableChangeProvider {
 
     /**
      * Provides access to the system prefix string. This was previously called
@@ -110,7 +112,9 @@ public interface Manager<E extends NamedBean> {
     public void dispose();
 
     /**
-     * Get the count of managed objects
+     * Get the count of managed objects.
+     * 
+     * @return the number of managed objects
      */
     @CheckReturnValue
     public int getObjectCount();
@@ -124,7 +128,7 @@ public interface Manager<E extends NamedBean> {
      * Note: this is not a live array; the contents don't stay up to date
      * @return (slow) copy of system names in array form
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -139,12 +143,12 @@ public interface Manager<E extends NamedBean> {
      * Note: this is ordered by the underlying NamedBeans, not
      *       on the Strings themselves.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()}  is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -158,12 +162,12 @@ public interface Manager<E extends NamedBean> {
      * <p>
      * Note: this is ordered by the original add order, used for ConfigureXML
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()}  is faster.
      * <p>
      * Note: This is a live list, it will be updated as beans are added and removed.
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -175,12 +179,12 @@ public interface Manager<E extends NamedBean> {
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
      * of NamedBeans in system-name order.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()} is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a List of NamedBeans
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -301,16 +305,18 @@ public interface Manager<E extends NamedBean> {
 
     /**
      * Remember a NamedBean Object created outside the manager.
-     * <P>
+     * <p>
      * The non-system-specific SignalHeadManagers use this method extensively.
      *
      * @param n the bean
+     * @throws IllegalArgumentException if a different bean with the same
+     * system name is already registered in the manager
      */
     public void register(@Nonnull E n);
 
     /**
      * Forget a NamedBean Object created outside the manager.
-     * <P>
+     * <p>
      * The non-system-specific RouteManager uses this method.
      *
      * @param n the bean
@@ -360,7 +366,7 @@ public interface Manager<E extends NamedBean> {
     /**
      * Returns the user-readable name of the type of NamedBean 
      * handled by this manager.
-     *<p>
+     * <p>
      * For instance, in the code where we are dealing with just a bean and a
      * message that needs to be passed to the user or in a log.
      *
@@ -548,12 +554,16 @@ public interface Manager<E extends NamedBean> {
 
     /**
      * Register a {@link ManagerDataListener} to hear about 
-     * adding or removing items from the list of NamedBeans
+     * adding or removing items from the list of NamedBeans.
+     * 
+     * @param e the data listener to add
      */
     public void addDataListener(ManagerDataListener<E> e);
     
     /**
-     * Unregister a previously-added {@link ManagerDataListener}
+     * Unregister a previously-added {@link ManagerDataListener}.
+     * 
+     * @param e the data listener to remove
      */
     public void removeDataListener(ManagerDataListener<E> e);
 
@@ -566,13 +576,17 @@ public interface Manager<E extends NamedBean> {
      * manager is not required to mute and (2) if present, 
      * its' temporary, in the sense that the manager must do
      * a cumulative notification when done.
+     * 
+     * @param muted true if notifications should be suppressed; false otherwise
      */
     public default void setDataListenerMute(boolean muted) {}
 
 
     /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
-     * without introducing a Swing dependency into core JMRI
+     * without introducing a Swing dependency into core JMRI.
+     * 
+     * @param <E> the type to support listening for
      * @since JMRI 4.11.4
      */
     interface ManagerDataListener<E extends NamedBean> {
@@ -597,7 +611,9 @@ public interface Manager<E extends NamedBean> {
      * Defines an event that encapsulates changes to a list.
      * <p>
      * Intended to be equivalent to {@link javax.swing.event.ListDataEvent}
-     * without introducing a Swing dependency into core JMRI
+     * without introducing a Swing dependency into core JMRI.
+     * 
+     * @param <E> the type to support in the event
      * @since JMRI 4.11.4
      */
     @javax.annotation.concurrent.Immutable

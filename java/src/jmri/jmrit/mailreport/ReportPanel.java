@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The report is sent to a dedicated SourceForge mailing list, from which people
  * can retrieve it.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Matthew Harris Copyright (c) 2014
  */
@@ -186,17 +186,17 @@ public class ReportPanel extends JPanel {
                 for (PerformFileModel m : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformFileModel.class)) {
                     String fn = m.getFileName();
                     File f = new File(fn);
-                    log.debug("add startup panel file: {}", f);
+                    log.info("Add panel file loaded at startup: {}", f);
                     msg.addFilePart("logfileupload[]", f);
                 }
                 // Check that a manual panel file has been loaded
                 File file = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
                 if (file != null) {
-                    log.debug("add manual panel file: {}", file.getPath());
+                    log.info("Adding manually-loaded panel file: {}", file.getPath());
                     msg.addFilePart("logfileupload[]", jmri.configurexml.LoadXmlUserAction.getCurrentFile());
                 } else {
-                    // No panel file loaded
-                    log.warn("No manual panel file loaded - not sending");
+                    // No panel file loaded by manual action
+                    log.debug("No panel file manually loaded");
                 }
             }
 

@@ -4,7 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-
+import jmri.JmriException;
 import jmri.Light;
 
 /**
@@ -70,7 +70,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * System independent operational instance variables (not saved between
      * runs).
      */
-    protected boolean mActive = false;
+    protected boolean mActive = false; // used to indicate if LightControls are active
     protected boolean mEnabled = true;
     protected double mCurrentIntensity = 0.0;
     protected int mState = OFF;
@@ -335,7 +335,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     /**
-     * Can the Light change it's intensity setting slowly?
+     * Can the Light change its intensity setting slowly?
      * <p>
      * If true, this Light supports a non-zero value of the transitionTime
      * property, which controls how long the Light will take to change from one
@@ -479,6 +479,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         lightControlList.stream().forEach((lc) -> {
             lc.activateLightControl();
         });
+        mActive = true; // set flag for control listeners
     }
 
     /**
@@ -487,11 +488,11 @@ public abstract class AbstractLight extends AbstractNamedBean
     @Override
     public void deactivateLight() {
         // skip if Light is not active
-        if (mActive) {
+        if (mActive) { // check if flag set for control listeners
             lightControlList.stream().forEach((lc) -> {
                 lc.deactivateLightControl();
             });
-            mActive = false;
+            mActive = false; // unset flag for control listeners
         }
     }
 
@@ -527,6 +528,43 @@ public abstract class AbstractLight extends AbstractNamedBean
             listCopy.add(lightControlList1);
         });
         return listCopy;
+    }
+
+    @Override
+    public void setCommandedAnalogValue(float value) throws JmriException {
+        float middle = (getMax() - getMin()) / 2 + getMin();
+        
+        if (value > middle) {
+            setCommandedState(ON);
+        } else {
+            setCommandedState(OFF);
+        }
+    }
+
+    @Override
+    public float getCommandedAnalogValue() {
+        return (float) getCurrentIntensity();
+    }
+
+    @Override
+    public float getMin() {
+        return (float) getMinIntensity();
+    }
+
+    @Override
+    public float getMax() {
+        return (float) getMaxIntensity();
+    }
+
+    @Override
+    public float getResolution() {
+        // AbstractLight is by default only ON or OFF
+        return (float) (getMaxIntensity() - getMinIntensity());
+    }
+
+    @Override
+    public AbsoluteOrRelative getAbsoluteOrRelative() {
+        return AbsoluteOrRelative.ABSOLUTE;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);

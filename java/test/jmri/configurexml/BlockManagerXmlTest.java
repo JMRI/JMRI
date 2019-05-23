@@ -11,21 +11,22 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for BlockManagerXml.
  * <p>
  * Just tests Elements, not actual files. Based upon a stub by Bob Jacobsen
  * Copyright 2008
- * <p>
+ *
  * @author Bob Coleman Copyright 2012
-  */
-public class BlockManagerXmlTest extends TestCase {
+ */
+public class BlockManagerXmlTest {
 
+    @Test
     public void testLoadCurrent() throws Exception {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -286,6 +287,7 @@ public class BlockManagerXmlTest extends TestCase {
             int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
+            Assert.assertNotNull(expectedtestmemory);
             expectedtestmemory.setValue("Memory test: " + testblockfocus);
             Assert.assertNotNull(expectedtestmemory);
 // TODO: BOB C: Memory Test
@@ -329,7 +331,10 @@ public class BlockManagerXmlTest extends TestCase {
     /**
      * This test checks that the store operation runs, but doesn't check the
      * output for correctness.
+     * 
+     * @throws jmri.JmriException if unanticipated exception is thrown
      */
+    @Test
     public void testStore() throws jmri.JmriException {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -342,7 +347,7 @@ public class BlockManagerXmlTest extends TestCase {
         Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb1", "");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
-
+        Assert.assertNotNull(b2);
         Sensor s2 = new AbstractSensor("IS2") {
             @Override
             public void requestUpdateFromLayout() {
@@ -371,6 +376,7 @@ public class BlockManagerXmlTest extends TestCase {
         //BlockManagerXml tb = new BlockManagerXml();
     }
 
+    @Test
     public void testBlockAndSignalMastTest() throws Exception {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -423,32 +429,15 @@ public class BlockManagerXmlTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public BlockManagerXmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",BlockManagerXmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(BlockManagerXmlTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

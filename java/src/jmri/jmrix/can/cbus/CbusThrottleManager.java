@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * CBUS implementation of a ThrottleManager.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2009
  */
@@ -39,6 +39,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     
     public void dispose() {
         tc.removeCanListener(this);
+        if (throttleRequestTimer != null ) {
+            throttleRequestTimer.stop();
+            throttleRequestTimer = null;
+        }
     }
 
     TrafficController tc;
@@ -86,7 +90,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * stopAll()
      *
-     * <P>
+     * <p>
      * Called when track stopped message received. Sets all JMRI managed
      * throttles to speed zero
      */

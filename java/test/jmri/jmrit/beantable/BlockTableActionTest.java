@@ -3,17 +3,19 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import jmri.util.junit.annotations.*;
+import jmri.util.swing.JemmyUtil;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -117,18 +119,180 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
+    public void testRenameBlock() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // Create a Layout Block which will create the Block entry
+        LayoutBlockManager lbm = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlock layoutBlock = lbm.createNewLayoutBlock("ILB999", "Block Name");  // NOI18N
+        layoutBlock.initializeLayoutBlock();
+        Assert.assertNotNull(layoutBlock);
+        Assert.assertEquals("Block Name", layoutBlock.getUserName());  // NOI18N
+
+        // Get the referenced block
+        jmri.Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Block Name");  // NOI18N
+        Assert.assertNotNull(block);
+
+        // Open the block table
+        a.actionPerformed(null); // show table
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleBlockTable"));  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JTableOperator tbo = new JTableOperator(jfo);
+        Assert.assertNotNull(tbo);
+
+        // Click on the edit button, set the user name to empty for remove
+        tbo.clickOnCell(0, 5);
+        JFrameOperator jfoEdit = new JFrameOperator(Bundle.getMessage("TitleEditBlock"));  // NOI18N
+        JTextFieldOperator jtxt = new JTextFieldOperator(jfoEdit, 0);
+        jtxt.clickMouse();
+        jtxt.setText("");
+
+        // Preprare the dialog thread and click on OK
+        Thread remove = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(jfoEdit, "OK").doClick();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(remove.isAlive());}, "remove finished");  // NOI18N
+        tbo.clickOnCell(0, 0);  // deselect the edit button
+
+        // Click on the edit button, set the user name to a new value
+        tbo.clickOnCell(0, 5);
+        jfoEdit = new JFrameOperator(Bundle.getMessage("TitleEditBlock"));  // NOI18N
+        jtxt = new JTextFieldOperator(jfoEdit, 0);
+        jtxt.clickMouse();
+        jtxt.setText("New Block Name");  // NOI18N
+
+        // Preprare the dialog thread and click on OK
+        Thread rename = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        new JButtonOperator(jfoEdit, "OK").doClick();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(rename.isAlive());}, "rename finished");  // NOI18N
+        tbo.clickOnCell(0, 0);  // deselect the edit button
+
+        // Confirm the layout block user name change
+        Assert.assertEquals("New Block Name", layoutBlock.getUserName());
+
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot remove user name for block Block Name");  // NOI18N
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddBlock");
+    }
+
+    @Test
+    public void testAddThroughDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	    //Enter 1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("1");
+	    //and press create
+	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        jf.requestClose();
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSetDefaultSpeed() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	    //Enter 1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("1");
+	    //and press create
+	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        jf.requestClose();
+
+        // Open Speed pane to test Speed menu, which displays a JOptionPane
+        JFrameOperator main = new JFrameOperator(getTableFrameName()); 
+        // Use GUI menu to open Speeds pane:
+	
+	//This is a modal JOptionPane, so create a thread to dismiss it.
+	Thread t = new Thread(() -> {
+            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("SpeedsMenuItemDefaults"),"","OK");
+        });
+        t.setName("Default Speeds Dialog Close Thread");
+        t.start();
+        // pushMenuNoBlock is used, because dialog is modal
+        JMenuBarOperator mainbar = new JMenuBarOperator(main);
+        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        JPopupMenu jpm = jmo.getPopupMenu();
+        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
+        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        jmio.pushNoBlock();
+        // clean up
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    @Override
+    public void testEditButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeTrue(a.includeAddButton());
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        JFrameOperator jfo = new JFrameOperator(f);
+
+        // find the "Add... " button and press it.
+	jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+	//Enter 1 in the text field labeled "System Name:"
+	   
+        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("1");
+	//and press create
+	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        jf.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+	// find the "Edit" button and press it.  This is in the table body.
+	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.dispose(f2);
+	JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+
+    @Override
+    public String getEditFrameName(){
+        return Bundle.getMessage("TitleEditBlock") + " IB1";
+    } 
+
+
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
-        helpTarget = "package.jmri.jmrit.beantable.BlockTable"; 
- 	a = new BlockTableAction();
+        InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
+        helpTarget = "package.jmri.jmrit.beantable.BlockTable";
+        a = new BlockTableAction();
     }
 
     @After
@@ -139,5 +303,4 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
-
 }

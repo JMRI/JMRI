@@ -34,10 +34,14 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * </ul>
  * QSI decoders generally use the 1st format, and ESU LokSound decoders the second.
- *<p>
+ * <p>
  * The specific CV numbers for PI and SI are provided when constructing the object.
  * They can be read from a decoder definition file by e.g. {@link jmri.implementation.ProgrammerFacadeSelector}.
- *<p>
+ * <p>
+ * Alternately the PI and/or SI CV numbers can be set by using a "nn=nn" syntax when specifying
+ * PI and/or SI.  For example, using a cvFirst false syntax, "101=12.80" sets CV101 to 12 before
+ * accessing CV 80, regardless of the PI value configured into the facade.
+ * <p>
  * If skipDupIndexWrite is true, sequential operations with the same PI and SI values
  * (and only immediately sequential operations with both PI and SI unchanged) will
  * skip writing of the PI and SI CVs.  This might not work for some decoders, hence is
@@ -86,11 +90,14 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
      */
     public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst, boolean skipDupIndexWrite) {
         super(prog);
-        this.indexPI = indexPI;
-        this.indexSI = indexSI;
+        this.defaultIndexPI = indexPI;
+        this.defaultIndexSI = indexSI;
         this.cvFirst = cvFirst;
         this.skipDupIndexWrite = skipDupIndexWrite;
     }
+
+    String defaultIndexPI;
+    String defaultIndexSI;
 
     String indexPI;
     String indexSI;
@@ -110,6 +117,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     int lastValueSI = -1;  // value written in last operation
     long lastOpTime = -1;  // time of last complete
 
+    // take the CV string and configure the actions to take
     void parseCV(String cv) {
         valuePI = -1;
         valueSI = -1;
@@ -118,16 +126,34 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 String[] splits = cv.split("\\.");
                 switch (splits.length) {
                     case 2:
-                        valuePI = Integer.parseInt(splits[1]);
+                        if (hasAlternateAddress(splits[1])) {
+                            valuePI = getAlternateValue(splits[1]);
+                            indexPI = getAlternateAddress(splits[1]);
+                        } else {
+                            valuePI = Integer.parseInt(splits[1]);
+                            indexPI = defaultIndexPI;
+                        }
                         _cv = splits[0];
                         break;
                     case 3:
-                        valuePI = Integer.parseInt(splits[1]);
-                        valueSI = Integer.parseInt(splits[2]);
+                        if (hasAlternateAddress(splits[1])) {
+                            valuePI = getAlternateValue(splits[1]);
+                            indexPI = getAlternateAddress(splits[1]);
+                        } else {
+                            valuePI = Integer.parseInt(splits[1]);
+                            indexPI = defaultIndexPI;
+                        }
+                        if (hasAlternateAddress(splits[2])) {
+                            valueSI = getAlternateValue(splits[2]);
+                            indexSI = getAlternateAddress(splits[2]);
+                        } else {
+                            valueSI = Integer.parseInt(splits[2]);
+                            indexSI = defaultIndexSI;
+                        }
                         _cv = splits[0];
                         break;
                     default:
-                        log.error("Too many parts in CV name " + cv);
+                        log.error("Too many parts in CV name; taking 1st two " + cv);
                         valuePI = Integer.parseInt(splits[1]);
                         valueSI = Integer.parseInt(splits[2]);
                         _cv = splits[0];
@@ -137,16 +163,34 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 String[] splits = cv.split("\\.");
                 switch (splits.length) {
                     case 2:
-                        valuePI = Integer.parseInt(splits[0]);
+                        if (hasAlternateAddress(splits[0])) {
+                            valuePI = getAlternateValue(splits[0]);
+                            indexPI = getAlternateAddress(splits[0]);
+                        } else {
+                            valuePI = Integer.parseInt(splits[0]);
+                            indexPI = defaultIndexPI;
+                        }
                         _cv = splits[1];
                         break;
                     case 3:
-                        valuePI = Integer.parseInt(splits[0]);
-                        valueSI = Integer.parseInt(splits[1]);
+                        if (hasAlternateAddress(splits[0])) {
+                            valuePI = getAlternateValue(splits[0]);
+                            indexPI = getAlternateAddress(splits[0]);
+                        } else {
+                            valuePI = Integer.parseInt(splits[0]);
+                            indexPI = defaultIndexPI;
+                        }
+                        if (hasAlternateAddress(splits[1])) {
+                            valueSI = getAlternateValue(splits[1]);
+                            indexSI = getAlternateAddress(splits[1]);
+                        } else {
+                            valueSI = Integer.parseInt(splits[1]);
+                            indexSI = defaultIndexSI;
+                        }
                         _cv = splits[2];
                         break;
                     default:
-                        log.error("Too many parts in CV name " + cv);
+                        log.error("Too many parts in CV name; taking 1st two " + cv);
                         valuePI = Integer.parseInt(splits[0]);
                         valueSI = Integer.parseInt(splits[1]);
                         _cv = splits[2];
@@ -158,6 +202,18 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         }
     }
 
+    boolean hasAlternateAddress(String cv) {
+        return cv.contains("=");
+    }
+    
+    String getAlternateAddress(String cv) {
+        return cv.split("=")[0];
+    }
+    
+    int getAlternateValue(String cv) {
+        return Integer.parseInt(cv.split("=")[1]);
+    }
+    
     /**
      * Check if the last-written PI and SI values can still be counted on.
      *

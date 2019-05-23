@@ -31,25 +31,25 @@ import org.jdom2.ProcessingInstruction;
 
 /**
  * Roster manages and manipulates a roster of locomotives.
- * <P>
+ * <p>
  * It works with the "roster-config" XML schema to load and store its
  * information.
- * <P>
+ * <p>
  * This is an in-memory representation of the roster xml file (see below for
  * constants defining name and location). As such, this class is also
  * responsible for the "dirty bit" handling to ensure it gets written. As a
  * temporary reliability enhancement, all changes to this structure are now
  * being written to a backup file, and a copy is made when the file is opened.
- * <P>
+ * <p>
  * Multiple Roster objects don't make sense, so we use an "instance" member to
  * navigate to a single one.
- * <P>
+ * <p>
  * The only bound property is the list of RosterEntrys; a PropertyChangedEvent
  * is fired every time that changes.
- * <P>
+ * <p>
  * The entries are stored in an ArrayList, sorted alphabetically. That sort is
  * done manually each time an entry is added.
- * <P>
+ * <p>
  * The roster is stored in a "Roster Index", which can be read or written. Each
  * individual entry (once stored) contains a filename which can be used to
  * retrieve the locomotive information for that roster entry. Note that the
@@ -515,7 +515,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Check if an entry is consistent with specific properties.
-     * <P>
+     * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
@@ -538,7 +538,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Check if an entry is consistent with specific properties.
-     * <P>
+     * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
@@ -565,7 +565,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Check if an entry is consistent with specific properties.
-     * <P>
+     * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
@@ -779,8 +779,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * </ul> Does not check for duplicates.
      *
      * @return Filename for RosterEntry
-     * @throws IllegalArgumentException if called with null or empty entry name
      * @param entry the getId() entry name from the RosterEntry
+     * @throws IllegalArgumentException if called with null or empty entry name
      * @see RosterEntry#ensureFilenameExists()
      * @since 2.1.5
      */
@@ -801,7 +801,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Read the contents of a roster XML file into this object.
-     * <P>
+     * <p>
      * Note that this does not clear any existing entries.
      *
      * @param name filename of roster file
@@ -1017,7 +1017,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Absolute path to roster file location.
-     * <P>
+     * <p>
      * Default is in the user's files directory, but can be set to anything.
      *
      * @return location of the Roster file
@@ -1231,7 +1231,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Get the identifier for all entries in the roster.
      *
-     * @param locale - The desired locale
+     * @param locale  The desired locale
      * @return "All Entries" in the specified locale
      */
     public static String allEntries(Locale locale) {

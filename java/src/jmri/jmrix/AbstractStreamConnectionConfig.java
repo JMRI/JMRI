@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
  */
-abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
+abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig implements StreamConnectionConfig {
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -32,7 +32,16 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
      * @param p the adapter to create a connection configuration for
      */
     public AbstractStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
+	super();
         adapter = p;
+    }
+
+    /**
+     * Ctor for a functional object with no preexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
+     */
+    public AbstractStreamConnectionConfig() {
+        adapter = null;
     }
 
     @Override
@@ -40,15 +49,11 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         return adapter;
     }
 
-    /**
-     * Ctor for a functional object with no preexisting adapter.
-     */
-    public AbstractStreamConnectionConfig() {
-        adapter = null;
-    }
-
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -143,6 +148,9 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         return Bundle.getMessage("none");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;

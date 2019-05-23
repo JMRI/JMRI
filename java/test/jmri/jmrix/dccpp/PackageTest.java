@@ -41,6 +41,7 @@ import org.junit.runners.Suite;
         DCCppTurnoutManagerTest.class,
         DCCppTurnoutReplyCacheTest.class,
         BundleTest.class,
+	DCCppStreamConnectionConfigTest.class
 })
 
 /**
@@ -48,6 +49,6 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
-  */
+ */
 public class PackageTest  {
 }

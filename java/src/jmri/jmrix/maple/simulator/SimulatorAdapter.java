@@ -381,7 +381,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     /**
      * Set checksum on simulated Maple Node reply.
-     * Code copied from {@link SerialMessage#setChecksum(int)}
+     * Code copied from {@link SerialMessage}#setChecksum(int)
      *
      * @param r the SerialReply to complete
      * @param index element index to place 2 checksum bytes

@@ -4,8 +4,8 @@ import org.junit.*;
 import jmri.util.junit.annotations.NotApplicable;
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
- * <p>
+ * Tests for the jmri.jmrix.xpa.XpaPowerManager class.
+ *
  * @author	Paul Bender
  */
 public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {

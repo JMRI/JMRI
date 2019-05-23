@@ -4,10 +4,10 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * JUnit tests for the NceMessage class
+ * JUnit tests for the NceMessage class.
  *
  * @author	Bob Jacobsen Copyright 2002-2004
-  */
+ */
 public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // ensure that the static useBinary value is left OK

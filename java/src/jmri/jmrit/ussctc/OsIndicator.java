@@ -13,7 +13,7 @@ import jmri.implementation.DefaultConditionalAction;
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a OsIndicator.
- * <P>
+ * <p>
  * An OS Indicator drives the lamp on the panel for a particular OS. Honors a
  * separate lock/unlocked indication by showing occupied if the associated
  * turnout has been unlocked.
@@ -68,7 +68,7 @@ public class OsIndicator implements Constants {
         variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                 Conditional.Type.SENSOR_INACTIVE,
                 osSensor, true));
-        if (!lock.equals("")) {
+        if (!lock.isEmpty()) {
             variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                     Conditional.Type.SENSOR_INACTIVE,
                     lock, true));

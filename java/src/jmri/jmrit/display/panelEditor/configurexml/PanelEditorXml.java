@@ -99,16 +99,25 @@ public class PanelEditorXml extends AbstractXmlAdapter {
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
+        Attribute a;
         // find coordinates
         int x = 0;
         int y = 0;
         int height = 400;
         int width = 300;
         try {
-            x = shared.getAttribute("x").getIntValue();
-            y = shared.getAttribute("y").getIntValue();
-            height = shared.getAttribute("height").getIntValue();
-            width = shared.getAttribute("width").getIntValue();
+            if ((a = shared.getAttribute("x")) != null) {
+                x = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("y")) != null) {
+                y = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("height")) != null) {
+                height = a.getIntValue();
+            }
+            if ((a = shared.getAttribute("width")) != null) {
+                width = a.getIntValue();
+            }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
             result = false;
@@ -123,6 +132,27 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
+
+        // If available, override location and size with machine dependent values
+        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+            jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+            if (prefsMgr != null) {
+                String windowFrameRef = name;
+
+                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                if (prefsWindowLocation != null) {
+                    x = (int) prefsWindowLocation.getX();
+                    y = (int) prefsWindowLocation.getY();
+                }
+
+                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
+                    height = (int) prefsWindowSize.getHeight();
+                    width = (int) prefsWindowSize.getWidth();
+                }
+            }
+        }
+
         PanelEditor panel = new PanelEditor(name);
         panel.setTitle();
         panel.getTargetFrame().setLocation(x, y);
@@ -131,7 +161,6 @@ public class PanelEditorXml extends AbstractXmlAdapter {
 
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings
-        Attribute a;
         boolean value = true;
         if ((a = shared.getAttribute("editable")) != null && a.getValue().equals("no")) {
             value = false;
@@ -201,15 +230,15 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via " + adapterName);
             try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
                 adapter.load(item, panel);
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
                     | jmri.configurexml.JmriConfigureXmlException
-                    | RuntimeException e) {
+                    | java.lang.reflect.InvocationTargetException e) {
                 log.error("Exception while loading {}", item.getName(), e);
                 result = false;
             }

@@ -27,7 +27,7 @@ Shared preferences are stored in the root of the ```profile``` directory within 
 
 Private preferences are preferences within a single profile that are only used on a single computer running that profile. An example of a private preference is the use of the port "COM3" to get to the system the connection "LocoNet" uses.
 
-Private preferences are stored in directories named ```jmri-MAC-ID``` where "MAC" is the MAC Address of the first network port on the computer and "ID" is the random digits in the identity of the profile. A unique private preferences directory is created for each computer a profile is used on.
+Private preferences are stored in directories named ```jmri-UUID-ID``` where "UUID" is a universally unique identifier for the computer and "ID" is the random digits in the identity of the profile. A unique private preferences directory is created for each user on each computer a profile is used on.
 
 ## Settings Directory
 
@@ -41,11 +41,17 @@ Preferences within a JMRI application may be stored as XML elements or as Java P
 
 ## XML Elements
 
-The XML elements for JMRI preferences are stored in two different files within a single space: ```profile.xml``` and ```user-interface.xml```. Within the two different files, preferences are stored using the same means and same structure, however the intention of the two files are different.
+The XML elements for JMRI preferences are stored in two different files within a single space: ```profile.xml``` (or ```preferences.xml```) and ```user-interface.xml```. Within the two different files, preferences are stored using the same means and same structure, however the intention of the two files are different.
 
 A manager for preferences using either of these files manages a type of preference, for example, connection configurations or table state. The manager uses the methods in [AuxiliaryConfiguration](http://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html) to get, put, or remove these XML elements. These methods all require the Element or the Element's name and if the Element is shared or private.
 
 XML elements for JMRI preferences must all have valid and resolvable namespaces. These namespaces *do not* have to be unique to or defined within the jmri.org web site.
+
+### preferences.xml
+
+```preferences.xml``` *should* contain preferences that have been explicitly set by the user within the JMRI Preferences user interface. These preferences tend to have significant impact on how an application operates and may require that the application be restarted to take effect.
+
+```preferences.xml``` only contains preferences that apply to all profiles operating under a single user on a single computer.
 
 ### profile.xml
 
@@ -63,7 +69,7 @@ Shared and private versions of ```profile.xml``` are retained within a single pr
 
 JMRI application preferences that a simple (a number, boolean, or string), or a list of simple preferences, and can only be meaningfully used once within a single Profile are candidates for storage as [Java Preferences](https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html).
 
-JMRI uses a Properties format for storing Java Preferences in the file ```profile.properties``` within both Shared and Private spaces in a single Profile.
+JMRI uses a Properties format for storing Java Preferences in the file ```profile.properties``` within both Shared and Private spaces in a single Profile. The file ```preferences.properties``` is used for storing preferences that apply to all profiles run by a single user within a single computer.
 
 JMRI further constrains Java Preferences by putting them in separate "namespaces" based on package names. This allows preferences in two different packages to use the same name for a preference (for example, the JMRI Web Server and Simple Server both have a "port" property, but because these are in different packages, they do not conflict).
 

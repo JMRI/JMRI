@@ -5,8 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +24,7 @@ import jmri.server.json.JsonConnection;
  */
 public class JsonMessageClientManager implements InstanceManagerAutoDefault {
 
-    ObjectMapper mapper = null;
+    final ObjectMapper mapper = new ObjectMapper();
     HashMap<String, JsonConnection> clients = new HashMap<>();
 
     /**
@@ -30,12 +33,9 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
      * @param client     the client identifier to use for the subscription
      * @param connection the connection associated with client
      * @throws IllegalArgumentException if client is already in use for a
-     *                                  different connection
+     *                                      different connection
      */
     public void subscribe(@Nonnull String client, @Nonnull JsonConnection connection) throws IllegalArgumentException {
-        if (this.mapper == null) {
-            this.mapper = connection.getObjectMapper();
-        }
         if (this.clients.containsKey(client) && !connection.equals(this.clients.get(client))) {
             throw new IllegalArgumentException("client in use with different connection");
         }
@@ -79,7 +79,7 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
         if (message.getClient() == null) {
             new HashMap<>(this.clients).entrySet().forEach((client) -> {
                 try {
-                    client.getValue().sendMessage(node);
+                    client.getValue().sendMessage(node, 0);
                 } catch (IOException ex) {
                     this.unsubscribe(client.getKey());
                 }
@@ -88,7 +88,7 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
             JsonConnection connection = this.clients.get(message.getClient());
             if (connection != null) {
                 try {
-                    connection.sendMessage(node);
+                    connection.sendMessage(node, 0);
                 } catch (IOException ex) {
                     this.unsubscribe(message.getClient());
                 }
@@ -108,9 +108,6 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
      */
     @CheckForNull
     public synchronized String getClient(@Nonnull JsonConnection connection) {
-        if (!this.clients.containsValue(connection)) {
-            return null;
-        }
         for (Entry<String, JsonConnection> entry : this.clients.entrySet()) {
             if (entry.getValue().equals(connection)) {
                 return entry.getKey();
@@ -119,4 +116,20 @@ public class JsonMessageClientManager implements InstanceManagerAutoDefault {
         return null;
     }
 
+    /**
+     * Get all client names associated with a connection.
+     * 
+     * @param connection the connection to get clients for
+     * @return a set of clients or an empty set if the connection is not
+     *         subscribed
+     */
+    public synchronized Set<String> getClients(@Nonnull JsonConnection connection) {
+        Set<String> set = new HashSet<>();
+        for (Entry<String, JsonConnection> entry : this.clients.entrySet()) {
+            if (entry.getValue().equals(connection)) {
+                set.add(entry.getKey());
+            }
+        }
+        return set;
+    }
 }

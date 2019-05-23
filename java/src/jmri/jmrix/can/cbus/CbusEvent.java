@@ -15,80 +15,174 @@ public class CbusEvent {
     private int _en;
     protected EvState _state;
     protected String _name;
-    protected String _nodeName; // this to be provided by a node table eventually
     
+    /**
+     * Enum of the event state.
+     * <p>
+     * Events generally have on, off or unknown status.
+     * <p>
+     * They can also be asked to request their current status via the network,
+     * or toggled to the opposite state that it is currently at.
+     */
     public enum EvState{
         ON, OFF, UNKNOWN, REQUEST, TOGGLE;
     }
     
+    /**
+     * Create a new event
+     * <p>
+     * New events have an unknown on or off status
+     *
+     * @param nn Node Number
+     * @param en Event Number
+     */
     public CbusEvent( int nn, int en){
         this._nn = nn;
         this._en = en;
         this._state = EvState.UNKNOWN;
         this._name = "";
-        this._nodeName = "";
     }
 
+    /**
+     * Get state of the event
+     *
+     * @return the enum event state, on off or unknown.
+     *
+     */
     public EvState getState() {
         return _state;
     }
     
+    /**
+     * Set current state of the event.
+     * <p>
+     * Does NOT send update to layout.
+     *
+     * @param newval the enum event state ie ON, OFF, UNKNOWN
+     */
     public void setState( EvState newval ) {
         _state = newval;
     }    
     
+    /**
+     * Get event event number
+     *
+     * @return event Number
+     *
+     */
     public int getEn() {
         return _en;
     }
 
+    /**
+     * Get event node number.
+     *
+     * @return node Number
+     */
     public int getNn(){
         return _nn;
     }
     
+    /**
+     * Set event event number.
+     *
+     * @param en Event Number, not restricted so can be -1 for unknown
+     */
     public void setEn ( int en ) {
         _en = en;
     }
 
+    /**
+     * Set event node number.
+     *
+     * @param nn Node Number, not restricted so can be -1 for unknown
+     */
     public void setNn ( int nn ) {
         _nn = nn;
     }
     
+    /**
+     * Set event name.
+     *
+     * @param name Event Name
+     */
     public void setName( String name ) {
         _name = name;
     }
     
+    /**
+     * Get event name.
+     *
+     * @return the Event Name
+     */
     public String getName() {
         return _name;
     }
     
-    // will not exist when there's a node table
-    public void setNodeName( String name ) {
-        _nodeName = name;
-    }
-    
+    /**
+     * Get Node name.
+     * <p>
+     * Helper method, node name not stored in event, retrieved via @CbusNameService
+     *
+     * @return Node Name
+     */
     public String getNodeName() {
-        return _nodeName;
+        return new CbusNameService().getNodeName( getNn() );
     }
     
-    public Boolean matches(int nn, int en) {
+    /**
+     * Test if a node and event number combination matches this event.
+     * 
+     * @param nn Node Number
+     * @param en Event Number
+     *
+     * @return true on match, else false
+     */
+    public boolean matches(int nn, int en) {
         if ( (nn == _nn) && (en == _en) ) {
             return true;
         }
         return false;
     }
     
+    /**
+     * Send ON event CAN frame.
+     * <p>
+     * Long event if Node num greater than 0, else short.
+     */
     public void sendOn(){
         sendEvent(EvState.ON);
     }
     
+    /**
+     * Send OFF event CAN frame.
+     * <p>
+     * Long event if Node num greater than 0, else short.
+     */
     public void sendOff(){
         sendEvent(EvState.OFF);
     }
-
+    
+    /**
+     * Send event status request CAN frame.
+     * <p>
+     * Long request if Node num greater than 0, else short.
+     */
     public void sendRequest(){
         sendEvent(EvState.REQUEST);
     }
 
+    /**
+     * Send event CAN frame via ENUM.
+     * <p>
+     * Also updates the event status as per the enum value.
+     * <p>
+     * If current state unknown, toggle sends event off.
+     * <p>
+     * Long event if Node num greater than 0, else short.
+     *
+     * @param state The enum state requested to be sent, ie ON, OFF, REQUEST, TOGGLE
+     */
     public void sendEvent(EvState state) {
         CanSystemConnectionMemo memo = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class);
         TrafficController _tc = memo.getTrafficController();
@@ -130,6 +224,11 @@ public class CbusEvent {
         jmri.util.ThreadingUtil.runOnLayout( () -> { _tc.sendCanMessage(m, null); } );
     }
     
+    /**
+     * Get a String with event overview.
+     * 
+     * @return includes event name and node name if known
+     */
     @Override
     public String toString() {
         StringBuilder addevbuf = new StringBuilder(50);
@@ -138,8 +237,8 @@ public class CbusEvent {
             addevbuf.append (":");
             addevbuf.append (_nn);
             addevbuf.append (" ");
-            if (!_nodeName.equals("")) {
-                addevbuf.append (_nodeName);
+            if ( !getNodeName().isEmpty() ) {
+                addevbuf.append ( getNodeName() );
                 addevbuf.append (" ");
             }
         }
@@ -147,12 +246,13 @@ public class CbusEvent {
         addevbuf.append (":");
         addevbuf.append (_en);
         addevbuf.append (" ");
-        if (!_name.equals("")) {
-            addevbuf.append (_name);
+        if ( !getName().isEmpty() ) {
+            addevbuf.append ( getName() );
             addevbuf.append (" ");
         }
         return addevbuf.toString();
     }
 
     // private static final Logger log = LoggerFactory.getLogger(CbusEvent.class);
+
 }

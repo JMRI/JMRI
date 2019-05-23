@@ -24,23 +24,23 @@ import org.slf4j.LoggerFactory;
  * This class holds information and options for an ActiveTrain when it is
  * running in AUTOMATIC mode. It is an extension to Active Train for automatic
  * running.
- * <P>
+ * <p>
  * This class implements logic that follows a train around a layout. Train
  * follows signals, provided the next Section is allocated to it, and its
  * ActiveTrain's status is RUNNING.
- * <P>
- * This class is linked via it's parent ActiveTrain object.
- * <P>
+ * <p>
+ * This class is linked via its parent ActiveTrain object.
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * The AutoEngineer sub class is based in part on code by Pete Cressman
  * contained in Warrants.java
  *
@@ -1314,7 +1314,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * Sets the throttle percent unless it is already less than the new setting
-     * @param throttleSetting - Max ThrottleSetting required.
+     * @param throttleSetting  Max ThrottleSetting required.
      */
     private synchronized void setToAMaximumThrottle(float throttleSetting) {
         if (throttleSetting < _targetSpeed) {
@@ -1324,7 +1324,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * Calculates the throttle setting for a given speed.
-     * @param speed - the unadjusted speed.
+     * @param speed  the unadjusted speed.
      * @return - throttle setting (a percentage)
      */
     private synchronized float getThrottleSettingFromSpeed(float speed) {
@@ -1366,7 +1366,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * sets the throttle based on an index number into _speedRatio array
-     * @param speedState - Index value
+     * @param speedState  Index value
      */
     private synchronized void setTargetSpeedState(int speedState) {
         _autoEngineer.slowToStop(false);
@@ -1946,7 +1946,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * Convert ramp rate name, stored as a string into the constant value
      * assigned.
      *
-     * @param rampRate - name of ramp rate, such as "RAMP_FAST"
+     * @param rampRate  name of ramp rate, such as "RAMP_FAST"
      * @return integer representing a ramprate constant value
      */
     public static int getRampRateFromName(String rampRate) {

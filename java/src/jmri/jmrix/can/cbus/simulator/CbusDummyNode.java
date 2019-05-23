@@ -1,43 +1,33 @@
 package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
-import jmri.jmrix.can.CanFrame;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.CbusSend;
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.swing.simulator.NdPane;
 import jmri.jmrix.can.TrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Node
+ * Simulating a MERG CBUS Node.
+ *
  * @author Steve Young Copyright (C) 2018 2019
  * @see CbusSimulator
  * @since 4.15.2
  */
-public class CbusDummyNode implements CanListener {
+public class CbusDummyNode extends CbusNode implements CanListener {
     
     private TrafficController tc;
     private CanSystemConnectionMemo memo;
     
-    private int[] _parameters;
-    private int[] _nvArray;
-    private int _flags;
-    private int _simType;
-    private int _nn;
-    private Boolean _inFLiM;
-    private Boolean _inSetup;
-    private Boolean _learnMode;
-    private Boolean _sendsWRACKonNVSET;
     private NdPane _pane;
-    private ArrayList<CbusNodeEvent> _ndEv;
     public static ArrayList<Integer> ndTypes;
     
     private int _networkDelay;
@@ -45,44 +35,42 @@ public class CbusDummyNode implements CanListener {
     private Boolean _processOut;
     private Boolean _sendIn;
     private Boolean _sendOut;
-    private CbusSend send;
     
-    public CbusDummyNode( CanSystemConnectionMemo sysmemo ){
-        _simType = 0;
+    public CbusDummyNode( int nodenumber, int manufacturer, int nodeType, int canId, CanSystemConnectionMemo sysmemo ){
+        super( sysmemo, nodenumber );
         memo = sysmemo;
         if (memo != null) {
             tc = memo.getTrafficController();
             tc.addCanListener(this);
         }
+        setDummyType(manufacturer, nodeType);
+        setCanId(canId);
         init();
     }
     
     private void init(){
-        send = new CbusSend(memo);
-        _inFLiM = false;
-        _inSetup = false;
-        _learnMode = false;
-        _nn=0;
+        
         _networkDelay = 40;
         _pane = null;
-        
-        _ndEv = new ArrayList<CbusNodeEvent>();
 
         _processIn=false;
         _processOut=true;
         _sendIn=true;
         _sendOut=false;
         
+        // get available simulated nodes
         ndTypes = new ArrayList<Integer>();
-        
         ndTypes.add(0); // 0 SlIM
         ndTypes.add(29); // 29 CANPAN
-        
-        setDummyType(_simType);
+        ndTypes.add(255); // 255 CANTSTMAX
     }
     
-    public void setDelay( int newval){
-        _networkDelay = newval;
+    /**
+     * Set the simulated node delay
+     * @param nodeDelay Delay in ms
+     */
+    public void setDelay( int nodeDelay){
+        _networkDelay = nodeDelay;
     }
     
     public int getDelay(){
@@ -121,276 +109,281 @@ public class CbusDummyNode implements CanListener {
         return _sendOut;
     }
 
-    private void setParameters(){
-        // Para 1 The manufacturer ID
-        // Para 2 Minor code version as an alphabetic character (ASCII)
-        // Para 3 Manufacturer module identifier as a HEX numeric
-        // Para 4 Number of supported events as a HEX numeric
-        // Para 5 Number of Event Variables per event as a HEX numeric
-        // Para 6 Number of supported Node Variables as a HEX numeric
-        // Para 7 Major version
-        // Para 8;  Node flags
-        // Para 9;  Processor type
-        // Para 10; Bus type
-        // Para 11; load address, 4 bytes
-        // Para 15; CPU manufacturer's id as read from the chip config space, 4 bytes
-        // Para 19; CPU manufacturer code
-        // Para 20; Beta revision (numeric), or 0 if release
-
-        _sendsWRACKonNVSET = true;
-    
-        if (_simType == 29) { // CANPAN
-            _sendsWRACKonNVSET = false;
-            _parameters = new int[]{ 
-            20, /* 0 num parameters   */
-            165, /* 1 manufacturer ID   */
-            89, /* 2 Minor code version   */
-            29, /* 3 Manufacturer module identifier   */
-            128, /* 4 Number of supported events   */
-            13, /* 5 Number of Event Variables per event   */
-            1, /* 6 Number of Node Variables   */
-            1, /* 7 Major version   */
-            13, /* 8 Node flags   */ 
-            13, /* 9 Processor type   */
-            1, /* 10 Bus type   */
-            0, /* 11 load address, 1/4 bytes   */
-            8, /* 12 load address, 2/4 bytes   */
-            0, /* 13 load address, 3/4 bytes   */
-            0, /* 14 load address, 4/4 bytes   */
-            0, /* 15 CPU manufacturer's id 1/4  */
-            0, /* 16 CPU manufacturer's id 2/4  */
-            0, /* 17 CPU manufacturer's id 3/4  */
-            0, /* 18 CPU manufacturer's id 4/4  */
-            1, /* 19 CPU manufacturer code   */
-            1, /* 20 Beta revision   */
-            };
-            
-            // 0th NV is total NVs
-            _nvArray = new int[]{ 1, 0 };
-            return;
-        }
-        
-        _parameters = new int[]{ 0 };
-        _nvArray = new int[]{ 0 };
-        _ndEv = null;
-        _ndEv = new ArrayList<CbusNodeEvent>();
-        _flags=7;
-    }
-
     // total events on module
     private void sendNUMEV(){
         CanReply r = new CanReply(4);
         r.setElement(0, CbusConstants.CBUS_NUMEV);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);
-        r.setElement(3, _ndEv.size());
+        r.setElement(1, getNodeNumber() >> 8);
+        r.setElement(2, getNodeNumber() & 0xff);
+        r.setElement(3, getTotalNodeEvents() );
         send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
     private void evLearn(int nn, int en, int index, int val){
-        CbusNodeEvent nodeEvent = getNodeEvent(nn,en);
-        if (nodeEvent==null){
-            nodeEvent = new CbusNodeEvent(nn,en,_nn,getNextFreeIndex(),_parameters[5]);
-            _ndEv.add(nodeEvent);
+        
+        if ( val < 0 || val > 255 ) {
+            sendCMDERR(11);
+            return;
         }
-        nodeEvent.setEvVar(index,val);
+        if ( index < 0 || index > 255 ) {
+            sendCMDERR(6);
+            return;
+        }
+        provideNodeEvent(nn,en).setEvVar(index,val);
+        if ( provideNodeEvent(nn,en).getIndex()< 0 ) {
+            provideNodeEvent(nn,en).setIndex( getNextFreeIndex() );
+        }
         sendWRACK();
-    }
-    
-    private void evUnLearn(int nn, int en){
-        _ndEv.remove(getNodeEvent(nn, en));
-    }
-
-    private CbusNodeEvent getNodeEvent(int nn, int en) {
-        for (int i = 0; i < _ndEv.size(); i++) {
-            if ( ( _ndEv.get(i).getNn() == nn ) && ( _ndEv.get(i).getEn() == en )) {
-                return _ndEv.get(i);
-            }
-        }
-        return null;
-    }
-
-    private CbusNodeEvent getNodeEventByIndex(int index) {
-        for (int i = 0; i < _ndEv.size(); i++) {
-            if ( _ndEv.get(i).getIndex() == index ) {
-                return _ndEv.get(i);
-            }
-        }
-        return null;
     }
     
     // finds the next event index to allocate
     private int getNextFreeIndex(){
         int newIndex = 1;
-        for (int i = 0; i < _ndEv.size(); i++) {
-            if ( newIndex <= _ndEv.get(i).getIndex() ) {
-                newIndex = _ndEv.get(i).getIndex()+1;
+        for (int i = 0; i < getTotalNodeEvents(); i++) {
+            if ( newIndex <= getNodeEventByArrayID(i).getIndex() ) {
+                newIndex = getNodeEventByArrayID(i).getIndex()+1;
             }
         }
+        log.debug("dummy node sets index {}",newIndex);
         return newIndex;
     }
     
+    /**
+     * Add an event to the node, will not overwrite an existing event.
+     *
+     * @param newEvent the new event to be added
+     */
+    @Override
+    public void addNewEvent( CbusNodeEvent newEvent ) {
+        if (_nodeEvents == null) {
+            resetNodeEvents();
+        }
+        _nodeEvents.add(newEvent);
+    }
+    
     private void sendENRSP(){
-        for (int i = 0; i < _ndEv.size(); i++) {
+        int extraDelay = 5;
+        for (int i = 0; i < getTotalNodeEvents(); i++) {
+            
+            if ( getNodeEventByArrayID(i).getIndex()<0 ) {
+                getNodeEventByArrayID(i).setIndex( getNextFreeIndex() );
+            }
+            
             CanReply r = new CanReply(8);
             r.setElement(0, CbusConstants.CBUS_ENRSP);
-            r.setElement(1, _nn >> 8);
-            r.setElement(2, _nn & 0xff);
-            r.setElement(3, _ndEv.get(i).getNn() >> 8);
-            r.setElement(4, _ndEv.get(i).getNn() & 0xff);
-            r.setElement(5, _ndEv.get(i).getEn() >> 8);
-            r.setElement(6, _ndEv.get(i).getEn() & 0xff);
-            r.setElement(7, _ndEv.get(i).getIndex() );
-            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+            r.setElement(1, getNodeNumber() >> 8);
+            r.setElement(2, getNodeNumber() & 0xff);
+            r.setElement(3, getNodeEventByArrayID(i).getNn() >> 8);
+            r.setElement(4, getNodeEventByArrayID(i).getNn() & 0xff);
+            r.setElement(5, getNodeEventByArrayID(i).getEn() >> 8);
+            r.setElement(6, getNodeEventByArrayID(i).getEn() & 0xff);
+            r.setElement(7, getNodeEventByArrayID(i).getIndex() & 0xff);
+            
+            send.sendWithDelay(r,_sendIn,_sendOut,( _networkDelay + ( extraDelay * i ) ) );
         }
     }
     
     private void sendNEVAL( int index, int varIndex ){
-        CanReply r = new CanReply(6);
-        r.setElement(0, CbusConstants.CBUS_NEVAL);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);
-        r.setElement(3, index);
-        r.setElement(4, varIndex);
-        r.setElement(5, getNodeEventByIndex(index).getEvVar(varIndex) );
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
-    }
-    
-    // move to private in future
-    public int getParamater(int number) {
-        return _parameters[number];
+        
+        if ( index < 0 || index > 255 ){
+            sendCMDERR(7);
+            return;
+        }
+        try {
+            CanReply r = new CanReply(6);
+            r.setElement(0, CbusConstants.CBUS_NEVAL);
+            r.setElement(1, getNodeNumber() >> 8);
+            r.setElement(2, getNodeNumber() & 0xff);
+            r.setElement(3, index);
+            r.setElement(4, varIndex);
+            r.setElement(5, getNodeEventByIndex(index).getEvVar(varIndex) );
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        }
+        catch ( NullPointerException e ){
+            // log.warn("unable to send node event {} variable index {}", index , varIndex );
+            sendCMDERR(12);
+        }
+        
     }
     
     private void sendPARAMS() {
         CanReply r = new CanReply(8);
         r.setElement(0, CbusConstants.CBUS_PARAMS);
-        r.setElement(1, _parameters[1]);
-        r.setElement(2, _parameters[2]);
-        r.setElement(3, _parameters[3]);
-        r.setElement(4, _parameters[4]);
-        r.setElement(5, _parameters[5]);
-        r.setElement(6, _parameters[6]);
-        r.setElement(7, _parameters[7]);
+        r.setElement(1, getParameter(1));
+        r.setElement(2, getParameter(2));
+        r.setElement(3, getParameter(3));
+        r.setElement(4, getParameter(4));
+        r.setElement(5, getParameter(5));
+        r.setElement(6, getParameter(6));
+        r.setElement(7, getParameter(7));
         send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     private void sendPNN() {
         CanReply r = new CanReply(6);
         r.setElement(0, CbusConstants.CBUS_PNN);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);
-        r.setElement(3, _parameters[1]);
-        r.setElement(4, _parameters[3]);
-        r.setElement(5, _flags);
+        r.setElement(1, getNodeNumber() >> 8);
+        r.setElement(2, getNodeNumber() & 0xff);
+        r.setElement(3, getParameter(1) );
+        r.setElement(4, getParameter(3) );
+        r.setElement(5, getParameter(8));
         send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
+    // Parameter answer
     private void sendPARAN( int index ){
-        CanReply r = new CanReply(5);
-        r.setElement(0, CbusConstants.CBUS_PARAN);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);
-        r.setElement(3, index);
-        r.setElement(4, _parameters[index]);
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        
+        try {
+            CanReply r = new CanReply(5);
+            r.setElement(0, CbusConstants.CBUS_PARAN);
+            r.setElement(1, getNodeNumber() >> 8);
+            r.setElement(2, getNodeNumber() & 0xff);
+            r.setElement(3, index);
+            r.setElement(4, getParameter(index));
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            sendCMDERR(9);
+        }
     }
     
     // NV Answer
     private void sendNVANS( int index ) {
-        CanReply r = new CanReply(5);
-        r.setElement(0, CbusConstants.CBUS_NVANS);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);
-        r.setElement(3, index);
-        r.setElement(4, _nvArray[index]);
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        
+        try {
+            CanReply r = new CanReply(5);
+            r.setElement(0, CbusConstants.CBUS_NVANS);
+            r.setElement(1, getNodeNumber() >> 8);
+            r.setElement(2, getNodeNumber() & 0xff);
+            r.setElement(3, index);
+            r.setElement(4, getNV(index));
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            sendCMDERR(10);
+        }
     }
 
-    private void setNV(int index, int newval) {
-        _nvArray[index]=newval;
-        if (_sendsWRACKonNVSET){
-            sendWRACK();
+    private void setDummyNV(int index, int newval) {
+        
+        if ( newval<0 || newval > 255 ) {
+            sendCMDERR(12);
+            return;
         }
+        
+        if (index==0) {
+            sendCMDERR(10);
+            return;
+        }
+        try {
+            setNV(index,newval);
+            if ( getsendsWRACKonNVSET() ){
+                sendWRACK();
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            sendCMDERR(10);
+        }
+    }
+    
+    private void sendCMDERR(int errorId) {
+        CanReply r = new CanReply(4);
+        r.setElement(0, CbusConstants.CBUS_CMDERR);
+        r.setElement(1, getNodeNumber() >> 8);
+        r.setElement(2, getNodeNumber() & 0xff);
+        r.setElement(3, errorId );
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     private void sendWRACK(){
         CanReply r = new CanReply(3);
         r.setElement(0, CbusConstants.CBUS_WRACK);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);        
+        r.setElement(1, getNodeNumber() >> 8);
+        r.setElement(2, getNodeNumber() & 0xff);        
         send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     // sim of FiLM Button
     public void flimButton() {
         // send request for node number
-        if ( _simType >0 ) {
-            _inSetup = true;
+        if ( getNodeType() >0 ) {
+            setNodeInSetupMode(true);
             CanReply r = new CanReply(3);
             r.setElement(0, CbusConstants.CBUS_RQNN);
-            r.setElement(1, _nn >> 8);
-            r.setElement(2, _nn & 0xff);
+            r.setElement(1, getNodeNumber() >> 8);
+            r.setElement(2, getNodeNumber() & 0xff);
             send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
         }
     }
     
-    public void setDummyType(int type){
-        _simType = type;
-        setParameters();
-        log.info("Simulated CBUS Node: {}", CbusOpCodes.getModuleType(165,_simType) );
+    public void setDummyType(int manu, int type){
+        
+        resetNodeEvents();
+        setNodeInFLiMMode(false);
+        
+        CbusNodeConstants.setDummyNodeParameters(this,manu,type);
+        
+        log.info("Simulated CBUS Node: {}", CbusNodeConstants.getModuleType(manu,type ) );
     }
-    
-    public int getDummyType() {
-        return _simType;
-    }
+
     
     public void setPane(NdPane pane) {
         _pane = pane;
     }
     
     private void setDNN(int nn){
-        _nn = nn;
-        _inFLiM = true;
-        _inSetup = false;
+        setNodeNumber(nn);
+        setNodeInFLiMMode(true);
+        setNodeInSetupMode(false);
         if (_pane != null) {
-            _pane.setNodeNum(_nn);
+            _pane.setNodeNum(getNodeNumber());
         }
         CanReply r = new CanReply(3);
         r.setElement(0, CbusConstants.CBUS_NNACK);
-        r.setElement(1, _nn >> 8);
-        r.setElement(2, _nn & 0xff);
+        r.setElement(1, getNodeNumber() >> 8);
+        r.setElement(2, getNodeNumber() & 0xff);
         send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
-    
-    private void setLearnMode(Boolean newval) {
-        _learnMode = newval;
-    }
 
-    public void passMessage(CanFrame m) {
-        // log.warn("dummy node canframe {}",m);
-        if ( _simType == 0 ) {
+    private void passMessage(CanMessage m) {
+        // log.debug("dummy node canMessage {}",m);
+        if ( getNodeType() == 0 ) {
             return;
         }
         int opc = m.getElement(0);
-        int nn = ( m.getElement(1) * 256 ) + m.getElement(2);
-        if ( _inSetup ) {
+        if ( getNodeInSetupMode() ) {
             if ( opc == CbusConstants.CBUS_RQNP ) { // Request Node Parameters
                 sendPARAMS();
             }
             if ( opc == CbusConstants.CBUS_SNN ) { // Set Node Number
-                setDNN(nn);
+                setDNN( ( m.getElement(1) * 256 ) + m.getElement(2) );
+            }
+            if ( opc == CbusConstants.CBUS_RQMN ) { // Request Module Name
+                
+                byte[] byteArr = jmri.util.StringUtil.fullTextToHexArray( getNodeNameFromName(),7 );
+                CanReply r = new CanReply(8);
+                r.setElement(0, CbusConstants.CBUS_NAME);
+                r.setElement(1, byteArr[0] & 0xff);
+                r.setElement(2, byteArr[1] & 0xff);
+                r.setElement(3, byteArr[2] & 0xff);
+                r.setElement(4, byteArr[3] & 0xff);
+                r.setElement(5, byteArr[4] & 0xff);
+                r.setElement(6, byteArr[5] & 0xff);
+                r.setElement(7, byteArr[6] & 0xff);
+                send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+                
             }
         }
-        if ( _inFLiM ) {
+        if ( getNodeInFLiMMode() ) {
             if ( opc == CbusConstants.CBUS_QNN ) { // Query Nodes
                 sendPNN();
             }
-            if (_nn == nn) {
+            if (getNodeNumber() == ( m.getElement(1) * 256 ) + m.getElement(2) ) {
                 if ( opc == CbusConstants.CBUS_NNULN ) { // Node exit learn mode
-                    setLearnMode(false);
+                    setNodeInLearnMode(false);
                 }
                 if ( opc == CbusConstants.CBUS_NNLRN ) { // Node enter learn mode
-                    setLearnMode(true);
+                    setNodeInLearnMode(true);
                 }
                 if ( opc == CbusConstants.CBUS_RQNPN ) { // Request Node Parameters by Index
                     sendPARAN(m.getElement(3));
@@ -399,7 +392,7 @@ public class CbusDummyNode implements CanListener {
                     sendNVANS(m.getElement(3));
                 }
                 if ( opc == CbusConstants.CBUS_NVSET ) { // Set Node Variable
-                    setNV(m.getElement(3),m.getElement(4));
+                    setDummyNV(m.getElement(3),m.getElement(4));
                 }
                 if ( opc == CbusConstants.CBUS_RQEVN ) { // Request number of events
                     sendNUMEV();
@@ -412,7 +405,7 @@ public class CbusDummyNode implements CanListener {
                 }
             }
             
-            if (_learnMode){
+            if ( getNodeInLearnMode() ){
                 if ( opc == CbusConstants.CBUS_EVLRN ) { // Teach node event
                     evLearn(
                     ( ( m.getElement(1) * 256 ) + m.getElement(2) ),
@@ -420,9 +413,15 @@ public class CbusDummyNode implements CanListener {
                     m.getElement(5),
                     m.getElement(6) );
                 }
-                if ( opc == CbusConstants.CBUS_EVULN ) { // Teach node event
-                    evUnLearn( ( m.getElement(1) * 256 ) + m.getElement(2) ,
+                if ( opc == CbusConstants.CBUS_EVULN ) { // Node Unlearn event
+                    removeEvent( ( m.getElement(1) * 256 ) + m.getElement(2) ,
                         ( ( m.getElement(3) * 256 ) + m.getElement(4) ) );
+                }
+                if ( opc ==  CbusConstants.CBUS_NNCLR) { // clear all events
+                    if ( ( ( m.getElement(1) * 256 ) + m.getElement(2) ) ==  getNodeNumber() ) {
+                        // no response expected
+                        resetNodeEvents();
+                    }
                 }
             }
         }
@@ -430,20 +429,26 @@ public class CbusDummyNode implements CanListener {
     
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
-            CanFrame test = m;
-            passMessage(test);
+            passMessage(m);
         }
     }
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
-            CanFrame test = r;
-            passMessage(test);
+            CanMessage msg = new CanMessage(r);
+            passMessage(msg);
         }
     }
 
+    @Override
     public void dispose(){
         if (tc != null) {
             tc.removeCanListener(this);
@@ -452,4 +457,5 @@ public class CbusDummyNode implements CanListener {
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyNode.class);
+
 }

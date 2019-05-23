@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of each train in operations.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *

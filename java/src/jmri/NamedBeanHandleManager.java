@@ -30,15 +30,14 @@ import org.slf4j.LoggerFactory;
  * listener has been used.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @see jmri.NamedBean
  * @see jmri.NamedBeanHandle
@@ -220,7 +219,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
 
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -228,7 +226,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     @Override
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

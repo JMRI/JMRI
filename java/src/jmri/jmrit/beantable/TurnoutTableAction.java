@@ -866,10 +866,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
              * Visualize state in table as a graphic, customized for Turnouts (4
              * states). Renderer and Editor are identical, as the cell contents
              * are not actually edited, only used to toggle state using
-             * {@link #clickOn(NamedBean)}.
+             * {@link #clickOn(Turnout)}.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
@@ -1668,7 +1666,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Respond to Create new item pressed on Add Turnout pane.
+     * Respond to Create new item button pressed on Add Turnout pane.
      *
      * @param e the click event
      */
@@ -1690,7 +1688,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
-        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
+        String curAddress = hardwareAddressTextField.getText(); // N11N
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -1706,7 +1704,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             uName = null;
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
+        // Add some entry pattern checking, before assembling sName and handing it to the TurnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = null;
         
@@ -2045,7 +2043,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             if (fld == null) {
                 return false;
             }
-            value = getText().trim();
+            value = getText();
             if ((value.length() < 1) && (allow0Length == false)) {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {

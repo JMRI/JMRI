@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Panel for load/store of RPS setup
+ * Panel for load/store of RPS setup.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
@@ -109,4 +109,5 @@ public class LoadStorePanel extends javax.swing.JPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadStorePanel.class);
+
 }

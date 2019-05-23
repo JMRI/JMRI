@@ -663,8 +663,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findCurrentBlocks(self) :
         # search the block list for the matching loco
         blockList = []
-        for x in blocks.getSystemNameList().toArray() :
-            b = blocks.getBySystemName(x)
+        for b in blocks.getNamedBeanSet() :
             if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
         return blockList

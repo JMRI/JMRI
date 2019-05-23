@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 /**
  * Handle configuring an layout connection via a Roco z21 or Z21.
- * <P>
+ * <p>
  * This uses the {@link Z21Adapter} class to do the actual connection.
  *
  * @author	Paul Bender Copyright (C) 2011
@@ -23,7 +23,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -31,12 +32,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "Roco Z21";
+        return "Roco Z21"; // NOI18N
     }
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</i> it has already been set.
+     * {@inheritDoc}
      */
     @Override
     protected void setInstance() {
@@ -45,6 +45,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);

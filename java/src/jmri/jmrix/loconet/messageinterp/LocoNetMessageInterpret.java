@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.messageinterp;
 
 
 import java.time.LocalTime;
-import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.Reporter;
@@ -20,6 +20,7 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * Reverse-engineering of device-specific OpSw messages, throttle text message,
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
- * <p>
+ *
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
@@ -160,6 +161,12 @@ public class LocoNetMessageInterpret {
                         locoAddress);
             }
 
+            case LnConstants.OPC_EXP_REQ_SLOT: {
+                String locoAddress = convertToMixed(l.getElement(2), l.getElement(1));
+                return Bundle.getMessage("LN_MSG_REQ_EXP_SLOT_FOR_ADDR",
+                        locoAddress);
+            }
+
             /*
              * OPC_SW_ACK       0xBD   ; REQ SWITCH WITH acknowledge function (not DT200)
              *                         ; Follow on message: LACK
@@ -245,6 +252,14 @@ public class LocoNetMessageInterpret {
                 }
                 break;
             }
+
+//            case LnConstants.OPC_EXP_SLOT_MOVE: {
+//                result = interpretOpcExpMoveSlots(l);
+//                if (result.length() > 0) {
+//                    return result;
+//                }
+//                break;
+//            }
 
             /*
              * OPC_LINK_SLOTS   0xB9   ; LINK slot ARG1 to slot ARG2=
@@ -460,6 +475,14 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR: {
+                result = interpretPocExpLocoSpdDirFunction(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
+
             /*
              * OPC_PANEL_QUERY 0xDF messages used by throttles to discover
              * panels
@@ -663,13 +686,18 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+//          TODO: put this back for intelibox cmd station.
+//            it conflicts with loconet speed/dire etc.
             case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
                     return result;
                 }
+                result = interpretOpcExpMoveSlots(l);
+                if (result.length() > 0) {
+                    return result;
+                }
                 break;
-
             }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
 
             //$FALL-THROUGH$
@@ -1941,6 +1969,79 @@ public class LocoNetMessageInterpret {
                     sect1Mode, sect1State, sect2Mode, sect2State,
                     sect3Mode, sect3State, sect4Mode, sect4State);
         }
+        if ((pCMD == 0x20) ) { //BXP88
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            ArrayList<Integer> sectsShorted = new ArrayList<>();
+            ArrayList<Integer> sectsUnshorted = new ArrayList<>();
+            if ((cm2 & 0x01) != 0) {
+                sectsShorted.add(1);
+            } else {
+                sectsUnshorted.add(1);
+            }
+            if ((cm2 & 0x02) != 0) {
+                sectsShorted.add(2);
+            } else {
+                sectsUnshorted.add(2);
+            }
+            if ((cm2 & 0x04) != 0) {
+                sectsShorted.add(3);
+            } else {
+                sectsUnshorted.add(3);
+            }
+            if ((cm2 & 0x08) != 0) {
+                sectsShorted.add(4);
+            } else {
+                sectsUnshorted.add(4);
+            }
+            if ((cm1 & 0x01) != 0) {
+                sectsShorted.add(5);
+            } else {
+                sectsUnshorted.add(5);
+            }
+            if ((cm1 & 0x02) != 0) {
+                sectsShorted.add(6);
+            } else {
+                sectsUnshorted.add(6);
+            }
+            if ((cm1 & 0x04) != 0) {
+                sectsShorted.add(7);
+            } else {
+                sectsUnshorted.add(7);
+            }
+            if ((cm1 & 0x08) != 0) {
+                sectsShorted.add(8);
+            } else {
+                sectsUnshorted.add(8);
+            }
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXP88",
+                    (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
+                    StringUtils.join(sectsShorted, ','), StringUtils.join(sectsUnshorted, ','));
+        }
+        if ( (pCMD == 0x50) || (pCMD == 0x40)) { //BXPA1
+            int cm1 = l.getElement(3);
+            String RevState = "";
+            String BreakState = "";
+            if ((cm1 & 0x10) != 0) { // reversing state
+                if ((cm1 & 0x08) != 0) {
+                    RevState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_REV");
+                } else {
+                    RevState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_NORM");
+                }
+            } else {
+                // breaker state
+                if ((cm1 & 0x08) != 0) {
+                    BreakState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_SHORT");
+                } else {
+                    BreakState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_NONSHORT");
+                }
+            }
+            int bxpa1_Id = ((l.getElement(2) << 3 ) + (l.getElement(3) & 0x07 ) + 1);
+            // Due to a problem with the firmware messages from x and x+4 are identical
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1",
+                    bxpa1_Id, bxpa1_Id +4,
+                    RevState, BreakState);
+        }
         return "";
     }
 
@@ -2374,10 +2475,11 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcRqSlData(LocoNetMessage l) {
-        int slot = l.getElement(1) + 128 * l.getElement(2);
-
+        int slot = l.getElement(1) + 128 * (l.getElement(2) & 0x07);
+        boolean expSlotRequ = (l.getElement(2) & 0x40) == 0X40 ? true : false;
         switch (slot) {
-            // Slots > 120 are all special, but these are the only ones we know to decode.
+         // Slots > 120 & < 128 are all special, but these are the only ones we know to decode.
+         // Extended System Slots 248 thru 251 delt with seperately, not here
             case LnConstants.FC_SLOT:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
             case LnConstants.CFG_SLOT:
@@ -2391,7 +2493,11 @@ public class LocoNetMessageInterpret {
             case 0x7d:
                 break;
             default:
-                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
+                if (expSlotRequ) {
+                    return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_EXP_SLOT", slot);
+                } else {
+                    return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
+                }
         }
         return "";
     }
@@ -4065,8 +4171,8 @@ public class LocoNetMessageInterpret {
     /**
      * Return a string which is formatted by a bundle Resource Name.
      *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
+     * @param hour    fast-clock hour
+     * @param minute  fast-clock minute
      * @return a formatted string containing the time
      */
     private static String fcTimeToString(int hour, int minute) {
@@ -4191,6 +4297,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT500");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS52");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
             case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
@@ -4228,7 +4336,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
-     * <p>
+     *
      * @param l LocoNet Message to interpret
      * @return String containing interpreted message or empty string if
      *      message is not interpretable.
@@ -4378,9 +4486,340 @@ public class LocoNetMessageInterpret {
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(14))));
             }
+        } else if (l.getElement(1) == 0x15) {
+            int slot = ( (l.getElement(2) & 0x07 ) *128) + l.getElement(3); // slot number for this request
+
+            String result = interpretExtendedSlotRdWr(l, slot) ;
+            if (result.length() > 0) {
+                return result;
+            }
         }
         return "";
 
+    }
+    private static String interpretOpcExpMoveSlots(LocoNetMessage l) {
+        int src = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
+        int dest = ((l.getElement(3) & 0x03) * 128) + (l.getElement(4) & 0x7f);
+
+        if ((src >= 0x79) && (src <= 0x7f)) {
+            return "";
+        }
+        if ((dest >= 0x79) && (dest <= 0x7f)) {
+            return "";
+        }
+
+        boolean isSettingStatus = ((l.getElement(3) & 0b01110000) == 0b01100000);
+        if (isSettingStatus) {
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_SET_STATUS",
+                    src,
+                    LnConstants.CONSIST_STAT(stat),
+                    LnConstants.LOCO_STAT(stat),
+                    LnConstants.DEC_MODE(stat));
+        }
+        boolean isUnconsisting = ((l.getElement(3) & 0b01110000) == 0b01010000);
+        if (isUnconsisting) {
+            // source and dest same, returns slot contents
+            return Bundle.getMessage("LN_MSG_OPC_EXP_UNCONSISTING",
+                    src);
+        }
+        boolean isConsisting = ((l.getElement(3) & 0b01110000) == 0b01000000);
+        if (isConsisting) {
+            //add dest to src, returns dest slot contents
+            return Bundle.getMessage("LN_MSG_OPC_EXP_CONSISTING",
+                    src,dest);
+        }
+       /* check special cases */
+        if (src == 0) {
+            /* DISPATCH GET */
+            // maybe
+            return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
+        } else if (src == dest) {
+            /* IN USE */
+            // correct
+            return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
+        } else if (dest == 0) {
+            /* DISPATCH PUT */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
+        } else {
+            /* general move */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
+        }
+    }
+
+    private static String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
+        int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
+            // speed and direction
+            int spd = l.getElement(4);
+            String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
+                    ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD");
+            String throttleID = Integer.toHexString(l.getElement(3));
+            return Bundle.getMessage("LN_MSG_OPC_EXP_SPEED_DIRECTION", slot, spd, direction, throttleID);
+        }
+        // Build a string for the functions on off
+        String[] fn = new String[8];
+        for (int bitIndex = 0; bitIndex < 8; bitIndex++) {
+            fn[bitIndex] = (l.getElement(4) >> (7 - bitIndex) & 1) == 1 ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                    : Bundle.getMessage("LN_MSG_FUNC_OFF");
+        }
+        if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F0_F6", slot, fn[3], fn[7], fn[6], fn[5], fn[4], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F7_F13", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_F20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1], Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1], Bundle.getMessage("LN_MSG_FUNC_ON"));
+        }
+        return "";
+    }
+
+    private static String interpretExtendedSlotRdWr(LocoNetMessage l, int slot) {
+        /**
+         * ************************************************
+         * extended slot read/write message               *
+         * ************************************************
+         */
+        /*
+         * If its a "Special" slot (Stats etc) use a different routine
+         */
+        if (slot > 247 && slot < 252) {
+            return interpretExtendedSlot_StatusData(l,slot);
+        }
+        int trackStatus = l.getElement(7); // track status
+        int id1 =  l.getElement(19);
+        int id2 = l.getElement(18);
+        int command = l.getOpCode();
+        int stat = l.getElement(4); // slot status
+        //int adr = l.getElement(5) + 128 * l.getElement(6); // loco address
+        int adr = l.getElement(5);
+        int spd = l.getElement(8); // command speed
+        int dirf = l.getElement(10) & 0b00111111; // direction and F0-F4 bits
+        String[] dirf0_4 = interpretF0_F4toStrings(dirf);
+        int ss2 = l.getElement(18); // slot status 2 (tells how to use
+        // ID1/ID2 & ADV Consist)
+        int adr2 = l.getElement(6); // loco address high
+        int snd = l.getElement(10); // Sound 1-4 / F5-F8
+        String[] sndf5_8 = interpretF5_F8toStrings(snd);
+
+        String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
+        return Bundle.getMessage(((command == 0xEE)
+                ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
+                : "LN_MSG_SLOT_LOCO_INFO_READ"),
+                slot,
+                locoAdrStr,
+                LnConstants.CONSIST_STAT(stat),
+                LnConstants.LOCO_STAT(stat),
+                LnConstants.DEC_MODE(stat),
+                directionOfTravelString((dirf & LnConstants.DIRF_DIR) == 0),
+                spd, // needs re-interpretation for some cases of slot consisting state
+                dirf0_4[0],
+                dirf0_4[1],
+                dirf0_4[2],
+                dirf0_4[3],
+                dirf0_4[4],
+                sndf5_8[0],
+                sndf5_8[1],
+                sndf5_8[2],
+                sndf5_8[3],
+                trackStatusByteToString(trackStatus),
+                Bundle.getMessage("LN_MSG_SLOT_HELPER_SS2_SIMPLE",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ss2))),
+                Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
+                        idString(id1, id2)));
+    }
+
+    private static String interpretExtendedSlot_StatusData(LocoNetMessage l, int slot) {
+       String baseInfo = "";
+       String detailInfo = "";
+       switch (slot) {
+           case 248:
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l,slot);
+                // Flags
+                detailInfo = interpretExtendedSlot_StatusData_Flags(l,slot);
+                break;
+           case 249:
+                // electric
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
+                break;
+            case 251:
+                // LocoNet stats
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                detailInfo = interpretExtendedSlot_StatusData_LocoNet(l,slot);
+                break;
+            case 250:
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                // Slots info
+                detailInfo = interpretExtendedSlot_StatusData_Slots(l,slot);
+                break;
+            default:
+                baseInfo = "Still working on it";
+        }
+       return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS",
+               slot, baseInfo, detailInfo);
+    }
+
+    /**
+     * Interpret the base information in bytes 16,18,19
+     * for slots 249,250,251. not 248
+     * @param l loconetmessage
+     * @param slot slot number
+     * @return a format message.
+     */
+    private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
+        String hwType = "";
+        int hwSerial;
+        switch (l.getElement(16)) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                hwType = "DCS240";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                hwType = "DCS210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                hwType = "DCS52";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
+                hwType = "BXP88";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
+                hwType = "BXPA1";
+                break;
+            default:
+                hwType = "Unknown";
+        }
+        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
+                hwType,
+                hwSerial);
+    }
+
+    /**
+     * Interp slot 248 base details
+     * @param l loconetmessage
+     * @param slot slot number
+     * @return formated message
+     */
+    private static String interpretExtendedSlot_StatusData_Base_Detail(LocoNetMessage l, int slot) {
+        double hwVersion ;
+        double swVersion ;
+        int hwSerial;
+        String hwType;
+        switch (l.getElement(14)) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                hwType = "DCS240";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                hwType = "DCS210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
+                hwType = "BXP88";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
+                hwType = "BXPA1";
+                break;
+            default:
+                hwType = "Unknown";
+        }
+        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
+        swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
+                hwType,
+                hwSerial,
+                hwVersion,
+                swVersion);
+    }
+
+    /**
+     * Interp slot 249 electric stuff, bytes 4,5,6,7,10,12
+     * @param l loconetmessage
+     * @param slot slot number
+     * @return formated message
+     */
+    private static String interpretExtendedSlot_StatusData_Electric(LocoNetMessage l, int slot) {
+        double voltsTrack;
+        double voltsIn;
+        double ampsIn;
+        double ampsLimit;
+        double  voltsRsLoaded;
+        double  voltsRsUnLoaded;
+        voltsTrack = ((double)l.getElement(4)) * 2 / 10 ;
+        voltsIn = ((double)l.getElement(5)) * 2 / 10;
+        ampsIn = ((double)l.getElement(6)) / 10;
+        ampsLimit = ((double)l.getElement(7)) / 10;
+        voltsRsLoaded = ((double)l.getElement(12)) * 2 / 10;
+        voltsRsUnLoaded = ((double)l.getElement(10)) * 2 / 10;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_ELECTRIC",
+                voltsTrack,
+                voltsIn,
+                ampsIn,
+                ampsLimit,
+                voltsRsLoaded,
+                voltsRsUnLoaded);
+    }
+
+    /**
+     * Interp slot 249 loconet stats, bytes 4 & 5,6 & 7
+     * @param l loconetmessage
+     * @param slot slot number
+     * @return formated message
+     */
+    private static String interpretExtendedSlot_StatusData_LocoNet(LocoNetMessage l, int slot) {
+        double msgTotal;
+        double msgErrors;
+        msgTotal = (l.getElement(4) + ( l.getElement(5) * 128)) ;
+        msgErrors = (l.getElement(6) + ( l.getElement(7) * 128)) ;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_LOCONET",
+                msgTotal,
+                msgErrors);
+    }
+
+
+    private static String interpretExtendedSlot_StatusData_Flags(LocoNetMessage l, int slot) {
+        //TODO need more sample data
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS");
+    }
+
+    /**
+     * Interp slot 250 slots used/free etc
+     * @param l loconetmessage
+     * @param slot slot number
+     * @return formated message
+     */
+    private static String interpretExtendedSlot_StatusData_Slots(LocoNetMessage l, int slot) {
+        //TODO there is still more data in this slot.
+        double msgInUse;
+        double msgIdle;
+        double msgFree;
+        msgInUse = (l.getElement(4) + ( l.getElement(5) * 128)) ;
+        msgIdle = (l.getElement(6) + ( l.getElement(7) * 128)) ;
+        msgFree = (l.getElement(8) + ( l.getElement(9) * 128)) ;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_SLOTS",
+                msgInUse,
+                msgIdle,
+                msgFree);
     }
 
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N

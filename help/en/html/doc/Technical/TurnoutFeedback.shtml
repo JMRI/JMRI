@@ -53,9 +53,10 @@
 
       <p>Built into into LocoNet and XPressNet are limited
       abilities to monitor what is happening on their networks and
-      adapt to messages about Turnout state changes. The NCE
-      Powerhouse Pro can provide the last known state of a turnout
-      that was changed by a cab or macro. All the other protocols
+      adapt to messages about Turnout state changes.
+      The NCE Powerhouse Pro (only) can monitor the last known state
+      of any turnout that it changed (on request from a cab, macro,
+      JMRI or Mini Panel). All the other protocols
       normally use a "you told it to change, so it did" logic. In
       other words, when something in the code (the Turnout Tool or
       a script) commands a state change from closed to thrown, the
@@ -135,12 +136,15 @@
 
         <dt>MONITORING</dt>
 
-        <dd>Default for LocoNet and XPressNet turnouts, and
-        available for NCE, this means the network is monitored for
+        <dd>Default for LocoNet and XPressNet turnouts, this means the
+        network is monitored for
         messages about the status of the turnout. This mode is only
         available for certain protocols, i.e. some protocols can't
         do the monitoring properly, and don't have this
-        choice.</dd>
+        choice.
+        <br>If selected for the NCE Powerhouse Pro (only), it will monitor
+        the last known state change of this turnout made by the command station
+        (on request from a cab, macro, JMRI or Mini Panel).</dd>
 
         <dt>INDIRECT</dt>
 
@@ -163,6 +167,14 @@
         have been connected as described in the <a href=
         "http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">
         LS100 manual (external link, PDF)</a>.</dd>
+        
+        <dt>SIGNAL</dt>
+
+        <dd>Recommended setting for Signal Mast controled by driver
+        Matrix output with XpressNet. The program does not wait
+        for turnout feedback and sends matrix commands as soon
+        as possible.</dd>
+
       </dl>
 
       <p>Most people will (and probably should!!!) stick with the

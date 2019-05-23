@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 /**
  * This sample Automaton invokes a Jython interpreter to handle a script that
  * defines a Siglet implementation.
- * <P>
+ * <p>
  * The python file should define two functions:
- * <UL>
- * <LI>defineIO()
- * <LI>setOutput()
- * </UL>
- * <P>
+ * <ul>
+ * <li>defineIO()
+ * <li>setOutput()
+ * </ul>
+ * <p>
  * Access is via Java reflection so that both users and developers can work
  * without the jython-standalone-2.7.0.jar file in the classpath. To make it easier to read the
  * code, the "non-reflection" statements are in the comments.
@@ -32,12 +32,12 @@ public class JythonSiglet extends Siglet {
 
     /**
      * Initialize this object.
-     * <UL>
-     * <LI>Create the Python interpreter.
-     * <LI>Load the generally-available objects
-     * <LI>Read the file
-     * <LI>Run the python defineIO routine
-     * </UL>
+     * <ul>
+     * <li>Create the Python interpreter.
+     * <li>Load the generally-available objects
+     * <li>Read the file
+     * <li>Run the python defineIO routine
+     * </ul>
      * Initialization of the Python in the actual script file is deferred until
      * the {@link #defineIO} method.
      */
@@ -52,7 +52,7 @@ public class JythonSiglet extends Siglet {
             initialize.invoke(null, (Object[]) null);
 
             // interp = new PythonInterpreter();
-            interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
+            interp = Class.forName("org.python.util.PythonInterpreter").getDeclaredConstructor().newInstance();
 
             // load some general objects
             java.lang.reflect.Method set

@@ -291,18 +291,19 @@ public class NamedIcon extends ImageIcon {
      }*/
 
     /**
-     * Valid values are <UL>
-     * <LI>0 - no rotation
-     * <LI>1 - 90 degrees counter-clockwise
-     * <LI>2 - 180 degrees counter-clockwise
-     * <LI>3 - 270 degrees counter-clockwise
-     * </UL>
+     * Valid values are <ul>
+     * <li>0 - no rotation
+     * <li>1 - 90 degrees counter-clockwise
+     * <li>2 - 180 degrees counter-clockwise
+     * <li>3 - 270 degrees counter-clockwise
+     * </ul>
      */
     int mRotation;
 
     /**
      * The following was based on a text-rotating applet from David Risner,
      * available at http://www.risner.org/java/rotate_text.html
+     * Page unavailable as at April 2019
      *
      * @param pImage     Image to transform
      * @param pComponent Component containing the image, needed to obtain a
@@ -474,7 +475,7 @@ public class NamedIcon extends ImageIcon {
      * @param h  Height
      * @param t  Affine Transform
      * @param comp
-     * @return
+     * @return Transformed image
      */
     private BufferedImage transformFrame(Image frame, int w, int h, AffineTransform t, Component comp) {
 

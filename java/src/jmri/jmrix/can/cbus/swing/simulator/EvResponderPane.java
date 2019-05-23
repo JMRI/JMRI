@@ -65,10 +65,10 @@ public class EvResponderPane extends JPanel {
         tooltips = new ArrayList<String>();
         String getSelected="";
         
-        for (int i = 0; i < CbusEventResponder.evModes.size(); i++) {
-            String option = CbusEventResponder.evModes.get(i);
+        for (int i = 0; i < _evr.evModes.size(); i++) {
+            String option = _evr.evModes.get(i);
             _selectMode.addItem(option);
-            tooltips.add(CbusEventResponder.evModesTip.get(i));
+            tooltips.add(_evr.evModesTip.get(i));
             if ( i == _mode ){
                 getSelected = option;
             }
@@ -80,8 +80,8 @@ public class EvResponderPane extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String chosen = (String)_selectMode.getSelectedItem();
                 
-                for (int i = 0; i < CbusEventResponder.evModes.size(); i++) {
-                    String option = CbusEventResponder.evModes.get(i);
+                for (int i = 0; i < _evr.evModes.size(); i++) {
+                    String option = _evr.evModes.get(i);
                     if (option.equals(chosen)) {
                         log.debug("chosen {} {}",i,chosen);
                         _evr.setMode(i);

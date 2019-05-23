@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -23,7 +22,7 @@ import javax.annotation.Nonnull;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface RouteManager extends Manager<Route> {
+public interface RouteManager extends ProvidingManager<Route> {
 
     // to free resources when no longer used
     @Override

@@ -106,14 +106,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * messages are sent, resulting in lower throughput, but fewer
      * rejections by the command station on account of "buffer-overflow".
      *
-     * @param packet - the data bytes of the raw NMRA packet to be sent.  The
+     * @param packet  the data bytes of the raw NMRA packet to be sent.  The
      *          "error check" byte must be included, even though the LocoNet
      *          message will not include that byte; the command station
      *          will re-create the error byte from the bytes encoded in
      *          the LocoNet message.  LocoNet is unable to propagate packets
      *          longer than 6 bytes (including the error-check byte).
      *
-     * @param sendCount - the total number of times the packet is to be
+     * @param sendCount  the total number of times the packet is to be
      *          sent on the DCC track signal (not LocoNet!).  Valid range is
      *          between 1 and 8.  sendCount will be forced to this range if it
      *          is outside of this range.
@@ -266,7 +266,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Add a slot listener, if it is not already registered
      * <p>
      * The slot listener will be invoked every time a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be added
      */
     public synchronized void addSlotListener(SlotListener l) {
@@ -281,7 +281,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * The slot listener will be removed from the list of listeners which are
      * invoked whenever a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be removed
      */
     public synchronized void removeSlotListener(SlotListener l) {
@@ -388,8 +388,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Checks a LocoNet message to see if it encodes a DCC "direct function" packet.
-     * <p>
-     * @param m - a LocoNet Message
+     *
+     * @param m  a LocoNet Message
      * @return the loco address if the LocoNet message encodes a "direct function" packet,
      * else returns -1
      */
@@ -1422,7 +1422,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
-        m.setElement(2, 0);
+        if (slot > 127) {
+            m.setElement(2, (slot / 128 ) & 0b00000111 );
+            // and se t expanded format wanted
+            m.setElement(2, m.getElement(2) | 0x40) ;
+        } else {
+            m.setElement(2, 0);
+        }
         tc.sendLocoNetMessage(m);
     }
 

@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
@@ -18,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of set of Sensors.
- * <P>
+ * <p>
  * Each sensor has an associated image. Normally, only one sensor will be active
  * at a time, and in that case the associated image will be shown. If more than
  * one is active, one of the corresponding images will be shown, but which one
@@ -97,6 +99,14 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     public int getNumEntries() {
         return entries.size();
+    }
+
+    public List<Sensor> getSensors() {
+        ArrayList<Sensor> list = new ArrayList<>(getNumEntries());
+        for (Entry handle : entries) {
+            list.add(handle.namedSensor.getBean());
+        }
+        return list;
     }
 
     public String getSensorName(int i) {

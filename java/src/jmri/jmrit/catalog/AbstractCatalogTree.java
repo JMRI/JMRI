@@ -82,7 +82,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     /*
-     * ** NamedBean implementation (Copied from AbstractNamedBean) *********
+     * NamedBean implementation (Copied from AbstractNamedBean) *********
      */
     /**
      * Get associated comment text.
@@ -147,8 +147,28 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /**
@@ -172,6 +192,17 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
         if (listenerRef != null) {
             listenerRefs.put(l, listenerRef);
+        }
+    }
+
+    @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+        if (beanRef != null) {
+            register.put(listener, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(listener, listenerRef);
         }
     }
 

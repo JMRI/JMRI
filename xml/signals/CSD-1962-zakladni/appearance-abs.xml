@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-19</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 26 Unlit</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-zakladni</aspecttable>
@@ -62,12 +68,20 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/005_o80_ab.gif</imagelink>
     </appearance>
 
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/026_zhasnuto_ab.gif</imagelink>
+    </appearance>
+
   </appearances>
   
   <specificappearances>
       <permissive>
           <aspect>Stůj</aspect>
       </permissive>
+      <dark>
+          <aspect>Zhasnuto</aspect>
+      </dark>
   </specificappearances>  
   
   <aspectMappings>

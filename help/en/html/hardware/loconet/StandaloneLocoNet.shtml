@@ -191,7 +191,7 @@
       DCC</a> page.</p>
 
       <p>Except as noted below for the <a href=
-      "#PR3config">PR3/PR4</a>, the JMRI connection for the standalone
+      "#PR3config">PR3</a>, the JMRI connection for the standalone
       LocoNet should specify the "<code>Command Station
       type</code>" of "<code><strong>Stand-alone
       LocoNet</strong></code>".</p>
@@ -250,7 +250,7 @@
 
                     <li>DCS100/DCS200</li>
 
-                    <li>DCS50/DCS51</li>
+                    <li>DCS50/DCS51/DCS52</li>
 
                     <li>DCS240</li>
 
@@ -283,7 +283,7 @@
 
                   <li>DCS210</li>
 
-                  <li>DCS50/DCS51</li>
+                  <li>DCS50/DCS51/DCS52</li>
 
                   <li>DB210/DB210Opto/DB220</li>
 
@@ -371,9 +371,9 @@
 
           <td>Optional</td>
 
-          <td>?</td>
+          <td><strong>Requires DCC signal or simple power supply *****</strong></td>
 
-          <td>Required, can provide</td>
+          <td>Required, <strong>cannot provide</strong></td>
 
           <td></td>
         </tr>
@@ -385,7 +385,7 @@
 
           <td>Required for power **</td>
 
-          <td>Required, cannot provide</td>
+          <td>Required, <strong>cannot provide</strong></td>
 
           <td></td>
         </tr>
@@ -683,6 +683,13 @@
             <td>Required</td>
             <td></td>
         </tr>
+        <tr align="center">
+            <td>M&ouml;llehem G&aring;rdsproduktion (MGP) LocoNet Termination card</td>
+            <td></td>
+            <td>Can provide DC power</td>
+            <td>Can provide Termination</td>
+            <td></td>
+        </tr>
 
         <tr align="center">
           <td colspan="5">
@@ -719,6 +726,12 @@
             connection. It is unclear whether any device using the
             signal on the RailSync lines from the Intellibox must
             have opto-isolation circuitry.</p>
+            <p>***** PR4 devices require either a low-power copy of the DCC Track
+            Signal or DC power on the "RailSync" wires.  The PR4 uses the signal
+            on the RailSync wires to power its LocoNet isolation and interface
+            circuitry.  Failure to provide sufficient power on the RailSync wires
+            will prevent the PR4 from communicating with LocoNet or result in
+            unreliable communication.</p>
           </td>
         </tr>
       </table>
@@ -739,8 +752,8 @@
       BDL168 board to terminate LocoNet". The LocoBuffer-II and
       LocoBuffer-USB devices (except not the LocoBuffer-USB Rev-n)
       have a hardware jumper which allows these devices to "provide
-      LocoNet Master termination". The PR3/PR4 has an operating mode
-      where "The PR3/PR4 has the ability to act as a LocoNet
+      LocoNet Master termination". The PR3 has an operating mode
+      where "The PR3 has the ability to act as a LocoNet
       terminator." All of these are describing the term used in
       this document, LocoNet Data Signal Termination.</p>
 
@@ -820,10 +833,10 @@
 
         <li>
           <a id="PR3config" name=
-          "PR3config"><strong>PR3/PR4</strong></a>
+          "PR3config"><strong>PR3</strong></a>
 
-          <p>The PR3 and PR4 both provide two different operating modes which
-          may be useful when the PR3/PR4 is used to interface to a
+          <p>The PR3 provides two different operating modes which
+          may be useful when the PR3 is used to interface to a
           standalone LocoNet. One useful mode provides <a href=
           "#dataterm">LocoNet Data Signal "Termination"</a> in it's
           MS100 mode, while the other mode does not provide LocoNet
@@ -831,40 +844,37 @@
 
           <ul>
             <li>
-              <p>For the case where the PR3/PR4 must provide <a href=
+              <p>For the case where the PR3 must provide <a href=
               "#dataterm">LocoNet Data Signal "Termination"</a>,
-              and where the PR3/PR4 is connected to a suitable live
+              and where the PR3 is connected to a suitable live
               power source via its "Power" jack, JMRI should be
               configured in a way which will automatically set the
-              PR3/PR4 to its "MS100 mode with termination" mode at JMRI
+              PR3 to its "MS100 mode with termination" mode at JMRI
               program start-up time. This can be accomplished by
-              configuring the JMRI connection settings for the PR3/PR4
-              so that the "<code>Command Station type</code>" is
-              set to "<code><strong>Stand-alone
-              LocoNet</strong></code> ".</p>
+              configuring the JMRI connection settings for the PR3
+              so that the "<code><strong>Command Station type</strong></code>" is
+              set to "<code><strong>Stand-alone LocoNet; interface device
+              'terminates' the LocoNet Data signal</strong></code> ".</p>
 
-              <p>Note that this PR3/PR4 operating mode is not
+              <p>Note that this PR3 operating mode is not
               recommended when there is some other source of
               "LocoNet Data Signal Termination" connected to
-              LocoNet, and it is not suitable when the PR3/PR4 is not
+              LocoNet, and it is not suitable when the PR3 is not
               provided suitable power via its "Power" barrel
               jack.</p>
             </li>
 
             <li>
-              <p>If, instead, the PR3/PR4 will be connected to a
+              <p>If, instead, the PR3 will be connected to a
               LocoNet where some other device provides <a href=
               "#dataterm">LocoNet Data Signal "Termination"</a>,
-              then it is more appropriate to use the PR3/PR4 in its
-              MS100 mode <em>without</em> enabling the PR3/PR4's Data
+              then it is more appropriate to use the PR3 in its
+              MS100 mode <em>without</em> enabling the PR3's Data
               signal termination feature. In this case, it is
-              appropriate to configure the PR3/PR4 connection for a
-              "<code>Command Station type</code>" of
-              "<code><strong>DCS100</strong></code>". Because there
-              is no command station connected to the LocoNet data
-              path of the standalone LocoNet, the setting will only
-              be used to determine how the PR3/PR4 is initialized at
-              JMRI start-up.</p>
+              appropriate to configure the PR3 connection for a
+              "<code><strong>Command Station type</strong></code>" of
+              "<code><strong>Stand-alone LocoNet; interface device does not
+              'terminate' the LocoNet Data signal</strong></code>".</p>
             </li>
           </ul>
         </li>
@@ -903,22 +913,36 @@
           Signal termination. It may also be configured to provide
           DC power on the RailSync wires.</p>
         </li>
+
+        <li>
+          <strong>M&ouml;llehem G&aring;rdsproduktion LocoNet Termination card</strong>
+
+          <p>This device may be configured to provide LocoNet Data
+          Signal termination. It may also be configured to provide
+          DC power on the RailSync wires.</p>
+        </li>
       </ul>
 
       <h4><a name="diyhwdataterm" id="diyhwdataterm">Do-it-yourself
       LocoNet Data Signal Termination</a></h4>
 
-      <p>A Do-it-yourself LocoNet Data Signal Termination will
-      typically be implemented similar to the diagram
+      <p>LocoNet cannot operate without "LocoNet Data Signal termination".
+      When using a PR4, a LocoBuffer-USB Rev N, a LocoBuffer-USB Rev O, or other
+      LocoNet interface device which cannot provide LocoNet Data Signal termination,
+      you must provide some other device which can provide that termination.  Several
+      common LocoNet devices are able to provide this function, as shown in the
+      table at the beginning of this page.  If you are not using any LocoNet device
+      which can provide that termination, you will need to provide it as a do-it-
+      yourself project.  Such a do-it-yourself LocoNet Data Signal Termination will
+      typically be implemented in a way that is similar to the diagram
       here:</p><img src="images/LocoNetDataSignalTermination.png"
       alt=
       "Image showing general LocoNet Data Signal Termination Diagram">
 
       <p>The 15 mA current source block in the diagram above may be
-      implemented in a wide variety of ways.</p>
-
-      <p>Dick Bronson shows a circuit for a 15 mA current source
-      that can be used to provide LocoNet Data signal termination
+      implemented in a wide variety of ways.  As an example, Dick Bronson shows
+      a circuit for a 15 mA current source that can be used to provide LocoNet
+      Data Signal termination
       at his <a href="http://www.rr-cirkits">RR-CirKits web
       site</a> on the <a href=
       "http://www.rr-cirkits.com/Notebook/Standalone-LocoNet.html">Notebook
@@ -926,16 +950,16 @@
       "Pull Up" which shows a circuit using two 2N2222 NPN
       transistors and two resistors. The circuit node shown as
       <strong>LN</strong> should be connected to the LocoNet "Data"
-      pins - pins 3 and 4, as is shown in the diagram above for the
-      "Out" connection of the current source.</p>
+      pins - pins 3 and 4 (typically the red and green wires), as is shown in the
+      diagram above for the "Out" connection of the current source.</p>
 
       <p>Dick's circuit should be powered by a 12VDC regulated
       power supply capable of providing at least 15mA. The power
       supply negative terminal should be connected to the LocoNet
-      "Ground" pins - pins 2 and 5. This power supply can be used
-      to power other devices so long as they either have
+      "Ground" pins - pins 2 and 5 (typically the yellow and black wires). This
+      power supply can be used to power other devices so long as they either have
       <strong>no</strong> electrical path back to any LocoNet wire,
-      or if they connect the power supply negative terminal
+      or so long as they connect the power supply negative terminal
       directly to the LocoNet "Ground" pins.</p>
 
       <p>Other Internet resources may show circuits for LocoNet
@@ -999,6 +1023,15 @@
           the RailSync wires. It may also be configured to provide
           LocoNet Data Signal termination.</p>
         </li>
+
+        <li>
+          <strong>M&ouml;llehem G&aring;rdsproduktion LocoNet Termination card</strong>
+
+          <p>This device may be configured to provide DC power on
+          the RailSync wires. It may also be configured to provide
+          LocoNet Data Signal termination.</p>
+        </li>
+
       </ul>
 
       <h4><a name="rspowersupply" id="rspowersupply">RailSync power
@@ -1444,7 +1477,7 @@
       RailSync wires, such as the RR-CirKits LocoNet-Terminator or
       SSB-Gateway products.</p><img src=
       "images/StandaloneLocoNetSignallingNet.jpg" alt=
-      "Image showing a Standalone Loconet for SE8C signalling only">
+      "Image showing a Standalone LocoNet for SE8C signalling only">
 
       <h2><a name="acknowledgments" id=
       "acknowledgments">Acknowledgments</a></h2>
@@ -1485,6 +1518,11 @@
       <p>Information and support for products by Tam Valley Depot
       may be found at <a href="http://www.tamvalleydepot.com/">the
       TAM Valley Depot website</a>.</p>
+
+      <p>Information and support for products by M&ouml;llehem G&aring;rdsproduktion
+      MGP) may be found at <a href="http://www.mollehem.se/index.php/en/">
+          The M&ouml;llehem G&aring;rdsproduktion website</a>.</p>
+
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
       <!--#include virtual="/Footer" -->

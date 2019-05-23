@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
+import jmri.CabSignalManager;
 import jmri.ClockControl;
 import jmri.CommandStation;
 import jmri.ConsistManager;
@@ -10,13 +11,14 @@ import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.IdTagManager;
 import jmri.LightManager;
+import jmri.MultiMeter;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -34,8 +36,11 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
+
     /**
      * Must manually register() after construction is complete.
+     * @param lt Traffic controller to be used
+     * @param sm Slot Manager to be used
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -145,7 +150,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transponding reports
+     *                                  transopnding reports
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
@@ -218,7 +223,13 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(CommandStation.class)) {
             return true;
         }
+        if (type.equals(MultiMeter.class)) {
+            return true;
+        }
         if (type.equals(IdTagManager.class)) {
+            return true;
+        }
+        if (type.equals(CabSignalManager.class)) {
             return true;
         }
 
@@ -270,8 +281,14 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(CommandStation.class)) {
             return (T) getSlotManager();
         }
+        if (T.equals(MultiMeter.class)) {
+            return (T) getMultiMeter();
+        }
         if (T.equals(IdTagManager.class)) {
             return (T) getIdTagManager();
+        }
+        if (T.equals(CabSignalManager.class)) {
+            return (T) getCabSignalManager();
         }
         return super.get(T);
     }
@@ -310,16 +327,22 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        InstanceManager.setReporterManager(
-                getReporterManager());
+        InstanceManager.setReporterManager(getReporterManager());
+        
+        InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));
 
         ClockControl cc = getClockControl();
+
         // make sure InstanceManager knows about that
         InstanceManager.setDefault(ClockControl.class, cc);
 
+        //MultiMeter mm = getMultiMeter();
+        jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
+
         getIdTagManager();
+
     }
 
     protected LnPowerManager powerManager;
@@ -417,6 +440,18 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         return lightManager;
     }
 
+    protected LnMultiMeter multiMeter;
+
+    public LnMultiMeter getMultiMeter() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (multiMeter == null) {
+            multiMeter = new LnMultiMeter(this);
+        }
+        return multiMeter;
+    }
+
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
@@ -428,11 +463,22 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     protected static TranspondingTagManager tagManager;
 
     static public TranspondingTagManager getIdTagManager() {
-        if (tagManager == null) {
-            tagManager = new TranspondingTagManager();
-            InstanceManager.setIdTagManager(tagManager);
+        synchronized (LocoNetSystemConnectionMemo.class) { // since tagManager can be null, can't synch on that
+            if (tagManager == null) {
+                tagManager = new TranspondingTagManager();
+                InstanceManager.setIdTagManager(tagManager);
+            }
+            return tagManager;
         }
-        return tagManager;
+    }
+
+    protected LnCabSignalManager cabSignalManager;
+
+    public LnCabSignalManager getCabSignalManager() {
+        if (cabSignalManager == null) {
+            cabSignalManager = new LnCabSignalManager(this);
+        }
+        return cabSignalManager;
     }
 
     @Override

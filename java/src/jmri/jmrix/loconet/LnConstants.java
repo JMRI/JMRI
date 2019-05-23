@@ -14,7 +14,7 @@ package jmri.jmrix.loconet;
  *  <li>STAT1 - bits in status byte 1
  *  <li>STAT2 - bits in status byte 2
  *  </ul>
- *<p>
+ * <p>
  * Slot Status byte definitions and macros
  * <ul>
  * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)
@@ -69,8 +69,8 @@ package jmri.jmrix.loconet;
  * Those parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
  * permission of the copyright holder.
  * <p>
- * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
- * SUMMARY found in the Loconet(r) Personal Edition 1.
+ * Most major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
+ * SUMMARY found in the LocoNet(r) Personal Edition 1.
  * <p>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
@@ -183,8 +183,8 @@ public final class LnConstants {
 
     /**
      * Encode consisting status as a string
-     * <p>
-     * @param s - consist status bits
+     *
+     * @param s  consist status bits
      * @return string contaning a description of the consisting state
      */
     public final static String CONSIST_STAT(int s) {
@@ -210,8 +210,8 @@ public final class LnConstants {
 
     /**
      * Encode loco status as a string
-     * <p>
-     * @param s - integer containing loco "status"
+     *
+     * @param s  integer containing loco "status"
      * @return string containing a description of the loco "status"
      */
     public final static String LOCO_STAT(int s) {
@@ -261,6 +261,9 @@ public final class LnConstants {
     /** Fast clock is in this slot                           */
     public final static int FC_SLOT = 0x7b;
 
+    /** Fast CLock valid **/
+    public final static int FC_VALID = 0X40;
+ 
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
@@ -375,17 +378,41 @@ public final class LnConstants {
     public final static int OPC_ALM_READ = 0xe6; // Undocumented name
     public final static int OPC_SL_RD_DATA = 0xe7;
     public final static int OPC_IMM_PACKET = 0xed;
+    //TODO Conflicts with OPC_EXP_WR_SL_DATA - or maybe length?
     public final static int OPC_IMM_PACKET_2 = 0xee;
     public final static int OPC_WR_SL_DATA = 0xef;
-    public final static int OPC_WR_SL_DATA_EXP = 0xee;
+    //TODO Conflicts with OPC_EXP_WR_SL_DATA - or maybe length?
     public final static int OPC_ALM_WRITE = 0xee; // Undocumented name
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
+    /* protocol level */
+
+    /** The protocol has not been established */
+    public final static int LOCONETPROTOCOL_UNKNOWN = 0;
+    /** Supports loconet 1.1 */
+    public final static int LOCONETPROTOCOL_ONE = 1;
+    /** Supports the protocol introduced to DCS240, DCS210 */
+    public final static int LOCONETPROTOCOL_TWO = 2;
+
+    /* Expanded slot codes */
+    public final static int OPC_EXP_REQ_SLOT = 0xbe;
+    public final static int OPC_EXP_SLOT_MOVE = 0xd4;
+    public final static int OPC_EXP_RD_SL_DATA = 0xe6;
+    public final static int OPC_EXP_WR_SL_DATA = 0xee;
+    public final static int OPC_EXP_SEND_SUB_CODE_MASK_SPEED = 0b11110000;
+    public final static int OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION = 0b11111000;
+    public final static int OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR = 0xd5;
+    public final static int OPC_EXP_SEND_SPEED_AND_DIR_MASK = 0b00010000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK = 0b00010000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK = 0b00011000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK = 0b00100000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK = 0b00101000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK =  0b00110000;
 
     /**
      * Encode LocoNet Opcode as a string
-     * <p>
-     * @param opcode - a LocoNet opcode value
+     *
+     * @param opcode  a LocoNet opcode value
      * @return string containing the opcode "name"
      */
     public final static String OPC_NAME(int opcode) {
@@ -428,6 +455,9 @@ public final class LnConstants {
     }
 
 // start of values not from llnmon.c
+
+// Multimeter polling interval
+    public final static int METER_INTERVAL_MS = 30000;
 
 // Expanded slot index values
     public final static int EXP_MAST = 0;
@@ -487,6 +517,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DB220 = 0x16;
     public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
     public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS52 = 0x34;
     public final static int RE_IPL_DIGITRAX_HOST_PR3 = 0x23;
     public final static int RE_IPL_DIGITRAX_HOST_PR4 = 0x24;
     public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;

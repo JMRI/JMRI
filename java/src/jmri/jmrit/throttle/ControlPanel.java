@@ -42,13 +42,11 @@ import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that contains a JSlider to control loco speed, and buttons
  * for forward, reverse and STOP.
- * <P>
+ * <p>
  * TODO: fix speed increments (14, 28)
  *
  * @author glen Copyright (C) 2002
@@ -392,6 +390,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     return;
                 }
                 break;
+            case SLIDERDISPLAY:
+                // normal, drop through
+                break;
+            default:
+                jmri.util.Log4JUtil.warnOnce(log, "Unexpected displaySlider = {}", displaySlider);
+                break;    
         }
         sliderPanel.setVisible(true);
         speedSlider.setEnabled(speedControllerEnable);
@@ -1495,5 +1499,5 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ControlPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }

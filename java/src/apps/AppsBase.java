@@ -1,6 +1,6 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -106,24 +106,6 @@ public abstract class AppsBase {
 
         FileUtil.logFilePaths();
 
-        /*
-         * Once all the preferences have been loaded we can initial the
-         * preferences doing it in a thread at this stage means we can let it
-         * work in the background if the file doesn't exist then we do not
-         * initialize it
-         */
-        if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
-            new Thread(() -> {
-                try {
-                    InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                        tp.init();
-                    });
-                } catch (Exception ex) {
-                    log.error("Error initializing preferences window", ex);
-                }
-            }, "Initialize TabbedPreferences").start();
-        }
-
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             new Thread(() -> {
                 try {
@@ -212,10 +194,6 @@ public abstract class AppsBase {
         // install the abstract action model that allows items to be added to the, both
         // CreateButton and Perform Action Model use a common Abstract class
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
-
-        // install preference manager
-        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
-
     }
 
     /**
@@ -305,7 +283,7 @@ public abstract class AppsBase {
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                tp.init();
+                //tp.init();
                 tp.saveContents();
                 InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
                     cm.storePrefs();
@@ -373,14 +351,16 @@ public abstract class AppsBase {
 
     /**
      * Set up the configuration file name at startup.
-     * <P>
+     * <p>
      * The Configuration File name variable holds the name used to load the
      * configuration file during later startup processing. Applications invoke
-     * this method to handle the usual startup hierarchy: <UL> <LI>If an
-     * absolute filename was provided on the command line, use it <LI>If a
-     * filename was provided that's not absolute, consider it to be in the
-     * preferences directory <LI>If no filename provided, use a default name
-     * (that's application specific) </UL>
+     * this method to handle the usual startup hierarchy:
+     * <ul>
+     * <li>If an absolute filename was provided on the command line, use it
+     * <li>If a filename was provided that's not absolute, consider it to be in
+     * the preferences directory
+     * <li>If no filename provided, use a default name (that's application specific)
+     * </ul>
      * This name will be used for reading and writing the preferences. It need
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em>.

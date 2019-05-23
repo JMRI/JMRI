@@ -234,11 +234,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     /**
      * Set to a specific value.
-     * <P>
+     * <p>
      * This searches for the displayed value, and sets the enum to that
      * particular one. It used to work off an index, but now it looks for the
      * value.
-     * <P>
+     * <p>
      * If the value is larger than any defined, a new one is created.
      */
     protected void selectValue(int value) {
@@ -513,7 +513,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     /* Internal class extends a JComboBox so that its color is consistent with
      * an underlying variable; we return one of these in getNewRep.
-     *<P>
+     * <p>
      * Unlike similar cases elsewhere, this doesn't have to listen to
      * value changes.  Those are handled automagically since we're sharing the same
      * model between this object and the real JComboBox value.

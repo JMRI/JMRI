@@ -160,8 +160,8 @@ public class LnSv2MessageContents {
     /**
      * Check a LocoNet message to determine if it is a valid SV Programming Format 
      *      2 message.
-     * @param m - LocoNet message to check
-     * @return true if Loconet message m is a supported SV Programming Format 2 
+     * @param m  LocoNet message to check
+     * @return true if LocoNet message m is a supported SV Programming Format 2
      *      message, else false.
      */
     public static boolean isSupportedSv2Message(LocoNetMessage m) {
@@ -213,9 +213,9 @@ public class LnSv2MessageContents {
     
     /**
      *
-     * @param m - LocoNet message to be verified as an SV Programming Format 2 message
+     * @param m  LocoNet message to be verified as an SV Programming Format 2 message
      *      with the specified &lt;SV_CMD&gt; value
-     * @param svCmd - SV Programming Format 2 command to expect
+     * @param svCmd  SV Programming Format 2 command to expect
      * @return true if message is an SV Programming Format 2 message of the specified &lt;SV_CMD&gt;,
      *      else false.
      */
@@ -272,8 +272,8 @@ public class LnSv2MessageContents {
     /**
      * Interprets a LocoNet message to determine its SV Programming Format 2 &lt;SV_CMD&gt;.
      * If the message is not an SV Programming Format 2 message, returns null
-     * @param m - LocoNet message containing SV Programming Format 2 message
-     * @return - Sv2Command found in the SV Programming Format 2 message
+     * @param m  LocoNet message containing SV Programming Format 2 message
+     * @return Sv2Command found in the SV Programming Format 2 message
      */
     public static Sv2Command extractMessageType(LocoNetMessage m) {
         if (isSupportedSv2Message(m)) {
@@ -291,7 +291,7 @@ public class LnSv2MessageContents {
     /**
      * Interprets the SV Programming Format 2 message into a human-readable string.
      * 
-     * @return - a String containing a human-readable version of the SV Programming 
+     * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message
      */
     @Override
@@ -303,8 +303,8 @@ public class LnSv2MessageContents {
     /**
      * Interprets the SV Programming Format 2 message into a human-readable string.
      * 
-     * @param locale - locale to use for the human-readable string
-     * @return - a String containing a human-readable version of the SV Programming 
+     * @param locale  locale to use for the human-readable string
+     * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message, in the language specified by the Locale, if the 
      *      properties have been translated to that Locale, else in the deafult 
      *      English language.
@@ -504,7 +504,7 @@ public class LnSv2MessageContents {
 
     /**
      *
-     * @param possibleCmd - integer to be compared to the command list
+     * @param possibleCmd  integer to be compared to the command list
      * @return  true if the possibleCmd value is one of the supported SV 
      *      Programming Format 2 commands
      */
@@ -583,15 +583,15 @@ public class LnSv2MessageContents {
     }
     /**
      * Create a LocoNet message containing an SV Programming Format 2 message
-     * @param source - source device address (7 bit, for &lt;SRC&gt;)
-     * @param command - SV Programming Format 2 command number (for &lt;SV_CMD&gt;)
+     * @param source  source device address (7 bit, for &lt;SRC&gt;)
+     * @param command  SV Programming Format 2 command number (for &lt;SV_CMD&gt;)
      * @param destination = SV format 2 destination address (for &lt;DST_L&gt; and &lt;DST_H&gt;)
-     * @param svNum - SV Programming Format 2 16-bit SV number (for &lt;SVN_L&gt; and &lt;SVN_H&gt;)
-     * @param d1 - SV Programming Format 2 first data value (for &lt;D1&gt;)
-     * @param d2 - SV Programming Format 2 second data value (for &lt;D2&gt;)
-     * @param d3 - SV Programming Format 2 third data value (for &lt;D3&gt;)
-     * @param d4 - SV Programming Format 2 fourth data value (for &lt;D4&gt;)
-     * @return - LocoNet message for the requested message
+     * @param svNum  SV Programming Format 2 16-bit SV number (for &lt;SVN_L&gt; and &lt;SVN_H&gt;)
+     * @param d1  SV Programming Format 2 first data value (for &lt;D1&gt;)
+     * @param d2  SV Programming Format 2 second data value (for &lt;D2&gt;)
+     * @param d3  SV Programming Format 2 third data value (for &lt;D3&gt;)
+     * @param d4  SV Programming Format 2 fourth data value (for &lt;D4&gt;)
+     * @return LocoNet message for the requested message
      * @throws IllegalArgumentException of command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
      */
     public static LocoNetMessage createSv2Message (int source, int command, 
@@ -701,12 +701,12 @@ public class LnSv2MessageContents {
     
     /** 
      * 
-     * @param ida - IDA number for "SRC" field of OPC_PEER_XFER
-     * @param currentDest - the destination address of the device
-     * @param mfg - the Manufacturer ID
-     * @param devel - the developer ID
-     * @param prodID - the product ID
-     * @param serial - the serial number
+     * @param ida  IDA number for "SRC" field of OPC_PEER_XFER
+     * @param currentDest  the destination address of the device
+     * @param mfg  the Manufacturer ID
+     * @param devel  the developer ID
+     * @param prodID  the product ID
+     * @param serial  the serial number
      * @return a LocoNet message containing the formatted reply
      */
     public static LocoNetMessage createSv2DeviceDiscoveryReply(int ida, int currentDest, 
@@ -726,8 +726,8 @@ public class LnSv2MessageContents {
      * Creates a LocoNet message for the reply for an SV2 "Change Address" 
      * message where the device requires a reconfigure.
      * 
-     * @param ida - IDA value, for the SRC field of the OPC_PEER_XFER
-     * @param destAddr - the "old" SV2 destination address
+     * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
+     * @param destAddr  the "old" SV2 destination address
      * @return a LocoNet message
      */
     public static LocoNetMessage createSv2ChangeAddressReply(int ida, int destAddr) {
@@ -741,12 +741,12 @@ public class LnSv2MessageContents {
      * Creates a LocoNet message for the reply for an SV2 "Change Address" 
      * message where the device requires a reconfigure.
      * 
-     * @param ida - IDA value, for the SRC field of the OPC_PEER_XFER
-     * @param newDestAddr - the "new" SV2 destination address
-     * @param mfg - manufacturer ID
-     * @param developer - device ID
-     * @param productId - product ID
-     * @param serialNum - serial Number
+     * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
+     * @param newDestAddr  the "new" SV2 destination address
+     * @param mfg  manufacturer ID
+     * @param developer  device ID
+     * @param productId  product ID
+     * @param serialNum  serial Number
      * @return a LocoNet message
      */
     public static LocoNetMessage createSv2ChangeAddressReply(int ida, int newDestAddr, 
@@ -761,12 +761,12 @@ public class LnSv2MessageContents {
     /**
      * Creates a LocoNet message for the reply for an SV2 "Reconfigure Reply"
      * 
-     * @param ida - IDA value, for the SRC field of the OPC_PEER_XFER
-     * @param newDestAddr - the "new" SV2 destination address
-     * @param mfg - manufacturer ID
-     * @param developer - device ID
-     * @param productId - product ID
-     * @param serialNum - serial Number
+     * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
+     * @param newDestAddr  the "new" SV2 destination address
+     * @param mfg  manufacturer ID
+     * @param developer  device ID
+     * @param productId  product ID
+     * @param serialNum  serial Number
      * @return a LocoNet message
      */
     public static LocoNetMessage createSv2ReconfigureReply(int ida, int newDestAddr, 
@@ -779,8 +779,8 @@ public class LnSv2MessageContents {
     }
     /**
      * 
-     * @param m - the preceeding LocoNet message
-     * @param svValues - array containing the SV values; only one value is used 
+     * @param m  the preceeding LocoNet message
+     * @param svValues  array containing the SV values; only one value is used 
      *          when m contains a SV_QUERY_ONE, else contains 4 values.
      * @return  LocoNet message containing the reply, or null if preceeding 
      *          message isn't a query.
@@ -823,8 +823,8 @@ public class LnSv2MessageContents {
 
     /**
      * 
-     * @param m - the preceeding LocoNet message
-     * @param svValue - value of one SV register
+     * @param m  the preceeding LocoNet message
+     * @param svValue  value of one SV register
      * @return  LocoNet message containing the reply, or null if preceeding 
      *          message isn't a query.
      */
@@ -886,8 +886,8 @@ public class LnSv2MessageContents {
     /**
      * Create LocoNet message for another query of an SV of this object
      * 
-     * @param deviceAddress - address of the device
-     * @param svNum - SV number
+     * @param deviceAddress  address of the device
+     * @param svNum  SV number
      * @return LocoNet message
      */
     public static LocoNetMessage createSvReadRequest(int deviceAddress, int svNum) {

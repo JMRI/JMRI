@@ -11,7 +11,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * switch settings on the new Digitrax PR2
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006
-  */
+ */
 public class PR2Adapter extends LocoBufferAdapter {
 
     public PR2Adapter() {
@@ -99,6 +99,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
     /**
      * The PR2 has one mode
+     * @return a String[] containing appropriate options
      */
     public String[] commandStationOptions() {
         return new String[]{jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_PR2_ALONE.getName()};

@@ -22,7 +22,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
     /**
      * Default implementation for storing the contents of a
-     * DoubleTurnoutSignalHead
+     * DoubleTurnoutSignalHead.
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
@@ -84,7 +84,16 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         loadCommon(h, shared);
 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        SignalHead existingBean =
+                InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBeanBySystemName(sys);
+
+        if ((existingBean != null) && (existingBean != h)) {
+            log.error("systemName is already registered: {}", sys);
+        } else {
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        }
+
         return true;
     }
 

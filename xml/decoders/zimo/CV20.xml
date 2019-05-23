@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2017-09-24</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Initial for CV20 (FW 31.5)</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="20" item="Extended Consist Address">
+    <decVal max="102"/>
+    <label>Extended Consist Address</label>
+    <label xml:lang="de">Erweiterte Verbundadresse</label>
+    <tooltip xml:lang="de">Der Wert aus CV20 * 100 wird zum Wert aus CV19 dazu addiert = Lange Verbundadresse.</tooltip>
+  </variable>
+</variables>

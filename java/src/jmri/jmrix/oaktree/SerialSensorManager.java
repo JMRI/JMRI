@@ -48,7 +48,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
-
     }
 
     /**

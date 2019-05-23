@@ -3,6 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.util.Date;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,7 +28,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -37,13 +38,10 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
     public RailComTableAction(String actionName) {
         super(actionName);
 
-        // disable ourself if there is no primary RailComm manager available
-        if (tagManager == null) {
-            setEnabled(false);
-        }
         includeAddButton = false;
     }
 
+    @Nonnull
     protected RailComManager tagManager = InstanceManager.getDefault(jmri.RailComManager.class);
 
     public RailComTableAction() {
@@ -185,7 +183,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
                 }
                 switch (col) {
                     case VALUECOL:
-                        return t.getTagID() + " " + t.getAddressTypeAsString();
+                        return t.getLocoAddress().toString();
                     case WHERECOL:
                         Reporter r;
                         return (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null);

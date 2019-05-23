@@ -5,7 +5,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid RFID Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010, 2015
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
@@ -20,7 +20,8 @@ public class RfidConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.rfid.serialdriver.ConnectionConfig",
-            "jmri.jmrix.rfid.networkdriver.ConnectionConfig"
+            "jmri.jmrix.rfid.networkdriver.ConnectionConfig",
+            "jmri.jmrix.rfid.RfidStreamConnectionConfig"
         };
     }
 

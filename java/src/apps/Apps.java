@@ -1,8 +1,11 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
-import apps.gui3.TabbedPreferencesAction;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesFrame;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,6 +49,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -93,6 +97,7 @@ import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -226,9 +231,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
 
-        // install preference manager
-        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
-
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
 
@@ -358,7 +360,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                tp.init();
+                // tp.init();
                 tp.saveContents();
                 cm.storePrefs();
             });
@@ -380,19 +382,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initialize those preferences.
-        // Doing it in a thread at this stage means we can let it work in the background.
-        new Thread(() -> {
-            try {
-                InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                    tp.init();
-                });
-            } catch (RuntimeException ex) {
-                log.error("Error trying to set up preferences {}", ex.getLocalizedMessage(), ex);
-            }
-        }, "init prefs").start();
-
-        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        // Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         new Thread(() -> {
             try {
                 InstanceManager.getDefault(DecoderIndexFile.class);
@@ -515,7 +505,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Create default menubar.
-     * <P>
+     * <p>
      * This does not include the development menu.
      *
      * @param menuBar Menu bar to be populated
@@ -573,6 +563,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
     }
 
+    /**
+     * Open Preferences action.
+     * Often done due to error
+     */
     public void doPreferences() {
         if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
         prefsAction.actionPerformed(null);
@@ -1041,17 +1035,17 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Set up the configuration file name at startup.
-     * <P>
+     * <p>
      * The Configuration File name variable holds the name used to load the
      * configuration file during later startup processing. Applications invoke
      * this method to handle the usual startup hierarchy:
-     * <UL>
-     * <LI>If an absolute filename was provided on the command line, use it
-     * <LI>If a filename was provided that's not absolute, consider it to be in
+     * <ul>
+     * <li>If an absolute filename was provided on the command line, use it
+     * <li>If a filename was provided that's not absolute, consider it to be in
      * the preferences directory
-     * <LI>If no filename provided, use a default name (that's application
+     * <li>If no filename provided, use a default name (that's application
      * specific)
-     * </UL>
+     * </ul>
      * This name will be used for reading and writing the preferences. It need
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em> and may not contain the equals sign (=).

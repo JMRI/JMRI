@@ -99,7 +99,10 @@ public class ColorUtil {
 
     /**
      * @param string Either a hexadecimal representation of the rgb value of a
-     * color or a color name defined as a constant.
+     *                   color or a color name defined as a constant.
+     * @return the color from the string or null if the string equals
+     *         {@value #ColorTrack} or equals the localized value for "None"
+     * @throws IllegalArgumentException if string cannot be converted into a Color
      */
     public static Color stringToColor(String string) {
         try {
@@ -182,9 +185,9 @@ public class ColorUtil {
                     }
                     if (string.equals(Bundle.getMessage("None"))) {
                        return null;
-                   } else {
+                    } else {
                       log.error("unknown color text '{}' sent to stringToColor", string);
-                      return Color.black;
+                      throw new IllegalArgumentException("unknown color text '" + string + "'");
                    }
             }
         }

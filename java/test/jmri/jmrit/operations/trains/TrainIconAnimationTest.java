@@ -370,9 +370,10 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Assert.assertEquals("Train 2 icon X", 125, ti2.getX());
         Assert.assertEquals("Train 2 icon Y", 35, ti2.getY());
 
-        editor.getTargetFrame().dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);
+    //    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);
 
 }

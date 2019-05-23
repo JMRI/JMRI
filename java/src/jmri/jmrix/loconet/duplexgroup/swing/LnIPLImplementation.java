@@ -224,6 +224,20 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     /**
+     * Create a LocoNet packet which queries DCS52 devices for IPL
+     * identification information. The invoking method is responsible for
+     * sending the message to LocoNet.
+     *
+     * @return a LocoNetMessage containing the packet required to query DCS52
+     *         devices for IPL identification information
+     */
+    public static final LocoNetMessage createIplDcs52QueryPacket() {
+        return createIplSpecificHostQueryPacket(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS52);
+    }
+
+    /**
      * Create a LocoNet packet which queries PR3 devices for IPL identification
      * information. The invoking method is responsible for sending the message
      * to LocoNet.
@@ -240,8 +254,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     /**
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
-     * <p>
-     * @param m - LocoNetMessage to be checked for an IPL Identity Query message
+     *
+     * @param m  LocoNetMessage to be checked for an IPL Identity Query message
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityQueryMessage(LocoNetMessage m) {
@@ -263,8 +277,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     /**
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
-     * <p>
-     * @param m - LocoNet message to check for an IPL Identity Report
+     *
+     * @param m  LocoNet message to check for an IPL Identity Report
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityReportMessage(LocoNetMessage m) {
@@ -354,6 +368,19 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         return isIplSpecificIdentityReportMessage(m,
                 LnConstants.RE_IPL_MFR_DIGITRAX,
                 LnConstants.RE_IPL_DIGITRAX_HOST_DCS51);
+    }
+
+    /**
+     * Check message m to determine if it contains a DSC52 IPL Identity Report
+     * message.
+     *
+     * @param m message to analyse
+     * @return true if message is report of DCS52 IPL Identity
+     */
+    public static final boolean isIplDcs52IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS52);
     }
 
     /**
@@ -705,11 +732,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * to support IPL, while UT4D appears to support IPL. This method will
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
-     * <p>
-     * @param hostMfr - host manufacturer number
-     * @param hostDevice - host device number
-     * @param slaveMfr - slave manufacturer number
-     * @param slaveDevice - slave device number
+     *
+     * @param hostMfr  host manufacturer number
+     * @param hostDevice  host device number
+     * @param slaveMfr  slave manufacturer number
+     * @param slaveDevice  slave device number
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice,
@@ -725,6 +752,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 switch (device) {
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
                         s = "Digitrax DCS51"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                        s = "Digitrax DCS52"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
                         if ((smanuf == LnConstants.RE_IPL_MFR_DIGITRAX)
@@ -838,9 +868,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * to support IPL, while UT4D appears to support IPL. This method will
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
-     * <p>
-     * @param hostMfr - host manufacturer number
-     * @param hostDevice - host device number
+     *
+     * @param hostMfr  host manufacturer number
+     * @param hostDevice  host device number
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice) {
@@ -853,9 +883,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Some IPL-capable devices may not be completely determined based
      * solely on Slave Manufacturer number and Slave Device number.
-     * <p>
-     * @param slaveMfr - slave manufacturer number
-     * @param slaveDevice - slave device number
+     *
+     * @param slaveMfr  slave manufacturer number
+     * @param slaveDevice  slave device number
      * @return String containing Slave Manufacturer name and Device model.
      */
     public static final String interpretSlaveManufacturerDevice(Integer slaveMfr, Integer slaveDevice) {
@@ -889,8 +919,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
 
     /**
      * Connect this instance's LocoNetListener to the LocoNet Traffic Controller.
-     * <p>
-     * @param t - a LocoNet Traffic Controller
+     *
+     * @param t  a LocoNet Traffic Controller
      */
     public void connect(jmri.jmrix.loconet.LnTrafficController t) {
         if (t != null) {
@@ -916,7 +946,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Process all incoming LocoNet messages to look for IPL operations. Ignores
      * all other LocoNet messages.
      *
-     * @param m - incoming LocoNet message to be examined
+     * @param m  incoming LocoNet message to be examined
      */
     @Override
     public void message(LocoNetMessage m) {

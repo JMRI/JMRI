@@ -20,54 +20,68 @@ import jmri.web.server.WebServerPreferences;
 public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService> {
 
     private PropertyChangeListener rrNameListener;
-    private WebServerPreferences webServerPreferences = InstanceManager.getDefault(WebServerPreferences.class);
 
     public JsonUtilSocketService(JsonConnection connection) {
         super(connection, new JsonUtilHttpService(connection.getObjectMapper()));
     }
 
+    /**
+     * Package protected method for unit testing that allows a test HTTP service
+     * to be used.
+     * 
+     * @param connection the connection to use
+     * @param service    the supporting HTTP service
+     */
+    JsonUtilSocketService(JsonConnection connection, JsonUtilHttpService service) {
+        super(connection, service);
+    }
+
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
         switch (type) {
             case JSON.LOCALE:
                 // do nothing - we only want to prevent an error at this point
                 break;
             case JSON.PING:
-                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.PONG));
+                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.PONG), id);
                 break;
             case JSON.GOODBYE:
-                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), id);
                 break;
             case JSON.RAILROAD:
-                this.connection.sendMessage(this.service.doGet(type, name, locale));
+                this.connection.sendMessage(this.service.doGet(type, name, data, locale, id), id);
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
                         try {
-                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, null, this.connection.getLocale()));
+                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale(), id), id);
                         } catch (JsonException ex) {
-                            this.connection.sendMessage(ex.getJsonMessage());
+                            this.connection.sendMessage(ex.getJsonMessage(), id);
                         }
                     } catch (IOException ex) {
-                        webServerPreferences.removePropertyChangeListener(this.rrNameListener);
+                        InstanceManager.getDefault(WebServerPreferences.class).removePropertyChangeListener(this.rrNameListener);
                     }
                 };
-                webServerPreferences.addPropertyChangeListener(this.rrNameListener);
+                InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent((preferences) -> {
+                    preferences.addPropertyChangeListener(this.rrNameListener);
+                });
                 break;
             default:
-                this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+                this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
                 break;
         }
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
     }
 
     @Override
     public void onClose() {
-        webServerPreferences.removePropertyChangeListener(this.rrNameListener);
+        InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent((preferences) -> {
+            preferences.removePropertyChangeListener(this.rrNameListener);
+        });
     }
 
 }

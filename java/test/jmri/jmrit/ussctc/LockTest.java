@@ -9,18 +9,13 @@ import org.junit.*;
  * Tests for Lock class in the jmri.jmrit.ussctc package
  *
  * @author	Paul Bender Copyright 2018
-  */
+ */
 public class LockTest {
 
     @Test
-    public void testMemoryName() {
-        // this is a pretty poor test, but the class under test is an interface         // with an enum that isn't used anywhere in the Java code.
-        Assert.assertEquals(Lock.logMemoryName,"IMUSS CTC:LOCK:1:LOG" );
-    }
-
-    @Test
     public void testEnumValues() {
-        // this is a pretty poor test, but the class under test is an interface         // with an enum that isn't used anywhere in the Java code.
+        // this is a pretty poor test, but the class under test is an interface         
+        // with an enum that isn't used anywhere in the Java code.
         Assert.assertNotEquals(Lock.Valid.FIELD_TURNOUT,Lock.Valid.FIELD_SIGNAL);
     }
 

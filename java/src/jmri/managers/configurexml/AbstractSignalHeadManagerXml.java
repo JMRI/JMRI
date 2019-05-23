@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring
  * SignalHeadManagers, working with AbstractSignalHeadManagers.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element turnouts) class,
  * relying on implementation here to load the individual turnouts. Note that
  * these are stored explicitly, so the resolution mechanism doesn't need to see
  * *Xml classes for each specific SignalHead or AbstractSignalHead subclass at
  * store time.
- * <P>
+ * <p>
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
@@ -32,7 +32,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
 
     /**
      * Default implementation for storing the contents of a SignalHeadManager.
-     * <P>
+     * <p>
      * Unlike most other managers, the individual SignalHead objects are stored
      * separately via the configuration system so they can have separate type
      * information.
@@ -64,13 +64,9 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                 }
                 log.debug("system name is " + sname);
                 SignalHead sub = sm.getBySystemName(sname);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        signalheads.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing signalhead: {}", e, e);
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    signalheads.addContent(e);
                 }
             }
         }
@@ -134,10 +130,12 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via " + adapterName);
             try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
                 adapter.load(item, null);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                        | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                        | jmri.configurexml.JmriConfigureXmlException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e, e);
             }
         }

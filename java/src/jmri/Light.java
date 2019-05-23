@@ -20,7 +20,7 @@ import jmri.implementation.LightControl;
  * The primary states are:
  * <ul>
  * <li>ON, corresponding to maximum intensity
- * <LI>INTERMEDIATE, some value between maximum and minimum
+ * <li>INTERMEDIATE, some value between maximum and minimum
  * <li>OFF, corresponding to minimum intensity
  * </ul>
  * The underlying hardware may provide just the ON/OFF two levels, or have a
@@ -50,20 +50,20 @@ import jmri.implementation.LightControl;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Dave Duchamp Copyright (C) 2004, 2010
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends DigitalIO {
+public interface Light extends DigitalIO, AnalogIO {
 
     /**
      * State value indicating output intensity is less than maxIntensity and
@@ -106,7 +106,16 @@ public interface Light extends DigitalIO {
     /** {@inheritDoc} */
     @Override
     default public boolean isConsistentState() {
-        return (getState() == DigitalIO.ON) || (getState() == DigitalIO.OFF);
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF)
+                || (getState() == INTERMEDIATE);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentValue() {
+        // Assume that the value is consistent if the state is consistent.
+        return isConsistentState();
     }
     
     /** {@inheritDoc} */
@@ -168,7 +177,7 @@ public interface Light extends DigitalIO {
 
     /**
      * Check if this object can handle variable intensity.
-     * <P>
+     * <p>
      * Unbound property.
      *
      * @return false if only ON/OFF is available.
@@ -199,12 +208,12 @@ public interface Light extends DigitalIO {
      * TargetIntensity set to values between MinIntensity and MaxIntensity,
      * which would result in the INTERMEDIATE state, as that is invalid for
      * them.
-     * <P>
+     * <p>
      * If a non-zero value is set in the transitionTime property, the state will
      * be one of TRANSITIONTOFULLON, TRANSITIONHIGHER, TRANSITIONLOWER or
      * TRANSITIONTOFULLOFF until the transition is complete.
-     * <P>
-     * @param intensity the desired brightness
+     *
+ * @param intensity the desired brightness
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      * @throws IllegalArgumentException if isIntensityVariable is false and the
@@ -296,7 +305,7 @@ public interface Light extends DigitalIO {
     public double getMinIntensity();
 
     /**
-     * Can the Light change it's intensity setting slowly?
+     * Can the Light change its intensity setting slowly?
      * <p>
      * If true, this Light supports a non-zero value of the transitionTime
      * property, which controls how long the Light will take to change from one
@@ -311,7 +320,7 @@ public interface Light extends DigitalIO {
     /**
      * Set the fast-clock duration for a transition from full ON to full OFF or
      * vice-versa.
-     * <P>
+     * <p>
      * Note there is no guarantee of how this scales when other changes in
      * intensity take place. In particular, some Light implementations will
      * change at a constant fraction per fastclock minute and some will take a

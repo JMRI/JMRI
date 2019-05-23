@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.Before;
 import org.jdom2.Element;
 import org.junit.Assert;
 
@@ -17,13 +16,15 @@ import org.junit.Assert;
  * working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
-public class PositionFileTest extends TestCase {
+ */
+public class PositionFileTest {
 
+    @Test
     public void testCtor() {
         new PositionFile();
     }
 
+    @Test
     public void testPointElement() {
         PositionFile f = new PositionFile();
 
@@ -33,6 +34,7 @@ public class PositionFileTest extends TestCase {
         checkPoint3d(in, out);
     }
 
+    @Test
     public void testReadingElement() {
         PositionFile f = new PositionFile();
 
@@ -60,6 +62,7 @@ public class PositionFileTest extends TestCase {
         }
     }
 
+    @Test
     public void testRW() throws IOException, org.jdom2.JDOMException {
         PositionFile fout = new PositionFile();
         fout.prepare();
@@ -91,26 +94,9 @@ public class PositionFileTest extends TestCase {
         Assert.assertEquals("no 2nd calibration reading", null, fin.getCalibrationReading(1));
     }
 
-    // from here down is testing infrastructure
-    public PositionFileTest(String s) {
-        super(s);
-    }
-
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PositionFileTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PositionFileTest.class);
-        return suite;
     }
 
 }

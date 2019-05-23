@@ -13,11 +13,10 @@ import org.junit.Test;
  */
 public class CbusTableEventTest {
 
-
     @Test
     public void testCTor() {
         // int,int,EvState,int,String,String,String,int,int,int,int,Date
-        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","","",0,0,0,0,null);
+        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","",0,0,0,0,null);
         Assert.assertNotNull("exists",t);
         t = null;
     }
@@ -25,7 +24,7 @@ public class CbusTableEventTest {
     @Test
     public void testSetGet() {
         
-        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","","",0,0,0,0,null);
+        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","",0,0,0,0,null);
         
         t.setDate(new java.util.Date() );
         Assert.assertNotNull("date",t.getDate());
@@ -47,6 +46,12 @@ public class CbusTableEventTest {
         Assert.assertEquals("getSessionIn starts 0", 0,(t.getSessionIn()) );
         Assert.assertEquals("getSessionOut starts 0", 0,(t.getSessionOut()) );
         
+        Assert.assertEquals("getTotalOn starts 0", 0,(t.getTotalOn()) );
+        Assert.assertEquals("getTotalOff starts 0", 0,(t.getTotalOff()) );
+        Assert.assertEquals("getTotalIn starts 0", 0,(t.getTotalIn()) );
+        Assert.assertEquals("getTotalOut starts 0", 0,(t.getTotalOut()) );
+        
+        
         t.bumpSessionOn();
         t.bumpSessionOff();
         t.bumpSessionIn();
@@ -56,6 +61,29 @@ public class CbusTableEventTest {
         Assert.assertEquals("getSessionOff 1", 1,(t.getSessionOff()) );
         Assert.assertEquals("getSessionIn 1", 1,(t.getSessionIn()) );
         Assert.assertEquals("getSessionOut 1", 1,(t.getSessionOut()) );
+        
+        Assert.assertEquals("getTotalOn 1", 1,(t.getTotalOn()) );
+        Assert.assertEquals("getTotalOff 1", 1,(t.getTotalOff()) );
+        Assert.assertEquals("getTotalIn 1", 1,(t.getTotalIn()) );
+        Assert.assertEquals("getTotalOut 1", 1,(t.getTotalOut()) );
+        
+        
+        t.resetSessionTotals();
+        
+        Assert.assertEquals("getSessionOn reset", 0,(t.getSessionOn()) );
+        Assert.assertEquals("getSessionOff reset", 0,(t.getSessionOff()) );
+        Assert.assertEquals("getSessionIn reset", 0,(t.getSessionIn()) );
+        Assert.assertEquals("getSessionOut reset", 0,(t.getSessionOut()) );
+        
+        t.setTotalOn(123);
+        t.setTotalOff(456);
+        t.setTotalIn(789);
+        t.setTotalOut(0);
+        
+        Assert.assertEquals("getTotalOn 123", 123,(t.getTotalOn()) );
+        Assert.assertEquals("getTotalOff 456", 456,(t.getTotalOff()) );
+        Assert.assertEquals("getTotalIn 789", 789,(t.getTotalIn()) );
+        Assert.assertEquals("getTotalOut 0", 0,(t.getTotalOut()) );
         
     }    
     

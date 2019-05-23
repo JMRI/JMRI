@@ -1,6 +1,10 @@
 package jmri.jmrit.symbolicprog;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import static java.nio.charset.Charset.defaultCharset;
+import static java.nio.charset.Charset.isSupported;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -9,11 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.AddressedProgrammer;
 import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.util.CvUtil;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Content;
@@ -306,9 +313,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        if (!CV.equals("")) // some variables have no CV per se
-        {
-            _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
+        if (!CV.equals("")) { // some variables have no CV per se
+            List<String> cvList = CvUtil.expandCvList(CV);
+            if (cvList.isEmpty()) {
+                _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
+            } else { // or require expansion
+                for (String s : cvList) {
+                    _cvModel.addCV(s, readOnly, infoOnly, writeOnly);
+                }
+            }
         }
 
         // decode and handle specific types
@@ -339,6 +352,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         } else if ((child = e.getChild("splitVal")) != null) {
             v = processSplitVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
+
+        } else if ((child = e.getChild("splitHexVal")) != null) {
+            v = processSplitHexVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
+
+        } else if ((child = e.getChild("splitTextVal")) != null) {
+            v = processSplitTextVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
+
+        } else if ((child = e.getChild("splitDateTimeVal")) != null) {
+            v = processSplitDateTimeVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
         } else {
             reportBogus();
@@ -406,27 +428,60 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) {
-        VariableValue v;
-        List<Element> lChoice = child.getChildren("compositeChoice");
-        CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, lChoice.size() - 1, _cvModel.allCvMap(), _status, item);
-        v = v1; // v1 is of CompositeVariableType, so doesn't need casts
-        // loop over the choices
-        for (int k = 0; k < lChoice.size(); k++) {
-            // Create the choice
-            Element choiceElement = lChoice.get(k);
-            String choice = LocaleSelector.getAttribute(choiceElement, "choice");
-            v1.addChoice(choice);
-            // for each choice, capture the settings
-            List<Element> lSetting = choiceElement.getChildren("compositeSetting");
-            for (int n = 0; n < lSetting.size(); n++) {
-                Element settingElement = lSetting.get(n);
-                String varName = LocaleSelector.getAttribute(settingElement, "label");
-                String value = settingElement.getAttribute("value").getValue();
-                v1.addSetting(choice, varName, findVar(varName), value);
+        int count = 0;
+        IteratorIterable<Content> iterator = child.getDescendants();
+        while (iterator.hasNext()) {
+            Object ex = iterator.next();
+            if (ex instanceof Element) {
+                if (((Element) ex).getName().equals("compositeChoice")) {
+                    count++;
+                }
             }
         }
+
+        VariableValue v;
+        CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, count, _cvModel.allCvMap(), _status, item);
+        v = v1; // v1 is of CompositeVariableType, so doesn't need casts
+
+        v1.nItems(count);
+        handleCompositeValChildren(child, v1);
         v1.lastItem();
         return v;
+    }
+
+    /**
+     * Recursively walk the child compositeChoice elements, working through the
+     * compositeChoiceGroup elements as needed.
+     * <p>
+     * Adapted from handleEnumValChildren for use in LocoIO.
+     */
+    protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
+        List<Element> local = e.getChildren();
+        for (int k = 0; k < local.size(); k++) {
+            Element el = local.get(k);
+            log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
+            if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
+                log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
+                continue;
+            }
+            if (el.getName().equals("compositeChoice")) {
+                // Create the choice
+                String choice = LocaleSelector.getAttribute(el, "choice");
+                var.addChoice(choice);
+                // for each choice, capture the settings
+                List<Element> lSetting = el.getChildren("compositeSetting");
+                for (int n = 0; n < lSetting.size(); n++) {
+                    Element settingElement = lSetting.get(n);
+                    String varName = LocaleSelector.getAttribute(settingElement, "label");
+                    String value = settingElement.getAttribute("value").getValue();
+                    var.addSetting(choice, varName, findVar(varName), value);
+                }
+            } else if (el.getName().equals("compositeChoiceGroup")) {
+                // no tree to manage as in enumGroup
+                handleCompositeValChildren(el, var);
+            }
+            log.debug("element processed");
+        }
     }
 
     protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
@@ -445,7 +500,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
-
         int count = 0;
         IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
@@ -462,7 +516,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
 
         v1.nItems(count);
-        handleENumValChildren(child, v1);
+        handleEnumValChildren(child, v1);
         v1.lastItem();
         return v;
     }
@@ -471,7 +525,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
      */
-    protected void handleENumValChildren(Element e, EnumVariableValue var) {
+    protected void handleEnumValChildren(Element e, EnumVariableValue var) {
         List<Element> local = e.getChildren();
         for (int k = 0; k < local.size(); k++) {
             Element el = local.get(k);
@@ -490,11 +544,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 }
             } else if (el.getName().equals("enumChoiceGroup")) {
                 var.startGroup(LocaleSelector.getAttribute(el, "name"));
-                handleENumValChildren(el, var);
+                handleEnumValChildren(el, var);
                 var.endGroup();
             }
             log.debug("element processed");
-
         }
     }
 
@@ -578,14 +631,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         Attribute a;
         int minVal = 0;
         int maxVal = 255;
+        String highCV = null;
+
         if ((a = child.getAttribute("min")) != null) {
             minVal = Integer.parseInt(a.getValue());
         }
         if ((a = child.getAttribute("max")) != null) {
             maxVal = Integer.parseInt(a.getValue());
         }
-
-        String highCV = child.getAttribute("highCV").getValue(); // no default, must be present
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = a.getValue();
+            _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        }
 
         int factor = 1;
         if ((a = child.getAttribute("factor")) != null) {
@@ -599,8 +656,152 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("upperMask")) != null) {
             uppermask = a.getValue();
         }
-        _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
-        v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask);
+        v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, null, null);
+        return v;
+    }
+
+    protected VariableValue processSplitHexVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        String highCV = null;
+
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = a.getValue();
+            _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        String extra1 = "default";
+        if ((a = child.getAttribute("case")) != null) {
+            extra1 = a.getValue();
+        }
+        v = new SplitHexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, extra1, null, null, null);
+        return v;
+    }
+
+    protected VariableValue processSplitTextVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        String highCV = null;
+
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = a.getValue();
+            _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        String match = null;
+        if ((a = child.getAttribute("match")) != null) {
+            match = a.getValue();
+        }
+        String termByte = "0";
+        if ((a = child.getAttribute("termByte")) != null) {
+            termByte = a.getValue();
+        }
+        String padByte = "0";
+        if ((a = child.getAttribute("padByte")) != null) {
+            padByte = a.getValue();
+        }
+        String charSet = defaultCharset().name();
+        if ((a = child.getAttribute("charSet")) != null) {
+            charSet = a.getValue();
+        }
+        boolean ok;
+        try {
+            ok = isSupported(charSet);
+        } catch (IllegalArgumentException ex) {
+            ok = false;
+        }
+        if (!ok) {
+            synchronized (this) {
+                JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, name),
+                        Bundle.getMessage("DecoderDefError"), JOptionPane.ERROR_MESSAGE); // NOI18N
+            }
+            log.error(Bundle.getMessage("UnsupportedCharset", charSet, name));
+        }
+        v = new SplitTextVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, match, termByte, padByte, charSet);
+        return v;
+    }
+
+    protected VariableValue processSplitDateTimeVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        boolean varRreadOnly = true; // unable to parse text dates accurately enough so force variable (but not CVs) to be read only
+        String highCV = null;
+
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = a.getValue();
+            _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        }
+        int factor = 1;
+        int offset = 0;
+
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        String extra1 = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
+                                                // Java epoch is "1970-01-01T00:00:00"
+        if ((a = child.getAttribute("base")) != null) {
+            extra1 = a.getValue();
+        }
+        String extra2 = "1";
+        if ((a = child.getAttribute("factor")) != null) {
+            extra2 = a.getValue();
+        }
+        String extra3 = "Seconds";
+        if ((a = child.getAttribute("unit")) != null) {
+            extra3 = a.getValue();
+        }
+        String extra4 = "default";
+        if ((a = child.getAttribute("display")) != null) {
+            extra4 = a.getValue();
+        }
+        v = new SplitDateTimeVariableValue(name, comment, "", varRreadOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, extra1, extra2, extra3, extra4);
         return v;
     }
 

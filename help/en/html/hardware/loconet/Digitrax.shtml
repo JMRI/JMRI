@@ -128,6 +128,8 @@
         <li>DCS50 Command Station/Booster/Throttle</li>
 
         <li>DCS51 Command Station/Booster/Throttle</li>
+        
+        <li>DCS52 Command Station/Booster/Throttle</li>
 
         <li>DB150 Command Station/Booster</li>
 
@@ -459,6 +461,7 @@
         <li>DB150 - does not provide a way to control "metering"</li>
         <li>DCS50 - does not provide a way to control "metering"</li>
         <li>DCS51 - does not provide a way to control "metering"</li>
+        <li>DCS52 - OpSw31="c" for faster turnout command handling (i.e. disables metering)</li>
         <li>DT200 acting as command station with DB100 - does not provide a way to control "metering"</li>
       </ul>
 
@@ -687,17 +690,33 @@
           generate blinking signal aspects instead of programming
           JMRI to sequentially send "on" and "off" messages to the
           signal hardware.<br>
-          Other users who do not have <i>any</i> hardware which are
-          controlled by DCC stationary decoder messages on the DCC
-          track signal (or on the LocoNet cable's RailSync wires)
-          may decide to prevent the command station from forwarding
-          <i>any</i> LocoNet switch control messages to the DCC
-          track signal (and RailSync wires) by enabling the command
-          station's "Bushby bit". Use the JMRI LocoNet <a href=
-          "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
+          <p>Stationary decoders that do not require commands to
+          start and stop the turnout operation (most stationary
+          decoders) may set the "Send ON/OFF" property to false.
+          This will half the number of messages required to set a
+          turnout. To do this, Right Click the table column header
+          row and check "Send ON and OFF" so it will display, you
+          can then uncheck the value (the default for LocoNet is
+          checked). 
+          <p>Other users may decide to prevent the command station
+          from forwarding <i>any regular</i> LocoNet switch control
+          messages to the DCC track signal (and RailSync wires) by
+          enabling the command station's "Bushby bit". Use the JMRI
+          LocoNet <a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
           Configure Command Station</a> tool, or the Roster-based
           mechanism for Command Station OpSw settings.<br>
-          One good way to avoid this problem is to prevent the
+          <i>Any</i> hardware which is controlled by DCC stationary
+          decoder messages on the DCC track signal (or on the LocoNet
+          cable's RailSync wires) will have to set the "Bypass Bushby Bit".
+          To do this, Right Click the table column header row and
+          check "Bypass Bushby Bit" so it will display, you can then
+          check the value (the default for LocoNet is unchecked).
+          <p> Another way to do this is on the Feedback tab, use
+          monitoring DIRECT, ONESENSOR, TWOSENSOR,
+          INDIRECT or EXACT, and Turnout Automation to RAW. If you use
+          this method the Command Station will not report the state of the
+          turnout correctly.
+          <p>One good way to avoid this problem is to prevent the
           Digitrax command station from receiving the LocoNet
           switch control messages. This can be done by using only
           devices which send and/or receive switch control messages
@@ -923,7 +942,7 @@
           select the appropriate "decoder" name when creating a new roster entry.
           These include:</p>
       <ul>
-          <li>DCS100/DCS200/DCS50/DCS51/DB150/DCS210/DCS240 (only when acting as 
+          <li>DCS100/DCS200/DCS50/DCS51/DCS52/DB150/DCS210/DCS240 (only when acting as 
               a command station)</li>
           <li>BDL16/BDL162/BDL168</li>
           <li>DS64</li>
@@ -988,6 +1007,12 @@
           <li>LocoNet does not provide any good way to allow JMRI to configure the 
             settings of any "booster".  Configure boosters using the mechanisms
             documented by the booster manufacturer.</li>
+          <li>The LocoNet "Command Station Configure" tool does not give access to OpSw
+            settings for OpSw 49 and above.  This prevents the tool from accessing
+            some OpSw settings on DCS240, DCS210, and DCS52 command stations. 
+            JMRI's "<a href="../../apps/DecoderPro/Roster.shtml">Roster</a>"-based 
+            command station configuration does not have this limitation.  Both
+            mechanisms are described in <a href="CommandStationConfig.shtml">this page</a>.</li>
       </ul>
 
       <a name="Support" id="Support"></a>

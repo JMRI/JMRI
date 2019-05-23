@@ -5,27 +5,27 @@ import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Test PaneProg with qualified variables
+ * Test PaneProg with qualified variables.
  *
  * @author	Bob Jacobsen Copyright 2010
-  */
-public class QualifiedVarTest extends TestCase {
+ */
+public class QualifiedVarTest {
 
     // show me a specially-created frame
+    @Test
     public void testFrame() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // run all following on Swing thread
         javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
@@ -176,34 +176,16 @@ public class QualifiedVarTest extends TestCase {
         return;
     }
 
-    // from here down is testing infrastructure
-    public QualifiedVarTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", QualifiedVarTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(QualifiedVarTest.class);
-        return suite;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
 
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

@@ -4,9 +4,9 @@ import jmri.Manager.NameValidity;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -14,11 +14,12 @@ import org.junit.Assert;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
-  */
-public class SerialAddressTest extends TestCase {
+ */
+public class SerialAddressTest {
 
     SerialTrafficControlScaffold tc = null;
 
+    @Test
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - PLA1", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLA1", 'L'));
         Assert.assertTrue("valid format - PLA16", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLA16", 'L'));
@@ -89,6 +90,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2B5x");
     }
 
+    @Test
     public void testValidSystemNameConfig() {
         Assert.assertTrue("valid config PLA1", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PLA1", 'L'));
         Assert.assertTrue("valid config PLB7", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PLB7", 'L'));
@@ -109,6 +111,7 @@ public class SerialAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testIsInsteonTrue() {
         Assert.assertTrue("PL01.02.03", tc.getAdapterMemo().getSerialAddress().isInsteon("PL01.02.03"));
         Assert.assertTrue("PLA1.02.03", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA1.02.03"));
@@ -116,34 +119,18 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("PLA1.02.A3", tc.getAdapterMemo().getSerialAddress().isInsteon("PL01.02.A3"));
     }
 
+    @Test
     public void testIsInsteonFalse() {
         Assert.assertFalse("PLA1", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA1"));
     }
 
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize PLB7", "PLB7", tc.getAdapterMemo().getSerialAddress().normalizeSystemName("PLB7"));
     }
 
-    // from here down is testing infrastructure
-    public SerialAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialAddressTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();        
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         // prepare an interface, register
@@ -153,8 +140,8 @@ public class SerialAddressTest extends TestCase {
         memo.setSerialAddress(new SerialAddress(memo));
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

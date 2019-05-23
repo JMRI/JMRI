@@ -1,150 +1,42 @@
 package jmri.server.json.route;
 
-import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
-import static jmri.server.json.route.JsonRouteServiceFactory.ROUTES;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Route;
-import jmri.RouteManager;
 import jmri.Sensor;
-import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonException;
-import jmri.server.json.JsonSocketService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.server.json.JsonNamedBeanSocketService;
 
 /**
  * JSON socket service provider for managing {@link jmri.Route}s.
  *
  * @author Randall Wood
  */
-public class JsonRouteSocketService extends JsonSocketService<JsonRouteHttpService> {
-
-    private final HashMap<String, RouteListener> routeListeners = new HashMap<>();
-    private final RoutesListener routesListener = new RoutesListener();
-    private final static Logger log = LoggerFactory.getLogger(JsonRouteSocketService.class);
-    private RouteManager routeManager = null;
+public class JsonRouteSocketService extends JsonNamedBeanSocketService<Route, JsonRouteHttpService> {
 
     public JsonRouteSocketService(JsonConnection connection) {
         super(connection, new JsonRouteHttpService(connection.getObjectMapper()));
-        routeManager = InstanceManager.getDefault(RouteManager.class);
     }
-
+    
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
-        this.setLocale(locale);
-        String name = data.path(JSON.NAME).asText();
-        if (method.equals(JSON.PUT)) {
-            this.connection.sendMessage(this.service.doPut(type, name, data, locale));
-        } else {
-            this.connection.sendMessage(this.service.doPost(type, name, data, locale));
-        }
-        if (!this.routeListeners.containsKey(name)) {
-            Route route = routeManager.getRoute(name);
-            if (route != null) {
-                Sensor sensor = route.getTurnoutsAlgdSensor();
-                if (sensor != null) {
-                    RouteListener listener = new RouteListener(route);
-                    sensor.addPropertyChangeListener(listener);
-                    this.routeListeners.put(name, listener);
-                }
+    protected void addListenerToBean(Route bean) {
+        if (bean != null) {
+            NamedBeanListener listener = new NamedBeanListener(bean);
+            bean.addPropertyChangeListener(listener);
+            Sensor sensor = bean.getTurnoutsAlgdSensor();
+            if (sensor != null) {
+                sensor.addPropertyChangeListener(listener);
             }
+            this.beanListeners.put(bean, listener);
         }
-    }
-
-    @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
-        log.debug("adding RoutesListener");
-        routeManager.addPropertyChangeListener(routesListener); //add parent listener
-        addListenersToChildren();
-    }
-
-    private void addListenersToChildren() {
-        routeManager.getNamedBeanSet().stream().forEach((route) -> { //add listeners to each child (if not already)
-            String rn = route.getSystemName();
-            if (!routeListeners.containsKey(rn)) {
-                log.debug("adding RouteListener for Route {}", rn);
-                Sensor sensor = route.getTurnoutsAlgdSensor();
-                if (sensor != null) {
-                    RouteListener listener = new RouteListener(route);
-                    sensor.addPropertyChangeListener(listener);
-                    this.routeListeners.put(rn, listener);
-                }
-            }
-        });
     }
 
     @Override
     public void onClose() {
-        routeListeners.values().stream().forEach((route) -> {
-            route.route.removePropertyChangeListener(route);
+        beanListeners.values().stream().forEach((listener) -> {
+            Sensor sensor = listener.bean.getTurnoutsAlgdSensor();
+            if (sensor != null) {
+                sensor.removePropertyChangeListener(listener);
+            }
         });
-        routeListeners.clear();
-        routeManager.removePropertyChangeListener(routesListener);
-
+        super.onClose();
     }
-
-    private class RouteListener implements PropertyChangeListener {
-
-        protected final Route route;
-
-        public RouteListener(Route route) {
-            this.route = route;
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in RouteListener for '{}' '{}' ('{}'=>'{}')", this.route.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-            try {
-                try {
-                    getConnection().sendMessage(service.doGet(ROUTE, this.route.getSystemName(), getLocale()));
-                } catch (JsonException ex) {
-                    getConnection().sendMessage(ex.getJsonMessage());
-                }
-            } catch (IOException ex) {
-                // if we get an error, de-register
-                Sensor sensor = route.getTurnoutsAlgdSensor();
-                if (sensor != null) {
-                    sensor.removePropertyChangeListener(this);
-                }
-                routeListeners.remove(this.route.getSystemName());
-            }
-        }
-    }
-
-    private class RoutesListener implements PropertyChangeListener {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in RoutesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-
-            try {
-                try {
-                 // send the new list
-                    connection.sendMessage(service.doGetList(ROUTES, getLocale()));
-                    //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToChildren();
-                    }
-                } catch (JsonException ex) {
-                    log.warn("json error sending Routes: {}", ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage());
-                }
-            } catch (IOException ex) {
-                // if we get an error, de-register
-                log.debug("deregistering sensorsListener due to IOException");
-                routeManager.removePropertyChangeListener(routesListener);
-            }
-        }
-    }
-
 }

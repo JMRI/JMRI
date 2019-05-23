@@ -182,6 +182,7 @@ public final class JmriScriptEngineManager {
      *
      * @param extension a file extension
      * @return a ScriptEngine or null
+     * @throws ScriptException if unable to get a matching ScriptEngine
      */
     public ScriptEngine getEngineByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
@@ -198,6 +199,7 @@ public final class JmriScriptEngineManager {
      *
      * @param mimeType a mimeType for a script
      * @return a ScriptEngine or null
+     * @throws ScriptException if unable to get a matching ScriptEngine
      */
     public ScriptEngine getEngineByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
@@ -213,6 +215,7 @@ public final class JmriScriptEngineManager {
      *
      * @param shortName the short name for the ScriptEngine
      * @return a ScriptEngine or null
+     * @throws ScriptException if unable to get a matching ScriptEngine
      */
     public ScriptEngine getEngineByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
@@ -224,7 +227,7 @@ public final class JmriScriptEngineManager {
     }
 
     /**
-     * Get a ScriptEngine by it's name.
+     * Get a ScriptEngine by its name.
      *
      * @param engineName the complete name for the ScriptEngine
      * @return a ScriptEngine or null
@@ -419,6 +422,7 @@ public final class JmriScriptEngineManager {
      *
      * @param extension a file extension
      * @return a ScriptEngineFactory or null
+     * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
     public ScriptEngineFactory getFactoryByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
@@ -435,6 +439,7 @@ public final class JmriScriptEngineManager {
      *
      * @param mimeType the script mimeType
      * @return a ScriptEngineFactory or null
+     * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
     public ScriptEngineFactory getFactoryByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
@@ -450,6 +455,7 @@ public final class JmriScriptEngineManager {
      *
      * @param shortName the short name for the factory
      * @return a ScriptEngineFactory or null
+     * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
     public ScriptEngineFactory getFactoryByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
@@ -461,7 +467,7 @@ public final class JmriScriptEngineManager {
     }
 
     /**
-     * Get a ScriptEngineFactory by it's name.
+     * Get a ScriptEngineFactory by its name.
      *
      * @param factoryName the complete name for a factory
      * @return a ScriptEngineFactory or null

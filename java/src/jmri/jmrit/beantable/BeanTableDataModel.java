@@ -51,6 +51,8 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -151,7 +153,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Is this property event announcing a change this table should display?
-     * <P>
+     * <p>
      * Note that events will come both from the NamedBeans and also from the
      * manager
      *
@@ -472,7 +474,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
+     * Service method to setup a column so that it will hold a button for its
      * values
      *
      * @param table  {@link JTable} to use
@@ -750,6 +752,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
+        if (!allowBlockNameChange("Rename", nBean, value)) return;  // NOI18N
+
         nBean.setUserName(value);
         fireTableRowsUpdated(row, row);
         if (!value.equals("")) {
@@ -783,6 +787,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     public void removeName(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
+        if (!allowBlockNameChange("Remove", nBean, "")) return;  // NOI18N
         String msg = Bundle.getMessage("UpdateToSystemName", new Object[]{getBeanType()});
         int optionPane = JOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
@@ -792,6 +797,45 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
         nBean.setUserName(null);
         fireTableRowsUpdated(row, row);
+    }
+
+    /*
+     * Determine whether it is safe to rename/remove a Block user name.
+     * <p>The user name is used by the LayoutBlock to link to the block and
+     * by Layout Editor track components to link to the layout block.
+     * @oaram changeType This will be Remove or Rename.
+     * @param bean The affected bean.  Only the Block bean is of interest.
+     * @param newName For Remove this will be empty, for Rename it will be the new user name.
+     * @return true to continue with the user name change.
+     */
+    boolean allowBlockNameChange(String changeType, T bean, String newName) {
+        if (!bean.getBeanType().equals("Block")) return true;  // NOI18N
+
+        // If there is no layout block or the block name is empty, Block rename and remove are ok without notification.
+        String oldName = bean.getUserName();
+        if (oldName == null) return true;
+        LayoutBlock layoutBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(oldName);
+        if (layoutBlock == null) return true;
+
+        // Remove is not allowed if there is a layout block
+        if (changeType.equals("Remove")) {
+            log.warn("Cannot remove user name for block {}", oldName);  // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("BlockRemoveUserNameWarning", oldName),  // NOI18N
+                        Bundle.getMessage("WarningTitle"),  // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Confirmation dialog
+        int optionPane = JOptionPane.showConfirmDialog(null,
+                Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
+                Bundle.getMessage("QuestionTitle"),  // NOI18N
+                JOptionPane.YES_NO_OPTION);
+        if (optionPane == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
     }
 
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics

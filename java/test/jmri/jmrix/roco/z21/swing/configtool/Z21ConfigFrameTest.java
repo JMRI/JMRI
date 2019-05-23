@@ -5,11 +5,7 @@ import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for Z21ConfigFrame class.
@@ -17,20 +13,13 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  *
  */
-public class Z21ConfigFrameTest {
+public class Z21ConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private Z21SystemConnectionMemo memo = null;
     private Z21InterfaceScaffold tc = null;
 
-    @Test
-    public void MemoConstructorTest() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Z21ConfigFrame f = new Z21ConfigFrame(memo);
-        Assert.assertNotNull("Z21ConfigFrame constructor", f);
-        f.dispose();
-    }
-
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -40,13 +29,18 @@ public class Z21ConfigFrameTest {
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
+        if(!GraphicsEnvironment.isHeadless()){
+          frame = new Z21ConfigFrame(memo);
+	}
     }
 
     @After
+    @Override
     public void tearDown() {
         memo = null;
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }

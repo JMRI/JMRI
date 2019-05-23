@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.swing.eventrequestmonitor;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -14,14 +13,15 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import java.util.List;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Cbus request events
@@ -39,7 +39,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     static private int MAX_LINES = 500; // tablefeedback screen log size
     
     protected ArrayList<CbusEventRequestMonitorEvent> _mainArray;
-    
+    private CbusNameService nameService;
     protected TextAreaFIFO tablefeedback;
     // private CanSystemConnectionMemo _memo;
     private TrafficController tc;
@@ -67,6 +67,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         // _memo = memo;
         tc = memo.getTrafficController();
         tc.addCanListener(this);
+        nameService = new CbusNameService();
     }
 
     // order needs to match column list top of dtabledatamodel
@@ -104,7 +105,6 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -182,7 +182,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
             case NAME_COLUMN:
                 return new JTextField(10).getPreferredSize().width;
             default:
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
 
@@ -246,7 +246,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
             case EVENT_COLUMN:
                 return _mainArray.get(row).getEn();
             case NAME_COLUMN:
-                return _mainArray.get(row).getName();
+                return nameService.getEventName(_mainArray.get(row).getNn(),_mainArray.get(row).getEn() );
             case STATUS_REQUEST_BUTTON_COLUMN:
                 return Bundle.getMessage("StatusButton");
             case DELETE_BUTTON_COLUMN:
@@ -266,7 +266,6 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
             case FEEDBACKTIMEOUT_COLUMN:
                 return _mainArray.get(row).getFeedbackTimeout();
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
@@ -281,77 +280,80 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     @Override
     public void setValueAt(Object value, int row, int col) {
         // log.debug("427 set valueat called row: {} col: {}", row, col);
-        if (col == NAME_COLUMN) {
-            _mainArray.get(row).setName( (String) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, NAME_COLUMN); });
-        }
-        else if (col == DELETE_BUTTON_COLUMN) {
+        if (col == DELETE_BUTTON_COLUMN) {
             buttonDeleteClicked(row);
         }
         else if (col == STATUS_REQUEST_BUTTON_COLUMN) {
-            _mainArray.get(row).sendEvent(CbusEventRequestMonitorEvent.EvState.REQUEST); // gui update from outgoing msg
+            _mainArray.get(row).sendEvent(CbusEventRequestMonitorEvent.EvState.REQUEST); // gui updates from outgoing msg
         }
         else if (col == LATEST_TIMESTAMP_COLUMN) {
             _mainArray.get(row).setDate( new Date() );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, LATEST_TIMESTAMP_COLUMN); });
+            updateGui(row, col);
         }
         else if (col == FEEDBACKREQUIRED_COLUMN) {
             _mainArray.get(row).setFeedbackTotReqd( (int) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, FEEDBACKREQUIRED_COLUMN); });
+            updateGui(row, col);
         }
         else if (col == FEEDBACKOUTSTANDING_COLUMN) {
             _mainArray.get(row).setFeedbackOutstanding( (Integer) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, FEEDBACKOUTSTANDING_COLUMN); });
+            updateGui(row, col);
         }
         else if (col == FEEDBACKEVENT_COLUMN) {
             _mainArray.get(row).setExtraEvent( (int) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, FEEDBACKEVENT_COLUMN); });
+            updateGui(row, col);
         }        
         else if (col == FEEDBACKNODE_COLUMN) {
             _mainArray.get(row).setExtraNode( (int) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, FEEDBACKNODE_COLUMN); });
+            updateGui(row, col);
         }
         else if (col == FEEDBACKTIMEOUT_COLUMN) {
             _mainArray.get(row).setFeedbackTimeout( (int) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, FEEDBACKTIMEOUT_COLUMN); });
+            updateGui(row, col);
         }
         else if (col == LASTFEEDBACK_COLUMN) {
             _mainArray.get(row).setLastFb( (CbusEventRequestMonitorEvent.FbState) value );
-            ThreadingUtil.runOnGUI( ()->{ fireTableCellUpdated(row, LASTFEEDBACK_COLUMN); });
+            updateGui(row, col);
         }
+    }
+    
+    private void updateGui(int row, int col){
+        ThreadingUtil.runOnGUI( ()->{
+            fireTableCellUpdated(row, col); 
+        });
     }
 
     // outgoing cbus message
     // or incoming CanReply
     @Override
-    public void message(CanMessage m) { 
-        
-        int opc = CbusMessage.getOpcode(m);
-        if (!CbusOpCodes.isEvent(opc)) {
+    public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
             return;
         }
-        
-        int nn = CbusMessage.getNodeNumber(m);
-        int en = CbusMessage.getEvent(m);
-        
+        int opc = CbusMessage.getOpcode(m);
         if (CbusOpCodes.isEventRequest(opc)) {
-            processEvRequest(nn,en);
+            processEvRequest( CbusMessage.getNodeNumber(m) , CbusMessage.getEvent(m) );
         }
         else if (CbusOpCodes.isEventNotRequest(opc)) {
-            processEvent(nn,en);
+            processEvent( CbusMessage.getNodeNumber(m) , CbusMessage.getEvent(m) );
+        }
+        else {
+            return;
         }
     }
     
     // incoming cbus message
     // handled the same as outgoing
     @Override
-    public void reply(CanReply r) { 
+    public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         CanMessage m = new CanMessage(r);
         message(m);
     }
 
     // called when event heard as CanReply / CanMessage
-    public void processEvent( int nn, int en ){
+    private void processEvent( int nn, int en ){
         
         int existingRow = eventRow( nn, en);
         int fbRow = extraFeedbackRow( nn, en);
@@ -365,18 +367,18 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     }
     
     // called when request heard as CanReply / CanMessage
-    public void processEvRequest( int nn, int en ) {
+    private void processEvRequest( int nn, int en ) {
         
         int existingRow = eventRow( nn, en);
         if (existingRow<0) {
-            addEvent(nn,en,CbusEventRequestMonitorEvent.EvState.REQUEST,"",null); 
+            addEvent(nn,en,CbusEventRequestMonitorEvent.EvState.REQUEST,null); 
         }
         existingRow = eventRow( nn, en);
         _mainArray.get(existingRow).setRequestReceived();
         
     }
     
-    public int eventRow(int nn, int en) {
+    protected int eventRow(int nn, int en) {
         for (int i = 0; i < getRowCount(); i++) {
             if (_mainArray.get(i).matches(nn, en)) {
                 return i;
@@ -385,7 +387,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         return -1;
     }
 
-    public int extraFeedbackRow(int nn, int en) {
+    protected int extraFeedbackRow(int nn, int en) {
         for (int i = 0; i < getRowCount(); i++) {
             if (_mainArray.get(i).matchesFeedback(nn, en)) {
                 return i;
@@ -394,11 +396,10 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         return -1;
     }
 
-    public void addEvent(int node, int event, CbusEventRequestMonitorEvent.EvState state, 
-        String eventName, Date timestamp) {
+    public void addEvent(int node, int event, CbusEventRequestMonitorEvent.EvState state, Date timestamp) {
         
         CbusEventRequestMonitorEvent newmonitor = new CbusEventRequestMonitorEvent(
-            node, event, state, eventName, timestamp, _defaultfeedbackdelay, 
+            node, event, state, timestamp, _defaultfeedbackdelay, 
             _defaultFeedback, this );
         
         _mainArray.add(newmonitor);
@@ -409,10 +410,10 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
 
     /**
      * Remove Row from table
-     * @see buttonDeleteClicked
+     * @see #buttonDeleteClicked
      * @param row int row number
      */    
-    void removeRow(int row) {
+    private void removeRow(int row) {
         _context = _mainArray.get(row).toString() + Bundle.getMessage("TableConfirmDelete");
         _mainArray.remove(row);
         ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
@@ -422,7 +423,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     /**
      * Delete Button Clicked
      * See whether to display confirm popup
-     * @see removeRow
+     * @see #removeRow
      * @param row int row number
      */
     private void buttonDeleteClicked(int row) {
@@ -476,14 +477,13 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         _mainArray = null;
         
         tablefeedback.dispose();
-        if (tc != null) {
-            tc.removeCanListener(this);
-        }
+        tc.removeCanListener(this);
+        
     }
 
     protected TextAreaFIFO tablefeedback(){
         return tablefeedback;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusEventRequestDataModel.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusEventRequestDataModel.class);
 }

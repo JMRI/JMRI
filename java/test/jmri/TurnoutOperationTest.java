@@ -2,18 +2,20 @@ package jmri;
 
 import jmri.implementation.AbstractTurnout;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the TurnoutOperation class
  *
  * @author	Bob Jacobsen Copyright (C) 2016
  */
-public class TurnoutOperationTest extends TestCase {
+public class TurnoutOperationTest {
 
+    @Test
     @SuppressWarnings("unlikely-arg-type") // String unrelated when testing Wrong type
     public void testEquals() {
         TurnoutOperation to1 = new TurnoutOperation("to1"){
@@ -51,36 +53,15 @@ public class TurnoutOperationTest extends TestCase {
         
     }
     
-    // from here down is testing infrastructure
-    public TurnoutOperationTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {TurnoutOperationTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TurnoutOperationTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-
-    @Override
-    protected void setUp() throws Exception { 
+    @Before
+    public void setUp() throws Exception { 
         jmri.util.JUnitUtil.setUp(); 
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception { 
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception { 
         jmri.util.JUnitUtil.tearDown(); 
     }
 

@@ -1,8 +1,10 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * <p>
@@ -14,12 +16,9 @@ import org.junit.Assert;
  *
  * @author Bob Jacobsen
  */
-public class XNetTrafficRouterTest extends TestCase {
+public class XNetTrafficRouterTest {
 
-    public XNetTrafficRouterTest(String s) {
-        super(s);
-    }
-
+    @Test
     public void testConnectAndSend() {
         // scaffold for upstream
         XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -66,6 +65,7 @@ public class XNetTrafficRouterTest extends TestCase {
         count++;
     }
 
+    @Test
     public void testReceiveAndForward() {
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation()) {
@@ -111,6 +111,7 @@ public class XNetTrafficRouterTest extends TestCase {
         Assert.assertEquals("one message sent", 1, count);
     }
 
+    @Test
     public void testConnectAndDisconnect() {
         // scaffold for upstream
         XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation()) {
@@ -140,20 +141,13 @@ public class XNetTrafficRouterTest extends TestCase {
         Assert.assertTrue("not connected", !router.status());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetTrafficRouterTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

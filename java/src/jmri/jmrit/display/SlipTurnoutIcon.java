@@ -14,14 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a Slip, either Single or Double.<P>
+ * An icon to display a status of a Slip, either Single or Double.<p>
  * This responds to only KnownState, leaving CommandedState to some other
  * graphic representation later.
- * <P>
+ * <p>
  * A click on the icon will command a state change. Specifically, it will set
  * the CommandedState to the opposite (THROWN vs CLOSED) of the current
  * KnownState.
- * <P>
+ * <p>
  * Note: lower west to lower east icon is used for storing the slip icon, in a
  * single slip, even if the slip is set for upper west to upper east.
  * <p>
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <li>singleSlipRoute - translates to which exit the first turnout goes to
  * <li>true if upper, or false if lower
  * </ul>
- * <P>
+ * <p>
  * Based upon the TurnoutIcon by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (c) 2010
@@ -187,7 +187,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Sets the type of turnout configuration which is being used
      *
-     * @param slip - valid values are
+     * @param slip  valid values are
      * <ul>
      * <li>0x00 - Double Slip
      * <li>0x02 - Single Slip

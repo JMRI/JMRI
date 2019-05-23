@@ -1,6 +1,6 @@
 package jmri.jmrix;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -119,9 +119,9 @@ abstract public class AbstractThrottle implements DccThrottle {
      * to the system state (eg. the speed is the same, or effectivly the same, as the existing speed).
      * Then, the boolean options can affect this behaviour.
      *
-     * @param speed - the new speed
-     * @param allowDuplicates - don't suppress messages
-     * @param allowDuplicatesOnStop - don't suppress messages if the new speed is 'stop'
+     * @param speed  the new speed
+     * @param allowDuplicates  don't suppress messages
+     * @param allowDuplicatesOnStop  don't suppress messages if the new speed is 'stop'
      */
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
@@ -134,7 +134,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * setSpeedSettingAgain - set the speed and don't ever supress the sending of messages to the system
      *
-     * @param speed - the new speed
+     * @param speed  the new speed
      */
     @Override
     public void setSpeedSettingAgain(float speed) {
@@ -863,7 +863,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -873,7 +873,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -883,7 +883,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F9, F10, F11, F12
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -894,7 +894,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the state of functions F13, F14, F15, F16, F17,
      * F18, F19, F20
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -927,7 +927,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the state of functions F21, F22, F23, F24, F25,
      * F26, F27, F28
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -1252,7 +1252,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the momentary state of functions F0, F1, F2, F3,
      * F4.
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1262,7 +1262,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the momentary state of functions F5, F6, F7, F8.
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1273,7 +1273,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F9, F10, F11,
      * F12
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1284,7 +1284,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1295,7 +1295,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1390,7 +1390,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", "" + currentDuration);
-        re.putAttribute("LastOperated", new ISO8601DateFormat().format(new Date()));
+        re.putAttribute("LastOperated", new StdDateFormat().format(new Date()));
         //Only store if the roster entry isn't open.
         if (!re.isOpen()) {
             re.store();

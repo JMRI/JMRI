@@ -81,7 +81,7 @@ public interface Logix extends NamedBean {
      * Add/Edit Logix dialog. If 'order' is greater than the number of
      * Conditionals for this Logix, and empty String is returned.
      *
-     * @param order - order in which the Conditional calculates
+     * @param order order in which the Conditional calculates
      * @return system name of conditional or an empty String
      */
     public String getConditionalByNumberOrder(int order);
@@ -90,7 +90,7 @@ public interface Logix extends NamedBean {
      * Add a Conditional name and sequence number to this Logix.
      *
      * @param systemName The Conditional system name
-     * @param order      - the order this conditional should calculate in if
+     * @param order      the order this conditional should calculate in if
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
      * @return true if the Conditional was added, false otherwise (most likely
@@ -151,7 +151,7 @@ public interface Logix extends NamedBean {
      * Deactivate the Logix. This method disconnects the Logix from all input
      * objects and stops it from being triggered to calculate.
      * <p>
-     * A Logix must be deactivated before it's Conditionals are changed.
+     * A Logix must be deactivated before its Conditionals are changed.
      */
     public void deActivateLogix();
 

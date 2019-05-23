@@ -19,14 +19,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a turnout.<P>
+ * An icon to display a status of a turnout.
+ * <p>
  * This responds to only KnownState, leaving CommandedState to some other
  * graphic representation later.
- * <P>
+ * <p>
  * A click on the icon will command a state change. Specifically, it will set
  * the CommandedState to the opposite (THROWN vs CLOSED) of the current
  * KnownState.
- * <P>
+ * <p>
  * The default icons are for a left-handed turnout, facing point for east-bound
  * traffic.
  *

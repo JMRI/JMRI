@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- *
  */
 public class MergConnectionConfig extends ConnectionConfig {
 
@@ -30,12 +29,16 @@ public class MergConnectionConfig extends ConnectionConfig {
     }
 
     /**
-     * Create a connection configuration without a preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public MergConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
@@ -48,4 +51,5 @@ public class MergConnectionConfig extends ConnectionConfig {
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
+
 }

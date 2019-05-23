@@ -1106,7 +1106,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
         m.setHeader(data * 4 + data2);
         for (j = 0; j < 8; j++) {
-            if (!dataFields[j].getText().equals("")) {
+            if (!dataFields[j].getText().isEmpty()) {
                 data = parseBinDecHexByte(dataFields[j].getText(), 255, _decimal, Bundle.getMessage("CbusConsoleTitle"),
                         Bundle.getMessage("DbxErrorDialog", j));
                 if (data == -1) {
@@ -1407,7 +1407,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     
     /**
      * Parse a string for binary, decimal or hex byte value
-     * <P>
+     * <p>
      * 0b, 0d or 0x prefix will force parsing of binary, decimal or hex,
      * respectively. Entries with no prefix are parsed as decimal if decimal
      * flag is true, otherwise hex.

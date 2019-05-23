@@ -10,10 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Command Station + other network objects
- * <p>By default starts with 1 command station, a node in SLiM mode,
- * and an event request responder.</p>
- * <p>All simulation responses can be sent as @CanMessage or @CanReply </p>
+ * Simulating a MERG CBUS Command Station + other network objects.
+ * <p>
+ * By default starts with 1 command station, a node in SLiM mode,
+ * and an event request responder.
+ * <p>
+ * All simulation responses can be sent as {@link jmri.jmrix.can.CanMessage} or {@link jmri.jmrix.can.CanReply}
+ *
  * @author Steve Young Copyright (C) 2018
  * @see CbusDummyCS
  * @see CbusEventResponder
@@ -39,7 +42,7 @@ public class CbusSimulator {
         _csArr.add(new CbusDummyCS(memo)); // type, id, memo
         
         _ndArr = new ArrayList<CbusDummyNode>();
-        _ndArr.add(new CbusDummyNode(memo)); // type, id, memo
+        _ndArr.add(new CbusDummyNode(0,165,0,0,memo)); // nn, manufacturer, type, canid, memo
         
         _evResponseArr = new ArrayList<CbusEventResponder>();
         _evResponseArr.add(new CbusEventResponder(memo) );
@@ -76,19 +79,16 @@ public class CbusSimulator {
     }
     
     public CbusDummyNode getNewNd(){
-        CbusDummyNode newnd  = new CbusDummyNode(memo);
+        CbusDummyNode newnd  = new CbusDummyNode(0,165,0,0,memo);
         _ndArr.add(newnd);
         return newnd;
-        
     }
 
     public CbusEventResponder getNewEv(){
         CbusEventResponder newcs = new CbusEventResponder(memo);
         _evResponseArr.add(newcs);
         return newcs;
-        
     }
-    
 
     // removes CanListeners
     // resets all command stations to stop any session timers

@@ -74,7 +74,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     /**
      * Set the Consist Type.
      *
-     * @param consistType, an integer, should be either
+     * @param consistType An integer, should be either
      *                     jmri.Consist.ADVANCED_CONSIST or
      *                     jmri.Consist.CS_CONSIST.
      */
@@ -241,7 +241,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                     // The only way it is valid for us to do something
                     // here is if the locomotive we're adding is
                     // already in the consist and we want to change
-                    // it's direction
+                    // its direction
                     if (consistList.size() == 2
                             && consistList.contains(locoAddress)) {
                         addToCSConsist(locoAddress, directionNormal);

@@ -393,10 +393,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
              * Visualize state in table as a graphic, customized for Lights (2
              * states + ... for transitioning). Renderer and Editor are
              * identical, as the cell contents are not actually edited, only
-             * used to toggle state using {@link #clickOn(NamedBean)}.
+             * used to toggle state using {@link #clickOn(Light)}.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              */
@@ -939,7 +937,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (uName.isEmpty()) {
             uName = null;   // a blank field means no user name
         }
-        // Does System Name have a valid format
+        // Does System Name have a valid format?
         if (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName) != Manager.NameValidity.VALID) {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: {}", suName);
@@ -1009,6 +1007,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         // check if requested Light uses the same address as a Turnout
         String testSN = turnoutPrefix + curAddress;
+        // normalize name before test to compare the string used as Light system name, normalized above
+        testSN = InstanceManager.turnoutManagerInstance().normalizeSystemName(testSN);
         Turnout testT = InstanceManager.turnoutManagerInstance().
                 getBySystemName(testSN);
         if (testT != null) {
@@ -1022,7 +1022,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                             Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                 if (selectedValue == 1) {
-                    return;   // return without creating if "No" response
+                    return;   // return without creating on "No" response
                 }
                 if (selectedValue == 2) {
                     // Suppress future warnings, and continue
@@ -1045,6 +1045,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             // convert numerical hardware address
             try {
                 startingAddress = Integer.parseInt(hardwareAddressTextField.getText().trim()); // N11N
+
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
@@ -1122,13 +1123,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 uxName = uName;
             }
             for (int i = 1; i < numberOfLights; i++) {
-                sxName = lightPrefix + (startingAddress + i);
+                sxName = lightPrefix + (startingAddress + i); // normalize once more to allow specific connection formatting
                 if (uxName != null) {
                     uxName = nextName(uxName);
                 }
                 try {
                     g = InstanceManager.getDefault(LightManager.class).newLight(sxName, uxName);
-                    // TODO: setup this light the same as the first light?
+                    // TODO: set up this light the same as the first light?
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName);
@@ -1198,7 +1199,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // get information for this Light
         userName.setText(g.getUserName());
         clearLightControls();
-        controlList = curLight.getLightControlList();
+        
+        // Get a copy of the LightControl list
+        controlList = new ArrayList<>();
+        curLight.getLightControlList().forEach((lightControlList1) -> {
+            controlList.add(new LightControl(lightControlList1));
+        });
+        
         // variable intensity
         if (g.isIntensityVariable()) {
             minIntensity.setValue(g.getMinIntensity()); // displayed as percentage

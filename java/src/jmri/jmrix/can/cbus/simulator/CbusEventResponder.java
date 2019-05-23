@@ -15,7 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing event request responses.
+ * Simulating event request responses.
+ *
  * @author Steve Young Copyright (C) 2018
  * @see CbusSimulator
  * @since 4.15.2
@@ -33,8 +34,8 @@ public class CbusEventResponder implements CanListener {
     private Boolean _sendOut;
     private CbusSend send;
     
-    public static ArrayList<String> evModes = new ArrayList<String>();
-    public static ArrayList<String> evModesTip = new ArrayList<String>();
+    public ArrayList<String> evModes = new ArrayList<String>();
+    public ArrayList<String> evModesTip = new ArrayList<String>();
     
     public CbusEventResponder( CanSystemConnectionMemo memod ){
         memo = memod;
@@ -72,8 +73,7 @@ public class CbusEventResponder implements CanListener {
         evModes.add(Bundle.getMessage("CbusEventOff"));
         evModesTip.add(null);
         
-        log.info("Simulated Event Responses: {}",evModes.get(_mode) );
-        
+        log.info("Simulated Event Responses: {}", evModes.get(_mode) );
     }
 
     public void setDelay( int newval){
@@ -195,6 +195,9 @@ public class CbusEventResponder implements CanListener {
     
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
             processEventforResponse(m);
         }
@@ -202,6 +205,9 @@ public class CbusEventResponder implements CanListener {
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
             CanMessage m = new CanMessage(r);
             processEventforResponse(m);
@@ -216,4 +222,5 @@ public class CbusEventResponder implements CanListener {
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusEventResponder.class);
+
 }

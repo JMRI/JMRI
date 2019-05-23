@@ -3,6 +3,7 @@ package jmri.jmrit.blockboss;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -17,46 +18,47 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Drives the "simple signal" logic for one signal.
- * <P>
+ * <p>
  * Signals "protect" by telling the engineer about the conditions ahead. The
  * engineer controls the speed of the train based on what the signals show, and
  * the signals in turn react to whether the track ahead is occupied, what
  * signals further down the line show, etc.
- * <P>
+ * <p>
  * There are four situations that this logic can handle:
- * <OL>
- * <LI>SINGLEBLOCK - A simple block, without a turnout.
- * <P>
+ * <ol>
+ * <li>SINGLEBLOCK - A simple block, without a turnout.
+ * <p>
  * In this case, there is only a single set of sensors and a single next signal
  * to protect.
- * <LI>TRAILINGMAIN - This signal is protecting a trailing point turnout, which
+ * <li>TRAILINGMAIN - This signal is protecting a trailing point turnout, which
  * can only be passed when the turnout is closed. It can also be used for the
  * upper head of a two head signal on the facing end of the turnout.
- * <P>
+ * <p>
  * In this case, the signal is forced red if the specified turnout is THROWN.
  * When the turnout is CLOSED, there is a single set of sensors and next
  * signal(s) to protect.
- * <LI>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
+ * <li>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
  * which can only be passed when the turnout is thrown. It can also be used for
  * the lower head of a two head signal on the facing end of the turnout.
- * <P>
+ * <p>
  * In this case, the signal is forced red if the specified turnout is CLOSED.
  * When the turnout is THROWN, there is a single set of sensors and next
  * signal(s) to protect.
- * <LI>FACING - This single head signal protects a facing point turnout, which
+ * <li>FACING - This single head signal protects a facing point turnout, which
  * may therefore have two next signals and two sets of next sensors for the
  * closed and thrown states of the turnout.
- * <P>
+ * <p>
  * If the turnout is THROWN, one set of sensors and next signal(s) is protected.
  * If the turnout is CLOSED, another set of sensors and next signal(s) is
  * protected.
- * </OL><P>
+ * </ol>
+ * <p>
  * Note that these four possibilities logically require that certain information
  * be configured consistently; e.g. not specifying a turnout in TRAILINGMAIN
  * doesn't make any sense. That's not enforced explicitly, but violating it can
  * result in confusing behavior.
  *
- * <P>
+ * <p>
  * The protected sensors should cover the track to the next signal. If any of
  * the protected sensors show ACTIVE, the signal will be dropped to red.
  * Normally, the protected sensors cover the occupancy of the track to the next
@@ -64,40 +66,40 @@ import org.slf4j.LoggerFactory;
  * entering an occupied stretch of track (often called a "block"). But the
  * actual source of the sensors can be anything useful, for example a
  * microswitch on a local turnout, etc.
- * <P>
+ * <p>
  * There are several variants to how a next signal is protected. In the simplest
  * form, the controlled signal provides a warning to the engineer of what the
  * signal being protected will show when it becomes visible:
- * <UL>
- * <LI>If the next signal is red, the engineer needs to be told to slow down;
+ * <ul>
+ * <li>If the next signal is red, the engineer needs to be told to slow down;
  * this signal will be set to yellow.
- * <LI>If the next signal is green, the engineer can proceed at track speed;
+ * <li>If the next signal is green, the engineer can proceed at track speed;
  * this signal will be set to green.
- * </UL>
+ * </ul>
  * If the next signal is yellow, there are two possible variants that can be
  * configured:
- * <UL>
- * <LI>For the common "three-aspect" signaling system, an engineer doesn't need
+ * <ul>
+ * <li>For the common "three-aspect" signaling system, an engineer doesn't need
  * any warning before a yellow signal. In this case, this signal is set to green
  * when the protected signal is yellow.
- * <LI>For lines where track speed is very fast or braking distances are very
+ * <li>For lines where track speed is very fast or braking distances are very
  * long, it can be useful to give engineers warning that the next signal is
  * yellow (and the one after that is red) so that slowing the train can start
  * early. Usually flashing yellow preceeds the yellow signal, and the system is
  * called "four-aspect" signaling.
- * </UL>
+ * </ul>
  *
- * <P>
+ * <p>
  * In some cases, you want a signal to show <i>exactly</I> what the next signal
  * shows, instead of one speed faster. E.g. if the (protected) next signal is
  * red, this one should be red, instead of yellow. In this case, this signal is
  * called a "distant signal", as it provides a "distant" view of the protected
  * signal heads's appearance. Note that when in this mode, this signal still protects
  * the interveneing track, etc.
- * <P>
+ * <p>
  * The "hold" unbound parameter can be used to set this logic to show red,
  * regardless of input. That's intended for use with CTC logic, etc.
- * <P>
+ * <p>
  * "Approach lit" signaling sets the signal head to dark (off) unless the
  * specified sensor(s) are ACTIVE. Normally, those sensors are in front of
  * (before) the signal head. The signal heads then only light when a train is
@@ -105,7 +107,7 @@ import org.slf4j.LoggerFactory;
  * reduce engineer workload) on prototype railroads, but is uncommon on model
  * railroads; once the layout owner has gone to the trouble and expense of
  * installing signals, he usually wants them lit up.
- * <P>
+ * <p>
  * Two signal heads can be protected. For example, if the next signal has two
  * heads to control travel onto a main track or siding, then both heads should
  * be provided here. The <i>faster</i> signal aspect will control the appearance
@@ -126,18 +128,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     static public final int FACING = 4;
 
     int mode = 0;
-
-    /**
-     * Create a default object, without contents.
-     * Used when registering a dummy with the configuration system.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
-                justification = "Private ctor used to create dummy object for registration; object never asked to do anything")
-        private BlockBossLogic() {
-        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-    }
 
     /**
      * Create an object to drive a specific signal head.
@@ -1160,19 +1150,32 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return;
     }
 
-    static ArrayList<BlockBossLogic> bblList;
+    // Due to an older configuration & storage paradigm, this class
+    // has to add itself to the configuration manager, but only once.
+    // We do that the first time an instance is created and added to the active list
+    private static volatile boolean addedToConfig = false;
+    
+    // The list of existing instances. When the first is added,
+    // the configuration connection is made.
+    static List<BlockBossLogic> bblList = Collections.synchronizedList(
+                        new ArrayList<BlockBossLogic>() {
+                            @Override
+                            public boolean add(BlockBossLogic bbl) {
+                                if (!addedToConfig) {
+                                    addedToConfig = true;
+                                    ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+                                    if (cm != null) {
+                                        cm.registerConfig(bbl, jmri.Manager.BLOCKBOSS);
+                                    }
+                                    log.debug("added to config for {}", bbl.name);
+                                }
+                                return super.add(bbl);
+                            }
+                        }
+            );
 
     public static Enumeration<BlockBossLogic> entries() {
         return Collections.enumeration(bblList);
-    }
-
-    //  ensure proper registration
-    static {
-        bblList = new ArrayList<BlockBossLogic>();
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
-            cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
-        }
     }
 
     /**
@@ -1231,7 +1234,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     /**
      * Return the BlockBossLogic item governing a specific signal head located from its name.
-     * <P>
+     * <p>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
      *
@@ -1250,7 +1253,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     /**
      * Return the BlockBossLogic item governing a specific signal head object.
-     * <P>
+     * <p>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
      *
@@ -1272,8 +1275,11 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
+            log.debug("name: {} got {} from {}", name, evt, evt.getSource());
+
             StringBuilder message = new StringBuilder();
             message.append(Bundle.getMessage("InUseBlockBossHeader", getDrivenSignal()));
+
             boolean found = false;
 
             if (nb instanceof SignalHead) {
@@ -1420,6 +1426,18 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
     }
 
+    /**
+     * Stop() all existing objects and clear the list.
+     * <p>
+     * Intended to be only used during testing.
+     */
+    public static void stopAllAndClear() {
+        for (BlockBossLogic b : bblList) {
+            b.stop();
+        }
+        bblList.clear();
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
 
 }

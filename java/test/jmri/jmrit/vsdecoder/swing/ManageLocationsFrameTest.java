@@ -8,21 +8,18 @@ import jmri.ReporterManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ManageLocationsFrameTest {
+public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Before
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         ListeningSpot s = new ListeningSpot();
         ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         String[] reporterNameArray = rmgr.getSystemNameArray(); // deprecated, but we test until removed
@@ -39,19 +36,15 @@ public class ManageLocationsFrameTest {
         Object[][] opsTable = new Object[locations.size()][6];
 
 
-        ManageLocationsFrame t = new ManageLocationsFrame(s,reporterTable,blockTable,opsTable);
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new ManageLocationsFrame(s,reporterTable,blockTable,opsTable);
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrameTest.class.getName());

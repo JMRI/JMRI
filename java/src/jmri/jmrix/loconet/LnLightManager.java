@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for LocoNet systems.
+ * Implement LightManager for LocoNet systems.
  * <p>
  * System names are "LLnnnnn", where the first L is the user configurable
  * system prefix, nnnnn is the bit number without padding.
@@ -26,7 +26,7 @@ public class LnLightManager extends AbstractLightManager {
     String prefix;
 
     /**
-     * Get the system letter for Loconet.
+     * Get the system letter for LocoNet.
      */
     @Override
     public String getSystemPrefix() {
@@ -58,6 +58,8 @@ public class LnLightManager extends AbstractLightManager {
 
     /**
      * Get the bit address from the system name.
+     * @param systemName the systemName to be checked for validity
+     * @return the bit address number from the system name
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -89,8 +91,9 @@ public class LnLightManager extends AbstractLightManager {
     /**
      * Validate system name format.
      *
-     * @return 'true' if system name has a valid format,
-     * else returns 'false'
+     * @param systemName the systemName to be validated
+     * @return NameValidity.VALID if system name has a valid format,
+     * else returns NameValidity.INVALID
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -101,6 +104,7 @@ public class LnLightManager extends AbstractLightManager {
      * Validate system name for configuration.
      * Needed for the Abstract Light class.
      *
+     * @param systemName the systemName to be validated
      * @return 'true' if system name has a valid meaning in current configuration,
      * else returns 'false'. For now this method always returns 'true';
      */
@@ -113,6 +117,8 @@ public class LnLightManager extends AbstractLightManager {
      * Determine if it is possible to add a range of Lights in
      * numerical order eg. 11 thru 18, primarily used to show/not show the add
      * range box in the Add Light pane.
+     * @param systemName  an ignored parameter
+     * @return true, always
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {

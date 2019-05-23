@@ -14,15 +14,15 @@ import org.slf4j.LoggerFactory;
  * Concrete implementation of the {@link jmri.RailCom} interface.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.3
@@ -66,6 +66,10 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
     @Override
     public String getAddressTypeAsString() {
         switch (addressTypeInt) {
@@ -82,11 +86,19 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
     int addressTypeInt = 0;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
     @Override
     public void setAddressType(int type) {
         addressTypeInt = type;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
     @Override
     public int getAddressType() {
         return addressTypeInt;
@@ -276,7 +288,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
                 comment = "Unknown Orientation ";
                 break;
         }
-        comment = comment + "Address " + getDccLocoAddress() + " ";
+        comment = comment + "Address " + getLocoAddress() + " ";
 
         if (getWaterLevel() != -1) {
             comment = comment + "Water " + getWaterLevel() + " ";

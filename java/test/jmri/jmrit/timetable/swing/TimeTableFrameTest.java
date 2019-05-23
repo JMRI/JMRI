@@ -14,6 +14,10 @@ import org.netbeans.jemmy.operators.*;
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableFrameTest {
+
+    @Rule
+    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+
     TimeTableFrame _ttf = null;
     JFrameOperator _jfo = null;
     JTreeOperator _jto = null;
@@ -62,8 +66,12 @@ public class TimeTableFrameTest {
         Assert.assertTrue(timeMenuItem.getText().equals(Bundle.getMessage("MenuTrainTimes")));  // NOI18N
         new JMenuItemOperator(timeMenuItem).doClick();
 
+        JMenuItem twoPageMenuItem = (JMenuItem)jpm.getComponent(2);
+        Assert.assertTrue(twoPageMenuItem.getText().equals(Bundle.getMessage("MenuTwoPage")));  // NOI18N
+        new JMenuItemOperator(twoPageMenuItem).doClick();
+
         Thread openDialog = createModalDialogOperatorThread("Open", Bundle.getMessage("ButtonCancel"), "openDialog");  // NOI18N
-        JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(2);
+        JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(4);
         Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImportSgn")));  // NOI18N
         new JMenuItemOperator(importMenuItem).doClick();
         JUnitUtil.waitFor(()->{return !(openDialog.isAlive());}, "open dialog finished");
@@ -75,7 +83,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("AddLayoutButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
-        _jtxt.setText("Test Layout");  // NOI18N
+        _jtxt.setText("Time Table Frame Test Layout");  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
         _jtxt.setText("6");
@@ -86,7 +94,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a train type
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Train Types"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Train Types"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddTrainTypeButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -94,7 +102,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a segment
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Segments"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Segments"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddSegmentButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -102,7 +110,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a station 1
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Segments", "Mainline"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Segments", "Mainline"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddStationButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -116,7 +124,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a station 2
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Segments", "Mainline"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Segments", "Mainline"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddStationButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -127,7 +135,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a schedule
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Schedules"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Schedules"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddScheduleButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -140,7 +148,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a train
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Schedules",  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Schedules",  // NOI18N
                 "Test Schedule   Effective Date: Today"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddTrainButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
@@ -166,7 +174,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add stop 2
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Schedules",  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Schedules",  // NOI18N
                 "Test Schedule   Effective Date: Today", "TRN -- Test Train"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddStopButtonText")).doClick();  // NOI18N
         new JComboBoxOperator(_jfo, 0).selectItem("Station 2");  // NOI18N
@@ -453,7 +461,7 @@ public class TimeTableFrameTest {
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline"}));  // NOI18N
         Thread misc1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonOK"), "misc1");  // NOI18N
-        new JButtonOperator(_jfo, Bundle.getMessage("ButtonGraph")).doClick();  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonDisplay")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(misc1.isAlive());}, "misc1 finished");
 
         // Other buttons
@@ -481,11 +489,24 @@ public class TimeTableFrameTest {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch(java.io.IOException ioe){
+          Assert.fail("failed to setup profile for test");
+        }
     }
 
     @After
     public  void tearDown() {
+       // use reflection to reset the static file location.
+       try {
+            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
+            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
+            f.setAccessible(true);
+            f.set(new String(), null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
+        }
         jmri.util.JUnitUtil.tearDown();
     }
 

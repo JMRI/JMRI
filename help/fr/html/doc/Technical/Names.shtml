@@ -26,6 +26,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
@@ -56,7 +57,7 @@ et des r&#233;f&#233;rences d'objets dans ce genre de configuration.
 </OL>
 
 <a name="type">
-<H2>&#201;l&#233;ments avec des noms</h2></a>
+<h2>&#201;l&#233;ments avec des noms</h2></a>
 Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
 <UL>
 <LI>Aspects pour les signaux
@@ -106,7 +107,7 @@ c'est par ailleurs sans contrainte.
 <P>
 Exemples:
 <UL>
-<LI>LT23 - <u>L</u>oconet <u>T</u>urnout <u>23</u>. ( Aiguillage Loconet n&#176;23 )
+<LI>LT23 - <u>L</u>oconet <u>T</u>urnout <u>23</u>. ( Aiguillage LocoNet n&#176;23 )
 <LI>CS12 <LI> - Les <u>12</u> <u>C</u>/IRM <u>S</u>Ensor .( Capteur C/MRI n&#176;12 )
 </ul>
 
@@ -116,7 +117,7 @@ Notez qu'il n'y a aucune hypoth&#232;se de mod&#232;le pour les noms, ils ne son
 <a name="hardware" id="hardware"></a>
 <h3>Pr&#233;fix Mat&#233;riel</h3>
 &#192; l'origine, le "pr&#233;fix mat&#233;riel" &#233;tait une simple lettre majuscule 
-identifiant un simple syst&#232;me de connexion: L pour Loconet, N pour NCE, etc.
+identifiant un simple syst&#232;me de connexion: L pour LocoNet, N pour NCE, etc.
 Les lettres par d&#233;faut pour ceux-ci sont list&#233;es ci-dessous.
 Ceci est encore de loin l'utilisation la plus courante; La plupart des r&#233;seaux miniatures ont une simple
 connexion, et utilise juste la lettre par d&#233;faut.
@@ -223,7 +224,7 @@ Pour plus d'informations, s'il vous pla&#238;t voir les pages sp&#233;cifiques p
 </UL>
 ( Si vous constatez un oubli, SVP 
 <a href="getgitcode.shtml#propose">Ajoutez une r&#233;f&#233;rence</a>)
-</UL>
+
 <P>
 Les objets "internes" peuvent &#233;galement &#234;tre adress&#233;s et manipul&#233;s, mais ils n'ont pas de stricte
 correspondance avec certains mat&#233;riels sur le r&#233;seau. Par exemple, si un feu de signalisation
@@ -271,8 +272,7 @@ La liste des outils travaillant de cette mani&#232;re:
       </ul>Notez qu'il n'y a aucune hypoth&egrave;se de
       mod&egrave;le pour les noms, ils ne sont pas affecter de
       fa&ccedil;on monotone, ils ne sont pas limit&eacute;s
-      &agrave; un seul syst&egrave;me. <a name="hardware" id=
-      "hardware"></a>
+      &agrave; un seul syst&egrave;me.
 
       <h3>Mat&eacute;riel, lettres syst&egrave;me</h3>Notez que
       certaines d'entre elles sont des espaces
@@ -363,7 +363,7 @@ ce que le programme tente de faire
 
         <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
         MX-1</a></li>
-      </ul><a name="types" id="types"></a>
+      </ul>
 
       <h3>Lettres type de p&eacute;riph&eacute;rique</h3>Notez que
       certains d'entre eux sont des espaces r&eacute;serv&eacute;s,

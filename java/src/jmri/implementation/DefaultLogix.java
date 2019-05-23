@@ -93,7 +93,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Add/Edit Logix dialog. If 'order' is greater than the number of
      * Conditionals for this Logix, and empty String is returned.
      *
-     * @param order - order in which the Conditional calculates.
+     * @param order  order in which the Conditional calculates.
      */
     @Override
     public String getConditionalByNumberOrder(int order) {
@@ -110,7 +110,7 @@ public class DefaultLogix extends AbstractNamedBean
      * has been exceeded.
      *
      * @param systemName The Conditional system name
-     * @param order      - the order this conditional should calculate in if
+     * @param order       the order this conditional should calculate in if
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
      */
@@ -182,11 +182,11 @@ public class DefaultLogix extends AbstractNamedBean
 
     /**
      * Delete a Conditional and remove it from this Logix
-     * <P>
+     * <p>
      * Note: Since each Logix must have at least one Conditional to do anything,
      * the user is warned in Logix Table Action when the last Conditional is
      * deleted.
-     * <P>
+     * <p>
      * Returns true if Conditional was successfully deleted, otherwise returns
      * false.
      *
@@ -251,7 +251,7 @@ public class DefaultLogix extends AbstractNamedBean
     /**
      * Activate the Logix, starts Logix processing by connecting all inputs that
      * are included the Conditionals in this Logix.
-     * <P>
+     * <p>
      * A Logix must be activated before it will calculate any of its
      * Conditionals.
      */
@@ -784,8 +784,8 @@ public class DefaultLogix extends AbstractNamedBean
     /**
      * Deactivate the Logix. This method disconnects the Logix from all input
      * objects and stops it from being triggered to calculate.
-     * <P>
-     * A Logix must be deactivated before it's Conditionals are changed.
+     * <p>
+     * A Logix must be deactivated before its Conditionals are changed.
      */
     @Override
     public void deActivateLogix() {

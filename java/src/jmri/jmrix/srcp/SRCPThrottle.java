@@ -7,7 +7,7 @@ import jmri.jmrix.AbstractThrottle;
 
 /**
  * An implementation of DccThrottle with code specific to an SRCP connection.
- * <P>
+ * <p>
  * Addresses of 99 and below are considered short addresses, and over 100 are
  * considered long addresses. This is not the NCE system standard, but is used
  * as an expedient here.
@@ -126,7 +126,7 @@ public class SRCPThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
