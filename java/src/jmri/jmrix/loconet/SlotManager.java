@@ -232,7 +232,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     javax.swing.Timer staleSlotCheckTimer = null;
 
     /**
-     * Scan the slot array looking for slots that are in-use but have
+     * Scan the slot array looking for slots that are in-use or common but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
      * the slot without telling us via a LocoNet message.
@@ -246,7 +246,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // We will just check the normal loco slots 1 to 120
         for (int i = 1; i <= 120; i++) {
             slot = _slots[i];
-            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE)
+            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
                 sendReadSlot(i);
             }
