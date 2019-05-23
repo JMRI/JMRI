@@ -28,6 +28,7 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +55,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     public static final String IDLE = "idle"; // NOI18N
     /**
      * {@value #SPEED}
+     * 
+     * @deprecated since 4.15.7; use {@link jmri.server.json.JSON#SPEED} instead
      */
-    public static final String SPEED = "speed"; // NOI18N
+    @Deprecated
+    public static final String SPEED = JSON.SPEED; // NOI18N
     /**
      * {@value #SPEED_STEPS}
      */

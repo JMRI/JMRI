@@ -5,12 +5,14 @@ import static jmri.server.json.block.JsonBlock.BLOCKS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.ProvidingManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -48,11 +50,22 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         data.put(JSON.VALUE, block.getValue() != null ? block.getValue().toString() : null);
         data.put(JsonSensor.SENSOR, block.getSensor() != null ? block.getSensor().getSystemName() : null);
         data.put(JsonReporter.REPORTER, block.getReporter() != null ? block.getReporter().getSystemName() : null);
+        data.put(JSON.SPEED, block.getBlockSpeed());
+        data.put(JsonBlock.CURVATURE, block.getCurvature());
+        data.put(JSON.DIRECTION, block.getDirection());
+        data.put(JSON.LENGTH, block.getLengthMm());
+        data.put(JsonBlock.PERMISSIVE, block.getPermissiveWorking());
+        data.put(JsonBlock.SPEED_LIMIT, block.getSpeedLimit());
+        ArrayNode array = data.putArray(JsonBlock.DENIED);
+        block.getDeniedBlocks().forEach((denied) -> {
+            array.add(denied);
+        });
         return root;
     }
 
     @Override
-    public ObjectNode doPost(Block block, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(Block block, String name, String type, JsonNode data, Locale locale, int id)
+            throws JsonException {
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 block.setValue(null);
@@ -83,7 +96,8 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 if (sensor != null) {
                     block.setSensor(sensor.getSystemName());
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()), id);
+                    throw new JsonException(404,
+                            Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()), id);
                 }
             }
         }
@@ -96,10 +110,21 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 if (reporter != null) {
                     block.setReporter(reporter);
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()), id);
+                    throw new JsonException(404,
+                            Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()), id);
                 }
             }
         }
+        String text = data.findPath(JSON.SPEED).asText(block.getBlockSpeed());
+        try {
+            block.setBlockSpeed(text);
+        } catch (JmriException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorInvalidPropertyValue", JSON.SPEED, type, text), id);
+        }
+        block.setCurvature(data.path(JsonBlock.CURVATURE).asInt(block.getCurvature()));
+        block.setDirection(data.path(JSON.DIRECTION).asInt(block.getDirection()));
+        block.setLength(Double.valueOf(data.path(JSON.LENGTH).asDouble(block.getLengthMm())).floatValue());
+        block.setPermissiveWorking(data.path(JsonBlock.PERMISSIVE).asBoolean(block.getPermissiveWorking()));
         return this.doGet(block, name, type, locale, id);
     }
 
