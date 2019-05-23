@@ -26,24 +26,21 @@ import org.slf4j.LoggerFactory;
  * from WarrantFrame who records throttle commands from "_student" throttle.
  * Warrant fires PropertyChanges for WarrantFrame to record when blocks are
  * entered. "_engineer" thread is null.
- * </p>
- * <P>
+ * <p>
  * MODE_RUN - Warrant may be launched from several places. An array of
  * BlockOrders, _savedOrders, and corresponding _throttleCommands allow an
  * "_engineer" thread to execute the throttle commands. The blockOrders
  * establish the route for the Warrant to acquire and reserve OBlocks. The
  * Warrant monitors block activity (entrances and exits, signals, rogue
  * occupancy etc) and modifies speed as needed.
- * </p>
- * <P>
+ * <p>
  * MODE_MANUAL - Warrant may be launched from several places. The Warrant to
  * acquires and reserves the route from the array of BlockOrders. Throttle
  * commands are done by a human operator. "_engineer" and "_throttleCommands"
  * are not used. Warrant monitors block activity but does not set _stoppingBlock
  * or _shareTOBlock since it cannot control speed. It does attempt to realign
  * the route as needed, but can be thwarted.
- * </p>
- * <P>
+ * <p>
  * Version 1.11 - remove setting of SignalHeads
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
@@ -2377,14 +2374,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @return distance in millimeters
      */
     private float rampLengthOfEntrance(int idxBlockOrder, String toSpeedType) {
-        if (_curSpeedType.equals(toSpeedType)) {
+/*        if (_curSpeedType.equals(toSpeedType)) {
             return 0.0f;
-        }
+        }*/
         BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         float throttleSetting = blkSpeedInfo.getEntranceSpeed();
-        float fromSpeed = _speedUtil.modifySpeed(throttleSetting, _curSpeedType);
-        float toSpeed = _speedUtil.modifySpeed(throttleSetting, toSpeedType);
-        float rampLen = _speedUtil.getRampForSpeedChange(fromSpeed, toSpeed).getRampLength();
+        float rampLen = _speedUtil.rampLengthForRampDown(throttleSetting, _curSpeedType, toSpeedType);
         if (_waitForBlock || _waitForWarrant) {    // occupied or foreign track ahead.
             rampLen *= RAMP_ADJUST;    // provide more space to avoid collisions
         } else if (_waitForSignal) {        // signal restricting speed

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Maintain a list of actions that can be used by
- * {@link apps.startup.AbstractActionModel} and it's descendants. This list is
+ * {@link apps.startup.AbstractActionModel} and its descendants. This list is
  * populated by {@link apps.startup.StartupActionFactory} instances registered
  * with a {@link java.util.ServiceLoader}.
  *

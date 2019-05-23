@@ -96,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li><>/li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -157,6 +157,12 @@
         <h4>BNM Hobbies</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>CT Elektronik</h4>
+            <ul>
+                <li>Nigel Cliffe added a decoder definition for the 
+                    NGS custom CT decoder</li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -319,13 +325,13 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>Petr Šídlo improved the Czech translation</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
         </ul>
 
     <h3>Logix</h3>
@@ -378,18 +384,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>Custom scripts that release throttles may need to be modified.</strong><br>
-            <ul>
-                <li>AutoDispatcher2</li>
-                <li>RobotThrottle2</li>
-                <li>RobotThrottle3</li>
-                <li>RocoCrane</li>
-                <li>Zimo Programmers</li>
-            </ul>
-            <br>
-            Old syntax: <code>self.throttle.release()</code> <br>
-            New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -453,7 +448,14 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
+                Engines, Operations Tracks, and Reporters.</li>
+            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
+                to a message to the original message.</li>
+            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
+                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
+                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version
+                    History</a> for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -471,6 +473,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add new <code>TestWaitsForever</class> test class to allow end-of-job debug.</li>
+            <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
+                <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
+            </li>
         </ul>
 

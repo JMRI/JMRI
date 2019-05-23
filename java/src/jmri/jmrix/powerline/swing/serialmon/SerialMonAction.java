@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 @Deprecated
 public class SerialMonAction extends AbstractAction {
 
@@ -42,6 +42,3 @@ public class SerialMonAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);
 
 }
-
-
-

@@ -9,7 +9,6 @@ import jmri.CollectingReporter;
  * Extension of the AbstractReporter class that implements CollectingReporter
  * and represents the contents of a track.  This is an internal construct that
  * does not correspond to a physical reporter.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2019
  */

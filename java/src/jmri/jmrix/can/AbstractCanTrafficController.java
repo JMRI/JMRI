@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base for TrafficControllers in a CANbus based Message/Reply
  * protocol.
- * <P>
+ * <p>
  * AbstractMRTrafficController is extended to allow for the translation between
  * CAN messages and the message format of the CAN adapter that connects to the
  * layout.
@@ -173,7 +173,7 @@ abstract public class AbstractCanTrafficController
 
     /**
      * Handle each reply when complete.
-     * <P>
+     * <p>
      * Overridden to include translation form the CAN hardware format
      *
      */

@@ -32,7 +32,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
     }
 
     /**
-     * Default implementation for storing the contents of a MergSD2SignalHead
+     * Default implementation for storing the contents of a MergSD2SignalHead.
      *
      * @param o Object to store, of type MergSD2SignalHead
      * @return Element containing the complete info
@@ -175,7 +175,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                         .getBeanBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
-            log.error("systemName is already registered: " + sys);
+            log.error("systemName is already registered: {}", sys);
         } else {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         }

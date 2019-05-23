@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements NetworkPortAdapter for the jmriclient system network connection.
- * <P>
+ * <p>
  * This connects a JMRI server (daemon) via a telnet connection.
  *
  * @author Paul Bender Copyright (C) 2010

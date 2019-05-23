@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Execute a throttle command script for a warrant.
  * <p>
- * This generally operates on it's own thread, but switches back to the Layout
+ * This generally operates on its own thread, but switches back to the Layout
  * thread when asking the Warrant to perform actions.
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011

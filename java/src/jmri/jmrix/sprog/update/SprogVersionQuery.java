@@ -1,5 +1,7 @@
 package jmri.jmrix.sprog.update;
 
+import static jmri.jmrix.sprog.SprogConstants.TC_BOOT_REPLY_TIMEOUT;
+
 import java.util.Vector;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
@@ -99,6 +101,8 @@ public class SprogVersionQuery implements SprogListener {
             // Kick things off with a blank message
             m = new SprogMessage(1);
             m.setOpCode(' ');
+            // Set a short timeout for the traffic controller
+            tc.setTimeout(TC_BOOT_REPLY_TIMEOUT);
             tc.sendSprogMessage(m, this);
             state = QueryState.CRSENT;
             startLongTimer();
@@ -245,6 +249,7 @@ public class SprogVersionQuery implements SprogListener {
             }
 
             case DONE:
+                tc.resetTimeout();
                 break;
 
             default: {
@@ -279,6 +284,7 @@ public class SprogVersionQuery implements SprogListener {
                 log.warn("Unhandled timeout state code: {}", state);
                 break;
         }
+        tc.resetTimeout();
     }
 
     /**

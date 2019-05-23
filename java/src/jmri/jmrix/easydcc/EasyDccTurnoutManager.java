@@ -20,7 +20,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
 
     public EasyDccTurnoutManager() {
-        log.debug("EasyDCC Turnout Manager null");
+        log.debug("EasyDCC TurnoutManager null");
     }
 
     /**
@@ -35,7 +35,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         trafficController = memo.getTrafficController();
         // listen for turnout creation
         trafficController.addEasyDccListener(this);
-        log.debug("EasyDCC Turnout Manager prefix={}", prefix);
+        log.debug("EasyDCC TurnoutManager prefix={}", prefix);
     }
 
     @Override

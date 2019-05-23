@@ -33,7 +33,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
@@ -45,7 +44,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -754,9 +752,17 @@ public class SwitchboardEditor extends Editor {
         });
     }
 
+    public void setDefaultTextColor(Color color) {
+        defaultTextColor = color;
+    }
+
+    /**
+     * @param color the string containing a color settable using {@link jmri.util.ColorUtil#stringToColor(String)}
+     * @deprecated since 4.15.7; use {@link #setDefaultTextColor(Color)} instead
+     */
+    @Deprecated
     public void setDefaultTextColor(String color) {
-        defaultTextColor = ColorUtil.stringToColor(color);
-        JmriColorChooser.addRecentColor(ColorUtil.stringToColor(color));
+        setDefaultTextColor(ColorUtil.stringToColor(color));
     }
 
     public String getDefaultTextColor() {

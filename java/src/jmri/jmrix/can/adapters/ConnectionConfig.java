@@ -19,11 +19,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2012
  * @author Andrew Crosland 2008
- *
  */
 abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
-
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -37,12 +34,16 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     }
 
     /**
-     * Create a connection configuration without a preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
@@ -66,8 +67,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         if (!CanSystemConnectionMemo.DEFAULT_USERNAME.equals(adapter.getSystemConnectionMemo()
                 .getUserName())) {
             // User name already set; do not overwrite it.
-            log.debug("Avoid overwriting user name {}.", adapter.getSystemConnectionMemo()
-                    .getUserName());
+            log.debug("Avoid overwriting user name {}.", adapter.getSystemConnectionMemo().getUserName());
             return;
         }
         log.debug("New user name based on manufacturer {}", getManufacturer());
@@ -84,6 +84,9 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         setInstance();
@@ -99,7 +102,12 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    abstract protected void setInstance(); // necessary to get right type
+    abstract protected void setInstance(); // necessary to get correct type
+
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
 }

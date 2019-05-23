@@ -22,7 +22,7 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
     /**
      * Default implementation for storing the contents of a
-     * TripleTurnoutSignalHead
+     * TripleTurnoutSignalHead.
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
@@ -73,7 +73,7 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
                         .getBeanBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
-            log.error("systemName is already registered: " + sys);
+            log.error("systemName is already registered: {}", sys);
         } else {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         }

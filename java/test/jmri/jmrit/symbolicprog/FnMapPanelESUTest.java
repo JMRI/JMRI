@@ -17,10 +17,23 @@ import org.junit.Test;
 public class FnMapPanelESUTest {
 
     @Test
-    public void testCTor() {
+    public void testV4() {
         List<Integer> varsUsed = new ArrayList<>();
         RosterEntry re = new RosterEntry();
         Element model = new Element("model");
+        model.setAttribute("extFnsESU", "V4");
+
+        FnMapPanelESU t = new FnMapPanelESU(tableModel, varsUsed, model,re,cvtm);
+        Assert.assertNotNull("exists",t);
+        t.dispose();
+    }
+
+    @Test
+    public void testV5() {
+        List<Integer> varsUsed = new ArrayList<>();
+        RosterEntry re = new RosterEntry();
+        Element model = new Element("model");
+        model.setAttribute("extFnsESU", "V5");
 
         FnMapPanelESU t = new FnMapPanelESU(tableModel, varsUsed, model,re,cvtm);
         Assert.assertNotNull("exists",t);

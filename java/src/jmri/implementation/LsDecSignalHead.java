@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * These decoders can display up to 8 aspects. One position of a turnout is
  * associated with one signal aspect. The class assigns turnout positions to all
  * 7 JMRI signal aspects.
- * <P>
+ * <p>
  * For more info on the signals, see
  * <A HREF="http://www.ldt-infocenter.com">http://www.ldt-infocenter.com</a>.
  *

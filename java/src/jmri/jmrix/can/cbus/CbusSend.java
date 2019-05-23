@@ -13,11 +13,11 @@ import jmri.util.ThreadingUtil;
 // import org.slf4j.LoggerFactory;
 
 /**
- * Class to send CAN Frames
- * <p>Auto adds CBUS priority</p>
+ * Class to send CAN Frames.
+ * <p>
+ * Auto adds CBUS priority.
  * 
  * @author Steve Young (C) 2019
- * 
  */
 public class CbusSend {
     

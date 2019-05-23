@@ -255,7 +255,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * Request a throttle, given a decoder address. When the decoder address is
      * located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
-     * <P>
+     * <p>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
@@ -334,7 +334,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * Cancel a request for a throttle.
-     * <P>
+     * <p>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
@@ -352,7 +352,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * Steal a requested throttle.
-     * <P>
+     * <p>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
@@ -368,7 +368,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * Steal a requested throttle.
-     * <P>
+     * <p>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
@@ -454,7 +454,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Handle throttle information when it's finally available, e.g. when a new
      * Throttle object has been created.
-     * <P>
+     * <p>
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      * @param throttle  throttle object
@@ -510,7 +510,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * it needs to notify the listener of this situation.
      * <p>
      * This applies only to those systems where "stealing" applies, such as LocoNet.
-     * <p>
+     *
      * @param address The DCC Loco Address where controlling requires a steal
      */
     public void notifyStealRequest(DccLocoAddress address) {

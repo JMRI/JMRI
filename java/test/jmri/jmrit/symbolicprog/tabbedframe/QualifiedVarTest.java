@@ -16,10 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Test PaneProg with qualified variables
+ * Test PaneProg with qualified variables.
  *
  * @author	Bob Jacobsen Copyright 2010
-  */
+ */
 public class QualifiedVarTest {
 
     // show me a specially-created frame

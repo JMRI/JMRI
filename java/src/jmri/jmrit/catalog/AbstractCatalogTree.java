@@ -82,7 +82,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     /*
-     * ** NamedBean implementation (Copied from AbstractNamedBean) *********
+     * NamedBean implementation (Copied from AbstractNamedBean) *********
      */
     /**
      * Get associated comment text.

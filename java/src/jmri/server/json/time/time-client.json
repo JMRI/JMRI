@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-reporter-client-message",
+    "title": "jmri-json-time-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"time\"",
     "properties": {
@@ -18,6 +18,5 @@
             "enum": [0, 2, 4]
         }
     },
-    "additionalProperties": false,
-    "required": []
+    "additionalProperties": false
 }

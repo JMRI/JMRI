@@ -275,7 +275,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
 
     /**
      * Forget a NamedBean Object created outside the manager.
-     * <P>
+     * <p>
      * The non-system-specific RouteManager uses this method.
      */
     public void deregister(EcosLocoAddress s) {
