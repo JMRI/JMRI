@@ -119,7 +119,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         try {
             block.setBlockSpeed(text);
         } catch (JmriException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorInvalidPropertyValue", JSON.SPEED, type, text), id);
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorBadPropertyValue", text, JSON.SPEED, type), id);
         }
         block.setCurvature(data.path(JsonBlock.CURVATURE).asInt(block.getCurvature()));
         block.setDirection(data.path(JSON.DIRECTION).asInt(block.getDirection()));
