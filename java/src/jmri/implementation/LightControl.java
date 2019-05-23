@@ -185,7 +185,7 @@ public class LightControl {
     /*
      * Get the Sensor 1 name for 1 and 2 Sensor Control Types.
      *
-     * @return  If a Sensor is being listened to, returns the Sensor.getName()
+     * @return  If a Sensor is registered, returns the Sensor.getName()
      *          else the Sensor Name as set by #setControlSensorName
      */
     public String getControlSensorName() {
@@ -297,7 +297,7 @@ public class LightControl {
     /*
      * Get the Timed On Trigger Sensor name.
      *
-     * @return  If a Sensor is being listened to, returns the Sensor.getName()
+     * @return  If a Sensor is registered, returns the Sensor.getName()
      *          else the Sensor Name as set by #setControlTimedOnSensorName
      */
     public String getControlTimedOnSensorName() {
@@ -340,7 +340,7 @@ public class LightControl {
      * Get the Second Sensor name.
      * as used in the 2 Sensor Control Group.
      *
-     * @return  If a 2nd Sensor is being listened to, returns the Sensor.getName()
+     * @return  If a 2nd Sensor is registered, returns the Sensor.getName()
      *          else the 2nd Sensor Name as set by #setControlSensor2Name
      */
     public String getControlSensor2Name() {
