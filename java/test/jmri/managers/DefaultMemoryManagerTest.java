@@ -32,6 +32,13 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         JUnitAppender.assertErrorMessage("Invalid system name for Memory: \"\" needed non-empty suffix to follow IM");
     }
 
+    @Test
+    public void testCreatesiM() {
+        jmri.Memory im = l.provideMemory("iM");
+        Assert.assertNotNull("iM created",im);
+        Assert.assertEquals("correct system name","IMIM",im.getSystemName());
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

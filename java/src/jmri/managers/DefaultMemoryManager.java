@@ -23,8 +23,8 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
     protected Memory createNewMemory(String systemName, String userName) {
         String prefix = getSystemNamePrefix();
         if (systemName.isEmpty() || systemName.equals(prefix)) {
-            log.error("Invalid system name for memory: \"{}\" but needed IM followed by a suffix", systemName);
-            throw new IllegalArgumentException("Invalid system name for memory: \"" + systemName + "\" but needed IM followed by a suffix");
+            log.error("Invalid system name for memory: \"{}\" but needed {} followed by a suffix", systemName, prefix);
+            throw new IllegalArgumentException("Invalid system name for memory: \"" + systemName + "\" but needed " + prefix + " followed by a suffix");
         }
         // we've decided to enforce that memory system
         // names start with IM by prepending if not present
