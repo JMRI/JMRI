@@ -5,6 +5,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Random Functions</name>
+    <name xml:lang="de">Zufallsfunktionen</name>
     <column>
         <separator/>
         <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
@@ -12,6 +13,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 1:    </text>
+                    <text xml:lang="de">Zufallsfunktion 1:    </text>
                 </label>
                 <display item="Random Function 1" layout="above"/>
                 <label>
@@ -56,6 +58,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 2:    </text>
+                    <text xml:lang="de">Zufallsfunktion 2:    </text>
                 </label>
                 <display item="Random Function 2" layout="above"/>
                 <label>
@@ -100,6 +103,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 3:    </text>
+                    <text xml:lang="de">Zufallsfunktion 3:    </text>
                 </label>
                 <display item="Random Function 3" layout="above"/>
                 <label>
@@ -144,6 +148,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 4:    </text>
+                    <text xml:lang="de">Zufallsfunktion 4:    </text>
                 </label>
                 <display item="Random Function 4" layout="above"/>
                 <label>
@@ -188,6 +193,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 5:    </text>
+                    <text xml:lang="de">Zufallsfunktion 5:    </text>
                 </label>
                 <display item="Random Function 5" layout="above"/>
                 <label>
@@ -232,6 +238,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 6:    </text>
+                    <text xml:lang="de">Zufallsfunktion 6:    </text>
                 </label>
                 <display item="Random Function 6" layout="above"/>
                 <label>
@@ -276,6 +283,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 7:    </text>
+                    <text xml:lang="de">Zufallsfunktion 7:    </text>
                 </label>
                 <display item="Random Function 7" layout="above"/>
                 <label>
@@ -320,6 +328,7 @@
             <griditem gridx="0" gridy="0" gridwidth="3">
                 <label>
                     <text>Random 8:    </text>
+                    <text xml:lang="de">Zufallsfunktion 8:    </text>
                 </label>
                 <display item="Random Function 8" layout="above"/>
                 <label>

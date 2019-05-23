@@ -16,6 +16,7 @@
         <separator/>
         <label>
             <text>Steam Chuffs</text>
+            <text xml:lang="de">Dampfstöße</text>
         </label>
         <label>
             <text> </text>
@@ -51,6 +52,7 @@
         <separator/>
         <label>
             <text>Volume</text>
+            <text xml:lang="de">Lautstärke</text>
         </label>
         <label>
             <text> </text>
@@ -79,20 +81,21 @@
         <separator/>
         <label>
             <text>Automatic Brake Sound</text>
+            <text xml:lang="de">Automatischer Bremssound</text>
         </label>
         <label>
             <text> </text>
         </label>
         <row>
             <display item="Sound Brake On" layout="above" label=""/>
-            <display item="Sound Brake On" format="hslider" layout="above" label="Sound on threshold"/>
+            <display item="Sound Brake On" format="hslider" layout="above"/>
         </row>
         <label>
             <text> </text>
         </label>
         <row>
             <display item="Sound Brake Off" layout="above" label=""/>
-            <display item="Sound Brake Off" format="hslider" layout="above" label="Sound off threshold"/>
+            <display item="Sound Brake Off" format="hslider" layout="above"/>
         </row>
         <label>
             <text> </text>
@@ -123,6 +126,7 @@
             <separator/>
             <label>
                 <text>Sound Selection</text>
+                <text xml:lang="de">Sound Auswahl</text>
             </label>
             <label>
                 <text> </text>
@@ -145,17 +149,20 @@
             <separator/>
             <label>
                 <text>Random Sounds</text>
+                <text xml:lang="de">Zufalls-Sounds</text>
             </label>
             <label>
                 <text> </text>
             </label>
             <row>
                 <display item="Sound Random Min" layout="above" label=""/>
-                <display item="Sound Random Min" format="hslider" layout="above" label="Min time between sounds"/>
+                <!--display item="Sound Random Min" format="hslider" layout="above" label="Min time between sounds"/-->
+                <display item="Sound Random Min" format="hslider" layout="above"/>
             </row>
             <row>
                 <display item="Sound Random Max" layout="above" label=""/>
-                <display item="Sound Random Max" format="hslider" layout="above" label="Max time between sounds"/>
+                <!--display item="Sound Random Max" format="hslider" layout="above" label="Max time between sounds"/-->
+                <display item="Sound Random Max" format="hslider" layout="above"/>
             </row>
             <label>
                 <text> </text>

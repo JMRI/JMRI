@@ -74,6 +74,7 @@
         <label>
             <text> </text>
         </label>
+        <group exclude="LokSound 5,LokSound 5 DCC,LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L,LokSound 5 L DCC,LokSound 5 XL">
         <separator/>
         <label>
             <text>Memory Settings</text>
@@ -88,6 +89,7 @@
         <label>
             <text> </text>
         </label>
+        </group>
         <separator/>
         <label>
             <text>Power Pack</text>
@@ -133,6 +135,7 @@
             <text> </text>
         </label>
         <!--         <group exclude="Essential Sound Unit,ESU LokSound 5"> -->
+        <group exclude="LokSound 5,LokSound 5 DCC,LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L,LokSound 5 L DCC,LokSound 5 XL">
         <separator/>
         <label>
             <text>Stop Behaviour</text>
@@ -143,6 +146,7 @@
             <text> </text>
         </label>
         <display item="ESU V4 E-Stop on Seed Step 0" format="checkbox"/>
+        </group>>
         <!--         </group> -->
         <separator/>
         <label>
@@ -159,6 +163,7 @@
         <separator/>
         <label>
             <text>ABC Brake Sections</text>
+            <text xml:lang="de">ABC Bremskonfiguration</text>
         </label>
         <label>
             <text> </text>
@@ -183,6 +188,7 @@
         <separator/>
         <label>
             <text>HLU Brake Sections</text>
+            <text xml:lang="de">HLU Bremskonfiguration</text>
         </label>
         <label>
             <text> </text>
@@ -214,6 +220,7 @@
         <separator/>
         <label>
             <text>DC Brake Sections</text>
+            <text xml:lang="de">DC Bremskonfiguration</text>
         </label>
         <label>
             <text> </text>
@@ -223,9 +230,11 @@
         <label>
             <text> </text>
         </label>
+        <group include="LokSound 5,LokSound 5 DCC,LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L,LokSound 5 L DCC,LokSound 5 XL">
         <separator/>
         <label>
             <text>Selectrix® Brake Sections</text>
+            <text xml:lang="de">Selectrix® Bremskonfiguration</text>
         </label>
         <label>
             <text> </text>
@@ -235,6 +244,7 @@
         <label>
             <text> </text>
         </label>
+        </group>
         <separator/>
         <label>
             <text>Constant Brake Distance</text>
@@ -260,9 +270,11 @@
         <label>
             <text> </text>
         </label>
+        <group include="LokSound 5,LokSound 5 DCC,LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L,LokSound 5 L DCC,LokSound 5 XL">
         <separator/>
         <label>
             <text>Brake Section Settings</text>
+            <text xml:lang="de">Bremsstrecken Einstellungen</text>
         </label>
         <label>
             <text> </text>
@@ -274,9 +286,11 @@
         <label>
             <text> </text>
         </label>
+        </group>
         <separator/>
         <label>
             <text>Brake Functions</text>
+            <text xml:lang="de">Bremsfunktion</text>
         </label>
         <label>
             <text> </text>
