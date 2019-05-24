@@ -25,7 +25,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        if (a instanceof DccLocoAddress ) { 
+        if (a instanceof DccLocoAddress ) {
             // Although DCCLocoAddress not enforced in SprogCSThrottle constructor,
             // is required in the construction.
             
@@ -78,9 +78,11 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            SprogCSThrottle lnt = (SprogCSThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof SprogCSThrottle) {
+                SprogCSThrottle lnt = (SprogCSThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }
