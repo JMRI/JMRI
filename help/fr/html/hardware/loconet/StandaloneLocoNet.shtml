@@ -350,7 +350,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 					</p></li>
 					<p>Notez que ce mode d'utilisation de PR3 n'est pas recommand&#233;
 						Quand il existe une autre source d' "Interruption du Signal 
-						de Donn&#233;es LocoNet" connect&#233;e &#224; Loconet et il n'est pas appropri&#233; 
+						de Donn&#233;es LocoNet" connect&#233;e &#224; LocoNet et il n'est pas appropri&#233;
 						quand le PR3 ne fournit pas la puissance appropri&#233;e par l'interm&#233;diaire de sa 
 						prise de jack d' "Alimentation". </p>
 					</li>
@@ -361,7 +361,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 					Interruption" du Signal de Donn&#233;es du PR3. Dans ce cas, il est appropri&#233; 
 					de configurer la connexion du PR3  pour un <code>type de Centrale</code>" 
 					"<code><strong>DCS100</strong></code>". Parce qu'il n'y a pas de centrale 
-					de connect&#233;e au cchemin de donn&#233;e LocoNet du Loconet Autonome, 
+					de connect&#233;e au cchemin de donn&#233;e LocoNet du LocoNet Autonome,
 					Le r&#233;glage ne sera utilis&#233; que pour d&#233;terminer comment le PR3
 					Est initialis&#233; au d&#233;marrage JMRI.</p></li>
 				<li><strong>LocoBuffer-II, LocoBuffer-USB (except LocoBuffer-USB Rev-n)</strong></li>				
@@ -779,7 +779,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 			aux fils LocoNet RailSync autonomes, tels que les RR-CirKits
 			LocoNet-Terminator ou SSB-Gateway. </p>            
 		<img src="images/StandaloneLocoNetSignallingNet.jpg"
-              alt = "Image montrant un Loconet autonome pour SE8C signalisation seulement">
+              alt = "Image montrant un LocoNet autonome pour SE8C signalisation seulement">
          
 		<h2> <a Name="acknowledgments">Remerciements</a></h2>
 			<p> Entre autres, Elmer McKay et Dick Bronson ont fourni d'importantes

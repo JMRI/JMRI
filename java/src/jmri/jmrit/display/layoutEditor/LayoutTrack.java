@@ -70,9 +70,6 @@ public abstract class LayoutTrack {
     //protected static double maxDashLength = 10;
     protected boolean hidden = false;
 
-    // package-private
-    static Color defaultTrackColor = Color.black;
-
     /**
      * constructor method
      */
@@ -80,7 +77,6 @@ public abstract class LayoutTrack {
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;
-        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
     }
 
     /**
@@ -137,10 +133,6 @@ public abstract class LayoutTrack {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
-
-    public static void setDefaultTrackColor(@Nullable Color color) {
-        defaultTrackColor = color;
-    }
 
     protected Color getColorForTrackBlock(
             @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {

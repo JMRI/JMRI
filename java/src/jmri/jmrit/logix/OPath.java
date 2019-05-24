@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * boundary to another. The mBlock parameter of Path is used to reference the
  * Block to which this OPath belongs. (Not a destination Block as might be
  * inferred from the naming in Path.java)
- * <P>
+ * <p>
  * An OPath inherits the List of BeanSettings for all the turnouts needed to
  * traverse the Block. It also has references to the Portals (block boundary
  * objects) through which it enters or exits the block. One of these may be

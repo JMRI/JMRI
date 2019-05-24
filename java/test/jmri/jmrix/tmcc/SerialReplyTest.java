@@ -10,7 +10,7 @@ import org.junit.Test;
  * JUnit tests for the SerialMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003
-  */
+ */
 public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     SerialReply msg = null;

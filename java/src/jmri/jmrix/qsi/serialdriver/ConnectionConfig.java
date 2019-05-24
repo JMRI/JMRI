@@ -3,11 +3,11 @@ package jmri.jmrix.qsi.serialdriver;
 import java.util.ResourceBundle;
 
 /**
- * Definition of objects to handle configuring a layout connection via an QSI
+ * Definition of objects to handle configuring a layout connection via a QSI
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2007
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -19,7 +19,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -35,10 +36,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.qsi.QsiActionListBundle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if(adapter == null) {
            adapter = new SerialDriverAdapter();
         }
     }
+
 }

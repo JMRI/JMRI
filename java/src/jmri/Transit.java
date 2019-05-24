@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A Transit is a group of Sections representing a specified path through a
  * layout.
- * <P>
+ * <p>
  * A Transit may have the following states:
  * <dl>
  * <dt>IDLE</dt>
@@ -20,18 +20,18 @@ import org.slf4j.LoggerFactory;
  * <dt>ASSIGNED</dt>
  * <dd>linked to a train in an {@link jmri.jmrit.dispatcher.ActiveTrain}</dd>
  * </dl>
- * <P>
+ * <p>
  * When assigned to a Transit, options may be set for the assigned Section. The
  * Section and its options are kept in a {@link jmri.TransitSection} object.
- * <P>
+ * <p>
  * To accommodate passing sidings and other track features, there may be
  * multiple Sections connecting two other Sections in a Transit. If so, one
  * Section is assigned as primary, and the other connecting Sections are
  * assigned as alternates.
- * <P>
+ * <p>
  * A Section may be in a Transit more than once, for example if a train is to
  * make two or more loops around a layout before going elsewhere.
- * <P>
+ * <p>
  * A Transit is normally traversed in the forward direction, that is, the
  * direction of increasing Section Numbers. When a Transit traversal is started
  * up, it is always started in the forward direction. However, to accommodate

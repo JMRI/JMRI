@@ -10,7 +10,7 @@ import jmri.LocoAddress;
 /**
  * This is an extension of the DebugThrottleManager that always requires
  * the calling throttle object to steal to get a valid throttle.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2005
  * @author Bob Jacobsen Copyright (C) 2018
  */
@@ -50,6 +50,5 @@ public class StealingThrottleManager extends DebugThrottleManager {
            failedThrottleRequest(a,"user declined to steal");
         }
     }
-
 
 }

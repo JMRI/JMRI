@@ -26,7 +26,7 @@ public class LnPr2Packetizer extends LnPacketizer {
      * This allows for re-configuring an existing LocoNetSystemConnectionMemo, 
      * which was created during PR3Adapter initialization, for use in the PR3's 
      * "PR2 Mode" (i.e. "Standalone Programmer Mode".)
-     * <p>
+     *
      * @param memo pre-existing LocoNetSystemConnectionMemo
      */    
     public LnPr2Packetizer(LocoNetSystemConnectionMemo memo) {

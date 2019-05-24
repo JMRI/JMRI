@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action that defers class loading until invoked.
- * <P>
+ * <p>
  * The "Frame" in the name refers to this class being optimized to create a
  * JFrame when invoked.
- * <P>
+ * <p>
  * This does not manage the JFrame instance; if you invoke this twice, you get
  * two JFrame objects.
  *

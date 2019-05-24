@@ -312,7 +312,7 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: {}", msg);
+                        log.warn("Ignore LocoNet packet with bad checksum: {}", msg);
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!

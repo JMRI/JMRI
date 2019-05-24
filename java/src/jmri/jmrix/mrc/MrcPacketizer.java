@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission.
  * <p>
- * This is based upon the Packetizer used for Loconet Connections due to its
+ * This is based upon the Packetizer used for LocoNet Connections due to its
  * speed and efficiency to handle messages. This also takes some code from the
  * AbstractMRTrafficController, when dealing with handling replies to messages
  * sent.
@@ -25,17 +25,17 @@ import org.slf4j.LoggerFactory;
  * has approximately 20ms to initially respond with a request. Otherwise the
  * Command Station will poll the next handset.
  *
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <P>
+ * <ul>
+ * <li> RcvHandler - at highest available priority
+ * <li> XmtHandler - down one, which is assumed to be above the GUI
+ * <li> (everything else)
+ * </ul>
+ * <p>
  * Some of the message formats used in this class are Copyright MRC, Inc. and
  * used with permission as part of the JMRI project. That permission does not
  * extend to uses in other software products. If you wish to use this code,
@@ -65,7 +65,7 @@ public class MrcPacketizer extends MrcTrafficController {
 
     /**
      * Synchronized list used as a transmit queue.
-     * <P>
+     * <p>
      * This is public to allow access from the internal class(es) when compiling
      * with Java 1.1
      */
@@ -195,7 +195,7 @@ public class MrcPacketizer extends MrcTrafficController {
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be

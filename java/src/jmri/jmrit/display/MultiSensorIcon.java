@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of set of Sensors.
- * <P>
+ * <p>
  * Each sensor has an associated image. Normally, only one sensor will be active
  * at a time, and in that case the associated image will be shown. If more than
  * one is active, one of the corresponding images will be shown, but which one

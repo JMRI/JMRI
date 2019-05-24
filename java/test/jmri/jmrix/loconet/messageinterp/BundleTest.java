@@ -24,7 +24,8 @@ import org.junit.Test;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <p> * @author B. Milhaupt Copyright (C) 2018
+ *
+ * @author B. Milhaupt Copyright (C) 2018
  *
  */
 public class BundleTest {

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * AnymaDMX_UsbLight.java
  * <p>
  * Implementation of the Light Object for anyma dmx
- * <P>
+ *
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
@@ -19,7 +19,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     *
      * @param systemName the system name (previously validated)
      * @param memo       the system memo
      */
@@ -33,7 +33,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     *
      * @param systemName the system name (previously validated)
      * @param userName   the user name
      * @param memo       the system memo

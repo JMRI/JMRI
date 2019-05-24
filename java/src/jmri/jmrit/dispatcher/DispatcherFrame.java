@@ -55,23 +55,23 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Dispatcher serves as the manager for ActiveTrains. All allocation of Sections
  * to ActiveTrains is performed here.
- * <P>
+ * <p>
  * Programming Note: Use the managed instance returned by
  * {@link jmri.InstanceManager#getDefault(java.lang.Class)} to access the
  * running Dispatcher.
- * <P>
+ * <p>
  * Dispatcher listens to fast clock minutes to handle all ActiveTrain items tied
  * to fast clock time.
- * <P>
+ * <p>
  * Delayed start of manual and automatic trains is enforced by not allocating
  * Sections for trains until the fast clock reaches the departure time.
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -1401,7 +1401,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     /**
      * Creates an Allocation Request, and registers it with Dispatcher
-     * <P>
+     * <p>
      * Required input entries:
      *
      * @param activeTrain       ActiveTrain requesting the allocation

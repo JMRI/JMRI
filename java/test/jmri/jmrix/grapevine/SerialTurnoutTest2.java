@@ -11,7 +11,7 @@ import org.junit.Before;
  * card.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 

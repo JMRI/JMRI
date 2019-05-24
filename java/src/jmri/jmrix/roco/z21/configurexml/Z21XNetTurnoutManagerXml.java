@@ -2,7 +2,7 @@ package jmri.jmrix.roco.z21.configurexml;
 
 /**
  * Provides load and store functionality for configuring Z21XNetTurnoutManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
