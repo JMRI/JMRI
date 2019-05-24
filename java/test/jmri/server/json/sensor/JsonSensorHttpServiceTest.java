@@ -12,6 +12,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -148,6 +151,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     public void testDoDelete() throws JsonException {
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
         ObjectNode message = mapper.createObjectNode();
+        // delete non-existant bean
         try {
             assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
             service.doDelete(service.getType(), "non-existant", message, locale, 42);
@@ -158,14 +162,27 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
             assertEquals("ID is 42", 42, ex.getId());
         }
         manager.newSensor("IS1", null);
+        // delete existing bean (no named listener)
+        assertNotNull(manager.getBeanBySystemName("IS1"));
+        service.doDelete(service.getType(), "IS1", message, locale, 42);
+        assertNull(manager.getBeanBySystemName("IS1"));
+        Sensor sensor = manager.newSensor("IS1", null);
+        assertNotNull(sensor);
+        sensor.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing
+            }
+        }, "IS1", "Test Listener");
+        // delete existing bean (with named listener)
         try {
-            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
             service.doDelete(service.getType(), "IS1", message, locale, 42);
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
             assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
         assertNotNull(manager.getBeanBySystemName("IS1"));
