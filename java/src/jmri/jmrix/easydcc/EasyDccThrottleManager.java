@@ -42,6 +42,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
         }
         else {
             log.error("LocoAddress {} is not a DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress " +address+ " is not a DccLocoAddress");
         }
     }
 

@@ -55,6 +55,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         }
         else {
             log.error("{} is not an DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress " +address+ " is not a DccLocoAddress");
         }
     }
 
@@ -140,7 +141,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
                 return true;
             }
             else {
-                log.error("{} is not an EcosDccThrottle");
+                log.error("{} is not an EcosDccThrottle",t);
             }
         }
         return false;

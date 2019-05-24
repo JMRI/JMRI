@@ -100,11 +100,13 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
 
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-        log.debug("disposeThrottle called for " + t);
+        log.debug("disposeThrottle called for {}", t);
         if (super.disposeThrottle(t, l)) {
-            OlcbThrottle lnt = (OlcbThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof OlcbThrottle) {
+                OlcbThrottle lnt = (OlcbThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

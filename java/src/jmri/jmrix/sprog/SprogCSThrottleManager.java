@@ -25,11 +25,19 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        // The SPROG protocol doesn't require an interaction with the command
-        // station for this, so immediately trigger the callback
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new SprogThrottle for " + address);
-        notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, address), address);
+        if (a instanceof DccLocoAddress ) { 
+            // Although DCCLocoAddress not enforced in SprogCSThrottle constructor,
+            // is required in the construction.
+            
+            // The SPROG protocol doesn't require an interaction with the command
+            // station for this, so immediately trigger the callback
+            log.debug("new SprogThrottle for " + a);
+            notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, a), a);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+        }
     }
 
     /**

@@ -62,11 +62,13 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      */
     @Override
     synchronized public void requestThrottleSetup(LocoAddress address, boolean control) {
-        try {
+        if (address instanceof DccLocoAddress ) {
             _dccAddr = (DccLocoAddress) address;
         }
-        catch(java.lang.ClassCastException cce){
+        else {
             log.error("{} is not a DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress " +address+ " is not a DccLocoAddress");
+            return;
         }
         _intAddr = _dccAddr.getNumber();
 
