@@ -107,6 +107,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         testRegisterDuplicateSystemName(l, s1, s2);
     }
 
+    @Override
     @Test
     public void testMakeSystemName() {
         try {
