@@ -200,7 +200,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         fireDataListenersAdded(position, position, s);
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
-        s.addPropertyChangeListener(this, "", "Manager");
+        s.addPropertyChangeListener(this);
     }
 
     // not efficient, but does job for now
