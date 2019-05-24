@@ -10,7 +10,7 @@ import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.StringUtil;
 
 /**
- * Frame for user input of Nce messages
+ * Frame for user input of Nce messages.
  *
  * @author Ken Cameron Copyright (C) 2010 derived from:
  * @author Bob Jacobsen Copyright (C) 2001
@@ -109,7 +109,6 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 sendButtonActionPerformed(e);
             }
         });
-
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -140,7 +139,6 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             }
 
             tc.sendNceMessage(m, this);
-
         }
     }
 
@@ -224,7 +222,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
@@ -235,4 +233,5 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
+
 }

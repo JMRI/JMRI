@@ -12,7 +12,7 @@ import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
- * Panel for configuring an NCE booster
+ * Panel for configuring an NCE booster.
  *
  * @author ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
  * @author Bob Jacobsen Copyright (C) 2004
@@ -21,10 +21,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
     JTextField start = new JTextField(6);
     JTextField length = new JTextField(12);
-
     JLabel status = new JLabel();
-
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.boosterprog.BoosterProgBundle");
 
     public BoosterProgPanel() {
         super();
@@ -64,7 +61,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("TitleBoosterProg"));
+        x.append(Bundle.getMessage("TitleBoosterProg"));
         return x.toString();
     }
 
@@ -83,13 +80,13 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
 
-        add(new JLabel(rb.getString("Warn1")));
-        add(new JLabel(rb.getString("Warn2")));
+        add(new JLabel(Bundle.getMessage("Warn1")));
+        add(new JLabel(Bundle.getMessage("Warn2")));
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        JButton b = new JButton(rb.getString("ButtonSet"));
-        p.add(new JLabel(rb.getString("LabelStart")));
+        JButton b = new JButton(Bundle.getMessage("ButtonSet"));
+        p.add(new JLabel(Bundle.getMessage("LabelStart")));
         start.setText("30");
         p.add(start);
         p.add(b);
@@ -103,8 +100,8 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        b = new JButton(rb.getString("ButtonSet"));
-        p.add(new JLabel(rb.getString("LabelDuration")));
+        b = new JButton(Bundle.getMessage("ButtonSet"));
+        p.add(new JLabel(Bundle.getMessage("LabelDuration")));
         length.setText("420");
         p.add(length);
         p.add(b);
@@ -119,7 +116,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         add(box);
 
         add(status);
-        status.setText(rb.getString("StatusOK"));
+        status.setText(Bundle.getMessage("StatusOK"));
     }
 
     private AddressedProgrammer p = null;
@@ -137,18 +134,18 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
     void setStartPushed() {
         getProgrammer();
-        status.setText(rb.getString("StatusProgramming"));
+        status.setText(Bundle.getMessage("StatusProgramming"));
         int val = Integer.parseInt(start.getText());
 
         try {
             p.writeCV("255", val, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
-                    status.setText(rb.getString("StatusOK"));
+                    status.setText(Bundle.getMessage("StatusOK"));
                 }
             });
         } catch (ProgrammerException e) {
-            status.setText(rb.getString("StatusError") + e);
+            status.setText(Bundle.getMessage("StatusError") + e);
         } finally {
             releaseProgrammer();
         }
@@ -202,7 +199,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
     void setDurationPushed() {
         getProgrammer();
-        status.setText(rb.getString("StatusProgramming"));
+        status.setText(Bundle.getMessage("StatusProgramming"));
         int val = Integer.parseInt(length.getText()) / 256;
 
         try {
@@ -219,28 +216,29 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                 }
             });
         } catch (ProgrammerException e) {
-            status.setText(rb.getString("StatusError") + e);
+            status.setText(Bundle.getMessage("StatusError") + e);
             releaseProgrammer();
         }
     }
 
     void durationPart2() {
-        status.setText(rb.getString("StatusProgramming"));
+        status.setText(Bundle.getMessage("StatusProgramming"));
         int val = Integer.parseInt(length.getText()) % 256;
 
         try {
             p.writeCV("254", val, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
-                    status.setText(rb.getString("StatusOK"));
+                    status.setText(Bundle.getMessage("StatusOK"));
                 }
             });
         } catch (ProgrammerException e) {
-            status.setText(rb.getString("StatusError") + e);
+            status.setText(Bundle.getMessage("StatusError") + e);
         } finally {
             releaseProgrammer();
         }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BoosterProgPanel.class);
+
 }

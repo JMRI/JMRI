@@ -13,7 +13,7 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
     private LnTrafficController tc = null;
 
     /**
-     * Create a ClockControl object for a Loconet clock
+     * Create a ClockControl object for a LocoNet clock
      *
      * @param scm  connection memo
      */

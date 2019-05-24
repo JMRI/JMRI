@@ -179,7 +179,7 @@ public enum LnCommandStationType {
 
     /**
      * Returns command station's support for OPC_IDLE
-     * <p>
+     *
      * @return true if OPC_IDLE forces broadcast of "stop", else false
      */
     public boolean getImplementsIdle() {

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A JInternalFrame that contains a JSlider to control loco speed, and buttons
  * for forward, reverse and STOP.
- * <P>
+ * <p>
  * TODO: fix speed increments (14, 28)
  *
  * @author glen Copyright (C) 2002

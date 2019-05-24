@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single command or response to the Zimo Binary Protocol.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.

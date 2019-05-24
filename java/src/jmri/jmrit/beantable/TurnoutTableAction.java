@@ -1666,7 +1666,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Respond to Create new item pressed on Add Turnout pane.
+     * Respond to Create new item button pressed on Add Turnout pane.
      *
      * @param e the click event
      */
@@ -1704,7 +1704,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             uName = null;
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
+        // Add some entry pattern checking, before assembling sName and handing it to the TurnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = null;
         

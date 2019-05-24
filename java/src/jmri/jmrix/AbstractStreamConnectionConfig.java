@@ -36,20 +36,24 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         adapter = p;
     }
 
-    @Override
-    public jmri.jmrix.AbstractStreamPortController getAdapter() {
-        return adapter;
-    }
-
     /**
-     * Ctor for a functional object with no preexisting adapter.
+     * Ctor for a functional object with no preexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
      */
     public AbstractStreamConnectionConfig() {
         adapter = null;
     }
 
+    @Override
+    public jmri.jmrix.AbstractStreamPortController getAdapter() {
+        return adapter;
+    }
+
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -144,6 +148,9 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         return Bundle.getMessage("none");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;

@@ -13,7 +13,6 @@ import org.junit.Test;
  */
 public class CbusTableEventTest {
 
-
     @Test
     public void testCTor() {
         // int,int,EvState,int,String,String,String,int,int,int,int,Date
@@ -85,7 +84,6 @@ public class CbusTableEventTest {
         Assert.assertEquals("getTotalOff 456", 456,(t.getTotalOff()) );
         Assert.assertEquals("getTotalIn 789", 789,(t.getTotalIn()) );
         Assert.assertEquals("getTotalOut 0", 0,(t.getTotalOut()) );
-        
         
     }    
     

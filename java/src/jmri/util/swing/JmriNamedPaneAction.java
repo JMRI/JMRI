@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action that, when invoked, creates a JmriPanel from its class name
  * and installs it in a given window.
- *<p>
+ * <p>
  * Windows are referenced through the {@link WindowInterface}, which can
  * provide access to a new or existing single-pane window, or a more complex multi-pane
  * window as seen in the DecoderPro interface.

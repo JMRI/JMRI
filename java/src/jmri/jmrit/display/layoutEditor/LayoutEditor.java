@@ -110,19 +110,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
- * <P>
+ * <p>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
  * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
  * integral subparts of the LayoutEditor class.
- * <P>
+ * <p>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
  * numbers.
- * <P>
+ * <p>
  * The "contents" List keeps track of all text and icon label objects added to
  * the target frame for later manipulation. Other Lists keep track of drawn
  * items.
- * <P>
+ * <p>
  * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
  * particular, text and icon label items are copied from Panel editor, as well
  * as some of the control design.
@@ -3053,7 +3053,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         //try to get the preference
                         ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
                         if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
+                            ddldoPref = ddldoProp.toString(); //get its (string value
                         } else { //otherwise...
                             //save it in the users preferences
                             prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);

@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     LocoDataPaneTest.class,
-    LocoDataModelTest.class
+    LocoDataModelTest.class,
+    BundleTest.class,
 })
 
 /**

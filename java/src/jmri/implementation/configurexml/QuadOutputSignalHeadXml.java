@@ -21,7 +21,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
     }
 
     /**
-     * Default implementation for storing the contents of a QuadOutputSignalHead
+     * Default implementation for storing the contents of a QuadOutputSignalHead.
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
@@ -73,7 +73,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
                         .getBeanBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
-            log.error("systemName is already registered: " + sys);
+            log.error("systemName is already registered: {}", sys);
         } else {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         }

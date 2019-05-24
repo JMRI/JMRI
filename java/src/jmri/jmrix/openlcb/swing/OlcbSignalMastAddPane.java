@@ -20,7 +20,7 @@ import org.openlcb.swing.EventIdTextField;
 
 /**
  * A pane for configuring OlcbSignalMast objects
- * <P>
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2

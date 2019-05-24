@@ -6,7 +6,7 @@ package jmri.jmrix.powerline;
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
 
     // Base class. Implementations will provide InputStream and OutputStream
@@ -21,6 +21,3 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     }
 
 }
-
-
-

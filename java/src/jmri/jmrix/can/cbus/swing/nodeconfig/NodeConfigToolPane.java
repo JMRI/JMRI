@@ -371,11 +371,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     }
     
     /**
-     * Creates a Menu List
+     * Creates a Menu List.
      * <p>
      * File - Print, Print Preview, Save, SaveAs csv
-     * Display - show / hide Create new event pane, show/hide bottom feedback pane
-     * </p>
+     * <p>
+     * Display - show / hide Create new event pane, show/hide bottom feedback pane.
      */
     @Override
     public List<JMenu> getMenus() {

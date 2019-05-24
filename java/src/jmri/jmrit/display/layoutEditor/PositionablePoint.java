@@ -58,17 +58,17 @@ import org.slf4j.LoggerFactory;
  * PositionablePoint is a Point defining a node in the Track that can be dragged
  * around the inside of the enclosing LayoutEditor panel using a right-drag
  * (drag with meta key).
- * <P>
+ * <p>
  * Three types of Positionable Point are supported: Anchor - point on track -
  * two track connections End Bumper - end of track point - one track connection
  * Edge Connector - This is used to link track segments between two different
  * panels
- * <P>
+ * <p>
  * Note that a PositionablePoint exists for specifying connectivity and drawing
  * position only. The Track Segments connected to a PositionablePoint may belong
  * to the same block or to different blocks. Since each Track Segment may only
  * belong to one block, a PositionablePoint may function as a Block Boundary.
- * <P>
+ * <p>
  * Signal names are saved here at a Block Boundary anchor point by the tool Set
  * Signals at Block Boundary. PositionablePoint does nothing with these signal
  * head names; it only serves as a place to store them.

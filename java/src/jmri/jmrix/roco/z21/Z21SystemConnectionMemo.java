@@ -76,7 +76,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private Z21ReporterManager _rm = null;
 
     /**
-     * Sensor Manager for this instance.
+     * SensorManager for this instance.
      */
     public void setSensorManager(Z21SensorManager sm){
         _sm = sm;
@@ -183,23 +183,23 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         z21CommandStation.setLocoNetTurnoutMessagesFlag(true);
         z21CommandStation.setLocoNetOccupancyMessagesFlag(true);
 
-        // and forward the flags to the command station.
+        // and forward the flags to the command station
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
                            z21CommandStation.getZ21BroadcastFlags()),null);
 
-        // add an LocoNet Tunnel.
+        // add an LocoNet Tunnel
         _loconettunnel = new Z21LocoNetTunnel(this);
 
-        // add an XpressNet Tunnel.
+        // add an XpressNet Tunnel
         _xnettunnel = new Z21XPressNetTunnel(this);
 
         // set up the Reporter Manager
         jmri.InstanceManager.setReporterManager(getReporterManager());
 
-        // set up the Sensor Manager
+        // set up the SensorManager
         jmri.InstanceManager.setSensorManager(getSensorManager());
 
-        // but make sure the Loconet memo is set (for one feedback message).
+        // but make sure the LocoNet memo is set (for one feedback message).
         Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
         xpm.setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
 

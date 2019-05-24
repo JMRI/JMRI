@@ -7,7 +7,7 @@ import org.junit.*;
  * Tests for CodeButton class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class CodeButtonTest {
 
     @Test

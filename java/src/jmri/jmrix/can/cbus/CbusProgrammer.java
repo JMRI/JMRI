@@ -214,7 +214,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
 
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
-     * <P>
+     * <p>
      * Here, it sends a request to exit from programming mode. But subclasses,
      * e.g. ops mode, may redefine that.
      */

@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.tams.simulator.configurexml.PackageTest.class,
-   SimulatorAdapterTest.class
+   SimulatorAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.tams.simulator package.

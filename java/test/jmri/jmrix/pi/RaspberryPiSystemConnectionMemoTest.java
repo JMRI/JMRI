@@ -9,9 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for RaspberryPiSystemConnectionMemo
- * </P>
+ * Tests for RaspberryPiSystemConnectionMemo.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -154,4 +152,5 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
         scm = null;
         JUnitUtil.tearDown();
     }
+
 }

@@ -82,6 +82,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     boolean feedbackDeliberatelySet = false; // package to allow access from LnTurnoutManager
     
     @Override
+    public void setBinaryOutput(boolean state) {
+        // TODO Auto-generated method stub
+        binaryOutput = state;
+    }
+    @Override
     public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException {
         feedbackDeliberatelySet = true;
         super.setFeedbackMode(mode);
@@ -129,6 +134,22 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         _useOffSwReqAsConfirmation = state;
     }
 
+    public boolean isByPassBushbyBit() {
+        if (getProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY) != null) {
+            return  (boolean) getProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY) ;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isSendOnAndOff() {
+        if (getProperty(LnTurnoutManager.SENDONANDOFFKEY) != null) {
+            return (boolean) getProperty(LnTurnoutManager.SENDONANDOFFKEY) ;
+        } else {
+            return !binaryOutput;
+        }
+    }
+
     // Handle a request to change state by sending a LocoNet command
     @Override
     protected void forwardCommandChangeToLayout(final int newstate) {
@@ -136,7 +157,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         // send SWREQ for close/thrown ON
         sendOpcSwReqMessage(adjustStateForInversion(newstate), true);
         // schedule SWREQ for closed/thrown off, unless in basic mode
-        if (!binaryOutput) {
+        if (isSendOnAndOff()) {
             meterTask = new java.util.TimerTask() {
                 int state = newstate;
 
@@ -165,7 +186,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
      */
     void sendOpcSwReqMessage(int state, boolean on) {
         LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SW_REQ);
+        if (isByPassBushbyBit()) {
+            l.setOpCode(LnConstants.OPC_SW_ACK);
+        } else {
+            l.setOpCode(LnConstants.OPC_SW_REQ);
+        }
 
         // compute address fields
         int hiadr = (_number - 1) / 128;
@@ -236,8 +261,9 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     public void message(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
+            case LnConstants.OPC_SW_ACK:
             case LnConstants.OPC_SW_REQ: {
-                /* page 9 of Loconet PE */
+                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -262,7 +288,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 return;
             }
             case LnConstants.OPC_SW_REP: {
-                /* page 9 of Loconet PE */
+                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
