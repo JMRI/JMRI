@@ -161,5 +161,14 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
 
 }
