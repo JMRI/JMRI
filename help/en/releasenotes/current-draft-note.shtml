@@ -378,7 +378,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The table and manager containing the element are no longer listed as items using the element when deleting the
+                element in the delete confirmation dialog. The count of items using the element shown in the delete confirmation
+                dialog now match the number of items shown to be using the element.</li>
         </ul>
 
     <h3>Scripting</h3>

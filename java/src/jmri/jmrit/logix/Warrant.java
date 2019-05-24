@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -74,6 +75,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     protected int _runMode;
     private Engineer _engineer; // thread that runs the train
+    @GuardedBy("this")
     private CommandDelay _delayCommand; // thread for delayed ramp down
     private boolean _allocated; // initial Blocks of _orders have been allocated
     private boolean _totalAllocated; // All Blocks of _orders have been allocated
@@ -1586,6 +1588,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // The latter warrant's deallocation may not have happened yet and
         // this has prevented allocation to this warrant.  For this case,
         // wait until leaving warrant's deallocation is seen and completed.
+        @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
         final Runnable allocateBlocks = new Runnable() {
             @Override
             public void run() {
@@ -2205,7 +2208,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    private void rampDelayDone() {
+    synchronized private void rampDelayDone() {
         _delayCommand = null;
     }
 
@@ -2738,11 +2741,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
     
     private void rampSpeedDelay (long waitTime, String speedType, int endBlockIdx) {
-        if (_delayCommand != null) {
-            if (_delayCommand.doNotCancel(speedType, waitTime, endBlockIdx)) {
-                return;
-            }
-            cancelDelayRamp();
+        synchronized(this) {
+           if (_delayCommand != null) {
+               if (_delayCommand.doNotCancel(speedType, waitTime, endBlockIdx)) {
+                   return;
+               }
+               cancelDelayRamp();
+           }
         }
         if (waitTime <= 0) {
             _engineer.rampSpeedTo(speedType, endBlockIdx, true);

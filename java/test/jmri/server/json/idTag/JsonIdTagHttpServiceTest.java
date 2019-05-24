@@ -11,6 +11,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import jmri.IdTag;
 import jmri.IdTagManager;
@@ -75,7 +77,8 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         validate(result);
         assertEquals(IdTag.SEEN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         assertEquals(reporter1.getSystemName(), result.path(JSON.DATA).path(JsonReporter.REPORTER).asText());
-        assertEquals(new StdDateFormat().format(idTag1.getWhenLastSeen()), result.path(JSON.DATA).path(JSON.TIME).asText());
+        assertEquals(new StdDateFormat().format(idTag1.getWhenLastSeen()),
+                result.path(JSON.DATA).path(JSON.TIME).asText());
         // change idTag state
         idTag1.setState(IdTag.UNKNOWN);
         result = service.doGet(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
@@ -152,6 +155,17 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         manager.provide("ID1");
         // delete an idTag
         assertNotNull(manager.getBeanBySystemName("ID1"));
+        service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
+        assertNull(manager.getBeanBySystemName("ID1"));
+        manager.provide("ID1").addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing
+            }
+        }, "ID1", "Test Listener");
+        // delete an idTag with a named listener ref
+        assertNotNull(manager.getBeanBySystemName("ID1"));
         try {
             // first attempt should fail on conflict
             service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
@@ -159,7 +173,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
             assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
         assertNotNull(manager.getBeanBySystemName("ID1"));
