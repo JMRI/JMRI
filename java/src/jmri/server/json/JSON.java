@@ -113,6 +113,10 @@ public final class JSON {
      * {@value #SPEED}
      */
     public static final String SPEED = "speed"; // NOI18N
+    /**
+     * {@value #DIRECTION}
+     */
+    public static final String DIRECTION = "direction"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -382,9 +386,9 @@ public final class JSON {
 
     /* JSON route (operations) tokens */
     /**
-     * {@value #DIRECTION}
+     * {@value #TRAIN_DIRECTION}
      */
-    public static final String DIRECTION = "trainDirection"; // NOI18N
+    public static final String TRAIN_DIRECTION = "trainDirection"; // NOI18N
     /**
      * {@value #SEQUENCE}
      */
