@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import jmri.Block;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -50,6 +51,19 @@ public class OBlockManagerTest {
     public void testCreateNewOBlock() {
         Assert.assertNull("createNewOBlock", l.createNewOBlock("", "user"));
         Assert.assertNull("createNewOBlock", l.createNewOBlock("OB", "user"));
+    }
+
+    @Test
+    public void testGetOBlock() {
+        // the is was originally part of Warrant test, but none of the asserts
+        // are testing anything in the warrant.
+        OBlockManager _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
+        OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
+        OBlock bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
+        OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
+        Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
+        Assert.assertEquals("OBlock", bEast, _OBlockMgr.getOBlock("OB2"));
     }
 
     // The minimal setup for log4J
