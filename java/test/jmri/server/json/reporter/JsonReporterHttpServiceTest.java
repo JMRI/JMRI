@@ -6,6 +6,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -150,6 +153,17 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         ObjectNode message = mapper.createObjectNode();
         // add a reporter
         assertNotNull(manager.getReporter("IR1"));
+        service.doDelete(REPORTER, "IR1", NullNode.getInstance(), locale, 0);
+        assertNull(manager.getReporter("IR1"));
+        manager.provide("IR1").addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing
+            }
+        }, "IR1", "Test Listener");
+        // delete an idTag with a named listener ref
+        assertNotNull(manager.getReporter("IR1"));
         message = mapper.createObjectNode().put(JSON.NAME, "IR1");
         try {
             service.doDelete(REPORTER, "IR1", NullNode.getInstance(), locale, 0);
@@ -157,7 +171,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
             assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
         assertNotNull(manager.getReporter("IR1"));

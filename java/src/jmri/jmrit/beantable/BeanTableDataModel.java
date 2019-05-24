@@ -120,7 +120,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             // if object has been deleted, it's not here; ignore it
             T b = getBySystemName(sysNameList.get(i));
             if (b != null) {
-                b.addPropertyChangeListener(this, null, "Table View");
+                b.addPropertyChangeListener(this);
             }
         }
     }
@@ -1022,7 +1022,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 message.append(e.getMessage());
             }
-            int count = t.getNumPropertyChangeListeners();
+            int count = t.getListenerRefs().size();
             log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
                 doDelete(t);
