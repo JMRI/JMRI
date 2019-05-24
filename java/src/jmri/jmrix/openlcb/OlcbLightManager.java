@@ -144,7 +144,7 @@ public class OlcbLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        String entryToolTip = Bundle.getMessage("AddLightEntryToolTip");
         return entryToolTip;
     }
 }

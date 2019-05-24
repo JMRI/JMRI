@@ -167,7 +167,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        String entryToolTip = Bundle.getMessage("AddTurnoutEntryToolTip");
         return entryToolTip;
     }
 
