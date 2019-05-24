@@ -281,8 +281,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**

@@ -368,8 +368,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);

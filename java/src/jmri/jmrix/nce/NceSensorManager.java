@@ -496,8 +496,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class);

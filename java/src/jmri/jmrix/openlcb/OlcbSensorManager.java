@@ -179,8 +179,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddSensorEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddSensorEntryToolTip");
     }
 
     // listen for sensors, creating them as needed
