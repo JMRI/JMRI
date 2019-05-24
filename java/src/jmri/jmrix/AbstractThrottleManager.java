@@ -1037,6 +1037,46 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return null;
     }
 
+    private boolean _hideStealNotifications = false;
+
+    /**
+     * If not headless, display a session stolen dialogue box with
+     * checkbox to hide notifications for rest of JMRI session
+     *
+     * @param address the LocoAddress of the stolen / cancelled Throttle
+     */
+    protected void showSessionCancelDialogue(LocoAddress address){
+        if ((!java.awt.GraphicsEnvironment.isHeadless()) && (!_hideStealNotifications)){
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
+                    Bundle.getMessage("HideFurtherAlerts"));
+                Object[] params = {Bundle.getMessage("LocoStolen",address), checkbox};
+                javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
+                pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JDialog dialog = pane.createDialog(null, Bundle.getMessage("LocoStolen", address));
+                dialog.setModal(false);
+                dialog.setVisible(true);
+                dialog.requestFocus();
+                dialog.toFront();
+                java.awt.event.ActionListener stolenpopupcheckbox = (java.awt.event.ActionEvent evt) -> {
+                    this.hideStealNotifications(checkbox.isSelected());
+                };
+                checkbox.addActionListener(stolenpopupcheckbox);
+            });
+        }
+    }
+    
+    /**
+     * Receive notification from a throttle dialogue
+     * to display steal dialogues for rest of the JMRI instance session.
+     * False by default to show notifications
+     *
+     * @param hide set True to hide notifications, else False.
+     */
+    public void hideStealNotifications(boolean hide){
+        _hideStealNotifications = hide;
+    }
+
     /**
      * This subClass, keeps track of which loco address have been requested and
      * by whom, it primarily uses a increment count to keep track of all the

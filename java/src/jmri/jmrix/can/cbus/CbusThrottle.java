@@ -769,38 +769,6 @@ public class CbusThrottle extends AbstractThrottle {
         notifyThrottleDispatchEnabled(false);
     }
 
-    /**
-     * If not headless, display a session stolen dialogue box with
-     * checkbox to hide notifications for rest of JMRI session
-     */
-    protected void showSessionCancelDialogue(LocoAddress address){
-        if (!java.awt.GraphicsEnvironment.isHeadless()){
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
-                    Bundle.getMessage("PopupSessionConfirm"));
-                Object[] params = {Bundle.getMessage("ERR_LOCO_STOLEN",address), checkbox};
-                
-                
-                javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
-                
-                pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
-                
-                javax.swing.JDialog dialog = pane.createDialog(null, Bundle.getMessage("ERR_LOCO_STOLEN", getLocoAddress()));
-                
-                dialog.setModal(false);
-                dialog.setVisible(true);
-                dialog.requestFocus();
-                dialog.toFront();
-                
-                java.awt.event.ActionListener stolenpopupcheckbox = (java.awt.event.ActionEvent evt) -> {
-                    CbusThrottleManager cbtm = (CbusThrottleManager) jmri.InstanceManager.throttleManagerInstance();
-                    log.info("sending checkbox");
-                    cbtm.hideStealNotifications(checkbox.isSelected());
-                };
-                checkbox.addActionListener(stolenpopupcheckbox);
-            });
-        }
-    }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(CbusThrottle.class);
 

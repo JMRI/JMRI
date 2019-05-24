@@ -33,7 +33,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     private boolean _handleExpectedSecondLevelRequest = false;
     private int _intAddr;
     private DccLocoAddress _dccAddr;
-    private boolean _hideStealNotifications;
     protected int THROTTLE_TIMEOUT = 5000;
 
     private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
@@ -522,9 +521,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         if ( throttle.getNumRecoverAttempts()>10 ){ // catch runaways
             _handleExpected = false;
             throttle.throttleDispose(); // stop throttle keep-alive messages, send PCL ThrottleConnected false
-            if (!_hideStealNotifications) {
-                throttle.showSessionCancelDialogue(throttle.getLocoAddress());
-            }
+            showSessionCancelDialogue(throttle.getLocoAddress());
             softThrottles.remove(oldhandle); // remove from local list
             forceDisposeThrottle( throttle.getLocoAddress() ); // remove from JMRI share list
             
@@ -565,9 +562,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
             },1000);
         } else {
             throttle.throttleDispose(); // stop throttle keep-alive messages, send PCL ThrottleConnected false
-            if (!_hideStealNotifications) {
-                throttle.showSessionCancelDialogue(throttle.getLocoAddress());
-            }
+            showSessionCancelDialogue(throttle.getLocoAddress());
             softThrottles.remove(oldhandle); // remove from local list
             forceDisposeThrottle( throttle.getLocoAddress() ); // remove from JMRI share list
         }
@@ -716,9 +711,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 CbusThrottle throttle = softThrottles.get(itr.next());
                 if (throttle.getLocoAddress() == _dccAddr) {
                     throttle.throttleDispose();
-                    if (!_hideStealNotifications) {
-                        throttle.showSessionCancelDialogue(_dccAddr);
-                    }
+                    showSessionCancelDialogue(_dccAddr);
                     softThrottles.remove(throttle.getHandle());
                 }
             }
@@ -779,7 +772,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         }
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -791,14 +783,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         // of the cancel but other listeners might
         super.cancelThrottleRequest(address, l);
         failedThrottleRequest(address, "Throttle Request " + address + " Cancelled.");
-    }
-    
-    /**
-     * Receive notification from a throttle dialogue
-     * to display steal dialogues for rest of the JMRI instance session
-     */
-    protected void hideStealNotifications(boolean hide){
-        _hideStealNotifications = hide;
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class);
