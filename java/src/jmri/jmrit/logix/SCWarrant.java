@@ -167,7 +167,7 @@ public class SCWarrant extends Warrant {
             firePropertyChange("throttleFail", null, Bundle.getMessage("noThrottle"));
             return;
         }
-        log.debug("{} notifyThrottleFound address= {} _runMode= {}"_trainName,throttle.getLocoAddress(),_runMode);
+        log.debug("{} notifyThrottleFound address= {} _runMode= {}",_trainName,throttle.getLocoAddress(),_runMode);
         
         startupWarrant();
 
@@ -371,7 +371,7 @@ public class SCWarrant extends Warrant {
      * would just cause all signals to go to Stop aspects and thus cause a jerky train movement.
      */
     protected void allocateBlocksAndSetTurnouts(int startIndex) {
-        log.debug("{} allocateBlocksAndSetTurnouts startIndex={} _orders.size()={}"_trainName,startIndex,getBlockOrders().size());
+        log.debug("{} allocateBlocksAndSetTurnouts startIndex={} _orders.size()={}",_trainName,startIndex,getBlockOrders().size());
         for (int i = startIndex; i < getBlockOrders().size(); i++) {
             log.debug("{} allocateBlocksAndSetTurnouts for loop #{}",_trainName,i);
             BlockOrder bo = getBlockOrderAt(i);
@@ -393,7 +393,7 @@ public class SCWarrant extends Warrant {
                     message = bo.setPath(this);
                 }
                 if (message != null) {
-                    log.debug("{} path setting failed for {} at block {} {}"_trainName,getDisplayName(),block.getDisplayName(),message);
+                    log.debug("{} path setting failed for {} at block {} {}",_trainName,getDisplayName(),block.getDisplayName(),message);
                     if (_stoppingBlock != null) {
                         _stoppingBlock.removePropertyChangeListener(this);
                     }
@@ -424,7 +424,7 @@ public class SCWarrant extends Warrant {
         int activeIdx = getIndexOfBlock(block, _idxCurrentOrder);
         log.debug("{} **Block \"{}\" goingActive. activeIdx= {}"
                     + ", _idxCurrentOrder= {}" 
-                    + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,idxCurrentOrder,getDisplayName(),_runMode,(_throttle==null));
+                    + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,_idxCurrentOrder,getDisplayName(),_runMode,(_throttle==null));
         if (_runMode != MODE_RUN) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
@@ -467,9 +467,9 @@ public class SCWarrant extends Warrant {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="See comment above notify call")
     protected void goingInactive(OBlock block) {
         int idx = getIndexOfBlock(block, 0);  // if idx >= 0, it is in this warrant
-        log.debug("{} Block \"{}"\" goingInactive. idx= {}"
+        log.debug("{} Block \"{}\" goingInactive. idx= {}"
                     + ", _idxCurrentOrder= {}"
-                    + " - warrant= {}",_trainName,block.getDisplayName(),idx,idxCurrentOrder,getDisplayName());
+                    + " - warrant= {}",_trainName,block.getDisplayName(),idx,_idxCurrentOrder,getDisplayName());
         if (_runMode != MODE_RUN) {
             return;
         }
@@ -480,7 +480,7 @@ public class SCWarrant extends Warrant {
         } else if (idx == _idxCurrentOrder) {
             // train is lost
             log.debug("{} LOST TRAIN firePropertyChange(\"blockChange\", {}"
-                                + ", null) - warrant= {}"_trainName,block.getDisplayName(),getDisplayName());
+                                + ", null) - warrant= {}",_trainName,block.getDisplayName(),getDisplayName());
 //            firePropertyChange("blockChange", block, null);
 //            emergencyStop();
 //            controlRunTrain(ABORT);
@@ -546,7 +546,7 @@ public class SCWarrant extends Warrant {
             return;
         }
         String property = evt.getPropertyName();
-        log.debug("{} propertyChange \"{}\" new= {} source= {} - warrant= {}",_trainName,property,evt.getNewValue,((NamedBean) evt.getSource()).getDisplayName(),getDisplayName());
+        log.debug("{} propertyChange \"{}\" new= {} source= {} - warrant= {}",_trainName,property,evt.getNewValue(),((NamedBean) evt.getSource()).getDisplayName(),getDisplayName());
         if (_nextSignal != null && _nextSignal == evt.getSource()) {
             if (property.equals("Aspect") || property.equals("Appearance")) {
                 // The signal controlling this warrant has changed. Adjust the speed (in runSignalControlledTrain)
@@ -558,7 +558,7 @@ public class SCWarrant extends Warrant {
         }
         synchronized(this) {
             if (_stoppingBlock != null) {
-                log.debug("{} CHECKING STOPPINGBLOCKEVENT ((NamedBean) evt.getSource()).getDisplayName() = '{}' evt.getPropertyName() = '{}' evt.getNewValue() = {} _throttle==null: {}",_trainName,,((NamedBean) evt.getSource()).getDisplayName(),evt.getPropertyName(),evt.getNewValue(),(_throttle==null));
+                log.debug("{} CHECKING STOPPINGBLOCKEVENT ((NamedBean) evt.getSource()).getDisplayName() = '{}' evt.getPropertyName() = '{}' evt.getNewValue() = {} _throttle==null: {}",_trainName,((NamedBean) evt.getSource()).getDisplayName(),evt.getPropertyName(),evt.getNewValue(),(_throttle==null));
                 if (((NamedBean) evt.getSource()).getDisplayName().equals(_stoppingBlock.getDisplayName()) &&
                         evt.getPropertyName().equals("state") &&
                         (((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) == OBlock.UNOCCUPIED) {
