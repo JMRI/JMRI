@@ -1032,6 +1032,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
          }
 
         @Override
+        @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
         public void run() {
             OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             long time = 0;
