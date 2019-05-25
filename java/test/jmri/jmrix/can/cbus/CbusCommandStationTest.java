@@ -48,7 +48,6 @@ public class CbusCommandStationTest {
         Assert.assertNotNull("exists",ta);
         try {
             CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
-            Assert.assertTrue(true);
             Assert.assertNotNull("exists",sim);
         } catch (NullPointerException e) {
             Assert.assertTrue(false);

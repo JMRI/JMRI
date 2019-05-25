@@ -326,13 +326,11 @@ public class CbusAddressTest {
         try {
             Assert.assertEquals("+0",null,CbusAddress.validateSysName("+0"));
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }        
 
         try {
             Assert.assertEquals("-0",null,CbusAddress.validateSysName("-0"));
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }   
 
     }

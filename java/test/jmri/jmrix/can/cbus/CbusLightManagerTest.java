@@ -112,7 +112,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("3 split Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
     }
 
@@ -130,7 +129,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("X Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -138,7 +136,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("A Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -146,7 +143,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("AC Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -154,7 +150,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("ABCDE Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
         
         try {
@@ -162,7 +157,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("ABCDEF0 Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -170,7 +164,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("Single hex Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -178,7 +171,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -186,7 +178,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
         
         try {
@@ -194,7 +185,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("; no arg Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }        
         
         try {
@@ -202,7 +192,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("ML Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
         
         try {
@@ -210,7 +199,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("; Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -218,7 +206,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("S Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
         
         try {
@@ -226,7 +213,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("M Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -234,7 +220,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("++ Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -242,7 +227,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("-- Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -250,7 +234,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("E+ Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -258,7 +241,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("+E Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -266,7 +248,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.fail("LKJK Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
-            Assert.assertTrue(true);
         }
     }
 
@@ -368,7 +349,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.assertNull("not exists", t);
             Assert.assertTrue(false);
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
     }
     
@@ -386,7 +366,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.assertNull("exists", testbool);
             Assert.assertTrue(false);
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
     }
 

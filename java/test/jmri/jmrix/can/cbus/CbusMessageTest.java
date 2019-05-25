@@ -308,14 +308,12 @@ public class CbusMessageTest {
             CbusMessage.setPri(r,0xff);
             Assert.fail("Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
         
         try {
             CbusMessage.setPri(m,0xff);
             Assert.fail("Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
         
         CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
@@ -360,14 +358,12 @@ public class CbusMessageTest {
             CbusMessage.setId(r,0xff);
             Assert.fail("Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
         
         try {
             CbusMessage.setId(m,0xff);
             Assert.fail("Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
         
         r.setExtended(true);
@@ -385,14 +381,12 @@ public class CbusMessageTest {
             CbusMessage.setId(r,0xffffff);
             Assert.fail("r Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
         
         try {
             CbusMessage.setId(m,0xffffff);
             Assert.fail("m Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }        
         
     }
