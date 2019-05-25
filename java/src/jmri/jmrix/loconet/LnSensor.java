@@ -93,7 +93,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     public void message(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
-            case LnConstants.OPC_INPUT_REP: {               /* page 9 of Loconet PE */
+            case LnConstants.OPC_INPUT_REP: {               /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);

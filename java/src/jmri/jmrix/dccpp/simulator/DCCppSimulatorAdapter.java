@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * Currently, the DCCppSimulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
  *
- **NOTE: Most DCC++ commands are still unsupported in this implementation.
+ * NOTE: Most DCC++ commands are still unsupported in this implementation.
  *
  * Normally controlled by the dccpp.DCCppSimulator.DCCppSimulatorFrame class.
  *

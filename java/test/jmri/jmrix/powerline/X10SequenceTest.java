@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Assert;
 
 /**
- * JUnit tests for the X10Sequence class
+ * JUnit tests for the X10Sequence class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @author	Dave Duchamp multi-node extensions 2003
-  */
+ */
 public class X10SequenceTest {
 
     @Test

@@ -78,7 +78,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     private ThrottleManager throttleManager;
 
     /*
-     * Provide access to the Power Manager for this particular connection.
+     * Provide access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
         if (powerManager == null) {
@@ -95,7 +95,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     private PowerManager powerManager;
 
     /*
-     * Provide access to the Turnout Manager for this particular connection.
+     * Provide access to the TurnoutManager for this particular connection.
      */
     public TurnoutManager getTurnoutManager() {
         if (turnoutManager == null) {

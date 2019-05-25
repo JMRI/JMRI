@@ -20,11 +20,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying Version information for XpressNet hardware.
- * <P>
+ * <p>
  * This is a utility for reading the software version and type of the command
  * station, and, the Hardware and software versions of your XpressNet Computer
  * Interface.
- * <P>
+ * <p>
  * Some of this code may be moved to facilitate automatic enabling of features
  * that are not available on all XpressNet Command Stations (as an example, the
  * fact that you can't program using the computer on a Commander or Compact)

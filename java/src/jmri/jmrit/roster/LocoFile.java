@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents and manipulates a locomotive definition, both as a file and in
  * memory. The interal storage is a JDOM tree. See locomotive-config.xsd
- * <P>
+ * <p>
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
  *

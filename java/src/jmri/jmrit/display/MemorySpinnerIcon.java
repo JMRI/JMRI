@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Memory in a JSpinner.
- * <P>
+ * <p>
  * Handles the case of either a String or an Integer in the Memory, preserving
  * what it finds.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (c) 2009
  * @since 2.7.2
  */

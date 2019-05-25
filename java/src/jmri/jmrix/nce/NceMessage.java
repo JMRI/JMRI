@@ -8,20 +8,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an NCE command station.
- * <P>
+ * <p>
  * The {@link NceReply} class handles the response from the command station.
- * <P>
+ * <p>
  * The NCE protocol has "binary" and "ASCII" command sets. Depending on the
  * version of the EPROM it contains, NCE command stations have different support
  * for command sets:
- * <UL>
- * <LI>1999 - All ASCII works. Binary works except for programming.
- * <LI>2004 - ASCII needed for programming, binary for everything else.
- * <LI>2006 - binary needed for everything
- * </UL>
+ * <ul>
+ * <li>1999 - All ASCII works. Binary works except for programming.
+ * <li>2004 - ASCII needed for programming, binary for everything else.
+ * <li>2006 - binary needed for everything
+ * </ul>
  * See the {@link NceTrafficController#setCommandOptions(int)} method for more
  * information.
- * <P>
+ * <p>
  * Apparently the binary "exitProgrammingMode" command can crash the command
  * station if the EPROM was built before 2006. This method uses a state flag
  * ({@link NceTrafficController#getNceProgMode}) to detect whether a command to

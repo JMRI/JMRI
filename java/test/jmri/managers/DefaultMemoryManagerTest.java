@@ -30,6 +30,13 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         }
     }
 
+    @Test
+    public void testCreatesiM() {
+        jmri.Memory im = l.provideMemory("iM");
+        Assert.assertNotNull("iM created",im);
+        Assert.assertEquals("correct system name","IMIM",im.getSystemName());
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

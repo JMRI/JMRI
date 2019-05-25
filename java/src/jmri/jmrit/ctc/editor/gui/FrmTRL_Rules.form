@@ -92,31 +92,22 @@
                                       <Component id="_mSwitchAlignment5" min="-2" pref="126" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="_mOccupancyExternalSensor1" min="-2" pref="126" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="_mOccupancyExternalSensor2" min="-2" pref="126" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="_mOccupancyExternalSensor6" min="-2" pref="126" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="_mOccupancyExternalSensor7" min="-2" pref="126" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="_mOccupancyExternalSensor1" pref="280" max="32767" attributes="0"/>
+                                          <Component id="_mOccupancyExternalSensor4" max="32767" attributes="0"/>
+                                          <Component id="_mOccupancyExternalSensor7" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="_mOccupancyExternalSensor3" min="-2" pref="126" max="-2" attributes="0"/>
-                                          <Component id="_mOccupancyExternalSensor8" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="_mOccupancyExternalSensor2" pref="280" max="32767" attributes="0"/>
+                                          <Component id="_mOccupancyExternalSensor5" max="32767" attributes="0"/>
+                                          <Component id="_mOccupancyExternalSensor8" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="_mOccupancyExternalSensor4" min="-2" pref="126" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="_mOccupancyExternalSensor5" min="-2" pref="120" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="_mOccupancyExternalSensor9" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="_mOccupancyExternalSensor3" pref="280" max="32767" attributes="0"/>
+                                          <Component id="_mOccupancyExternalSensor6" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="_mOccupancyExternalSensor9" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -191,19 +182,22 @@
                   <Component id="_mSwitchAlignment4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mSwitchAlignment5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" pref="19" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="32767" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mOccupancyExternalSensor1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mOccupancyExternalSensor2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mOccupancyExternalSensor3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mOccupancyExternalSensor4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mOccupancyExternalSensor5" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mOccupancyExternalSensor6" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mOccupancyExternalSensor7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mOccupancyExternalSensor8" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mOccupancyExternalSensor9" alignment="3" min="-2" max="-2" attributes="0"/>

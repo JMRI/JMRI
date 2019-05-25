@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the NceTrafficController class
+ * Stands in for the NceTrafficController class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceTrafficControlScaffold extends NceTrafficController {
 
     public NceTrafficControlScaffold() {

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting parsing and testing of addresses.
- * <P>
+ * <p>
  * Two address formats are supported: For X10: Ptnxx where: t is the type code,
  * 'S' for sensors, and 'L' for lights n is the house code of the input or
  * output bit (A - P) xx is a bit number of the input or output bit (1-16)
@@ -141,10 +141,10 @@ public class SerialAddress {
 
     /**
      * Public static method to normalize a system name.
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.
@@ -188,7 +188,7 @@ public class SerialAddress {
 
     /**
      * Extract housecode from system name, as a letter A-P.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -251,7 +251,7 @@ public class SerialAddress {
 
     /**
      * Extract housecode from system name, as a value 1-16.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an -1 is
      * returned.
      *
@@ -279,7 +279,7 @@ public class SerialAddress {
 
     /**
      * Extract devicecode from system name, as a value 1-16.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an -1 is
      * returned.
      *
@@ -307,7 +307,7 @@ public class SerialAddress {
 
     /**
      * Extract Insteon high device id from system name.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -335,7 +335,7 @@ public class SerialAddress {
 
     /**
      * Extract Insteon middle device id from system name.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -363,7 +363,7 @@ public class SerialAddress {
 
     /**
      * Extract Insteon low device id from system name.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *

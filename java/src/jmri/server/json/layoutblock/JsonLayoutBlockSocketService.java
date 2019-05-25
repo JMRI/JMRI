@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBlockHttpService> {
 
-    private final HashMap<String, LayoutBlockListener> layoutBlockListeners = new HashMap<>();
+    private final HashMap<LayoutBlock, LayoutBlockListener> layoutBlockListeners = new HashMap<>();
     private final LayoutBlocksListener layoutBlocksListener = new LayoutBlocksListener();
     private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactory.class);
 
@@ -63,13 +63,10 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
         }
         layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
         if (layoutBlock != null) {
-            if (!layoutBlock.getSystemName().equals(name)) {
-                name = layoutBlock.getSystemName();
-            }
-            if (!this.layoutBlockListeners.containsKey(name)) {
+            if (!this.layoutBlockListeners.containsKey(layoutBlock)) {
                 LayoutBlockListener listener = new LayoutBlockListener(layoutBlock);
                 layoutBlock.addPropertyChangeListener(listener);
-                this.layoutBlockListeners.put(name, listener);
+                this.layoutBlockListeners.put(layoutBlock, listener);
             }
         }
     }
@@ -83,9 +80,9 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
     }
 
     private void removeListenersFromRemovedBeans() {
-        for (String name : new HashSet<>(layoutBlockListeners.keySet())) {
-            if (InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name) == null) {
-                layoutBlockListeners.remove(name);
+        for (LayoutBlock layoutBlock : new HashSet<>(layoutBlockListeners.keySet())) {
+            if (InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(layoutBlock.getSystemName()) == null) {
+                layoutBlockListeners.remove(layoutBlock);
             }
         }
     }
@@ -120,7 +117,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
                 } catch (IOException ex) {
                     // if we get an error, de-register
                     layoutBlock.removePropertyChangeListener(this);
-                    layoutBlockListeners.remove(this.layoutBlock.getSystemName());
+                    layoutBlockListeners.remove(this.layoutBlock);
                 }
             }
         }

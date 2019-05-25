@@ -5,7 +5,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register a SystemInfo object.
- * <P>
+ * <p>
  * The {@link SystemInfoFrame} is an information screen giving the hardware and
  * software versions of the Interface hardware and the command station
  *

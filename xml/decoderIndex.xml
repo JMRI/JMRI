@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.15.6ish+heap+20190508T0714Z+R67de903 on Wed May 08 17:14:59 AEST 2019-->
-  <decoderIndex version="952">
+  <!--Written by JMRI version 4.15.7ish+heap+20190525T0200Z+Reb28a333b2 on Sat May 25 12:01:47 AEST 2019-->
+  <decoderIndex version="956">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -975,6 +975,19 @@
           <output name="G6" label="Snd Slot 6/14" />
           <output name="G7" label="Snd Slot 7/15" />
           <output name="G8" label="Snd Slot 8/16" />
+        </model>
+      </family>
+      <family name="OEM: N Gauge Society" mfg="CT Elektronik" comment="NGS custom CT decoder" file="CT_NGS_Hunslet.xml">
+        <model model="Hunslet" numOuts="3" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
+          <versionCV lowVersionID="11" />
+          <output name="1" label="Headlight">
+            <label>Headlamp</label>
+          </output>
+          <output name="2" label="Rearlight" />
+          <output name="3" label="Cab Roof light" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
       </family>
       <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml">
@@ -6708,6 +6721,8 @@
             <label xml:lang="da">Shift Mode 6</label>
             <label xml:lang="nl">Shift Mode 6</label>
           </output>
+          <output name="3,23" label="|" />
+          <output name="3,24" label="|" />
         </outputs>
         <functionlabels>
           <functionlabel num="0" lockable="true">
@@ -8856,7 +8871,7 @@
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
-        <model model="Hornby TTS Class 66" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
+        <model model="Hornby TTS Class 66" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
           <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />

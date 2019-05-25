@@ -96,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li><>/li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -157,6 +157,12 @@
         <h4>BNM Hobbies</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>CT Elektronik</h4>
+            <ul>
+                <li>Nigel Cliffe added a decoder definition for the 
+                    NGS custom CT decoder</li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -325,7 +331,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
         </ul>
 
     <h3>Logix</h3>
@@ -372,7 +378,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The table and manager containing the element are no longer listed as items using the element when deleting the
+                element in the delete confirmation dialog. The count of items using the element shown in the delete confirmation
+                dialog now match the number of items shown to be using the element.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -442,14 +450,14 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>JSON clients can now add, edit, or remove IdTags, Reporters, Operations Locations, Operations Cars, Operations
-                Engines, and Operations Tracks.</li>
+            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
+                Engines, Operations Tracks, and Reporters.</li>
             <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
                 to a message to the original message.</li>
             <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
                 changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
-                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version History</a>
-                for more details.</li>
+                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version
+                    History</a> for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -467,6 +475,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
+                <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
+            </li>
         </ul>
 

@@ -9,14 +9,14 @@ import org.jdom2.Element;
  * IdTag is a pre-parsed representation of an identification message from the
  * layout.  One use of an IdTag is a device that might be attached to any 
  * specific piece of rolling stock to uniquely identify it.
- * <P>
+ * <p>
  * Examples include
  * <ul>
  *   <li>RFID-tag.</li>
  *   <li>Digitrax Transponding Decoders</li>
  *   <li>RailCom tags</li>
  * </ul>
- * <P>
+ * <p>
  * Each IdTag contains the following information:
  * <ul>
  *   <li>A System Name</li>
@@ -33,15 +33,14 @@ import org.jdom2.Element;
  * updating the list.  This information may vary between implementations.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4

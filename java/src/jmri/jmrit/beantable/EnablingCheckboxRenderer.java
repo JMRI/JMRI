@@ -7,7 +7,7 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  * Handle painting checkbox classes in a JTable.
- * <P>
+ * <p>
  * Beyond the normal behavior of providing a checkbox to show the value, this
  * disables the JCheckBox if the cell is not editable. This makes the visual
  * behavior more in line with user expectations.

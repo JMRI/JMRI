@@ -22,7 +22,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
-     * <p>
+     *
      * @param s         Human-readable panel name for display by the action
      * @param wi        Window into which to install the new panel. If you want it to be put into a existing
      *                  one, provide a reference. To create a new window
@@ -40,7 +40,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
-     * <p>
+     *
      * @param s         Human-readable panel name for display by the action
      * @param i         Icon for display by the action
      * @param wi        Window into which to install the new panel. If you want it to be put into a existing

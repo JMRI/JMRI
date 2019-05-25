@@ -1,4 +1,4 @@
-#  Minimal test that AutoDispatcher2 can load OK
+#  Minimal test that RobotThrottle3 can load OK
 #
 # Author: Bob Jacobsen, copyright 2019
 # Part of the JMRI distribution

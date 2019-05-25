@@ -6,28 +6,28 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle planning information for AutoAllocate
- * <P>
+ * <p>
  * An Allocation Plan involves a planned meet of two ActiveTrains in a specified
  * area of the layout.
- * <P>
+ * <p>
  * AllocationPlan objects are transient (not saved between runs).
- * <P>
+ * <p>
  * AllocationPlan objects are created and disposed by AutoAllocate as needed.
  * AutoAllocate serves as the manager of AllocationPlan objects.
- * <P>
+ * <p>
  * An ActiveTrain may be in more than one AllocationPlan of the same type,
  * provided its target Section in all active AllocationPlans is the same.
- * <P>
+ * <p>
  * An AllocationPlan is "complete" when both Active Trains have been allocated
  * their target Sections.
  *
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.

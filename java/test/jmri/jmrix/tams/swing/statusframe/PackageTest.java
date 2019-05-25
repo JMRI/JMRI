@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    StatusPanelTest.class
+    StatusPanelTest.class,
+    BundleTest.class,
 })
 
 /**

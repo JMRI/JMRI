@@ -52,7 +52,7 @@ public class InterchangeTableModel extends TrackTableModel {
         });
     }
 
-    // this table listens for changes to a location and it's interchanges
+    // this table listens for changes to a location and its interchanges
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {

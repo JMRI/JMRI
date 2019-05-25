@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    SerialDriverAdapterTest.class,
-   jmri.jmrix.mrc.serialdriver.configurexml.PackageTest.class
+   jmri.jmrix.mrc.serialdriver.configurexml.PackageTest.class,
+        BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.mrc.serialdriver package.

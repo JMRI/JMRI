@@ -7,7 +7,7 @@ import org.jdom2.Element;
 
 /**
  * Common utility methods for working with JToolBars.
- * <P>
+ * <p>
  * Chief among these is the loadToolBar method, for creating a JToolBar from an
  * XML definition
  * <p>

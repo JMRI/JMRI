@@ -25,12 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
  * This class handles text attributes for Positionables. Font, size, style and
  * color. Margin size and color, Border size and color, Fixed sizes.
  * Justification.
- * </p>
- *
+ * <p>
  * moved from PositionableLabel
  *
  * @author Pete Cressman copyright (C) 2010

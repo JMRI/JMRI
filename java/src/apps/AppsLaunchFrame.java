@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base class for main frame (window) of traditional-style JMRI applications
- * <P>
+ * <p>
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
@@ -85,7 +85,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
     /**
      * Add menus to a menu bar.
-     * <P>
+     * <p>
      * This does not include the development menu.
      *
      * @param menuBar the existing menu bar

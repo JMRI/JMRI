@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
+ * An icon to display info from a Reporter, e.g. transponder or RFID reader.
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */

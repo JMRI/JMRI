@@ -9,15 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to allow use of CBUS concepts to access the underlying can message
- * <p> Methods that take a CanMessage or CanReply as argument </p>
- * <p> CanMessage - Can Frame being sent by JMRI </p>
- * <p> canReply - Can Frame being received by JMRI </p>
- * <p> https://github.com/MERG-DEV/CBUSlib </p>
+ * Class to allow use of CBUS concepts to access the underlying can message.
+ * <p>
+ * Methods that take a CanMessage or CanReply as argument:
+ * <ul>
+ * <li>CanMessage - Can Frame being sent by JMRI
+ * <li>CanReply - Can Frame being received by JMRI
+ * </ul>
+ * https://github.com/MERG-DEV/CBUSlib.
  * 
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young (C) 2018
- * 
  */
 public class CbusMessage {
 
