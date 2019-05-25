@@ -307,13 +307,15 @@ public class CbusMessageTest {
         try {
             CbusMessage.setPri(r,0xff);
             Assert.fail("Should have thrown an exception");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("invalid CBUS Pri value: 255", e.getMessage());
         }
         
         try {
             CbusMessage.setPri(m,0xff);
             Assert.fail("Should have thrown an exception");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Invalid CBUS Priority value: 255", e.getMessage());
         }
         
         CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
