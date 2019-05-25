@@ -44,9 +44,34 @@ public class WarrantTest {
     public void testCTor() {
         Assert.assertNotNull("exists",warrant);
     }
-    
+
     @Test
-    public void testWarrant() {
+    public void testSetAndGetTrainName(){
+        warrant.setTrainName("TestTrain");
+        Assert.assertEquals("Train Name","TestTrain",warrant.getTrainName());
+    }
+
+    @Test
+    public void testGetSpeedUtil(){
+        SpeedUtil su = warrant.getSpeedUtil();
+        Assert.assertNotNull("SpeedUtil null", su);
+    }
+
+    @Test
+    public void testAddPropertyChangeListener(){
+        PropertyChangeListener listener = new WarrantListener(warrant);
+        Assert.assertNotNull("PropertyChangeListener", listener);
+        warrant.addPropertyChangeListener(listener);
+    }
+
+    @Test
+    public void testAllocateAndDeallocateWarrant() {
+        try{
+            sWest.setState(Sensor.INACTIVE);
+            sEast.setState(Sensor.ACTIVE);
+            sNorth.setState(Sensor.INACTIVE);
+            sSouth.setState(Sensor.ACTIVE);            
+        } catch (JmriException je) { }
         bWest.allocate(warrant);
         bEast.allocate(warrant);
         Assert.assertEquals("Block Detection 3", OBlock.UNOCCUPIED | OBlock.ALLOCATED, bWest.getState());
@@ -60,7 +85,15 @@ public class WarrantTest {
         bEast.deAllocate(warrant);
         Assert.assertEquals("Block Detection 5", OBlock.UNOCCUPIED, bWest.getState());
         Assert.assertEquals("Block Detection 6", OBlock.UNOCCUPIED, bEast.getState());
+    }
 
+    @Test
+    public void testSetRouteUsingViaOrders(){
+        try{
+            sEast.setState(Sensor.INACTIVE);
+            sSouth.setState(Sensor.INACTIVE);            
+            sNorth.setState(Sensor.ACTIVE);     // start block of warrant
+        } catch (JmriException je) { }
         ArrayList <BlockOrder> orders = new ArrayList <>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
         BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
@@ -75,8 +108,38 @@ public class WarrantTest {
 
         String msg = warrant.allocateRoute(false, orders);
         Assert.assertNull("allocateRoute - "+msg, msg);
-        warrant.deAllocate();
+        msg =  warrant.checkStartBlock();
+        Assert.assertNull("checkStartBlock - "+msg, msg);
+        msg = warrant.checkRoute();
+        Assert.assertNull("checkRoute - "+msg, msg);
+    }
+
+    @Test
+    public void testSetRoute(){
+        try{
+            sEast.setState(Sensor.INACTIVE);
+            sSouth.setState(Sensor.INACTIVE);            
+            sNorth.setState(Sensor.ACTIVE);     // start block of warrant
+        } catch (JmriException je) { }
+        ArrayList <BlockOrder> orders = new ArrayList <>();
+        orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
+        BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
+        orders.add(viaOrder);
+        BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
+        orders.add(lastOrder);
         
+        String msg = warrant.allocateRoute(false, orders);
+        Assert.assertNull("allocateRoute - "+msg, msg);
+        msg =  warrant.checkStartBlock();
+        Assert.assertNull("checkStartBlock - "+msg, msg);
+        msg = warrant.checkRoute();
+        Assert.assertNull("checkRoute - "+msg, msg);
+
+        Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
+    }
+
+    @Test
+    public void setThrottleCommands(){
         warrant.setThrottleCommands(new ArrayList<ThrottleSetting>());
         warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
         warrant.addThrottleCommand(new ThrottleSetting(10, "Speed", "0.4", "North"));
@@ -87,23 +150,40 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
         List<ThrottleSetting> list = warrant.getThrottleCommands();
         Assert.assertEquals("ThrottleCommands", 7, list.size());
+    }
+
+    @Test
+    public void testWarrant() {
+        try{
+            sEast.setState(Sensor.INACTIVE);
+            sSouth.setState(Sensor.INACTIVE);            
+            sNorth.setState(Sensor.ACTIVE);     // start block of warrant
+        } catch (JmriException je) { }
+
+        ArrayList <BlockOrder> orders = new ArrayList <>();
+        orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
+        BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
+        orders.add(viaOrder);
+        BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
+        orders.add(lastOrder);
+
+        warrant.setThrottleCommands(new ArrayList<ThrottleSetting>());
+        warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
+        warrant.addThrottleCommand(new ThrottleSetting(10, "Speed", "0.4", "North"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "West"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.5", "West"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
+        List<ThrottleSetting> list = warrant.getThrottleCommands();
         
-//        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
-//        Assert.assertNotNull("dccAddress", dccAddress);
         warrant.getSpeedUtil().setDccAddress("999(L)");
-        msg = warrant.setRoute(false, orders);
-        Assert.assertNull("setRoute - "+msg, msg);
-        msg =  warrant.checkStartBlock();
-        Assert.assertNull("checkStartBlock - "+msg, msg);
-        msg = warrant.checkRoute();
-        Assert.assertNull("checkRoute - "+msg, msg);
+        String msg = warrant.allocateRoute(false, orders);
         SpeedUtil su = warrant.getSpeedUtil();
-        Assert.assertNotNull("SpeedUtil null", su);
         su.setOrders(orders);
         
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
-        Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
         
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
@@ -218,12 +298,10 @@ public class WarrantTest {
         path = new OPath("SouthToNorth", block, _portalMgr.getPortal("NorthWest"), _portalMgr.getPortal("SouthWest"), settings);
         _OBlockMgr.getOBlock("West").addPath(path);
         path.setLength(200);
-        Assert.assertEquals("Path Block", path, block.getPathByName("SouthToNorth"));
         settings = new ArrayList<>();
         block =  _OBlockMgr.getOBlock("East");
         path = new OPath("NorthToSouth", block, south.getPortalByName("SouthEast"), north.getPortalByName("NorthEast"), settings);
         _OBlockMgr.getOBlock("East").addPath(path);
-        Assert.assertEquals("Path Block", path, block.getPathByName("NorthToSouth"));
    
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         sWest = _sensorMgr.newSensor("IS1", "WestSensor");
@@ -234,16 +312,6 @@ public class WarrantTest {
         bEast.setSensor("IS2");
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
-        Assert.assertEquals("Sensor Block", sNorth, bNorth.getSensor());
-        Assert.assertEquals("Sensor Block", sSouth, bSouth.getSensor());
-        try{
-            sWest.setState(Sensor.INACTIVE);
-            sEast.setState(Sensor.ACTIVE);
-            sNorth.setState(Sensor.INACTIVE);
-            sSouth.setState(Sensor.ACTIVE);            
-        } catch (JmriException je) { }
-        Assert.assertEquals("Block Detection 1", OBlock.UNOCCUPIED, bWest.getState());
-        Assert.assertEquals("Block Detection 2", OBlock.OCCUPIED, bEast.getState());
         warrant = new Warrant("IW0", "AllTestWarrant");
     }
 
