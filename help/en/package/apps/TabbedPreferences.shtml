@@ -179,9 +179,10 @@
 
         <dt>Open file</dt>
 
-        <dd>Automatically load panel files when the program starts
-        up. You can load as many panel files as you'd like; each
-        will be completely loaded before the next is started.</dd>
+        <dd>Automatically load a Panel file or Configuration file
+        when the program starts up. You can load as many files
+        as you'd like; each will be completely loaded before
+        the next is started.</dd>
 
         <dt>Run script</dt>
 

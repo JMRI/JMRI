@@ -214,7 +214,7 @@
             <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback"
             >turnout feedback</a> set by this sensor.
             <br>
-            <a href="../../../apps/PanelPro/PanelPro.shtml">JMRI panel(s)</a> 
+            <a href="../../../apps/PanelPro/index.shtml">JMRI panel(s)</a>
             update to reflect the new point position.</li>
             <li><a href="../../../tools/signaling/SignalMastLogic.shtml"
             >JMRI Signalling Logic</a> recalculates, and on the JMRI panel, 

@@ -24,18 +24,13 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1>JMRI: Manifest Creator</h1>
-
-     Manifest Creator is an Excel-based
-     add-on to JMRI that can provide
-     train manifests and switch lists
-     in a number of formats.
+        <h1>JMRI: Manifest Creator</h1>
+        Manifest Creator is an Excel-based add-on to JMRI that can provide
+        train manifests and switch lists in a number of formats.
      
-     <p>
-     For more information, see the 
-     <a href="http://manifestcreator.weebly.com">Manifest Creator web site</a>.
-     
-     
+        <p>
+        For more information, see the
+        <a href="http://manifestcreator.weebly.com">Manifest Creator web site</a>.
      
       <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->

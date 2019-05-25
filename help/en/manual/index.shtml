@@ -56,7 +56,7 @@
             <td></td>
 
             <td style="font-weight: bold;"><a href=
-            "../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;
+            "../html/apps/PanelPro/index.shtml">PanelPro&trade;
             v4.x</a></td>
 
             <td></td>
@@ -168,9 +168,9 @@
 
         <li>Drawing computer based panels for depicting a model
         railroad layout (<a href=
-        "../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a>
+        "../html/apps/PanelPro/index.shtml">PanelPro&trade;</a>
         and <a href=
-        "../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout
+        "../html/apps/PanelPro/index.shtml#layouteditor">Layout
         Editor</a>)</li>
 
         <li>Controlling the layout (All modules)</li>

@@ -51,7 +51,7 @@
         <p>Therefore, JMRI lets you change a Sensor via the Sensor
         Table (see below), or by clicking on a sensor icon on a
         panel (See the <a href=
-        "../apps/PanelPro/PanelPro.shtml">PanelPro pages</a> for
+        "../apps/PanelPro/index.shtml">PanelPro pages</a> for
         more on Panels).</p>
 
         <p>The change takes effect immediately, unless a debounce

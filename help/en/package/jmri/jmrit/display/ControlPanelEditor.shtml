@@ -100,17 +100,18 @@
         <li><b>Select All</b> - Select all items.</li>
       </ul>
 
-      <h3>Options Menu</h3>The items in this menu are similar to
+      <h3>Options Menu</h3>
+      <p>The items in this menu are similar to
       the checkboxes in Panel Editor's edit window with a few
       additional items and features. As with PE, CPE can globally
       set repositioning and control attributes. However CPE
       preserves the individual repositioning and controlling
       attributes of items and will restore them when global
-      overriding is removed.
+      overriding is removed.</p>
 
       <ul>
         <li>The <b>Override individual Position &amp; Control
-        settings</b> item enables or disables, the next two menu
+        settings</b> item enables or disables the next two menu
         items</li>
 
         <li><b>All panel items can be repositioned</b> - globally
@@ -153,7 +154,7 @@
       the display to fit the new panel window dimensions.</p>
 
       <h3>Add Items Menu</h3>
-      The <b>Item Palette</b> menu item opens
+      <p>The <b>Item Palette</b> menu item opens
       a tabbed window which allows you to add item icons to the
       panel. Each item type has a tab in the window. Adding items
       is done by drag and drop. Iconic items may have multiple sets
@@ -164,7 +165,7 @@
       accelerator key, Control P. The icons are displayed on the
       background of the last editor to call the Item Palette.
       Once visible, use the bottom of the pane use the "Show on:"
-      combo box to slect a different background.
+      combo box to slect a different background.</p>
 
       <p>The Palette in Control Panel Editor does not support the
       <b>Slip/3-Way/Scissor</b> turnout icons that are available
@@ -182,12 +183,13 @@
       table list. The menu item can also be invoked with the
       accelerator key, Control T.</p>
 
-      <h3>Warrants</h3>The items under this menu are help files for
+      <h3>Warrants</h3>
+      <p>The items under this menu are help files for
       defining Occupancy Blocks and using them to define
       Warrants. When two or more Occupancy Blocks are defined,
       additional menu items for defining and using Warrants will appear.
       These menu items are described in <a href=
-      "../logix/Warrant.shtml">Warrants</a>.
+                                                   "../logix/Warrant.shtml">Warrants</a>.</p>
 
       <h3>Circuit Builder</h3>
       <p>This menu appears when two or more Occupancy Blocks are
@@ -296,8 +298,7 @@
       <p>A background icon (i.e. an icon at level 1) can be moved
       by dragging it with the control key held down.</p>
 
-      <h2>Duplicating Selections in Control Panel
-      Editor</h2>
+      <h2>Duplicating Selections in Control Panel Editor</h2>
       Copying an item or selection group is done by
       bringing up the popup for one of the selected items. When the
       <b>Duplicate</b> popup menu item is clicked, a Copy of the
