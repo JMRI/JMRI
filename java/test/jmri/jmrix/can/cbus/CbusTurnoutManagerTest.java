@@ -153,16 +153,15 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         try {
             l.provideTurnout(";+N15E62");
             Assert.fail("; Should have thrown an exception");
-            
-        } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+        } catch (Exception ex) {
+            Assert.assertEquals("Invalid system name for Turnout: name \"MT;+N15E62\" has incorrect format", ex.getMessage());
         }
 
         try {
             l.provideTurnout("T+N156E77;+N123E456");
             Assert.fail("Missing M Should have thrown an exception");
-        } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+        } catch (Exception ex) {
+            Assert.assertEquals("Invalid system name for Turnout: name \"MTT+N156E77;+N123E456\" has incorrect format", ex.getMessage());
         }
     }
     
@@ -171,8 +170,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         try {
             l.provideTurnout("M+N156E77;+N15E60");
             Assert.fail("M Should have thrown an exception");
-        } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+        } catch (Exception ex) {
+            Assert.assertEquals("Invalid system name for Turnout: name \"MTM+N156E77;+N15E60\" has incorrect format", ex.getMessage());
         }
     }
 
