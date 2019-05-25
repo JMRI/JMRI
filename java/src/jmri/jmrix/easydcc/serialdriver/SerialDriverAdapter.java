@@ -158,14 +158,6 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     private boolean opened = false;
     InputStream serialStream = null;
 
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }
