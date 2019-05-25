@@ -198,21 +198,21 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight(";+N15E6");
             Assert.fail("; Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            Assert.assertEquals("Invalid system name for Light: name \"ML;+N15E6\" has incorrect format", e.getMessage());
         }
 
         try {
             l.provideLight("S+N156E77;+N15E6");
             Assert.fail("S Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            Assert.assertEquals("Invalid system name for Light: name \"MLS+N156E77;+N15E6\" has incorrect format", e.getMessage());
         }
         
         try {
             l.provideLight("M+N156E77;+N15E6");
             Assert.fail("M Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            Assert.assertEquals("Invalid system name for Light: name \"MLM+N156E77;+N15E6\" has incorrect format", e.getMessage());
         }
 
         try {
