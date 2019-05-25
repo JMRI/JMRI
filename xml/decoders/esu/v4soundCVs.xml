@@ -92,7 +92,7 @@
     <variable CV="114" mask="XVVVVVVV" default="6" item="Heavy Load">
         <decVal max="127"/>
         <label>Sound acceleration amount</label>
-        <label xml:lang="de">Acceleration-Wert erhöhen</label>
+        <label xml:lang="de">Beschleunigungs-Wert erhöhen</label>
         <label xml:lang="ca">Quantitat so acceleració</label>
     </variable>
     <variable CV="115" mask="VXXXXXXX" default="0" item="Coast Mode Option 1">
@@ -104,7 +104,7 @@
     <variable CV="115" mask="XVVVVVVV" default="6" item="Coast Mode">
         <decVal max="127"/>
         <label>Sound deceleration amount</label>
-        <label xml:lang="de">Acceleration-Wert verringern</label>
+        <label xml:lang="de">Beschleunigungs-Wert verringern</label>
         <label xml:lang="ca">Quantitat de so en desacceleració</label>
     </variable>
     <variable CV="124" mask="XXXXXVXX" default="1" item="ESU V4 Starting Delay">
