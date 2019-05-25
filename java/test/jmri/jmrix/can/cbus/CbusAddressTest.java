@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusAddress class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusAddressTest {
 
@@ -324,13 +324,17 @@ public class CbusAddressTest {
     @Test
     public void testvalidateSysName() {
         try {
-            Assert.assertEquals("+0",null,CbusAddress.validateSysName("+0"));
-        } catch (Exception e) {
-        }        
+            CbusAddress.validateSysName("+0");
+            Assert.fail("Expected exception not thrown");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("Event cannot be 0 in address: +0", ex.getMessage());
+        }
 
         try {
             Assert.assertEquals("-0",null,CbusAddress.validateSysName("-0"));
-        } catch (Exception e) {
+            Assert.fail("Expected exception not thrown");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("Event cannot be 0 in address: -0", ex.getMessage());
         }   
 
     }
