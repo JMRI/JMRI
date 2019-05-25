@@ -78,7 +78,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     protected void sendIdleReply() {
-        Assert.assertTrue(false);
+        Assert.fail("Should not have been called");
     }
     
     @Test

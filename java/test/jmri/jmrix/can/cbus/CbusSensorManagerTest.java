@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.Manager.NameValidity;
+import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -354,104 +355,70 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
     
     @Test
-    public void testgetNextValidAddress() {
+    public void testgetNextValidAddress() throws JmriException {
         
+        Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
+        Sensor t =  l.provideSensor("MS+17");
+        Assert.assertNotNull("exists",t);
+        Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
+    
+        Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
+        Sensor ta =  l.provideSensor("MS+N45E22");
+        Assert.assertNotNull("exists",ta);
+        Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
+    
         try {
-            Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
-            Sensor t =  l.provideSensor("MS+17");
-            Assert.assertNotNull("exists",t);
-            Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
-        
-            Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
-            Sensor ta =  l.provideSensor("MS+N45E22");
-            Assert.assertNotNull("exists",ta);
-            Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-        
-        try {
-            Assert.assertEquals("null",null,l.getNextValidAddress(null,"M"));
-        } catch (Exception e) {
-            //JUnitAppender.assertErrorMessageStartsWith("jmri.JmriException: ");
-            //Assert.assertTrue(true);
+            l.getNextValidAddress(null,"M");
+        } catch (JmriException ex) {
+            Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
         }
     }
 
     @Test
-    public void testgetNextValidAddressPt2() {
+    public void testgetNextValidAddressPt2() throws JmriException {
         Sensor t =  l.provideSensor("MS+65535");
         Assert.assertNotNull("exists",t);
             
-        try {
-            Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
+        JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
     }
     
     @Test
-    public void testgetNextValidAddressPt3() {
+    public void testgetNextValidAddressPt3() throws JmriException {
         
         Sensor t =  l.provideSensor("MS+10");
         Assert.assertNotNull("exists",t);
             
-        try {
-            Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
     }
     
     @Test
-    public void testgetNextValidAddressPt4() {
+    public void testgetNextValidAddressPt4() throws JmriException {
 
         Sensor t = l.provideSensor("MS+9");
         Sensor ta = l.provideSensor("MS+10");
         Assert.assertNotNull("exists",t);
         Assert.assertNotNull("exists",ta);
 
-        try {
-            Assert.assertEquals(" null +9 +10","+11",l.getNextValidAddress("+9","M"));
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals(" null +9 +10","+11",l.getNextValidAddress("+9","M"));
     }    
 
     @Test
-    public void testcreateSystemName() {
+    public void testcreateSystemName() throws JmriException {
         
-        try {
-            Assert.assertEquals("MS+10","MS+10",l.createSystemName("+10","M"));
-            Assert.assertEquals("MS+N34E610","MS+N34E610",l.createSystemName("+N34E610","M"));
-            Assert.assertEquals("MS-N34E610","MS-N34E610",l.createSystemName("-N34E610","M"));
-            Assert.assertEquals("MS+N34E610;-N987E654","MS+N34E610;-N987E654",l.createSystemName("+N34E610;-N987E654","M"));
-            
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-        
-        try {
-            Assert.assertEquals("M2S+10","M2S+10",l.createSystemName("+10","M2"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals("MS+10","MS+10",l.createSystemName("+10","M"));
+        Assert.assertEquals("MS+N34E610","MS+N34E610",l.createSystemName("+N34E610","M"));
+        Assert.assertEquals("MS-N34E610","MS-N34E610",l.createSystemName("-N34E610","M"));
+        Assert.assertEquals("MS+N34E610;-N987E654","MS+N34E610;-N987E654",l.createSystemName("+N34E610;-N987E654","M"));
+    
+        Assert.assertEquals("M2S+10","M2S+10",l.createSystemName("+10","M2"));
+
+        Assert.assertEquals("ZZZZZZZZZS+10","ZZZZZZZZZS+10",l.createSystemName("+10","ZZZZZZZZZ"));
 
         try {
-            Assert.assertEquals("ZZZZZZZZZS+10","ZZZZZZZZZS+10",l.createSystemName("+10","ZZZZZZZZZ"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-        
-        try {
-            Assert.assertEquals("MSS",null,l.createSystemName("S","M"));
-            Assert.assertTrue(false);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            l.createSystemName("S","M");
+        } catch (JmriException ex) {
+            Assert.assertEquals("java.lang.IllegalArgumentException: Wrong number of events in address: S", ex.getMessage());
         }
     }
     

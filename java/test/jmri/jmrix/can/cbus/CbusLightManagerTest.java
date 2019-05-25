@@ -344,28 +344,19 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Test
     public void testcreateNewLightException(){
         CbusLightManager l = new CbusLightManager(memo);
-        try {
-            Light t = l.createNewLight("", null);
-            Assert.assertNull("not exists", t);
-            Assert.assertTrue(false);
-        } catch (Exception e) {
-        }
+        Light t = l.createNewLight("", null);
+        Assert.assertNull("not exists", t);
     }
     
     @Test
     public void testvalidSystemNameConfig(){
         CbusLightManager l = new CbusLightManager(memo);
+        Assert.assertTrue(l.validSystemNameConfig("ML+123") );
         try {
-            Assert.assertTrue(l.validSystemNameConfig("ML+123") );
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-
-        try {
-            Boolean testbool = l.validSystemNameConfig("");
-            Assert.assertNull("exists", testbool);
-            Assert.assertTrue(false);
-        } catch (Exception e) {
+            l.validSystemNameConfig("");
+            Assert.fail("Expected exception not thrown");
+        } catch (StringIndexOutOfBoundsException ex) {
+            Assert.assertEquals("String index out of range: -2", ex.getMessage());
         }
     }
 
