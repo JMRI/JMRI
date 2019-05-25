@@ -170,14 +170,14 @@
         railroad layout (<a href=
         "../html/apps/PanelPro/index.shtml">PanelPro&trade;</a>
         and <a href=
-        "../html/apps/PanelPro/index.shtml#layouteditor">Layout
+        "../html/apps/PanelPro/index.shtml#le">Layout
         Editor</a>)</li>
 
         <li>Controlling the layout (All modules)</li>
 
         <li>Creating train manifests for duplicating railroad
         operations (<a href=
-        "../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
+        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
 
         <li>Controlling the signals on the layout (All
         modules)</li>
@@ -202,7 +202,7 @@
       connected to your Command Station first.<br>
       When train(s) run and a turnout responds to your
       hand held throttle, it's time to open the <a href=
-      "../en/html/hardware/">Hardware Help</a>
+      "../html/hardware/index.shtml">Hardware Help</a>
       (use the Hardware tab at the top of the page).<br>
       Next is trying to do basic things with PanelPro,
       for example using a JMRI Throttle to run a loco.<br>
@@ -248,7 +248,7 @@
       "https://www.java.com/en/download/help/sysreq.xml">Java
       versions and hardware requirements</a>.<br>
       Get the latest Java as a free download at: <a href=
-      "http://java.com/download/" target=
+      "https://www.java.com/download/" target=
       "_blank">java.com/download</a>.</p>
 
       <!--#include virtual="/Footer" -->

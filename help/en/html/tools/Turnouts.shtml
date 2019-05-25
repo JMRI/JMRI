@@ -135,7 +135,7 @@
           <li>
             <p>Back in the main Turnout Table, you can now set
             <a href=
-            "../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout%20Feedback">
+            "../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">
             options</a> for the Turnout by clicking its
             <strong>Edit</strong> button, and control it by
             clicking its <b>Cmd</b> button.</p>

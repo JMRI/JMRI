@@ -43,7 +43,7 @@
         </ul>
 		</dd>
 
-		<dt><h3 style="padding-left: 1em;"><a href="../tools/automation/">Layout Automation</a></h3></dt>
+		<dt><h3 style="padding-left: 1em;"><a href="../tools/automation/index.shtml">Layout Automation</a></h3></dt>
 		<dd>
 		JMRI can be used to automate parts 
 		of your layout, from simply controlling a crossing gate
@@ -55,6 +55,7 @@
 		    <li><dfn><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="../tools/uss/index.shtml">US CTC</a></dfn>
 		    <li><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
 		  </ul>
 		</dd>

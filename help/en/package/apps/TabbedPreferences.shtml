@@ -206,9 +206,9 @@
       <a href="images/PrefsGui4_15.png"><img src=
       "images/PrefsGui4_15.png" height="194" width="478" align=
       "right" alt="JMRI v4.15 GUI Prefs tab"></a>
-      <a name="Gui" id="Gui"></a>
+
       <dl>
-        <dt>GUI</dt>
+        <dt>GUI<a name="Gui" id="Gui"></a></dt>
 
         <dd>
           A row of radio boxes allow you to select how the program
@@ -247,7 +247,7 @@
           </ul>
         </dd>
 
-        <dt>Locale</dt>
+        <dt>Locale<a name="locale" id="locale"></a></dt>
 
         <dd><a href="../../Acknowledgements.shtml">Many people</a>
         have contributed "internationalizations" of JMRI. This
