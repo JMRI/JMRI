@@ -458,8 +458,8 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
-                Engines, Operations Tracks, and Reporters.</li>
+            <li>JSON clients can now add, edit, or remove Blocks, IdTags, LayoutBlocks, Operations Locations, Operations Cars,
+                Operations Engines, Operations Tracks, Reporters, and Sensors.</li>
             <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
                 to a message to the original message.</li>
             <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible

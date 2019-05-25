@@ -2,6 +2,7 @@ package jmri.server.json.sensor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,6 +10,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -139,6 +144,58 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
         service.doPut(JsonSensor.SENSOR, "IS1", message, locale, 42);
         assertNotNull(manager.getSensor("IS1"));
+    }
+
+    @Test
+    @Override
+    public void testDoDelete() throws JsonException {
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        ObjectNode message = mapper.createObjectNode();
+        // delete non-existant bean
+        try {
+            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
+            service.doDelete(service.getType(), "non-existant", message, locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
+            assertEquals("Message", "Object type sensor named \"non-existant\" not found.", ex.getMessage());
+            assertEquals("ID is 42", 42, ex.getId());
+        }
+        manager.newSensor("IS1", null);
+        // delete existing bean (no named listener)
+        assertNotNull(manager.getBeanBySystemName("IS1"));
+        service.doDelete(service.getType(), "IS1", message, locale, 42);
+        assertNull(manager.getBeanBySystemName("IS1"));
+        Sensor sensor = manager.newSensor("IS1", null);
+        assertNotNull(sensor);
+        sensor.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing
+            }
+        }, "IS1", "Test Listener");
+        // delete existing bean (with named listener)
+        try {
+            service.doDelete(service.getType(), "IS1", message, locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+        }
+        assertNotNull(manager.getBeanBySystemName("IS1"));
+        // will throw if prior catch failed
+        service.doDelete(service.getType(), "IS1", message, locale, 0);
+        assertNull(manager.getBeanBySystemName("IS1"));
+        try {
+            // deleting again should throw an exception
+            service.doDelete(service.getType(), "IS1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+        }
     }
 
     @Test
