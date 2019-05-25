@@ -1586,9 +1586,11 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.removeTrackSegment(TrackSegment.this);
-                remove();
-                dispose();
+                if (canRemove()) {
+                    layoutEditor.removeTrackSegment(TrackSegment.this);
+                    remove();
+                    dispose();
+                }
             }
         });
         popupMenu.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
@@ -1662,6 +1664,71 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popupMenu;
     }   // showPopup
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        List<String> itemList = new ArrayList<>();
+
+        int type1 = getType1();
+        LayoutTrack conn1 = getConnect1();
+        itemList.addAll(getPointReferences(type1, conn1));
+
+        int type2 = getType2();
+        LayoutTrack conn2 = getConnect2();
+        itemList.addAll(getPointReferences(type2, conn2));
+
+        if (!itemList.isEmpty()) {
+            displayRemoveWarningDialog(itemList, "TrackSegment");  // NOI18N
+        }
+        return itemList.isEmpty();
+    }
+
+    public ArrayList<String> getPointReferences(int type, LayoutTrack conn) {
+        ArrayList<String> items = new ArrayList<>();
+
+        if (type == POS_POINT && conn instanceof PositionablePoint) {
+            PositionablePoint pt = (PositionablePoint) conn;
+            if (!pt.getEastBoundSignal().isEmpty()) items.add(pt.getEastBoundSignal());
+            if (!pt.getWestBoundSignal().isEmpty()) items.add(pt.getWestBoundSignal());
+            if (!pt.getEastBoundSignalMastName().isEmpty()) items.add(pt.getEastBoundSignalMastName());
+            if (!pt.getWestBoundSignalMastName().isEmpty()) items.add(pt.getWestBoundSignalMastName());
+            if (!pt.getEastBoundSensorName().isEmpty()) items.add(pt.getEastBoundSensorName());
+            if (!pt.getWestBoundSensorName().isEmpty()) items.add(pt.getWestBoundSensorName());
+            if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
+                items.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
+            }
+            return items;
+        }
+
+        if ((type == TURNOUT_A || type == TURNOUT_B || type == TURNOUT_C || type == TURNOUT_D) && conn instanceof LayoutTurnout) {
+            LayoutTurnout lt = (LayoutTurnout) conn;
+            if (type == TURNOUT_A) return lt.getBeanReferences("A");  // NOI18N
+            if (type == TURNOUT_B) return lt.getBeanReferences("B");  // NOI18N
+            if (type == TURNOUT_C) return lt.getBeanReferences("C");  // NOI18N
+            return lt.getBeanReferences("D");  // NOI18N
+        }
+
+        if ((type == LEVEL_XING_A || type == LEVEL_XING_B || type == LEVEL_XING_C || type == LEVEL_XING_D) && conn instanceof LevelXing) {
+            LevelXing lx = (LevelXing) conn;
+            if (type == LEVEL_XING_A) return lx.getBeanReferences("A");  // NOI18N
+            if (type == LEVEL_XING_B) return lx.getBeanReferences("B");  // NOI18N
+            if (type == LEVEL_XING_C) return lx.getBeanReferences("C");  // NOI18N
+            return lx.getBeanReferences("D");  // NOI18N
+        }
+
+        if ((type == SLIP_A || type == SLIP_B || type == SLIP_C || type == SLIP_D) && conn instanceof LayoutSlip) {
+            LayoutSlip ls = (LayoutSlip) conn;
+            if (type == SLIP_A) return ls.getBeanReferences("A");  // NOI18N
+            if (type == SLIP_B) return ls.getBeanReferences("B");  // NOI18N
+            if (type == SLIP_C) return ls.getBeanReferences("C");  // NOI18N
+            return ls.getBeanReferences("D");  // NOI18N
+        }
+
+        return items;
+    }
 
     /**
      * split track segment into two track segments with an anchor between
