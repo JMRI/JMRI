@@ -99,18 +99,15 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         l.register(e1);
 
         String expectedMessage = "systemName is already registered: " + e1.getSystemName();
-        boolean hasException = false;
         try {
             // Register different bean with existing systemName.
             // This should fail with an IllegalArgumentException.
             l.register(e2);
+            Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            hasException = true;
-            Assert.assertTrue("exception message is correct",
-                    expectedMessage.equals(ex.getMessage()));
+            Assert.assertEquals("exception message is correct", expectedMessage, ex.getMessage());
             JUnitAppender.assertErrorMessage(expectedMessage);
         }
-        Assert.assertTrue("exception is thrown", hasException);
 
         l.deregister(e1);
     }
