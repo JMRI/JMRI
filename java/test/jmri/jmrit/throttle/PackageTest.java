@@ -36,6 +36,8 @@ import org.junit.runners.Suite;
         WindowPreferencesTest.class,
         SpeedPanelTest.class,
         StealingThrottleTest.class,
+        SharingThrottleTest.class,
+        StealingOrSharingThrottleTest.class
 })
 
 /**

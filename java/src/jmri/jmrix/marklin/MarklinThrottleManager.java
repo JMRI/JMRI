@@ -87,6 +87,11 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         return false;
     }
 
+    /**
+     * Returns false
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean singleUse() {
         return false;
