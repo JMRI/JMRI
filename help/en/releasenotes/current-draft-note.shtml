@@ -61,7 +61,8 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Increased support for stealing / sharing command station sessions, see 
+                    <a href="http://jmri.org/help/en/html/hardware/can/cbus/index.shtml#dcc">CBUS Hardware Support</a></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -386,7 +387,14 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li><strong>2 lines in scripts that use the 
+            <a href="https://github.com/JMRI/JMRI/blob/master/jython/Jynstruments/ThrottleWindowToolBar/DCCThrottle.jyn/DCCThrottle.py"
+            >DCCThrottle.py</a> Jynstrument may need to be added,</strong><br>
+            Insert after line 141<br>
+            New line 142 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
+            New line 143 : <code>pass #</code><br>
+            These changes were made to enhance the JMRI Steal / Share mechanism for hardware types that support this.<br>
+            </li>
         </ul>
 
     <h3>Signals</h3>

@@ -22,6 +22,7 @@
         <label xml:lang="it">Velocità distanza Chuff step 1</label>
         <label xml:lang="de">Dampfstöße bei FS=1</label>
         <label xml:lang="ca">Espaiat entre xufs pas 1</label>
+        <tooltip xml:lang="de">Setzen Sie den Wert auf 0 wenn ein externer Radsensor verwendet wird.</tooltip>
     </variable>
     <variable CV="58" default="43" item="Sound Steam Chuffs Decrease Rate">
         <decVal/>
@@ -49,9 +50,9 @@
     </variable>
     <variable CV="65" default="25" item="Sound Brake Off">
         <decVal/>
-        <!--label>Brake Off Threshold</label>
+        <label>Brake Off Threshold</label>
         <label xml:lang="it">Soglia Fine intervento Freno</label>
-        <label xml:lang="de">Bremsgeräusch - Abschaltschwelle</label-->
+        <label xml:lang="de">Bremsgeräusch - Abschaltschwelle</label>
     </variable>
     <variable CV="124" mask="XXXXXVXX" default="1" item="ESU V4 Starting Delay">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -68,9 +69,12 @@
             <label xml:lang="de">Reduzierte Lautstärke</label>
             <label xml:lang="ca">Volum de so quan es fa FADE</label>
         </variable>
-        <variable CV="135" default="2" tooltip="Unit is .0041 seconds" item="Sound Fade Time">
+        <variable CV="135" default="2" item="Sound Fade Time">
             <decVal max="64"/>
             <label>Sound Fade Time</label>
+            <label xml:lang="de">Sound Fader Aus- und Einblendzeit</label>
+            <tooltip>Unit is .0041 seconds</tooltip>
+            <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
         </variable>
     </variables>
     <variable CV="141" default="20" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 2">
@@ -78,16 +82,16 @@
         <label>Smoke Unit Minimum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Min.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Minimale Dauer</label>
-        <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
         <label xml:lang="ca">Unitat mínima de duració de xuf</label>
+        <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
     </variable>
     <variable CV="142" default="122" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 3">
         <decVal/>
         <label>Smoke Unit Maximum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Max.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Maximale Dauer</label>
-        <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
         <label xml:lang="ca">Unitat màxima de duració de xuf</label>
+        <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
     </variable>
     <variable CV="143" default="102" item="ESU V4 Function Settings Smoke Chuffs Slider 1">
         <decVal/>
