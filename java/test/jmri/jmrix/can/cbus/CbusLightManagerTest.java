@@ -344,8 +344,12 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Test
     public void testcreateNewLightException(){
         CbusLightManager l = new CbusLightManager(memo);
-        Light t = l.createNewLight("", null);
-        Assert.assertNull("not exists", t);
+        try {
+            l.createNewLight("", null);
+            Assert.fail("Expected exception not thrown");
+        } catch (StringIndexOutOfBoundsException ex) {
+            Assert.assertEquals("String index out of range: -2", ex.getMessage());
+        }
     }
     
     @Test
