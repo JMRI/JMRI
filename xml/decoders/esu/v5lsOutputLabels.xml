@@ -131,5 +131,7 @@
         <label xml:lang="da">Shift Mode 6</label>
         <label xml:lang="nl">Shift Mode 6</label>
     </output>
+    <output name="3,23" label="|" />
+    <output name="3,24" label="|" />
 
 </outputs>
