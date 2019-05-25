@@ -26,7 +26,6 @@ public class PortalManagerTest {
         // are testing anything in the warrant.
         OBlockManager _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
-        OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
         OBlock bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
         OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
         

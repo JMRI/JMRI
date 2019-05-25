@@ -62,8 +62,10 @@ public class OBlockManagerTest {
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
         OBlock bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
         OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
-        Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
+        Assert.assertEquals("OBlock", bWest, _OBlockMgr.getOBlock("West"));
         Assert.assertEquals("OBlock", bEast, _OBlockMgr.getOBlock("OB2"));
+        Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
+        Assert.assertEquals("OBlock", bSouth, _OBlockMgr.getOBlock("OB4"));
     }
 
     // The minimal setup for log4J

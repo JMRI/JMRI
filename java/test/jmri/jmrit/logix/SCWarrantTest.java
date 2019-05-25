@@ -46,7 +46,6 @@ public class SCWarrantTest extends WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
-        List<ThrottleSetting> list = warrant.getThrottleCommands();
         
         warrant.getSpeedUtil().setDccAddress("999(L)");
         warrant.setBlockOrders(orders);
@@ -65,7 +64,6 @@ public class SCWarrantTest extends WarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            System.out.println(m);
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?

@@ -175,8 +175,7 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
-        List<ThrottleSetting> list = warrant.getThrottleCommands();
-        
+
         warrant.getSpeedUtil().setDccAddress("999(L)");
         String msg = warrant.allocateRoute(false, orders);
         SpeedUtil su = warrant.getSpeedUtil();
@@ -321,7 +320,7 @@ public class WarrantTest {
         _portalMgr=null;
         _sensorMgr=null;
         _turnoutMgr=null;
-        bWest=null;;
+        bWest=null;
         bEast=null;
         bNorth=null;
         bSouth=null;
