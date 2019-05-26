@@ -444,7 +444,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
 
         re = reBox.getSelectedRosterEntries()[0];
-        boolean ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this);
+        boolean ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this, true); // we have a mechanism for steal / share
         if (!ok) {
             log.warn("Throttle for locomotive {} could not be set up.", re.getId());
             setButtonStates(true);
@@ -642,12 +642,31 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         setButtonStates(true);
         throttleState = -1;
     }
-
+    
+    /**
+     * Profiling on a stolen or shared throttle is invalid
+     * <p>
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(jmri.LocoAddress address){
-        // profiling on stolen throttle is invalid.
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoStealing"));
-        InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), this);
+        InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+        setButtonStates(true);
+        throttleState = -1;
+    }
+    
+    /**
+    * Profiling on a stolen or shared throttle is invalid
+    * <p>
+    * {@inheritDoc}
+    */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoStealing"));
+        InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
         setButtonStates(true);
         throttleState = -1;
     }

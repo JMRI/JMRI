@@ -7,6 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: DecoderPro Frequently Asked Questions</title>
+
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -16,6 +17,13 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
+    <!-- FAQ-Head -->
+    <script type="text/javascript">
+    /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
+  </script>
+    <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
+          media="screen">
+    <!-- /FAQ-Head -->
 </head>
 
 <body>
@@ -129,5 +137,8 @@
       </dl><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <!-- FAQ-Tail -->
+  <script type="text/javascript" src="/web/js/faq.js">
+  </script><!-- /FAQ-Tail -->
 </body>
 </html>

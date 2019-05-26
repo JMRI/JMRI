@@ -140,7 +140,6 @@ public class JsonLayoutBlockSocketServiceTest {
             instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, JSON.DELETE, locale, 42);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
-            System.out.println(ex.getJsonMessage());
             assertEquals(409, ex.getCode());
             assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());

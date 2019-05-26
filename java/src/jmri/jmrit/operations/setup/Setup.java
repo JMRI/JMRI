@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -16,9 +22,6 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.web.server.WebServerPreferences;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Operations settings.
@@ -324,6 +327,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
     public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
     public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
+    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -522,7 +526,8 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     /**
-     * allow cars to return to the same staging location if no other options (tracks) are available
+     * allow cars to return to the same staging location if no other options (tracks) are available.
+     * Also available on a per train basis.
      * @return true if cars are allowed to depart and return to same staging location
      */
     public static boolean isAllowReturnToStagingEnabled() {
@@ -530,7 +535,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setAllowReturnToStagingEnabled(boolean enabled) {
+        boolean old = getDefault().allowCarsReturnStaging;
         getDefault().allowCarsReturnStaging = enabled;
+        setDirtyAndFirePropertyChange(ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE, old, enabled);
     }
 
     public static boolean isPromptFromStagingEnabled() {
@@ -2631,7 +2638,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_RETURN_STAGING)) != null) {
                 String enable = a.getValue();
                 log.debug("allowReturnStaging: {}", enable);
-                setAllowReturnToStagingEnabled(enable.equals(Xml.TRUE));
+                getDefault().allowCarsReturnStaging = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.PROMPT_STAGING_ENABLED)) != null) {
                 String enable = a.getValue();
