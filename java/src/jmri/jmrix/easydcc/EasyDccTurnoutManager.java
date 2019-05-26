@@ -117,21 +117,6 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return entryToolTip;
     }
 
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EasyDccTurnoutManager instance() {
-        log.warn("deprecated instance() call for EasyDccTurnoutManager");
-        return null;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static EasyDccTurnoutManager _instance = null;
-
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManager.class);
 
 }

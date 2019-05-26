@@ -10,6 +10,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -48,15 +50,18 @@ public class JsonLayoutBlockSocketServiceTest {
     /**
      * Test property change listener on LayoutBlocks.
      *
-     * @throws java.io.IOException if unexpectedly unable to write to connection
-     * @throws jmri.JmriException on unexpected error handling LayoutBlock
+     * @throws java.io.IOException            if unexpectedly unable to write to
+     *                                            connection
+     * @throws jmri.JmriException             on unexpected error handling
+     *                                            LayoutBlock
      * @throws jmri.server.json.JsonException on unexpected error handling JSON
      */
     @Test
     public void testBlockChange() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
-        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, "LayoutBlock1");
+        LayoutBlock lb =
+                InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, "LayoutBlock1");
         assertNotNull("Required LayoutBlock not created", lb);
         JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, lb.getSystemName());
         assertEquals("Block has only one listener", 1, lb.getNumPropertyChangeListeners());
@@ -99,17 +104,20 @@ public class JsonLayoutBlockSocketServiceTest {
         assertEquals("LayoutBlock has 2 listeners", 2, lb.getPropertyChangeListeners().length);
         // test POSTs
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
-                instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"userName\":\"LayoutBlock2\"}"),
+                instance.getConnection().getObjectMapper()
+                        .readTree("{\"name\":\"" + lb.getSystemName() + "\", \"userName\":\"LayoutBlock2\"}"),
                 JSON.POST, locale, 42);
         // onMessage causes a listener to be added to requested LayoutBlocks if not already listening
         assertEquals("LayoutBlock has 2 listeners", 2, lb.getPropertyChangeListeners().length);
         assertEquals("LayoutBlock user name is changed", "LayoutBlock2", lb.getUserName());
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
-                instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":\"this is a comment\"}"),
+                instance.getConnection().getObjectMapper()
+                        .readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":\"this is a comment\"}"),
                 JSON.POST, locale, 42);
         assertEquals("LayoutBlock has comment", "this is a comment", lb.getComment());
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
-                instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":null}"),
+                instance.getConnection().getObjectMapper()
+                        .readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":null}"),
                 JSON.POST, locale, 42);
         assertNull("LayoutBlock has no comment", lb.getComment());
         // test PUTs
@@ -119,15 +127,22 @@ public class JsonLayoutBlockSocketServiceTest {
                 locale, 42);
         assertNotNull("New LayoutBlock created", manager.getLayoutBlock("LayoutBlock3"));
         // test DELETEs
+        // first add a named reference listener to trigger a deletion conflict
+        lb.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing
+            }
+        }, lb.getUserName(), "Test Listener");
         ObjectNode message = instance.getConnection().getObjectMapper().createObjectNode().put(JSON.NAME, lb.getSystemName());
         try {
             instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, JSON.DELETE, locale, 42);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
-            System.out.println(ex.getJsonMessage());
             assertEquals(409, ex.getCode());
             assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Manager", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
         assertNotNull("LayoutBlock not deleted", manager.getBeanBySystemName(lb.getSystemName()));
