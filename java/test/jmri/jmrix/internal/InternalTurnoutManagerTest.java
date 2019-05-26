@@ -84,8 +84,6 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         list.add(tSpaceLLEE);
     }
 
-    }
-
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Override

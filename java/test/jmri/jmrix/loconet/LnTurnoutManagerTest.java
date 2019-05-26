@@ -119,8 +119,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertTrue(null != l.getByUserName("my name"));
     }
 
-    }
-
     private LocoNetInterfaceScaffold lnis;
     private LocoNetSystemConnectionMemo memo;
 

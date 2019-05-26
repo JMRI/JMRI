@@ -39,10 +39,11 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
         Assert.assertTrue(null != l.getBySystemName("BT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
+    }
 
     @Override
     @Before
-    public void setUp(){
+    public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
         l = new DccTurnoutManager();
