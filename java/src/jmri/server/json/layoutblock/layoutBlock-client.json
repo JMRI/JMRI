@@ -2,15 +2,18 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "jmri-json-layoutBlock-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"layoutBlock\"",
+    "description": "Schema data object in message from client to JMRI for type \"layoutBlock\". With the excpetion of name, all properties are optional, and if specified in a post or put message, will update the layoutBlock in the server.",
     "properties": {
         "name": {
-            "type": "string",
-            "description": "System name of the layoutBlock"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "System name of the layoutBlock; may be empty or null when putting a new layoutBlock"
         },
         "userName": {
             "type": "string",
-            "description": "If present, set the user name of the layoutBlock"
+            "description": "If present, set the user name of the layoutBlock; if not present when putting a new layoutBlock, name must be empty or null to generate an automatically named layoutBlock"
         },
         "comment": {
             "type": "string",
@@ -19,8 +22,55 @@
         "value": {
             "type": "string",
             "description": "If present, sets the value of the layoutBlock"
+        },
+        "block": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Name of underlying block"
+        },
+        "memory": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Name of memory for block"
+        },
+        "occupancySensor": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Name of occupancy sensor for block"
+        },
+        "occupiedSense": {
+            "type": "integer",
+            "description": "State of occupancy sensor for block"
+        },
+        "blockColor": {
+            "type": "string",
+            "description": "Color of block on panel"
+        },
+        "trackColor": {
+            "type": "string",
+            "description": "Color of track in block on panel"
+        },
+        "occupiedColor": {
+            "type": "string",
+            "description": "Color of track in block on panel when occupied"
+        },
+        "extraColor": {
+            "type": "string",
+            "description": "Extra color in block on panel"
+        },
+        "useExtraColor": {
+            "type": "boolean",
+            "description": "\"true\" is extra colors are to be used; \"false\" otherwise"
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "required": [
+        "name"
+    ]
 }

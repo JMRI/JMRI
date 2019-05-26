@@ -21,8 +21,7 @@ public class QsiMonAction extends AbstractAction {
     }
 
     public QsiMonAction(QsiSystemConnectionMemo memo) {
-        this(java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle")
-                .getString("MenuItemCommandMonitor"), memo);
+        this(Bundle.getMessage("MonitorXTitle", "QSI"), memo);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class QsiMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("QsiMonAction starting QsiMonFrame: Exception: " + ex.toString());
+            log.warn("QsiMonAction starting QsiMonFrame: Exception: ", ex);
         }
         f.setVisible(true);
     }

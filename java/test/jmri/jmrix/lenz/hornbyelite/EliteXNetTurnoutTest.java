@@ -2,6 +2,7 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.slf4j.Logger;
@@ -50,11 +51,39 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         m.setElement(2, 0x04);     // set CLOSED
         m.setElement(3, 0x43);
 
-        ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
+        ((EliteXNetTurnout) t).message(m);
 
         // no wait here.  The last reply should cause the turnout to
         // set it's state, but it will not cause another reply.
         Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
+    }
+
+    @Test
+    public void checkIncoming() {
+        t.setFeedbackMode(Turnout.MONITORING);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return t.getFeedbackMode() == Turnout.MONITORING;
+        }, "Feedback mode set");
+
+	    listenStatus = Turnout.UNKNOWN;
+	    t.addPropertyChangeListener(new Listen());
+
+        // notify the object that somebody else changed it...
+        XNetReply m = new XNetReply("42 05 04 43"); // set CLOSED
+        ((EliteXNetTurnout) t).message(m);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return listenStatus != Turnout.UNKNOWN;
+        }, "Turnout state changed");
+        Assert.assertEquals("state after CLOSED message",Turnout.CLOSED,t.getKnownState());
+
+	    listenStatus = Turnout.UNKNOWN;
+
+        m = new XNetReply("42 05 08 4F"); // set THROWN
+        ((EliteXNetTurnout) t).message(m);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return listenStatus != Turnout.UNKNOWN;
+        }, "Turnout state changed");
+        Assert.assertEquals("state after THROWN message",Turnout.THROWN,t.getKnownState());
     }
 
     // The minimal setup for log4J
@@ -67,7 +96,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         jmri.util.JUnitUtil.initInternalSensorManager();
         lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
 
-        t = new EliteXNetTurnout("XT", 21, lnis);
+        t = new EliteXNetTurnout("X", 21, lnis);
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 

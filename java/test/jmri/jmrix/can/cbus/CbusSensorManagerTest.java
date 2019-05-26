@@ -301,11 +301,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
         Sensor t14 = l.provideSensor("MSXF00D0A0600100601;XF1FFFFAAFAFFFFFE");
         Assert.assertNotNull("exists",t14);
-        
     }
-
-
-
 
     @Test
     public void testQueryAll() {
@@ -327,7 +323,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists",t1);
         Assert.assertNotNull("exists",t2);
         Assert.assertNotNull("exists",t3);
-
     }
     
     @Test
@@ -336,7 +331,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertTrue(x.contains("<html>"));
         
         Assert.assertTrue(l.allowMultipleAdditions("M77"));
-        
     }
     
     @Test
@@ -376,7 +370,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS0E17",NameValidity.INVALID,l.validSystemNameFormat("MS0E17"));
         Assert.assertEquals("MS+N65535e65536",NameValidity.INVALID,l.validSystemNameFormat("MS+N65535e65536"));
         Assert.assertEquals("MS+N65536e65535",NameValidity.INVALID,l.validSystemNameFormat("MS+N65536e65535"));
-        
     }
     
     @Test
@@ -392,8 +385,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Sensor ta =  l.provideSensor("MS+N45E22");
             Assert.assertNotNull("exists",ta);
             Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
-        
-        
+
             Assert.assertTrue(true);
         } catch (Exception e) {
             Assert.assertTrue(false);
@@ -401,10 +393,9 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         
         try {
             Assert.assertEquals("null",null,l.getNextValidAddress(null,"M"));
-            
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
+            //JUnitAppender.assertErrorMessageStartsWith("jmri.JmriException: ");
+            //Assert.assertTrue(true);
         }
     }
 
@@ -440,20 +431,19 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testgetNextValidAddressPt4() {
 
-        Sensor t =  l.provideSensor("MS+9");
-        Sensor ta =  l.provideSensor("MS+10");
+        Sensor t = l.provideSensor("MS+9");
+        Sensor ta = l.provideSensor("MS+10");
         Assert.assertNotNull("exists",t);
         Assert.assertNotNull("exists",ta);
 
         try {
-            Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
+            Assert.assertEquals(" null +9 +10","+11",l.getNextValidAddress("+9","M"));
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         } catch (Exception e) {
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(false);
         }
-        
     }    
 
     @Test
@@ -470,13 +460,13 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         }
         
         try {
-            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","M2"));
+            Assert.assertEquals("M2S+10","M2S+10",l.createSystemName("+10","M2"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }
 
         try {
-            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","ZZZZZZZZZ"));
+            Assert.assertEquals("ZZZZZZZZZS+10","ZZZZZZZZZS+10",l.createSystemName("+10","ZZZZZZZZZ"));
         } catch (Exception e) {
             Assert.assertTrue(false);
         }
@@ -508,5 +498,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo.dispose();
         JUnitUtil.tearDown();
     }
+
     // private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);
+
 }

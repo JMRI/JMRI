@@ -10,18 +10,18 @@ import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * Programmer support for Hornby Elite implementationn of XpressNet.
- * <P>
+ * <p>
  * The read operation state sequence is:
- * <UL>
- * <LI>Send Register Mode / Paged mode /Direct Mode read request
- * <LI>Wait for Broadcast Service Mode Entry message -- not happening on elite
- * <LI>Send Request for Service Mode Results request
- * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request -- The Elite does not seem to require this
+ * <ul>
+ * <li>Send Register Mode / Paged mode /Direct Mode read request
+ * <li>Wait for Broadcast Service Mode Entry message -- not happening on elite
+ * <li>Send Request for Service Mode Results request
+ * <li>Wait for results reply, interpret
+ * <li>Send Resume Operations request -- The Elite does not seem to require this
  * step.
- * <LI>Wait for Normal Operations Resumed broadcast -- The Elite does not seem
+ * <li>Wait for Normal Operations Resumed broadcast -- The Elite does not seem
  * to require this step.
- * </UL>
+ * </ul>
  *
  * @author Paul Bender Copyright (c) 2008
  */

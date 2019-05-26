@@ -13,7 +13,7 @@ import jmri.implementation.DefaultConditionalAction;
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a OsIndicator.
- * <P>
+ * <p>
  * An OS Indicator drives the lamp on the panel for a particular OS. Honors a
  * separate lock/unlocked indication by showing occupied if the associated
  * turnout has been unlocked.

@@ -28,13 +28,13 @@ import org.slf4j.LoggerFactory;
 // try to limit the JDOM to this class, so that others can manipulate...
 /**
  * DecoderIndex represents a decoderIndex.xml file in memory.
- * <P>
+ * <p>
  * This allows a program to navigate to various decoder descriptions without
  * having to manipulate files.
- * <P>
+ * <p>
  * This class doesn't provide tools for defining the index; that's done
  * manually, or at least not done here.
- * <P>
+ * <p>
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance"
  * member to navigate to a single one.
  *

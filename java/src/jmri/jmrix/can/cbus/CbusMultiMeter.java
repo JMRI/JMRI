@@ -61,6 +61,9 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( CbusMessage.getOpcode(r) != CbusConstants.CBUS_ACON2  ) {
             return;
         }

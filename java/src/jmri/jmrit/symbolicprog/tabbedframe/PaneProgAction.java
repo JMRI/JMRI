@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a frame for selecting the information
  * needed to open a PaneProgFrame in service mode.
- * <P>
+ * <p>
  * The name is a historical accident, and probably should have included
  * "ServiceMode" or something.
- * <P>
+ * <p>
  * The resulting JFrame is constructed on the fly here, and has no specific
  * type.
  *

@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the Rfid-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "FSpppp", where ppp is a representation of the RFID reader.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4

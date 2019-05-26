@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring CbusLightManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
- * <P>
+ *
  * @author Matthew Harris Copyright (c) 2015
  */
 public class CbusLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {

@@ -18,7 +18,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A pane for configuring TurnoutSignalMast objects
- * <P>
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2017, 2018
  * @since 4.11.2

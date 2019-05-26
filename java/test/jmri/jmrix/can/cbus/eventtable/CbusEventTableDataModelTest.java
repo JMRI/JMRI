@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class CbusEventTableDataModelTest {
 
-    CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
@@ -99,7 +99,7 @@ public class CbusEventTableDataModelTest {
         CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
         Assert.assertEquals("listener attached",1,tcis.numListeners());
         
-        Assert.assertTrue(t.getRowCount()==0);
+        Assert.assertEquals("rowcount 0",0,t.getRowCount());
         t.message(new CanMessage( new int[]{0x05},0x12 ));
         Assert.assertTrue(t.getRowCount()==0);
         
@@ -202,7 +202,7 @@ public class CbusEventTableDataModelTest {
         
         CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
         
-        Assert.assertTrue( t.getColumnCount()== 20 );
+        Assert.assertTrue( t.getColumnCount()== 25 );
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
@@ -226,8 +226,6 @@ public class CbusEventTableDataModelTest {
             t.getColumnClass(CbusEventTableDataModel.STATE_COLUMN) ==  Enum.class );
         Assert.assertTrue("column class null", t.getColumnClass(999) ==  null );
         
-        Assert.assertNotNull("tafifo exists",t.tablefeedback() );
-        
         t.dispose();
         t = null;
         
@@ -241,8 +239,7 @@ public class CbusEventTableDataModelTest {
         memo.setTrafficController(tcis);
         
         CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
-        Assert.assertTrue(t.getRowCount()==0);
-        Assert.assertFalse("table not dirty",t.isTableDirty() );
+        Assert.assertEquals("rowcount 0",0,t.getRowCount());
         
         CanMessage m = new CanMessage(tcis.getCanid());
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
@@ -424,8 +421,9 @@ public class CbusEventTableDataModelTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         memo = null;
+        JUnitUtil.tearDown();
+        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModelTest.class);

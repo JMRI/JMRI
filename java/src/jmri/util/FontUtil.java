@@ -4,11 +4,11 @@ import java.awt.Font;
 
 /**
  * Common utility methods for working with Fonts.
- * <P>
+ * <p>
  * We needed a place to refactor common Font-processing idioms in JMRI code, so
  * this class was created. It's more of a library of procedures than a real
  * class, as (so far) all of the operations have needed no state information.
- * <P>
+ * <p>
  * In particular, this is intended to provide Java 2 functionality on a Java
  * 1.1.8 system, or at least try to fake it.
  *

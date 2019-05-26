@@ -113,7 +113,32 @@
 
       <h2>Enable Throttle toolbar</h2>This option enables a
       <a href="ThrottleToolBar.shtml">Toolbar that will show in all
-      Throttle Windows</a>. <!--#include virtual="/Footer" -->
+      Throttle Windows</a>. 
+      
+      <h2>Steal / Share Options</h2>
+      <img src="images/throttles-preferences-steal-share-600x395.png" width="600" height="395" 
+        alt= "JMRI Throttle Preferences Silent Steal Share Options" />
+      
+      <p>These are system dependent options, and are not be available for all hardware types.</p>
+      
+      <p>Some systems perform automatic steal or sharing, so no option is required.</p>
+      
+      <p>The Silent Steal and Silent Share options are independent of the Use Extended Throttle setting.</p>
+      
+      <p>If both Silent Steal and Silent Share are available, only 1 can be selected at a time.</p>
+      
+      <p>Automation scripts and the actual hardware may override these options at any point. 
+      Although these options are to serve as a guide, they are fully honoured in the main JMRI Throttle window.</p>
+      
+      <p>WiThrottle connections are only able to support Steal questions, 
+      so steal or share questions are processed as steal-only.</p>
+      
+      <p>See individual hardware documentation for more detail on how these options affect
+      your system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">MERG CBUS Throttles</a></p>
+      
+      
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

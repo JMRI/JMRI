@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<!-- Ronald Kuhn, 28th Feb 2018 -->
+<!-- CV's 830-833 control adjustment for constant stopping distance -->
+<!-- see Zimo manual for small decoders, -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <!-- include this CV to adjustment for constant stopping distance -->
+  <variable CV="830" item="stopping distance fwd high">
+    <decVal/>
+    <label>stopping distance forward high byte</label>
+    <label xml:lang="de">Bremsweg Vorwärts High</label>
+  </variable>
+  <variable CV="831" item="stopping distance fwd low">
+    <decVal/>
+    <label>stopping distance forward low byte</label>
+    <label xml:lang="de">Bremsweg Vorwärts Low</label>
+  </variable>
+  <variable CV="832" item="stopping distance rev high">
+    <decVal/>
+    <label>stopping distance reverse high byte</label>
+    <label xml:lang="de">Bremsweg Rückwärts High</label>
+  </variable>
+  <variable CV="833" item="stopping distance rev low">
+    <decVal/>
+    <label>stopping distance reverse low byte</label>
+    <label xml:lang="de">Bremsweg Rückwärts Low</label>
+  </variable>
+</variables>

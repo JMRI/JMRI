@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * <li>OPSACCEXTBYTEMODE
  * <li>OPSACCEXTBITMODE
  * </ul>
- * <P>
+ * <p>
  * Used through the String write/read/confirm interface. Accepts integers as
  * addresses, but then emits NMRA DCC packets through the default CommandStation
  * interface (which must be present)

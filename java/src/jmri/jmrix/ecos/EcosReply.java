@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to an EcosMessage.
- * <P>
+ * <p>
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008

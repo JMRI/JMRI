@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jcomuzzi $) 2018 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jcomuzzi $ -->
+<title>JMRI: CNJ-1974 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: CNJ-1974 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to Central Railroad of New Jersey rules as described in <a href="
+http://signals.jovet.net/rules/CNJ%20Signal%20Rules.pdf">http://http://signals.jovet.net/rules/CNJ Signal Rules.pdf</a> and
+<a href="http://raildata.railfan.net/cnj/SigRules74/CNJSignalRules74.html">http://raildata.railfan.net/cnj/SigRules74/CNJSignalRules74.html</a>. These rules
+were also used by the New York and Long Branch.
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-SL-1-high-abs.xml">Single searchlight high absolute signal</a>
+<li><a href="appearance-SL-2-abs.xml">Double searchlight absolute signal</a>
+<li><a href="appearance-SL-3-abs.xml">Triple searchlight absolute signal</a>
+<li><a href="appearance-SL-1-low-abs.xml">Single searchlight low absolute signal</a>
+<li><a href="appearance-SL-2-pbs.xml">Double searchlight permissive signal</a>
+<li><a href="appearance-SL-3-pbs.xml">Triple searchlight permissive signal</a>
+<li><a href="appearance-SL-1-dwarf-abs.xml">Single searchlight dwarf signal</a>
+
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

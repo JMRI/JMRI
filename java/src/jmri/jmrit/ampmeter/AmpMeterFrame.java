@@ -16,10 +16,9 @@ import jmri.util.JmriJFrame;
 
 /**
  * Frame providing a simple lcd-based display of track current.
- * <P>
+ * <p>
  * A Run/Stop button is built into this, but because I don't like the way it
  * looks, it's not currently displayed in the GUI.
- *
  *
  * @author Ken Cameron Copyright (C) 2007
  * @author Mark Underwood Copyright (C) 2007
@@ -27,7 +26,6 @@ import jmri.util.JmriJFrame;
  * This was a direct steal form the LCDClock code by Ken Cameron, which was a
  * direct steal from the Nixie clock code, ver 1.2. Thank you Bob Jacobsen and
  * Ken Cameron.
- *
  */
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -49,7 +47,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     NamedIcon decimalIcon;
 
     public AmpMeterFrame() {
-        super(Bundle.getMessage("MenuItemAmpMeter"));
+        super(Bundle.getMessage("TrackCurrentMeterTitle"));
 
         meter = InstanceManager.getDefault(MultiMeter.class);
     }
@@ -153,10 +151,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     synchronized void update() {
         float val = meter.getCurrent();
-
-
         int value = (int)Math.floor(val *10); // keep one decimal place.
-
         boolean scaleChanged = false;
         // autoscale the array of labels.
         while( (value) > (Math.pow(10,digitIcons.size()-1))) {

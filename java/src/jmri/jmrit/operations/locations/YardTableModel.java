@@ -52,7 +52,7 @@ public class YardTableModel extends TrackTableModel {
         });
     }
 
-    // this table listens for changes to a location and it's yards
+    // this table listens for changes to a location and its yards
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {

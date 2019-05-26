@@ -5,7 +5,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid Raspberry Pi Connection Types
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2015
   *
  */

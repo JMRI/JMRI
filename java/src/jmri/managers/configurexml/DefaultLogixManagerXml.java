@@ -11,8 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for configuring LogixManagers
- * <P>
+ * Provides the functionality for configuring LogixManagers.
  *
  * @author Dave Duchamp Copyright (c) 2007
  */

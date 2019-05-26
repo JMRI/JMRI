@@ -29,12 +29,12 @@ import jmri.util.StringUtil;
 
 /**
  * User interface for sending CAN frames to exercise the system
- * <P>
+ * <p>
  * When sending a sequence of operations:
- * <UL>
- * <LI>Send the next message and start a timer
- * <LI>When the timer trips, repeat if buttons still down.
- * </UL>
+ * <ul>
+ * <li>Send the next message and start a timer
+ * <li>When the timer trips, repeat if buttons still down.
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */

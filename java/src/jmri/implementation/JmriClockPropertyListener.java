@@ -10,17 +10,17 @@ import jmri.Timebase;
  * A service class for monitoring a bound property in one of the JMRI Named
  * beans For use with properties having two states which are determined by
  * containment in an interval (e.g. Fast Clock ranges).
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
@@ -74,7 +74,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
 
     /**
      * Check if have entered/exited one of the Fast Clock Ranges
-     * <P>
+     * <p>
      * This method is invoked when the minute listener fires.
      */
     @SuppressWarnings("deprecation")

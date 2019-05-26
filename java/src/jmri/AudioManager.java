@@ -7,13 +7,13 @@ import jmri.jmrit.audio.AudioFactory;
 
 /**
  * Locate an Audio object representing some specific audio information.
- * <P>
+ * <p>
  * Audio objects are obtained from an AudioManager, which in turn is generally
  * located from the InstanceManager. A typical call sequence might be:
- * <PRE>
+ * <pre>
  * Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).provideAudio("myAudio");
- * </PRE>
- * <P>
+ * </pre>
+ * <p>
  * Each Audio has two names. The "user" name is entirely free form, and can be
  * used for any purpose. The "system" name is provided by the system-specific
  * implementations, if any, and provides a unique mapping to the layout control
@@ -21,20 +21,20 @@ import jmri.jmrit.audio.AudioFactory;
  * most (all?) layout systems don't have anything corresponding to this, in
  * which case the "Internal" Audio objects are still available with names like
  * IAS23.
- * <P>
+ * <p>
  * Much of the book-keeping is implemented in the AbstractAudioManager class,
  * which can form the basis for a system-specific implementation.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Matthew Harris Copyright (c) 2009
  */
 public interface AudioManager extends Manager<Audio> {
@@ -106,17 +106,17 @@ public interface AudioManager extends Manager<Audio> {
      * two calls with the same arguments will get the same instance; there is
      * only one Audio object representing a given physical Audio and therefore
      * only one with a specific system or user name.
-     * <P>
+     * <p>
      * This will always return a valid object reference; a new object will be
      * created if necessary. In that case:
-     * <UL>
-     * <LI>If a null reference is given for user name, no user name will be
+     * <ul>
+     * <li>If a null reference is given for user name, no user name will be
      * associated with the Audio object created; a valid system name must be
      * provided
-     * <LI>If both names are provided, the system name defines the hardware
+     * <li>If both names are provided, the system name defines the hardware
      * access of the desired Audio, and the user address is associated with it.
      * The system name must be valid.
-     * </UL>
+     * </ul>
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with
      * different objects. This is a problem, and we don't have a good solution

@@ -149,8 +149,13 @@ public class ColorUtilTest {
 
     @Test
     public void testDefaultColorFromString() {
-        Assert.assertEquals("other from color", Color.black, ColorUtil.stringToColor("other")); //NOI18N
-        jmri.util.JUnitAppender.assertErrorMessage("unknown color text 'other' sent to stringToColor ");
+        try {
+            ColorUtil.stringToColor("other"); //NOI18N
+            Assert.fail("Expected exception not thrown");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("unknown color text 'other'", ex.getMessage());
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("unknown color text 'other' sent to stringToColor");
     }
 
     @Test

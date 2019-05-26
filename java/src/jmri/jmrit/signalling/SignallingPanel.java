@@ -996,7 +996,7 @@ public class SignallingPanel extends JmriPanel {
         int result = jmri.util.StringUtil.getStateFromName(mode, blockInputModeValues, blockInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in blockMode: " + mode);  // NOI18N
+            log.warn("unexpected mode string in blockMode: {}", mode);  // NOI18N
             throw new IllegalArgumentException();
         }
         return result;

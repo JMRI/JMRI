@@ -728,6 +728,19 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       is a bit time-intensive, so we don't leave it on 
       all the time.
 
+      <p>
+      Tools like heap dumps, thread dumps, and the jvisualvm
+      browser can help you see what's being left over by your tests.
+      But they must be used while the JVM is still running, and it
+      usually terminates right after the tests.
+      To prolong the JVM life, add an instance of 
+      <code>jmri.util.TestWaitsForever</code>
+      at the end of your <code>PackageList</code>
+      list of tests.  <code>TestWaitsForever</code>
+      does what it says on the tin: waits forever, allowing you
+      to look at the state of the JVM. When you're done,
+      you have to kill the test job manually.
+      
       <h3><a id="io" name="io"></a>Testing I/O</h3>
       Some test
       environments don't automatically flush I/O operations such as

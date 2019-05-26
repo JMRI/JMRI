@@ -4,10 +4,10 @@ import org.junit.Test;
 import org.junit.Assert;
 
 /**
- * JUnit tests for the LoaderPane class
+ * JUnit tests for the LoaderPane class.
  *
  * @author	Bob Jacobsen Copyright 2005
-  */
+ */
 public class LoaderPaneTest {
 
     @Test
@@ -44,7 +44,6 @@ public class LoaderPaneTest {
         p.CRC_block(bytes);
         Assert.assertEquals("1st CRC byte msg 5", 0x58, bytes[bytes.length - 2] & 0xFF);
         Assert.assertEquals("2nd CRC byte msg 5", 0x93, bytes[bytes.length - 1] & 0xFF);
-
     }
 
     @Test
@@ -56,7 +55,6 @@ public class LoaderPaneTest {
 
         bytes = jmri.util.StringUtil.bytesFromHexString("1F 20 1E 42 6F 6F 74 65 72 20 56 31 2E 30 BC CE");
         Assert.assertEquals("2nd message", false, p.isUploadReady(bytes));
-
     }
 
     @Test
@@ -68,7 +66,6 @@ public class LoaderPaneTest {
 
         bytes = jmri.util.StringUtil.bytesFromHexString("1F 20 63 00 2D 00 00");
         Assert.assertEquals("length", 128, p.getDataSize(bytes));
-
     }
 
 }

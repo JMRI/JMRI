@@ -75,7 +75,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     /**
      * Terminate service thread
-     *<p>
+     * <p>
      * This is intended to be used only by testing subclasses.
      */
     public void terminateThread() {

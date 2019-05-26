@@ -7,11 +7,11 @@ import javax.annotation.Nonnull;
 
 /**
  * Provide access to clock capabilities in hardware or software.
- * <P>
+ * <p>
  * The {@code rate} property determines how much faster than real time this
  * runs. For example, a value of 2.0 means that the value returned by getTime
  * will advance an hour for every half-hour of wall-clock time elapsed.
- * <P>
+ * <p>
  * The {@code rate} and {@code run} properties are bound, so you can listen for
  * changes to them. The {@code time} property is bound, but listeners only
  * receive change notifications if the change is a minute or more, because it

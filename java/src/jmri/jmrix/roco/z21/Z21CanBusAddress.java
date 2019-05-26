@@ -5,7 +5,7 @@ import jmri.ReporterManager;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 CanBus  
- * <P>
+ * <p>
  * One address format is supported for Reporters and Sensors: 
  * <ul>
  * <li>

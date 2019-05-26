@@ -42,19 +42,19 @@ import org.slf4j.LoggerFactory;
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
  * extension of the standard Turnout object with drawing and connectivity
  * information added.
- * <P>
+ * <p>
  * Six types are supported: right-hand, left-hand, wye, double crossover,
  * right-handed single crossover, and left-handed single crossover. Note that
  * double-slip turnouts can be handled as two turnouts, throat to throat, and
  * three-way turnouts can be handles as two turnouts, left-hand and right-hand,
  * arranged throat to continuing route.
- * <P>
+ * <p>
  * A LayoutTurnout has three or four connection points, designated A, B, C, and
  * D. For right-handed or left-handed turnouts, A corresponds to the throat. At
  * the crossing, A-B (and C-D for crossovers) is a straight segment (continuing
  * route). A-C (and B-D for crossovers) is the diverging route. B-C (and A-D for
  * crossovers) is an illegal condition.
- * <P>
+ * <p>
  * {@literal
  *           Turnouts
  * Right-hand       Left-hand
@@ -87,13 +87,13 @@ import org.slf4j.LoggerFactory;
  *             //\\
  *        D ==**==**== C
  * literal}
- * <P>
+ * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may
  * occur at any connection (A,B,C,D). For a double crossover turnout, up to four
  * blocks may be assigned, one for each connection point, but if only one block
  * is assigned, that block applies to the entire turnout.
- * <P>
+ * <p>
  * For drawing purposes, each LayoutTurnout carries a center point and
  * displacements for B and C. For right-handed or left-handed turnouts, the
  * displacement for A = - the displacement for B, and the center point is at the
@@ -105,23 +105,23 @@ import org.slf4j.LoggerFactory;
  * constrained to remain perpendicular. For single crossovers, AB and CD are
  * constrained to remain parallel, and AC and BD are constrained to remain
  * parallel.
- * <P>
+ * <p>
  * When LayoutTurnouts are first created, a rotation (degrees) is provided. For
  * 0.0 rotation, the turnout lies on the east-west line with A facing east.
  * Rotations are performed in a clockwise direction.
- * <P>
+ * <p>
  * When LayoutTurnouts are first created, there are no connections. Block
  * information and connections may be added when available.
- * <P>
+ * <p>
  * When a LayoutTurnout is first created, it is enabled for control of an
  * assigned actual turnout. Clicking on the turnout center point will toggle the
  * turnout. This can be disabled via the popup menu.
- * <P>
+ * <p>
  * Signal Head names are saved here to keep track of where signals are.
  * LayoutTurnout only serves as a storage place for signal head names. The names
  * are placed here by tools, e.g., Set Signals at Turnout, and Set Signals at
  * Double Crossover.
- * <P>
+ * <p>
  * A LayoutTurnout may be linked to another LayoutTurnout to form a turnout
  * pair. Throat-To-Throat Turnouts - Two turnouts connected closely at their
  * throats, so closely that signals are not appropriate at the their throats.
@@ -731,6 +731,53 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
+        if (!beanReferences.isEmpty()) {
+            displayRemoveWarningDialog(beanReferences, "BeanNameTurnout");  // NOI18N
+        }
+        return beanReferences.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a turnout point.
+     * @param pointName Specify the point (A-D) or all (All) points.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getBeanReferences(String pointName) {
+        ArrayList<String> references = new ArrayList<>();
+        if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
+            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
+            if (!getSignalA1Name().isEmpty()) references.add(getSignalA1Name());
+            if (!getSignalA2Name().isEmpty()) references.add(getSignalA2Name());
+            if (!getSignalA3Name().isEmpty()) references.add(getSignalA3Name());
+        }
+        if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
+            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
+            if (!getSignalB1Name().isEmpty()) references.add(getSignalB1Name());
+            if (!getSignalB2Name().isEmpty()) references.add(getSignalB2Name());
+        }
+        if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
+            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
+            if (!getSignalC1Name().isEmpty()) references.add(getSignalC1Name());
+            if (!getSignalC2Name().isEmpty()) references.add(getSignalC2Name());
+        }
+        if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
+            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
+            if (!getSignalD1Name().isEmpty()) references.add(getSignalD1Name());
+            if (!getSignalD2Name().isEmpty()) references.add(getSignalD2Name());
+        }
+        return references;
+    }
+
     @Nonnull
     public String getSignalAMastName() {
         if (signalAMastNamed != null) {
@@ -1009,6 +1056,15 @@ public class LayoutTurnout extends LayoutTrack {
 
     public int getContinuingSense() {
         return continuingSense;
+    }
+
+    /**
+     * isInContinuingSenseState
+     *
+     * @return true is the continuingSense matches the known state
+     */
+    public boolean isInContinuingSenseState() {
+        return getState() == continuingSense;
     }
 
     public void setTurnout(@Nullable String tName) {
@@ -2692,7 +2748,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
+                    if (canRemove() && layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -3227,10 +3283,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         int state = UNKNOWN;
         if (layoutEditor.isAnimating()) {
-            Turnout to = getTurnout();
-            if (to != null) {
-                state = to.getKnownState();
-            }
+            state = getState();
         }
 
         int type = getTurnoutType();
@@ -3572,10 +3625,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         int state = UNKNOWN;
         if (layoutEditor.isAnimating()) {
-            Turnout to = getTurnout();
-            if (to != null) {
-                state = to.getKnownState();
-            }
+            state = getState();
         }
 
         switch (type) {
@@ -4220,7 +4270,19 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
-            g2.draw(layoutEditor.trackControlCircleAt(center));
+            Color foregroundColor = g2.getColor();
+            if (!isInContinuingSenseState()) {
+                Color backgroundColor = g2.getBackground();
+                g2.setColor(backgroundColor);
+            }
+            if (layoutEditor.isTurnoutFillControlCircles()) {
+                g2.fill(layoutEditor.trackControlCircleAt(center));
+            } else {
+                g2.draw(layoutEditor.trackControlCircleAt(center));
+            }
+            if (!isInContinuingSenseState()) {
+                g2.setColor(foregroundColor);
+            }
         }
     }
 
