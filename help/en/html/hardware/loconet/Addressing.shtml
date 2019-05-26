@@ -8,11 +8,7 @@
 
   <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI LocoNet Address Addressing Sensors Turnout">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
+  <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -223,7 +219,8 @@
       change the state of those Turnouts.</p>
 
       <p>Additional information on Turnouts and the Turnout Table
-          may be found at the main JMRI <a href="../../tools/Turnouts.shtml">Turnouts</a> page.</p>
+      may be found at the main JMRI <a href="../../tools/Turnouts.shtml">Turnouts</a> page.</p>
+
       <h3>JMRI "Lights"</h3>
       <p>JMRI provides an object-type called "Lights".  For some DCC systems, "Light"
           objects are defined and addressed separately from "Turnout" objects.  LocoNet
@@ -232,6 +229,8 @@
       <p>This means that changing the state of a JMRI "Light" object with System
           Name "LL123" will actually modify the LocoNet turnout which corresponds
           to the JMRI turnout with System Name "LT123".</p>
+      <p>Additional information on Lights and the Light Table
+      may be found at the main JMRI <a href="../../tools/Lights.shtml">Lights</a> page.</p>
 
       <a name="sensor" id="sensor"></a>
       <h2>Addressing LocoNet Sensors</h2>
@@ -294,9 +293,9 @@
 
       <p>Additional information on Sensors and the Sensor Table may
       be found at the main JMRI <a href="../../tools/Sensors.shtml">
-      Sensors</a> page.</p><a name="transponding" id=
-      "transponding"></a>
+      Sensors</a> page.</p>
 
+      <a name="transponding" id="transponding"></a>
       <h2>Addressing LocoNet Transponding Zones</h2>
 
       <p>Digitrax Transponding is handled via the Reporter
