@@ -32,7 +32,7 @@
 
     <div id="mainContent">
       <h1>JMRI: PanelPro Frequently Asked Questions</h1>
-
+    <dl>
       <dt id="context" class="on">How does
           JMRI tie into the rest of my layout?</dt>
         <dd class="first"><!-- by Jim Betz -->
@@ -140,7 +140,7 @@
       </dd>
 
       <dt id="store" class="left">How do I save my work?</dt>
-        <dd class="first"><p>There are several ways to save
+        <dd class="first">There are several ways to save
       your panel. This is because the program has to store both
       configuration (turnouts, sensors, etc) and layout (the
       details of your specific panel) information.<br>
@@ -158,16 +158,16 @@
 
       This works because panels are stored with all the
       configuration information at that same time (which guarantees
-        they'll work when reloaded)</p></dd>
+        they'll work when reloaded)</dd>
 
       <dt id="multifile" class="left">Can I store just the
           configuration information?</dt>
-        <dd class="first"><p>You
+        <dd class="first">You
       can store just the "configuration" information in a file,
       which you can save without worrying about whether your
       panel(s) are open, etc. If you do this, you can also save
       your panels to their own, separate files.<br>
-        To do this:</p>
+        To do this:
 
       <ul>
         <li>Go to one of the table tools (e.g. Route Table) and
@@ -179,15 +179,15 @@
 
         <li>Remember that name and location, then store.</li>
       </ul>
-      <p>This puts config info like Turnouts, Sensors etc, but
+      This puts config info like Turnouts, Sensors etc, but
       not panels, in the file. If you also want to save your
       currently loaded panels, select "Store Panels and
-      Configuration..." instead.</p>
+      Configuration..." instead.
       </dd>
 
       <dt id="showfile" class="left">How can I see my saved
           configuration, including Turnouts etc and panels?</dt>
-        <dd class="first"><p>JMRI does not remember the Turnout, Sensor
+        <dd class="first">JMRI does not remember the Turnout, Sensor
         or Reporter table entries from
         a previous JMRI session unless you take specific action to save your
         information, and unless you take specific action to instruct JMRI to read
@@ -199,7 +199,7 @@
         different configurations, or go back to an older version
         of the configuration when an error was made in your
         latest saved version.<br>
-        To automatically load the file when the program starts:</p>
+        To automatically load the file when the program starts:
 
         <ul>
             <li>Open the Preferences panel.</li>
@@ -214,14 +214,14 @@
             <li>Quit the program and restart it to test.</li>
         </ul>
 
-        <p>On subsequent JMRI invocations, all start-up actions are invoked,
+        On subsequent JMRI invocations, all start-up actions are invoked,
         including any "start-up" actions you have defined to "Load" a "Panel File".<br>
 
         If automatic reloading of the table entries is not desired, it is possible
         to manually read a panel file.  Under the JMRI "Panels" menu item, select
         "Open Panel..." and then locate and select one or more panel files
         containing the appropriate information.  Select the "Open Panels" button
-        to read those files into JMRI.</p></dd>
+        to read those files into JMRI.</dd>
 
       <dt id="location" class="left">Where should I put my custom icons and other
       files?</dt>
@@ -283,6 +283,7 @@
       More information about the
       <a href="../../setup/Files.shtml">JMRI Configuration Files</a></p>
       </dd>
+    </dl>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
