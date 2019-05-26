@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.
- * <p>
  * A MatrixSignalMast is built up from an array of 1 - 6 turnouts to control each aspect.
  * System name specifies the creation information:
  * <pre>

@@ -17,7 +17,7 @@ import jmri.jmrit.symbolicprog.SymbolicProgBundle;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
-  */
+ */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
     /**

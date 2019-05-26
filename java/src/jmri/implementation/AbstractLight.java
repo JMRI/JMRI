@@ -70,7 +70,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * System independent operational instance variables (not saved between
      * runs).
      */
-    protected boolean mActive = false;
+    protected boolean mActive = false; // used to indicate if LightControls are active
     protected boolean mEnabled = true;
     protected double mCurrentIntensity = 0.0;
     protected int mState = OFF;
@@ -335,7 +335,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     /**
-     * Can the Light change it's intensity setting slowly?
+     * Can the Light change its intensity setting slowly?
      * <p>
      * If true, this Light supports a non-zero value of the transitionTime
      * property, which controls how long the Light will take to change from one
@@ -480,6 +480,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         lightControlList.stream().forEach((lc) -> {
             lc.activateLightControl();
         });
+        mActive = true; // set flag for control listeners
     }
 
     /**
@@ -488,11 +489,11 @@ public abstract class AbstractLight extends AbstractNamedBean
     @Override
     public void deactivateLight() {
         // skip if Light is not active
-        if (mActive) {
+        if (mActive) { // check if flag set for control listeners
             lightControlList.stream().forEach((lc) -> {
                 lc.deactivateLightControl();
             });
-            mActive = false;
+            mActive = false; // unset flag for control listeners
         }
     }
 

@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Frame providing a simple clock showing Lcd tubes.
- * <P>
+ * <p>
  * A Run/Stop button is built into this, but because I don't like the way it
  * looks, it's not currently displayed in the GUI.
  *

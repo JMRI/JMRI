@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the bachrus-specific tools
+ * Create a "Systems" menu containing the bachrus-specific tools.
  *
  * @author Andrew Crosland Copyright 2010
  */

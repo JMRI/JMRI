@@ -12,26 +12,25 @@ import javax.annotation.Nonnull;
 
 /**
  * Implementation of a Transit Manager
- * <P>
+ * <p>
  * This doesn't need an interface, since Transits are globaly implemented,
  * instead of being system-specific.
- * <P>
+ * <p>
  * Note that Transit system names must begin with IZ, and be followed by a
  * string, usually, but not always, a number. All alphabetic characters in a
  * Transit system name must be upper case. This is enforced when a Transit is
  * created.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */

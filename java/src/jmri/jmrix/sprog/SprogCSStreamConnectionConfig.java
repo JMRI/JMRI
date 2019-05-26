@@ -3,12 +3,12 @@ package jmri.jmrix.sprog;
 /**
  * Handle configuring an SPROG layout connection via an SprogCSStreamPortController
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link SprogCSStreamPortController} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see SprogCSStreamPortController
  */
 public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
@@ -22,7 +22,8 @@ public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConn
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public SprogCSStreamConnectionConfig() {
         super();
@@ -45,6 +46,9 @@ public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConn
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

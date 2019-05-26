@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractProgrammer;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
- * <P>
+ * <p>
  * This has two states: NOTPROGRAMMING, and COMMANDSENT. The transitions to and
  * from programming mode are now handled in the TrafficController code.
  *

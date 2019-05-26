@@ -227,6 +227,9 @@
           <li>Whether you want to use graphics to show the state of turnouts,
           lights, sensors and blocks in the state column of their tables.
           <span class="since">since 4.7.4</span></li>
+          <li>Whether you want to use the values saved in a panel xml file
+          instead of the standard location and size process for JMRI windows.
+          <span class="since">since 4.15.6</span></li>
           <li>How long tooltips (where available) should be shown.</li>
           </ul>
         </dd>
@@ -516,7 +519,7 @@
 
       <h3>Speed Name Tables</h3>
       <p>When an automatically running train encounters a Signal
-      aspect that calls for a speed change, the speed map table 
+      aspect that calls for a speed change, the speed map table
       provides the information of what the speed change should
       be. Other parameters control the way the
       speed change is made.</p>
@@ -527,9 +530,9 @@
       that all the speed names used in your signal system be listed
       in the Speed Map Table.  Rows can be added or deleted to conform
       to the Signal System aspects.</p>
-      
+
       <p>The value associated with a speed
-      name can be interpreted in four different ways and there are 
+      name can be interpreted in four different ways and there are
       four radio buttons for you to choose the meaning
       of the value.</p>
       <ul>
@@ -552,13 +555,13 @@
 
       <h2>Head Appearance Name Table</h2>
       <p>The <b>Head Appearance Table</b> is used when Signal Heads
-      are used as signals. It maps signal head appearance names 
+      are used as signals. It maps signal head appearance names
       to aspect speed name which in turn are mapped by the Aspect
       Speed Name table to values that interpret speed limits.</p>
 
       <h3>Layout Scale and Search Depth</h3>
       <p>It is important that the correct <b>Layout Scale</b> is
-      chosen since it is needed to convert throttle settings 
+      chosen since it is needed to convert throttle settings
       and track speeds to and from scale speeds.<br>
       The <b>Max Number of Blocks in Route</b> is the depth to which
       JMRI will search for a route when defining a warrant. This is
@@ -570,11 +573,11 @@
       speed up are done by stepping up and down with two "ramp"
       parameters; the throttle increment per step and the time
         interval of each step.  These two parameters are paired to
-        make a "stair step" pattern for changing speed.  
+        make a "stair step" pattern for changing speed.
         Generally, they are paired in that a small throttle increment
         should be done in a short time interval and a large increment
         in a longer time. When setting them, the time interval should
-        be long enough for the speed increment to complete given the 
+        be long enough for the speed increment to complete given the
         momentum you have programmed into your decoders.
 	  <ul>
         <li><b>Ramp Step throttle Increment</b>  This value is
@@ -585,35 +588,35 @@
 
         <li><b>Ramp Step time</b> Depending how you have
         configured momentum on your
-        locomotives, adjust this value so the speed change is 
+        locomotives, adjust this value so the speed change is
         completed within this period of time. Typically
-        corresponding to the above, 
+        corresponding to the above,
         300 to 1000 milliseconds would be appropriate.</li>
       </ul>
       <p>You should experiment by watching how NX Warrants start and end
        or by issuing "Stop" and "Resume" commands to a recorded
       warrant.</p>
-       
+
       <h3>Throttle Factor</h3>
       <p>The value of <b>Throttle Setting/Speed Factor</b>
       along with <b>Layout Scale</b>
-      adjusts a throttle setting to be a layout track speed. 
+      adjusts a throttle setting to be a layout track speed.
       The Throttle Factor set here is a global default.</p>
-       
+
       <p>For more information on Warrant speed parameters, see
       <a href="../jmri/jmrit/logix/speedChanges.shtml">Modifying
       Warrant Speeds</a> and follow its links.</p>
-      
+
       <h2>Merging Speed Profiles</h2>
       <p>In Release 4.9.2 Warrant compute a track speed when traversing
-      a path with known length and known throttle setting.  These 
+      a path with known length and known throttle setting.  These
       measurements are made for each address that is rub under a
       warrant and are kept for the entire layout session.  When
       JMRI is quit, at shutdown. These Session Speed Profiles can
       be merged into their Roster Speed Profiles.  The following
       choices are available at shutdown.</p>
       <ul>
-        <li><b>Don't Merge</b> - Do not prompt and 
+        <li><b>Don't Merge</b> - Do not prompt and
         discard the Session Profiles and
         leave the Roster Speed Profiles unchanged. </li>
         <li><b>Prompt Merges</b> - At shutdown at dialog is presented

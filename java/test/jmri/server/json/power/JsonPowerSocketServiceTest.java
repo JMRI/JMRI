@@ -26,6 +26,8 @@ import org.junit.Test;
  */
 public class JsonPowerSocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testPowerChange() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -34,7 +36,7 @@ public class JsonPowerSocketServiceTest {
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         Assert.assertEquals("No listeners", 0, power.getPropertyChangeListeners().length);
         power.setPower(PowerManager.UNKNOWN);
-        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, locale, 42);
         Assert.assertEquals("One listener", 1, power.getPropertyChangeListeners().length);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
@@ -58,17 +60,17 @@ public class JsonPowerSocketServiceTest {
         JsonPowerSocketService service = new JsonPowerSocketService(connection);
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         power.setPower(PowerManager.UNKNOWN);
-        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, locale, 42);
         Assert.assertEquals(PowerManager.ON, power.getPower());
         message = connection.getObjectMapper().readTree("{\"name\":\"test\", \"state\":4}"); // Power OFF, named connection
-        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, locale, 42);
         Assert.assertEquals(PowerManager.OFF, power.getPower());
         message = connection.getObjectMapper().readTree("{\"state\":0}"); // JSON Power UNKNOWN
-        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
+        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, locale, 42);
         Assert.assertEquals(PowerManager.OFF, power.getPower()); // did not change
         message = connection.getObjectMapper().readTree("{\"state\":1}"); // JSON Invalid
         try {
-            service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
@@ -85,7 +87,7 @@ public class JsonPowerSocketServiceTest {
         JsonPowerSocketService service = new JsonPowerSocketService(connection);
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         power.setPower(PowerManager.UNKNOWN);
-        service.onList(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+        service.onList(JsonPowerServiceFactory.POWER, message, locale, 0);
         message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertTrue(message.isArray());
@@ -112,7 +114,7 @@ public class JsonPowerSocketServiceTest {
         JsonPowerSocketService service = new JsonPowerSocketService(connection, http);
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         power.setPower(PowerManager.UNKNOWN);
-        service.onList(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+        service.onList(JsonPowerServiceFactory.POWER, message, locale, 0);
         http.setThrowException(true);
         power.setPower(PowerManager.ON);
         message = connection.getMessage();
@@ -128,7 +130,7 @@ public class JsonPowerSocketServiceTest {
         JsonNode message = connection.getObjectMapper().readTree("{\"state\":0}"); // Power UNKNOWN
         JsonPowerSocketService service = new JsonPowerSocketService(connection);
         InstanceManager.reset(PowerManager.class);
-        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.GET, Locale.ENGLISH);
+        service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.GET, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals(JsonPowerServiceFactory.POWER, message.path(JSON.TYPE).asText());
@@ -160,12 +162,12 @@ public class JsonPowerSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
             if (throwException) {
                 throwException = false;
-                throw new JsonException(499, "Mock Exception");
+                throw new JsonException(499, "Mock Exception", id);
             }
-            return super.doGet(type, name, data, locale);
+            return super.doGet(type, name, data, locale, id);
         }
 
         public void setThrowException(boolean throwException) {

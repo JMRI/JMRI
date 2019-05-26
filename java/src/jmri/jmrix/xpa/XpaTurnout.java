@@ -8,7 +8,7 @@ import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Xpa+Modem implementation of the Turnout interface.
- * <P>
+ * <p>
  *
  * @author	Paul Bender Copyright (C) 2004
  */

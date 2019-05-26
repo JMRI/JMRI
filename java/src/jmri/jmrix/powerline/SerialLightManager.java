@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Powerline serial systems.
+ * Implement LightManager for Powerline serial systems.
  * <p>
  * System names are "PLnnn", where P is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -103,8 +103,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

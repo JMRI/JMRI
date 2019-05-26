@@ -3,7 +3,7 @@ package jmri.jmrix.mrc;
 import jmri.Turnout;
 
 /**
- * New MRC Turnout Manager
+ * New MRC TurnoutManager
  * <p>
  * System names are "PTnnn", where P is the user configurable system prefix,
  * nnn is the turnout number without padding.

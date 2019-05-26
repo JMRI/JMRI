@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Assert;
 
 /**
- * JUnit tests for the NceAIU class
+ * JUnit tests for the NceAIU class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceAIUTest {
 
     @Test
@@ -37,4 +37,5 @@ public class NceAIUTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

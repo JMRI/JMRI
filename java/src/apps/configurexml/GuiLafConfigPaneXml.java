@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of SwingGuiLaf default values.
- * <P>
+ * <p>
  * This class is named as being the persistant form of the GuiLafConfigPane
  * class, but there's no object of that form created when this is read back.
  * Instead, this interacts directly with Swing and the default Locale.

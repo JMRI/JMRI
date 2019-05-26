@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for SECSI serial systems.
+ * Implement LightManager for SECSI serial systems.
  * <p>
  * System names are "VLnnn", where V is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
-  */
+ */
 public class SerialLightManager extends AbstractLightManager {
 
     private SecsiSystemConnectionMemo memo = null;
@@ -103,8 +103,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

@@ -76,7 +76,7 @@ public class ProxyTurnoutManagerTest {
             correct = true;
         }
         Assert.assertTrue("Exception thrown properly", correct);
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT");
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT followed by a suffix");
     }
 
     @Test

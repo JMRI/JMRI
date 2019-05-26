@@ -47,14 +47,17 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
 
     /**
-     * Create a connection configuration without a preexisting adapter. Expect
-     * that the subclass setInstance() will fill the adapter member.
+     * Ctor for a functional object with no preexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
      */
     public AbstractNetworkConnectionConfig() {
     }
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -283,8 +286,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * {@inheritDoc}
      */
     @Override
     abstract protected void setInstance();
@@ -303,7 +305,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             adapter.setOptionState(i, (String) opt.getSelectedItem());
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;

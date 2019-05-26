@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of Roster default values.
- * <P>
+ * <p>
  * This class is named as being the persistant form of the RosterConfigPane
  * class, but there's no object of that form created when this is read back.
  * Instead, this persists static members of the roster.Roster class.

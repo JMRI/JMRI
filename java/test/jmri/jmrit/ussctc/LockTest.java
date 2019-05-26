@@ -9,7 +9,7 @@ import org.junit.*;
  * Tests for Lock class in the jmri.jmrit.ussctc package
  *
  * @author	Paul Bender Copyright 2018
-  */
+ */
 public class LockTest {
 
     @Test

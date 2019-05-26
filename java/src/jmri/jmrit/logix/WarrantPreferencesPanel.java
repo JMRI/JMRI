@@ -110,9 +110,10 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         _layoutScales = new JComboBox<>();
-        _layoutScales.addItem(new ScaleData("G", 20.3f));
+        _layoutScales.addItem(new ScaleData("G", 22.5f));
         _layoutScales.addItem(new ScaleData("L", 38f));
-        _layoutScales.addItem(new ScaleData("O", 43f));
+        _layoutScales.addItem(new ScaleData("O", 48f));
+        _layoutScales.addItem(new ScaleData("O'", 43f));
         _layoutScales.addItem(new ScaleData("S", 64f));
         _layoutScales.addItem(new ScaleData("OO", 76.2f));
         _layoutScales.addItem(new ScaleData("HO", 87.1f));

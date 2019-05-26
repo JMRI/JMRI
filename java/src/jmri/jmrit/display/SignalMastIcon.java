@@ -620,7 +620,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     /**
      * How to handle lit vs not lit?
-     * <P>
+     * <p>
      * False means ignore (always show R/Y/G/etc appearance on screen); True
      * means show {@link jmri.SignalAppearanceMap#DARK} if lit is set false.
      */

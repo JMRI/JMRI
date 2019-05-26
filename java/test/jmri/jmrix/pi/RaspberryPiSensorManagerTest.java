@@ -7,13 +7,11 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
-
 /**
+ * Tests for RaspberryPiSensorManager.
  * <p>
- * Tests for RaspberryPiSensorManager
- * </P><p>
  * This is somehow not reseting the GPIO support, so each reference to a "pin"
- * needs to be do a different one, even across multiple test types
+ * needs to be do a different one, even across multiple test types.
  *
  * @author Paul Bender Copyright (C) 2016
  */

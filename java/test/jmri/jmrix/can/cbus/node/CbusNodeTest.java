@@ -70,7 +70,7 @@ public class CbusNodeTest {
     }
     
     @Test
-    public void testInOutLearnMode() {
+    public void testInOutLearnModeExtendedRtr() {
         CbusNode t = new CbusNode(memo,1234);
         
         Assert.assertEquals("default getNodeInLearnMode ",false,t.getNodeInLearnMode() );
@@ -116,8 +116,45 @@ public class CbusNodeTest {
         m.setNumDataElements(1);
         m.setElement(0, CbusConstants.CBUS_RTOF); // request track off
         t.message(m);
-        Assert.assertEquals("still in learn mode ",false,t.getNodeInLearnMode() );
-
+        Assert.assertEquals("not in learn mode ",false,t.getNodeInLearnMode() );
+        
+        
+        m = new CanMessage( tcis.getCanid() );
+        m.setElement(0, CbusConstants.CBUS_NNLRN); // enter learn mode
+        m.setElement(1, 0x04);
+        m.setElement(2, 0xd2);
+        
+        m.setExtended(true);
+        
+        t.message(m);
+        Assert.assertEquals("no change ext",false,t.getNodeInLearnMode() );
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertEquals("no change rtr",false,t.getNodeInLearnMode() );
+        
+        m.setRtr(false);
+        t.message(m);
+        Assert.assertEquals("message enter learn mode ",true,t.getNodeInLearnMode() );
+        
+        
+        r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_NNULN); 
+        r.setElement(1, 0x04);
+        r.setElement(2, 0xd2);
+        
+        r.setExtended(true);
+        t.reply(r);
+        Assert.assertEquals("no change ext",true,t.getNodeInLearnMode() );
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertEquals("no change rtr",true,t.getNodeInLearnMode() );
+        
         m = null;
         r = null;
         
@@ -678,10 +715,10 @@ public class CbusNodeTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         
         tcis = null;
         memo = null;
+        JUnitUtil.tearDown();
         
     }
 

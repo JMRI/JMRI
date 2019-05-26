@@ -34,7 +34,7 @@ public class Bundle extends jmri.jmrix.marklin.Bundle {
      * Provides a translated string for a given 
      * key from the package resource bundle or 
      * parent.
-     *<p>
+     * <p>
      * Note that this is intentionally package-local
      * access.
      * 
@@ -48,10 +48,10 @@ public class Bundle extends jmri.jmrix.marklin.Bundle {
      * Merges user data with a translated string for a given 
      * key from the package resource bundle or 
      * parent.
-     *<p>
+     * <p>
      * Uses the transformation conventions of 
      * the Java MessageFormat utility.
-     *<p>
+     * <p>
      * Note that this is intentionally package-local
      * access.
      *

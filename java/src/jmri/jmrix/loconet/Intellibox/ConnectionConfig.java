@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.Intellibox;
  * connection via an IntelliboxAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -17,7 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no pre-existing adapter
+     * Ctor for a functional Swing object with no pre-existing adapter.
      */
     public ConnectionConfig() {
         super();
@@ -28,10 +28,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return "Intellibox-I (Serial)";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new IntelliboxAdapter();
         }
     }
+
 }

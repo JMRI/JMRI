@@ -35,6 +35,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * @param method The HTTP method to handle in this message.
      * @param locale The locale of the client, which may be different than the
      *                   locale of the JMRI server.
+     * @param id     the message id set by the client
      * @throws java.io.IOException Thrown if the service cannot send a response.
      *                                 This will cause the JSON Server to close
      *                                 its connection to the client if open.
@@ -46,7 +47,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *                                 message back to the client.
      */
     public abstract void onMessage(@Nonnull String type, @Nonnull JsonNode data, @Nonnull String method,
-            @Nonnull Locale locale) throws IOException, JmriException, JsonException;
+            @Nonnull Locale locale, int id) throws IOException, JmriException, JsonException;
 
     /**
      * Handle a request for a list of objects. Note that this <strong>should
@@ -60,6 +61,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *                   implementing service
      * @param locale The locale of the client, which may be different than the
      *                   locale of the JMRI server
+     * @param id     the message id set by the client
      * @throws java.io.IOException Thrown if the service cannot send a response;
      *                                 this will cause the JSON Server to close
      *                                 its connection to the client if open
@@ -74,7 +76,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *                                 "UnlistableService" to indicate that
      *                                 {@code type} should not be listed
      */
-    public abstract void onList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale)
+    public abstract void onList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws IOException, JmriException, JsonException;
 
     /**

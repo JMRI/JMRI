@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring
  * MemoryManagers, working with AbstractMemoryManagers.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element memories) class,
  * relying on implementation here to load the individual Memory objects. Note
  * that these are stored explicitly, so the resolution mechanism doesn't need to

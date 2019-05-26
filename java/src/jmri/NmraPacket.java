@@ -6,29 +6,29 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for coding/decoding NMRA {@literal S&RP} DCC packets.
- * <P>
+ * <p>
  * Packets are (now) represented by an array of bytes. Preamble/postamble not
  * included. Note that this is a data representation, _not_ a representation of
  * the waveform! But this is a class, which might eventually also form a
  * representation object.
- * <P>
+ * <p>
  * This is meant to be a general Java NMRA implementation, so does NOT use JMRI
  * utilities. In particular, it returns null instead of throwing JmriException
  * for invalid requests. Callers need to check upstream.
- * <P>
+ * <p>
  * The function is provided by static member functions; objects of this class
  * should not be created.
- * <P>
+ * <p>
  * Note that these functions are structured by packet type, not by what want to
  * do. E.g. there are functions to create specific packet formats instead of a
  * general "loco speed packet" routine which figures out which type of packet to
  * use. Those decisions are to be made somewhere else.
- * <P>
+ * <p>
  * Range and value checking is intended to be aggressive; if we can check, we
  * should. Problems are reported as warnings.
- * <P>
+ * <p>
  * The basic function is to build a packet with proper addressing, etc:
- * <UL>
+ * <ul>
  * <li>oneBytePacket
  * <li>twoBytePacket
  * <li>threeBytePacket
@@ -37,15 +37,15 @@ import org.slf4j.LoggerFactory;
  * On top of those are built various special-purpose packet formats.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -1208,7 +1208,7 @@ public class NmraPacket {
 
     /**
      * Provide an NMRA analog control instruction.
-     * <P>
+     * <p>
      * Note that the NMRA draft of Fall 2004 only defines the value of "1" for
      * the "function parameter", calling that the value for "volume control".
      * However, DCC systems in the wild have been observed to use 0x7F for the
@@ -1336,7 +1336,7 @@ public class NmraPacket {
 
     /**
      * Extract the address type from an NMRA packet.
-     * <P>
+     * <p>
      * This finds and returns the type of address within a specific packet, e.g.
      * "the stationary decoder space".
      *
@@ -1364,7 +1364,7 @@ public class NmraPacket {
 
     /**
      * Extract the numerical address from an NMRA packet.
-     * <P>
+     * <p>
      * This finds and returns the numerical address within a specific type, e.g.
      * "first address within the stationary decoder space".
      * <p>
@@ -1406,7 +1406,7 @@ public class NmraPacket {
 
     /**
      * Extract the instruction from an NMRA packet.
-     * <P>
+     * <p>
      * This finds and returns the instruction byte within a specific type of
      * packet/instruction.
      *

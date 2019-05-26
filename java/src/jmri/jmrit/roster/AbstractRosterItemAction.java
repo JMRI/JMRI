@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base class for Actions to copy, export and import RosterEntrys.
- * <P>
+ * <p>
  * Note that {@link DeleteRosterItemAction} is sufficiently different that it
  * doesn't use this base class.
  *

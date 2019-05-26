@@ -68,7 +68,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // parse message type
         LnSensorAddress a;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_INPUT_REP:                /* page 9 of Loconet PE */
+            case LnConstants.OPC_INPUT_REP:                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -237,6 +237,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next 10 addresses are also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new LocoNet Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);
@@ -248,8 +250,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**

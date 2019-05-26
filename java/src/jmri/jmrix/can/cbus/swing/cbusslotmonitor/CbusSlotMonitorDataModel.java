@@ -207,7 +207,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable cmdStatTable) {
         // allow reordering of the columns
@@ -361,6 +360,9 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         // process is false as outgoing
         
@@ -435,7 +437,10 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      * @param m incoming cbus CanReply
      */
     @Override
-    public void reply(CanReply m) { 
+    public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         // log.warn(" opc {}",opc);
         // process is true as incoming message
@@ -736,12 +741,10 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 buf.append(rcvdIntAddr);
                 break;
             case 2:
-                buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
-                buf.append(rcvdIntAddr);
+                buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN",rcvdIntAddr));
                 break;
             case 3:
-                buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT"));
-                buf.append(one);
+                buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT",one));
                 break;
             case 4:
                 buf.append(Bundle.getMessage("ERR_CONSIST_EMPTY"));
@@ -759,8 +762,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 buf.append(rcvdIntAddr);
                 break;
             case 8:
-                buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));
-                buf.append(one);
+                buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED",one));
                 // cancel session number in table
                 int row = getrowfromsession(one);
                 if ( row > -1 ) {

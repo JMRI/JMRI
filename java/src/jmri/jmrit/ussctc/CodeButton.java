@@ -4,7 +4,7 @@ import jmri.*;
 
 /**
  * Drive the interactions of a code button and code light on the panel.
- *<p>
+ * <p>
  * Primary interactions are with the common {@link CodeLine} and
  * specific {@link Station} object.
  *
@@ -31,7 +31,7 @@ public class CodeButton {
 
     /**
      * Configure the Station connection for this CodeButton.
-     *<p>
+     * <p>
      * Note that {@link Station} normally invokes this automatically
      * as part of its construction
      *

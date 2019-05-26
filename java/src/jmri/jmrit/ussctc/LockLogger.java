@@ -8,7 +8,7 @@ import jmri.*;
  * Manages user-level logging information from Locks and Lock-like functions.
  * Locking objects store their status as a string, which is kept for them until
  * overwritten by a newer one.
- *<p>
+ * <p>
  * This implementation stores one (if more than one) in a Memory for display.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2019

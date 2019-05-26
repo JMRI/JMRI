@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>Read Me - IMPORTANT</name>
     <name xml:lang="de">Read Me - WICHTIG</name>
@@ -7,10 +9,10 @@
             <text> </text>
         </label>
         <label>
-            <text>&lt;html&gt;&lt;strong&gt;JMRI 4.7.1 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
-            <text xml:lang="it">&lt;html&gt;&lt;strong&gt;Richiesto JMRI 4.7.1 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;</text>
-            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.7.1 oder später ist notwendig um diese Definiton verwenden zu können.&lt;/strong&gt;&lt;/html&gt;</text>
-            <text xml:lang="ca">&lt;html&gt;&lt;strong&gt;JMRI 4.7.1 o posterior necessiten aquestes definicions.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text>&lt;html&gt;&lt;strong&gt;JMRI 4.15.6 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="it">&lt;html&gt;&lt;strong&gt;Richiesto JMRI 4.15.6 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.15.6 oder später ist notwendig um diese Definiton verwenden zu können.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;strong&gt;JMRI 4.15.6 o posterior necessiten aquestes definicions.&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
             <text> </text>
@@ -19,7 +21,7 @@
             <text>&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;</text>
             <text xml:lang="it">&lt;html&gt;&lt;h1&gt;Decoders ESU V4/Select Informazioni Importanti&lt;/h1&gt;&lt;/html&gt;</text>
             <text xml:lang="de">&lt;html&gt;&lt;strong&gt;ESU V4/Select Decoder Wichtige Information&lt;/strong&gt;&lt;/html&gt;</text>
-			<text xml:lang="ca">&lt;html&gt;&lt;strong&gt;Informació important dels decóders V4/Select&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;strong&gt;Informació important dels decóders V4/Select&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
             <text> </text>
@@ -39,7 +41,7 @@
             <text>&lt;html&gt;&lt;em&gt;Occasionally Factory Reset has rendered the sound project apparently inoperable.&lt;/em&gt;&lt;/html&gt;</text>
             <text xml:lang="it">&lt;html&gt;&lt;em&gt;L'esecuzione di un reset ai valori  di fabbrica sui decoder sonori ESU può rendere il progetto sonoro inutilizzabile!&lt;/em&gt;&lt;/html&gt;</text>
             <text xml:lang="de">&lt;html&gt;&lt;h2&gt;Der Reset auf die Werkseinstellungen kann das Sound-Projekt beschädigen!&lt;/h2&gt;&lt;/html&gt;</text>
-			<text xml:lang="ca">&lt;html&gt;&lt;em&gt;Ocasionalment un reset a fàbrica fa semblar que el projecte de so no va.&lt;/em&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;em&gt;Ocasionalment un reset a fàbrica fa semblar que el projecte de so no va.&lt;/em&gt;&lt;/html&gt;</text>
         </label>
         <label>
             <text> </text>
@@ -60,13 +62,13 @@
             <text>'factory' defaults suited to the project. If this has not been done correctly, a</text>
             <text xml:lang="it">alcuni parametri optional per i "nuovi settagi di fabbrica" appropriati al progetto</text>
             <text xml:lang="de">Teil dieser Installation ist das Schreiben neuer 'Default-Werte' passend zum Soundprojekt.</text>
-			<text xml:lang="ca">valors adequats al projecte. Si no es fa corretament,</text>
+            <text xml:lang="ca">valors adequats al projecte. Si no es fa corretament,</text>
         </label>
         <label>
             <text>subsequent reset will most likely render the sounds apparently inoperable due to</text>
             <text xml:lang="it">un successivo reset potrebbe rendere non utilizzabili i suoni a causa dei valori</text>
             <text xml:lang="de">Sollte dieser Vorgang nicht ordnungsgemäß stattgefunden haben kann ein Reset des Decoders durch</text>
-			<text xml:lang="ca">el Reset farà semblar que els sons no funcionen</text>
+            <text xml:lang="ca">el Reset farà semblar que els sons no funcionen</text>
         </label>
         <label>
             <text>incorrect CV defaults.</text>
@@ -126,82 +128,71 @@
             <text> </text>
         </label>
         <label>
-            <text></text>
-        </label>
-        <label>
-            <text>The Function Map pane has been rewritten to be more like the one used by the</text>
-            <text xml:lang="de">Der Reiter "Funktionszuordnung" ist so gestaltet das er mehr der Funktion der Software "ESU LokProgrammer®" entspricht.</text>
-            <text xml:lang="ca">El mapejat de funcions s'ha escrit per a assemblarse a</text>
-        </label>
-        <label>
-            <text>ESU LokProgrammer® software and now also includes Row Move buttons. For help</text>
-            <text xml:lang="de">Die Seite beinhalten nun auch die Funktion "Zeile verschieben" (Row auf / ab).</text>
-            <text xml:lang="ca">El Lokprogrammer ja té botons dalt i baix per ajudar</text>
-        </label>
-        <label>
-            <text>&lt;html&gt;with use of this pane see the &lt;strong&gt;Function Map&lt;/strong&gt; section below.&lt;/html&gt;</text>
-            <text xml:lang="de">&lt;html&gt;Für weitere Hilfe bei der Benutzung dieser Seite sehen Sie im Abschnit &lt;strong&gt;"Funktionszuordnung"&lt;/strong&gt; weiter unten nach.&lt;/html&gt;</text>
-            <text xml:lang="ca">&lt;html&gt;amb l'ús d'aquesta pestanya el &lt;strong&gt;"mappejat de funcions"&lt;/strong&gt; de la secció postrior.&lt;/html&gt;</text>
-        </label>
-        <label>
-            <text></text>
+            <text>The Sound Project Name can now be read from the decoder and is displayed on the Information pane.</text>
+            <text xml:lang="de">Der Soundprojekt-Name kann nun vom Decoder ausgelesen und auf der Info-Seite angezeigt werden.</text>
         </label>
         <label>
             <text> </text>
         </label>
         <label>
-            <text>There is now an option to import CV value list files created by LokProgrammer.</text>
-            <text xml:lang="it">Nuova opzione per importare i valori delle CV da file creato da LokProgrammer.</text>
-            <text xml:lang="de">Es gibt nun auch eine Möglichkeit CV-Dateien exportiert aus der Software "ESU LokProgrammer®" zu importieren.</text>
-			<text xml:lang="ca">Hi ha una opció per importar llistes de CV creadfes amb el Lokprogrammer</text>
+            <text>The SUSI Function Map is now available for those needing it.</text>
+            <text xml:lang="de">Wenn gewünscht ist das SUSI Funktionsmapping nun verfügbar.</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>There is an option to import CV value list files created by LokProgrammer.</text>
+            <text xml:lang="it">Opzione per importare i valori delle CV da file creato da LokProgrammer.</text>
+            <text xml:lang="de">Es gibt eine Möglichkeit CV-Dateien exportiert aus der Software "ESU LokProgrammer®" zu importieren.</text>
+            <text xml:lang="ca">Hi ha una opció per importar llistes de CV creadfes amb el Lokprogrammer</text>
         </label>
         <label>
             <text>(File menu when a roster entry is open.)</text>
             <text xml:lang="it">(Menu File quando si apre un decoder dal Roster.)</text>
             <text xml:lang="de">Menüpunt "Ablage->Importieren->LokProgrammer CV-liste Datei..." im geöffneten Lokpark-Fenster</text>
-			<text xml:lang="ca">Menú Fitxer quan hi ha una fitxa de flota oberta</text>
+            <text xml:lang="ca">Menú Fitxer quan hi ha una fitxa de flota oberta</text>
         </label>
         <label>
             <text> </text>
         </label>
         <label>
-            <text>These decoders are probably the most complex (and versatile) DCC decoders</text>
-            <text xml:lang="it">Questi decoders sono probabilmente i più complessi (e versatili) decoders DCC</text>
-            <text xml:lang="de">Die ESU-Decoder sind wahrscheinlich die komplexesten (und vielseitigsten) DCC-Decoder am derzeitigen Markt.</text>
-			<text xml:lang="ca">Aquests són els decóders més complexos i versàtils en DCC</text>
+            <text>These decoders are complex (and versatile) DCC decoders.</text>
+            <text xml:lang="it">Questi decoders sono complessi (e versatili) decoders DCC.</text>
+            <text xml:lang="de">Die ESU-Decoder sind komplexesten (und vielseitigsten) DCC-Decoder.</text>
+            <text xml:lang="ca">Aquests són els decóders més complexos i versàtils en DCC decoder.</text>
         </label>
         <label>
-            <text>manufactured to date. Each decoder implements ~1,200 CVs and this poses</text>
-            <text xml:lang="it">fino ad oggi. Comprendono circa 1.200 CV e questo impone</text>
+            <text>Each decoder implements ~1,200 CVs and this poses</text>
+            <text xml:lang="it">Comprendono circa 1.200 CV e questo impone</text>
             <text xml:lang="de">Jeder Decoder beinhaltet ~ 1.200 CVs und stellt damit eine zusätzliche Herausforderungen für die JMRI-Codierung dar.</text>
-			<text xml:lang="ca">fabricats fins la data. Cada decoder té 1200 CV i això</text>
+            <text xml:lang="ca">Cada decoder té 1200 CV i això</text>
         </label>
         <label>
-            <text>extra challenges for JMRI coding. These defintions are a work in progress.</text>
-            <text xml:lang="it">molto lavoro nella codifica. Queste definizioni sono in evoluzione.</text>
-            <text xml:lang="de">Diese Definitionen sind ein "work in progress".</text>
-			<text xml:lang="ca">implica més complicacions al JMRI. Les definicions estan en progrés</text>
+            <text>extra challenges for JMRI coding.</text>
+            <text xml:lang="it">molto lavoro nella codifica.</text>
+            <text xml:lang="ca">implica més complicacions al JMRI.</text>
         </label>
         <label>
             <text> </text>
         </label>
         <label>
-            <text>If you have an NCE Power Pro system, there is now a workaround in JMRI for the</text>
+            <text>If you have an NCE Power Pro system, there is a workaround in JMRI for the</text>
             <text xml:lang="it">Se avete un NCE Power Pro, è stata corretto un errore che preveniva</text>
             <text xml:lang="de">Wenn Sie ein NCE Power Pro System haben, gibt es jetzt einen Workaround in JMRI für das Firmware-Problem, das verhindert,</text>
-			<text xml:lang="ca">Si tens el sistema NCE Power Pro hi ha una solució</text>
+            <text xml:lang="ca">Si tens el sistema NCE Power Pro hi ha una solució</text>
         </label>
         <label>
             <text>firmware issue that prevents the Power Pro from correctly writing Indexed CVs on</text>
             <text xml:lang="it">la corretta scrittura delle CV indicizzate usando il Binario di Programmazione</text>
             <text xml:lang="de">dass Power Pro korrekt indizierte CVs auf dem Programmiergleis schreibt. Sie können jetzt sicher das Programmiergleis</text>
-			<text xml:lang="ca">per al problema de firmware, que fa que no es puguin escriure CV indexades a</text>
-		</label>
+            <text xml:lang="ca">per al problema de firmware, que fa que no es puguin escriure CV indexades a</text>
+        </label>
         <label>
             <text>the Programming Track. You can now safely use the the Programming Track to read</text>
             <text xml:lang="it">Ora potete usare tranquillamente il Binario di Programmazione</text>
             <text xml:lang="de">verwenden, um CVs in dieser Definition zu lesen oder zu schreiben.</text>
-			<text xml:lang="ca">la via de programació- Ara es pot fer servir via de programació per llegir</text>
+            <text xml:lang="ca">la via de programació- Ara es pot fer servir via de programació per llegir</text>
         </label>
         <label>
             <text>or write any CVs in this definition.</text>
@@ -226,13 +217,13 @@
             <text>The ESU V4/Select decoders use a multiplier factor of 0.25 rather than the NMRA standard</text>
             <text xml:lang="it">I decoders ESU V4 e Select usano un fattore di moltiplica di 0.25 al posto dello standard NMRA</text>
             <text xml:lang="de">Die ESU v4 / Select Decoder verwenden für die Werte der Beschleunigungs- (CV 3) und Verzögerungs- (CV 4)</text>
-			<text xml:lang="ca">Els ESU V4/Select fan servir un multiplicador de 0.25 en comptes de l'estàndard NMRA</text>
+            <text xml:lang="ca">Els ESU V4/Select fan servir un multiplicador de 0.25 en comptes de l'estàndard NMRA</text>
         </label>
         <label>
             <text>factor of 0.896 for the values of Acceleration (CV 3) and Deceleration (CV 4) rates.</text>
             <text xml:lang="it">di 0.896 per i valori di Accellerazione (CV 3) e Decellerazione (CV 4).</text>
             <text xml:lang="de">Raten einen Multiplikatorfaktor von 0,25 anstatt des NMRA-Standard-Faktors von 0,896.</text>
-			<text xml:lang="ca">facto de 0.896 per a que el valor d'acceleració (CV3) i desacceleració (CV4)</text>
+            <text xml:lang="ca">facto de 0.896 per a que el valor d'acceleració (CV3) i desacceleració (CV4)</text>
         </label>
         <label>
             <text> </text>
@@ -247,7 +238,7 @@
             <text>the Acceleration and Deceleration CVs to achieve the same rate as in a LokSound</text>
             <text xml:lang="it">nelle CV Accellerazione e Decellerazione per ottenere lo stesso risultato di un LokSound</text>
             <text xml:lang="de">der fast 4 mal so groß ist (3,6) um die gleiche Rate wie in einem LokSound v3.5 oder fast jeder</text>
-			<text xml:lang="ca">la taxa d'Acceleració i desacceleraciñi per aconseguir les mateixes tasques que un LokSound</text>
+            <text xml:lang="ca">la taxa d'Acceleració i desacceleraciñi per aconseguir les mateixes tasques que un LokSound</text>
         </label>
         <label>
             <text>V3.5 or almost any other brand of decoder. This can be a particular problem</text>
@@ -277,12 +268,12 @@
         <label>
             <text>The ESU Function Map has 40 lines and these lines are not sequentially mapped to</text>
             <text xml:lang="de">Die ESU-Funktionszuordnung hat 40 Zeilen welche nicht sequentiell Funktionen zugeordnet sind.</text>
-			<text xml:lang="ca">. El mapejat té 40 límies i no es mapegen seqüencialment</text>
+            <text xml:lang="ca">. El mapejat té 40 límies i no es mapegen seqüencialment</text>
         </label>
         <label>
             <text>functions. Instead, any line can be set to be activated by any one (or</text>
             <text xml:lang="de">Stattdessen kann jede Zeile durch eine beliebige Funktion (oder Kombination davon) aktiviert werden.</text>
-			<text xml:lang="ca">.cap a funcions, Cada linea es pot activar per ser activada per cadascuna</text>
+            <text xml:lang="ca">.cap a funcions, Cada linea es pot activar per ser activada per cadascuna</text>
         </label>
         <label>
             <text>combination of) function buttons.</text>
@@ -299,20 +290,20 @@
         <label>
             <text>The information in the ESU LokSound Select manual is oversimplified and may not give.</text>
             <text xml:lang="de">Die Informationen im ESU LokSound Select Handbuch sind vereinfacht und können nicht</text>
-			<text xml:lang="ca">La informació del manual ESU està simplificada i potser no dóna</text>
+            <text xml:lang="ca">La informació del manual ESU està simplificada i potser no dóna</text>
         </label>
         <label>
             <text>satisfactory results. Use the V4 manual for Select decoders as well..</text>
             <text xml:lang="de">zufriedenstellende Ergebnisse erzielen. Verwenden Sie auch das v4-Handbuch für Select-Decoder.</text>
-			<text xml:lang="ca">resultats satisfactoris. Utilitza el Manual del V4 per a Select decóders igualment </text>
+            <text xml:lang="ca">resultats satisfactoris. Utilitza el Manual del V4 per a Select decóders igualment </text>
         </label>
         <label>
             <text> </text>
         </label>
         <label>
-            <text>This version of JMRI now uses a very similar layout to the ESU LokProgrammer®</text>
-            <text xml:lang="de">Diese Version von JMRI verwendet nun ein sehr ähnliches Layout wie die ESU LokProgrammer® Software.</text>
-			<text xml:lang="ca">Aquesta versió del JMRI fa servir una presentació similar al Lokproggramer d'ESU</text>
+            <text>This version of JMRI uses a very similar layout to the ESU LokProgrammer®</text>
+            <text xml:lang="de">Diese Version von JMRI verwendet ein sehr ähnliches Layout wie die ESU LokProgrammer® Software.</text>
+            <text xml:lang="ca">Aquesta versió del JMRI fa servir una presentació similar al Lokproggramer d'ESU</text>
         </label>
         <label>
             <text>software. A good guide to the Function Map pane is available at pages 14 and 15</text>
@@ -322,7 +313,7 @@
         <label>
             <text>of the LokProgrammer® V4.0 manual. This manual can be downloaded from the</text>
             <text xml:lang="de">des LokProgrammer® v4.0 Handbuches. Dieses Handbuch kann heruntergeladen werden von der</text>
-			<text xml:lang="ca">del manual del LokProgrammer. Es pot descarrregar del </text>
+            <text xml:lang="ca">del manual del LokProgrammer. Es pot descarrregar del </text>
         </label>
         <label>
             <text>LokSound Yahoo® group at https://groups.yahoo.com/neo/groups/loksound/files</text>
@@ -360,17 +351,17 @@
         <label>
             <text>P.S. (Not described in the manual are the Row Move buttons/arrows. These are for</text>
             <text xml:lang="de">P.S. (Nicht im Handbuch beschrieben sind die Row Move Knöpfe / Pfeile, die für fortgeschrittene Benutzer </text>
-			<text xml:lang="ca">P.S. (No descrit al manual hi ha els botons per moure. Aquests són per a </text>
+            <text xml:lang="ca">P.S. (No descrit al manual hi ha els botons per moure. Aquests són per a </text>
         </label>
         <label>
             <text>advanced users and allow the row order to be reorganised by moving the selected</text>
             <text xml:lang="de">gedacht sind und es erlauben, die Zeilenreihenfolge zu reorganisieren indem sie die ausgewählte Zeile</text>
-			<text xml:lang="ca">usuaris avançats i permet moure files sseleccionant-les</text>
+            <text xml:lang="ca">usuaris avançats i permet moure files sseleccionant-les</text>
         </label>
         <label>
             <text>row up or down in the table. Reorganising rows is purely for cosmetic</text>
             <text xml:lang="de">nach oben oder unten in der Tabelle verschieben. Das Reorganisieren von Zeilen ist rein für die Kosmetik</text>
-			<text xml:lang="ca">Fila superior o inferior a la taula. Reorganitzar files només és est`tic</text>
+            <text xml:lang="ca">Fila superior o inferior a la taula. Reorganitzar files només és est`tic</text>
         </label>
         <label>
             <text>organisational purposes and makes no difference to the way the function map is</text>
@@ -380,12 +371,12 @@
         <label>
             <text>interpreted. To select a row for moving, click on the Radio Button at the</text>
             <text xml:lang="de">Um eine Zeile zum Verschieben auszuwählen, markieren Sie die Schaltfläche "Radio" am</text>
-			<text xml:lang="ca">interpretat- Per a seleccionar una fila per desplaçar-la, clica el botó de ràdio</text>
+            <text xml:lang="ca">interpretat- Per a seleccionar una fila per desplaçar-la, clica el botó de ràdio</text>
         </label>
         <label>
             <text>beginning of the row you wish to move and then use the arrow buttons above the</text>
             <text xml:lang="de">Anfang der Zeile die Sie verschieben möchten und betätigen anschließend die Pfeiltasten über- bzw.</text>
-			<text xml:lang="ca">començament de la fla que vols moure</text>
+            <text xml:lang="ca">començament de la fla que vols moure</text>
         </label>
         <label>
             <text>top row or below the bottom row. If you move rows, you will then need to Write</text>
@@ -400,7 +391,7 @@
         <label>
             <text>done if you are very familiar with the use of the Function Map pane.)</text>
             <text xml:lang="de">gemacht werden, wenn Sie mit der Verwendung des Funktionszuordnungsbereich sehr vertraut sind.)</text>
-			<text xml:lang="ca"> si estàs familiaritzat amb l'ús de Mapes de funcions)</text>
+            <text xml:lang="ca"> si estàs familiaritzat amb l'ús de Mapes de funcions)</text>
         </label>
         <label>
             <text> </text>
@@ -419,19 +410,19 @@
             <text>The ESU V4/Select Decoders implement the mfx® style speed table rather than</text>
             <text xml:lang="it">I decoder ESU V4 e Select implementano una tabella stile ® mfx</text>
             <text xml:lang="de">Die ESU v4 / Select Decoder haben die Geschwindigkeitstabelle im mfx®-Stil implementiert</text>
-        	<text xml:lang="ca">Els decoders V4/Select implementen estil de taula de velocitat MFX en coptes de</text>	
+            <text xml:lang="ca">Els decoders V4/Select implementen estil de taula de velocitat MFX en coptes de</text>	
         </label>
         <label>
             <text>the NMRA version. This style can do everything the NMRA stlye does and is every</text>
             <text xml:lang="it">invece della versione NMRA. Questo stile fà tutto quello che permette la tabella NMRA</text>
             <text xml:lang="de">und nicht die NMRA Version. Dieser Stil kann alles, was der NMRA Stil kann und ist mit jedem</text>
-        	<text xml:lang="ca">la versió NMRA. Aquest estil pot fer tot el que NMRA pot fer i és</text>	
+            <text xml:lang="ca">la versió NMRA. Aquest estil pot fer tot el que NMRA pot fer i és</text>	
         </label>
         <label>
             <text>bit as versatile and easy to use.</text>
             <text xml:lang="it">ed è altrettanto versatile e facile da usare</text>
             <text xml:lang="de">Bit vielseitig und einfach zu bedienen.</text>
-        	<text xml:lang="ca">petita i versàtil i fàcil d'utilitzar</text>	
+            <text xml:lang="ca">petita i versàtil i fàcil d'utilitzar</text>	
         </label>
         <label>
             <text> </text>
@@ -440,7 +431,7 @@
             <text>The difference is that Vstart (CV 2) and Vhigh (CV 5) are ALWAYS used as well</text>
             <text xml:lang="it">La differenza è che Vstart (CV 2) e Vhigh (CV 5) sono SEMPRE utilizzate come Inizio e Fine valori</text>
             <text xml:lang="de">Der Unterschied besteht darin, dass Vstart (CV 2) und Vhigh (CV 5) IMMER verwendet werden. Auch für die</text>
-   			<text xml:lang="ca">La diferència és que VInici (CV2) i VAlt (CV 5) sempre s'usen</text>	
+            <text xml:lang="ca">La diferència és que VInici (CV2) i VAlt (CV 5) sempre s'usen</text>	
         </label>
         <label>
             <text> as the speed table CVs. The curve shape defined in the speed table CVs is</text>
@@ -452,7 +443,7 @@
             <text> squeezed to fit between Vstart and Vhigh.</text>
             <text xml:lang="it">ed è ridimensionata per stare tra Vstart e Vhigh.</text>
             <text xml:lang="de">wird eingepasst zwischen Vstart und Vhigh.</text>
-			<text xml:lang="ca">redimensionada per aconseguir VInici i VFinal</text>	
+            <text xml:lang="ca">redimensionada per aconseguir VInici i VFinal</text>	
         </label>
         <label>
             <text> </text>
@@ -461,7 +452,7 @@
             <text>The procedure to set up a speed curve is to pick the curve shape you desire on</text>
             <text xml:lang="it">La procedura per programmare una particolare curva è quella di disegnare la curva che desiderate</text>
             <text xml:lang="de">Die Vorgehensweise, um eine Geschwindigkeitskurve einzurichten, ist, die Kurvenform auszuwählen</text>
-        	<text xml:lang="ca">Per a fer corba velocitat cal fer la forma que es vulgui</text>	
+            <text xml:lang="ca">Per a fer corba velocitat cal fer la forma que es vulgui</text>	
         </label>
         <label>
             <text>the speed table AND use Vstart (CV 2) and Vhigh (CV 5) to set the Minimum and</text>
@@ -473,7 +464,7 @@
             <text>Maximum speeds.</text>
             <text xml:lang="it">e massimo delle velocità</text>
             <text xml:lang="de">und Höchstgeschwindigkeiten festzulegen.</text>
-			<text xml:lang="ca">i màxima velocitat</text>	
+            <text xml:lang="ca">i màxima velocitat</text>	
         </label>
         <label>
             <text> </text>
@@ -482,7 +473,7 @@
             <text>When speed matching to a loco the Minimum and Maximum speeds MUST be matched</text>
             <text xml:lang="it">Se dovete accopiare due loco i valori di Vstart (CV 2) e Vhigh (CV 5) devono essere uguali</text>
             <text xml:lang="de">Wenn die Geschwindigkeit auf eine andere Lok abgestimmt werden soll, müssen zuerst mit den CVs 2 und 5 NUR</text>
-        	<text xml:lang="ca">Quan es fa una MT, la velocitat Mínima i màxima han de coincidir</text>	
+            <text xml:lang="ca">Quan es fa una MT, la velocitat Mínima i màxima han de coincidir</text>	
         </label>
         <label>
             <text>first using CVs 2 and 5 ONLY on the LokSound decoder. Then use CVs 68 to 93</text>
@@ -501,7 +492,6 @@
             <text xml:lang="it">quando accopiate due loco.</text>
             <text xml:lang="de">passend zu einer anderen Lok eingestellt werden soll.</text>
             <text xml:lang="ca">MT</text>	
-
         </label>
         <label>
             <text> </text>
@@ -510,20 +500,19 @@
             <text>The Minimum and Maximum speeds cannot be set by using the speed table steps 1</text>
             <text xml:lang="it">La velocità Minima e Massima non si possono programmare sulla Tabella per gli step 1 e 28</text>
             <text xml:lang="de">Die Minimal- und Höchstgeschwindigkeiten können nicht mit den Geschwindigkeitstabellenwerten 1 und 28</text>
-        	<text xml:lang="ca">La velocitat mínima i màxima no es poden definir usant el pas 1 de la taula de velocitats</text>	
+            <text xml:lang="ca">La velocitat mínima i màxima no es poden definir usant el pas 1 de la taula de velocitats</text>	
         </label>
         <label>
             <text>and 28 (CVs 67 and 94). The values of these two CVs are fixed in the decoder at</text>
             <text xml:lang="it">(CV 67 e 94). I valori di queste due CV sono fissati nel decoder</text>
             <text xml:lang="de">(CVs 67 und 94) eingestellt werden. Die Werte dieser beiden CVs sind im Decoder fest auf die</text>
-			<text xml:lang="ca">i 28 (CV 67 i 94). El valor d'aquestes CV es fixa en el decóder en</text>	
+            <text xml:lang="ca">i 28 (CV 67 i 94). El valor d'aquestes CV es fixa en el decóder en</text>	
         </label>
         <label>
             <text>1 and 255 respectively.</text>
             <text xml:lang="it">rispettivamente a 1 e 255.</text>
             <text xml:lang="de">Werte 1 und 255 eingestellt.</text>
             <text xml:lang="ca">1 i 255 respectivament</text>	
-
         </label>
         <label>
             <text> </text>
@@ -542,7 +531,7 @@
             <text>For help with programming these decoders, the LokSound Yahoo® group is recommended.</text>
             <text xml:lang="it">Per aiuto nella programmazione di questi Decoder si raccomanda il Gruppo di Yahoo® dedicato a LokSound</text>
             <text xml:lang="de">Für die Programmierung dieser Decoder wird die LokSound Yahoo® Gruppe empfohlen.</text>
-			<text xml:lang="ca">Per ajuda amb la programació, es recomana el grup de Yahoo LokSound</text>	
+            <text xml:lang="ca">Per ajuda amb la programació, es recomana el grup de Yahoo LokSound</text>	
         </label>
         <label>
             <text> </text>
@@ -551,13 +540,13 @@
             <text>If you think there is a problem with this decoder definition, please report back to us by</text>
             <text xml:lang="it">Se pensate ci siano problemi con questa definizione del Decoder in JMRI</text>
             <text xml:lang="de">Wenn Sie denken, dass es ein Problem mit dieser Decoder-Definition gibt, melden Sie sich bitte bei uns.</text>
-			<text xml:lang="ca">Si creus que la plantilla del decóder té alguna errada, sisusplau contacta amb nosaltres</text>
+            <text xml:lang="ca">Si creus que la plantilla del decóder té alguna errada, sisusplau contacta amb nosaltres</text>
         </label>
         <label>
-            <text>posting to either the JMRI or LokSound Yahoo® groups or by logging an Issue bug report on</text>
-            <text xml:lang="it">Mettendo un post sul Gruppo di Yahoo® o inserendo un report Issue</text>
-            <text xml:lang="de">Senden Sie ein Posting an die JMRI oder LokSound Yahoo® Gruppen oder durch das Melden eines Bug Report Issues auf</text>
-            <text xml:lang="ca">Enviar a JMRI o grup de Yahoo de LokSound o asvisant d'un error Issue a</text>
+            <text>posting to either the JMRI groups.io or LokSound Yahoo® groups or by logging an Issue bug report on</text>
+            <text xml:lang="it">Mettendo un post sul Gruppo di JMRI groups.io o Yahoo® o inserendo un report Issue</text>
+            <text xml:lang="de">Senden Sie ein Posting an die JMRI groups.io oder LokSound Yahoo® Gruppen oder durch das Melden eines Bug Report Issues auf</text>
+            <text xml:lang="ca">Enviar a JMRI groups.io o grup de Yahoo de LokSound o asvisant d'un error Issue a</text>
         </label>
         <label>
             <text>the JMRI GitHub page at https://github.com/JMRI/JMRI/issues</text>
