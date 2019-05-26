@@ -709,7 +709,8 @@
               nor the "alternate" LocoNet turnout control messages used with the
               command station "Bushby" feature, described below.
               <p>See <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#automation">
-              for more information on this mechanism.
+              Turnouts Table "automation"</a>help for more information on this 
+              mechanism.
               <p>When using this mechanism with LocoNet connections, the turnout
               must not be configured for "MONITORING" feedback mode, as the
               messaging used with this mechanism does not use the messages required
