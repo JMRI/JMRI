@@ -43,14 +43,14 @@
     </variable>
     <variable CV="64" default="100" item="Sound Brake On">
         <decVal/>
-        <label>Brake On Threshold</label>
+        <label>Brake Sound On Threshold</label>
         <label xml:lang="it">Soglia Inizio intervento Freno</label>
         <label xml:lang="de">Bremsgeräusch - Einschaltschwelle</label>
         <label xml:lang="ca">Límit a la frenada</label>
     </variable>
     <variable CV="65" default="25" item="Sound Brake Off">
         <decVal/>
-        <label>Brake Off Threshold</label>
+        <label>Brake Sound Off Threshold</label>
         <label xml:lang="it">Soglia Fine intervento Freno</label>
         <label xml:lang="de">Bremsgeräusch - Abschaltschwelle</label>
     </variable>
