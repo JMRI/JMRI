@@ -22,14 +22,16 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
 
     /**
      * Provides access to the system prefix string.
-     * This was previously called the "System letter"
+     * This was previously called the "System letter".
      */
     @Override
-    public String getSystemPrefix(){ return prefix; }
+    public String getSystemPrefix() {
+        return prefix;
+    }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        Turnout t = new RaspberryPiTurnout(systemName,userName);
+        Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }
 

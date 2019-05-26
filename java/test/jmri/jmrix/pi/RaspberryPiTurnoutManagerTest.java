@@ -20,18 +20,17 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @Override
     public String getSystemName(int i){
-        return "PiT"+i;
+        return l.getSystemPrefix() + "T" + i;
     }
-
 
    @Test
    public void ConstructorTest(){
        Assert.assertNotNull(l);
    }
 
-   @Test
-   public void checkPrefix(){
-       Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
+    @Test
+    public void checkPrefix(){
+       Assert.assertEquals("Prefix", "P2", l.getSystemPrefix());
    }
 
     @Override    
@@ -108,8 +107,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         return 5;
     }
 
-
-
     // The minimal setup for log4J
     @Override
     @Before
@@ -118,7 +115,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        jmri.util.JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiTurnoutManager("Pi");
+       l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo("P2", "RaspberryPi"));
     }
 
     @After
