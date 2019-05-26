@@ -75,12 +75,30 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
-     * @param s the item to make the system name for
+     * @param name the item to make the system name for
      * @return A system name from a user input, typically a number.
      * @throws IllegalArgumentException if a valid name can't be created
      */
     @Nonnull
-    public String makeSystemName(@Nonnull String s);
+    public default String makeSystemName(@Nonnull String name) {
+        return validateSystemName(name.startsWith(getSystemNamePrefix()) ? name : getSystemNamePrefix() + name);
+    }
+
+    /**
+     * Validate the format of a system name.
+     * 
+     * @param name the system name to validate
+     * @return the system name unchanged from its input so that this method can
+     *         be chained or used as an parameter to another method
+     * @throws IllegalArgumentException if the name is not valid
+     */
+    @Nonnull
+    public default String validateSystemName(@Nonnull String name) {
+        if (validSystemNameFormat(name) != NameValidity.VALID) {
+            throw new NamedBean.BadSystemNameException();
+        }
+        return name;
+    }
 
     /**
      * Code the validity (including just as a prefix) of a proposed name string.
