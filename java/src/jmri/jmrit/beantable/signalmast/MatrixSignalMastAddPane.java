@@ -20,6 +20,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A pane for configuring MatrixSignalMast objects.
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @author Egbert Broerse Copyright (C) 2016
@@ -1003,4 +1004,5 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatrixSignalMastAddPane.class);
+
 }
