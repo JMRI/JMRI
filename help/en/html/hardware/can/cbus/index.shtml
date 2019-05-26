@@ -84,7 +84,8 @@
         <li><a href="../index.shtml">JMRI CAN Support</a></li>
         <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
         </ul>
-      
+
+    <a name="tools" id="tools"></a>
     <h3>JMRI MERG CBUS Tools Support Pages</h3>
       <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" align="right"
       width="206" height="145">
@@ -421,8 +422,8 @@
         <p>If neither have been checked and you are using the main JMRI Throttle, you will be asked
         if you want to Steal, Share, or cancel.</p>
         
-        <img alt="JMRI MERG CBUS Steal Share Dialogue"
-        height="128" src="images/web/cbus-throttle-steal-share-dialogue-322x128.png" width="322">
+        <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png"
+        width="322" height="128" alt="JMRI MERG CBUS Steal Share Dialogue">
         
         <p>If you are using an automation script and neither option is checked, the system will
         attempt to acquire a Share on the session.</p>
@@ -452,8 +453,8 @@
         
         <p>If neither option is enabled, or the steal / share is not possible, a notification will be displayed:</p>
         
-        <img alt="JMRI MERG CBUS Stolen Throttle Dialogue"
-        height="138" src="images/web/cbus-throttle-stolen-dialogue-278x138.png" width="278">
+        <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png"
+        width="278" height="138" alt="JMRI MERG CBUS Stolen Throttle Dialogue">
         
         <p>Ticking the checkbox before closing the popup will supress loco steal notifications for
         the rest of the JMRI session, for all loco sessions.</p>

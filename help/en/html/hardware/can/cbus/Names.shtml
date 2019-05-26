@@ -160,7 +160,7 @@
       <p>See <a href="../../../doc/Technical/TurnoutFeedback.shtml">JMRI : Turnout Feedback</a> for more info.</p>
       
       
-      <h4><a id="reporters" name="reporters">Reporter ( incl. RFID ) data from CBUS</a></h4>
+      <h4><a name="reporters" id="reporters">Reporter ( incl. RFID ) data from CBUS</a></h4>
       <p><a href="../../../tools/Reporters.shtml">JMRI Reporters</a> do not have Off or On events,
         they just use a device ( short event ) or node number.</p>
         
