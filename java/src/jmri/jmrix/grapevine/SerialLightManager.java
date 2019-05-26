@@ -108,8 +108,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**
