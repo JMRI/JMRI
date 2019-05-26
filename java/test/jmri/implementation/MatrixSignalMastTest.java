@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the MatrixSignalMast implementation
+ * Tests for the MatrixSignalMast implementation.
  *
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author	Egbert Broerse Copyright (C) 2016, 2019
  */
 public class MatrixSignalMastTest {
 
@@ -151,6 +151,15 @@ public class MatrixSignalMastTest {
         Assert.assertNull("check null", m.getAspect());
     }
 
+    @Test
+    public void testSetDelay() {
+        MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+
+        Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(150);
+        Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
+    }
+
     // from here down is testing infrastructure
 
     // The minimal setup for log4J
@@ -166,4 +175,5 @@ public class MatrixSignalMastTest {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+
 }
