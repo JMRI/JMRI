@@ -286,6 +286,33 @@ public abstract class LayoutTrack {
     }
 
     /**
+     * Check for active block boundaries.
+     * <p>
+     * If any connection point of a layout track object has attached objects, such as
+     * signal masts, signal heads or NX sensors, the layout track object cannot be deleted.
+     * @return true if the layout track object can be deleted.
+     */
+    public abstract boolean canRemove();
+
+    /**
+     * Display the attached items that prevent removing the layout track item.
+     * @param itemList A list of the attached heads, masts and/or sensors.
+     * @param typeKey The object type such as Turnout, Level Crossing, etc.
+     */
+    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
+        itemList.sort(null);
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+                Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
+        for (String item : itemList) {
+            msg.append("\n    " + item);  // NOI18N
+        }
+        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+                msg.toString(),
+                Bundle.getMessage("WarningTitle"),  // NOI18N
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
      * Initialization method for LayoutTrack sub-classes. The following method
      * is called for each instance after the entire LayoutEditor is loaded to
      * set the specific objects for that instance

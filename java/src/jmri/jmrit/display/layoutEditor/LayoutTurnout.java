@@ -731,6 +731,53 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
+        if (!beanReferences.isEmpty()) {
+            displayRemoveWarningDialog(beanReferences, "BeanNameTurnout");  // NOI18N
+        }
+        return beanReferences.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a turnout point.
+     * @param pointName Specify the point (A-D) or all (All) points.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getBeanReferences(String pointName) {
+        ArrayList<String> references = new ArrayList<>();
+        if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
+            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
+            if (!getSignalA1Name().isEmpty()) references.add(getSignalA1Name());
+            if (!getSignalA2Name().isEmpty()) references.add(getSignalA2Name());
+            if (!getSignalA3Name().isEmpty()) references.add(getSignalA3Name());
+        }
+        if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
+            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
+            if (!getSignalB1Name().isEmpty()) references.add(getSignalB1Name());
+            if (!getSignalB2Name().isEmpty()) references.add(getSignalB2Name());
+        }
+        if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
+            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
+            if (!getSignalC1Name().isEmpty()) references.add(getSignalC1Name());
+            if (!getSignalC2Name().isEmpty()) references.add(getSignalC2Name());
+        }
+        if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
+            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
+            if (!getSignalD1Name().isEmpty()) references.add(getSignalD1Name());
+            if (!getSignalD2Name().isEmpty()) references.add(getSignalD2Name());
+        }
+        return references;
+    }
+
     @Nonnull
     public String getSignalAMastName() {
         if (signalAMastNamed != null) {
@@ -2701,7 +2748,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
+                    if (canRemove() && layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

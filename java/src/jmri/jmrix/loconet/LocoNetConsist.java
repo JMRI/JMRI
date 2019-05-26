@@ -47,7 +47,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = LEADREQUESTSTATE;
         consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<DccLocoAddress>();
-        throttleManager.requestThrottle(consistAddress, this);
+        throttleManager.requestThrottle(consistAddress, this, false);
     }
 
     // Initialize a consist for the specific address
@@ -61,7 +61,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = LEADREQUESTSTATE;
         consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<DccLocoAddress>();
-        throttleManager.requestThrottle(consistAddress, this);
+        throttleManager.requestThrottle(consistAddress, this, false);
     }
 
     // Clean Up local storage
@@ -282,7 +282,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + directionNormal + ".");
         }
         consistRequestState = LINKSTAGEONESTATE;
-        throttleManager.requestThrottle(LocoAddress, this);
+        throttleManager.requestThrottle(LocoAddress, this, false);
     }
 
     /*
@@ -321,7 +321,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
           notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);
           return;
         }
-        throttleManager.requestThrottle(LocoAddress, this);
+        throttleManager.requestThrottle(LocoAddress, this, false);
         // skip right to stage 2, we do not need to status edit. 
         consistRequestState = LINKSTAGETWOSTATE;
     }
@@ -505,11 +505,24 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         removeFromConsistList((DccLocoAddress) address);
         consistRequestState = IDLESTATE;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address){
-        // this is an automatically stealing impelementation.
-        throttleManager.stealThrottleRequest(address, this, true);
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class);

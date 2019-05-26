@@ -19,8 +19,50 @@
         "value": {
             "type": "string",
             "description": "If present, sets the value of the block"
+        },
+        "speed": {
+            "type": [
+                "string"
+            ],
+            "description": "The authorized speed through the block; authorized values depend on signal system in use"
+        },
+        "curvature": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2,
+                4
+            ],
+            "description": "Curvature of block; allowed values correspond to NONE, GRADUAL, TIGHT, SEVERE in that order"
+        },
+        "direction": {
+            "type": "integer",
+            "description": "Direction of block; see http://jmri.org/JavaDoc/doc/jmri/Path.html for possible values"
+        },
+        "length": {
+            "type": "number",
+            "description": "Length of block in millimeters"
+        },
+        "permissive": {
+            "type": "boolean",
+            "description": "true if block allows a train to enter it while occupied; false otherwise"
+        },
+        "speedLimit": {
+            "type": "number",
+            "description": "The maximum allowed speed for the block"
+        },
+        "denied": {
+            "type": "array",
+            "description": "List of names of blocks that trains cannot enter this block from",
+            "items": {
+                "type": "string",
+                "description": "Name of a block that trains cannot enter this block from"
+            }
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "required": [
+        "name"
+    ]
 }
