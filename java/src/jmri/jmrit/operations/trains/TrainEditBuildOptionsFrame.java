@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -19,6 +20,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -30,8 +35,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a train's build options
@@ -329,7 +332,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         // row 15 buttons
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
-//  pB.setMaximumSize(new Dimension(2000, 250));
+        //  pB.setMaximumSize(new Dimension(2000, 250));
         addItem(pB, saveTrainButton, 3, 0);
 
         getContentPane().add(p1);
@@ -380,7 +383,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             trainDescription.setText(_train.getDescription());
             buildNormalCheckBox.setSelected(_train.isBuildTrainNormalEnabled());
             sendToTerminalCheckBox.setSelected(_train.isSendCarsToTerminalEnabled());
-            returnStagingCheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
             allowLocalMovesCheckBox.setSelected(_train.isAllowLocalMovesEnabled());
             allowThroughCarsCheckBox.setSelected(_train.isAllowThroughCarsEnabled());
             serviceAllCarsCheckBox.setSelected(_train.isServiceAllCarsWithFinalDestinationsEnabled());
@@ -392,28 +394,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             builtBeforeTextField.setText(_train.getBuiltEndYear());
             setBuiltRadioButton();
             enableButtons(true);
-            // does this train depart staging?
-            if (_train.getTrainDepartsRouteLocation() != null
-                    && _train.getTrainDepartsRouteLocation().getLocation() != null
-                    && _train.getTrainDepartsRouteLocation().getLocation().isStaging()) {
-                buildConsistCheckBox.setEnabled(false); // can't build a consist out of staging
-            }
             // does train depart and return to same staging location?
-            if (_train.getTrainDepartsRouteLocation() != null
-                    && _train.getTrainTerminatesRouteLocation() != null
-                    && _train.getTrainTerminatesRouteLocation().getLocation() != null
-                    && _train.getTrainTerminatesRouteLocation().getLocation().isStaging()
-                    && _train.getTrainDepartsRouteLocation().getName().equals(
-                            _train.getTrainTerminatesRouteLocation().getName())) {
-                allowThroughCarsCheckBox.setEnabled(false);
-                if (Setup.isAllowReturnToStagingEnabled()) {
-                    returnStagingCheckBox.setEnabled(false);
-                    returnStagingCheckBox.setSelected(true);
-                    returnStagingCheckBox.setToolTipText(Bundle.getMessage("TipReturnToStaging"));
-                } else {
-                    returnStagingCheckBox.setEnabled(true);
-                }
-            }
+            updateReturnToStagingCheckbox();
             // listen for train changes
             _train.addPropertyChangeListener(this);
         } else {
@@ -428,6 +410,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         // get notified if car owners or engine models gets modified
         InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(EngineModels.class).addPropertyChangeListener(this);
+
+        // get notified if return to staging option changes
+        Setup.addPropertyChangeListener(this);
 
         initMinimumSize();
     }
@@ -471,8 +456,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 _train.setOwnerOption(Train.EXCLUDE_OWNERS);
                 updateOwnerNames();
             }
-            if (ae.getSource() == builtDateAll || ae.getSource() == builtDateAfter
-                    || ae.getSource() == builtDateBefore || ae.getSource() == builtDateRange) {
+            if (ae.getSource() == builtDateAll ||
+                    ae.getSource() == builtDateAfter ||
+                    ae.getSource() == builtDateBefore ||
+                    ae.getSource() == builtDateRange) {
                 updateBuilt();
             }
             if (ae.getSource() == none1) {
@@ -494,8 +481,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 _train.setSecondLegOptions(Train.HELPER_ENGINES);
                 updateTrainRequires1Option();
             }
-            if (ae.getSource() == keep1Caboose || ae.getSource() == change1Caboose
-                    || ae.getSource() == remove1Caboose) {
+            if (ae.getSource() == keep1Caboose ||
+                    ae.getSource() == change1Caboose ||
+                    ae.getSource() == remove1Caboose) {
                 roadCaboose1Box.setEnabled(change1Caboose.isSelected());
                 updateTrainRequires2Option();
             }
@@ -515,8 +503,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 _train.setThirdLegOptions(Train.HELPER_ENGINES);
                 updateTrainRequires2Option();
             }
-            if (ae.getSource() == keep2Caboose || ae.getSource() == change2Caboose
-                    || ae.getSource() == remove2Caboose) {
+            if (ae.getSource() == keep2Caboose ||
+                    ae.getSource() == change2Caboose ||
+                    ae.getSource() == remove2Caboose) {
                 roadCaboose2Box.setEnabled(change2Caboose.isSelected());
             }
         }
@@ -646,8 +635,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             change1Engine.setSelected((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES);
             helper1Service.setSelected((_train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES);
             if (!change1Engine.isSelected() && !helper1Service.isSelected()) {
-                modify1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE
-                        || (_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
+                modify1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE ||
+                        (_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
             }
             numEngines1Box.setSelectedItem(_train.getSecondLegNumberEngines());
             modelEngine1Box.setSelectedItem(_train.getSecondLegEngineModel());
@@ -698,8 +687,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             change2Engine.setSelected((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES);
             helper2Service.setSelected((_train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES);
             if (!change2Engine.isSelected() && !helper2Service.isSelected()) {
-                modify2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE
-                        || (_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
+                modify2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE ||
+                        (_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
             }
             numEngines2Box.setSelectedItem(_train.getThirdLegNumberEngines());
             modelEngine2Box.setSelectedItem(_train.getThirdLegEngineModel());
@@ -712,8 +701,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             roadCaboose2Box.setEnabled(change2Caboose.isSelected());
             roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
             // adjust radio button text
-            if (((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE || change1Caboose.isSelected())
-                    && !remove1Caboose.isSelected()) {
+            if (((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE || change1Caboose.isSelected()) &&
+                    !remove1Caboose.isSelected()) {
                 change2Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove2Caboose.setEnabled(true);
             } else {
@@ -743,8 +732,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
         _train.setBuildTrainNormalEnabled(buildNormalCheckBox.isSelected());
         _train.setSendCarsToTerminalEnabled(sendToTerminalCheckBox.isSelected());
-        _train.setAllowReturnToStagingEnabled(returnStagingCheckBox.isSelected()
-                && returnStagingCheckBox.isEnabled());
+        if (returnStagingCheckBox.isEnabled()) {
+            _train.setAllowReturnToStagingEnabled(returnStagingCheckBox.isSelected());
+        }
         _train.setAllowLocalMovesEnabled(allowLocalMovesCheckBox.isSelected());
         _train.setAllowThroughCarsEnabled(allowThroughCarsCheckBox.isSelected());
         _train.setServiceAllCarsWithFinalDestinationsEnabled(serviceAllCarsCheckBox.isSelected());
@@ -816,14 +806,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     private boolean checkInput() {
-        if ((!none1.isSelected() && routePickup1Box.getSelectedItem() == null)
-                || (!none2.isSelected() && routePickup2Box.getSelectedItem() == null)) {
+        if ((!none1.isSelected() && routePickup1Box.getSelectedItem() == null) ||
+                (!none2.isSelected() && routePickup2Box.getSelectedItem() == null)) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEngChange"), Bundle
                     .getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if ((helper1Service.isSelected() && routeDrop1Box.getSelectedItem() == null)
-                || (helper2Service.isSelected() && routeDrop2Box.getSelectedItem() == null)) {
+        if ((helper1Service.isSelected() && routeDrop1Box.getSelectedItem() == null) ||
+                (helper2Service.isSelected() && routeDrop2Box.getSelectedItem() == null)) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEndHelper"), Bundle
                     .getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
             return false;
@@ -903,6 +893,27 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
+    private void updateReturnToStagingCheckbox() {
+        if (_train != null &&
+                _train.getTrainDepartsRouteLocation() != null &&
+                _train.getTrainTerminatesRouteLocation() != null &&
+                _train.getTrainTerminatesRouteLocation().getLocation() != null &&
+                _train.getTrainTerminatesRouteLocation().getLocation().isStaging() &&
+                _train.getTrainDepartsRouteLocation().getName().equals(
+                        _train.getTrainTerminatesRouteLocation().getName())) {
+            allowThroughCarsCheckBox.setEnabled(false);
+            if (Setup.isAllowReturnToStagingEnabled()) {
+                returnStagingCheckBox.setEnabled(false);
+                returnStagingCheckBox.setSelected(true);
+                returnStagingCheckBox.setToolTipText(Bundle.getMessage("TipReturnToStaging"));
+            } else {
+                returnStagingCheckBox.setEnabled(true);
+                returnStagingCheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
+                returnStagingCheckBox.setToolTipText("");
+            }
+        }
+    }
+
     private void createEngine1Panel() {
         engine1Option.removeAll();
         addItem(engine1Option, new JLabel(Bundle.getMessage("ChangeEnginesAt")), 0, 0);
@@ -956,17 +967,21 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     /*
-     * private boolean checkModel(String model, String numberEngines){ if (numberEngines.equals("0") ||
-     * model.equals("")) return true; String type = InstanceManager.getDefault(EngineModels.class).getModelType(model);
-     * if(_train.acceptsTypeName(type)) return true; JOptionPane.showMessageDialog(this,
-     * MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[] {model, type}),
-     * MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] {Bundle.getMessage("save")}),
-     * JOptionPane.ERROR_MESSAGE); return false; }
+     * private boolean checkModel(String model, String numberEngines){ if
+     * (numberEngines.equals("0") || model.equals("")) return true; String type
+     * = InstanceManager.getDefault(EngineModels.class).getModelType(model);
+     * if(_train.acceptsTypeName(type)) return true;
+     * JOptionPane.showMessageDialog(this,
+     * MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[]
+     * {model, type}), MessageFormat.format(Bundle.getMessage("CanNot"), new
+     * Object[] {Bundle.getMessage("save")}), JOptionPane.ERROR_MESSAGE); return
+     * false; }
      */
     @Override
     public void dispose() {
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
+        Setup.removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }
@@ -983,13 +998,16 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             updateOwnerComboBoxes();
             updateOwnerNames();
         }
-        if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
             updateModelComboBoxes();
         }
         if (e.getPropertyName().equals(Train.TRAIN_REQUIREMENTS_CHANGED_PROPERTY)) {
             updateTrainRequires1Option();
             updateTrainRequires2Option();
+        }
+        if (e.getPropertyName().equals(Setup.ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE)) {
+            updateReturnToStagingCheckbox();
         }
     }
 

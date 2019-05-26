@@ -235,7 +235,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             /**
              * Delete the bean after all the checking has been done.
              * <p>
-             * Deactivates the Logix and remove it's conditionals.
+             * Deactivates the Logix and remove its conditionals.
              *
              * @param bean of the Logix to delete
              */
@@ -1324,9 +1324,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param sName system name of bean to be deleted
      */
     void deletePressed(String sName) {
-        if (!checkFlags(sName)) {
-            return;
-        }
         if (!checkConditionalReferences(sName)) {
             return;
         }

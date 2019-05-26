@@ -25,6 +25,7 @@ public class CbusPreferences extends PreferencesBean {
     private long _nodeBackgroundFetchDelay = 100L; // needs to match an option in NodeConfigToolPane
     private boolean _startupSearchForCs = true;
     private boolean _startupSearchForNodes = true;
+    private boolean _saveRestoreEventTable = true;
 
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -34,7 +35,6 @@ public class CbusPreferences extends PreferencesBean {
 
     private void readPreferences(Preferences sharedPreferences) {
 
-
         this._addCommandStations = sharedPreferences.getBoolean("_addCommandStations",this.getAddCommandStations());
         this._addNodes = sharedPreferences.getBoolean("_addNodes",this.getAddNodes());
         this._allocateNnListener = sharedPreferences.getBoolean("_allocateNnListener",this.getAllocateNNListener());
@@ -42,6 +42,9 @@ public class CbusPreferences extends PreferencesBean {
         
         this._startupSearchForCs = sharedPreferences.getBoolean("_startupSearchForCs",this.getStartupSearchForCs());
         this._startupSearchForNodes = sharedPreferences.getBoolean("_startupSearchForNodes",this.getStartupSearchForNodes());
+        
+        this._saveRestoreEventTable = sharedPreferences.getBoolean(
+            "saveRestoreEventTable",this.getSaveRestoreEventTable() );
 
     }
 
@@ -57,12 +60,14 @@ public class CbusPreferences extends PreferencesBean {
         sharedPreferences.putBoolean("_startupSearchForCs", this.getStartupSearchForCs() );
         sharedPreferences.putBoolean("_startupSearchForNodes", this.getStartupSearchForNodes() );
         
+        sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
+        
         try {
             sharedPreferences.sync();
-            log.info("Updated Cbus Preferences");
+            log.debug("Updated Cbus Preferences");
           //  setIsDirty(false);  //  Resets only when stored
         } catch (BackingStoreException ex) {
-            log.error("Exception while saving web server preferences", ex);
+            log.error("Exception while saving preferences", ex);
         }
     }
 
@@ -123,7 +128,16 @@ public class CbusPreferences extends PreferencesBean {
     public void setStartupSearchForNodes( boolean newVal ){
         _startupSearchForNodes = newVal;
         savePreferences();
-    }     
+    }
+    
+    public boolean getSaveRestoreEventTable(){
+        return _saveRestoreEventTable;
+    }
+    
+    public void setSaveRestoreEventTable( boolean newVal ){
+        _saveRestoreEventTable = newVal;
+        savePreferences();
+    }
     
     private final static Logger log = LoggerFactory.getLogger(CbusPreferences.class);
 

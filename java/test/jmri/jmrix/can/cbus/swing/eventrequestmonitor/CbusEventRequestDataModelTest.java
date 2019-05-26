@@ -20,14 +20,10 @@ import org.junit.Test;
  */
 public class CbusEventRequestDataModelTest {
 
-    TrafficControllerScaffold tcis;
+    
 
     @Test
     public void testCtor() {
-
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         CbusEventRequestDataModel t = new CbusEventRequestDataModel(memo, 1,
                 CbusEventRequestDataModel.MAX_COLUMN); // controller, row, column
@@ -35,15 +31,11 @@ public class CbusEventRequestDataModelTest {
         
         t.dispose();
         t = null;
-        tcis = null;
-        memo = null;
+        
     }
     
     @Test
     public void testCanListenAndRemove() {
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         Assert.assertEquals("no listener to start with",0,tcis.numListeners());
         CbusEventRequestDataModel t = new CbusEventRequestDataModel(
@@ -54,15 +46,12 @@ public class CbusEventRequestDataModelTest {
         Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
         
         t = null;
-        memo = null;
         
     }
     
     @Test
     public void testColumns() {
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
+        
         CbusEventRequestDataModel t = new CbusEventRequestDataModel(
         memo,5,CbusEventRequestDataModel.MAX_COLUMN);
         
@@ -90,16 +79,12 @@ public class CbusEventRequestDataModelTest {
         
         t.dispose();
         t = null;
-        memo = null;
         
     }
     
     @Test
     public void testCreateRow() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         CbusEventRequestDataModel t = new CbusEventRequestDataModel(
         memo,5,CbusEventRequestDataModel.MAX_COLUMN);
         
@@ -174,19 +159,76 @@ public class CbusEventRequestDataModelTest {
         
         t.dispose();
         t = null;
-        memo = null;
         
     }
+    
+    @Test
+    public void testNotCreateRowExtendedRtr() {
+        
+        CbusEventRequestDataModel t = new CbusEventRequestDataModel(
+        memo,5,CbusEventRequestDataModel.MAX_COLUMN);
+        
+        Assert.assertTrue("no rows to start",0 == t.getRowCount() );
+        
+        CanReply r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_AREQ); // long event status request
+        r.setElement(1, 0x04); // node 1234
+        r.setElement(2, 0xd2); // node 1234
+        r.setElement(3, 0x00); // event 7
+        r.setElement(4, 0x07); // event 7
+        
+        r.setExtended(true);
+        t.reply(r);
+        Assert.assertTrue("no rows as extended",0 == t.getRowCount() );
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertTrue("no rows as rtr",0 == t.getRowCount() );
+        
+        CanMessage m = new CanMessage(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, CbusConstants.CBUS_AREQ); // long event status request
+        m.setElement(1, 0x04); // node 1234
+        m.setElement(2, 0xd2); // node 1234
+        m.setElement(3, 0x00); // event 7
+        m.setElement(4, 0x07); // event 7
+        
+        m.setExtended(true);
+        t.message(m);
+        Assert.assertTrue("no rows as rtr",0 == t.getRowCount() );
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertTrue("no rows as rtr",0 == t.getRowCount() );
+        
+        t.dispose();
+        t = null;
+        
+    }
+    
+    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
     }
 
     @After
     public void tearDown() {        
-        JUnitUtil.tearDown();  
+        
         tcis = null;
+        memo = null;
+        JUnitUtil.tearDown();
     }
 
 }

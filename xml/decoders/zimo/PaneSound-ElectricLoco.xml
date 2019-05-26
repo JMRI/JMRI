@@ -63,6 +63,11 @@
       <!--label>Thyristor Second Switching Threshold</label-->
       <!--label xml:lang="it">Soglia Tiristore velocità manovra</label-->
     </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ZIMO Konfig 5-4">
+    </display>
   </column>
   <column>
     <label>
@@ -162,6 +167,10 @@
     </display>
     <display item="Lights flash with switchgear sound">
       <!--label>Lights flash with switchgear sound</label-->
+    </display>
+    <display item="ZIMO Konfig 5-2">
+    </display>
+    <display item="ZIMO Konfig 5-3">
     </display>
   </column>
 </pane>

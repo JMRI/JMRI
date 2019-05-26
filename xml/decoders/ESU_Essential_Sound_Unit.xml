@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <!-- ver1 made from the ESU_LokSoundV5 file -->
+    <version author="Dave Heap" version="1" lastUpdated="20190507"/>
+    <decoder>
+        <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model model="Essential Sound Unit" numOuts="4" productID="16777363">
+                <output name="1" label="Front|Light">
+                    <label xml:lang="fr">Feux|avant</label>
+                    <label xml:lang="it">Luci|Frontali</label>
+                    <label xml:lang="de">Licht|vor</label>
+                </output>
+                <output name="2" label="Rear|Light">
+                    <label xml:lang="fr">Feux|arrière</label>
+                    <label xml:lang="it">Luci|Posteriori</label>
+                    <label xml:lang="de">Licht|rück</label>
+                </output>
+                <output name="3" label="Aux|1">
+                    <label xml:lang="fr">Aux|1</label>
+                    <label xml:lang="it">Ausil|1</label>
+                    <label xml:lang="de">Aux|1</label>
+                </output>
+                <output name="4" label="Aux|2">
+                    <label xml:lang="fr">Aux|2</label>
+                    <label xml:lang="it">Ausil|2</label>
+                    <label xml:lang="de">Aux|2</label>
+                </output>
+                <output name="5" label="Shift|mode">
+                    <label xml:lang="fr">Changement|mode</label>
+                    <label xml:lang="it">Modo|Modifica</label>
+                    <label xml:lang="de">Shift|modus</label>
+                </output>
+                <output name="6" label="Dynamic|brake">
+                    <label xml:lang="fr">Frein|dynamique</label>
+                    <label xml:lang="it">Freni|Dinamici</label>
+                    <label xml:lang="de">Dynam.|Bremse</label>
+                </output>
+                <output name="7" label="Drive|hold">
+                </output>
+                <output name="8" label="Grade|crossing">
+                </output>
+                <output name="9" label="Sound|slot 1">
+                    <label xml:lang="fr">Créneau|Son 1</label>
+                    <label xml:lang="it">Slot| Suono 1</label>
+                    <label xml:lang="de">Sound|slot 1</label>
+                </output>
+                <output name="10" label="Sound|slot 2">
+                    <label xml:lang="fr">Créneau|Son 2</label>
+                    <label xml:lang="it">Slot| Suono 2</label>
+                    <label xml:lang="de">Sound|slot 2</label>
+                </output>
+                <output name="11" label="Sound|slot 3">
+                    <label xml:lang="fr">Créneau|Son 3</label>
+                    <label xml:lang="it">Slot| Suono 3</label>
+                    <label xml:lang="de">Sound|slot 3</label>
+                </output>
+                <output name="12" label="Sound|slot 4">
+                    <label xml:lang="fr">Créneau|Son 4</label>
+                    <label xml:lang="it">Slot| Suono 4</label>
+                    <label xml:lang="de">Sound|slot 4</label>
+                </output>
+                <output name="13" label="Sound|slot 5">
+                    <label xml:lang="fr">Créneau|Son 5</label>
+                    <label xml:lang="it">Slot| Suono 5</label>
+                    <label xml:lang="de">Sound|slot 5</label>
+                </output>
+                <output name="14" label="Sound|slot 6">
+                    <label xml:lang="fr">Créneau|Son 6</label>
+                    <label xml:lang="it">Slot| Suono 6</label>
+                    <label xml:lang="de">Sound|slot 6</label>
+                </output>
+                <output name="15" label="Sound|slot 7">
+                    <label xml:lang="fr">Créneau|Son 7</label>
+                    <label xml:lang="it">Slot| Suono 7</label>
+                    <label xml:lang="de">Sound|slot 7</label>
+                </output>
+                <output name="16" label="Sound|slot 8">
+                    <label xml:lang="fr">Créneau|Son 8</label>
+                    <label xml:lang="it">Slot| Suono 8</label>
+                    <label xml:lang="de">Sound|slot 8</label>
+                </output>
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">
+                    <text>Light</text>
+                    <text xml:lang="de">Licht</text>
+                </functionlabel>
+                <functionlabel num="1" lockable="true">
+                    <text>Bell</text>
+                    <text xml:lang="de">Sound</text>
+                </functionlabel>
+                <functionlabel num="2" lockable="false">
+                    <text>Horn</text>
+                    <text xml:lang="de">Pfeife / Signalhorn</text>
+                </functionlabel>
+            </functionlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>High Access via Double Index</name>
+                <parameter name="Max Regular CV address">256</parameter>
+                <parameter name="High Address CV">96</parameter>
+                <parameter name="Low Address CV">97</parameter>
+                <parameter name="Access Register CV">99</parameter>
+                <parameter name="Modulo">100</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v5standardCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/esu/EssenFnMapCVs.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs." CV="8" default="8"/>
+        </resets>
+    </decoder>
+    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+</decoder-config>

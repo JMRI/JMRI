@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalSystemManager.
- * <P>
+ * <p>
  * This loads automatically the first time used.
  * <p>
  *

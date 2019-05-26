@@ -37,6 +37,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilSocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -70,10 +72,10 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
-        instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale);
+        instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale, 42);
         Assert.assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
-        instance.onMessage(JSON.PING, empty, JSON.POST, locale);
+        instance.onMessage(JSON.PING, empty, JSON.POST, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("message is not null", message);
         JsonNode result = message.path(JSON.TYPE);
@@ -83,7 +85,7 @@ public class JsonUtilSocketServiceTest {
         Assert.assertTrue(message.path(JSON.DATA).isMissingNode());
         // JSON.RAILROAD
         WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
-        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale);
+        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("message is not null", message);
         result = message.path(JSON.DATA);
@@ -100,7 +102,7 @@ public class JsonUtilSocketServiceTest {
         // JSON.NETWORK_SERVICE (should return 404 because not running the requested service)
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, JSON.ZEROCONF_SERVICE_TYPE);
         try {
-            instance.onMessage(JSON.NETWORK_SERVICE, message, JSON.GET, locale);
+            instance.onMessage(JSON.NETWORK_SERVICE, message, JSON.GET, locale, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Not Found", 404, ex.getCode());
@@ -108,7 +110,7 @@ public class JsonUtilSocketServiceTest {
                     ex.getMessage());
         }
         // JSON.GOODBYE
-        instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
+        instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("message is not null", message);
         result = message.path(JSON.TYPE);
@@ -132,7 +134,7 @@ public class JsonUtilSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
-        instance.onMessage(JSON.PANELS, empty, JSON.GET, Locale.ENGLISH);
+        instance.onMessage(JSON.PANELS, empty, JSON.GET, locale, 42);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
@@ -159,12 +161,12 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
-        instance.onList(JSON.METADATA, empty, locale);
-        Assert.assertEquals(helper.getMetadata(locale), connection.getMessage());
-        instance.onList(JSON.NETWORK_SERVICES, empty, locale);
-        Assert.assertEquals(helper.getNetworkServices(locale), connection.getMessage());
-        instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale);
-        Assert.assertEquals(helper.getSystemConnections(locale), connection.getMessage());
+        instance.onList(JSON.METADATA, empty, locale, 42);
+        Assert.assertEquals(helper.getMetadata(locale, 42), connection.getMessage());
+        instance.onList(JSON.NETWORK_SERVICES, empty, locale, 42);
+        Assert.assertEquals(helper.getNetworkServices(locale, 42), connection.getMessage());
+        instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale, 42);
+        Assert.assertEquals(helper.getSystemConnections(locale, 42), connection.getMessage());
     }
 
     /**
@@ -183,8 +185,8 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
-        instance.onList(JSON.CONFIG_PROFILES, empty, locale);
-        Assert.assertEquals(helper.getConfigProfiles(locale), connection.getMessage());
+        instance.onList(JSON.CONFIG_PROFILES, empty, locale, 42);
+        Assert.assertEquals(helper.getConfigProfiles(locale, 42), connection.getMessage());
     }
 
     /**
@@ -207,7 +209,7 @@ public class JsonUtilSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
-        instance.onList(JSON.PANELS, empty, Locale.ENGLISH);
+        instance.onList(JSON.PANELS, empty, locale, 42);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
@@ -233,7 +235,7 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection, httpService);
         WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         Assert.assertEquals("No preferences listener", 0, preferences.getPropertyChangeListeners().length);
-        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, Locale.ENGLISH);
+        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale, 42);
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Message has RR Name", preferences.getRailroadName(),
@@ -281,12 +283,12 @@ public class JsonUtilSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
             if (throwException) {
                 throwException = false;
-                throw new JsonException(499, "Mock Exception");
+                throw new JsonException(499, "Mock Exception", id);
             }
-            return super.doGet(type, name, data, locale);
+            return super.doGet(type, name, data, locale, id);
         }
 
         public void setThrowException(boolean throwException) {

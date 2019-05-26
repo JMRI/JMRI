@@ -265,10 +265,9 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     
     @Override
     public String getTitle() {
-        return Bundle.getMessage("MenuItemCabSignalPane");
+        return Bundle.getMessage("CabSignalPaneTitle");
     }
 
-    
     public CabSignalPane() {
         super();
         cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class);
@@ -291,13 +290,13 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         
         menuList.add(cabSigColMenu);
         
-        JMenu iconMenu = new JMenu("Aspect Icon");
+        JMenu iconMenu = new JMenu(Bundle.getMessage("AspectIconMenu"));
         ButtonGroup offsetGroup = new ButtonGroup();
         
-        JRadioButtonMenuItem offset0MenuItem = new JRadioButtonMenuItem(("0 deg"));
-        JRadioButtonMenuItem offset1MenuItem = new JRadioButtonMenuItem(("90 deg"));
-        JRadioButtonMenuItem offset2MenuItem = new JRadioButtonMenuItem(("180 deg"));
-        JRadioButtonMenuItem offset3MenuItem = new JRadioButtonMenuItem(("270 deg"));
+        JRadioButtonMenuItem offset0MenuItem = new JRadioButtonMenuItem(Bundle.getMessage("IconDegrees", 0));
+        JRadioButtonMenuItem offset1MenuItem = new JRadioButtonMenuItem(Bundle.getMessage("IconDegrees", 90));
+        JRadioButtonMenuItem offset2MenuItem = new JRadioButtonMenuItem(Bundle.getMessage("IconDegrees", 180));
+        JRadioButtonMenuItem offset3MenuItem = new JRadioButtonMenuItem(Bundle.getMessage("IconDegrees", 270));
         
         offsetGroup.add(offset0MenuItem);
         offsetGroup.add(offset1MenuItem);
@@ -395,7 +394,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         cabSignalManager = null;
         super.dispose();
     }
-
 
     // Cab Signal List Listener interface
 

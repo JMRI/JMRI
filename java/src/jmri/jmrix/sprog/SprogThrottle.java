@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  * <p>
- * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */

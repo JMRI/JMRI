@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * XNet implementation of a ThrottleManager based on the
  * AbstractThrottleManager.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2002-2004
  * @navassoc 1 - * jmri.jmrix.lenz.XNetThrottle
  */
@@ -70,6 +70,8 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
     /**
      * XpressNet based systems can have multiple throttles for the same
      * device.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected boolean singleUse() {

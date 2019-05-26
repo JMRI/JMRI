@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring
  * SensorManagers, working with AbstractSensorManagers.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element sensors) class,
  * relying on implementation here to load the individual sensors. Note that
  * these are stored explicitly, so the resolution mechanism doesn't need to see

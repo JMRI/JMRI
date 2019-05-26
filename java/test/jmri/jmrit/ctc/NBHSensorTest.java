@@ -18,8 +18,7 @@ import org.junit.*;
 */
 public class NBHSensorTest {
 
-    private PropertyChangeListener _testListener1 = null;
-    private PropertyChangeListener _testListener2 = null;
+    private PropertyChangeListener _testListener = null;
 
     @Test
     public void testGetsAndSets() {
@@ -62,91 +61,8 @@ public class NBHSensorTest {
         int known = sensor.getKnownState();
         Assert.assertEquals(Sensor.INACTIVE, known);
 
-        sensor.requestUpdateFromLayout();
-
-        sensor.setInverted(true);
-        boolean inverted = sensor.getInverted();
-        Assert.assertFalse(inverted);
-        boolean canInvert = sensor.canInvert();
-        Assert.assertFalse(canInvert);
-
-        int rawState = sensor.getRawState();
-        Assert.assertEquals(Sensor.INACTIVE, rawState);
-
-        sensor.setSensorDebounceGoingActiveTimer(100);
-        long goActive = sensor.getSensorDebounceGoingActiveTimer();
-        Assert.assertEquals(0, goActive);
-
-        sensor.setSensorDebounceGoingInActiveTimer(100);
-        long goInActive = sensor.getSensorDebounceGoingInActiveTimer();
-        Assert.assertEquals(0, goInActive);
-
-        sensor.setUseDefaultTimerSettings(true);
-        boolean useDefault = sensor.getUseDefaultTimerSettings();
-        Assert.assertFalse(useDefault);
-
-        jmri.Reporter reporter = sensor.getReporter();
-        Assert.assertNull(reporter);
-        sensor.setReporter(reporter);
-
-        jmri.Sensor.PullResistance pull = sensor.getPullResistance();
-        Assert.assertNull(pull);
-        sensor.setPullResistance(pull);
-
-        String userName = sensor.getUserName();
-        Assert.assertEquals("UNKNOWN", userName);
-        sensor.setUserName(userName);
-
-        String systemName = sensor.getSystemName();
-        Assert.assertEquals("UNKNOWN", systemName);
-
-        String displayName = sensor.getDisplayName();
-        Assert.assertEquals("UNKNOWN", displayName);
-
-        String fullName = sensor.getFullyFormattedDisplayName();
-        Assert.assertEquals("UNKNOWN", fullName);
-
-        String comment = sensor.getComment();
-        Assert.assertEquals("UNKNOWN", comment);
-        sensor.setComment(comment);
-
-        sensor.addPropertyChangeListener(_testListener1 = (PropertyChangeEvent e) -> {}, "Name", "Ref");
-        sensor.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        sensor.removePropertyChangeListener(_testListener2);
-        sensor.updateListenerRef(_testListener1, "newRef");
-
-        String ref = sensor.getListenerRef(_testListener1);
-        Assert.assertEquals("UNKNOWN", ref);
-
-        java.util.ArrayList<String> refs = sensor.getListenerRefs();
-        Assert.assertEquals(0, refs.size());
-
-        int num = sensor.getNumPropertyChangeListeners();
-        Assert.assertEquals(0, num);
-
-        PropertyChangeListener[] numrefs = sensor.getPropertyChangeListenersByReference("newRef");
-        Assert.assertEquals(0, numrefs.length);
-
-        sensor.vetoableChange(null);
-
-        int state = sensor.getState();
-        Assert.assertEquals(4, state);
-        String stateName = sensor.describeState(state);
-        Assert.assertEquals("UNKNOWN", stateName);
-        sensor.setState(state);
-
-        sensor.setProperty("Test", "Value");
-        String property = (String) sensor.getProperty("Test");
-        Assert.assertNull(property);
-        sensor.removeProperty("Test");
-        java.util.Set keys = sensor.getPropertyKeys();
-        Assert.assertEquals(0, keys.size());
-
-        String type = sensor.getBeanType();
-        Assert.assertEquals("UNKNOWN", type);
-
-        sensor.compareSystemNameSuffix("", "", null);
-        sensor.dispose();
+        sensor.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        sensor.removePropertyChangeListener(_testListener);
     }
 
     public void realBean(NBHSensor sensor) {
@@ -159,91 +75,8 @@ public class NBHSensorTest {
         int known = sensor.getKnownState();
         Assert.assertEquals(Sensor.ACTIVE, known);
 
-        sensor.requestUpdateFromLayout();
-
-        sensor.setInverted(true);
-        boolean inverted = sensor.getInverted();
-        Assert.assertTrue(inverted);
-        boolean canInvert = sensor.canInvert();
-        Assert.assertTrue(canInvert);
-
-        int rawState = sensor.getRawState();
-        Assert.assertEquals(Sensor.INACTIVE, rawState);
-
-        sensor.setSensorDebounceGoingActiveTimer(100);
-        long goActive = sensor.getSensorDebounceGoingActiveTimer();
-        Assert.assertEquals(100, goActive);
-
-        sensor.setSensorDebounceGoingInActiveTimer(100);
-        long goInActive = sensor.getSensorDebounceGoingInActiveTimer();
-        Assert.assertEquals(100, goInActive);
-
-        sensor.setUseDefaultTimerSettings(true);
-        boolean useDefault = sensor.getUseDefaultTimerSettings();
-        Assert.assertTrue(useDefault);
-
-        jmri.Reporter reporter = sensor.getReporter();
-        Assert.assertNull(reporter);
-        sensor.setReporter(reporter);
-
-        jmri.Sensor.PullResistance pull = sensor.getPullResistance();
-        Assert.assertNotNull(pull);
-        sensor.setPullResistance(pull);
-
-        String userName = sensor.getUserName();
-        Assert.assertEquals("IS 93", userName);
-        sensor.setUserName(userName);
-
-        String systemName = sensor.getSystemName();
-        Assert.assertEquals("IS93", systemName);
-
-        String displayName = sensor.getDisplayName();
-        Assert.assertEquals("IS 93", displayName);
-
-        String fullName = sensor.getFullyFormattedDisplayName();
-        Assert.assertEquals("IS93(IS 93)", fullName);
-
-        String comment = sensor.getComment();
-        Assert.assertNull(comment);
-        sensor.setComment(comment);
-
-        sensor.addPropertyChangeListener(_testListener1 = (PropertyChangeEvent e) -> {}, "Name", "Ref");
-        sensor.addPropertyChangeListener(_testListener2 = (PropertyChangeEvent e) -> {});
-        sensor.removePropertyChangeListener(_testListener2);
-        sensor.updateListenerRef(_testListener1, "newRef");
-
-        String ref = sensor.getListenerRef(_testListener1);
-        Assert.assertEquals("newRef", ref);
-
-        java.util.ArrayList<String> refs = sensor.getListenerRefs();
-        Assert.assertEquals(2, refs.size());
-
-        int num = sensor.getNumPropertyChangeListeners();
-        Assert.assertEquals(2, num);
-
-        PropertyChangeListener[] numrefs = sensor.getPropertyChangeListenersByReference("newRef");
-        Assert.assertEquals(0, numrefs.length);
-
-        sensor.vetoableChange(null);
-
-        int state = sensor.getState();
-        Assert.assertEquals(4, state);
-        String stateName = sensor.describeState(state);
-        Assert.assertEquals("Inactive", stateName);
-        sensor.setState(state);
-
-        sensor.setProperty("Test", "Value");
-        String property = (String) sensor.getProperty("Test");
-        Assert.assertEquals("Value", property);
-        sensor.removeProperty("Test");
-        java.util.Set keys = sensor.getPropertyKeys();
-        Assert.assertEquals(0, keys.size());
-
-        String type = sensor.getBeanType();
-        Assert.assertEquals("Sensor", type);
-
-        sensor.compareSystemNameSuffix("", "", null);
-        sensor.dispose();
+        sensor.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
+        sensor.removePropertyChangeListener(_testListener);
     }
 
     @Before
@@ -257,6 +90,4 @@ public class NBHSensorTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensorTest.class);
 }

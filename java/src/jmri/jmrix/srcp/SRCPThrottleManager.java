@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SRCP implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on early NCE code.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2008

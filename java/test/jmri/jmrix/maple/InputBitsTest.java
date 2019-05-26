@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.Assert;
 
 /**
- * JUnit tests for the InputBits class
+ * JUnit tests for the InputBits class.
  *
  * @author	Dave Duchamp 2009
-  */
+ */
 public class InputBitsTest {
 
     @Test

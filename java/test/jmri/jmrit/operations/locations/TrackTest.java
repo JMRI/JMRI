@@ -16,7 +16,7 @@ import org.junit.Test;
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- * <p>
+ *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class TrackTest extends OperationsTestCase {
@@ -469,4 +469,5 @@ public class TrackTest extends OperationsTestCase {
         t.setServiceOrder(Track.LIFO);
         Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
     }
+
 }

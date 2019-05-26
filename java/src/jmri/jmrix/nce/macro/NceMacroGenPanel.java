@@ -12,12 +12,11 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
 /**
- * Pane for user input of Nce macros
+ * Pane for user input of NCE macros.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007 Cloned into a Panel by
  * @author kcameron
- *
  */
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
@@ -224,7 +223,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
@@ -235,4 +234,5 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
+
 }

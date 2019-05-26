@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Fast Clock interface for Wi-Fi throttles.
- * <P>
+ * <p>
  * Fast Clock display on devices will be synchronized with hardware or software
  * clock. Time is UTC seconds on Wi-Fi devices, Local milliseconds in JMRI.
- * <P>
+ *
  * @author Brett Hoffman Copyright (C) 2018
  */
 public class FastClockController extends AbstractController {
@@ -82,7 +82,7 @@ public class FastClockController extends AbstractController {
     
     /**
      * Fast clock should not have a time zone.
-     * <P>
+     * <p>
      * Remove the offset to give straight UTC value.
      * @return Time with offset removed
      */
@@ -92,7 +92,7 @@ public class FastClockController extends AbstractController {
     
     /**
      * Send just time.
-     * <P>
+     * <p>
      * Use to synchronize time on Wi-Fi devices to nearest second. Send no rate.
      */
     public void sendFastTime() {
@@ -109,7 +109,7 @@ public class FastClockController extends AbstractController {
     
     /**
      * Send Time and Rate.
-     * <P>
+     * <p>
      * Time on device will update to the value that is sent and rate will allow 
      * Fast Clock to keep its own time. A rate == 0 will tell the device to 
      * stop the clock.

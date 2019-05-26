@@ -136,6 +136,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Enumerate all protocols that have options set.
+     *
      * @return set of protocol names.
      */
     public Set<String> getProtocolsWithOptions() {
@@ -144,6 +145,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Get all options we have set (saved in the connection XML) for a given protocol type.
+     *
      * @param protocol String name of the protocol.
      * @return map of known protocol options to values, or empty map.
      */
@@ -154,6 +156,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Get a single option of a single protocol, or null if not present.
+     *
      * @param protocol name of the protocol.
      * @param option name of the option.
      * @return null if option has never been set; or the option value if set.
@@ -166,6 +169,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Sets a protocol option. This list will be persisted when the connection gets saved.
+     *
      * @param protocol name of the protocol
      * @param option name of the option
      * @param value option value

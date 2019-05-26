@@ -1,33 +1,39 @@
 package jmri.jmrix.sprog.sprogmon;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of SprogMonFrame 
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SprogMonFrameTest {
+public class SprogMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        SprogMonFrame action = new SprogMonFrame(new jmri.jmrix.sprog.SprogSystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
-    }
+    	private SprogTrafficControlScaffold stcs = null;
+    private SprogSystemConnectionMemo m = null;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        stcs = new SprogTrafficControlScaffold(m);
+        m.setSprogTrafficController(stcs);
+        m.configureCommandStation();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new SprogMonFrame(m);
+	}
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {
+        m.getSlotThread().interrupt();
+        stcs.dispose();
+    	super.tearDown();
+    }
 }

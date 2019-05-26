@@ -39,7 +39,7 @@ public class JsonWebSocket {
                 @Override
                 public boolean execute() {
                     try {
-                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), 0);
                     } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }

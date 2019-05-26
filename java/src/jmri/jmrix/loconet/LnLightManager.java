@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for LocoNet systems.
+ * Implement LightManager for LocoNet systems.
  * <p>
  * System names are "LLnnnnn", where the first L is the user configurable
  * system prefix, nnnnn is the bit number without padding.
@@ -26,7 +26,7 @@ public class LnLightManager extends AbstractLightManager {
     String prefix;
 
     /**
-     * Get the system letter for Loconet.
+     * Get the system letter for LocoNet.
      */
     @Override
     public String getSystemPrefix() {
@@ -130,8 +130,7 @@ public class LnLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnLightManager.class);

@@ -6,14 +6,14 @@ import jmri.Turnout;
 
 /**
  * Drive a single signal head via four "Turnout" objects.
- * <P>
+ * <p>
  * After much confusion, the user-level terminology was changed to call these
  * "Triple Output"; the class name remains the same to reduce recoding.
- * <P>
+ * <p>
  * The four Turnout objects are provided during construction, and each drives a
  * specific color (RED, YELLOW, GREEN, and LUNAR). Normally, "THROWN" is on, and
  * "CLOSED" is off.
- * <P>
+ * <p>
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *

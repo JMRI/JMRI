@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement Turnout Manager for DCC++ systems.
+ * Implement TurnoutManager for DCC++ systems.
  * <p>
  * System names are "DxppTnnn", where Dx is the system prefix and nnn is the turnout number without padding.
  *
@@ -195,8 +195,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     @Deprecated

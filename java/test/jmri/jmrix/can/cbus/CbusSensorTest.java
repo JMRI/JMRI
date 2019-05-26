@@ -398,6 +398,18 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         r.setElement(0, 0x99); // ASOF OPC
         t.reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        
+        
+        r.setElement(0, 0x98); // ASON OPC
+        r.setExtended(true);
+        t.reply(r);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        
     
     }
     
@@ -422,6 +434,16 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         
         m.setElement(0, 0x99); // ASOF OPC
         t.message(m);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        
+        
+        m.setElement(0, 0x98); // ASON OPC
+        m.setExtended(true);
+        t.message(m);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        
+        m.setExtended(false);
+        m.setRtr(true);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
     
     }

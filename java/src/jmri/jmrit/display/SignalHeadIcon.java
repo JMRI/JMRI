@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a SignalHead.
- * <P>
+ * <p>
  * SignalHeads are located via the SignalHeadManager, which in turn is located
  * via the InstanceManager.
  *
@@ -333,13 +333,13 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     /**
      * Drive the current state of the display from the state of the underlying
      * SignalHead object.
-     * <UL>
-     * <LI>If the signal is held, display that.
-     * <LI>If set to monitor the status of the lit parameter and lit is false,
+     * <ul>
+     * <li>If the signal is held, display that.
+     * <li>If set to monitor the status of the lit parameter and lit is false,
      * show the dark icon ("dark", when set as an explicit appearance, is
      * displayed anyway)
-     * <LI>Show the icon corresponding to one of the seven appearances.
-     * </UL>
+     * <li>Show the icon corresponding to one of the seven appearances.
+     * </ul>
      */
     @Override
     public void displayState(int state) {
@@ -535,10 +535,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     /**
      * How to handle lit vs not lit?
-     * <P>
+     * <p>
      * False means ignore (always show R/Y/G/etc appearance on screen); True
      * means show "dark" if lit is set false.
-     * <P>
+     * <p>
      * Note that setting the appearance "DARK" explicitly will show the dark
      * icon regardless of how this is set.
      */

@@ -67,11 +67,10 @@ public class QuickPromptUtil {
      * The validator may throw an {@link IllegalArgumentException} whose {@link IllegalArgumentException#getLocalizedMessage()} will
      * be displayed. The Predicate may also simply return {@code false}, which causes just general message (the value is invalid) to
      * be printed. If the Predicate rejects the input, the OK button is disabled and the user is unable to confirm the dialog.
-     * </p>
      * <p>
      * The function returns the original value if the dialog was cancelled or the entered value was empty or invalid. Otherwise, it
      * returns the new value entered by the user.
-     * </p>
+     *
      * @param parentComponent the parent component
      * @param message the prompt message.
      * @param title title for the dialog

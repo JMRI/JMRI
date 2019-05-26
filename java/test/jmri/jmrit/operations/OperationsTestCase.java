@@ -2,12 +2,16 @@ package jmri.jmrit.operations;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.netbeans.jemmy.QueueTool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 
 /**
  * Common setup and tear down for operation tests.
@@ -24,12 +28,12 @@ public class OperationsTestCase {
         reset();
         JUnitOperationsUtil.setupOperationsTests();
     }
-    
+
     // Set things up outside of operations
     public void reset() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
-        
+
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -37,11 +41,27 @@ public class OperationsTestCase {
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
     }
-    
+
+    private final boolean waitOnEventQueueNotEmpty = false;
     private final boolean checkEventQueueEmpty = false;
 
     @After
     public void tearDown() {
+        if (waitOnEventQueueNotEmpty) {
+            Thread AWT_EventQueue = JUnitUtil.getThreadStartsWithName("AWT-EventQueue");
+            if (AWT_EventQueue != null) {
+                if (AWT_EventQueue.isAlive()) {
+                    log.debug("event queue running");
+                }
+                try {
+                    AWT_EventQueue.join();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
         if (checkEventQueueEmpty) {
             final Semaphore sem = new Semaphore(0);
             new Thread(new Runnable() {
@@ -62,4 +82,6 @@ public class OperationsTestCase {
         }
         JUnitUtil.tearDown();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(OperationsTestCase.class);
 }

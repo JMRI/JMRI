@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Andrew Crosland 2008
-  */
+ */
 public abstract class PortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to TrafficController classes, who in turn will deal in messages.

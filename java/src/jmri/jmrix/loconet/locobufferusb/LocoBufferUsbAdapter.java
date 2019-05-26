@@ -11,7 +11,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * switch settings on the new LocoBuffer-USB
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2005
-  */
+ */
 public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
     public LocoBufferUsbAdapter() {
@@ -63,4 +63,5 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapter.class);
+
 }

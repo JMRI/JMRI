@@ -13,13 +13,13 @@ public class RpsMonAction extends AbstractAction {
 
     RpsSystemConnectionMemo memo = null;
 
-    public RpsMonAction(String s,RpsSystemConnectionMemo _memo) {
+    public RpsMonAction(String s, RpsSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public RpsMonAction(RpsSystemConnectionMemo _memo) {
-        this("RPS Monitor",_memo);
+        this("RPS Monitor", _memo);
     }
 
     @Override
@@ -28,9 +28,9 @@ public class RpsMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
+            // ignore
         }
         f.setVisible(true);
-
     }
 
 }

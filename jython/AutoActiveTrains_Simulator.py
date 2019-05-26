@@ -55,8 +55,8 @@ class AutoActiveTrains_Simulator(jmri.jmrit.automat.AbstractAutomaton) :
                         log.debug(at.getTrainName() + ": set {} ON  for block {}, debounce {}", sn, 
                                 nextBlock.getDisplayName(), str(delay))
                         s.setKnownState(ACTIVE)
-                        totDelay += delay + 100
-                        time.sleep((delay + 100)/1000.0)  # wait for sensor to debounce
+                        totDelay += delay + 200
+                        time.sleep((delay + 200)/1000.0)  # wait for sensor to debounce
                 if occupiedBlocks > 1:
                     s = lastBlock.getSensor()
                     sn = s.getSystemName()
@@ -68,8 +68,8 @@ class AutoActiveTrains_Simulator(jmri.jmrit.automat.AbstractAutomaton) :
                         s.setKnownState(INACTIVE)   
                         totDelay += delay + 500
                         time.sleep((delay + 500)/1000.0)  # wait for sensor to debounce
-        if totDelay < 1000:
-            time.sleep((1000 - totDelay)/1000.0)  # sleep for at least 1 second
+        if totDelay < 1500:
+            time.sleep((1500 - totDelay)/1000.0)  # sleep for at least 1 second
             
         return True         
             

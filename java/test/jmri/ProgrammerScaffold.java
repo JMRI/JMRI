@@ -19,10 +19,10 @@ import javax.annotation.Nonnull;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
+ *
  * @see jmri.Programmer
  * @author	Bob Jacobsen Copyright (C) 2008, 2014
-  */
+ */
 public class ProgrammerScaffold implements Programmer {
 
     ProgrammingMode matchesMode;
@@ -98,6 +98,3 @@ public class ProgrammerScaffold implements Programmer {
     }
 
 }
-
-
-

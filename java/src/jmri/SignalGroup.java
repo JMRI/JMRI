@@ -7,15 +7,15 @@ package jmri;
  * route/junction/speed would be represented by a single output signal (head),
  * that is either Off or On. Within the group only one such signal head would be
  * allowed on at any one time.
- * <P>
+ * <p>
  * The group is attached to a main signal mast, and can be configured to be
  * activated depending upon one or more aspects when displayed on that signal
  * mast.
- * <P>
+ * <p>
  * Each signal head within the group is defined with an On and Off appearance,
  * and a set of criteria in the form of matching turnouts and sensor states,
  * that must be met for the head to be set On.
- * <P>
+ * <p>
  * For code clarity, JMRI uses the terms (signal)Mast and (signal)Head instead
  * of Signal. Masts show Aspects, Heads show Appearances, though outside the USA
  * this will vary. Use localization to address this in the user interface.

@@ -317,7 +317,7 @@
             who added Light support for OpenLCB.<li>
 
         <li>Joe Comuzzi <!-- jcomuzzi -->
-        added new icon tests</li>
+        added new icon tests and added a definition for  CNJ 1974 signals </li>
         
         <li>John Crellin contributed numerous new and improved
         decoder definitions for MRC decoders and the Kato
@@ -899,7 +899,7 @@
         <li>Wim Ros, who provide help with the direct connection to
         the Intellibox</li>
 
-        <li>Heiko Rosemann,
+        <li>Heiko Rosemann, <!-- newHeiko -->
         who created the Slackware repository version of JMRI
         
         <li>Klaus Ruebsam, who is hosting German and English JMRI

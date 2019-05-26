@@ -96,7 +96,7 @@
 						} else inGroup = true;
 						if (inGroup) {
 							var loco = {
-								id: $(this).attr('id'),
+								name: $(this).attr('id'),
 								roadNumber: $(this).attr('roadNumber'),
 								roadName: $(this).attr('roadName'),
 								mfg: $(this).attr('mfg'),
@@ -112,14 +112,14 @@
 				}
 				return locoList;
 			};
-			jmri.getRosterItem = function(id) {
+			jmri.getRosterItem = function(name) {
 				if (!roster) roster = loadRoster();
 				var loco = null;
 				if (roster) {
 					roster.find('roster-config roster locomotive').each(function() { 
-						if ($(this).attr('id') == id) {
+						if ($(this).attr('id') == name) {
 							loco = {
-								id: $(this).attr('id'),
+								name: $(this).attr('id'),
 								fileName: $(this).attr('fileName'),
 								roadNumber: $(this).attr('roadNumber'),
 								roadName: $(this).attr('roadName'),
