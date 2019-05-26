@@ -103,7 +103,7 @@
 
         <li style="list-style: none">
           <ul>
-            <li><a href="#sampleScriptTesting">Testing Jython
+            <li><a href="#sampleJythonScriptTesting">Testing Jython
             sample scripts</a></li>
           </ul>
         </li>
