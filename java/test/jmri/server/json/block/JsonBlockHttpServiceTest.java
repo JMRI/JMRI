@@ -11,8 +11,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import jmri.Block;
 import jmri.BlockManager;
@@ -230,12 +228,8 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         assertNull(manager.getBeanBySystemName("IB1"));
         Block block = manager.createNewBlock("IB1", null);
         assertNotNull(block);
-        block.addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                // do nothing
-            }
+        block.addPropertyChangeListener(evt -> {
+            // do nothing
         }, "IB1", "Test Listener");
         // delete existing bean (with named listener)
         try {

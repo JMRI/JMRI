@@ -2,6 +2,7 @@ package jmri.server.json.turnout;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
 
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -132,6 +134,54 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), locale, 0);
         validate(result);
         assertEquals(2, result.size());
+    }
+
+    @Test
+    @Override
+    public void testDoDelete() throws JsonException {
+        TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
+        ObjectNode message = mapper.createObjectNode();
+        assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
+        // delete non-existant bean
+        try {
+            service.doDelete(service.getType(), "non-existant", message, locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
+            assertEquals("Message", "Object type turnout named \"non-existant\" not found.", ex.getMessage());
+            assertEquals("ID is 42", 42, ex.getId());
+        }
+        manager.newTurnout("IT1", null);
+        // delete existing bean (no named listener)
+        assertNotNull(manager.getBeanBySystemName("IT1"));
+        service.doDelete(service.getType(), "IT1", message, locale, 42);
+        assertNull(manager.getBeanBySystemName("IT1"));
+        Turnout turnout = manager.newTurnout("IT1", null);
+        assertNotNull(turnout);
+        turnout.addPropertyChangeListener(evt -> {
+            // do nothing
+        }, "IT1", "Test Listener");
+        // delete existing bean (with named listener)
+        try {
+            service.doDelete(service.getType(), "IT1", message, locale, 42);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(409, ex.getCode());
+            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+        }
+        assertNotNull(manager.getBeanBySystemName("IT1"));
+        // will throw if prior catch failed
+        service.doDelete(service.getType(), "IT1", message, locale, 0);
+        assertNull(manager.getBeanBySystemName("IT1"));
+        try {
+            // deleting again should throw an exception
+            service.doDelete(service.getType(), "IT1", NullNode.getInstance(), locale, 0);
+            fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            assertEquals(404, ex.getCode());
+        }
     }
 
     @Before
