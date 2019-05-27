@@ -25,13 +25,15 @@ import org.slf4j.LoggerFactory;
  * Automatically includes an Internal system, which need not be separately added
  * any more.
  * <p>
- * Encapsulates access to the "Primary" manager, used by default, which is the first one
- * provided.
+ * Encapsulates access to the "Primary" manager, used by default, which is the
+ * first one provided.
  * <p>
- * Internally, this is done by using an ordered list of all non-Internal managers, plus a
- * separate reference to the internal manager and default manager.
+ * Internally, this is done by using an ordered list of all non-Internal
+ * managers, plus a separate reference to the internal manager and default
+ * manager.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010, 2018
+ * @param <E> the supported type of NamedBean
+ * @author Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
 abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener<E> {
 
@@ -100,7 +102,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Returns the set default or, if not present, the internal manager as defacto default
+     * Returns the set default or, if not present, the internal manager as
+     * defacto default
+     * 
+     * @return the default manager or the internal manager if no default set
      */
     public Manager<E> getDefaultManager() {
         if (defaultManager != null) return defaultManager;
@@ -191,6 +196,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      *
      * @param name the user name or system name of the bean
      * @return an existing or new NamedBean
+     * @throws IllegalArgumentException if name is not usable in a bean
      */
     protected E provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
@@ -644,7 +650,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Nonnull
     public SortedSet<E> getNamedBeanSet() {
         if (namedBeanSet == null) {
-            namedBeanSet = new TreeSet<>(new NamedBeanComparator());
+            namedBeanSet = new TreeSet<>(new NamedBeanComparator<>());
             recomputeNamedBeanSet();
         }
         return Collections.unmodifiableSortedSet(namedBeanSet);
@@ -668,7 +674,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      * managers.
      */
     @Override
-    public void contentsChanged(Manager.ManagerDataEvent e) {
+    public void contentsChanged(Manager.ManagerDataEvent<E> e) {
     }
 
     /**

@@ -1,9 +1,17 @@
 package jmri.jmrix.cmri.serial;
 
-import jmri.implementation.AbstractTurnoutTestBase;
-import jmri.*;
+import java.util.Iterator;
+import java.util.TreeSet;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import jmri.Turnout;
+import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
@@ -24,8 +32,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
@@ -41,7 +49,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
         memo = null;
@@ -71,7 +79,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Test
     public void testSystemSpecificComparisonOfStandardNames() {
-        jmri.util.NamedBeanComparator t = new jmri.util.NamedBeanComparator();
+        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
         
         Turnout t1 = new SerialTurnout("CT1", "to1", memo);
         Turnout t2 = new SerialTurnout("CT2", "to2", memo);
@@ -89,7 +97,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Turnout> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Turnout> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new SerialTurnout("CT3B4",    "to3004", memo));
         set.add(new SerialTurnout("CT3003",    "to3003", memo));
@@ -109,7 +117,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         set.add(new SerialTurnout("CT1",    "to1", memo));
         
         
-        java.util.Iterator<Turnout> it = set.iterator();
+        Iterator<Turnout> it = set.iterator();
         
         Assert.assertEquals("CT1", it.next().getSystemName());
         Assert.assertEquals("CT2", it.next().getSystemName());

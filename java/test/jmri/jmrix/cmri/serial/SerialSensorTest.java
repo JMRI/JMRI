@@ -1,11 +1,16 @@
 package jmri.jmrix.cmri.serial;
 
-import jmri.util.JUnitUtil;
-import jmri.*;
+import java.util.Iterator;
+import java.util.TreeSet;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.Sensor;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
 
 /**
  *
@@ -36,7 +41,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     @Test
     public void testSystemSpecificComparisonOfStandardNames() {
-        jmri.util.NamedBeanComparator c = new jmri.util.NamedBeanComparator();
+        NamedBeanComparator<Sensor> c = new NamedBeanComparator<>();
         
         Sensor t1 = new SerialSensor("CS1");
         Sensor t2 = new SerialSensor("CS2");
@@ -54,7 +59,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Sensor> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Sensor> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new SerialSensor("CS3B4"));
         set.add(new SerialSensor("CS3003"));
@@ -74,7 +79,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         set.add(new SerialSensor("CS1"));
         
         
-        java.util.Iterator<Sensor> it = set.iterator();
+        Iterator<Sensor> it = set.iterator();
         
         Assert.assertEquals("CS1", it.next().getSystemName());
         Assert.assertEquals("CS2", it.next().getSystemName());
