@@ -529,10 +529,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                     for (NamedBean namedBean : namedBeanSet) {
                         //checking to see if it matches "<sname> (<uname>)" or "<uname> (<sname>)"
-                        String uname = namedBean.getUserName();
-                        String sname = namedBean.getSystemName();
-
-                        if ((null != uname)) {
+                        if ((namedBean.getUserName() != null)) {
                             String usname = namedBean.getFullyFormattedDisplayName();
                             String suname = namedBean.getFullyFormattedDisplayName(false);
 
