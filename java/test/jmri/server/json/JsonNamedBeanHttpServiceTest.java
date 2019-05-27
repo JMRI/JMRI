@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.server.json.turnout.JsonTurnout;
 import jmri.server.json.turnout.JsonTurnoutHttpService;
-import jmri.server.json.turnout.JsonTurnoutServiceFactory;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -99,7 +99,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         bean.setComment("Turnout Comment");
         bean.setProperty("foo", "bar");
         bean.setProperty("bar", null);
-        JsonNode root = service.getNamedBean(bean, name, JsonTurnoutServiceFactory.TURNOUT, locale, 42);
+        JsonNode root = service.getNamedBean(bean, name, JsonTurnout.TURNOUT, locale, 42);
         JsonNode data = root.path(JSON.DATA);
         Assert.assertEquals("Correct system name", bean.getSystemName(), data.path(JSON.NAME).asText());
         Assert.assertEquals("Correct user name", bean.getUserName(), data.path(JSON.USERNAME).asText());

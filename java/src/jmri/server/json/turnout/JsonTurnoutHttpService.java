@@ -6,8 +6,10 @@ import static jmri.server.json.JSON.INVERTED;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.THROWN;
 import static jmri.server.json.JSON.UNKNOWN;
-import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
-import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
+import static jmri.server.json.turnout.JsonTurnout.FEEDBACK_MODE;
+import static jmri.server.json.turnout.JsonTurnout.TURNOUT;
+import static jmri.server.json.turnout.JsonTurnout.TURNOUTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +17,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.ProvidingManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.server.json.JSON;
@@ -53,15 +58,54 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                     data.put(STATE, UNKNOWN);
                     break;
             }
+            data.put(FEEDBACK_MODE, turnout.getFeedbackMode());
+            Sensor sensor = turnout.getFirstSensor();
+            data.put(SENSOR + 1, sensor != null ? sensor.getSystemName() : null);
+            sensor = turnout.getSecondSensor();
+            data.put(SENSOR + 2, sensor != null ? sensor.getSystemName() : null);
         }
         return root;
     }
 
     @Override
     public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
-        if (data.path(INVERTED).isBoolean()) {
-            turnout.setInverted(data.path(INVERTED).asBoolean());
+        if (!data.path(SENSOR + 1).isMissingNode()) {
+            JsonNode node = data.path(SENSOR + 1);
+            try {
+                if (node.isNull()) {
+                    turnout.provideFirstFeedbackSensor(null);
+                } else {
+                    Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
+                    if (sensor != null) {
+                        turnout.provideFirstFeedbackSensor(sensor.getSystemName());
+                    } else {
+                        throw new JsonException(404,
+                                Bundle.getMessage(locale, "ErrorNotFound", SENSOR, node.asText()), id);
+                    }
+                }
+            } catch (JmriException ex) {
+                throw new JsonException(500, Bundle.getMessage(locale, "ErrorInternal", type), id);
+            }
         }
+        if (!data.path(SENSOR + 2).isMissingNode()) {
+            JsonNode node = data.path(SENSOR + 2);
+            try {
+                if (node.isNull()) {
+                    turnout.provideSecondFeedbackSensor(null);
+                } else {
+                    Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
+                    if (sensor != null) {
+                        turnout.provideSecondFeedbackSensor(sensor.getSystemName());
+                    } else {
+                        throw new JsonException(404,
+                                Bundle.getMessage(locale, "ErrorNotFound", SENSOR, node.asText()), id);
+                    }
+                }
+            } catch (JmriException ex) {
+                throw new JsonException(500, Bundle.getMessage(locale, "ErrorInternal", type), id);
+            }
+        }
+        turnout.setInverted(data.path(INVERTED).asBoolean(turnout.getInverted()));
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case THROWN:
