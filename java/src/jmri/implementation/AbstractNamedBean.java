@@ -106,9 +106,9 @@ public abstract class AbstractNamedBean implements NamedBean {
         String name = getUserName();
         if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
             if (userNameFirst) {
-                name = name + " (" + getSystemName() + ")";
+                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, name, getSystemName());
             } else {
-                name = getSystemName() + " (" + name + ")";
+                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, getSystemName(), name);
             }
         } else {
             name = getSystemName();
