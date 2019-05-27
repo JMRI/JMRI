@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -61,7 +61,8 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Increased support for stealing / sharing command station sessions, see
+                    <a href="http://jmri.org/help/en/html/hardware/can/cbus/index.shtml#dcc">CBUS Hardware Support</a></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -161,7 +162,7 @@
 
         <h4>CT Elektronik</h4>
             <ul>
-                <li>Nigel Cliffe added a decoder definition for the 
+                <li>Nigel Cliffe added a decoder definition for the
                     NGS custom CT decoder</li>
             </ul>
 
@@ -264,7 +265,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -331,7 +332,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
+            <li>Color for new tracks is now consistent within a single Layout Editor.</li>
+            <li>Turnouts, level crossings, track segments and positional points (A/EB/EC) cannot
+            be deleted if signal heads, signal masts or sensors have been assigned to the item.
+            Also, an edge connector cannot be deleted if the link is defined.</li>
         </ul>
 
     <h3>Logix</h3>
@@ -378,13 +382,22 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The table and manager containing the element are no longer listed as items using the element when deleting the
+                element in the delete confirmation dialog. The count of items using the element shown in the delete confirmation
+                dialog now match the number of items shown to be using the element.</li>
         </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li><strong>2 lines in scripts that use the
+            <a href="https://github.com/JMRI/JMRI/blob/master/jython/Jynstruments/ThrottleWindowToolBar/DCCThrottle.jyn/DCCThrottle.py"
+            >DCCThrottle.py</a> Jynstrument may need to be added,</strong><br>
+            Insert after line 141<br>
+            New line 142 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
+            New line 143 : <code>pass #</code><br>
+            These changes were made to enhance the JMRI Steal / Share mechanism for hardware types that support this.<br>
+            </li>
         </ul>
 
     <h3>Signals</h3>
@@ -406,7 +419,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -448,8 +461,8 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
-                Engines, Operations Tracks, and Reporters.</li>
+            <li>JSON clients can now add, edit, or remove Blocks, IdTags, LayoutBlocks, Operations Locations, Operations Cars,
+                Operations Engines, Operations Tracks, Reporters, and Sensors.</li>
             <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
                 to a message to the original message.</li>
             <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
@@ -463,7 +476,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>

@@ -60,8 +60,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "A string which will be appended to \""+mqttAdapter.baseTopic+topicPrefix+"\"";
-        return entryToolTip;
+        return "A string which will be appended to \""+mqttAdapter.baseTopic+topicPrefix+"\"";
     }
 
     public void setParser(MqttContentParser<Turnout> parser) {

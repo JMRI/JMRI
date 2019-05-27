@@ -1,0 +1,7 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+RewriteRule "Panels.shtml" "index.shtml" [R=302,L]
+RewriteRule "PanelPro.shtml" "index.shtml" [R=302,L]
+

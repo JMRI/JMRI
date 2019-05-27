@@ -25,8 +25,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Main Window</h1>The JMRI main window is where you
-      get access to all the JMRI capabilities.
+      <h1>JMRI: Main Window</h1>
+      <p>The JMRI main window is where you
+      get access to all the JMRI capabilities.</p>
 
       <p>Help for specific main windows:</p>
 

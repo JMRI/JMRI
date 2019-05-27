@@ -162,7 +162,7 @@ public class JsonManifest extends TrainCommon {
 
             if (routeLocation != train.getRoute().getTerminatesRouteLocation()) {
                 jsonLocation.set(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
-                jsonLocation.put(JSON.DIRECTION, routeLocation.getTrainDirection());
+                jsonLocation.put(JSON.TRAIN_DIRECTION, routeLocation.getTrainDirection());
                 ObjectNode length = this.mapper.createObjectNode();
                 length.put(JSON.LENGTH, train.getTrainLength(routeLocation));
                 length.put(JSON.UNIT, Setup.getLengthUnit());

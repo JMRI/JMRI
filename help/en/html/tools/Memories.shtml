@@ -5,7 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Me 2008 -->
   <title>JMRI: Memories</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -101,11 +100,13 @@
       the examples.</p>
 
       <a name="addBlock" id="addBlock"></a>
-      <h3>Saving Blocks to disk</h3>
+      <h3>Saving Memories to disk</h3>
 
-      <p>Memories are saved in your layout configuration file, along
+      <p>Memories are is kept in your <i>layout configuration</i>, along
       with Turnouts, Sensors, Signal Heads, etc. To store this
-      information on disk, use <b>Store Configuration...</b> in the
+      information on disk, allowing to
+      <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+      it</a> next time you run JMRI, use <b>Store Configuration...</b> in the
       <b>File</b> menu at the top of the Memory Variable Table (or other
       tables from the Tools menu), or select <b>Store Panel...</b>
       in the <b>Panel</b> menu.</p>

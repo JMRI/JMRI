@@ -858,15 +858,15 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * Prepare a roster entry to be printed, and display a selection list.
      *
      * @see jmri.jmrit.roster.PrintRosterEntry#printPanes(boolean)
-     * @param boo true if output should got to a Preview pane on screen, false
+     * @param preview true if output should got to a Preview pane on screen, false
      *            to output to a printer (dialog)
      */
-    protected void printLoco(boolean boo) {
+    protected void printLoco(boolean preview) {
         log.debug("Selected entry: {}", re.getDisplayName());
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
         // uses Basic programmer (programmer2) when printing a selected entry from (this) top Roster frame
         // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
-        pre.printPanes(boo);
+        pre.printPanes(preview);
     }
 
     /**

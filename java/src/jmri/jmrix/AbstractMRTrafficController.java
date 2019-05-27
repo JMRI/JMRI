@@ -333,7 +333,7 @@ abstract public class AbstractMRTrafficController {
      * Permanent loop for the transmit thread.
      */
     protected void transmitLoop() {
-        log.debug("transmitLoop starts");
+        log.debug("transmitLoop starts in {}", this);
 
         // loop forever
         while (!connectionError && !threadStopRequest) {
@@ -864,7 +864,7 @@ abstract public class AbstractMRTrafficController {
      * Each turn of the loop is the receipt of a single message.
      */
     public void receiveLoop() {
-        log.debug("receiveLoop starts");
+        log.debug("receiveLoop starts in {}", this);
         int errorCount = 0;
         while (errorCount < maxRcvExceptionCount && !threadStopRequest) { // stream close will exit via exception
             try {

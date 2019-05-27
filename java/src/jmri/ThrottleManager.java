@@ -33,13 +33,33 @@ public interface ThrottleManager {
      * located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
      *
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(BasicRosterEntry, ThrottleListener, boolean) instead
+     * 
      * @param re desired RosterEntry
      * @param l  ThrottleListener awaiting notification of a found throttle
      * @return true if the request will continue, false if the request will not
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
+    @Deprecated
     public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l);
+
+    /**
+     * Request a throttle from a given RosterEntry. When the decoder address is
+     * located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     *
+     * @param re desired RosterEntry
+     * @param l  ThrottleListener awaiting notification of a found throttle
+     * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
+     *        Share / Steal decisions, else false
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l, boolean canHandleDecisions);
+
 
     /**
      * Request a throttle, given a decoder address. When the decoder address is
@@ -47,7 +67,8 @@ public interface ThrottleManager {
      * ThrottleListener.notifyThrottleFound method.
      * <p>
      * This is a convenience version of the call, which uses system-specific
-     * logic to tell whether the address is a short or long form.
+     * logic to tell whether the address is a short or long form,
+     * and assumes that the hardware makes and steal / share decisions.
      *
      * @param address desired decoder address
      * @param l       ThrottleListener awaiting notification of a found throttle
@@ -58,10 +79,33 @@ public interface ThrottleManager {
     public boolean requestThrottle(int address, ThrottleListener l);
 
     /**
+     * Request a throttle, given a decoder address. When the decoder address is
+     * located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form,
+     * and assumes that the hardware makes and steal / share decisions.
+     * <p>
+     * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
+     *        Share / Steal decisions, else false
+     * @param address desired decoder address
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    public boolean requestThrottle(int address, ThrottleListener l, boolean canHandleDecisions);
+
+    /**
      * Request a throttle, given a decoder address and whether it is a long or
      * short DCC address. When the decoder address is located, the
      * ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
+     * <p>
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(int, boolean, ThrottleListener, boolean) instead
      *
      * @param address desired decoder address
      * @param isLong  true if requesting a DCC long (extended) address
@@ -70,7 +114,25 @@ public interface ThrottleManager {
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
+    @Deprecated
     public boolean requestThrottle(int address, boolean isLong, ThrottleListener l);
+
+    /**
+     * Request a throttle, given a decoder address and whether it is a long or
+     * short DCC address. When the decoder address is located, the
+     * ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     *
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
+     *                Share / Steal decisions, else false
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    public boolean requestThrottle(int address, boolean isLong, ThrottleListener l, boolean canHandleDecisions);
 
     /**
      * Request a throttle, given a decoder address. When the decoder address is
@@ -80,12 +142,16 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(LocoAddress, ThrottleListener, boolean) instead
+     *
      * @param address desired decoder address
      * @param l       ThrottleListener awaiting notification of a found throttle
      * @return true if the request will continue, false if the request will not
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
+    @Deprecated
     public boolean requestThrottle(LocoAddress address, ThrottleListener l);
 
     /**
@@ -95,6 +161,9 @@ public interface ThrottleManager {
      * <p>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
+     * @deprecated since 4.15.7; use
+     * #requestThrottle(LocoAddress, ThrottleListener, boolean) or
+     * #requestThrottle(BasicRosterEntry, ThrottleListener, boolean) instead
      *
      * @param address desired decoder address
      * @param re      desired RosterEntry
@@ -103,11 +172,27 @@ public interface ThrottleManager {
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
+    @Deprecated
     public boolean requestThrottle(LocoAddress address, BasicRosterEntry re, ThrottleListener l);
 
     /**
+     * Request a throttle, given a LocoAddress. When the address is
+     * located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     *
+     * @param address desired loco address
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
+     *        Share / Steal decisions, else false
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    public boolean requestThrottle(LocoAddress address, ThrottleListener l, boolean canHandleDecisions);
+    
+    /**
      * Cancel a request for a throttle.
-     * <p>
+     * <P>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
@@ -115,10 +200,10 @@ public interface ThrottleManager {
      * @param l  ThrottleListener canceling the request for a throttle
      */
     public void cancelThrottleRequest(BasicRosterEntry re, ThrottleListener l);
-
+    
     /**
      * Cancel a request for a throttle.
-     * <p>
+     * <P>
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
@@ -126,7 +211,7 @@ public interface ThrottleManager {
      * @param l       ThrottleListener canceling request for a throttle
      */
     public void cancelThrottleRequest(int address, ThrottleListener l);
-
+    
     /**
      * Cancel a request for a throttle.
      *
@@ -135,6 +220,15 @@ public interface ThrottleManager {
      * @param l       ThrottleListener canceling request for a throttle
      */
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l);
+
+    
+    /**
+     * Cancel a request for a throttle.
+     *
+     * @param address unwanted Loco address
+     * @param l       ThrottleListener canceling request for a throttle
+     */
+    public void cancelThrottleRequest(LocoAddress address, ThrottleListener l);
 
     /**
      * Steal a requested throttle.
@@ -147,6 +241,7 @@ public interface ThrottleManager {
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
      */
+    @Deprecated
     public void stealThrottleRequest(BasicRosterEntry re, ThrottleListener l,boolean steal);
 
     /**
@@ -159,11 +254,36 @@ public interface ThrottleManager {
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
+     * 
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      */
-    public void stealThrottleRequest(int address, ThrottleListener l,boolean steal);
-
+    @Deprecated
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal);
+    
+    
     /**
      * Steal a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @deprecated since 4.15.7; use #responseThrottleDecision
+     *
+     * @param address desired decoder address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    @Deprecated
+    public void stealThrottleRequest(int address, ThrottleListener l,boolean steal);
+    
+    /**
+     * Steal a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @deprecated since 4.15.7; use #responseThrottleDecision
      *
      * @param address desired decoder address
      * @param isLong  true if requesting a DCC long (extended) address
@@ -171,18 +291,58 @@ public interface ThrottleManager {
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
      */
+    @Deprecated
     public void stealThrottleRequest(int address, boolean isLong, ThrottleListener l,boolean steal);
-
+    
     /**
-     * Steal a requested throttle.
+     * Steal or Share a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
      *
-     * @param address desired LocoAddress 
+     * @param address desired decoder address
      * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
+     * @param decision from the ThrottleListener, STEAL or SHARE.
+     */
+    public void responseThrottleDecision(int address, ThrottleListener l, ThrottleListener.DecisionType decision);
+    
+    /**
+     * Steal or Share a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param decision from the ThrottleListener, STEAL or SHARE.
+     */
+    public void responseThrottleDecision(int address, boolean isLong, ThrottleListener l, ThrottleListener.DecisionType decision);
+    
+    /**
+     * Steal or Share a requested throttle.
+     *
+     * @param address desired LocoAddress
+     * @param l The ThrottleListener which has made the decision
+     * @param decision from the ThrottleListener, STEAL or SHARE.
      * @since 4.9.2
      */
-    public void stealThrottleRequest(LocoAddress address, ThrottleListener l,boolean steal);
-
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision);
+    
+    /**
+     * Test if the Silent Steal Throttles preference option should be enabled.
+     *
+     * @return true if steal is possible; false otherwise
+     */
+    public boolean enablePrefSilentStealOption();
+    
+    /**
+     * Test if the Silent Share Throttles preference option should be enabled.
+     *
+     * @return true if steal is possible; false otherwise
+     */
+    public boolean enablePrefSilentShareOption();
+    
     /**
      * Test if the Dispatch Button should be enabled or not.
      *
@@ -303,6 +463,7 @@ public interface ThrottleManager {
      * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(int address, boolean addressIsLong);
+    
     /**
      * 
      * @param address Loco number to test
@@ -316,7 +477,6 @@ public interface ThrottleManager {
      * @return true, its still required, false its not.
      */
     public boolean addressStillRequired(BasicRosterEntry re);
-
     
     /**
      * The specified Throttle Listener has finished using a given throttle and
@@ -409,8 +569,8 @@ public interface ThrottleManager {
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
     public int getThrottleUsageCount(LocoAddress la);
-
-    /**
+    
+     /**
      * Get the number of Throttles sharing the throttle for a ddcaddress.
      *
      * @param address number of the loco you want the throttle usage count for.
@@ -434,5 +594,6 @@ public interface ThrottleManager {
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
     public int getThrottleUsageCount(BasicRosterEntry re);
+
 
 }

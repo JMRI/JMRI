@@ -41,7 +41,7 @@
 			    </ul>
 			<li><a href="WebSite.shtml">Web Site</a>
 			
-			<li><a href="/JavaDoc/doc">Javadocs</a><ul>
+			<li><a href="/JavaDoc/doc/">Javadocs</a><ul>
 				<li><a href="/JavaDoc/doc/index-files/index-1.html">Name Index</a>
 				<li><A HREF="/JavaDoc/doc/index.html">Packages</A>
 				<li><A HREF="/JavaDoc/doc/allclasses-frame.html">Classes</A>

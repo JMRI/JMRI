@@ -1756,19 +1756,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void readFile() {
         if (getFileName() == null) {
-            log.debug("readFiler file invoked with null filename");
+            log.warn("readFile invoked with null filename");
             return;
-        } else if (log.isDebugEnabled()) {
-            log.debug("readFile invoked with filename " + getFileName());
+        } else {
+            log.debug("readFile invoked with filename {}", getFileName());
         }
 
         LocoFile lf = new LocoFile(); // used as a temporary
+        String file = LocoFile.getFileLocation() + getFileName();
+        if (! (new File(file).exists() ) ) {
+            // try without prefix
+            file = getFileName();
+        }
         try {
-            mRootElement = lf.rootFromName(LocoFile.getFileLocation() + getFileName());
-        } catch (
-                JDOMException |
-                IOException e) {
-            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
+            mRootElement = lf.rootFromName(file);
+        } catch ( JDOMException | IOException e) {
+            log.error("Exception while loading loco XML file: {} from {}", getFileName(), file, e);
         }
     }
 

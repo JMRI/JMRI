@@ -61,6 +61,7 @@
         <separator/>
         <label>
             <text>Logical Output Settings</text>
+            <text xml:lang="de">Logische Ausgangs-Einstellungen</text>
         </label>
         <label>
             <text> </text>

@@ -130,6 +130,7 @@
     </enumChoice>
     <enumChoice choice="External controlled smoke unit" value="26">
         <choice>External controlled smoke unit</choice>
+        <choice xml:lang="de">externer Rauchgenerator</choice>
     </enumChoice>
     <enumChoiceGroup include="LokSound XL V4.0,LokSound 5">
         <enumChoice choice="Servo" value="27">
