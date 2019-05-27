@@ -49,7 +49,7 @@
     <label>Mars/Gyra Max Brightness</label>
     <label xml:lang="it">Luminosità max.Mars/Gyra</label>
   </variable>
-  <variable CV="117" default="213" item="Function 2 behavior" exclude="220">
+  <variable CV="117" default="3" item="Function 2 behavior" exclude="220">
     <decVal/>
     <label>Ditch Light Blink Rate</label>
     <label xml:lang="it">Freq.lampeggio Luci Ditch</label>
@@ -398,12 +398,7 @@
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Enable Keep Alive</label>
   </variable>
-  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="0" exclude="220">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-    <label>2x Function Packets Required</label>
-	<tooltip>Two function packets must be received before changing function state, if using SPROG set to disabled</tooltip>
-  </variable>
-  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="1" include="220">
+  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="1">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>2x Function Packets Required</label>
 	<tooltip>Two function packets must be received before changing function state, if using SPROG set to disabled</tooltip>

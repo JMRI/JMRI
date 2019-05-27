@@ -119,7 +119,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
      */
     public void readButtonActionPerformed() {
         // We set the display to "-" until the callback gets the value from the
-        // Loconet
+        // LocoNet
         idBox.setSelectedIndex(0);
         memo.getLnTrafficController().sendLocoNetMessage(createReadPacket());
     }

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides services for configuring NamedBean manager storage.
- * <P>
+ * <p>
  * Not a full abstract implementation by any means, rather this class provides
  * various common service routines to eventual type-specific subclasses.
  *

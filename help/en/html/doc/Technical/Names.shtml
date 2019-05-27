@@ -318,16 +318,13 @@
         but not always, start with IH.
         </li>
 
-        <li>I dIgitalIO - DigitalIO is a one bit input/output device, for example
-		turnout or sensor.</li>
-
-        <li>L Light - another form of output, used to e.g. control
-        lights on a layout</li>
-
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
         information temporarily and display it on panels, etc.
         Memory system names are all upper case, have no trailing whitespace and start with IM.</li>
+
+        <li>L Light - another form of output, used to e.g. control
+        lights on a layout</li>
 
         <li>N eNtry/exit destination points</li>
 
@@ -337,8 +334,6 @@
         can. For example, the system specific part might be B for
         main layout power, e.g. LPB or S42 for subdistrict channel
         2 on card 4, e.g. LPS42.</li>
-
-        <li>Q LogixNG - Logix Next Generation (under development by danieb987)</li>
 
         <li>R Reporters - a general purpose mechanism for reporting
         complicated information from the layout, e.g. locomotive
@@ -352,20 +347,15 @@
         generally be either ACTIVE or INACTIVE. This is most
         commonly used for block occupancy detectors.</li>
 
+        <li>Y Sections - holds a map of trackwork.
+        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
+        
         <li>T Turnout - actually a general purpose output on the
         layout</li>
-
-        <li>V AnalogIO (think Variable) - an analog input/output device.</li>
 
         <li>X logiX - a set of logic equations used to control the
         layout.
         Logix system names are all upper case, have no trailing whitespace and start with IX.</li>
-
-        <li>Y Sections - holds a map of trackwork.
-        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
-        
-        <li>Z StringIO (ztrings) - A input/output device for strings</li>
-
       </ul>
 
 

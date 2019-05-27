@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Rfid implementation of a ReporterManager.
- * <P>
+ * <p>
  * System names are "FRpppp", where ppp is a representation of the RFID reader.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4

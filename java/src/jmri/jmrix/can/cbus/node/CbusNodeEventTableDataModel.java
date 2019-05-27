@@ -6,7 +6,7 @@ import javax.swing.JTextField;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusNameService;
-import jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeEditEventFrame;
+import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
 
     private CbusNameService nameService;
     private CbusNode nodeOfInterest;
-    private CbusNodeEditEventFrame editEvFrame;
+    private NodeConfigToolPane _mainpane;
     
     // column order needs to match list in column tooltips
     static public final int NODE_NUMBER_COLUMN = 0;
@@ -31,14 +31,15 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     static public final int NODE_NAME_COLUMN = 3;
     static public final int EVENT_NAME_COLUMN = 4;
     static public final int EV_VARS_COLUMN = 5;
-    static public final int MAX_COLUMN = 6;
+    static public final int EV_INDEX_COLUMN = 6;
+    static public final int MAX_COLUMN = 7;
     
     CanSystemConnectionMemo _memo;
 
-    public CbusNodeEventTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
+    public CbusNodeEventTableDataModel( NodeConfigToolPane mainpane, CanSystemConnectionMemo memo, int row, int column) {
         
         log.debug("Starting MERG CBUS Node Event Table");
-        
+        _mainpane = mainpane;
         _memo = memo;
         nameService = new CbusNameService();
     }
@@ -65,7 +66,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -102,6 +102,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
                 return ("Event Name");
             case EV_VARS_COLUMN:
                 return ("Event Variables");
+            case EV_INDEX_COLUMN:
+                return ("Index");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -116,6 +118,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
             case EVENT_NUMBER_COLUMN:
             case NODE_NUMBER_COLUMN:
+            case EV_INDEX_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case NODE_NAME_COLUMN:
             case EVENT_NAME_COLUMN:
@@ -135,6 +138,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
             case EVENT_NUMBER_COLUMN:
             case NODE_NUMBER_COLUMN:
+            case EV_INDEX_COLUMN:
                 return Integer.class;
             case NODE_NAME_COLUMN:
             case EVENT_NAME_COLUMN:
@@ -182,11 +186,23 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
                 return "Edit";
             case NODE_NAME_COLUMN:
-                return nameService.getNodeName( nnc );
+                if ( !nodeOfInterest.getNodeEventByArrayID(row).getTempFcuNodeName().isEmpty() ) {
+                    return nodeOfInterest.getNodeEventByArrayID(row).getTempFcuNodeName();
+                }
+                else {
+                    return nameService.getNodeName( nnc );
+                }
             case EVENT_NAME_COLUMN:
-                return nameService.getEventName( nnc, enc  );
+                if ( !nodeOfInterest.getNodeEventByArrayID(row).getName().isEmpty() ) {
+                    return nodeOfInterest.getNodeEventByArrayID(row).getName();
+                }
+                else {
+                    return nameService.getEventName( nnc, enc  );
+                }
             case EV_VARS_COLUMN:
                 return nodeOfInterest.getNodeEventByArrayID(row).getEvVarString();
+            case EV_INDEX_COLUMN:
+                return nodeOfInterest.getNodeEventByArrayID(row).getIndex();
             default:
                 return null;
         }
@@ -200,23 +216,23 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     public void setValueAt(Object value, int row, int col) {
         if (col == NODE_EDIT_BUTTON_COLUMN) {
             
-            ThreadingUtil.runOnGUI( ()->{
+            ThreadingUtil.runOnGUIDelayed( ()->{
+                _mainpane.getEditEvFrame().initComponents(_memo, nodeOfInterest.getNodeEventByArrayID(row) );
                 
-                editEvFrame = new CbusNodeEditEventFrame(null,
-                    nodeOfInterest.getNodeEventByArrayID(row));
-                    
-                editEvFrame.initComponents(_memo);
-                
-            });
+            },10);
             
         }
     }
     
     public void setNode( CbusNode node){
         
+        if ( nodeOfInterest != null ){
+            nodeOfInterest.setNodeEventTable(null);
+        }
         nodeOfInterest = node;
-        
-        node.setNodeEventTable(this);
+        if ( nodeOfInterest != null ){
+            nodeOfInterest.setNodeEventTable(this);
+        }
        // fireTableDataChanged();
         
     }
@@ -225,10 +241,9 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
      * To close window after testing
      */  
     protected void disposeEvFrame(){
-        // if ( editEvFrame != null ) {
-            editEvFrame.dispose();
-            editEvFrame = null;
-        // }
+        if ( _mainpane.getEditEvFrame() != null ) {
+            _mainpane.getEditEvFrame().dispose();
+        }
     }
     
     public void updateFromNode( int arrayid, int col){
@@ -237,6 +252,10 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             // fireTableCellUpdated(arrayid, col);
             fireTableDataChanged();
         });
+    }
+    
+    public void dispose(){
+        setNode( null);
     }
     
     /**

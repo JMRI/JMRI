@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Random Functions</name>
+    <name xml:lang="de">Zufallsfunktionen</name>
+    <column>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 1:    </text>
+                    <text xml:lang="de">Zufallsfunktion 1:    </text>
+                </label>
+                <display item="Random Function 1" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 1 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 1 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 1 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 1 Off Min" layout="above" label=""/>
+                <display item="Random Function 1 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 1 Off Max" layout="above" label=""/>
+                <display item="Random Function 1 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 1 On Min" layout="above" label=""/>
+                <display item="Random Function 1 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 1 On Max" layout="above" label=""/>
+                <display item="Random Function 1 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 2:    </text>
+                    <text xml:lang="de">Zufallsfunktion 2:    </text>
+                </label>
+                <display item="Random Function 2" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 2 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 2 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 2 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 2 Off Min" layout="above" label=""/>
+                <display item="Random Function 2 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 2 Off Max" layout="above" label=""/>
+                <display item="Random Function 2 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 2 On Min" layout="above" label=""/>
+                <display item="Random Function 2 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 2 On Max" layout="above" label=""/>
+                <display item="Random Function 2 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 3:    </text>
+                    <text xml:lang="de">Zufallsfunktion 3:    </text>
+                </label>
+                <display item="Random Function 3" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 3 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 3 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 3 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 3 Off Min" layout="above" label=""/>
+                <display item="Random Function 3 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 3 Off Max" layout="above" label=""/>
+                <display item="Random Function 3 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 3 On Min" layout="above" label=""/>
+                <display item="Random Function 3 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 3 On Max" layout="above" label=""/>
+                <display item="Random Function 3 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 4:    </text>
+                    <text xml:lang="de">Zufallsfunktion 4:    </text>
+                </label>
+                <display item="Random Function 4" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 4 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 4 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 4 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 4 Off Min" layout="above" label=""/>
+                <display item="Random Function 4 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 4 Off Max" layout="above" label=""/>
+                <display item="Random Function 4 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 4 On Min" layout="above" label=""/>
+                <display item="Random Function 4 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 4 On Max" layout="above" label=""/>
+                <display item="Random Function 4 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 5:    </text>
+                    <text xml:lang="de">Zufallsfunktion 5:    </text>
+                </label>
+                <display item="Random Function 5" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 5 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 5 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 5 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 5 Off Min" layout="above" label=""/>
+                <display item="Random Function 5 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 5 Off Max" layout="above" label=""/>
+                <display item="Random Function 5 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 5 On Min" layout="above" label=""/>
+                <display item="Random Function 5 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 5 On Max" layout="above" label=""/>
+                <display item="Random Function 5 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 6:    </text>
+                    <text xml:lang="de">Zufallsfunktion 6:    </text>
+                </label>
+                <display item="Random Function 6" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 6 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 6 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 6 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 6 Off Min" layout="above" label=""/>
+                <display item="Random Function 6 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 6 Off Max" layout="above" label=""/>
+                <display item="Random Function 6 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 6 On Min" layout="above" label=""/>
+                <display item="Random Function 6 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 6 On Max" layout="above" label=""/>
+                <display item="Random Function 6 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 7:    </text>
+                    <text xml:lang="de">Zufallsfunktion 7:    </text>
+                </label>
+                <display item="Random Function 7" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 7 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 7 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 7 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 7 Off Min" layout="above" label=""/>
+                <display item="Random Function 7 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 7 Off Max" layout="above" label=""/>
+                <display item="Random Function 7 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 7 On Min" layout="above" label=""/>
+                <display item="Random Function 7 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 7 On Max" layout="above" label=""/>
+                <display item="Random Function 7 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10" anchor="LINE_END">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="3">
+                <label>
+                    <text>Random 8:    </text>
+                    <text xml:lang="de">Zufallsfunktion 8:    </text>
+                </label>
+                <display item="Random Function 8" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 8 Stopped" layout="above"/>
+                <label>
+                    <text>    </text>
+                </label>
+                <display item="Random Function 8 Moving" layout="above"/>
+                <label>
+                    <text>  </text>
+                </label>
+                <display item="Random Function 8 Drive Sound" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <display item="Random Function 8 Off Min" layout="above" label=""/>
+                <display item="Random Function 8 Off Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 8 Off Max" layout="above" label=""/>
+                <display item="Random Function 8 Off Max" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Random Function 8 On Min" layout="above" label=""/>
+                <display item="Random Function 8 On Min" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Random Function 8 On Max" layout="above" label=""/>
+                <display item="Random Function 8 On Max" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+    </column>
+</pane>

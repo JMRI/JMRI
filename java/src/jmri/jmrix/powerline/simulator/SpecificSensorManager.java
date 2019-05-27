@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the system-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "PSann", where a is the unit id, nn is the unit number
  * without padding.
- * <P>
+ * <p>
  * Sensors are numbered from 1.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
  * @author Ken Cameron, (C) 2009, 2010 sensors from poll replies Converted to
  * multiple connection

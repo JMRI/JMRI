@@ -63,7 +63,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         String system = parts[1];
         String mast = parts[2];
 
-        // if "mast" contains (, it's new style
+        // if "mast" contains (, it's a new style
         if (mast.indexOf('(') == -1) {
             // old style
             setMastType(mast);

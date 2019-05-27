@@ -33,6 +33,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     private Block _nextBlock = null;
     private SignalMast _nextMast = null;
     private boolean _cabSignalActive = true;
+    private boolean _masterPausedButtonActive = false;
     private PropertyChangeListener _cconSignalMastListener = null;
 
     public DefaultCabSignal(LocoAddress address){
@@ -51,6 +52,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
        _nextBlock = null;
        _nextMast = null;
        _cabSignalActive = true;
+       _masterPausedButtonActive = false;
     }
 
     /**
@@ -207,28 +209,30 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         if(getBlock()!=null){
            LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         
-           Block b = getBlock();
-           Block nB = getNextBlock();
-           while(_nextMast == null && nB !=null ) {
-              _nextMast = lbm.getFacingSignalMast(b, nB);
-              b = nB;
-              nB = nextBlockOnPath(b,b.getDirection()); 
-           }
-           if ( _nextMast == null) {
-              _nextMast = lbm.getSignalMastAtEndBumper(getBlock(),null);
-           }
-           if ( _nextMast != null) {
-              // add signal changelistener
-              _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
-                 // aspect changed?, need to notify
-                 firePropertyChange("MastChanged",e.getNewValue(),e.getOldValue());
-                 forwardCabSignalToLayout();
-              });
-           }
+            Block b = getBlock();
+            Block nB = getNextBlock();
+            while(_nextMast == null && nB !=null ) {
+                _nextMast = lbm.getFacingSignalMast(b, nB);
+                b = nB;
+                nB = nextBlockOnPath(b,b.getDirection()); 
+            }
+            if ( _nextMast == null) {
+                // use block b which is the last non-null block in the path
+                _nextMast = lbm.getSignalMastAtEndBumper(b,null);
+            }
+           
+            if ( _nextMast != null) {
+                // add signal changelistener
+                _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
+                // aspect changed?, need to notify
+                firePropertyChange("MastChanged",e.getNewValue(),e.getOldValue());
+                forwardCabSignalToLayout();
+                });
+            }
         }
         if(_nextMast!=null) {
             if(!_nextMast.equals(oldNextMast)) {
-               firePropertyChange("NextMast",_nextMast,oldNextMast);
+                firePropertyChange("NextMast",_nextMast,oldNextMast);
             }
         } else {
             // currentNextMast is null, notify if old next mast was not.
@@ -246,6 +250,9 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         if (!isCabSignalActive() ) {
             return;
         }
+        if (_masterPausedButtonActive) {
+            return;
+        }
 
         LocoAddress locoaddr = getCabSignalAddress();
         SignalMast mast = getNextMast();
@@ -255,7 +262,6 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         }
         // and forward the message on to the layout.
         forwardAspectToLayout();
-       
     }
 
     /**
@@ -281,19 +287,33 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * @param active true if on, false if off
      */
     public void setCabSignalActive(boolean active){
-        if(_cabSignalActive!=active && active == true ) {
-           setBlock();
-        }
         _cabSignalActive = active;
+        if(_cabSignalActive) {
+           getNextMast(); // refreshes block, mast, and sends if master button not paused
+        }
+        else {
+            resetLayoutCabSignal(); // send data invalid to layout
+        }
     }
-
+    
     /*
-     * Disable the cab signal.  
+     * Set when initialised and when Master PAUSED button is toggled
      *
+     * @param active true if paused, false if resumed
      */
-    public void disableCabSignal(){
-        setCabSignalActive(false);
-        resetLayoutCabSignal();
+    public void setMasterCabSigPauseActive (boolean active) {
+        _masterPausedButtonActive = active;
+        if ( !isCabSignalActive() ){
+            return; // if cabsig has already been disabled no action needed
+        }
+        if ( _masterPausedButtonActive ) {
+            log.debug("master paused");
+            resetLayoutCabSignal(); // send data invalid to layout
+        }
+        else {
+            log.debug("master not paused");
+            getNextMast(); // refreshes block, mast, and sends if single cabsig enabled
+        }
     }
 
     /**

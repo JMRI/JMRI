@@ -73,7 +73,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     @Override
     public void configureTable(JTable eventTable) {
@@ -274,6 +273,16 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
     
     /**
+     * Returns an existing node by table row number
+     * @param rowNum The Row Number
+     * @return the Node
+     */
+    @Override
+    public CbusNode getNodeByRowNum( int rowNum ) {
+        return _mainArray.get(rowNum);
+    }
+    
+    /**
      * Notify GUI that a table cell has been updated
      * @param node Node Number, not node row number
      * @param col Table Column number
@@ -287,6 +296,26 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
                 fireTableCellUpdated(getNodeRowFromNodeNum(node), col);
             });
         }
+    }
+    
+    /**
+     * Single Node User Name
+     * @param nn Node Number, NOT row number
+     * @return Node Username, if unset returns node type name
+     */
+    @Override
+    public String getNodeName( int nn ) {
+        int rownum = getNodeRowFromNodeNum(nn);
+        if ( rownum < 0 ) {
+            return "";
+        }
+        if ( !_mainArray.get(rownum).getUserName().isEmpty() ) {
+            return _mainArray.get(rownum).getUserName();
+        }
+        if ( !_mainArray.get(rownum).getNodeTypeName().isEmpty() ) {
+            return _mainArray.get(rownum).getNodeTypeName();
+        }        
+        return "";
     }
     
     /**

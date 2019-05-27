@@ -19,18 +19,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for the Warrant List
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
@@ -423,19 +422,24 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
                     "occupied");
         case SET_COLUMN:
-            if (w.hasRouteSet() && w.isTotalAllocated()) {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-green.gif",
-                        "off");
-            } else if (w.hasRouteSet() && w.isAllocated()) {
+            if (w.hasRouteSet()) {
+                if (w.isTotalAllocated()) {
+                    return new NamedIcon(
+                            "resources/icons/smallschematics/tracksegments/circuit-green.gif",
+                            "off");
+                } else if (w.isAllocated()) {
+                    return new NamedIcon(
+                            "resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                            "occupied");
+                }
+            } else if (w.isAllocated()) {
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
                         "occupied");
-            } else {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                        "occupied");
             }
+            return new NamedIcon(
+                    "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
+                    "occupied");
         case AUTO_RUN_COLUMN:
             if (w.getRunMode() == Warrant.MODE_RUN) {
                 return new NamedIcon(
@@ -586,13 +590,13 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                removeWarrant(w, true); // removes any warrant
                 fireTableRowsDeleted(row, row);
+                removeWarrant(w, true); // removes any warrant
             } else {
                 w.controlRunTrain(Warrant.ABORT);
                 if (_warNX.contains(w)) { // don't remove regular warrants
-                    removeWarrant(w, false);
                     fireTableRowsDeleted(row, row);
+                    removeWarrant(w, false);
                 }
             }
             break;
@@ -600,9 +604,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
-/*        if (row < getRowCount()) {
-            fireTableRowsUpdated(row, row);                    
-        }*/
         if (msg != null) {
             JOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),

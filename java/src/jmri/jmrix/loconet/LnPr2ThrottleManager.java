@@ -29,6 +29,8 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
     /**
      * PR2 allows only one throttle
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected boolean singleUse() {

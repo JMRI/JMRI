@@ -1,3 +1,3 @@
-The code that handle the text buffer is lame, and needs to be improved.
+The code that handles the text buffer is lame, and needs to be improved.
 
 Use an explicit StringBuffer instead of temporaries in Strings

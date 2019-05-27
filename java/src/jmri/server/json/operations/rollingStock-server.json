@@ -1,0 +1,6 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-rollingStock-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"rollingStock\" (items in \"rollingStock\" will match \"car\" or \"engine\")"
+}

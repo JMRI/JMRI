@@ -194,7 +194,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
             });
             this.add(b);
 
-            // button to remove this entry from it's parent
+            // button to remove this entry from its parent
             b = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener a = new ActionListener() {
                 @Override

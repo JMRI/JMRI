@@ -42,13 +42,13 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     }
     
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         String name = data.path(NAME).asText();
         if (method.equals(PUT)) {
-            this.connection.sendMessage(this.service.doPut(type, name, data, locale));
+            this.connection.sendMessage(this.service.doPut(type, name, data, locale, id), id);
         } else {
-            this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+            this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
         }
         if (!this.beanListeners.containsKey(name)) {
             SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
@@ -61,28 +61,18 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
         log.debug("adding SignalHeadsListener");
         if (managerListener == null) {
             managerListener = new SignalHeadsListener();
             InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(managerListener);
         }
-        addListenersToBeans();
     }
 
-    private void addListenersToBeans() {
+    private void removeListenersFromRemovedBeans() {
         SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
-        manager.getNamedBeanSet().stream().forEach((bean) -> {
-            String name = bean.getSystemName();
-            if (!beanListeners.containsKey(name)) {
-                log.debug("adding SignalHeadListener for SignalHead '{}'", name);
-                SignalHeadListener listener = new SignalHeadListener(bean);
-                beanListeners.put(name, listener);
-                bean.addPropertyChangeListener(listener);
-            }
-        });
         for (String name : new HashSet<>(beanListeners.keySet())) {
             if (manager.getBeanBySystemName(name) == null) {
                 beanListeners.remove(name);
@@ -112,9 +102,10 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
         public void propertyChange(PropertyChangeEvent e) {
             try {
                 try {
-                    connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(), getLocale()));
+                    connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(),
+                            connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                 } catch (JsonException ex) {
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ie) {
                 // if we get an error, de-register
@@ -132,14 +123,14 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(SIGNAL_HEADS, getLocale()));
+                    connection.sendMessage(service.doGetList(SIGNAL_HEADS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToBeans();
+                        removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending SignalHeads: {}", ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
                 // do nothing; the listeners will be removed as the connection gets closed

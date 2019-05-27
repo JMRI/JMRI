@@ -32,15 +32,15 @@ public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpServi
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.addListeners();
-        this.connection.sendMessage(this.service.doPost(type, data.path(NAME).asText(), data, locale));
+        this.connection.sendMessage(this.service.doPost(type, data.path(NAME).asText(), data, locale, id), id);
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws JsonException, IOException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws JsonException, IOException {
         this.addListeners();
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
     }
 
     private void addListeners() {
@@ -56,9 +56,9 @@ public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpServi
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             try {
-                this.connection.sendMessage(this.service.doGet(POWER, ((PowerManager) evt.getSource()).getUserName(), this.connection.getLocale()));
+                this.connection.sendMessage(this.service.doGet(POWER, ((PowerManager) evt.getSource()).getUserName(), this.connection.getObjectMapper().createObjectNode(), this.connection.getLocale(), 0), 0);
             } catch (JsonException ex) {
-                this.connection.sendMessage(ex.getJsonMessage());
+                this.connection.sendMessage(ex.getJsonMessage(), 0);
             }
         } catch (IOException ex) {
             // do nothing - we can only silently fail at this point

@@ -450,7 +450,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
     /**
      * Terminate the receive and transmit threads.
-     *<p>
+     * <p>
      * This is intended to be used only by testing subclasses.
      */
     @Override

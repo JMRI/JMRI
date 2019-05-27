@@ -31,9 +31,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         super(new EliteXNetSystemConnectionMemo());
         option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
-        option2Name = Bundle.getMessage("BufferTitle");
-        options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
-        setCheckBuffer(true); // default to true for elite
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
@@ -191,7 +188,9 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      */
     /*public String option1Name() { return "Elite connection uses "; }
      public String[] validOption1() { return Arrays.copyOf(validOption1, validOption1.length); }*/
-    protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud", "57,600 baud", "115,200 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
+            Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
+            Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
 
     // meanings are assigned to these above, so make sure the order is consistent

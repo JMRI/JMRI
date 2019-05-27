@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 /**
  * This sample Automaton watches a Sensor, and adjusts the state of a Turnout so
  * that it matches the Sensor's state.
- * <P>
+ * <p>
  * The sensor and turnout id's are hardcoded, as this is an example of just the
  * Automaton function. Adding a GUI to configure these would be
  * straight-forward. The values could be passed via the constructor, or the
  * constructor (which can run in any required thread) could invoke a dialog.
- * <P>
+ * <p>
  * For test purposes, one of these objects can be created and invoked by a
  * SampleAutomatonAction.
  * <p>
@@ -47,7 +47,6 @@ public class SampleAutomaton extends AbstractAutomaton {
     String turnoutName = "26";
 
     /**
-     * <P>
      * This also sets the turnout to the current (initial) state to make sure
      * everything is consistent at the start.
      */

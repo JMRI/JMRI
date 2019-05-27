@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * probably should, however, in case.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
-  */
+ */
 public class SerialSignalHead extends DefaultSignalHead {
 
     GrapevineSystemConnectionMemo memo = null;

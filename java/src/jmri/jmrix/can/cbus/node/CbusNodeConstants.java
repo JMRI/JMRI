@@ -48,9 +48,11 @@ public class CbusNodeConstants {
         
         if ( node.getParameter(1) == 165 ) { // MERG MODULE
             if ( node.getParameter(3) == 29 ) { // CANPAN
-            
                 node.setsendsWRACKonNVSET(false);
-                
+            }
+            if ( node.getParameter(3) == 10 ) { // CANCMD
+                if ( node.getParameter(7) == 4 ) // v4 Firmware
+                node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
             }
         }
     }
@@ -86,8 +88,66 @@ public class CbusNodeConstants {
                 };
                 
                 thisNode.setParameters(_params);
-                thisNode.setNVs( new int[]{ 1 , 0 } );
+                thisNode.setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
+                thisNode.setNodeNameFromName("PAN");
             }
+            
+            else if ( type == 255 ) {
+                
+                // 255 parameters could have unintended future
+                // consequences so staying with the standard 20
+                // for now
+                int[] _params = new int[]{ 
+                20, /* 0 num parameters   */
+                165, /* 1 manufacturer ID   */
+                89, /* 2 Minor code version   */
+                255, /* 3 Manufacturer module identifier   */
+                255, /* 4 Number of supported events   */
+                255, /* 5 Number of Event Variables per event   */
+                255, /* 6 Number of Node Variables   */
+                1, /* 7 Major version   */
+                13, /* 8 Node flags   */ 
+                13, /* 9 Processor type   */
+                1, /* 10 Bus type   */
+                0, /* 11 load address, 1/4 bytes   */
+                8, /* 12 load address, 2/4 bytes   */
+                0, /* 13 load address, 3/4 bytes   */
+                0, /* 14 load address, 4/4 bytes   */
+                0, /* 15 CPU manufacturer's id 1/4  */
+                0, /* 16 CPU manufacturer's id 2/4  */
+                0, /* 17 CPU manufacturer's id 3/4  */
+                0, /* 18 CPU manufacturer's id 4/4  */
+                1, /* 19 CPU manufacturer code   */
+                1, /* 20 Beta revision   */
+                };
+                
+                thisNode.setParameters(_params);
+                
+                int[] nvArray = new int[256];
+                nvArray[0]=255;
+                for (int i = 1; i < nvArray.length; i++) {
+                    nvArray[i] = i;
+                }
+                
+                // create array of event variables
+                int[] evVarArray = new int[255];
+                for (int i = 0; i < evVarArray.length; i++) {
+                    evVarArray[i] = i+1;
+                }
+                
+                for (int i = 1; i < 256; i++) {
+                    
+                    CbusNodeEvent singleEv = new CbusNodeEvent(i,i,-1,i,255);
+                    singleEv.setEvArr(evVarArray);
+                    thisNode.addNewEvent(singleEv);
+                    
+                }
+                
+                thisNode.setNVs( nvArray );
+                thisNode.setNodeNameFromName("TSTMAXND");
+                
+            }
+            
             else {
             
                 // default MERG module in SLiM mode
@@ -96,7 +156,7 @@ public class CbusNodeConstants {
             }
         }
         else {
-            thisNode.setParameters( new int[]{ 7,165,0,0,0,0,0,0 } );
+            thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
             thisNode.setNVs( new int[]{ 0 } );
         }
         
@@ -110,10 +170,13 @@ public class CbusNodeConstants {
      * @return decoded CBUS message
      */
     public static String getManu(int man) {
-        // look for the opcode
+        if (man < 1 ) {
+            return ("");
+        }
+        // look for the manufacturer
         String format = manMap.get(man);
         if (format == null) {
-            return "Manufacturer Unknown";
+            return "Manufacturer " + man;
         } else {
             return format; 
         }
@@ -179,7 +242,7 @@ public class CbusNodeConstants {
      * manufacturer 165 MERG.
      * @param man int manufacturer
      * @param type module type int
-     * @return decoded String module type name
+     * @return decoded String module type name else empty string
      */
     public static String getModuleType(int man, int type) {
         String format="";
@@ -192,7 +255,13 @@ public class CbusNodeConstants {
         else if (man == 80) {
             format = type80Map.get(type);
         }
-        return format;
+        
+        if ( format == null ){
+            return ("");
+        }
+        else {
+            return format;
+        }
     }
     
     /**
@@ -268,6 +337,7 @@ public class CbusNodeConstants {
         result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "CANDISP"); // NOI18N
         result.put(60, "CANCOMPUTE"); // NOI18N
+        result.put(61, "CANCMDDC"); // NOI18N
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -398,6 +468,7 @@ public class CbusNodeConstants {
         result.put(58, "CBUS module based on Raspberry Pi");
         result.put(59, "25K80 version of CANLED64");
         result.put(60, "Event processing engine");
+        result.put(61, "8-Channel DC command station");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -438,7 +509,7 @@ public class CbusNodeConstants {
      * Return a string representation of Module Support Link
      * @param man int manufacturer ID
      * @param type int module type ID
-     * @return string module support link
+     * @return string module support link, else empty string
      */
     public static String getModuleSupportLink(int man, int type) {
         String format="";
@@ -447,6 +518,9 @@ public class CbusNodeConstants {
         }
         else if (man == 70) {
             format = link70Map.get(type);
+        }
+        if ( format == null ){
+            return ("");
         }
         return format;
     }
@@ -520,6 +594,7 @@ public class CbusNodeConstants {
         // result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:candisp"); // NOI18N
         result.put(60, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cancompute"); // NOI18N
+        result.put(61, "https://www.merg.org.uk/forum/viewtopic.php?f=45&t=6376"); // NOI18N
         
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N

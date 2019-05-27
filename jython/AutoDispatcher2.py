@@ -4911,7 +4911,7 @@ class ADlocomotive :
     def setAddress(self, address) :
         # Change dcc address
         if self.throttle != None :
-            self.throttle.release()
+            self.throttle.release(None)
         if address <1 :
                 address = 1
         self.address = address
@@ -4970,11 +4970,11 @@ class ADlocomotive :
         if self.throttle != None :
             if ADsettings.lightMode != 0 :
                 self.setFunction(0, False)
-            self.throttle.release()
+            self.throttle.release(None)
             self.throttle = None
             self.throttleAssigned = False
             if self.leadLoco != 0 :
-                self.leadThrottle.release()
+                self.leadThrottle.release(None)
                 AutoDispatcher.message("Released throttles of consist "
                   + self.name + " (" + str(self.address) + ", " + 
                   str(self.leadLoco) + ")")

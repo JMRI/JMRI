@@ -46,7 +46,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        Assert.assertNotNull("Senor IS12 not found", sensor1);
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -62,8 +62,11 @@ public class LinkedWarrantTest {
 
         Warrant warrant = _warrantMgr.getWarrant("LoopDeLoop");
         Assert.assertNotNull("warrant", warrant);
-       
-        tableFrame.runTrain(warrant, Warrant.MODE_RUN); // start run
+      
+        // WarrantTable.runTrain() returns a string that is not null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
@@ -138,7 +141,10 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("Loop&Fred");
         Assert.assertNotNull("warrant", warrant);
        
-        tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        // WarrantTable.runTrain() returns a string that is not null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
 
         Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -226,8 +232,10 @@ public class LinkedWarrantTest {
         String[] routeBack = {"OB11", "OB9", "OB7", "OB6", "OB5", "OB3", "OB1"};
         String backEndSensorName = _OBlockMgr.getOBlock("OB1").getSensor().getDisplayName();
 
-
-        tableFrame.runTrain(outWarrant, Warrant.MODE_RUN);  // start run
+        // WarrantTable.runTrain() returns a string that is not null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(outWarrant, Warrant.MODE_RUN)); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  outWarrant.getRunningMessage();
@@ -261,7 +269,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
 
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause for to start next leg
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause for to start next leg
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");
@@ -282,7 +290,7 @@ public class LinkedWarrantTest {
             panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance
+    // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
     public void testLinkedMidScript() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -294,7 +302,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
 
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
-        Assert.assertNotNull("Senor IS12 not found", sensor0);
+        Assert.assertNotNull("Senor IS0 not found", sensor0);
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -311,7 +319,10 @@ public class LinkedWarrantTest {
         Warrant warrant = _warrantMgr.getWarrant("Tinker");
         Assert.assertNotNull("warrant", warrant);
        
-        tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        // WarrantTable.runTrain() returns a string that is not null if the 
+        // warrant can't be started 
+        Assert.assertNull("Warrant starts",
+              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
 
         Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {

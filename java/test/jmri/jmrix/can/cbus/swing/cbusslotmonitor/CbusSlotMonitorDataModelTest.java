@@ -18,22 +18,17 @@ import org.junit.Test;
  */
 public class CbusSlotMonitorDataModelTest {
  
-    jmri.jmrix.can.TrafficControllerScaffold tcis = null;
-    jmri.jmrix.can.CanSystemConnectionMemo memo = null;
+    private jmri.jmrix.can.TrafficControllerScaffold tcis = null;
+    private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
+    private CbusSlotMonitorDataModel t = null;
 
     @Test
     public void testCtor() {
-        CbusSlotMonitorDataModel model = new CbusSlotMonitorDataModel(memo,5,5);
-        Assert.assertNotNull("exists", model);
-        model.dispose();
-        model = null;
+        Assert.assertNotNull("exists", t);
     }
     
     @Test
     public void testAddToTable() {
-        
-        CbusSlotMonitorDataModel t = new CbusSlotMonitorDataModel(
-        memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
         
         Assert.assertEquals("column count",CbusSlotMonitorDataModel.MAX_COLUMN,t.getColumnCount());
         
@@ -48,7 +43,19 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(0, CbusConstants.CBUS_RLOC); 
         r.setElement(1, 0x00);
         r.setElement(2, 0x03);
+        
+        r.setExtended(true);
         t.reply(r);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        
+        Assert.assertTrue("reply ext rtr",t.getRowCount()==0);
+        
+        r.setRtr(false);
+        t.reply(r);
+        
         Assert.assertTrue("reply rloc 3",t.getRowCount()==1);
         
         int locoId = (Integer) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_COLUMN);
@@ -64,7 +71,18 @@ public class CbusSlotMonitorDataModelTest {
         m.setElement(0, CbusConstants.CBUS_RLOC); 
         m.setElement(1, 0x00);
         m.setElement(2, 0x07);
+        
+        m.setExtended(true);
         t.message(m);
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertTrue("msg ext rtr",t.getRowCount()==1);
+        
+        m.setRtr(false);
+        t.message(m);
+        
         Assert.assertTrue("msg rloc 7",t.getRowCount()==2);
         
         CanMessage ma = new CanMessage( tcis.getCanid() );
@@ -137,26 +155,19 @@ public class CbusSlotMonitorDataModelTest {
         t.message(mc);
         Assert.assertTrue("msg gloc 0x04 0x34",t.getRowCount()==5);
         
-        t.dispose();
-        t = null;
-        
     }
     
     @Test
     public void testCanListenAndRemove() {
-        Assert.assertEquals("no listener to start with",0,tcis.numListeners());
-        CbusSlotMonitorDataModel t = new CbusSlotMonitorDataModel(
-        memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
         Assert.assertTrue("table listening",1 == tcis.numListeners());
         t.dispose();
-        Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
+        Assert.assertEquals("no listener after didpose",0,tcis.numListeners());
+        t = new CbusSlotMonitorDataModel(memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
+        Assert.assertTrue("table listening again",1 == tcis.numListeners());     
     }
     
     @Test
     public void testColumns() {
-        
-        CbusSlotMonitorDataModel t = new CbusSlotMonitorDataModel(
-        memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
         
         Assert.assertNotNull("exists", t.tablefeedback() );
         Assert.assertTrue( t.getColumnCount()== 10 );
@@ -180,15 +191,10 @@ public class CbusSlotMonitorDataModelTest {
             t.getColumnClass(CbusSlotMonitorDataModel.LOCO_ID_LONG_COLUMN) ==  Boolean.class );
         Assert.assertTrue("column class null",
             t.getColumnClass(999) ==  null );
-        t.dispose();
-        
     }
     
     @Test
     public void testGetValueAtSetValueAtFunctions() {
-        
-        CbusSlotMonitorDataModel t = new CbusSlotMonitorDataModel(
-        memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
         
         // table hears session 1 already in progress
         CanReply r = new CanReply();
@@ -390,16 +396,10 @@ public class CbusSlotMonitorDataModelTest {
         
         Assert.assertEquals("Session Unset CanReply",0, t.getValueAt(0,CbusSlotMonitorDataModel.SESSION_ID_COLUMN) );
         
-        t.dispose();
-        
     }
     
     @Test
     public void testErrors() {
-    
-        CbusSlotMonitorDataModel t = new CbusSlotMonitorDataModel(
-            memo,5,CbusSlotMonitorDataModel.MAX_COLUMN);
-        
         // table hears session 1 already in progress
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -487,7 +487,6 @@ public class CbusSlotMonitorDataModelTest {
         t.reply(r);
         Assert.assertEquals("Session resumed CanReply",1, t.getValueAt(0,CbusSlotMonitorDataModel.SESSION_ID_COLUMN) );
         
-        
         r = new CanReply();
         r.setHeader(tcis.getCanid());
         r.setNumDataElements(4);
@@ -501,13 +500,13 @@ public class CbusSlotMonitorDataModelTest {
         t.tablefeedback().setText("");
         r.setElement(3, 2); // error byte 3 loco address taken
         t.reply(r);
-        Assert.assertTrue(t.tablefeedback().getText().contains("Loco address taken for address 777"));
+        Assert.assertTrue(t.tablefeedback().getText().contains("Loco address 777 taken"));
         
         
         t.tablefeedback().setText("");
         r.setElement(3, 3); // error byte 3 session not present
         t.reply(r);
-        Assert.assertTrue(t.tablefeedback().getText().contains("Session not present for session 195"));
+        Assert.assertTrue(t.tablefeedback().getText().contains("Session 195 not present"));
         
         t.tablefeedback().setText("");
         r.setElement(3, 4); // error byte 3 consist empty
@@ -528,8 +527,6 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(3, 7); // error byte 3 Invalid request
         t.reply(r);
         Assert.assertTrue(t.tablefeedback().getText().contains("Invalid request for address 777"));
-        
-        t.dispose();
     
     }
     
@@ -539,11 +536,17 @@ public class CbusSlotMonitorDataModelTest {
         tcis = new jmri.jmrix.can.TrafficControllerScaffold();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
-
+        t = new CbusSlotMonitorDataModel(memo,5,5);
     }
 
     @After
     public void tearDown() {
+        t.dispose();
+        t = null;
+        memo.dispose();
+        memo=null;
+        tcis.terminateThreads();
+        tcis=null;
         JUnitUtil.tearDown();    
     }
 

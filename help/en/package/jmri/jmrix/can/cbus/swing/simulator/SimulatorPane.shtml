@@ -133,6 +133,7 @@
         <p>Node Simulation</p>
         
         <ul>
+        <li>RQMN - Setup Mode only</li>
         <li>RQNP - Setup Mode only</li>
         <li>SNN - Setup Mode Only</li>
         <li>QNN</li>
@@ -171,6 +172,7 @@
         <p>Sent in Node Simulations</p>
 
         <ul>
+        <li>NAME</li>
         <li>NNACK</li>
         <li>RQNN</li>
         <li>WRACK</li>

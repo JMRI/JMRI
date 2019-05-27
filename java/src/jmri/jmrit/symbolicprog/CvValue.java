@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Encapsulate a single CV value and provide programming access to the decoder.
- * <P>
+ * <p>
  * Since this is a single CV in a single decoder, the Programmer used to get
  * access is part of the state. This allows us to specify a specific ops-mode
  * programmer aimed at a particular decoder.
- * <P>
+ * <p>
  * There are three relevant parameters: Busy, Value, State. Busy == true means
  * that a read or write operation is going on. When it transitions to "false",
  * the operation is complete, and the Value and State are stable. During a read

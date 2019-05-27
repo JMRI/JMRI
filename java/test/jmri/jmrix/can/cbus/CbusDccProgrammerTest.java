@@ -26,9 +26,7 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((CbusDccProgrammer)programmer).getBestMode());        
     }
 
-
 /*
-
     @Test(expected=java.lang.IllegalArgumentException.class)
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
@@ -71,12 +69,7 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("value", 5, testListener.getRcvdValue());
     }
 
-
-
-
-
 */
-
 
     // The minimal setup for log4J
     @Override

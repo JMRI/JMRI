@@ -106,6 +106,9 @@ public class CbusLight extends AbstractLight
     
     @Override
     public void message(CanMessage f) {
+        if ( f.isExtended() || f.isRtr() ) {
+            return;
+        }
         if (addrOn.match(f)) {
             setState(ON);
         } else if (addrOff.match(f)) {
@@ -115,6 +118,9 @@ public class CbusLight extends AbstractLight
 
     @Override
     public void reply(CanReply f) {
+        if ( f.isExtended() || f.isRtr() ) {
+            return;
+        }
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrOn.match(f)) {

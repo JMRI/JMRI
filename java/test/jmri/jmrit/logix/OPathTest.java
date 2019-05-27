@@ -72,6 +72,15 @@ public class OPathTest {
         Assert.assertEquals("block", null, op.getBlock());
     }
 
+    public void testSetOBlockToNull() {
+        OBlock b1 = new OBlock("IB1");
+
+        OPath op = new OPath(b1, "name");
+        op.setBlock(null);
+
+        Assert.assertEquals("block", null, op.getBlock());
+    }
+
     @Test
     @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to OPath
     public void testEquals() {

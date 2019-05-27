@@ -57,10 +57,10 @@ import org.slf4j.LoggerFactory;
  * via server side image map; see the .properties file for the content
  * <dt>.png<dd>Just return the image <dt>no name<dd>Return an HTML page with
  * links to available images </dl>
- * <P>
+ * <p>
  * The associated .properties file contains the HTML fragments used to form
  * replies.
- * <P>
+ * <p>
  * Parts taken from Core Web Programming from Prentice Hall and Sun Microsystems
  * Press, http://www.corewebprogramming.com/. &copy; 2001 Marty Hall and Larry
  * Brown; may be freely used or adapted.
@@ -360,7 +360,7 @@ public class JmriJFrameServlet extends HttpServlet {
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
             for (JmriJFrame frame : JmriJFrame.getFrameList()) {
                 if (usePanels && frame instanceof Editor) {
-                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML);
+                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML, 0);
                     if (node != null) {
                         root.add(node);
                         frames.add(((Editor) frame).getTargetFrame());
@@ -380,7 +380,7 @@ public class JmriJFrameServlet extends HttpServlet {
                             root.add(node);
                             frames.add(frame);
                         } catch (UnsupportedEncodingException ex) {
-                            JsonException je = new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to encode panel title \"" + title + "\"");
+                            JsonException je = new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to encode panel title \"" + title + "\"", 0);
                             response.sendError(je.getCode(), mapper.writeValueAsString(je.getJsonMessage()));
                             return;
                         }

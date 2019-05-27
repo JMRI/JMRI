@@ -4,6 +4,8 @@ import jmri.CommandStation;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * should always be referred to.
  *
  * @author Andrew Crosland Copyright (C) 2009
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusCommandStation implements CommandStation {
 
@@ -72,7 +75,7 @@ public class CbusCommandStation implements CommandStation {
      *
      * @param handle the handle for the session to be released
      */
-    public void releaseSession(int handle) {
+    protected void releaseSession(int handle) {
         // Send KLOC
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_KLOC);
@@ -85,7 +88,7 @@ public class CbusCommandStation implements CommandStation {
      * Send keep alive (DKEEP) packet for a throttle.
      *
      */
-    public void sendKeepAlive(int handle) {
+    protected void sendKeepAlive(int handle) {
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DKEEP);
         msg.setElement(1, handle);
@@ -99,7 +102,7 @@ public class CbusCommandStation implements CommandStation {
      * @param handle    The handle of the session to which it applies
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
-    public void setSpeedDir(int handle, int speed_dir) {
+    protected void setSpeedDir(int handle, int speed_dir) {
         CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DSPD);
         msg.setElement(1, handle);
@@ -137,6 +140,59 @@ public class CbusCommandStation implements CommandStation {
         msg.setElement(1, handle);
         msg.setElement(2, mode);
         tc.sendCanMessage(msg, null);
+    }
+
+    /**
+     * Get the master command station from the CBUS Node Table
+     * <p>
+     * Full CBUS spec is defined as to comply with CBUS Developers Guide Version 6b
+     * <p>
+     * eg. CANCMD FW v3 supports the main loco OPCs but not full spec, will return null.
+     * eg. CANCMD FW v4 supports the full steal / share spec, will return the CbusNode.
+     *
+     * @return the Master Command Station, else null if not found
+     */
+    protected CbusNode getMasterCommandStation(){
+        if ( jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class) != null ) {
+            CbusNodeTableDataModel nodeModel =  jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+            return nodeModel.getCsByNum(0);
+        }
+        return null;
+    }
+    
+    // we can't rely on the command station flags at present so instead we check the
+    // node variables of master command station 0
+    
+    /**
+     * Get if Steal is available on the Command Station
+     * <p>
+     * Steal availability can change, so CbusThrottleManager checks this value
+     * when it struggles on initial attempt to obtain a throttle 
+     */
+    protected boolean isStealAvailable() {
+        if ( getMasterCommandStation() != null ) {
+            log.debug("found master command station");
+            if ( getMasterCommandStation().getNV(2) > -1 ){
+                log.debug("nv 2 has a value");
+                return (( getMasterCommandStation().getNV(2) >> 1 ) & 1) != 0; // NV2 bit 1 set
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Get if Share is available on the Command Station
+     * <p>
+     * Share availability can change, so CbusThrottleManager checks this value
+     * when it struggles on initial attempt to obtain a throttle 
+     */
+    protected boolean isShareAvailable() {
+        if ( getMasterCommandStation() != null ) { // command station found
+            if ( getMasterCommandStation().getNV(2) > -1 ){ // NV2 is set
+                return (( getMasterCommandStation().getNV(2) >> 2 ) & 1) != 0; // NV2 bit 2 set
+            }
+        }
+        return false;
     }
 
     @Override

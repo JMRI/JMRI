@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of a Manager to handle LayoutBlocks. Note: the same
  * LayoutBlocks may appear in multiple LayoutEditor panels.
- * <P>
+ * <p>
  * This manager does not enforce any particular system naming convention.
- * <P>
+ * <p>
  * LayoutBlocks are usually addressed by userName. The systemName is hidden from
  * the user for the most part.
  *
@@ -238,7 +238,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Initializes/checks the Paths of all Blocks associated with LayoutBlocks.
-     * <P>
+     * <p>
      * This routine should be called when loading panels, after all Layout
      * Editor panels have been loaded.
      */
@@ -297,7 +297,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the Signal Head facing into a specified Block from a
      * specified protected Block.
-     * <P>
+     * <p>
      * This method is primarily designed for use with scripts to get information
      * initially residing in a Layout Editor panel. If either of the input
      * Blocks is null, or if the two blocks do not join at a block boundary, or
@@ -1413,7 +1413,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the named bean of either a Sensor or signalmast facing
      * into a specified Block from a specified protected Block.
-     * <P>
+     *
      * @return The assigned sensor or signal mast as a named bean
      */
     @CheckReturnValue
@@ -1445,7 +1445,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the Signal Mast facing into a specified Block from a
      * specified protected Block.
-     * <P>
+     *
      * @return The assigned signalMast.
      */
     @CheckReturnValue
@@ -2434,7 +2434,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Controls switching off incompatible block connectivity messages.
-     * <P>
+     * <p>
      * Warnings are always on when program starts up. Once stopped by the user,
      * these messages may not be switched on again until program restarts.
      */

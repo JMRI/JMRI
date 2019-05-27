@@ -23,6 +23,11 @@ public class WebServerScaffold implements En {
 
         Before(tags, () -> {
             jmri.util.JUnitUtil.resetProfileManager();
+            jmri.util.JUnitUtil.initConfigureManager();
+            jmri.util.JUnitUtil.initInternalTurnoutManager();
+            jmri.util.JUnitUtil.initInternalLightManager();
+            jmri.util.JUnitUtil.initInternalSensorManager();
+            jmri.util.JUnitUtil.initMemoryManager();
             jmri.util.JUnitUtil.initShutDownManager();
             jmri.util.JUnitUtil.initConnectionConfigManager();
             jmri.util.JUnitUtil.initDebugPowerManager();

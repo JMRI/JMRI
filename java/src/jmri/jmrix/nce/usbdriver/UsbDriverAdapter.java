@@ -19,10 +19,9 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements UsbPortAdapter for the NCE system.
- * <P>
+ * <p>
  * This connects an NCE PowerCab or PowerPro via a USB port. Normally
  * controlled by the UsbDriverFrame class.
- * <P>
  *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
@@ -237,7 +236,7 @@ public class UsbDriverAdapter extends NcePortController {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    private String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+    private String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200")};
     private int[] validSpeedValues = new int[]{9600, 19200};
 
     // private control members

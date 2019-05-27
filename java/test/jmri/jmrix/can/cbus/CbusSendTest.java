@@ -131,7 +131,13 @@ public class CbusSendTest {
     public void testnNCLR() {
         send.nNCLR(4321);
         checknNCLR();
-    }    
+    }
+
+    @Test
+    public void testrQmn() {
+        send.rQmn();
+        checkrQmn();
+    }
     
     @Test
     public void testTextAreaAdd2() {
@@ -239,7 +245,12 @@ public class CbusSendTest {
     public void checknNCLR() {
         Assert.assertEquals("nNCLR sent", "[5f8] 55 10 E1",
         tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-    }    
+    }
+    
+    public void checkrQmn() {
+        Assert.assertEquals("rQmn sent", "[5f8] 11",
+        tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+    }
 
     // The minimal setup for log4J
     @Before

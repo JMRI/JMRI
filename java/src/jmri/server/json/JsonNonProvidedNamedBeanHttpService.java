@@ -13,9 +13,9 @@ import jmri.NamedBean;
  * Abstract implementation of JsonHttpService with specific support for
  * {@link jmri.NamedBean} objects.
  * <p>
- * <strong>Note:</strong> if the extending class meets the requirements
- * of {@link jmri.server.json.JsonNamedBeanHttpService}, it is recommended
- * to extend that class instead.
+ * <strong>Note:</strong> if the extending class meets the requirements of
+ * {@link jmri.server.json.JsonNamedBeanHttpService}, it is recommended to
+ * extend that class instead.
  *
  * @author Randall Wood (C) 2016, 2019
  * @param <T> the type supported by this service
@@ -37,18 +37,22 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * JsonException in this case.
      * 
      * @param manager the manager for the requested type
-     * @param type   the type of the requested list
-     * @param locale the requesting client's Locale
+     * @param type    the type of the requested list
+     * @param data    JSON object possibly containing filters to limit the list
+     *                    to
+     * @param locale  the requesting client's Locale
+     * @param id      the message id set by the client
      * @return a JSON list
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    protected final ArrayNode doGetList(Manager<T> manager, String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
+    protected final JsonNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale, int id)
+            throws JsonException {
+        ArrayNode array = this.mapper.createArrayNode();
         for (T bean : manager.getNamedBeanSet()) {
-            root.add(this.doGet(bean, bean.getSystemName(), type, locale));
+            array.add(this.doGet(bean, bean.getSystemName(), type, locale, id));
         }
-        return root;
+        return message(array, id);
     }
 
     /**
@@ -64,12 +68,14 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param name   the name of the requested object
      * @param type   the type of the requested object
      * @param locale the requesting client's Locale
+     * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
-     *                       occurs
+     *                           occurs
      */
     @Nonnull
-    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException;
+    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale, int id)
+            throws JsonException;
 
     /**
      * Create the JsonNode for a {@link jmri.NamedBean} object.
@@ -78,17 +84,17 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param name   the name of the bean; used only if the bean is null
      * @param type   the JSON type of the bean
      * @param locale the locale used for any error messages
+     * @param id     the message id set by the client
      * @return a JSON node
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
+    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale, int id)
+            throws JsonException {
         if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
         }
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, type);
-        ObjectNode data = root.putObject(JSON.DATA);
+        ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, bean.getSystemName());
         data.put(JSON.USERNAME, bean.getUserName());
         data.put(JSON.COMMENT, bean.getComment());
@@ -101,7 +107,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
                 properties.add(mapper.createObjectNode().putNull(key));
             }
         });
-        return root;
+        return message(type, data, id);
     }
 
     /**
@@ -116,13 +122,15 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param name   the system name of the bean
      * @param type   the JSON type of the bean
      * @param locale the locale used for any error messages
+     * @param id     the message id set by the client
      * @return the bean so that this can be used in a method chain
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
+    protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type,
+            @Nonnull Locale locale, int id) throws JsonException {
         if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
         }
         if (data.path(JSON.USERNAME).isTextual()) {
             bean.setUserName(data.path(JSON.USERNAME).asText());

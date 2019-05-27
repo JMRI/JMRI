@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring RpsReporterManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
@@ -32,11 +32,10 @@ public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractRe
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        RpsReporterManager.instance();
         // load individual sensors
         return loadReporters(shared);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class);
+
 }

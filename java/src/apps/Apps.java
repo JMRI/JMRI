@@ -505,7 +505,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Create default menubar.
-     * <P>
+     * <p>
      * This does not include the development menu.
      *
      * @param menuBar Menu bar to be populated
@@ -1035,17 +1035,17 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Set up the configuration file name at startup.
-     * <P>
+     * <p>
      * The Configuration File name variable holds the name used to load the
      * configuration file during later startup processing. Applications invoke
      * this method to handle the usual startup hierarchy:
-     * <UL>
-     * <LI>If an absolute filename was provided on the command line, use it
-     * <LI>If a filename was provided that's not absolute, consider it to be in
+     * <ul>
+     * <li>If an absolute filename was provided on the command line, use it
+     * <li>If a filename was provided that's not absolute, consider it to be in
      * the preferences directory
-     * <LI>If no filename provided, use a default name (that's application
+     * <li>If no filename provided, use a default name (that's application
      * specific)
-     * </UL>
+     * </ul>
      * This name will be used for reading and writing the preferences. It need
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em> and may not contain the equals sign (=).
