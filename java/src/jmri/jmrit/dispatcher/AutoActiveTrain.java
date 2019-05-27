@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -273,23 +274,22 @@ public class AutoActiveTrain implements ThrottleListener {
         log.debug("{}: requesting throttle address={}", _activeTrain.getTrainName(), _address);
         useSpeedProfile = false;
         boolean ok;
+        DccLocoAddress addressForRequest = new DccLocoAddress(
+            _address,!InstanceManager.throttleManagerInstance().canBeShortAddress(_address));
         if (_activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
             if (_activeTrain.getRosterEntry() != null) {
                 re = _activeTrain.getRosterEntry();
-                //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_activeTrain.getRosterEntry(), this);
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(_activeTrain.getRosterEntry(), this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this, false);
                 if (_useSpeedProfile) {
                     if (re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0) {
                         useSpeedProfile = true;
                     }
                 }
             } else {
-                //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_address, this);
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(_address, this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
             }
         } else {
-            //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_address, this);
-            ok = InstanceManager.throttleManagerInstance().requestThrottle(_address, this);
+            ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
         }
         if (!ok) {
             log.warn("Throttle for locomotive address {} could not be setup.", _address);
@@ -338,14 +338,24 @@ public class AutoActiveTrain implements ThrottleListener {
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
+    @Deprecated
     public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        log.warn("Stealing");
-        //InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
-        //
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     // more operational variables

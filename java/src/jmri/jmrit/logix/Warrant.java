@@ -871,7 +871,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (tm == null) {
                 msg = Bundle.getMessage("noThrottle", _speedUtil.getDccAddress().getNumber());
             } else {
-                if (!tm.requestThrottle(dccAddress.getNumber(), dccAddress.isLongAddress(), this)) {
+                if (!tm.requestThrottle(dccAddress, this, false)) {
                     return Bundle.getMessage("trainInUse", dccAddress.getNumber());
                 }
             }
@@ -908,11 +908,24 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 (reason + " " + (address != null ? address.getNumber() : getDisplayName()))));
         fireRunStatus("throttleFail", null, reason);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     protected void releaseThrottle(DccThrottle throttle) {

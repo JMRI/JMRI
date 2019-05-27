@@ -20,7 +20,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+      <!--#include virtual="Sidebar" -->
     <div id="mainContent">
       <h2>JMRI: USS CTC Tools</h2>
 
@@ -29,8 +30,8 @@
       to drive a physical panel with real levers and lights.</p>
             
       <h3>Script-based Tools<span class="since">Since JMRI 4.8</span></h3>
-      These are very powerful, but currently can only be configured via a script.
-      <p>
+      <p>These tools are very powerful, but currently can only be configured via a script.
+      <br>
       For information how to do this, see:
       <ul>
       <li>The <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample script
@@ -118,7 +119,7 @@
       you find that these will save you some work on the setup.
       
       <p>
-      This tools log information to several JMRI Memory objects, which 
+      These tools log information to several JMRI Memory objects, which
       in turn can be placed onto panels as MemoryIcons.
       <dl>
         <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>

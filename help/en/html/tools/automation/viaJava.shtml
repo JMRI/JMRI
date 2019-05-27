@@ -30,7 +30,7 @@
       <h2>JMRI: Layout Automation in Java</h2>The JMRI library
       provides a very powerful set of tools for automating your
       layout. If the tools built into <a href=
-      "../../apps/PanelPro/PanelPro.shtml">PanelPro</a> or the
+      "../../apps/PanelPro/index.shtml">PanelPro</a> or the
       <a href="../scripting/index.shtml">scripting capability</a>
       aren't sufficient to do what you want, writing your own
       control program certainly will be.

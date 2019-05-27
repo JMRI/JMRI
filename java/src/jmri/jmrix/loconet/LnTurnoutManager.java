@@ -240,8 +240,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     public static final String BYPASSBUSHBYBITKEY = "Bypass Bushby Bit";
