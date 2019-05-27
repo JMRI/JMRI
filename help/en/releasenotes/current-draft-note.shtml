@@ -332,7 +332,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
+            <li>Color for new tracks is now consistent within a single Layout Editor.</li>
+            <li>Turnouts, level crossings, track segments and positional points (A/EB/EC) cannot
+            be deleted if signal heads, signal masts or sensors have been assigned to the item.
+            Also, an edge connector cannot be deleted if the link is defined.</li>
         </ul>
 
     <h3>Logix</h3>
