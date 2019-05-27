@@ -60,14 +60,15 @@
 
         <h2>How to setup Reporters</h2>
 
-        <h3>The Reporter Table</h3>The <a href=
+        <h3>The Reporter Table</h3>
+        <p>The <a href=
         "../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter
         Table</a> provides easy access to the contents of all
         Reporters that JMRI knows about. There's also an <a href=
         "../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..."
         button</a> for creating your own internal Reporters; JMRI
         automatically creates Reporter objects for devices on the
-        layout.
+        layout.</p>
 
         <h3>Displaying Reporter Values on Panels</h3><a href=
         "images/AddReportertoPanel.png"><img src=
@@ -95,7 +96,18 @@
 
           <li>The pop-up menu on the icon will let you change the
           formatting.</li>
-        </ul><!--#include virtual="/Footer" -->
+        </ul>
+
+        <p>Reporters are kept in your <i>layout configuration</i>, along
+          with Turnouts, Sensors, Signal Heads, control panel setup etc.
+          To store this information on disk, allowing to
+          <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+          it</a> next time you run JMRI, use <b>Store Configuration...</b>
+          in the <b>File</b> menu at the top of the Reporter Table (or other
+          tables from the Tools menu), or select <b>Store Panel...</b>
+          in the <b>Panel</b> menu.</p>
+
+        <!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->

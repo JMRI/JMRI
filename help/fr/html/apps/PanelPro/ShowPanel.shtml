@@ -119,11 +119,13 @@ Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
 </pre> </code>
 </ul>
 <p>
-Ne pas modifier la premi&#232;re ligne!
+Ne pas modifier la premi&#232;re ligne du fichier!
 <p>
 Pour plus d'informations techniques &#224; ce sujet, voir la
-<a href="../../doc/Technical/XmlUsage.shtml#xslt">  page JMRI XML </a>.
-   
+<a href="../../doc/Technical/XmlUsage.shtml#xslt">page JMRI XML</a>.
+</p>
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

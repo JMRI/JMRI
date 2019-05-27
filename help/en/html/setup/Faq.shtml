@@ -18,7 +18,7 @@
   <!-- FAQ-Head -->
 
   <script type="text/javascript">
-/*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
+    /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen"><!-- /FAQ-Head -->
