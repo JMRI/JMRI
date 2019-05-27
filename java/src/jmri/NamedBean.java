@@ -129,12 +129,33 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     /**
      * Returns a fully formatted display that includes the SystemName and
      * UserName if set.
+     * <p>
+     * This is the same as calling
+     * {@link #getFullyFormattedDisplayName(boolean)} with the parameter true.
      *
-     * @return <code>UserName (SystemName)</code> or <code>SystemName</code>
+     * @return {@code UserName (SystemName)} or {@code SystemName} if the
+     *         UserName is null, empty, or matches the SystemName
      */
     @CheckReturnValue
     @Nonnull
-    public String getFullyFormattedDisplayName();
+    public default String getFullyFormattedDisplayName() {
+        return getFullyFormattedDisplayName(true);
+    }
+
+    /**
+     * Returns a fully formatted display that includes the SystemName and
+     * UserName if set.
+     *
+     * @param userNameFirst returns UserName followed by SystemName if true;
+     *                          otherwise returns SystemName followed by
+     *                          UserName
+     * @return {@code UserName (SystemName)} or {@code SystemName (UserName)}
+     *         based on value of userNameFirst, or {@code SystemName} if the
+     *         UserName is null, empty, or matches the SystemName
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String getFullyFormattedDisplayName(boolean userNameFirst);
 
     /**
      * Request a call-back when a bound property changes. Bound properties are

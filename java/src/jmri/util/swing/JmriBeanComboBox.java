@@ -179,7 +179,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                         case USERNAMESYSTEMNAME:
                             if (uname != null && !uname.equals("")) {
-                                displayList[i] = nBean.getUserName() + " - " + name;
+                                displayList[i] = nBean.getFullyFormattedDisplayName();
                             } else {
                                 displayList[i] = name;
                             }
@@ -187,7 +187,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                         case SYSTEMNAMEUSERNAME:
                             if (uname != null && !uname.equals("")) {
-                                displayList[i] = name + " - " + nBean.getUserName();
+                                displayList[i] = nBean.getFullyFormattedDisplayName(false);
                             } else {
                                 displayList[i] = name;
                             }
@@ -398,7 +398,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                 case USERNAMESYSTEMNAME:
                     if (uname != null && !uname.equals("")) {
-                        selectedItem = uname + " - " + inNamedBean.getSystemName();
+                        selectedItem = inNamedBean.getFullyFormattedDisplayName();
                     } else {
                         selectedItem = inNamedBean.getSystemName();
                     }
@@ -406,7 +406,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                 case SYSTEMNAMEUSERNAME:
                     if (uname != null && !uname.equals("")) {
-                        selectedItem = inNamedBean.getSystemName() + " - " + uname;
+                        selectedItem = inNamedBean.getFullyFormattedDisplayName(false);
                     } else {
                         selectedItem = inNamedBean.getSystemName();
                     }
@@ -528,13 +528,13 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     Set<NamedBean> namedBeanSet = uDaManager.getNamedBeanSet();
 
                     for (NamedBean namedBean : namedBeanSet) {
-                        //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
+                        //checking to see if it matches "<sname> (<uname>)" or "<uname> (<sname>)"
                         String uname = namedBean.getUserName();
                         String sname = namedBean.getSystemName();
 
                         if ((null != uname)) {
-                            String usname = uname + " - " + sname;
-                            String suname = sname + " - " + uname;
+                            String usname = namedBean.getFullyFormattedDisplayName();
+                            String suname = namedBean.getFullyFormattedDisplayName(false);
 
                             if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
                                 result = namedBean;

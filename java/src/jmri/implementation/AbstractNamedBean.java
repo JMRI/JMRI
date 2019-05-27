@@ -102,10 +102,14 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /** {@inheritDoc} */
     @Override
-    final public String getFullyFormattedDisplayName() {
+    final public String getFullyFormattedDisplayName(boolean userNameFirst) {
         String name = getUserName();
         if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
-            name = getSystemName() + "(" + name + ")";
+            if (userNameFirst) {
+                name = name + " (" + getSystemName() + ")";
+            } else {
+                name = getSystemName() + " (" + name + ")";
+            }
         } else {
             name = getSystemName();
         }
