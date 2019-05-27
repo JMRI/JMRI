@@ -20,7 +20,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @Override
     public String getSystemName(int i){
-        return "PiT"+i;
+        return l.getSystemPrefix() + "T" + i;
     }
 
    @Test
@@ -30,7 +30,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
    @Test
    public void checkPrefix(){
-       Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
+       Assert.assertEquals("Prefix", "Pi", l.getSystemPrefix());
    }
 
     @Override    
