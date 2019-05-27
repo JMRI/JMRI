@@ -538,10 +538,10 @@
 		</ul>
 
 		<h2>Développeur de Code Swarm</h2>
-		<p>nous avons créé un <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm du développement de JMRI
+		<p>nous avons créé un <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm du développement de JMRI
 		</a>depuis sa création à Janvier 2009.  Un Code Swarm est une représentation visuelle dynamique et passionnante 
 		des modifications que les développeurs apportent aux fichiers qui composent un projet.. Plus d'informations sont disponibles sur
-		la page <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> .</p>
+		la page <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> .</p>
 			<!--#include virtual="/Footer" -->
 </div>
 </div>

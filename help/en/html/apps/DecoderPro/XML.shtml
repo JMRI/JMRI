@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Decoder - Decoder Information</title><!-- Style -->
+  <title>JMRI: Decoder - Decoder Information</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -29,14 +30,14 @@
 
       <h1>JMRI: DecoderPro User Guide</h1>
 
-      <h2>Decoder Information</h2>The JMRI project has collected a
-      large amount of information about DCC decoders, which it
-      makes publicly available in several ways. These are described
-      on this page.
+      <h2>Decoder Information</h2>
+      <p>The JMRI project has collected a large amount of
+      information about DCC decoders, which it makes publicly
+      available in several ways. These are described on this page.</p>
 
-      <h2>Access to the information via the web</h2>Web pages are
-      automatically created from the DecoderPro configuration files
-      as part of each release. These contain:
+      <h2>Access to the information via the web</h2>
+      <p>Web pages are automatically created from the DecoderPro
+      configuration files as part of each release. These contain:</p>
 
       <ul>
         <li><a href="../../xml/XSLT/pages/DecoderId.html">Decoder
@@ -55,14 +56,14 @@
         electrical characteristics</a>.</li>
 
         <li><a href="../../xml/XSLT/pages/CVSummary.html">Combined
-        summary of CVs for all decoders</a>. Note that this is a
+        summary of CVs for all decoders</a>.<br>Note that this is a
         <i>very</i> large page!</li>
       </ul>
 
-      <h2>Information in Comma-Separated-Variable (CSV)
-      format</h2>To make it easier to import into a spread-sheet or
+      <h2>Information in Comma-Separated-Values (CSV) format</h2>
+      <p>To make it easier to import into a spreadsheet or
       other program, these are also made available as files in
-      Comma-Separated-Variable (CSV) format.
+      Comma-Separated-Values (CSV) format.</p>
 
       <ul>
         <li><a href=
@@ -78,10 +79,11 @@
         Power limits and connector by decoder</li>
       </ul>
 
-      <h2>XML files</h2>The definitive version of the data is in
+      <h2>XML files</h2>
+      <p>The definitive version of the data is in
       XML files. These can be obtained from any JMRI distribution,
       or via the web at <a href=
-      "http://jmri.org/xml">http://jmri.org/xml</a>. 
+      "http://jmri.org/xml">http://jmri.org/xml</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
