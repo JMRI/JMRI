@@ -123,6 +123,7 @@ public class MatrixSignalMastTest {
         m.setAspectEnabled("Unlit");
 
         m.aspect = "Stop"; // define some initial aspect before setting any aspect
+        m.setMatrixMastCommandDelay(0);
         // wait for outputs and outputbits to be set
 
         log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear")));
