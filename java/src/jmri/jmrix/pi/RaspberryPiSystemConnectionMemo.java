@@ -60,7 +60,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          turnoutManager = t;
     }
 
-    private TurnoutManager turnoutManager=null;
+    private TurnoutManager turnoutManager = null;
 
     /*
      * Provides access to the LightManager for this particular connection.
@@ -74,7 +74,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          lightManager = l;
     }
 
-    private LightManager lightManager=null;
+    private LightManager lightManager = null;
 
     public void configureManagers(){
        setTurnoutManager(new RaspberryPiTurnoutManager(getSystemPrefix()));
@@ -90,7 +90,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
         else if (type.equals(jmri.TurnoutManager.class))
             return true;
         else if (type.equals(jmri.LightManager.class))
-            return false; // implement LightManager later.
+            return false;  // implement LightManager later.
         else return false; // nothing, by default
     }
 
