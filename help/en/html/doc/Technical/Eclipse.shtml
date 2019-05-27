@@ -21,7 +21,7 @@
 				Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>)
 				can be used for working with JMRI. Due to the lack of integration
 				between Ant (the primary JMRI build tool) and Eclipse, <a
-					href="Netbeans.shtml">NetBeans</a> is recommended unless you are
+					href="NetBeans.shtml">NetBeans</a> is recommended unless you are
 				already familiar with Eclipse.
 			</p>
 
