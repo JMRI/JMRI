@@ -78,10 +78,10 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("XT21"));
+            log.debug("by system name: {}", t.getBySystemName("XT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("XT21"));

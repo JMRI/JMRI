@@ -36,7 +36,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      *
-    * Accepts any string.
+     * Accepts any string.
      */
     @Override
     public String createSystemName(@Nonnull String topicSuffix, @Nonnull String prefix) throws JmriException {

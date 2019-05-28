@@ -25,7 +25,7 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     // ctor has to register for RaspberryPi events
     public RaspberryPiTurnoutManager(String prefix) {
         super();
-        this.prefix = normalizeSystemName(prefix);
+        this.prefix = prefix;
     }
 
     /**

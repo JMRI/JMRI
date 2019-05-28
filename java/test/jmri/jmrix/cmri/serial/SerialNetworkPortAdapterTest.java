@@ -28,4 +28,5 @@ public class SerialNetworkPortAdapterTest extends jmri.jmrix.AbstractNetworkPort
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }

@@ -28,4 +28,5 @@ public class MarklinPortControllerTest extends jmri.jmrix.AbstractNetworkPortCon
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }

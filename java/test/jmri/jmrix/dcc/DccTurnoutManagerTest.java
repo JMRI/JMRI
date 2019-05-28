@@ -52,7 +52,7 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     @Override
     @Before
-    public void setUp(){
+    public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
         l = new DccTurnoutManager();

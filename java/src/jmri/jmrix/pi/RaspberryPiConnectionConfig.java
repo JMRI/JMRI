@@ -57,16 +57,16 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         }
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.addActionListener((ActionEvent e) -> {
-                if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                    JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // not normalized
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                     systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                 }
             });
             systemPrefixField.addFocusListener(new FocusListener() {
                 @Override
                 public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // not normalized
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                         systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -97,7 +97,6 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
         }
         init = true;
-
     }
 
     @Override
@@ -106,7 +105,6 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-
     }
 
     @Override
@@ -196,4 +194,5 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     }
 
     private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfig.class);
+
 }

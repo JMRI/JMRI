@@ -32,4 +32,5 @@ public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortContro
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }

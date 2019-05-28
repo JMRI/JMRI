@@ -28,4 +28,5 @@ public class JMRIClientPortControllerTest extends jmri.jmrix.AbstractNetworkPort
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }

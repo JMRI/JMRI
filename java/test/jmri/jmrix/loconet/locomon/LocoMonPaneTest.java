@@ -13,7 +13,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * Test of LocoMonPane
  * 

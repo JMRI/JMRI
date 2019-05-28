@@ -46,7 +46,15 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>
+                    Track Current support for the DCS240,DCS210 and DCS52 has been added.
+                </li>
+                <li>
+                    Turnouts can now be configured to send only a single LTnnn command (ON)
+                    instead of an ON followed by OFF, and turnouts can also be configured
+                    to bypass a command station "Bushby" feature as described in <a href="/help/en/html/hardware/loconet/Digitrax.shtml#alternatives"
+                    target="_blank">Command Station Turnout Command Rejection Avoidance Strategies</a>
+                </li>
             </ul>
 
         <h4>Maple</h4>

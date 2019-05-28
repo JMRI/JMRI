@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of XNetPortController that eases
- * checking whether data was forwarded or not
+ * checking whether data was forwarded or not.
  * 
  * @author	Bob Jacobsen Copyright (C) 2006, 2015
  */

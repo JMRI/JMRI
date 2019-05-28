@@ -38,4 +38,5 @@ public class DCCppNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPo
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }
