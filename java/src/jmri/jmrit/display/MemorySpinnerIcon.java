@@ -142,10 +142,8 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         String name;
         if (namedMemory == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getMemory().getUserName() != null) {
-            name = getMemory().getUserName() + " (" + getMemory().getSystemName() + ")";
         } else {
-            name = getMemory().getSystemName();
+            name = getMemory().getFullyFormattedDisplayName();
         }
         return name;
     }
