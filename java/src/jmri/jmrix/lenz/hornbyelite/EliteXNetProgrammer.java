@@ -32,6 +32,8 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     // experimentation, and may need to be adjusted
     static private final int ELITEMESSAGETIMEOUT = 10000;
     static private final int EliteXNetProgrammerTimeout = 20000;
+    
+    protected boolean _local_service_mode = false;
 
     public EliteXNetProgrammer(XNetTrafficController tc) {
         super(tc);
@@ -145,13 +147,17 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         // On the Elite, we're not getting a broadcast message
         // saying we're in service mode, so go ahead and request
         // the results.
-        progState = INQUIRESENT;
+        // ***** MikeBr95 Yes we do know when we are in service mode
+        // Elite sends two 0x61,0x02,0x63 followed by two 0x61,0x01,0x60
+        // after the first 0x61,0x01,0x60 the result can be requested
+        
+        //progState = INQUIRESENT;
         //start the error timer
-        restartTimer(EliteXNetProgrammerTimeout);
-        XNetMessage resultMsg = XNetMessage.getServiceModeResultsMsg();
-        resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-        resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
-        controller().sendXNetMessage(resultMsg, this);
+        //restartTimer(EliteXNetProgrammerTimeout);
+        //XNetMessage resultMsg = XNetMessage.getServiceModeResultsMsg();
+        //resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+        //resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
+        //controller().sendXNetMessage(resultMsg, this);
     }
 
     /** 
@@ -159,18 +165,25 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
      */
     @Override
     synchronized public void message(XNetReply m) {
+        log.debug("EliteMessage " + m.toString());
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
             if (_service_mode == false) {
                 // the command station is in service mode.  An "OK"
                 // message can trigger a request for service mode
                 // results if progrstate is REQUESTSENT.
+                if (_local_service_mode == false)
+                {
+                    _local_service_mode = true;
+                    return;
+                }
                 _service_mode = true;
+                return;
             } else {  // _service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
-                return;
+//                return;
             }
         }
         if (m.getElement(0) == XNetConstants.CS_INFO
@@ -180,6 +193,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 // "OK" message can not trigger a request for service
                 // mode results if progrstate is REQUESTSENT.
                 _service_mode = false;
+                _local_service_mode = false;
             } else { // _service_mode == false
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
@@ -197,7 +211,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             // see if reply is the acknowledge of program mode; if not, wait for next
             if ((_service_mode && m.isOkMessage())
                     || (m.getElement(0) == XNetConstants.CS_INFO
-                    && (m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY
+                    && (m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS
                     || m.getElement(1) == XNetConstants.PROG_CS_READY))) {
                 stopTimer();
 
