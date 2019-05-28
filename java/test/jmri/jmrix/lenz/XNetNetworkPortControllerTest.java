@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the XNetNetworkPortController class
- * <p>
+ * JUnit tests for the XNetNetworkPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
