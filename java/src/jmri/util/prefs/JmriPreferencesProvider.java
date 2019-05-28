@@ -59,7 +59,7 @@ public final class JmriPreferencesProvider {
     //private static final String INVALID_KEY_CHARACTERS = "_.";
     
     /**
-     * Get the JmriPreferencesProvider for the specified profile path. Use of
+     * Get the JmriPreferencesProvider for the specified profile path.
      *
      * @param path   The root path of a {@link jmri.profile.Profile}. This is
      *               most frequently the path returned by
