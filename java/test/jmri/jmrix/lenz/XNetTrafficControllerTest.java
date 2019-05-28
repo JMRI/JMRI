@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Tests for XNetTrafficController
+ * Tests for XNetTrafficController.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2016
@@ -29,6 +29,5 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
        tc = null;
         JUnitUtil.tearDown();
     }
-
 
 }
