@@ -476,8 +476,11 @@
                 to a message to the original message.</li>
             <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
                 changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
-                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version
+                objects. See the <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">JSON Version
                     History</a> for more details.</li>
+            <li>JSON schema are, with the exception of consists, usable, even when JMRI is running on a computer not connected to
+                the internet. See the <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#schema">JSON
+                    Schema</a> for more details.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
