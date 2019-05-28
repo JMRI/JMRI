@@ -425,7 +425,8 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Output Matrix Signal Masts now allow to set a mast-specific delay interval between the individual
+                commands sent to the connected Turnout outputs.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
