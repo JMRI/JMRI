@@ -862,6 +862,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             }
         }
         clearPath();
+        clearListSelection();
         _parent.closePathFrame(_block);
         _loc = getLocation(_loc);
         _dim = getSize(_dim);
