@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a SPROG Command
  * Station connection.
  * <p>
- * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
  */

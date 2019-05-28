@@ -286,7 +286,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             /**
              * Delete the bean after all the checking has been done.
-             * <P>
+             * <p>
              * Deactivate the Route, then use the superclass to delete it.
              */
             @Override
@@ -742,11 +742,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
             p34.add(cTurnoutStateBox);
             p3.add(p34);
-            // add added delay
+            // add additional route-specific delay
             JPanel p36 = new JPanel();
             p36.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelTurnoutDelay"))));
             timeDelay.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
-//            timeDelay.setValue(0); // reset from possible previous use
+            // timeDelay.setValue(0); // reset from possible previous use
             timeDelay.setPreferredSize(new JTextField(5).getPreferredSize());
             p36.add(timeDelay);
             timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
@@ -1069,7 +1069,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             // No Control Turnout was entered
             g.setControlTurnout("");
         }
-        // set Delay information
+        // set route specific Delay information, see jmri.implementation.DefaultRoute#SetRouteThread()
         int addDelay = (Integer) timeDelay.getValue(); // from a JSpinner with 0 set as minimum
         g.setRouteCommandDelay(addDelay);
 
@@ -1229,7 +1229,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
-        // set up additional Delay
+        // set up additional route specific Delay
         timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts
         // set up buttons and notes

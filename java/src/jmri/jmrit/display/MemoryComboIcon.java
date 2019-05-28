@@ -22,10 +22,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display and input a Memory value in a TextField.
- * <P>
+ * <p>
  * Handles the case of either a String or an Integer in the Memory, preserving
  * what it finds.
- * <P>
+ *
  * @author Pete Cressman Copyright (c) 2012
  * @since 2.7.2
  */

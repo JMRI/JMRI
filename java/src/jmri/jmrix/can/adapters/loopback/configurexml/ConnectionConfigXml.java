@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle XML persistance of layout connections by persistening the CAN
  * simulator (and connections).
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -28,7 +28,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * A simulated connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
-     * @return Formatted element containing no attributes except the class name
+     * @return formatted element containing no attributes except the class name
      */
     @Override
     public Element store(Object o) {
@@ -36,7 +36,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) o).getAdapter();
         Element e = new Element("connection");
 
-        if (adapter.getCurrentPortName() != null) {
+        if (adapter.getCurrentPortName() != null) { // port not functional in loopback Sim, hidden in UI. Remove in store?
             e.setAttribute("port", adapter.getCurrentPortName());
         } else {
             e.setAttribute("port", Bundle.getMessage("noneSelected"));
@@ -87,7 +87,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String mfg = shared.getAttribute("manufacturer").getValue();
             adapter.setManufacturer(mfg);
         }
-        if (shared.getAttribute("port") != null) {
+        if (shared.getAttribute("port") != null) { // port not functional in loopback Sim, hidden in UI. Remove in load?
             String portName = shared.getAttribute("port").getValue();
             adapter.setPort(portName);
         }
@@ -137,7 +137,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
                 shared.getParentElement(), perNode.getParentElement(), adapter);
-
     }
 
     @Override

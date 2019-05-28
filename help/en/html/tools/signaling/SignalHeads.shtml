@@ -125,12 +125,20 @@
         first method).</li>
       </ul>
 
-      <h2>Saving and Reloading Configuration</h2>The Signal Head
-      information is saved as part of the JMRI configuration in an
-      XML file, along with control panel setup and similar stuff.
-      For more information on creating and displaying panels,
+      <h2>Saving and Reloading Configuration</h2>
+
+      <p>The Signal Head information is kept in your <i>layout
+      configuration</i>, along with Turnouts, Lights, Sensors,
+      control panel setup etc.<br>
+      To save this information on disk, allowing to <a href=
+      "../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+      it</a> next time you run JMRI, use <b>Store Configuration...</b>
+      in the <b>File</b> menu at the top of the Signal Head Table (or
+      other tables from the Tools menu), or select <b>Store
+      Panel...</b> in the <b>Panel</b> menu.</p>
+      <p>For more information on creating and displaying panels,
       including how to show signals on your panels, please see the
-      <a href="../../apps/PanelPro/Panels.shtml">Panels pages</a>.
+      <a href="../../apps/PanelPro/Panels.shtml">Panels pages</a>.</p>
 
       <p>Back to the <a href="index.shtml#tools">Signaling main
       help page</a>.</p>

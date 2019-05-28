@@ -73,7 +73,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     @Override
     public void configureTable(JTable eventTable) {

@@ -7,10 +7,10 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
 /**
- * Pane displaying (and logging) JMRIClient command messages
+ * Pane displaying (and logging) JMRIClient command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class JMRIClientMonPane extends jmri.jmrix.AbstractMonPane implements JMRIClientListener {
 
     protected JMRIClientTrafficController tc = null;

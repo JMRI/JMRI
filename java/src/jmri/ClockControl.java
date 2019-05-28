@@ -4,33 +4,33 @@ import java.util.Date;
 
 /**
  * ClockControl defines an interface for control of hardware Fast Clocks
- * <P>
+ * <p>
  * Each hardware system that has a hardware Fast Clock implementation must
  * supply a module that implements this interface. Each ClockControl module must
  * register itself with the Instance Manager at start up.
- * <P>
+ * <p>
  * Parameters for fast clocks are set up generically in the Fast Clock Setup,
  * accessed via the JMRI Tools menu. These parameters are saved in the
  * configuration file generically, so no special configxml module is needed for
  * storing parameters.
- * <P>
+ * <p>
  * Hardware ClockControl modules should extend DefaultClockControl, which
  * supplies default implementations of methods required by this interface that
  * specific hardware implementations may not need.
- * <P>
+ * <p>
  * All Clock Control modules communicate with the internal clock and the master
  * JMRI timebase, using methods of the Timebase interface.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Dave Duchamp Copyright (C) 2007
  */
 public interface ClockControl {

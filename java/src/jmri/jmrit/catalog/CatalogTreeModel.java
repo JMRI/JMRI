@@ -9,16 +9,16 @@ import jmri.util.FileUtil;
 
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
- * <P>
+ * <p>
  * Accessed via the instance() member, as we expect to have only one of these
  * models.
- * <P>
+ * <p>
  * The tree has two top-level visible nodes. One, "icons", represents the
  * contents of the icons directory in the resources tree in the .jar file. The
  * other, "files", is all files found in the "resources" filetree in the
  * preferences directory. Note that this means that files in the distribution
  * directory are _not_ included.
- * <P>
+ * <p>
  * As a special case "simplification", the catalog tree will not contain CVS
  * directories, or files whose name starts with a "."
  *

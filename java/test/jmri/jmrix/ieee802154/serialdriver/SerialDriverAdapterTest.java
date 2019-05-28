@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for SerialDriverAdapter
- * </P>
+ * Tests for SerialDriverAdapter.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SerialDriverAdapterTest {
@@ -30,6 +29,5 @@ public class SerialDriverAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

@@ -49,8 +49,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
         panel.initComponents(memo);
         
         Assert.assertNotNull("exists", panel);
-        Assert.assertEquals("name with memo","CAN " + Bundle.getMessage("MenuItemNetworkSim"),panel.getTitle());
-        
+        Assert.assertEquals("name with memo","CAN " + Bundle.getMessage("MenuItemNetworkSim"), panel.getTitle());
         
         // check pane has loaded something
         JmriJFrame f = new JmriJFrame();
@@ -74,19 +73,17 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
         JFrameOperator jfo = new JFrameOperator( panel.getTitle() );
         
         Assert.assertTrue(getResetCsButtonEnabled(jfo));
-        
-        
+
         // Ask to close window
         jfo.requestClose();
-        
-        
+
         tcis = null;
         memo = null;
         
     }
     
     private boolean getResetCsButtonEnabled( JFrameOperator jfo ){
-        return ( new JButtonOperator(jfo,Bundle.getMessage("Reset")).isEnabled() );
+        return ( new JButtonOperator(jfo, Bundle.getMessage("Reset")).isEnabled() );
     }
 
 }

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig.
+ * Abstract base class for common implementation of the SerialConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -50,11 +50,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         addToActionList();
     }
 
-    @Override
-    public jmri.jmrix.SerialPortAdapter getAdapter() {
-        return adapter;
-    }
-
     /**
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
@@ -64,13 +59,19 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         addToActionList();
     }
 
+    @Override
+    public jmri.jmrix.SerialPortAdapter getAdapter() {
+        return adapter;
+    }
+
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for {}", name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -139,7 +140,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void focusLost(FocusEvent e) {
             }
-
         });
 
         for (String i : options.keySet()) {
@@ -178,8 +178,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * {@inheritDoc}
      */
     @Override
     abstract protected void setInstance();
@@ -292,6 +291,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     String value;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {

@@ -192,7 +192,7 @@ git push github
 ```    
         cd (local web copy)/releasenotes
         git pull 
-        cp jmri4.15.6.shtml jmri4.15.7.shtml
+        cp jmri4.15.6.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old
@@ -221,14 +221,14 @@ git push github
 - Commit release note, push and pull back
 
     cd ../website/releasenotes
-    git commit -m"updated 4.15.6 release note" jmri4.15.6.shtml
+    git commit -m"updated 4.15.6 release note" jmri4.15.6.shtml jmri4.15.7.shtml
     git push github
     git pull
     cd ../../JMRI
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-03-10+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-04-14+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -385,6 +385,7 @@ mkdir release
 mv target/properties.4.15.6.zip release/
 ls -lt release/
 git checkout master
+
 ```
 
 ====================================================================================
@@ -425,9 +426,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.4+R0d44598.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.6/JMRI.4.15.4+R0d44598.dmg) | 58e54b96da61d87bb19597cc20a3d78475a5016a1fb7a0ca23bd4c76a0e43ef1
-[JMRI.4.15.4+R0d44598.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.6/JMRI.4.15.4+R0d44598.exe) | d29a79874e5a183b132ff3fb9348d77315a8a5ad36b32aa683cc9043981dbc0b
-[JMRI.4.15.4+R0d44598.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.6/JMRI.4.15.4+R0d44598.tgz) | f162bc608365e80c62b6c9f69e1fe9e9ccbf1ba24a68233a19a4012e67adb53a
+[JMRI.4.15.6+Red1ceb2.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.6/JMRI.4.15.6+Red1ceb2.dmg) | e27da2d2fd402e30cf462c79cbcb0d70a1f629ab59faaacd6fa2480a92c3105c
+[JMRI.4.15.6+Red1ceb2.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.6/JMRI.4.15.6+Red1ceb2.exe) | 96bbd3d90037cf7e35f5340e04f48931474c7a427b03f91030ce48a277c09a96
+[JMRI.4.15.6+Red1ceb2.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.6/JMRI.4.15.6+Red1ceb2.tgz) | b2e8c106f0945de6f912234c0fb16e17834ad50f69f1484d06063bed0a86ea67
 
 ```
 
@@ -477,7 +478,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.15.7". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.16 cycle. It's intended to be created around (July 12) from HEAD of master.
+This is the next release in the 4.16 cycle. It's intended to be created around (July 12) from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v4.15.6 for release 4.15.6) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.6) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -514,7 +515,7 @@ git push github
 
 - Commit site, push to github
 ```
-    git commit -m"4.15.6 web site"
+    git commit -m"4.15.6 web site" .
     git push github
     git pull
 ```
@@ -553,7 +554,7 @@ Note that JMRI is made available under the GNU General Public License. For more 
 The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
 <http://jmri.org/releasenotes/jmri4.15.6.shtml>
 
-- Close the [current release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
+- Close the [4.15.6 release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
 ```
 JMRI 4.15.6 has been released. Files are available in the GitHub release section.
 

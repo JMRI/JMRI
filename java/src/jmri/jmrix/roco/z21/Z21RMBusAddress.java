@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 RMBus  
- * <P>
+ * <p>
  * Two address format are supported: 
  * <ul>
  * <li> 

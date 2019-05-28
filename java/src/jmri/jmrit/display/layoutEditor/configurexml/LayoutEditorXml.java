@@ -353,29 +353,49 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setXScale(xScale);
         panel.setYScale(yScale);
 
-        String defaultColor = ColorUtil.ColorDarkGray;
-        if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
-            defaultColor = a.getValue();
+        String color = ColorUtil.ColorDarkGray;
+        try {
+            if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
+                color = a.getValue();
+            }
+            panel.setDefaultTrackColor(ColorUtil.stringToColor(color));
+        } catch (IllegalArgumentException e) {
+            panel.setDefaultTrackColor(Color.BLACK);
+            log.error("Invalid defaulttrackcolor {}; using black", color);
         }
-        panel.setDefaultTrackColor(ColorUtil.stringToColor(defaultColor));
 
-        String defaultTextColor = ColorUtil.ColorBlack;
-        if ((a = shared.getAttribute("defaulttextcolor")) != null) {
-            defaultTextColor = a.getValue();
+        color = ColorUtil.ColorBlack;
+        try {
+            if ((a = shared.getAttribute("defaulttextcolor")) != null) {
+                color = a.getValue();
+            }
+            panel.setDefaultTextColor(ColorUtil.stringToColor(color));
+        } catch (IllegalArgumentException e) {
+            panel.setDefaultTextColor(Color.BLACK);
+            log.error("Invalid defaulttextcolor {}; using black", color);
         }
-        panel.setDefaultTextColor(ColorUtil.stringToColor(defaultTextColor));
 
-        String turnoutCircleColor = "track";  //default to using use default track color for circle color
-        if ((a = shared.getAttribute("turnoutcirclecolor")) != null) {
-            turnoutCircleColor = a.getValue();
+        color = "track";  //default to using use default track color for circle color
+        try {
+            if ((a = shared.getAttribute("turnoutcirclecolor")) != null) {
+                color = a.getValue();
+            }
+            panel.setTurnoutCircleColor(ColorUtil.stringToColor(color));
+        } catch (IllegalArgumentException e) {
+            panel.setTurnoutCircleColor(Color.BLACK);
+            log.error("Invalid color {}; using black", color);
         }
-        panel.setTurnoutCircleColor(ColorUtil.stringToColor(turnoutCircleColor));
 
-        String turnoutCircleThrownColor = turnoutCircleColor;  //default to using use turnoutCircleColor
-        if ((a = shared.getAttribute("turnoutcirclethrowncolor")) != null) {
-            turnoutCircleThrownColor = a.getValue();
+        // default to using turnout circle color just set
+        try {
+            if ((a = shared.getAttribute("turnoutcirclethrowncolor")) != null) {
+                color = a.getValue();
+            }
+            panel.setTurnoutCircleThrownColor(ColorUtil.stringToColor(color));
+        } catch (IllegalArgumentException e) {
+            panel.setTurnoutCircleThrownColor(Color.BLACK);
+            log.error("Invalid color {}; using black", color);
         }
-        panel.setTurnoutCircleThrownColor(ColorUtil.stringToColor(turnoutCircleThrownColor));
 
         try {   // the "turnoutfillcontrolcircles" attribute has a default="no" value in the schema;
             // it will always return a "no" attribute if the attribute is not present.
@@ -557,15 +577,30 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // set default track color
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
-            panel.setDefaultTrackColor(ColorUtil.stringToColor(a.getValue()));
+            try {
+                panel.setDefaultTrackColor(ColorUtil.stringToColor(a.getValue()));
+            } catch (IllegalArgumentException e) {
+                panel.setDefaultTrackColor(Color.BLACK);
+                log.error("Invalid color {}; using black", a.getValue());
+            }
         }
-        // set default track color
+        // set default occupied track color
         if ((a = shared.getAttribute("defaultoccupiedtrackcolor")) != null) {
-            panel.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(a.getValue()));
+            try {
+                panel.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(a.getValue()));
+            } catch (IllegalArgumentException e) {
+                panel.setDefaultOccupiedTrackColor(Color.BLACK);
+                log.error("Invalid color {}; using black", a.getValue());
+            }
         }
-        // set default track color
+        // set default alternative track color
         if ((a = shared.getAttribute("defaultalternativetrackcolor")) != null) {
-            panel.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(a.getValue()));
+            try {
+                panel.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(a.getValue()));
+            } catch (IllegalArgumentException e) {
+                panel.setDefaultAlternativeTrackColor(Color.BLACK);
+                log.error("Invalid color {}; using black", a.getValue());
+            }
         }
         try {
             int red = shared.getAttribute("redBackground").getIntValue();

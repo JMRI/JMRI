@@ -2386,13 +2386,13 @@ public class Track {
 
     /**
      * Sets the destination option for this track. The three options are:
-     * <P>
+     * <p>
      * ALL_DESTINATIONS which means this track services all destinations, the
      * default.
-     * <P>
+     * <p>
      * INCLUDE_DESTINATIONS which means this track services only certain
      * destinations.
-     * <P>
+     * <p>
      * EXCLUDE_DESTINATIONS which means this track does not service certain
      * destinations.
      *
@@ -3013,7 +3013,7 @@ public class Track {
      *
      * @param reader jmri.Reporter object.
      */
-    protected void setReporter(Reporter r) {
+    public void setReporter(Reporter r) {
         Reporter old = _reader;
         _reader = r;
         if (old != r) {

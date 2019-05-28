@@ -14,7 +14,7 @@ package jmri.jmrix.loconet;
  *  <li>STAT1 - bits in status byte 1
  *  <li>STAT2 - bits in status byte 2
  *  </ul>
- *<p>
+ * <p>
  * Slot Status byte definitions and macros
  * <ul>
  * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)
@@ -69,8 +69,8 @@ package jmri.jmrix.loconet;
  * Those parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
  * permission of the copyright holder.
  * <p>
- * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
- * SUMMARY found in the Loconet(r) Personal Edition 1.
+ * Most major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
+ * SUMMARY found in the LocoNet(r) Personal Edition 1.
  * <p>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
@@ -183,7 +183,7 @@ public final class LnConstants {
 
     /**
      * Encode consisting status as a string
-     * <p>
+     *
      * @param s  consist status bits
      * @return string contaning a description of the consisting state
      */
@@ -210,7 +210,7 @@ public final class LnConstants {
 
     /**
      * Encode loco status as a string
-     * <p>
+     *
      * @param s  integer containing loco "status"
      * @return string containing a description of the loco "status"
      */
@@ -411,7 +411,7 @@ public final class LnConstants {
 
     /**
      * Encode LocoNet Opcode as a string
-     * <p>
+     *
      * @param opcode  a LocoNet opcode value
      * @return string containing the opcode "name"
      */

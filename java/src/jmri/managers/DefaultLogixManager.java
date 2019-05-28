@@ -16,11 +16,11 @@ import javax.annotation.Nonnull;
 
 /**
  * Basic Implementation of a LogixManager.
- * <P>
+ * <p>
  * Note that Logix system names must begin with IX, and be followed by a string,
  * usually, but not always, a number. All alphabetic characters in a Logix
  * system name must be upper case. This is enforced when a Logix is created.
- * <P>
+ * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
  *

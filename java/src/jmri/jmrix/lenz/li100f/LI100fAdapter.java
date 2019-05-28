@@ -172,8 +172,6 @@ public class LI100fAdapter extends XNetSerialPortController implements jmri.jmri
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
-        /*if (getOptionState(option2Name).equals(validOption2[0]))
-         checkBuffer = true;*/
     }
 
     @Override

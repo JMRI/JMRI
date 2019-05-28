@@ -291,12 +291,12 @@ public class NamedIcon extends ImageIcon {
      }*/
 
     /**
-     * Valid values are <UL>
-     * <LI>0 - no rotation
-     * <LI>1 - 90 degrees counter-clockwise
-     * <LI>2 - 180 degrees counter-clockwise
-     * <LI>3 - 270 degrees counter-clockwise
-     * </UL>
+     * Valid values are <ul>
+     * <li>0 - no rotation
+     * <li>1 - 90 degrees counter-clockwise
+     * <li>2 - 180 degrees counter-clockwise
+     * <li>3 - 270 degrees counter-clockwise
+     * </ul>
      */
     int mRotation;
 

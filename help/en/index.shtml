@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <!-- This page doesn't have the usual formatting because its  -->
+  <!-- This page doesn't have the usual formatting because it's -->
   <!-- only encountered (normally) from the help system. See    -->
   <!-- http://jmri.org/help/en/html/doc/Technical/Help.shtml    -->
 
@@ -60,7 +60,7 @@
     properly).</p>
 
     <p>The <a href=
-    "http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a>
+    "https://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a>
     mailing list carries announcements of new versions, major
     changes, etc. This list is intended to be very low traffic;
     discussions, etc. should take place elsewhere. You can
