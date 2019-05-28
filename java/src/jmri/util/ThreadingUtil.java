@@ -65,7 +65,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p> {@code
-     * ThreadingUtil.runOnLayoutEventually(() -> {
+     * ThreadingUtil.runOnLayoutDelayed(() -> {
      *     sensor.setState(value);
      * }, 1000); 
      * }

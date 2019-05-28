@@ -15,7 +15,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
     // ctor has to register for RaspberryPi events
     public RaspberryPiSensorManager(String prefix) {
         super();
-        this.prefix=prefix.toUpperCase();
+        this.prefix = prefix;
     }
 
     /**
@@ -23,7 +23,9 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
      * This was previously called the "System letter"
      */
     @Override
-    public String getSystemPrefix(){ return prefix; }
+    public String getSystemPrefix(){
+        return prefix;
+    }
 
     private String prefix = null;
 
