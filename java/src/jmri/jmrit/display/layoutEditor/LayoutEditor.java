@@ -110,19 +110,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
- * <P>
+ * <p>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
  * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
  * integral subparts of the LayoutEditor class.
- * <P>
+ * <p>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
  * numbers.
- * <P>
+ * <p>
  * The "contents" List keeps track of all text and icon label objects added to
  * the target frame for later manipulation. Other Lists keep track of drawn
  * items.
- * <P>
+ * <p>
  * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
  * particular, text and icon label items are copied from Panel editor, as well
  * as some of the control design.
@@ -2793,8 +2793,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
-    /**
-     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+    /***************************************************************************
+     * Getter Layout Track Drawing Options.
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor <br>
+     * blockDefaultColor, blockOccupiedColor and blockAlternativeColor added to LayoutTrackDrawingOptions <br>
      * @return LayoutTrackDrawingOptions object
      */
     @Nonnull
@@ -2808,11 +2810,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
             layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
+            layoutTrackDrawingOptions.setBlockDefaultColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            layoutTrackDrawingOptions.setBlockAlternativeColor(defaultAlternativeTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
 
-    /** 
+    /**
      * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
      * @param ltdo LayoutTrackDrawingOptions object
      */
@@ -3048,7 +3053,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         //try to get the preference
                         ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
                         if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
+                            ddldoPref = ddldoProp.toString(); //get its (string value
                         } else { //otherwise...
                             //save it in the users preferences
                             prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
@@ -7793,15 +7798,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             //remove connections if any
-            TrackSegment t = o.getConnect1();
+            TrackSegment t1 = o.getConnect1();
+            TrackSegment t2 = o.getConnect2();
 
-            if (t != null) {
-                removeTrackSegment(t);
+            if (t1 != null) {
+                removeTrackSegment(t1);
             }
-            t = o.getConnect2();
 
-            if (t != null) {
-                removeTrackSegment(t);
+            if (t2 != null) {
+                removeTrackSegment(t2);
             }
 
             //delete from array
@@ -9077,12 +9082,36 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultTrackColor.
+     * @return block default color as Color
+     */
+    public Color getDefaultTrackColorColor() {
+        return defaultTrackColor;
+    }
+
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultOccupiedTrackColor.
+     * @return block default occupied color as Color
+     */
+    public Color getDefaultOccupiedTrackColorColor() {
+        return defaultOccupiedTrackColor;
+    }
+
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
+    }
+
+    /***************************************************************************
+     * Getter defaultAlternativeTrackColor.
+     * @return block default alternetive color as Color
+     */
+    public Color getDefaultAlternativeTrackColorColor() {
+        return defaultAlternativeTrackColor;
     }
 
     public String getDefaultTextColor() {
@@ -9096,22 +9125,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public String getTurnoutCircleThrownColor() {
         return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }
-    
+
     public boolean isTurnoutFillControlCircles() {
         return turnoutFillControlCircles;
     }
 
     public int getTurnoutCircleSize() {
         return turnoutCircleSize;
-    }
-
-    /**
-     * @deprecated since 4.11.2 use {@link #isTurnoutDrawUnselectedLeg()}
-     * instead.
-     */
-    @Deprecated
-    public boolean getTurnoutDrawUnselectedLeg() {
-        return turnoutDrawUnselectedLeg;
     }
 
     public boolean isTurnoutDrawUnselectedLeg() {
@@ -9245,29 +9265,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultTrackColor(@Nonnull String colorName) {
-        setDefaultTrackColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
-        LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
-        setDefaultOccupiedTrackColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
@@ -9279,15 +9281,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use
-     * {@link #setDefaultAlternativeTrackColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
-        setDefaultAlternativeTrackColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default alternate track color to.
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
@@ -9296,23 +9289,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setTurnoutCircleColor(@Nonnull String colorName) {
-        if (colorName.equals("track")) {
-            colorName = getDefaultTrackColor();
-        }
-        setTurnoutCircleColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color new color for turnout circle.
      */
     public void setTurnoutCircleColor(Color color) {
         if (color == null) {
-            turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
+            turnoutCircleColor = getDefaultTrackColorColor();
         } else {
             turnoutCircleColor = color;
             JmriColorChooser.addRecentColor(color);
@@ -9324,7 +9305,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setTurnoutCircleThrownColor(Color color) {
         if (color == null) {
-            turnoutCircleThrownColor = ColorUtil.stringToColor(getDefaultTrackColor());
+            turnoutCircleThrownColor = getDefaultTrackColorColor();
         } else {
             turnoutCircleThrownColor = color;
             JmriColorChooser.addRecentColor(color);
@@ -9365,28 +9346,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultTextColor(@Nonnull String colorName) {
-        setDefaultTextColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default text color to.
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setDefaultBackgroundColor(@Nonnull String colorName) {
-        setDefaultBackgroundColor(ColorUtil.stringToColor(colorName));
     }
 
     /**

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Log4J.
- * <P>
+ * <p>
  * Two system properties influence how logging is configured in JMRI:
  * <dl>
  * <dt>jmri.log</dt><dd>The logging control file. If this file is not an

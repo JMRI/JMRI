@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.nce.usbdriver.configurexml.PackageTest.class,
-   UsbDriverAdapterTest.class
+   UsbDriverAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.nce.usbdriver package.

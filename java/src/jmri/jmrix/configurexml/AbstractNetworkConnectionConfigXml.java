@@ -81,7 +81,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     /**
-     * Customizable method if you need to add anything more
+     * Customizable method if you need to add anything more.
      *
      * @param e Element being created, update as needed
      */
@@ -176,7 +176,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     /**
-     * Update static data from XML file
+     * Update static data from XML file.
      *
      * @param element Top level Element to unpack.
      */

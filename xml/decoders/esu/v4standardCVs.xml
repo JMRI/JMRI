@@ -625,7 +625,7 @@
         <label>Deceleration with Dynamic Brake</label>
         <label xml:lang="it">Decellerazione with Dynamic Brake (0-255)</label>
         <label xml:lang="fr">Décélération with Dynamic Brake (0-255)</label>
-        <label xml:lang="de">Bremszeit with Dynamic Brake</label>
+        <label xml:lang="de">Dynamische Bremse Bremszeit</label>
         <label xml:lang="ca">Desacceleració with Dynamic Brake (0-255)</label>
         <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>

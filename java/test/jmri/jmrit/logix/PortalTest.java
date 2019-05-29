@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -78,6 +79,17 @@ public class PortalTest {
         jmri.util.JUnitAppender.assertWarnMessage("Path \"path_1\" already in block OB2, cannot be added to block OB1");
         jmri.util.JUnitAppender.assertWarnMessage("Path \"path_3\" is duplicate of path \"path_2\" in Portal \"portal_3\" from block OB1.");
         jmri.util.JUnitAppender.assertWarnMessage("Path \"path_2\" is duplicate name for another path in Portal \"portal_3\" from block OB1.");
+    }
+
+    @Test
+    public void testSetProtectSignal() {
+        Portal p = _portalMgr.providePortal("portal_3");
+        OBlock toBlk = _blkMgr.provideOBlock("OB1");
+        OBlock fromBlk = _blkMgr.provideOBlock("OB2");
+        p.setToBlock(toBlk, false);
+        p.setFromBlock(fromBlk, true);
+        p.setProtectSignal(new VirtualSignalHead("IH1"),200,toBlk);
+        Assert.assertNotNull("portal has signal",p.getSignalProtectingBlock(toBlk));
     }
 
     // from here down is testing infrastructure

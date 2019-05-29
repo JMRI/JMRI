@@ -24,14 +24,14 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Simple GUI for controlling the PRICOM Pocket Tester.
- * <P>
+ * <p>
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
- * <P>
+ * <p>
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
-  */
+ */
 public class DataSource extends jmri.util.JmriJFrame {
 
     static DataSource existingInstance;
@@ -493,11 +493,11 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     /**
      * Handle a new line from the device.
-     * <UL>
-     * <LI>Check for version number and display
-     * <LI>Trigger the notification of all listeners.
-     * </UL>
-     * <P>
+     * <ul>
+     * <li>Check for version number and display
+     * <li>Trigger the notification of all listeners.
+     * </ul>
+     * <p>
      * This needs to execute on the Swing GUI thread.
      *
      * @param s The new message to distribute

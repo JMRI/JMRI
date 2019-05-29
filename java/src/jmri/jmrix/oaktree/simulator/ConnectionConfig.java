@@ -31,7 +31,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -39,12 +40,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         setInstance();
 
         // have to embed the usual one in a new JPanel
-        b.addActionListener(new NodeConfigAction((OakTreeSystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        b.addActionListener(new NodeConfigAction((OakTreeSystemConnectionMemo) adapter.getSystemConnectionMemo()));
+        // add another button
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }

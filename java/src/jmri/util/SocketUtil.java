@@ -6,11 +6,11 @@ import java.net.SocketException;
 
 /**
  * Common utility methods for working with Sockets.
- * <P>
+ * <p>
  * We needed a place to refactor common socket-handling idioms in JMRI code, so
  * this class was created. It's more of a library of procedures than a real
  * class, as (so far) all of the operations have needed no state information.
- * <P>
+ * <p>
  * In some cases, these routines use a Java 1.3 or later method, falling back to
  * an explicit implementation when running on Java 1.1
  *

@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * is defined in {@link LV102InternalFrame}
  *
  * @author Paul Bender Copyright (C) 2004,2005
-  */
+ */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
     public LV102Frame() {

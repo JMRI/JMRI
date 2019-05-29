@@ -305,7 +305,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
             /**
              * Is this property event announcing a change this table should
              * display?
-             * <P>
+             * <p>
              * Note that events will come both from the
              * jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
              */

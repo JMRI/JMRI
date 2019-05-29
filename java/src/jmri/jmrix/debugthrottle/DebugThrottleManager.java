@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ThrottleManager for debugging.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2005
  */
 public class DebugThrottleManager extends AbstractThrottleManager {

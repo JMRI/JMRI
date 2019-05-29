@@ -13,7 +13,10 @@
             "description": "User name of the layoutBlock"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the layoutBlock"
         },
         "properties": {
@@ -27,17 +30,48 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "value"]
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         },
         "state": {
             "type": "integer",
             "description": "The state of the layoutBlock"
+        },
+        "block": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Name of underlying block"
+        },
+        "memory": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Name of memory for block"
+        },
+        "occupancySensor": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Name of occupancy sensor for block"
+        },
+        "occupiedSense": {
+            "type": "integer",
+            "description": "State of occupancy sensor for block"
         },
         "blockColor": {
             "type": "string",
@@ -58,16 +92,22 @@
         "useExtraColor": {
             "type": "boolean",
             "description": "\"true\" is extra colors are to be used; \"false\" otherwise"
-        },
-        "occupancySensor": {
-            "type": ["string", "null"],
-            "description": "Name of occupancy sensor for block"
-        },
-        "occupiedSense": {
-            "type": "integer",
-            "description": "State of occupancy sensor for block"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "state", "blockColor", "trackColor", "occupiedColor", "extraColor", "useExtraColor", "occupancySensor", "occupiedSense"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "state",
+        "block",
+        "memory",
+        "occupancySensor",
+        "occupiedSense",
+        "blockColor",
+        "trackColor",
+        "occupiedColor",
+        "extraColor",
+        "useExtraColor"
+    ]
 }

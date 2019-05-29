@@ -5,9 +5,8 @@ import jmri.RailCom;
 
 /**
  * Extend AbstractReporter for RailCom reporters
- * <P>
+ * <p>
  * This file is based on @{link jmri.jmrix.rfid.RfidReporter}
- * <P>
  *
  * @author Matthew Harris Copyright (c) 2011
  * @author Paul Bender Copyright (c) 2016,2019

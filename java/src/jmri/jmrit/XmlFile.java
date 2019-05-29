@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle common aspects of XML files.
- * <P>
+ * <p>
  * JMRI needs to be able to operate offline, so it needs to store resources
  * locally. At the same time, we want XML files to be transportable, and to have
  * their schema and stylesheets accessible via the web (for browser rendering).
@@ -246,12 +246,12 @@ public abstract class XmlFile {
 
     /**
      * Return a File object for a name. This is here to implement the search
-     * rule: <OL> <LI>Look in user preferences directory, located by
+     * rule: <ol> <li>Look in user preferences directory, located by
      * {@link jmri.util.FileUtil#getUserFilesPath()} <li>Look in current working
      * directory (usually the JMRI distribution directory) <li>Look in program
      * directory, located by {@link jmri.util.FileUtil#getProgramPath()}
-     * <LI>Look in XML directory, located by {@link #xmlDir} <LI>Check for
-     * absolute name. </OL>
+     * <li>Look in XML directory, located by {@link #xmlDir} <li>Check for
+     * absolute name. </ol>
      *
      * @param name Filename perhaps containing subdirectory information (e.g.
      *             "decoders/Mine.xml")
@@ -539,12 +539,12 @@ public abstract class XmlFile {
 
     /**
      * Add default information to the XML before writing it out.
-     * <P>
+     * <p>
      * Currently, this is identification information as an XML comment. This
-     * includes: <UL>
-     * <LI>The JMRI version used <LI>Date of writing <LI>A CVS id string, in
-     * case the file gets checked in or out </UL>
-     * <P>
+     * includes: <ul>
+     * <li>The JMRI version used <li>Date of writing <li>A CVS id string, in
+     * case the file gets checked in or out </ul>
+     * <p>
      * It may be necessary to extend this to check whether the info is already
      * present, e.g. if re-writing a file.
      *

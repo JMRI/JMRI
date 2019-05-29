@@ -12,7 +12,7 @@ import org.junit.Test;
  * JUnit tests for the RPS Sensor class.
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override

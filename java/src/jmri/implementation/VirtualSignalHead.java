@@ -3,7 +3,7 @@ package jmri.implementation;
 
 /**
  * A signal head that exists only within the program.
- * <P>
+ * <p>
  * This can be useful e.g. as part of a more complex signal calculation.
  *
  * @author Bob Jacobsen Copyright (C) 2005

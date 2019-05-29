@@ -5,9 +5,7 @@ import org.junit.*;
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig;
 
 /**
- * ConnectionConfigXmlTest.java
- *
- * Description: tests for the ConnectionConfigXml class
+ * Tests for the ConnectionConfigXml class.
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -28,4 +26,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         xmlAdapter = null;
         cc = null;
     }
+
 }

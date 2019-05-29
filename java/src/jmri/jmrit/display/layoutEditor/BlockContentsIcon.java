@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a Block Object.<P>
- *
+ * An icon to display a status of a Block Object.
+ * <p>
  * This is the same name as display.BlockContentsIcon, it follows
  * on from the MemoryIcon
  */

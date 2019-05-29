@@ -3,6 +3,10 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationEditFrame;
@@ -10,10 +14,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -64,6 +64,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tcf.copyButton);
         Assert.assertNotNull(acton.getTrackByName("Test track name", Track.INTERCHANGE));
 
+        JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);
     }
     
@@ -140,6 +141,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
         Assert.assertNull(acton.getTrackByName("Very Long Test Track Name X", null));
 
+        JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);
     }
     
@@ -168,6 +170,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
 
+        JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);
     }
     
@@ -183,6 +186,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         JemmyUtil.enterClickAndLeave(tcf.saveButton);
 
+        JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);
     }
 

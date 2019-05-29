@@ -81,25 +81,25 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
  * JFrame.
- * <P>
+ * <p>
  * GUI is structured as a band of common parameters across the top, then a
  * series of things you can add.
- * <P>
+ * <p>
  * All created objects are put specific levels depending on their type (higher
  * levels are in front):
- * <UL>
- * <LI>BKG background
- * <LI>ICONS icons and other drawing symbols
- * <LI>LABELS text labels
- * <LI>TURNOUTS turnouts and other variable track items
- * <LI>SENSORS sensors and other independently modified objects
- * </UL>
+ * <ul>
+ * <li>BKG background
+ * <li>ICONS icons and other drawing symbols
+ * <li>LABELS text labels
+ * <li>TURNOUTS turnouts and other variable track items
+ * <li>SENSORS sensors and other independently modified objects
+ * </ul>
  * Note that higher numbers appear behind lower numbers.
- * <P>
+ * <p>
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation. Extends the behavior it shares with PanelPro DnD
  * implemented at JDK 1.2 for backward compatibility
- * <P>
+ *
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */

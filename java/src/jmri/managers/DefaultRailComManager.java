@@ -93,7 +93,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
         // save in the maps
         register(s);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }

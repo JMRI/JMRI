@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for
  * configuring the CatalogTreeManager.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element catalogTree)
  * class, relying on implementation here to load the individual CatalogTree objects.
  *

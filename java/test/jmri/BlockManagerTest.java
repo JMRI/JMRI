@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the BlockManager class
+ * Tests for the BlockManager class.
  * <p>
  * Based upon a stub by Bob Jacobsen Copyright (C) 2006
- * <p>
+ *
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
  */
@@ -171,4 +171,5 @@ public class BlockManagerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

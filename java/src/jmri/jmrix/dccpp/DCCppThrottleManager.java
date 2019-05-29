@@ -71,6 +71,8 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     /*
      * DCC++ based systems can have multiple throttles for the same 
      * device
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected boolean singleUse() {

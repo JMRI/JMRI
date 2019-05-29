@@ -232,7 +232,7 @@
 
 <mapID target="html.hardware.nce.Wangrow_tools" url="html/hardware/nce/Wangrow.shtml#tools"/>
 
-<mapID target="html.apps.PanelPro.PanelPro_cpe" url="html/apps/PanelPro/PanelPro.shtml#cpe"/>
+<mapID target="html.apps.PanelPro.PanelPro_cpe" url="html/apps/PanelPro/index.shtml#cpe"/>
 
 <mapID target="manual.DecoderPro3.index_Top" url="manual/DecoderPro3/index.shtml#Top"/>
 
@@ -612,8 +612,6 @@
 
 <mapID target="html.hardware.modbus.index_documentation" url="html/hardware/modbus/index.shtml#documentation"/>
 
-<mapID target="html.apps.PanelPro.ColorTrack" url="html/apps/PanelPro/ColorTrack.shtml"/>
-
 <mapID target="html.tools.Logix_variable" url="html/tools/Logix.shtml#variable"/>
 
 <mapID target="html.hardware.powerline.Names" url="html/hardware/powerline/Names.shtml"/>
@@ -990,7 +988,7 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_Backup" url="package/jmri/jmrit/operations/Operations.shtml#Backup"/>
 
-<mapID target="html.apps.PanelPro.PanelPro_swb" url="html/apps/PanelPro/PanelPro.shtml#swb"/>
+<mapID target="html.apps.PanelPro.PanelPro_swb" url="html/apps/PanelPro/index.shtml#swb"/>
 
 <mapID target="manual.DecoderPro.index_GettingStarted" url="manual/DecoderPro/index.shtml#GettingStarted"/>
 
@@ -1632,7 +1630,7 @@
 
 <mapID target="html.tools.signaling.SimpleSignalExample_setup" url="html/tools/signaling/SimpleSignalExample.shtml#setup"/>
 
-<mapID target="html.apps.PanelPro.PanelPro_pe" url="html/apps/PanelPro/PanelPro.shtml#pe"/>
+<mapID target="html.apps.PanelPro.PanelPro_pe" url="html/apps/PanelPro/index.shtml#pe"/>
 
 <mapID target="manual.DecoderPro.Comp_Basic_Top" url="manual/DecoderPro/Comp_Basic.shtml#Top"/>
 
@@ -1758,7 +1756,7 @@
 
 <mapID target="html.hardware.loconet.LocoIO_current" url="html/hardware/loconet/LocoIO.shtml#current"/>
 
-<mapID target="html.apps.PanelPro.PanelPro_le" url="html/apps/PanelPro/PanelPro.shtml#le"/>
+<mapID target="html.apps.PanelPro.PanelPro_le" url="html/apps/PanelPro/index.shtml#le"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_tracking" url="package/jmri/jmrit/display/LayoutEditor.shtml#tracking"/>
 
@@ -1858,7 +1856,7 @@
 
 <mapID target="html.hardware.can.index_documentation" url="html/hardware/can/index.shtml#documentation"/>
 
-<mapID target="html.apps.PanelPro.PanelPro" url="html/apps/PanelPro/PanelPro.shtml"/>
+<mapID target="html.apps.PanelPro.PanelPro" url="html/apps/PanelPro/index.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_acela" url="manual/DecoderPro/Main_acela.shtml"/>
 
@@ -3117,8 +3115,6 @@
 <mapID target="manual.DecoderPro.Adv_FunctionLabel" url="manual/DecoderPro/Adv_FunctionLabel.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveThrottlePreferences" url="html/tools/throttle/ThrottleChapter4.shtml#SaveThrottlePreferences"/>
-
-<mapID target="package.jmri.jmrit.display.CircuitBuilder_circuitediting" url="package/jmri/jmrit/display/CircuitBuilder.shtml#circuitediting"/>
 
 <mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
 

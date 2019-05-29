@@ -16,10 +16,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test PaneProgFrame
+ * Tests for PaneProgFrame.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class PaneProgFrameTest {
 
     // test creating a pane in config file

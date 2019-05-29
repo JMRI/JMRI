@@ -7,7 +7,7 @@ import org.junit.*;
  * JUnit tests for the SerialMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
-  */
+ */
 public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         
     private SerialMessage msg = null;

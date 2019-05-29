@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with CVs
- * <P>
+ * <p>
  * We needed a place to refactor common CV-processing idioms in JMRI code, so
  * this class was created. It's more of a library of procedures than a real
  * class, as (so far) all of the operations have needed no state information.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dave Heap Copyright (C) 2016
  */

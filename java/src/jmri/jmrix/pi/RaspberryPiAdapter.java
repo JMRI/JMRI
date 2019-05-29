@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides an Adapter to allow the system connection memo and multiple
  * RaspberryPi managers to be handled.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender Copyright (C) 2015
  */

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JMenus.
- * <P>
+ * <p>
  * Chief among these is the loadMenu method, for creating a set of menus from an
  * XML definition
  *

@@ -26,7 +26,7 @@ import jmri.swing.PreferencesPanel;
  * Pane to show ECoS preferences
  *
  * @author Kevin Dickerson Copyright (C) 2009
-  */
+ */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener, PreferencesPanel {
 
     JPanel throttletabpanel = new JPanel();
