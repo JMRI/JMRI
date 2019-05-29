@@ -131,12 +131,11 @@ public class MatrixSignalMastTest {
 
         m.setAspect("Clear");
         Assert.assertEquals("check Clear", "Clear", m.getAspect());
-        JUnitUtil.waitFor(100); // next test fails on Travis and Appveyor servers without the waitFor(100) statement
-        Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState()); // it12 state is more fragile
+        JUnitUtil.waitFor( ()->{ return it11.getCommandedState() == Turnout.CLOSED; }, "it11 for Clear" );
         m.setAspect("Stop");
         Assert.assertEquals("check Stop", "Stop", m.getAspect());
-        JUnitUtil.waitFor(100); // next test fails on Travis and Appveyor servers without the waitFor(100) statement
-        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // it12 state is more fragile
+        JUnitUtil.waitFor( ()->{ return it12.getCommandedState() == Turnout.THROWN; }, "it12 for Stop" );
+        // it12 state is more fragile
     }
 
     public void testAspectAttributes() {
