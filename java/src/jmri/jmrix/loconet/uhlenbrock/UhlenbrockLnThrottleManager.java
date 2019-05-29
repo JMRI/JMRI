@@ -40,6 +40,11 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
+        if (!(address instanceof DccLocoAddress)){
+            log.error("{} is not a DCCLocoAddress");
+            failedThrottleRequest(address, "Address" + address + " is not a DccLocoAddress");
+            return;
+        }
         slotManager.slotFromLocoAddress(((DccLocoAddress) address).getNumber(), this);
 
         class RetrySetup implements Runnable {
