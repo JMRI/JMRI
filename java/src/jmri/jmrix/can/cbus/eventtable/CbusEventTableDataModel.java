@@ -727,28 +727,26 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     public static class CbusEventTableShutdownTask extends AbstractShutDownTask {
 
-    /**
-     * Constructor specifies the warning message and action to take
-     *
-     * @param name the name of the task (used in logs)
-     */
-    public CbusEventTableShutdownTask(String name) {
-        super(name);
-    }
-
-    /**
-     * Take the necessary action.
-     *
-     * @return true if the shutdown should continue, false to abort.
-     */
-    @Override
-    public boolean execute() {
-        if ( jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class) != null ){
-            jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class).dispose();
+        /**
+        * Constructor specifies the warning message and action to take
+        *
+        * @param name the name of the task (used in logs)
+        */
+        public CbusEventTableShutdownTask(String name) {
+            super(name);
         }
-        return true;
+    
+        /**
+        * Checks preferences, saving Table contents if necessary
+        *
+        * @returns true as the shutdown should continue
+        */
+        @Override
+        public boolean execute() {
+            jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class).dispose();
+            return true;
+        }
     }
-}
     
     private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);
 }
