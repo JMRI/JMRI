@@ -468,7 +468,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return lastRef;
     }
 
-    static int lastRef = 0;
+    private int lastRef = 0;
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
