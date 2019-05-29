@@ -40,7 +40,7 @@
       editor</a> because the SDF information is stored in a
       Digitrax SPJ sound project file. After you edit the SDF
       information, you can save it to a file from the <a href=
-      "../soundloader/EditorFrame.shtml">SPJ editor</a>, and the
+      "../soundloader/EditorFrame.shtml">SPJ editor</a>, and then
       download it to a Digitrax sound decoder with a Digitrax PR2
       or PR3 and the <a href=
       "../soundloader/LoaderFrame.shtml">JMRI sound downloader

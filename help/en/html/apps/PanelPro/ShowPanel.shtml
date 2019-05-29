@@ -27,7 +27,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Displaying JMRI Panel Files</h1>
+      <h1>JMRI: Displaying Panel File Contents</h1>
+
+      <p>To show a Panel previously saved to disk in JMRI
+      on screen, use the "Open Panel..." item from the Panels
+      menu.<br>
+      In contrast, this pages describes how to show the contents
+      of the file itself, meaning the data used to draw
+      the Panel, either on screen or on paper.</p>
 
       <p>JMRI panel and configuration information is stored in XML
       files. These are text files that people can directly read,
