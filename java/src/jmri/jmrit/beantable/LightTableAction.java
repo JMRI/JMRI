@@ -95,7 +95,12 @@ public class LightTableAction extends AbstractTableAction<Light> {
     /** {@inheritDoc} */
     @Override
     public void setManager(@Nonnull Manager<Light> man) {
-        lightManager = (LightManager) man;
+        if (man instanceof LightManager) {
+            lightManager = (LightManager) man;
+            if (m != null) {
+                m.setManager(lightManager);
+            }
+        }
     }
 
     /**

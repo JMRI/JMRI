@@ -139,7 +139,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      */
     @Override
     public void setManager(@Nonnull Manager<Turnout> man) {
-        turnManager = (TurnoutManager) man;
+        if (man instanceof TurnoutManager) {
+            turnManager = (TurnoutManager) man;
+            if (m != null) {
+                m.setManager(turnManager);
+            }
+        }
     }
 
     static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;

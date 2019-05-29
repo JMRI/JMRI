@@ -69,9 +69,11 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      */
     @Override
     public void setManager(@Nonnull Manager<Sensor> s) {
-        senManager = (SensorManager) s;
-        if (m != null) {
-            m.setManager(senManager);
+        if (s instanceof SensorManager) {
+            senManager = (SensorManager) s;
+            if (m != null) {
+                m.setManager(senManager);
+            }
         }
     }
 
