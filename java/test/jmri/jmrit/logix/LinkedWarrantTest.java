@@ -44,6 +44,9 @@ public class LinkedWarrantTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
+        
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor1);
@@ -108,7 +111,6 @@ public class LinkedWarrantTest {
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
@@ -122,6 +124,9 @@ public class LinkedWarrantTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
+        
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor12 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor12);
@@ -191,7 +196,6 @@ public class LinkedWarrantTest {
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
@@ -206,6 +210,9 @@ public class LinkedWarrantTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
+        
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
@@ -285,8 +292,7 @@ public class LinkedWarrantTest {
             // passed test - cleanup.  Do it here so failure leaves traces.
             JFrameOperator jfo = new JFrameOperator(tableFrame);
             jfo.requestClose();
-            // we may want to use jemmy to close the panel as well.
-            ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
+            // we may want to use jemmy to close the panel as well.     
             panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
@@ -300,6 +306,9 @@ public class LinkedWarrantTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
+        
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
@@ -395,7 +404,6 @@ public class LinkedWarrantTest {
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 

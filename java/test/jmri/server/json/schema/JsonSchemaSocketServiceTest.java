@@ -3,7 +3,6 @@ package jmri.server.json.schema;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.networknt.schema.JsonSchemaException;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -104,9 +102,7 @@ public class JsonSchemaSocketServiceTest {
     }
 
     /**
-     * Test that schema are gettable, but not modifiable. Note: This test will
-     * be skipped if a {@link java.net.ConnectException} is thrown trying to
-     * reach json-schema.org.
+     * Test that schema are gettable, but not modifiable.
      *
      * @throws IOException   on unexpected exception
      * @throws JmriException on unexpected exception
@@ -121,12 +117,7 @@ public class JsonSchemaSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
         // GET without NAME returns JSON schema
-        try {
-            instance.onMessage(type, data, JSON.GET, locale, 0);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
+        instance.onMessage(type, data, JSON.GET, locale, 0);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned array", message.isArray());
@@ -143,12 +134,7 @@ public class JsonSchemaSocketServiceTest {
         JUnitAppender.checkForMessageStartingWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
         // GET with NAME returns the desired schema
-        try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, locale, 0);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, locale, 0);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned array", message.isArray());
@@ -162,12 +148,7 @@ public class JsonSchemaSocketServiceTest {
         Assert.assertFalse("Returned schema is for client",
                 message.get(1).path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and SERVER==true returns a single schema
-        try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true}"), JSON.GET, locale, 42);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true}"), JSON.GET, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -175,12 +156,7 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertTrue("Returned schema is for server", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and SERVER==false returns a single schema
-        try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":false}"), JSON.GET, locale, 42);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":false}"), JSON.GET, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -188,12 +164,7 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertFalse("Returned schema is for client", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and CLIENT==false returns a single schema
-        try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":false}"), JSON.GET, locale, 42);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":false}"), JSON.GET, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -201,12 +172,7 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertTrue("Returned schema is for server", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and CLIENT==true returns a single schema
-        try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":true}"), JSON.GET, locale, 42);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":true}"), JSON.GET, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -214,13 +180,8 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertFalse("Returned schema is for client", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME, SERVER==true, and CLIENT==true returns the desired schema
-        try {
-            instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true, \"client\":true}"),
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true, \"client\":true}"),
                     JSON.GET, locale, 0);
-        } catch (JsonSchemaException ex) {
-            JUnitAppender.assertErrorMessage("Failed to load json schema!");
-            Assume.assumeNoException("Unable to reach json-schema.org", ex);
-        }
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned array", message.isArray());

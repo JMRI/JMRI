@@ -50,6 +50,7 @@ public class MatrixSignalMastXml
         }
         e.addContent(unlit);
 
+        // store mast-specific delay, since 4.15.7
         Element delay = new Element("delay");
         if (p.getMatrixMastCommandDelay() > 0) {
             delay.setAttribute("duration", Integer.toString(p.getMatrixMastCommandDelay()));
@@ -138,7 +139,7 @@ public class MatrixSignalMastXml
             }
         }
 
-        if (shared.getChild("delay") != null) { // since 4.15.2
+        if (shared.getChild("delay") != null) { // load mast-specific delay, since 4.15.7
             Element delay = shared.getChild("delay");
             if (delay.getAttribute("duration") != null) {
                 m.setMatrixMastCommandDelay(Integer.parseInt(delay.getAttribute("duration").getValue()));

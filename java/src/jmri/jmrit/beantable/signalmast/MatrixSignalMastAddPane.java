@@ -33,7 +33,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // lit/unlit controls
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "));
+        p.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("AllowUnLitLabel"))));
         p.add(allowUnLit);
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(p);
@@ -50,20 +50,14 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixMastScroll = new JScrollPane(matrixMastPanel);
         matrixMastScroll.setBorder(BorderFactory.createEmptyBorder());
         add(matrixMastScroll);
-
     }
     
     String sigsysname;
     DefaultSignalAppearanceMap map;
-    
     MatrixSignalMast currentMast;
-    
     JCheckBox resetPreviousState = new JCheckBox(Bundle.getMessage("ResetPrevious"));
-
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-
     String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
-
     JCheckBox allowUnLit = new JCheckBox();
 
     JScrollPane matrixMastScroll;
@@ -93,8 +87,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }
 
     /**
-     * Set the maximum number of outputs for Matrix Signal Masts Used in
-     * combobox and for loops
+     * Set the maximum number of outputs for Matrix Signal Masts.
+     * Used in combobox and for loops.
      */
     public static final int MAXMATRIXBITS = 6; // Don't set above 6
     // 6 Seems the maximum to be able to show in a panel a coded and code below should be extended where marked
@@ -182,7 +176,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
         columnChoice.setEnabled(false);
         // fill in the names of the outputs from mast:
-        if ( ! currentMast.getOutputName(1).equals("")) {
+        if ( !currentMast.getOutputName(1).equals("")) {
             turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(1))); // load input into turnoutBox1
         }
         if (bitNum > 1 && !currentMast.getOutputName(2).equals("")) {
@@ -498,7 +492,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         delayPanel.add(timeDelay);
         timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
         delayPanel.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
-        // // set up additional route specific Delay
+        // set up additional route specific Delay?
         // timeDelay.setValue(currentMast.getRouteCommandDelay());
         matrixMastPanel.add(delayPanel);
 

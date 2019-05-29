@@ -45,7 +45,7 @@ public class MatrixSignalMastTest {
 
         Assert.assertEquals("system name", "IF$xsm:basic:one-low($0001)-3t", m.getSystemName());
         Assert.assertEquals("user name", "user", m.getUserName());
-        //System.out.println(it11.getFullyFormattedDisplayName()); //debug
+        // log.debug(it11.getFullyFormattedDisplayName());
         Assert.assertEquals("output2", "IT12", m.outputsToBeans.get("output2").getName());
     }
 
@@ -123,21 +123,20 @@ public class MatrixSignalMastTest {
         m.setAspectEnabled("Unlit");
 
         m.aspect = "Stop"; // define some initial aspect before setting any aspect
+        m.setMatrixMastCommandDelay(0);
         // wait for outputs and outputbits to be set
 
-        log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
-        Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        // log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        Assert.assertEquals("check bitarray for Stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         InstanceManager.turnoutManagerInstance().setOutputInterval(0); // default outputInterval = 250, set to 0 to speed up test
         m.setAspect("Clear");
-        Assert.assertEquals("check clear", "Clear", m.getAspect());
-        JUnitUtil.waitFor(250); // next test fails on Travis and Appveyor servers without the waitFor(250) statement
-        Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState());
-        // mast delay + interval = 0 but it12 state is fragile (expected state on it12 happens to be identical to it11)
-//        m.setAspect("Stop"); // removed test since it will take too long as part of alltest
-//        Assert.assertEquals("check stop", "Stop", m.getAspect());
-//        JUnitUtil.waitFor(600); // next test fails on Travis and Appveyor servers without waitFor
-//        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // mast delay + interval = 0
+        Assert.assertEquals("check Clear", "Clear", m.getAspect());
+        JUnitUtil.waitFor( ()->{ return it11.getCommandedState() == Turnout.CLOSED; }, "it11 for Clear" );
+        m.setAspect("Stop");
+        Assert.assertEquals("check Stop", "Stop", m.getAspect());
+        JUnitUtil.waitFor( ()->{ return it12.getCommandedState() == Turnout.THROWN; }, "it12 for Stop" );
+        // it12 state is more fragile
     }
 
     public void testAspectAttributes() {
@@ -162,6 +161,7 @@ public class MatrixSignalMastTest {
         Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
         m.setMatrixMastCommandDelay(150);
         Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(0);
     }
 
     // from here down is testing infrastructure
@@ -178,6 +178,6 @@ public class MatrixSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+    //private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
 
 }

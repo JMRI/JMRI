@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.
+ * <p>
  * A MatrixSignalMast is built up from an array of 1 - 6 turnouts to control each aspect.
  * System name specifies the creation information:
  * <pre>
@@ -57,7 +58,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     protected String mastType = "IF$xsm";
 
-    protected void configureFromName(String systemName) {
+    protected void configureFromName(@Nonnull String systemName) {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
@@ -243,7 +244,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Used?
      *
      *  @param colnum int index (1 up to 6) for the column of the desired output
-     *  @return NamedBeanHandle to the configured output
+     *  @return NamedBeanHandle to the configured turnout output
      */
     @CheckForNull public NamedBeanHandle<Turnout> getOutputHandle(int colnum) {
         String key = "output" + Integer.toString(colnum);
@@ -348,7 +349,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
     protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(6); // output# - bean pairs
     // adjust Hashmap size in order to set MAXMATRIXBITS > 6
     /**
-     * Receive properties from xml, convert name to NamedBeanHandle, store in hashmap outputsToBeans
+     * Receive properties from xml, convert name to NamedBeanHandle, store in hashmap outputsToBeans.
+     *
      * @param colname String describing the name of the corresponding output, like "output1"
      * @param turnoutname String for the display name of the output, like "LT1"
      */

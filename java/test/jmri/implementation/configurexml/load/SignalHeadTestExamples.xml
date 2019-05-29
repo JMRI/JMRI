@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>15</minor>
-    <test>2</test>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -251,5 +251,5 @@
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.13.5ish+jake+20181113T1609Z+Re7a9e1ae07 on Tue Nov 13 08:18:36 PST 2018-->
+  <!--Written by JMRI version 4.15.7ish+jake+20181113T1609Z+Re7a9e1ae07 on Tue Nov 13 08:18:36 PST 2018-->
 </layout-config>
