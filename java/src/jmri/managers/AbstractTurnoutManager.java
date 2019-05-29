@@ -1,9 +1,8 @@
 package jmri.managers;
 
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
-
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;

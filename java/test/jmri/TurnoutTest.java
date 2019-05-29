@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for the Turnout class
+ * Tests for the Turnout class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  */
@@ -21,9 +21,8 @@ public class TurnoutTest {
         Assert.assertTrue("Closed and Inconsistent differ", (Turnout.CLOSED & Turnout.INCONSISTENT) == 0);
     }
 
-
     @Test 
-    public void testInverTurnoutState() {
+    public void testInvertTurnoutState() {
         Assert.assertEquals("Closed state Inverted",Turnout.THROWN,Turnout.invertTurnoutState(Turnout.CLOSED));
         Assert.assertEquals("Thrown state Inverted",Turnout.CLOSED,Turnout.invertTurnoutState(Turnout.THROWN));
     }

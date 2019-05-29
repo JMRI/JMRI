@@ -1755,7 +1755,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel11.add(new JLabel("    " + rbx.getString("OptionalDelay") + ": "));
             panel11.add(whenDataSpinner);
             whenDataSpinner.setToolTipText(rbx.getString("HintDelayData"));
-            panel11.add(new JLabel(rbx.getString("Milliseconds")));
+            panel11.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             panelx.add(panel11);
             JPanel spacer = new JPanel();
             spacer.setLayout(new FlowLayout());

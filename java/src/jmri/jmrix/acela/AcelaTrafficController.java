@@ -37,7 +37,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     public AcelaTrafficController() {
         super();
 
-        // entirely poll driven, so reduce interval
+        // entirely poll driven, so reduce Polling interval
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 

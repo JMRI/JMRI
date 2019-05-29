@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the MatrixSignalMast implementation
+ * Tests for the MatrixSignalMast implementation.
  *
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author	Egbert Broerse Copyright (C) 2016, 2019
  */
 public class MatrixSignalMastTest {
 
@@ -123,17 +123,18 @@ public class MatrixSignalMastTest {
         m.setAspectEnabled("Unlit");
 
         m.aspect = "Stop"; // define some initial aspect before setting any aspect
+        m.setMatrixMastCommandDelay(0);
         // wait for outputs and outputbits to be set
 
-        log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
+        log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear")));
         Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         m.setAspect("Clear");
         Assert.assertEquals("check clear", "Clear", m.getAspect());
-        Assert.assertEquals("it12 for Clear", Turnout.CLOSED, it12.getCommandedState());
+        Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState()); // it12 state is fragile
         m.setAspect("Stop");
         Assert.assertEquals("check stop", "Stop", m.getAspect());
-        Assert.assertEquals("it12 for Stop", Turnout.THROWN, it12.getCommandedState());
+        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // it12 state is fragile
     }
 
     public void testAspectAttributes() {
@@ -151,6 +152,15 @@ public class MatrixSignalMastTest {
         Assert.assertNull("check null", m.getAspect());
     }
 
+    @Test
+    public void testSetDelay() {
+        MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+
+        Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(150);
+        Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
+    }
+
     // from here down is testing infrastructure
 
     // The minimal setup for log4J
@@ -166,4 +176,5 @@ public class MatrixSignalMastTest {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+
 }

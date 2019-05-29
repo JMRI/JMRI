@@ -64,7 +64,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
 
     @Test
     public void testGetPullResistance(){
-        Assert.assertEquals("default pull state",jmri.Sensor.PullResistance.PULL_DOWN,t.getPullResistance());
+        Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_DOWN, t.getPullResistance());
     }
 
     // The minimal setup for log4J
