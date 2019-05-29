@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.Sensor;
+import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -144,6 +146,54 @@ public class LightTableActionTest extends AbstractTableActionBase {
     public String getEditFrameName(){
         return Bundle.getMessage("TitleEditLight");
     }
+    
+    @Test
+    public void testAddLightControls() throws jmri.JmriException {
+        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create 2 Sensors to pick from
+        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
+        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+
+        a.actionPerformed(null); // show table
+        
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        JFrameOperator jfo = new JFrameOperator(f);
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        //Enter 1234 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        // set to "1234"
+        new JTextFieldOperator(hwAddressField).typeText("1234");
+        JFrameOperator jfob = new JFrameOperator(f1);
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("LightAddControlButton"));
+        JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
+        JFrameOperator jfoc = new JFrameOperator(fControl);
+        
+        // create a new Light Controlled by Sensor S2
+        new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightSensorControl"));
+        new JComboBoxOperator(jfoc, 1).selectItem(("S2")); // select Sensor S2
+        new JComboBoxOperator(jfoc, 2).selectItem(Bundle.getMessage("SensorStateActive"));
+        jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));
+        
+        // closes the add light control frame
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonCreate"));
+        
+        // confirm light has been created with correct control
+        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL1234");
+        Assert.assertEquals("OFF state", Light.OFF, created.getState());
+        sTwo.setState(Sensor.ON);
+        JUnitUtil.waitFor(()->{return created.getState()==Light.ON;},"Light should go ON");
+        
+        
+        
+        
+    }
 
     // The minimal setup for log4J
     @Before
@@ -153,6 +203,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.LightTable"; 
