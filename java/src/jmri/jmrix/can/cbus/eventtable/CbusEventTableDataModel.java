@@ -739,7 +739,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         /**
         * Checks preferences, saving Table contents if necessary
         *
-        * @returns true as the shutdown should continue
+        * @return true as the shutdown should continue
         */
         @Override
         public boolean execute() {
