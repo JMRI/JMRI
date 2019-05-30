@@ -375,7 +375,7 @@ public abstract class BeanEditAction extends AbstractAction {
 
     public void save() {
         String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
-                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
+                + " " + bean.getFullyFormattedDisplayName();
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);
         statusBar.setForeground(Color.gray);

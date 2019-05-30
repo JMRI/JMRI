@@ -105,10 +105,8 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         String name;
         if (reporter == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (reporter.getUserName() != null) {
-            name = reporter.getUserName() + " (" + reporter.getSystemName() + ")";
         } else {
-            name = reporter.getSystemName();
+            name = reporter.getFullyFormattedDisplayName();
         }
         return name;
     }
