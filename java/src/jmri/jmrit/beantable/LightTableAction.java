@@ -441,11 +441,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     return updateLabel((String) value, row);
                 }
 
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
-                justification = "OK to compare floats, as even tiny differences should trigger update")
             public JLabel updateLabel(String value, int row) {
                     if (iconHeight > 0) { // if necessary, increase row height;
-                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Lights
+                        log.debug("TODO adjust table row height for Lights?");
+                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); 
                     }
                     if (value.equals(Bundle.getMessage("StateOff")) && offIcon != null) {
                         label = new JLabel(offIcon);
@@ -828,10 +827,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // Update tooltip in the Add Light pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         // get tooltip from ProxyLightManager
+        String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
         if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
             List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Light> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     // get tooltip from ProxyLightManager
@@ -841,7 +840,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     break;
                 }
             }
-        } else if (lightManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
+        } else if (lightManager.allowMultipleAdditions(systemPrefix)) {
             addRangeBox.setEnabled(true);
             log.debug("L add box enabled2");
             // get tooltip from light manager
@@ -1702,6 +1701,19 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (typeBox.getSelectedItem().equals(noControl)) {
             return;
         }
+        if (typeBox.getSelectedItem().equals(fastClockControl)) {
+            try {
+                fastHourSpinner1.commitEdit();
+                fastHourSpinner2.commitEdit();
+                fastMinuteSpinner1.commitEdit();
+                fastMinuteSpinner2.commitEdit();
+            }
+            catch (java.text.ParseException pe) {
+                // unlikely to be thrown as values set to original if incorrect on commitEdit()
+                log.error("Incorrect value found in a FastClock Time: {}",pe);
+                return;
+            }
+        }
         lc = new LightControl();
         if (setControlInformation(lc)) {
             controlList.add(lc);
@@ -1719,6 +1731,19 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     protected void updateControlPressed(ActionEvent e) {
+        if (typeBox.getSelectedItem().equals(fastClockControl)) {
+            try {
+                fastHourSpinner1.commitEdit();
+                fastHourSpinner2.commitEdit();
+                fastMinuteSpinner1.commitEdit();
+                fastMinuteSpinner2.commitEdit();
+            }
+            catch (java.text.ParseException pe) {
+                // unlikely to be thrown as values set to original if incorrect on commitEdit()
+                log.error("Incorrect value found in a FastClock Time: {}",pe);
+                return;
+            }
+        }
         if (setControlInformation(lc)) {
             lightControlChanged = true;
             lightControlTableModel.fireTableDataChanged();
@@ -2396,10 +2421,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
             /** {@inheritDoc} */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-
-                    boolean inputOK = verify(input);
-                    if (inputOK) {
+                if (input instanceof CheckedTextField ) {
+                    if (verify(input)) {
                         input.setBackground(Color.white);
                         return true;
                     } else {
@@ -2416,7 +2439,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
-                    return ((CheckedTextField) input).isValid();
+                    return input.isValid();
                 } else {
                     return false;
                 }

@@ -513,10 +513,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
+        String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
         if (InstanceManager.getDefault(ReporterManager.class).getClass().getName().contains("ProxyReporterManager")) {            
             jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(ReporterManager.class);    
             List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Reporter> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     rangeCheckBox.setEnabled(((ReporterManager) mgr).allowMultipleAdditions(systemPrefix));
@@ -526,7 +526,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     break;
                 }
             }
-        } else if (reportManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (reportManager.allowMultipleAdditions(systemPrefix)) {
             rangeCheckBox.setEnabled(true);
             log.debug("R add box enabled2");
             // get tooltip from reporter manager
@@ -642,10 +642,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-
-                    boolean inputOK = verify(input);
-                    if (inputOK) {
+                if (input instanceof CheckedTextField ) {
+                    if (verify(input)) {
                         input.setBackground(Color.white);
                         return true;
                     } else {
@@ -664,7 +662,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
-                    return ((CheckedTextField) input).isValid();
+                    return input.isValid();
                 } else {
                     return false;
                 }
