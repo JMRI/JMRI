@@ -149,6 +149,19 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         }
     }
 
+    /**
+     * Don't send to-normal-mode message if in normal mode
+     */
+    @Override
+    protected void terminate() {
+        if (mCurrentMode == NORMALMODE) {
+            log.debug("skipping sending normal mode during termination");
+            return;
+        } else {
+            super.terminate();
+        }
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class);
 
 }
