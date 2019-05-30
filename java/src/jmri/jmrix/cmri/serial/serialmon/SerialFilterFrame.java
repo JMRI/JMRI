@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame for a message filter for CMRInet network packets.
+ *
  * @author	 Chuck Catania   Copyright (C) 2016
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
@@ -319,9 +320,10 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 	    }
     }
 
-    /**setMonitorNodePackets
-    *
-    */
+    /**
+     * Set MonitorNodePackets.
+     *
+     */
     public void nodeMonitorAllButtonActionPerformed() {
         for(int i=0; i<monitorNode.size(); i++) {
             monitorNode.get(i).setMonitorNodePackets(false);

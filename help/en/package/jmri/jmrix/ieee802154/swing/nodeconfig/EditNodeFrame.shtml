@@ -1,12 +1,12 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 <head>
-  <title>JMRI: TAMs Command Generator</title>
-  <meta name="author" content="Kevin Dickerson">
-  <meta name="keywords" content="JMRI Help TAMS Command Generator">
-  <!-- Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="keywords" content="JMRI help MERG CBUS NODE Manager CONFIG TOOL configuration variable">
+  <title>JMRI: IEEE802154 Edit Node Frame</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,9 +22,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>TAMs Command Generator</h1>The TAMs command generator
-      tool lets you type a message for the TAMs command station
-      and then send it. <!--#include virtual="/Footer" -->
+     <h1>JMRI: IEEE802154 - Edit Node Frame</h1>
+     
+        Help is on the way.
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -5,10 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: MRC Command Monitor</title><!-- Style -->
+  <title>JMRI: C/MRInet Manager</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -24,15 +23,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: MRC Command Monitor</h1>This is the
-      package/jmri/jmrix/mrc/swing/monitor/MrcMonPanel.shtml
-      package help file.
+      <h2>JMRI: C/MRInet Manager</h2>
 
-      <p><b>Include Poll Messages</b> - When enabled you will see
-      the messages as each cab on the network is polled by the
-      command station. This is a lot of traffic and generally shows
-      that nothing meaningful is happening. It is useful to confirm
-      that a cab is being polled and if the cab is responding.</p>
+      Help in preparation
 
       <!--#include virtual="/Footer" -->
     </div>

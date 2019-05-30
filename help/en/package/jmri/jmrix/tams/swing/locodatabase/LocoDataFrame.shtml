@@ -3,7 +3,7 @@
 
 <html lang="en">
 <head>
-  <title>JMRI: TAMs Command Generator</title>
+  <title>JMRI: TAMs LocoData Frame</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI Help TAMS Command Generator">
   <!-- Style -->
@@ -22,9 +22,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>TAMs Command Generator</h1>The TAMs command generator
-      tool lets you type a message for the TAMs command station
-      and then send it. <!--#include virtual="/Footer" -->
+      <h1>TAMs LocoData Frame</h1>
+      The TAMs LocoData tool lets you read and write Locomotive Data
+      to the TAMs command station.
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
