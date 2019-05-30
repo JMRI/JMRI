@@ -868,9 +868,7 @@
             Windows are available from the <a href=
             "http://www.ftdichip.com/">FTDI website</a> (direct
             link to the drivers current as of this writing:
-            <a href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).</li>
-            </li>
-          </ul>
+            <a href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).</p>
 
           <p>When the device drivers are installed, and the LZV200
           is connected to your PC, the LZV200 should have a Red LED
