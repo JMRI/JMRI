@@ -569,9 +569,6 @@ public class LightControlTest {
         
         Light l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         
-        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
-        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
-        
         LightControl lc = new LightControl(l);
         lc.setControlType(Light.TWO_SENSOR_CONTROL);
         
