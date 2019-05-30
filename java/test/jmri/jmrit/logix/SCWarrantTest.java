@@ -22,11 +22,31 @@ import org.junit.*;
 public class SCWarrantTest extends WarrantTest {
 
     @Test
+    public void testIsRouteFree(){
+        try{
+            sEast.setState(Sensor.INACTIVE);
+            sWest.setState(Sensor.INACTIVE);
+            sSouth.setState(Sensor.INACTIVE);            
+            sNorth.setState(Sensor.ACTIVE);     // start block of warrant
+        } catch (JmriException je) { }
+        ArrayList <BlockOrder> orders = new ArrayList <>();
+        orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
+        BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
+        orders.add(viaOrder);
+        BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
+        orders.add(lastOrder);
+      
+        Assert.assertTrue("Route Free",((SCWarrant)warrant).isRouteFree());   
+        Assert.assertTrue("Route Allocated",((SCWarrant)warrant).isRouteAllocated());   
+    }
+
+
+    @Test
     @Override
-    @Ignore("SCWarrant doesn't start correctly as configured")
     public void testWarrant() {
         try{
             sEast.setState(Sensor.INACTIVE);
+            sWest.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);            
             sNorth.setState(Sensor.ACTIVE);     // start block of warrant
         } catch (JmriException je) { }
@@ -62,14 +82,16 @@ public class SCWarrantTest extends WarrantTest {
         String msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
 
+        Assert.assertTrue("in start block",((SCWarrant)warrant).inStartBlock());
+
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
+            return m.endsWith("IH1 showing appearance 16");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
+        //jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
@@ -80,6 +102,7 @@ public class SCWarrantTest extends WarrantTest {
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
+                sWest.setState(Sensor.INACTIVE);
                 sSouth.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
@@ -97,7 +120,6 @@ public class SCWarrantTest extends WarrantTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initShutDownManager();

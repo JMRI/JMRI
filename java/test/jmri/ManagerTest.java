@@ -305,12 +305,14 @@ public class ManagerTest {
         
     /**
      * Service routine
+     * 
+     * @param iter set of entries
      * @return true when all entries are in correct order, false otherwise
      */
     boolean checkOrderNamedBeans(Iterator<NamedBean> iter) {
         NamedBean first = iter.next();
         NamedBean next;
-        jmri.util.NamedBeanComparator comp = new jmri.util.NamedBeanComparator();
+        jmri.util.NamedBeanComparator<NamedBean> comp = new jmri.util.NamedBeanComparator<>();
         while (iter.hasNext()) {
             next = iter.next();
             if (comp.compare(first, next) >= 0) return false;
@@ -321,6 +323,8 @@ public class ManagerTest {
     
     /**
      * Service routine
+     * 
+     * @param iter set of entries
      * @return true when all entries are in correct order, false otherwise
      */
     boolean checkOrderStrings(Iterator<String> iter) {

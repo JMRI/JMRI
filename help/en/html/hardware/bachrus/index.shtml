@@ -31,8 +31,7 @@
       which is an input only device, to capture speed information
       from a reader module on a Bachrus "Saddle" running stand.</p>
 
-      <p><a name="hardware" id="hardware"></a></p>
-
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Bachrus MTS-DCC Model train Speedometer</h3>
@@ -58,8 +57,9 @@
 
       <h3>Third Party info</h3>
 
-      <p>More information on the Bachrus Speedometer products on
-      the <a href="http://www.bachrus.com/speedometer.php">Bachrus
+      <p>Bachrus has retired as of 2018. Information on the Bachrus
+      Speedometer products stored on the WaybackMachine from the
+      <a href="https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php">Bachrus
       website</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

@@ -43,4 +43,3 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     static volatile DccTurnoutManager _instance = null;
 
 }
-

@@ -191,7 +191,7 @@
             If you have tests for that method (you should!) you may need to
             modify the direct tests of the deprecated method; see
             the 
-            <a href="JUNit.shtml#deprecationWarning">instructions on the JUnit page</a>.
+            <a href="JUnit.shtml#deprecationWarning">instructions on the JUnit page</a>.
 
         <a href="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
             <img src="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY" align="right" width="250" height="100">

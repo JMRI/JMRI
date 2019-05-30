@@ -1,24 +1,26 @@
 package jmri.jmrix.openlcb;
 
+import java.util.Iterator;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
-
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
-import jmri.util.JUnitUtil;
-import jmri.util.PropertyChangeListenerScaffold;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.jmrix.can.CanMessage;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
+import jmri.util.PropertyChangeListenerScaffold;
+import jmri.util.junit.rules.RetryRule;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -28,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Rule
-    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries of tests
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries of tests
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
     protected PropertyChangeListenerScaffold l; 
@@ -341,14 +343,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void testSystemSpecificComparisonOfSpecificFormats() {
 
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Sensor> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Sensor> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface));
         set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", ti.iface));
         set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", ti.iface));
         set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", ti.iface));
         
-        java.util.Iterator<Sensor> it = set.iterator();
+        Iterator<Sensor> it = set.iterator();
         
         Assert.assertEquals("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MS1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());

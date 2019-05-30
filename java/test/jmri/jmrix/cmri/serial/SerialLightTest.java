@@ -1,12 +1,16 @@
 package jmri.jmrix.cmri.serial;
 
-import jmri.util.JUnitUtil;
-import jmri.*;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.Light;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
 
 /**
  *
@@ -31,7 +35,7 @@ public class SerialLightTest {
 
     @Test
     public void testSystemSpecificComparisonOfStandardNames() {
-        jmri.util.NamedBeanComparator t = new jmri.util.NamedBeanComparator();
+        NamedBeanComparator<Light> t = new NamedBeanComparator<>();
         
         Light t1 = new SerialLight("CL1", "to1", memo);
         Light t2 = new SerialLight("CL2", "to2", memo);
@@ -49,7 +53,7 @@ public class SerialLightTest {
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Light> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Light> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new SerialLight("CL3B4",    "to3004", memo));
         set.add(new SerialLight("CL3003",    "to3003", memo));
@@ -69,7 +73,7 @@ public class SerialLightTest {
         set.add(new SerialLight("CL1",    "to1", memo));
         
         
-        java.util.Iterator<Light> it = set.iterator();
+        Iterator<Light> it = set.iterator();
         
         Assert.assertEquals("CL1", it.next().getSystemName());
         Assert.assertEquals("CL2", it.next().getSystemName());

@@ -5,7 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2016 -->
 
   <title>JMRI: CTC</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -52,11 +51,11 @@
       </p>
 
       <p>
-      The last component is the layout configuration in JMRI.  This includes
+      The last component is the layout configuration in JMRI. This includes
       turnout definitions, occupancy sensors, blocks and signals.  The signals
       can be defined as signal heads with SSL or signal masts using signal mast
-      logic.  The signaling implementation needs to properly implement ABS
-      signaling before adding CTC.  This includes proper block boundaries.
+      logic. The signaling implementation needs to properly implement ABS
+      signaling before adding CTC. This includes proper block boundaries.
       </p>
 
       <h3>CTCEditor</h3>

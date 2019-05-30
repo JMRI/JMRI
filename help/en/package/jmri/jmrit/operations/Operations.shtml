@@ -432,7 +432,8 @@
 
    <h3>Display and Help</h3>
    To adjust the display font size or appearance of the JMRI windows, select "Preferences..." found
-   under "Edit" in the main window menu bar. The <a href="../../../apps/TabbedPreferences.shtml">JMRI:
+   under "Edit" (on Windows/Linux) or PanelPro (on macOS) in the main window menu bar.
+   The <a href="../../../apps/TabbedPreferences.shtml">JMRI:
     Preferences Pane</a> will appear with options to make <a
     href="../../../apps/TabbedPreferences.shtml#Connection">Layout Connections</a>, change the
    window <a href="../../../apps/TabbedPreferences.shtml#Display">Display</a> appearance and font

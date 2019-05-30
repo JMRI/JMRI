@@ -223,7 +223,7 @@ public class CbusDummyCS implements CanListener {
         
         // check for existing session
         int exSession = getExistingSession( rcvdIntAddr, rcvdIsLong );
-        if ( exSession > 0 )  {
+        if ( exSession > -1 )  {
             int locoaddr = rcvdIntAddr;
             if (rcvdIsLong) {
                 locoaddr = locoaddr | 0xC000;
