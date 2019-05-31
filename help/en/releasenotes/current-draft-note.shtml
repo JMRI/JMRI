@@ -427,6 +427,7 @@
             <ul>
                 <li>Output Matrix Signal Masts now allow to set a mast-specific delay interval between the individual
                 commands sent to the connected Turnout outputs.</li>
+                <li>A bug was fixed that wrote the wrong mast system name as Comment in the Turnout outputs.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
