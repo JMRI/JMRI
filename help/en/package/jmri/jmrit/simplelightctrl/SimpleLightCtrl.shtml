@@ -8,7 +8,7 @@
 
   <title>JMRI: Light Control</title>
   <meta name="author" content="Ken Cameron">
-  <meta name="keywords" content="JMRI help Light Control">
+  <meta name="keywords" content="JMRI help Light Control transition time status tool">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -25,22 +25,32 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Light Control</h1>Enter the light system name for the
-      light you wish to control in the box to right of "light:".
-      For example, entering 678 and by pressing either the On or
+      <h1>Light Control</h1>
+      <p>Enter the light system name for the
+      light you wish to control in the box to right of "light:".</p>
+      
+      <p>For example, entering 678 and by pressing either the On or
       Off button, you should be able to change the state of light
-      number 678 on the layout. Another example, a valid light
+      number 678 on the layout.</p> 
+      
+      <p>Another example, a valid light
       system name for PowerLine devices could be PL9. Then by
       pressing either the On or Off button, you should be able to
-      change the state of light on the layout. Another example, a
+      change the state of light on the layout.</p> 
+      
+      <p>Another example, a
       valid light system name could be IL123 which is internal
       light number 123. Pressing On or Off will only change the
       state of the internal light and will not change a light on
-      the layout. See " <a href=
-      "../../../../html/doc/Technical/Names.shtml">Names</a> "
-      under general help for more information.
+      the layout.</p> 
+      
+      <p>See <a href=
+      "../../../../html/doc/Technical/Names.shtml">Names</a>
+      under general help for more information.</p>
 
       <h2>Light Control Buttons and Status</h2>
+      <img src="light-control-window-600x266.png" height="266" width="600"
+      alt="Light Control Tool Window">
 
       <dl>
         <dt>Current State:</dt>
@@ -153,7 +163,12 @@
         A value of zero will cause the device to change from one
         intensity to new intensity as fast as the device is able to
         do so.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+      
+      <h2>Further Light Support</h2>
+        <p><a href="../../../../html/tools/Lights.shtml" >JMRI Lights</a></p>
+      
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

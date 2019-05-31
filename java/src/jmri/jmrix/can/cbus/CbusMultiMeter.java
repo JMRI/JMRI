@@ -28,7 +28,7 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
     }
 
     /**
-     * CBUS does have Current
+     * CBUS does have Amperage reporting
      * 
      * {@inheritDoc}
      */
@@ -38,7 +38,7 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
     }
 
     /**
-     * CBUS does have Voltage
+     * CBUS does not have Voltage reporting
      *
      * {@inheritDoc}
      */
