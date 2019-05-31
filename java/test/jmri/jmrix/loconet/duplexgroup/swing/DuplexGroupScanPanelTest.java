@@ -16,7 +16,7 @@ public class DuplexGroupScanPanelTest extends jmri.util.swing.JmriPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         panel = new DuplexGroupScanPanel();
-        helpTarget = "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel";
+        helpTarget = "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel";
         title = "Scan Duplex Channels";
     }
 
