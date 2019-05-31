@@ -3,7 +3,7 @@
 
 <html lang="en">
 <head>
-  <title>JMRI: TAMs LocoData Frame</title>
+  <title>JMRI: Tams LocoData Frame</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI Help TAMS Command Generator">
   <!-- Style -->
@@ -22,9 +22,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>TAMs LocoData Frame</h1>
-      The TAMs LocoData tool lets you read and write Locomotive Data
-      to the TAMs command station.
+      <h1>Tams LocoData Frame</h1>
+      The Tams LocoData tool lets you read and write Locomotive Data
+      to the Tams command station.
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
