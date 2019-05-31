@@ -284,13 +284,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             }
             log.debug("Message dequeued id: {}", messageToSend.message.getId());
             // remember who sent this
-//            log.debug("Updating last sender {}");
             lastSender = messageToSend.listener;
             lastId = messageToSend.message.getId();
             // notify all _other_ listeners
-            if (messageToSend.listener != null) {
-                notifyMessage(messageToSend.message, messageToSend.listener);
-            }
+            notifyMessage(messageToSend.message, messageToSend.listener);
             replyAvailable = false;
             sendToInterface(messageToSend.message);
             log.debug("Waiting for a reply");
