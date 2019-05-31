@@ -159,7 +159,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             searchlightBits[i] = false;
             firstSearchlight[i] = false;
         }
-        addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigManagerFrame", true); // NOI18N
+        // addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerFrame", true); // NOI18N duplicate, see initComponents
     }
 
     /**
