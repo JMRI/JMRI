@@ -115,7 +115,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Added fixes for SPROG bootloader client</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -216,7 +216,7 @@
 
         <h4>Lenz</h4>
             <ul>
-                <li></li>
+                <li>Added connection option for the Lenz LZV200</li>
             </ul>
 
         <h4>MGP</h4>

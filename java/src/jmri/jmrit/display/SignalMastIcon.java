@@ -184,10 +184,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         String name;
         if (getSignalMast() == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getSignalMast().getUserName() == null) {
-            name = getSignalMast().getSystemName();
         } else {
-            name = getSignalMast().getUserName() + " (" + getSignalMast().getSystemName() + ")";
+            name = getSignalMast().getFullyFormattedDisplayName();
         }
         return name;
     }
