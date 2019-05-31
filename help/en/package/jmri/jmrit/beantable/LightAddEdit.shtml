@@ -293,7 +293,7 @@
       controlled in one or more of the following ways:</p>
 
       <h4><a name="lightcontrolturnout" id="lightcontrolturnout">Light Controlled by Turnout</a></h4>
-          <p><b>By Turnout Status</b> - The Light will be turned
+          <p>The Light will be turned
           <b>ON</b> when the Turnout changes to Closed or Thrown,
           depending upon the choice made in the <b>Status for
           ON</b> popup menu, and it will be turned <b>OFF</b>, when
@@ -311,14 +311,12 @@
 
     <h4><a name="lightcontrolonesensor" id="lightcontrolonesensor">Light Controlled by Sensor</a></h4>
 
-          <p><b>By Sensor</b> - The Light will be turned <b>ON</b>
+          <p>The Light will be turned <b>ON</b>
           when the Sensor changes to Active or Inactive, depending
           upon the choice made in the <b>Sense for ON</b> popup
           menu, and it will be turned <b>OFF</b>, when the Sensor
           reverses state.</p> 
-          <p>Specify the Sensor by entering its name
-          (System Name or User Name) in the <b>Sensor Name</b>
-          field.</p> 
+          <p>Select the Sensor in the dropdown select.</p> 
           <p>This option has a number of uses, including
           setting a fascia panel light to follow block occupancy.
           That is useful, for example, for monitoring train
@@ -330,15 +328,14 @@
 
     <h4><a name="lightcontroltwosensor" id="lightcontroltwosensor">Light Controlled by Two Sensors</a></h4>
 
-          <p><b>By Two Sensors</b> - The Light will be turned
+          <p>The Light will be turned
           <b>ON</b> when the either of the two Sensors changes to
           Active or Inactive, depending upon the choice made in the
           <b>Sense for ON</b> popup menu, and it will be turned
           <b>OFF</b>, when both of the two Sensors are in the
           reverse state.</p> 
-          <p>Specify each Sensor by entering its name
-          (System Name or User Name) in the <b>Sensor Name</b>
-          field. The order of entry does not matter.</p>
+          <p>Select each Sensor in the dropdown menu.</p>
+          <p>The order of entry does not matter.</p>
           <p>This option
           has multiple uses, such as controlling crossing gates
           with point sensors that detect when a train passes. By
@@ -350,7 +347,7 @@
 
     <h4><a name="lightcontrolfastclock" id="lightcontrolfastclock">Light Controlled by Fast Clock</a></h4>
 
-          <p><b>By Fast Clock</b> - Each time the minute is updated, the 
+          <p>Each time the minute is updated, the 
           Light Control will check if the Light should be On or Off,
           and set the Light accordingly.</p>
           
