@@ -640,16 +640,15 @@
       </variable>
 	  
 	  <variable CV="49" default="0" item="Analog (AC) Mode">  <!--  forcing item onto analogue pane as well as output and dimming pane -->
-		<label>Hunslet Cab Roof Light</label>
 	    <enumVal>
-				<enumChoice choice="On" value="0">
+			<enumChoice choice="On" value="0">
 				<choice>On</choice>	
 			</enumChoice>
 			<enumChoice choice="Off" value="32">
 				<choice>Off</choice>					
 			</enumChoice>
 		</enumVal>
-	  
+		<label>Hunslet Cab Roof Light</label>
 	  </variable>
 		
       <variable CV="50" default="255" item="EMF Feedback Cutout">
