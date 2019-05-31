@@ -287,7 +287,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             lastSender = messageToSend.listener;
             lastId = messageToSend.message.getId();
             // notify all _other_ listeners
-                notifyMessage(messageToSend.message, messageToSend.listener);
+            notifyMessage(messageToSend.message, messageToSend.listener);
             replyAvailable = false;
             sendToInterface(messageToSend.message);
             log.debug("Waiting for a reply");
