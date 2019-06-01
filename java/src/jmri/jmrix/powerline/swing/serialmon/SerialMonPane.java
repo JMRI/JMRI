@@ -22,7 +22,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
 
     @Override
     public String getHelpTarget() {
-        return null;
+        return "package.jmri.jmrix.powerline.serialmon.SerialMonFrame";
     }
 
     @Override

@@ -308,8 +308,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     portal.dispose();
                     _portalList.dataChange();
                     _portalName.setText(null);
-                    _currentPortalName = null;
+                    // fall through to remove icon
                 case 1:
+                    _currentPortalName = null;
                     PortalIcon icon = _parent.getPortalIconMap().get(name);
                     if (icon != null) {
                         deletePortalIcon(icon);
