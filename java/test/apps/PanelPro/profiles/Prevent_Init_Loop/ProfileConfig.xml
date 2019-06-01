@@ -17,7 +17,7 @@
   </connection>
   <fileLocations class="apps.configurexml.FileLocationPaneXml">
     <fileLocation defaultScriptLocation="preference:jython/" />
-    <fileLocation defaultUserLocation="settings:" />
+    <fileLocation defaultUserLocation="profile:" />
   </fileLocations>
   <gui LAFclass="Metal" class="apps.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="US" LocaleVariant="" fontsize="17" nonStandardMouseEvent="no" />
   <console class="apps.configurexml.SystemConsoleConfigPanelXml" scheme="0" fontfamily="Monospaced" fontsize="18" fontstyle="0" wrapstyle="2" />
@@ -48,6 +48,5 @@
       <value>LocoNet</value>
     </setting>
   </managerdefaults>
-  <perform name="preference:jython/jmri_defaults.py" type="ScriptFile" class="apps.configurexml.PerformScriptModelXml" />
   <!--Written by JMRI version 4.3.4-Reb510be on Fri Apr 15 10:17:07 PDT 2016 $Id$-->
 </layout-config>

@@ -25,14 +25,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
- * from prebuilt profile directories
+ * from prebuilt profile directories.
  *
  * @author Bob Jacobsen 2018
  */
 abstract public class LaunchJmriAppBase {
 
     static final int RELEASETIME = 3000; // mSec
-    static final int TESTMAXTIME = 20; // seconds - not too long, so job doesn't hang
+    static final int TESTMAXTIME = 25; // seconds - not too long, so job doesn't hang, but needs this time for setup
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -44,7 +44,7 @@ abstract public class LaunchJmriAppBase {
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     /**
-     * Run one application
+     * Run one application.
      * 
      * @param profileName Name of the Profile to copy from files in
      *                  java/test/apps/PanelPro/profiles/
@@ -55,7 +55,7 @@ abstract public class LaunchJmriAppBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
-
+            JUnitUtil.resetInstanceManager();
             // create a custom profile
             folder.create();
             File tempFolder = folder.newFolder();

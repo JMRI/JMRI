@@ -76,7 +76,7 @@ class FollowJumpingPanel(jmri.jmrit.automat.AbstractAutomaton):
     # As each panel appears, the x and y locations of the upper left corner are discovered and reported.
     #
     # Executing this script will provide "before" and "after" values on the JMRI
-    # System console and in your "session.log" file.  
+    # System Console and in your "session.log" file.
 
 
 
