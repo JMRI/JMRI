@@ -245,6 +245,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
+    private void openCircuitWindow() {
+        _circuitBuilder.openWindow();
+    }
+
     protected void makeCircuitMenu(boolean edit) {
         if (edit) {
             if (_circuitMenu == null) {
@@ -319,9 +323,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             _warrantMenu.add(aboutItem);
             aboutItem.addActionListener((ActionEvent event) -> {
                 makeCircuitMenu(true);
+                openCircuitWindow();
             });
         } else {
             makeCircuitMenu(edit);
+            JMenuItem item = new JMenuItem(Bundle.getMessage("OpenCircuitMenu"));
+            _warrantMenu.add(item);
+            item.addActionListener((ActionEvent event) -> {
+                openCircuitWindow();
+            });
         }
         if (addMenu) {
             _menuBar.add(_warrantMenu, 0);
