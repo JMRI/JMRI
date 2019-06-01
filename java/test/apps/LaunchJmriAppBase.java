@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 abstract public class LaunchJmriAppBase {
 
     static final int RELEASETIME = 3000; // mSec
-    static final int TESTMAXTIME = 25; // seconds - not too long, so job doesn't hang, but needs this time for setup
+    static final int TESTMAXTIME = 40; // seconds - not too long, so job doesn't hang, but needs this time for setup
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -46,16 +46,16 @@ abstract public class LaunchJmriAppBase {
     /**
      * Run one application.
      * 
-     * @param profileName Name of the Profile to copy from files in
-     *                  java/test/apps/PanelPro/profiles/
-     * @param frameName Application (frame) title
-     * @param startMessageStart Start of the "we're up!" message
+     * @param profileName       Name of the Profile to copy from files in
+     *                          java/test/apps/PanelPro/profiles/
+     * @param frameName         Application (frame) title
+     * @param startMessageStart Start of the "we're up!" message as seen in System Console
      */
     protected void runOne(String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
-            JUnitUtil.resetInstanceManager();
+            // JUnitUtil.resetInstanceManager(); // reset between calls
             // create a custom profile
             folder.create();
             File tempFolder = folder.newFolder();
@@ -70,11 +70,11 @@ abstract public class LaunchJmriAppBase {
 
             JUnitUtil.waitFor(() -> {
                 return JmriJFrame.getFrame(frameName) != null;
-            }, "window up");
+            }, "the application window is up");
 
             JUnitUtil.waitFor(() -> {
                 return JUnitAppender.checkForMessageStartingWith(startMessageStart) != null;
-            }, "first Info line seen");
+            }, "first Info line seen in Console after startup");
 
             extraChecks();
 
