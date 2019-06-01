@@ -355,7 +355,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Due to underlying changes in the Operations web access, train manifests will need to rebuilt before web access works.</li>
         </ul>
 
    <h3>Panel Editors</h3>
