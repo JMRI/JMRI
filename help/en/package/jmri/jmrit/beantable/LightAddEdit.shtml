@@ -353,7 +353,9 @@
           
           
           <p>The Light will be turned
-          <b>ON</b> when the Fast Clock reaches the time entered in
+          <b>ON</b> when the <a href="../../../../html/tools/fastclock/index.shtml" 
+          title="JMRI Fast Clock">Fast Clock</a> 
+          reaches the time entered in
           <b>Time On</b> and will be turned <b>OFF</b> when the
           Fast Clock reaches the time entered in <b>Time Off</b>.</p>
           
@@ -376,7 +378,7 @@
           <p>On startup, the Fast Clock will be checked, and the light will be set to
           correspond with the current time setting.</p>
           
-          <p>The Light Control will not update status if the Light is disabled in the Light Table.</p>
+          <p>If no Fast Clock is present on your system, the current local time will be used.</p>
           
           
           <img src="images/LightAddFrameClock.png" alt="Add or Edit Light controlled by FastClock"
