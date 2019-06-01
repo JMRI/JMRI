@@ -1133,11 +1133,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
      */
     private void deleteSectionPressed(String sName) {
         final Section s = jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(sName);
-        String fullName = sName;
-        String uname = s.getUserName();
-        if (uname != null && uname.length() > 0) {
-            fullName = fullName + " (" + uname + ")";
-        }
+        String fullName = s.getFullyFormattedDisplayName();
         ArrayList<Transit> affectedTransits = jmri.InstanceManager.getDefault(jmri.TransitManager.class).getListUsingSection(s);
         final JDialog dialog = new JDialog();
         String msg = "";
@@ -1153,11 +1149,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             dialog.add(p1);
             for (int i = 0; i < affectedTransits.size(); i++) {
                 Transit aTransit = affectedTransits.get(i);
-                String tFullName = aTransit.getSystemName();
-                uname = aTransit.getUserName();
-                if (uname != null && uname.length() > 0) {
-                    tFullName = tFullName + " (" + uname + ")";
-                }
+                String tFullName = aTransit.getFullyFormattedDisplayName();
                 p1 = new JPanel();
                 p1.setLayout(new FlowLayout());
                 iLabel = new JLabel("   " + tFullName);
