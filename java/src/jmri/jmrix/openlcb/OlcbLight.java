@@ -74,8 +74,23 @@ public class OlcbLight extends AbstractLight {
         };
         // A Light Control will have failed to set its state during xml load
         // as the LightListener is not present, so we re-activate any Light Controls
-        deactivateLight();
         activateLight();
+    }
+    
+    /**
+     * Activate a light activating all its LightControl objects.
+     */
+    @Override
+    public void activateLight() {
+        // during xml load any Light Controls may attempt to set the Light before the
+        // lightListener has been set
+        if (lightListener==null){
+            return;
+        }
+        lightControlList.stream().forEach((lc) -> {
+            lc.activateLightControl();
+        });
+        mActive = true; // set flag for control listeners
     }
     
     
@@ -87,12 +102,6 @@ public class OlcbLight extends AbstractLight {
      */
     @Override
     protected void doNewState(int oldState, int newState) {
-        // during xml load any Light Controls may attempt to set the Light before the
-        // lightListener has been set
-        if (lightListener==null){
-            log.debug("lightListener not set, probably still initialising");
-            return;
-        }
         switch (newState) {
             case Light.ON:
                 lightListener.setFromOwnerWithForceNotify(true);
