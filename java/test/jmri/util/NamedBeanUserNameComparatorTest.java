@@ -31,6 +31,19 @@ public class NamedBeanUserNameComparatorTest {
 
         Assert.assertEquals("IT10 > IT2", +1, t.compare(it10, it2));
         Assert.assertEquals("IT2 < IT10", -1, t.compare(it2, it10));
+
+        it1.setUserName("A");
+        it10.setUserName("B");
+        it2.setUserName("C");
+
+        Assert.assertEquals("A == A", 0, t.compare(it1, it1));
+
+        Assert.assertEquals("A < C", -1, t.compare(it1, it2));
+        Assert.assertEquals("C > A", +1, t.compare(it2, it1));
+
+        Assert.assertEquals("B < C", -1, t.compare(it10, it2));
+        Assert.assertEquals("C > B", +1, t.compare(it2, it10));
+
     }
 
     @Test
