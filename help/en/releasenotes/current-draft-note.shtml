@@ -427,6 +427,7 @@
             <ul>
                 <li>Output Matrix Signal Masts now allow to set a mast-specific delay interval between the individual
                 commands sent to the connected Turnout outputs.</li>
+                <li>A bug was fixed that wrote the wrong mast system name as Comment in the Turnout outputs.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -500,6 +501,10 @@
         <ul>
             <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
                 <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
+            </li>
+            <li>The Help Index and Table Of Contents were updated and expanded to include the current Hardware
+                systems.<br>
+                In the process we discovered that additional instructions for many of the new tools are welcome.
             </li>
         </ul>
 
