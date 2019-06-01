@@ -28,42 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
     
-    CanSystemConnectionMemo memo;
-    CbusDummyCS _cs;
-    CbusThrottleManager cbtm;
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback(); // do not use this tc normally
-        memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        tm = new CbusThrottleManager(memo);
-        
-        InstanceManager.setThrottleManager( tm );
-        
-        
-        _cs = new CbusDummyCS(memo); // we are testing the tm, not the command station
-        _cs.setDelay(0); // no need to simulate network delay
-        
-    }
-    
-    DccThrottle throttle;
-    boolean failedThrottleRequest = false;
-    int flagGotStealRequest = -1;
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-        tm=null;
-        _cs.dispose();
-        _cs = null;
-        if (cbtm != null) { 
-            cbtm.dispose();
-        }
-        cbtm = null;
-    }
+    private CanSystemConnectionMemo memo;
+    private CbusDummyCS _cs;
+    private CbusThrottleManager cbtm;
 
     @Test
     public void testCTor() {
@@ -446,19 +413,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 // this is a never-stealing impelementation.
                 if ( question == DecisionType.STEAL ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal request");
+                    log.error("1: Got a steal request {}",address);
                 }
                 if ( question == DecisionType.SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a share request");
+                    log.error("1: Got a share request {}",address);
                 }
                 if ( question == DecisionType.STEAL_OR_SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question");
+                    log.error("1: Got a steal OR share question {}",address);
                 }
             }
         };
@@ -506,22 +470,18 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             @Override
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 
-                
                 // this is a never-steal or sharing impelementation.
                 if ( question == DecisionType.STEAL ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question");
+                    log.error("1: Got a Steal question {}",address);
                 }
                 if ( question == DecisionType.SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question");
+                    log.error("1: Got a Share question {}",address);
                 }
                 if ( question == DecisionType.STEAL_OR_SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question");
+                    log.error("1: Got a steal OR share question {}",address);
                 }
             }
         };
@@ -549,7 +509,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         cbtm.reply(r);
         
-        jmri.util.JUnitAppender.assertErrorMessage("1: Got a steal OR share question");
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a steal OR share question 141(L)");
         // which was cancelled by the throttlelistener
         
         cs.setNV(2, 0b00000010); // steal only enabled
@@ -563,7 +523,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         cbtm.reply(r);
         
-        jmri.util.JUnitAppender.assertErrorMessage("1: Got a Steal question");
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a Steal question 141(L)");
         // which was cancelled by the throttlelistener
 
         cs.setNV(2, 0b00000100); // share only enabled
@@ -576,7 +536,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         cbtm.reply(r);
         
-        jmri.util.JUnitAppender.assertErrorMessage("1: Got a Share question");
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a Share question 141(L)");
         // which was cancelled by the throttlelistener
         
         throtListen = null;
@@ -612,19 +572,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 
                 if ( question == DecisionType.STEAL ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question");
+                    log.error("1: Got a Steal question {}",address);
                 }
                 if ( question == DecisionType.SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question");
+                    log.error("1: Got a Share question {}",address);
                 }
                 if ( question == DecisionType.STEAL_OR_SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question");
+                    log.error("1: Got a steal OR share question {}",address);
                 }
             }
         };
@@ -696,19 +653,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 
                 if ( question == DecisionType.STEAL ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question");
+                    log.error("1: Got a Steal question {}",address);
                 }
                 if ( question == DecisionType.SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question");
+                    log.error("1: Got a Share question {}",address);
                 }
                 if ( question == DecisionType.STEAL_OR_SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question");
+                    log.error("1: Got a steal OR share question {}",address);
                 }
             }
         };
@@ -787,19 +741,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 
                 if ( question == DecisionType.STEAL ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question");
+                    log.error("1: Got a Steal question {}",address);
                 }
                 if ( question == DecisionType.SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question");
+                    log.error("1: Got a Share question {}",address);
                 }
                 if ( question == DecisionType.STEAL_OR_SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question");
+                    log.error("1: Got a steal OR share question {}",address);
                 }
             }
         };
@@ -873,19 +824,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
                 
                 // this is a never-steal or sharing impelementation.
                 if ( question == DecisionType.STEAL ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().responseThrottleDecision(address, null, DecisionType.STEAL );
-                    log.error("1: Got a Steal question");
+                    log.error("1: Got a Steal question {}",address);
                 }
                 if ( question == DecisionType.SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question");
+                    log.error("1: Got a Share question {}",address);
                 }
                 if ( question == DecisionType.STEAL_OR_SHARE ){
-                    flagGotStealRequest = address.getNumber();
                     InstanceManager.throttleManagerInstance().responseThrottleDecision(address, null, DecisionType.STEAL );
-                    log.error("1: Got a steal OR share question");
+                    log.error("1: Got a steal OR share question {}",address);
                 }
             }
         };
@@ -913,7 +861,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         cbtm.reply(r);
         
-        jmri.util.JUnitAppender.assertErrorMessage("1: Got a Steal question");
+        jmri.util.JUnitAppender.assertErrorMessage("1: Got a Steal question 141(L)");
         // which was confirmed please steal by the throttlelistener
         
         
@@ -943,7 +891,35 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         throtListen = null;
         nodemodel.dispose();
     }
+    
+    private DccThrottle throttle;
+    private boolean failedThrottleRequest = false;
+    
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback(); // do not use this tc normally
+        memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tc);
+        tm = new CbusThrottleManager(memo);
+        InstanceManager.setThrottleManager( tm );
+        _cs = new CbusDummyCS(memo); // we are testing the tm, not the command station
+        _cs.setDelay(0); // no need to simulate network delay
+        
+    }
 
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        tm=null;
+        _cs.dispose();
+        _cs = null;
+        if (cbtm != null) { 
+            cbtm.dispose();
+        }
+        cbtm = null;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);
 

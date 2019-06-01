@@ -9,8 +9,7 @@ import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
 
 /**
- *
- * Description: Frame for user input of Acela messages
+ * Frame for user input of Acela messages
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
@@ -67,6 +66,8 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
                     }
                 }
         );
+
+        addHelpMenu("package.jmri.jmrix.acela.packetgen.AcelaPacketGenFrame", true); // NOI18N
 
         // pack for display
         pack();

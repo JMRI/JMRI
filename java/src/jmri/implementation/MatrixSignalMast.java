@@ -74,11 +74,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
         mast = mast.substring(0, mast.indexOf("("));
         setMastType(mast);
         
-        String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
+        String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")")); // retrieve ordinal from name
         try {
             int autoNumber = Integer.parseInt(tmp);
-            if (autoNumber > lastRef) {
-                lastRef = autoNumber;
+            if (autoNumber > getLastRef()) {
+                setLastRef(autoNumber);
             }
         } catch (NumberFormatException e) {
             log.warn("Auto generated SystemName \"{}\" is not in the correct format", systemName);
@@ -466,15 +466,29 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return false;
     }
 
+    /**
+     * @return highest ordinal of all MatrixSignalMasts in use
+     */
     public static int getLastRef() {
         return lastRef;
     }
 
-    static int lastRef = 0;
+    /**
+     *
+     * @param newVal for ordinal of all MatrixSignalMasts in use
+     */
+    public static void setLastRef(int newVal) {
+        lastRef = newVal;
+    }
+
+    /**
+     * Ordinal of all MatrixSignalMasts to create unique system name.
+     */
+    private static int lastRef = 0;
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (isTurnoutUsed((Turnout) evt.getOldValue())) {
                     java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
