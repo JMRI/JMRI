@@ -22,7 +22,7 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
 //        setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
 //        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-//        jmri.InstanceManager.setSensorManager(getSensorManager());
+        jmri.InstanceManager.setSensorManager(getSensorManager());
 //        jmri.InstanceManager.setLightManager(getLightManager());
 //        jmri.InstanceManager.setReporterManager(getReporterManager());
     }    
@@ -61,7 +61,7 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         return null; // nothing, by default
     }
     
-   protected MqttTurnoutManager turnoutManager;
+    protected MqttTurnoutManager turnoutManager;
 
     public MqttTurnoutManager getTurnoutManager() {
         if (getDisabled()) {
@@ -71,6 +71,18 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
             turnoutManager = new MqttTurnoutManager(mqttAdapter, getSystemPrefix());
         }
         return turnoutManager;
+    }
+
+    protected MqttSensorManager sensorManager;
+
+    public MqttSensorManager getSensorManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (sensorManager == null) {
+            sensorManager = new MqttSensorManager(mqttAdapter, getSystemPrefix());
+        }
+        return sensorManager;
     }
 
     void setMqttAdapter(MqttAdapter ma) {
