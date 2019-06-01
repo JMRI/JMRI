@@ -84,7 +84,8 @@
         <li><a href="../index.shtml">JMRI CAN Support</a></li>
         <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
         </ul>
-      
+
+    <a name="tools" id="tools"></a>
     <h3>JMRI MERG CBUS Tools Support Pages</h3>
       <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" align="right"
       width="206" height="145">
@@ -214,7 +215,7 @@
             <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback"
             >turnout feedback</a> set by this sensor.
             <br>
-            <a href="../../../apps/PanelPro/PanelPro.shtml">JMRI panel(s)</a> 
+            <a href="../../../apps/PanelPro/index.shtml">JMRI panel(s)</a>
             update to reflect the new point position.</li>
             <li><a href="../../../tools/signaling/SignalMastLogic.shtml"
             >JMRI Signalling Logic</a> recalculates, and on the JMRI panel, 

@@ -41,8 +41,9 @@
 
       <p>Support for Tams MC was first available in <a href=
       "http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI
-      2.99.7</a>. 
-      <a name="limitations" id="limitations"></a></p>
+      2.99.7</a>.</p>
+
+      <a name="limitations" id="limitations"></a>
       <h2>Limitations</h2>
 
       <p>Known limitations:
@@ -106,6 +107,22 @@
 
         <li>Click "Save" and restart JMRI.</li>
       </ul><a name="documentation" id="documentation"></a>
+
+      <a name="tools" id="tools"></a>
+      <h2>JMRI Tams Tools</h2>
+
+      <ul>
+        <li>Tams network traffic can be viewed with the Tams Monitor</li>
+
+        <li>Messages can be sent to Tams devices with <a href=
+        "../../../package/jmri/jmrix/tams/swing/packetgen/PacketGenFrame.shtml">
+        Send Tams Packets</a></li>
+
+        <li>The the <a href=
+        "../../../package/jmri/jmrix/tams/locodatabase/LocoDataFrame.shtml">
+          LocoData tool</a> lets you read and write Locomotive Data
+          to the Tams command station.</li>
+      </ul>
 
       <h2>Documentation</h2>
 

@@ -75,8 +75,9 @@
 
         <li>A CTI Sentry (no output circuits, 16 input
         circuits).</li>
-      </ul><a name="limitations" id="limitations"></a>
+      </ul>
 
+      <a name="limitations" id="limitations"></a>
       <h2>Limitations</h2>
 
       <ul>
@@ -107,8 +108,9 @@
         allows you to <a href=
         "../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">
         configure</a> this.</li>
-      </ul><a name="connecting" id="connecting"></a>
+      </ul>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3>Creating Nodes</h3>
@@ -172,8 +174,9 @@
         <li>Inputs and Outputs can be configured with the <a href=
         "../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">
         Configure Nodes</a> tool</li>
-      </ul><a name="documentation" id="documentation"></a>
+      </ul>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>

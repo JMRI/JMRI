@@ -43,10 +43,10 @@
      
      <p>Windows users will probably need to run JMRI with 
      Administrative permissions
-     ( eg. right click on PanelPro desktop link, 
+     (eg. right click on PanelPro desktop link,
      Run as Administrator) to install.
-     <br>it is not recommended to run JMRI like 
-     this all of the time, just to install TrainCrew.</p>
+     <br>it is not recommended to run JMRI as Administrator
+     all of the time, just to install TrainCrew.</p>
      
       <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
