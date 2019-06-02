@@ -2,6 +2,8 @@ package apps.DispatcherPro;
 
 import java.io.IOException;
 
+import jmri.util.JUnitAppender;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -24,22 +26,32 @@ public class DispatcherProTest extends apps.LaunchJmriAppBase {
     protected void launch(String[] args) {
         DispatcherPro.main(args);
     }
-    
-    @Test
-    public void testLaunchLocoNet() throws IOException {
-        runOne("LocoNet_Simulator", "DispatcherPro", "DispatcherPro version"); // param 2 and 3 must match Console output
-    }
 
     @Test
     public void testLaunchEasyDcc() throws IOException {
         runOne("EasyDcc_Simulator", "DispatcherPro", "DispatcherPro version");
+        // param 1 is profile folder name, param 2 and 3 must match Console output
     }
 
     @Test
     public void testLaunchGrapevine() throws IOException {
         runOne("Grapevine_Simulator", "DispatcherPro", "DispatcherPro version");
-        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
-        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
+        JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+        JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
+    }
+
+    @Test
+    public void testLaunchLocoNet() throws IOException {
+        runOne("LocoNet_Simulator", "DispatcherPro", "DispatcherPro version");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+
+    }
+
+    @Test
+    public void testLaunchSprog() throws IOException {
+        runOne("Sprog_Simulator", "DispatcherPro", "DispatcherPro version");
     }
 
     @Test
@@ -47,13 +59,4 @@ public class DispatcherProTest extends apps.LaunchJmriAppBase {
         runOne("TMCC_Simulator", "DispatcherPro", "DispatcherPro version");
     }
 
-    @Test
-    public void testLaunchSprog() throws IOException {
-        runOne("Sprog_Simulator", "PanelPro", "PanelPro version");
-    }
-
-    @Test
-    public void testLaunchInitLoop() throws IOException {
-        runOne("Prevent_Init_Loop", "DispatcherPro", "DispatcherPro version");
-    }
 }

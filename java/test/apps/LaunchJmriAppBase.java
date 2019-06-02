@@ -46,7 +46,7 @@ abstract public class LaunchJmriAppBase {
     /**
      * Run one application.
      * 
-     * @param profileName       Name of the Profile to copy from files in
+     * @param profileName       Name of the Profile folder to copy from files in
      *                          java/test/apps/PanelPro/profiles/
      * @param frameName         Application (frame) title
      * @param startMessageStart Start of the "we're up!" message as seen in System Console
@@ -55,7 +55,6 @@ abstract public class LaunchJmriAppBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
-            // JUnitUtil.resetInstanceManager(); // reset between calls
             // create a custom profile
             folder.create();
             File tempFolder = folder.newFolder();

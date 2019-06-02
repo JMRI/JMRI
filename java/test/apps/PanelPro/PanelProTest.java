@@ -33,30 +33,34 @@ public class PanelProTest extends apps.LaunchJmriAppBase {
     }
     
     @Test
-    public void testLaunchLocoNet() throws IOException {
-        runOne("LocoNet_Simulator", "PanelPro", "PanelPro version"); // param 2 and 3 must match Console output
-    }
-
-    @Test
     public void testLaunchEasyDcc() throws IOException {
         runOne("EasyDcc_Simulator", "PanelPro", "PanelPro version");
+        // param 1 is profile folder name, param 2 and 3 must match Console output
     }
 
     @Test
     public void testLaunchGrapevine() throws IOException {
         runOne("Grapevine_Simulator", "PanelPro", "PanelPro version");
-        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
-        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
+        JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+        JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
     }
 
     @Test
-    public void testLaunchTmcc() throws IOException {
-        runOne("TMCC_Simulator", "PanelPro", "PanelPro version");
+    public void testLaunchLocoNet() throws IOException {
+        runOne("LocoNet_Simulator", "PanelPro", "PanelPro version");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
     }
 
     @Test
     public void testLaunchSprog() throws IOException {
         runOne("Sprog_Simulator", "PanelPro", "PanelPro version");
+    }
+
+    @Test
+    public void testLaunchTmcc() throws IOException {
+        runOne("TMCC_Simulator", "PanelPro", "PanelPro version");
     }
 
     @Test

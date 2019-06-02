@@ -5,7 +5,7 @@
             <options>
                 <option>
                     <name>SensorDefaultState</name>
-                    <value>Unknown</value>
+                    <value>First 4 per bank</value>
                 </option>
             </options>
         </connection>
