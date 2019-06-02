@@ -1955,25 +1955,24 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 }
             }
 
-            Set<Block> autoBlockKeys = autoBlocks.keySet();
-            for (Block key : autoBlockKeys) {
-                log.debug("{} auto block add list {}", destination.getDisplayName(), key.getDisplayName());
-                key.addPropertyChangeListener(propertyBlockListener);
-                if (key.getState() != autoBlocks.get(key)) {
-                    if (isBlockIncluded(key)) {
-                        if (key.getState() != getBlockState(key)) {
-                            if (key.getState() == Block.OCCUPIED && key.getPermissiveWorking()) {
+            for (Map.Entry<Block, Integer> entry : this.autoBlocks.entrySet()) {
+                log.debug("{} auto block add list {}", destination.getDisplayName(), entry.getKey().getDisplayName());
+                entry.getKey().addPropertyChangeListener(propertyBlockListener);
+                if (entry.getKey().getState() != entry.getValue()) {
+                    if (isBlockIncluded(entry.getKey())) {
+                        if (entry.getKey().getState() != getBlockState(entry.getKey())) {
+                            if (entry.getKey().getState() == Block.OCCUPIED && entry.getKey().getPermissiveWorking()) {
                                 permissiveBlock = true;
                             } else {
                                 routeclear = false;
                             }
                         }
                     } else {
-                        if (key.getState() == Block.OCCUPIED && key.getPermissiveWorking()) {
+                        if (entry.getKey().getState() == Block.OCCUPIED && entry.getKey().getPermissiveWorking()) {
                             permissiveBlock = true;
-                        } else if (key.getState() == Block.UNDETECTED) {
+                        } else if (entry.getKey().getState() == Block.UNDETECTED) {
                             if (log.isDebugEnabled()) {
-                                log.debug("Block {} is UNDETECTED so treat as unoccupied", key.getDisplayName());
+                                log.debug("Block {} is UNDETECTED so treat as unoccupied", entry.getKey().getDisplayName());
                             }
                         } else {
                             routeclear = false;
