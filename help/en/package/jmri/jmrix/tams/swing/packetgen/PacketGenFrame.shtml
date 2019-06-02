@@ -3,10 +3,7 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Command Generator</title>
+  <title>JMRI: TAMs Command Generator</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI Help TAMS Command Generator">
   <!-- Style -->
@@ -26,7 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>TAMs Command Generator</h1>The TAMs command generator
-      tool lets you type an message for the TAMs command station
+      tool lets you type a message for the TAMs command station
       and then send it. <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the SRCPPortController class
- * <p>
+ * JUnit tests for the SRCPPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -33,4 +32,5 @@ public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortContro
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }

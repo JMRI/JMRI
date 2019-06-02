@@ -176,10 +176,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         String name;
         if (light == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (light.getUserName() != null) {
-            name = light.getUserName() + " (" + light.getSystemName() + ")";
         } else {
-            name = light.getSystemName();
+            name = light.getFullyFormattedDisplayName();
         }
         return name;
     }

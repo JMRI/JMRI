@@ -403,6 +403,9 @@
         "http://jmri.org/install/qsidriver/">great
         instructions</a>. <a name="F" id="F"></a></li>
 
+        <li>Jim Exler, <!-- jimexler -->
+        who fixed a Digitrax CV definition.
+        
         <li>Dave Falkenburg created the original DecoderPro
         application (and found the perfect name for it!) He created
         our Mac Classic and Mac OS X icons and worked on the
