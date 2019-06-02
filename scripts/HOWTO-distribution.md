@@ -421,15 +421,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
+
 [Release notes](http://jmri.org/releasenotes/jmri4.15.7.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.7+Red1ceb2.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.7/JMRI.4.15.7+Red1ceb2.dmg) | e27da2d2fd402e30cf462c79cbcb0d70a1f629ab59faaacd6fa2480a92c3105c
-[JMRI.4.15.7+Red1ceb2.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.7/JMRI.4.15.7+Red1ceb2.exe) | 96bbd3d90037cf7e35f5340e04f48931474c7a427b03f91030ce48a277c09a96
-[JMRI.4.15.7+Red1ceb2.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.7/JMRI.4.15.7+Red1ceb2.tgz) | b2e8c106f0945de6f912234c0fb16e17834ad50f69f1484d06063bed0a86ea67
+[JMRI.4.15.7+Rf006fc4.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.7/JMRI.4.15.7+Rf006fc4.dmg) | e4a438800095aded9d8d36d3fa7b766f3e17db366327d435a8f125634b31b4d3
+[JMRI.4.15.7+Rf006fc4.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.7/JMRI.4.15.7+Rf006fc4.exe) | a0212fa68718214074cfd4202bf31d29e479b909eec1210e61eab03869b92990
+[JMRI.4.15.7+Rf006fc4.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.7/JMRI.4.15.7+Rf006fc4.tgz) | ec280f9c317f6b458e5b21e207a04666b89f9525f41a0e097aa08c817cb777f7
 
 ```
 
@@ -443,7 +444,7 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 
 - Wait for completion, which might be a while with big uploads
 
-- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
+- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.
 
 ====================================================================================
 ## Check for Unmerged Changes
