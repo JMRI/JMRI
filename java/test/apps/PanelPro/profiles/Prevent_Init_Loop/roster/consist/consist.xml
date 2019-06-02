@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/consistRoster.xsl" type="text/xsl"?>
+<!DOCTYPE consist-roster-config SYSTEM "/xml/DTD/consist-roster-config.dtd">
+
+<consist-roster-config>
+  <!--Written by JMRI version 3.10.1-r28327 on Tue May 26 13:12:35 PDT 2015 $Id: XmlFile.java 27564 2014-11-01 05:08:01Z jacobsen $-->
+  <roster />
+</consist-roster-config>
+

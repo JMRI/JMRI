@@ -4,8 +4,8 @@
         <connection xmlns="" class="jmri.jmrix.sprog.simulator.configurexml.ConnectionConfigXml" disabled="no" manufacturer="SPROG DCC" port="(none selected)" speed="" systemPrefix="S" userName="SPROG Simulator">
             <options>
                 <option>
-                    <name>InitPreference</name>
-                    <value>Disabled</value>
+                    <name>OperatingMode</name>
+                    <value>SPROG Programmer</value>
                 </option>
             </options>
         </connection>

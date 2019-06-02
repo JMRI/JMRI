@@ -13,8 +13,9 @@ import org.junit.Test;
  * <p>
  * It confirms that the entire application can start up and configure itself.
  * <p>
- * When format of user configuration (profile) files is changed, update the
- * sets stored in java/test/apps/PanelPro/profiles/ to match.
+ * When format of user configuration (profile) files is changed, check the
+ * sets in java/test/apps/PanelPro/profiles/ to match or allow for conversion
+ * dialogs.
  * Also check the required TESTMAXTIME in {@link apps.LaunchJmriAppBase} to
  * prevent timeouts on app startup tests if structure of data develops.
  * 
@@ -56,6 +57,13 @@ public class DecoderProTest extends apps.LaunchJmriAppBase {
     @Test
     public void testLaunchTmcc() throws IOException {
         runOne("TMCC_Simulator", "DecoderPro", "DecoderPro version");
+    }
+
+    @Test
+    public void testLaunchInitLoop() throws IOException {
+        runOne("Prevent_Init_Loop", "DecoderPro", "DecoderPro version");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
     }
 
 }

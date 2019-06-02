@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<withrottle-prefs>
+  <WiThrottlePreferences isUseEStop="true" getEStopDelay="10" isUseMomF2="true" getPort="55555" isAllowTrackPower="true" isAllowTurnout="true" isAllowTurnoutCreation="false" isAllowRoute="true" isAllowConsist="true" isUseWiFiConsist="true" isDisplayFastClock="true" />
+</withrottle-prefs>

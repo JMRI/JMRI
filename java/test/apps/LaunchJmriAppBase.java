@@ -32,7 +32,8 @@ import org.slf4j.LoggerFactory;
 abstract public class LaunchJmriAppBase {
 
     static final int RELEASETIME = 3000; // mSec
-    static final int TESTMAXTIME = 40; // seconds - not too long, so job doesn't hang, but needs this time for setup
+    static final int TESTMAXTIME = 40; // seconds - not too long, so job doesn't hang
+    // in particular the #testLaunchInitLoop() test needs this time for setup
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -46,7 +47,7 @@ abstract public class LaunchJmriAppBase {
     /**
      * Run one application.
      * 
-     * @param profileName       Name of the Profile folder to copy from files in
+     * @param profileName       Name of the Profile folder to copy from
      *                          java/test/apps/PanelPro/profiles/
      * @param frameName         Application (frame) title
      * @param startMessageStart Start of the "we're up!" message as seen in System Console

@@ -1,4 +1,4 @@
-# FollowJumpingPanel is a diagnostic tool that can provide panel location meterics
+# FollowJumpingPanel is a diagnostic tool that can provide panel location metrics
 # to indicate an inconsistent and even intermittent symptom, but not yet (as of this date) 
 # provide a fix for a problem that has shown up in 4.9.1
 #
