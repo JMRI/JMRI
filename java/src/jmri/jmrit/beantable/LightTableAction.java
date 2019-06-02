@@ -1529,7 +1529,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             fastMinuteSpinner2.setValue(0); // reset needed
             fastMinuteSpinner2.setVisible(false);
 
-            timedOnSpinner.setValue(0);  // reset needed
+            timedOnSpinner.setValue(5000);  // reset needed, default to 5,000 ms
             timedOnSpinner.setVisible(false);
             clockSep2.setVisible(false);
 
@@ -1701,18 +1701,18 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (typeBox.getSelectedItem().equals(noControl)) {
             return;
         }
-        if (typeBox.getSelectedItem().equals(fastClockControl)) {
-            try {
-                fastHourSpinner1.commitEdit();
-                fastHourSpinner2.commitEdit();
-                fastMinuteSpinner1.commitEdit();
-                fastMinuteSpinner2.commitEdit();
-            }
-            catch (java.text.ParseException pe) {
-                // unlikely to be thrown as values set to original if incorrect on commitEdit()
-                log.error("Incorrect value found in a FastClock Time: {}",pe);
-                return;
-            }
+        try {
+            
+            fastHourSpinner1.commitEdit();
+            fastHourSpinner2.commitEdit();
+            fastMinuteSpinner1.commitEdit();
+            fastMinuteSpinner2.commitEdit();
+            timedOnSpinner.commitEdit();
+        }
+        catch (java.text.ParseException pe) {
+            // unlikely to be thrown as values set to original if incorrect on commitEdit()
+            log.error("Incorrect value found in a Time: {}",pe);
+            return;
         }
         lc = new LightControl();
         if (setControlInformation(lc)) {
@@ -1731,18 +1731,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     protected void updateControlPressed(ActionEvent e) {
-        if (typeBox.getSelectedItem().equals(fastClockControl)) {
-            try {
-                fastHourSpinner1.commitEdit();
-                fastHourSpinner2.commitEdit();
-                fastMinuteSpinner1.commitEdit();
-                fastMinuteSpinner2.commitEdit();
-            }
-            catch (java.text.ParseException pe) {
-                // unlikely to be thrown as values set to original if incorrect on commitEdit()
-                log.error("Incorrect value found in a FastClock Time: {}",pe);
-                return;
-            }
+        try {
+            fastHourSpinner1.commitEdit();
+            fastHourSpinner2.commitEdit();
+            fastMinuteSpinner1.commitEdit();
+            fastMinuteSpinner2.commitEdit();
+            timedOnSpinner.commitEdit();
+        }
+        catch (java.text.ParseException pe) {
+            // unlikely to be thrown as values set to original if incorrect on commitEdit()
+            log.error("Incorrect value found in a FastClock Time: {}",pe);
+            return;
         }
         if (setControlInformation(lc)) {
             lightControlChanged = true;

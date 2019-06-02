@@ -174,9 +174,13 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
         JFrameOperator jfoc = new JFrameOperator(fControl);
         
-        // create a new Light Controlled by Sensor S2
+        Assert.assertEquals("No Sensor selected ", Bundle.getMessage("LightNoControl"),
+            new JComboBoxOperator(jfoc, 0).getSelectedItem());
+        
+        // create a new LightControl by Sensor S2
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightSensorControl"));
-        new JComboBoxOperator(jfoc, 1).selectItem(("S2")); // select Sensor S2
+        
+        new JComboBoxOperator(jfoc, 1).selectItem(("ISS2")); // select Sensor S2
         new JComboBoxOperator(jfoc, 2).selectItem(Bundle.getMessage("SensorStateActive"));
         jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));
         // light control frame closes
@@ -239,7 +243,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
         
         JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(f);  // close Light Table window
         
     }
     
@@ -378,7 +382,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
             LightTableAction.getDescriptionText(created.getLightControlList().get(0),
             created.getLightControlList().get(0).getControlType() ) );
 
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(f);  // close Light Table window
         
     }
 
@@ -388,6 +392,9 @@ public class LightTableActionTest extends AbstractTableActionBase {
         
         Turnout tOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("T1");
         Turnout tTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("T2");
+
+        Assert.assertNotNull("exists",tOne);
+        Assert.assertNotNull("exists",tTwo);
 
         a.actionPerformed(null); // show table
         
@@ -406,8 +413,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
         JFrameOperator jfoc = new JFrameOperator(fControl);
         
-        // create a new Light 
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTurnoutStatusControl"));
+        
         new JComboBoxOperator(jfoc, 1).selectItem(("ITT2")); // select Turnout T2
         new JComboBoxOperator(jfoc, 2).selectItem(
             InstanceManager.getDefault(jmri.TurnoutManager.class).getThrownText());
@@ -415,6 +422,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));
         // light new control frame closes
         jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonCreate"));
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonClose"));
         
         Light created = InstanceManager.getDefault(jmri.LightManager.class).getLight("IL333");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
@@ -463,8 +471,258 @@ public class LightTableActionTest extends AbstractTableActionBase {
             LightTableAction.getDescriptionText(created.getLightControlList().get(0),
             created.getLightControlList().get(0).getControlType() ) );
         
-        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(f);  // close Light Table window
+        
+    }
+    
+    
+    @Test
+    public void testAddEditTimedOnLightControl() throws jmri.JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create 2 Sensors to pick from
+        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
+        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+
+        Assert.assertNotNull("exists",sOne);
+        Assert.assertNotNull("exists",sTwo);
+
+        a.actionPerformed(null); // show table
+        
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        JFrameOperator jfo = new JFrameOperator(f);
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        //Enter 444 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        new JTextFieldOperator(hwAddressField).typeText("444");
+        JFrameOperator jfob = new JFrameOperator(f1);
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("LightAddControlButton"));
+        JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
+        JFrameOperator jfoc = new JFrameOperator(fControl);
+        
+        // create a new Light Control
+        new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTimedOnControl"));
+        new JComboBoxOperator(jfoc, 1).selectItem(("ISS2")); // select Sensor S2
+        new JTextFieldOperator(jfoc,0).clearText();
+        new JTextFieldOperator(jfoc,0).typeText("20");
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));
+        // light control frame closes
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonCreate"));   
+        // new light frame closes
+        
+        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL444");
+        Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
+        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 msec. when ISS2 goes Active.", 
+            LightTableAction.getDescriptionText(created.getLightControlList().get(0),
+            created.getLightControlList().get(0).getControlType() ) );
+        
+         // now we find the Light in the table and edit it
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0,tbl.getColumnCount() -1); // edit column is last in light table.
+        
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        
+        JFrameOperator jfoce = new JFrameOperator(f2);
+        JTableOperator controltbl = new JTableOperator(jfoce, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        
+        controltbl.clickOnCell(0,2); // click edit button in column 2.
+        
+        // find edit control window
+        JFrame f3 = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLightControl"), true, true);
+        JFrameOperator jfof3 = new JFrameOperator(f3);
+        
+        // edit window should have the Timed On control selected
+        Assert.assertEquals("Timed On Control type selected ", Bundle.getMessage("LightTimedOnControl"),
+            new JComboBoxOperator(jfof3, 0).getSelectedItem());
+        Assert.assertEquals("Correct duration ", "20",new JTextFieldOperator(jfof3,0).getText());
+        
+        new JComboBoxOperator(jfof3, 1).selectItem(("ISS1")); // select Sensor S1
+        
+        new JTextFieldOperator(jfof3,0).clearText();
+        new JTextFieldOperator(jfof3,0).typeText("777");
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfof3,Bundle.getMessage("ButtonUpdate"));
+        // light control edit frame closes
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonUpdate"));
+        // light edit frame closes
+        
+        // light should now be updaed to S1
+        Assert.assertEquals("Correct Light Control Type", "ON for 777 msec. when ISS1 goes Active.", 
+            LightTableAction.getDescriptionText(created.getLightControlList().get(0),
+            created.getLightControlList().get(0).getControlType() ) );
+        
+        JUnitUtil.dispose(f); // close Light Table window
+        
+    }
+    
+    @Test
+    public void testAddEditTwoSensorLightControl() throws jmri.JmriException {
+    
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create 3 Sensors to pick from
+        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
+        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+        Sensor sThree = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S3");
+
+        Assert.assertNotNull("exists",sOne);
+        Assert.assertNotNull("exists",sTwo);
+        Assert.assertNotNull("exists",sThree);
+
+        a.actionPerformed(null); // show table
+        
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        JFrameOperator jfo = new JFrameOperator(f);
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        //Enter 555 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        new JTextFieldOperator(hwAddressField).typeText("555");
+        JFrameOperator jfob = new JFrameOperator(f1);
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("LightAddControlButton"));
+        JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
+        JFrameOperator jfoc = new JFrameOperator(fControl);
+        
+        // create a new LightControl
+        new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTwoSensorControl"));
+        new JComboBoxOperator(jfoc, 1).selectItem(("ISS3")); // select Sensor S3
+        new JComboBoxOperator(jfoc, 2).selectItem(("ISS1")); // select Sensor S1
+        new JComboBoxOperator(jfoc, 3).selectItem(Bundle.getMessage("SensorStateActive"));
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));
+        // light control frame closes
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonCreate"));
+        // new / edit light frame stays open
+        
+        // so we close it
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonClose"));
+        
+        // confirm light has been created with correct control
+        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL555");
+        
+        Assert.assertEquals("Correct Light Control Type", "ON when either ISS3 or ISS1 is Active.", 
+            LightTableAction.getDescriptionText(created.getLightControlList().get(0),
+            created.getLightControlList().get(0).getControlType() ) );
+            
+        // now we find the Light in the table and edit it
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0,tbl.getColumnCount() -1); // edit column is last in light table.
+        
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
+        
+        JFrameOperator jfoce = new JFrameOperator(f2);
+        JTableOperator controltbl = new JTableOperator(jfoce, 0);
+        // find the "Edit" button and press it.  This is in the table body.
+        controltbl.clickOnCell(0,2); // click edit button in column 2.
+        
+        // find edit control window
+        JFrame f3 = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLightControl"), true, true);
+        JFrameOperator jfof3 = new JFrameOperator(f3);
+        
+        // edit window should have the 2 sensor control selected
+        Assert.assertEquals("2 Sensor Control type selected ", Bundle.getMessage("LightTwoSensorControl"),
+            new JComboBoxOperator(jfof3, 0).getSelectedItem());
+        Assert.assertEquals("Sensor slot 1 selected ", "ISS3",
+            new JComboBoxOperator(jfof3, 1).getSelectedItem());
+        Assert.assertEquals("Sensor slot 2 selected ", "ISS1",
+            new JComboBoxOperator(jfof3, 2).getSelectedItem());
+            
+        Assert.assertEquals("Sensor active", Bundle.getMessage("SensorStateActive"),
+            new JComboBoxOperator(jfof3, 3).getSelectedItem());
+            
+        new JComboBoxOperator(jfof3, 1).selectItem(("ISS2")); // select Sensor S2
+        new JComboBoxOperator(jfof3, 2).selectItem(("ISS3")); // select Sensor S3
+        
+        new JComboBoxOperator(jfof3, 3).selectItem(Bundle.getMessage("SensorStateInactive"));
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfof3,Bundle.getMessage("ButtonUpdate"));
+        // light control edit frame closes
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfoce,Bundle.getMessage("ButtonUpdate"));
+        // light edit frame closes
+        
+        // light should now be updaed
+        Assert.assertEquals("Correct Light Control Type", "ON when either ISS2 or ISS3 is Inactive.", 
+            LightTableAction.getDescriptionText(created.getLightControlList().get(0),
+            created.getLightControlList().get(0).getControlType() ) );
+        
+        JUnitUtil.dispose(f); // close Light Table window
+
         // jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),("Pause"));
+
+    }
+    
+    // sensors with usernames
+        @Test
+    public void testSensorUserNamesLightControl() throws jmri.JmriException {
+    
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create 3 Sensors to pick from
+        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
+        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+        
+        sOne.setUserName("My Sensor One");
+        sTwo.setUserName("My Sensor Two");
+
+        a.actionPerformed(null); // show table
+        
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        // find the "Add... " button and press it.
+        JFrameOperator jfo = new JFrameOperator(f);
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        //Enter 777 in the text field labeled "Hardware address:"
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        new JTextFieldOperator(hwAddressField).typeText("777");
+        JFrameOperator jfob = new JFrameOperator(f1);
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("LightAddControlButton"));
+        JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
+        JFrameOperator jfoc = new JFrameOperator(fControl);
+        
+        // create a new LightControl
+        new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTwoSensorControl"));
+        new JComboBoxOperator(jfoc, 1).selectItem(("My Sensor Two")); // select Sensor S2
+        new JComboBoxOperator(jfoc, 2).selectItem(("My Sensor One")); // select Sensor S1
+        new JComboBoxOperator(jfoc, 3).selectItem(Bundle.getMessage("SensorStateActive"));
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));
+        // light control frame closes
+        
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonCreate"));
+        // new / edit light frame stays open
+        
+        // so we close it
+        jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("ButtonClose"));
+        
+        // confirm light has been created with correct control
+        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL777");
+        
+        Assert.assertEquals("Correct Light Control Type", "ON when either My Sensor Two or My Sensor One is Active.", 
+            LightTableAction.getDescriptionText(created.getLightControlList().get(0),
+            created.getLightControlList().get(0).getControlType() ) );
+        
+        JUnitUtil.dispose(f); // close Light Table window
+        
+        // jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
         
     }
 
