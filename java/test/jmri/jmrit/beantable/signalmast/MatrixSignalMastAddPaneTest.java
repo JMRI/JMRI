@@ -17,29 +17,32 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
     protected SignalMastAddPane getOTT() { return new MatrixSignalMastAddPane(); }    
     
     @Test
-    @Ignore("causes exception, needs more setup, see comments")
-    /* generates the following:
-     * ERROR - Trying to get aspect Approach but it has not been configured [main] jmri.implementation.MatrixSignalMast.getBitsForAspect()
-     * ERROR - Trying to get aspect Stop but it has not been configured [main] jmri.implementation.MatrixSignalMast.getBitsForAspect()
-     * ERROR - Trying to get aspect Unlit but it has not been configured [main] jmri.implementation.MatrixSignalMast.getBitsForAspect()
-     * ERROR - Trying to read name of output 1 which has not been configured [main] jmri.implementation.MatrixSignalMast.getOutputName()
-     * ERROR - Trying to read name of output 2 which has not been configured [main] jmri.implementation.MatrixSignalMast.getOutputName()
-     * ERROR - Trying to read name of output 3 which has not been configured [main] jmri.implementation.MatrixSignalMast.getOutputName()
-     * ERROR - Trying to read name of output 4 which has not been configured [main] jmri.implementation.MatrixSignalMast.getOutputName()
-     * ERROR - Trying to read name of output 5 which has not been configured [main] jmri.implementation.MatrixSignalMast.getOutputName()
-     * ERROR - Trying to read name of output 6 which has not been configured [main] jmri.implementation.MatrixSignalMast.getOutputName()
-     */
+    @SuppressWarnings("unused") // it1 etc. are indirectly used as NamedBeans IT1 etc.
     public void testSetMastOK() {
-        MatrixSignalMast s1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+        MatrixSignalMast s1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user name");
+        Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
+        Turnout it3 = InstanceManager.turnoutManagerInstance().provideTurnout("IT3");
+        Turnout it4 = InstanceManager.turnoutManagerInstance().provideTurnout("IT4");
+        Turnout it5 = InstanceManager.turnoutManagerInstance().provideTurnout("IT5");
+        Turnout it6 = InstanceManager.turnoutManagerInstance().provideTurnout("IT666");
+        // m.setBitNum(6); // defaults to 6
+        s1.setOutput("output1", "IT1");
+        s1.setOutput("output2", "IT2");
+        s1.setOutput("output3", "IT3");
+        s1.setOutput("output4", "IT4");
+        s1.setOutput("output5", "IT5");
+        s1.setOutput("output6", "IT666");
 
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
         
         Assert.assertTrue(vp.canHandleMast(s1));
         
         vp.setMast(null);
-        
+        vp.setMast(s1);
+
         vp.setAspectNames(
-            new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+            new jmri.implementation.DefaultSignalAppearanceMap("IF$xsm:basic:one-low($0001)-3t") {
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
                         java.util.Arrays.asList(
@@ -47,8 +50,6 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
                     }
             }
             , null);
-        vp.setMast(s1);
-        
     }
 
     @Test
@@ -76,4 +77,5 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

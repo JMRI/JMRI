@@ -27,16 +27,31 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
         log.debug("CbusMultiMeter constructor called");
     }
 
+    /**
+     * CBUS does have Amperage reporting
+     * 
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasCurrent() {
         return true;
     }
 
+    /**
+     * CBUS does not have Voltage reporting
+     *
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasVoltage() {
         return false;
     }
 
+    /**
+     * Starts listening for ExData2 CAN Frames using the Node of the Master Command Station
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void enable() {
         try {
@@ -53,12 +68,23 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
         }
     }
 
+    /**
+     * Stops listening for updates
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void disable() {
         tc.removeCanListener(this);
         log.info("Disabled meter.");
     }
 
+    /**
+     * Listen for CAN Frames sent by Command Station 0
+     * Typically sent every 4-5 seconds.
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void reply(CanReply r) {
         if ( r.isExtended() || r.isRtr() ) {
@@ -74,27 +100,43 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
             return;
         }
         int currentInt = ( r.getElement(5) * 256 ) + r.getElement(6);
-        log.debug("Setting current {}",currentInt);
+        log.debug("Setting current to {} mA",currentInt);
         
-        setCurrent(currentInt * 1.0f );
+        setCurrent(currentInt * 1.0f ); // mA value, min 0, max 65535, NOT percentage
 
     }
 
-    // ignore
+    /**
+     * Outgoing CAN Frames ignored
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void message(CanMessage m) {
     }
     
-    // Adjust Command station settings to change frequency of updates
-    // there is no request update mechanism in cbus
+    /**
+     * Adjust CBUS Command station settings to change frequency of updates
+     * No local action performed
+     *
+     * {@inheritDoc}
+     */
     @Override
     protected void requestUpdateFromLayout() {
     }
     
+    /**
+     * Performs no local action, Meter is setup by #enable()
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void initializeHardwareMeter() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHardwareMeterName() {
         return ("CBUS");

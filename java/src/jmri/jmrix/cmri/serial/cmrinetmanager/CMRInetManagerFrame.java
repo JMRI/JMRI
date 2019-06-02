@@ -56,11 +56,12 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     JButton netStatsButton = new JButton(Bundle.getMessage("NetStatsButtonText") );
 
     private CMRISystemConnectionMemo _memo = null;
+
     public CMRInetManagerFrame(CMRISystemConnectionMemo memo) {
         super();
-	_memo = memo;
-        addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true); // c2
-   }
+	    _memo = memo;
+        //addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true); // duplicate, see initComponents()
+    }
 
     protected javax.swing.JTextField pollIntervalField = new javax.swing.JTextField();
 
@@ -231,7 +232,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 	panel3.add(doneButton);
         contentPane13.add(panel3);
 
-        addHelpMenu("package.jmri.jmrix.cmri.serial.CMRInetManagerFrame", true);
+        addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true);
 
         // pack for display
         pack();
