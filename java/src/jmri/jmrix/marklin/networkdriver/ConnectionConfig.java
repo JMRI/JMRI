@@ -19,12 +19,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         super.loadDetails(details);

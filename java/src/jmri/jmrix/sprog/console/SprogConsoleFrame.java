@@ -106,7 +106,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      */
     @Override
     public void dispose() {
-        tc.removeSprogListener(this);
+	if(tc!=null) {
+           tc.removeSprogListener(this);
+	}
         super.dispose();
     }
 

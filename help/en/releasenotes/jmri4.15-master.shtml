@@ -96,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li><>/li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -155,6 +155,11 @@
             </ul>
 
         <h4>BNM Hobbies</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>CT Elektronik</h4>
             <ul>
                 <li></li>
             </ul>
@@ -345,6 +350,11 @@
         <ul>
             <li></li>
         </ul>
+        <h4>CTC Tool</h4>
+            <a id="PE-CTC" name="PE-CTC"></a>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -424,7 +434,6 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
-        <span class="since">since 4.13.4</span>
         <ul>
             <li></li>
         </ul>

@@ -36,7 +36,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -222,7 +222,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             /**
              * Is this property event announcing a change this table should
              * display?
-             * <P>
+             * <p>
              * Note that events will come both from the NamedBeans and also from
              * the manager
              */

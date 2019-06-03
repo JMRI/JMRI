@@ -13,7 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-   	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.13" lastUpdated="20181208"/>
+ 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.15" lastUpdated="20190524"/>
+	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.15" lastUpdated="20190520"/>			
+	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.14" lastUpdated="20190330"/>
+	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.13" lastUpdated="20181208"/>
 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.12" lastUpdated="20181016"/>
 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.11" lastUpdated="20181012"/>
 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.10" lastUpdated="20181010"/>
@@ -103,8 +106,11 @@
     <!-- NOTE - FOR DECODERS WITH IDENTICAL CV159 VALUES, CV158 IS USED AS THE LOW BYTE AND CV159 THE HIGH BYTE
 			EXAMPLE   CV 158 = 10 BINARY IS 00001010  CV159 = 139 BINARY IS 10001011
 			COMPOSITE PRODUCT ID VALUE BECOMES 0000101010001011 WHICH IN DECIMAL IS 2699
-    -->		
-    <decoder>
+    -->	
+    <!--  Version 1.14 added J36 Class 0-6-0       ID 185	-->
+    <!--  Version 1.5 added Class 66               ID 153       -->	
+    <!--  Version 1.16 added class 50              ID 189    -->
+   <decoder>
         <family name="Hornby TTS Sound Decoder" mfg="Hornby" comment="">
             <model model="Hornby TTS Class 08" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="175">
                 <versionCV lowVersionID="10" highVersionID="132"/>
@@ -112,50 +118,56 @@
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
             </model>
-	    <model model="Hornby TTS Class 20" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="159">
+			<model model="Hornby TTS Class 20" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="159">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
             </model>
-	    <model model="Hornby TTS Class 31" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="161">
+			<model model="Hornby TTS Class 31" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="161">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
+			</model>
             <model model="Hornby TTS Class 37" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="cl37,147">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
+			</model>
             <model model="Hornby TTS Class 40" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="151">
                 <versionCV lowVersionID="120" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
             </model>
-	    <model model="Hornby TTS Class 43 HST (Valenta)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="181">    
-	        <versionCV lowVersionID="10" highVersionID="132"/>
+			<model model="Hornby TTS Class 43 HST (Valenta)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="181">    
+			    <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS Class 43 HST (MTU)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="157">    
-		<versionCV lowVersionID="10" highVersionID="132"/>
+			<model model="Hornby TTS Class 43 HST (MTU)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="157">    
+			    <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS Class 47" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="149">    
-	        <versionCV lowVersionID="10" highVersionID="132"/>
+			                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS Class 60" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="163">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+	   <model model="Hornby TTS Class 50" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="189">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+            </model>
+		<model model="Hornby TTS Class 60" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="163">
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -165,33 +177,33 @@
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS Class 66" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
+			</model>
+			<model model="Hornby TTS Class 66" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
+			<model model="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
                 <versionCV lowVersionID="90" highVersionID="99"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS Duke of Gloucester" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
+			</model>
+			<model model="Hornby TTS Duke of Gloucester" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
                 <versionCV lowVersionID="90" highVersionID="99"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
+			</model>
             <model model="Hornby TTS Flying Scotsman" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS Class A1 and A3 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+			 <model model="Hornby TTS Class A1 and A3 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -202,14 +214,14 @@
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS P2 2-8-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="133">
+			 <model model="Hornby TTS P2 2-8-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="133">
                 <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 			</model>	
             <model model="Hornby TTS 9F 2-10-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="655">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -232,63 +244,66 @@
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS 5MT Black 5 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="171">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+			<model model="Hornby TTS 5MT Black 5 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="171">
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
-	    <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2699">
+			<model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2699">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-            <model model="Hornby TTS Castle Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="165">
+			</model>
+			<model model="Hornby TTS Castle Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="165">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS S15 Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="179">
+			</model>
+			<model model="Hornby TTS S15 Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="179">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS Coronation Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="177">
+			</model>
+			<model model="Hornby TTS Coronation Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="177">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS Peppercorn Class A1 4-6-2 (Tornado)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="129">
+			</model>
+			<model model="Hornby TTS Peppercorn Class A1 4-6-2 (Tornado)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="129">
                 <versionCV lowVersionID="1" highVersionID="1"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS Merchant Navy Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="169">
+			</model>
+			<model model="Hornby TTS Merchant Navy Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="169">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS 6000 King Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="141">
+			</model>
+			<model model="Hornby TTS 6000 King Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="141">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-	    <model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="183">
+			</model>
+			<model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="183">
                 <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
-	    </model>
-
-
-			
+			</model>
+			<model model="Hornby TTS J36 Class 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="185">
+                <versionCV lowVersionID="10" highVersionID="120"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+			</model>						
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes"/>
         <variables>
@@ -341,6 +356,10 @@
                 <label>I2 adjustment</label>
                 <comment>Range 0-255</comment>
             </variable>
+			 <variable CV="158" readOnly="yes" item="Decoder Sound Version" default="0">
+                <decVal/>
+                <label>Decoder sound ID: </label>
+            </variable>
             <variable CV="159" readOnly="yes" item="Product Number" default="0">
                 <decVal/>
                 <label>Decoder sound ID: </label>
@@ -348,622 +367,706 @@
 			
 			<!-- TRACK 1 SOUND LEVELS -->
 	
-	    <variable CV="160" default="4" item="Sound Setting 22" tooltip="Range 0-8" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+			<variable CV="160" default="4" item="Sound Setting 22" tooltip="Range 0-8" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Background Steam, Cylinder Cocks</label>
             </variable>
-	    <variable CV="161" default="4" item="Sound Setting 23" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+			<variable CV="161" default="4" item="Sound Setting 23" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Locomotive Running - Accelerating</label>
             </variable>
-	    <variable CV="161" default="4" item="Sound Setting 22" tooltip="F1 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181">
+			 <variable CV="161" default="4" item="Sound Setting 22" tooltip="F1 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal max="8"/>
                 <label>Engine Startup/Shutdown</label>
             </variable>
-	    <variable CV="177" default="4" item="Sound Setting 24" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+			<variable CV="177" default="4" item="Sound Setting 24" tooltip="F1 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Locomotive Running - Decelerating</label>
             </variable>
 			
 			<!--QUICK SET VOLUME SETTINGS -->
 			
-	    <variable CV="178" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,655,2699,2703">
+<variable CV="178" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,655,2699,2703">
                 <decVal max="8"/>
                 <label>Quick Set Volume level</label>
             </variable>
-	    <variable CV="182" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,169,171,175,177,179,181,183">
+			<variable CV="182" default="4" item="Sound Setting 21" tooltip="Overall vol (write only)" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,169,171,175,177,179,181,183,185,189">
                 <decVal max="8"/>
                 <label>Quick Set Volume level</label>
             </variable>
-
+						
 			<!-- DIESEL LOCOMOTIVES TRACK 2 SOUND LEVELS -->
 			
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181">
+	<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181">
                 <decVal max="8"/>
                 <label>Horn High-Low</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="163">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Horn High-Low Short</label>
+            </variable>
+			 <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn Low-High</label>
-            </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="DoG,131,135,145,169,175,177,179,183,655,2703">
-                <decVal max="8"/>
-                <label>Whistle Long</label>
-            </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F2 Volume" comment="Range 0-8" include="175">
-                <decVal max="8"/>
-                <label>Whistle Two Bursts</label>
-            </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181">
+            </variable>				 
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume" comment="Range 0-8" include="cl37,147,149,151,153,157,159,161,181">
                 <decVal max="8"/>
                 <label>Horn Low-High</label>
-            </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="163">
+			</variable>	
+            <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn High-Low</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Horn High-Low Long</label>
+            </variable>
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal max="8"/>
                 <label>Brake Squeal</label>
             </variable>
-	    <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="175">
+			<variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Horn Three Bursts</label>	
             </variable>
-	    <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="cl37,147,149,151,157,161,163,181">
+			<variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Horn Low-High Short</label>	
+            </variable>
+			 <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="cl37,147,149,151,153,157,161,163,181">
                 <decVal max="8"/>
                 <label>Compressor</label>
             </variable>
-	    <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="159">
+			<variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="159">
                 <decVal max="8"/>
                 <label>Horn High Two Bursts</label>	
             </variable>
-	    <variable CV="166" default="4" item="Sound Setting 4"  tooltip="F10 Volume"  comment="Range 0-8" include="153">
-                <decVal max="8"/>
-                <label>Horn Special</label>
-	    </variable>
-	    <variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="175">
+			<variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Horn Two Bursts</label>
             </variable>
-	    <variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+			<variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Horn Low Short</label>
+            </variable>
+			<variable CV="167" default="4" item="Sound Setting 5"  tooltip="F11 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Door Slam</label>
             </variable>
-	    <variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="175">
+			<variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Reverser</label>
             </variable>	
-	    <variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+			<variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Fan</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="175">
+			<variable CV="168" default="4" item="Sound Setting 6"  tooltip="F12 Volume"  comment="Range 0-8" include="153,189">
+                <decVal max="8"/>
+                <label>Spirax Valve</label>
+            </variable>
+			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Air Release</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="Cl37,147,149,151,157,159">
+			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="Cl37,147,149,151,157,159">
                 <decVal max="8"/>
                 <label>Horn Long High</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="161">
+			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="161">
                 <decVal max="8"/>
                 <label>Horn High</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="163">
+			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn High-Low-High</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 7"  tooltip="F13 Volume" comment="Range 0-8" include="153">
+			<variable CV="169" default="4" item="Sound Setting 7"  tooltip="F13 Volume" comment="Range 0-8" include="153,189">
                 <decVal max="8"/>
-                <label>Horn Long low</label>
+                <label>Brake Release</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="181">
+			<variable CV="169" default="4" item="Sound Setting 7"   tooltip="F13 Volume" comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn High Low High(passing)</label>
             </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="175">
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Air Dump</label>
             </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157">
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157">
                 <decVal max="8"/>
                 <label>Horn Long Low</label>
-	    </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="159">
+			</variable>
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="159">
                 <decVal max="8"/>
                 <label>Horn Low Two bursts</label>	
             </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="161">
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Traction Motor Blowers</label>	
+            </variable>
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="161">
                 <decVal max="8"/>
                 <label>Horn Low</label>
-	    </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="163">
+			</variable>
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn Low High Low</label>
-	    </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume" comment="Range 0-8" include="153">
+			</variable>
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume" comment="Range 0-8" include="153">
                 <decVal max="8"/>
-                <label>Horn Long low</label>
+                <label>Brake Application</label>
             </variable>
-	    <variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="181">
+			<variable CV="170" default="4" item="Sound Setting 8"  tooltip="F14 Volume"  comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn (Fancy)</label>
-	    </variable>
-	    <variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="175">
+			</variable>
+			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Detonator</label>
             </variable>
-	    <variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Manual Lubricating Oil Primer</label>
+            </variable>
+			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Primer</label>
             </variable>
-	    <variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="175">
+			<variable CV="171" default="4" item="Sound Setting 9"  tooltip="F15 Volume"  comment="Range 0-8" include="153">
+                <decVal max="8"/>
+                <label>Primer and Alarm</label>
+            </variable>
+			<variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Couple</label>
             </variable>
-	    <variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
+			<variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161,163,181">
                 <decVal max="8"/>
                 <label>Slow flange squeal</label>
             </variable>
-	    <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="175">
+			<variable CV="172" default="4" item="Sound Setting 10"  tooltip="F16 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Lift Pump</label>
+            </variable>
+			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Un-Couple</label>
             </variable>
-            <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,159,161,163">
+			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
                 <decVal max="8"/>
                 <label>Spirax Valve</label>
             </variable>
-	    <variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="157,181">
+			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Radiator Fan</label>
+            </variable>
+			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="153">
+                <decVal max="8"/>
+                <label>Horn Medium Low</label>
+            </variable>
+			<variable CV="173" default="4" item="Sound Setting 11"   tooltip="F17 Volume" comment="Range 0-8" include="157,181">
                 <decVal max="8"/>
                 <label>Drivers Safety Device (In Cab)</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="175">
+			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Primer</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="Cl37,147,149,151,153,157,159,161">
+			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Air Release</label>
+            </variable>
+			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="Cl37,147,149,151,157,159,161">
                 <decVal max="8"/>
                 <label>Horn Short Low</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="163">
+			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="163,153">
                 <decVal max="8"/>
                 <label>Horn Low</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="181">
+			<variable CV="174" default="4" item="Sound Setting 12"  tooltip="F18 Volume"  comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn High-Low (prototype Loco) </label>
             </variable>
-	    <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="175">
+			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Exhauster</label>
             </variable>
-	    <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="cl37,147,149,151,153,157,159,161">
+			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="cl37,147,149,151,157,159,161">
                 <decVal max="8"/>
                 <label>Horn Short High</label>
             </variable>
-	    <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="163">
+			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="163">
                 <decVal max="8"/>
                 <label>Horn High</label>
             </variable>
-	    <variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="181">
+			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="181">
                 <decVal max="8"/>
                 <label>Horn High-Low-High (Prototype Loco)</label>
             </variable>
-	    <variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="175">
-                <decVal max="8"/>
-                <label>Compressor</label>
-            </variable>
-	    <variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,159,161,163">
-                <decVal max="8"/>
-                <label>Wagons Buffering</label>
-            </variable>
-			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="157,181">
-                <decVal max="8"/>
-                <label>Windscreen wipers</label>
-            </variable>
-	    <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="175">
-                <decVal max="8"/>
-                <label>Hand Brake</label>
-            </variable>
-	    <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,159,161,163">
-                <decVal max="8"/>
-                <label>Wagons Clanging</label>
-            </variable>
-	    <variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="157,181">
-                <decVal max="8"/>
-                <label>AWS Test (In Cab)</label>
-            </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="175">
-                <decVal max="8"/>
-                <label>Spirax Valve</label>
-            </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="149,151,153,161,163">
-                <decVal max="8"/>
-                <label>Coupling</label>
-	    </variable>	
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="159">
-                <decVal max="8"/>
-                <label>Coupling 1</label>	
-            </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="Cl37,147">
-                <decVal max="8"/>
-                <label>Alternative Door Slam</label>
-            </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="157,181">
-                <decVal max="8"/>
-                <label>Firebell test</label>
-	    </variable>
-	    <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="175">
+			<variable CV="175" default="4" item="Sound Setting 13"  tooltip="F19 Volume"  comment="Range 0-8" include="189">
                 <decVal max="8"/>
                 <label>Flange Squeal</label>
             </variable>
-	    <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,163,181">
+			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="175">
+                <decVal max="8"/>
+                <label>Compressor</label>
+            </variable>
+			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>BIS and Fire Bell</label>
+            </variable>
+			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
+                <decVal max="8"/>
+                <label>Wagons Buffering</label>
+            </variable>
+			<variable CV="176" default="4" item="Sound Setting 14"   tooltip="F20 Volume" comment="Range 0-8" include="153,157,181">
+                <decVal max="8"/>
+                <label>Windscreen wipers</label>
+            </variable>
+			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="175">
+                <decVal max="8"/>
+                <label>Hand Brake</label>
+            </variable>
+			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="Cl37,147,149,151,159,161,163">
+                <decVal max="8"/>
+                <label>Wagons Clanging</label>
+            </variable>
+			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="153">
+                <decVal max="8"/>
+                <label>Horn Single Toot</label>
+            </variable>
+			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Horn Low High Long</label>
+            </variable>
+			<variable CV="177" default="4" item="Sound Setting 15" tooltip="F21 Volume" comment="Range 0-8" include="157,181">
+                <decVal max="8"/>
+                <label>AWS Test (In Cab)</label>
+            </variable>
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="175">
+                <decVal max="8"/>
+                <label>Spirax Valve</label>
+            </variable>
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="149,151,161,163">
+                <decVal max="8"/>
+                <label>Coupling</label>
+			</variable>	
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="159">
+                <decVal max="8"/>
+                <label>Coupling 1</label>	
+            </variable>
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="Cl37,147">
+                <decVal max="8"/>
+                <label>Alternative Door Slam</label>
+            </variable>
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="157,181">
+                <decVal max="8"/>
+                <label>Firebell test</label>
+			</variable>
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="153">
+                <decVal max="8"/>
+                <label>Horn "Toot Toot"</label>
+			</variable>
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F22 Volume" comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Horn High Short</label>
+			</variable>
+			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="175">
+                <decVal max="8"/>
+                <label>Flange Squeal</label>
+            </variable>
+			 <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,157,159,163,181,189">
                 <decVal max="8"/>
                 <label>Guards Whistle</label>
             </variable>
-	    <variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="161">
+			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F23 Volume" comment="Range 0-8" include="161">
                 <decVal max="8"/>
                 <label>Dispatch Whistle</label>
             </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="175">
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="175">
                 <decVal max="8"/>
                 <label>Metal Door</label>
-	    </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,161,163">
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="Cl37,147,149,151,153,161,163">
                 <decVal max="8"/>
                 <label>Locomotive Buffering</label>
-	    </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="159">
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="189">
+                <decVal max="8"/>
+                <label>Wagon Buffering</label>
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="159">
                 <decVal max="8"/>
                 <label>Coupling 2</label>	
             </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="157,181">
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F24 Volume" comment="Range 0-8" include="157,181">
                 <decVal max="8"/>
                 <label>Guard to Driver Buzzer (In Cab)</label>
 			</variable>
 			
 			<!-- STEAM LOCOMOTIVE TRACK 2 SOUND LEVELS -->	
 	
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="2699">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="2699">
                 <decVal max="8"/>
                 <label>Whistle Low</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="DoG,131">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="DoG,131,135,145,169,175,177,179,183,185,655,2703">
                 <decVal max="8"/>
                 <label>Whistle Long</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="129">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Chime Whistle</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="133">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Long</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="137">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="137">
                 <decVal max="8"/>
                 <label>Whistle Four Burst</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="141">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="141">
                 <decVal max="8"/>
                 <label>Whistle Medium </label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="145,169,177,179,183,2703">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="145,169,177,179,183,2703">
                 <decVal max="8"/>
                 <label>Whistle Long</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="165">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="165">
                 <decVal max="8"/>
                 <label>Whistle Long Passing</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="171">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Long + 2 short bursts</label>
             </variable>
-	    <variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="655">
+			<variable CV="162" default="4" item="Sound Setting 1"  tooltip="F2 Volume"  comment="Range 0-8" include="655">
                 <decVal max="8"/>
                 <label>Whistle Long 1</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="137,2699">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="137,2699">
                 <decVal max="8"/>
                 <label>Whistle Two Bursts</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="129">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F2 Volume" comment="Range 0-8" include="185">
+                <decVal max="8"/>
+                <label>Whistle Three Short Bursts</label>
+            </variable>		
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Screech Whistle</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="DoG,131">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Coupler Clank</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="133">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Short</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="135">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="135">
                 <decVal max="8"/>
                 <label>Chime Whistle Short 1</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="141">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="141">
                 <decVal max="8"/>
                 <label>Whistle Long</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="145,169,171,179,655,2703">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="145,169,171,179,655,2703">
                 <decVal max="8"/>
                 <label>Whistle Medium</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="165">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="165">
                 <decVal max="8"/>
                 <label>Whistle Short 1</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="177">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Medium Two Bursts</label>
             </variable>
-	    <variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="183">
+			<variable CV="163" default="4" item="Sound Setting 2"  tooltip="F3 Volume"  comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Two short Bursts A</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="2699">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="2699">
                 <decVal max="8"/>
                 <label>Whistle High</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="129,135">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="129,135">
                 <decVal max="8"/>
                 <label>Chime Whistle Long</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="135">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="135">
                 <decVal max="8"/>
                 <label>Chime Whistle Short 2</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="DoG,131,141,145,169,179,2703">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="DoG,131,141,145,169,179,2703">
                 <decVal max="8"/>
                 <label>Whistle Short</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="133">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Two bursts</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="137,177,183">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="137,177,183">
                 <decVal max="8"/>
                 <label>Whistle Short Burst</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="165">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="185">
+                <decVal max="8"/>
+                <label>Whistle Short Burst A</label>
+            </variable>
+			 <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="165">
                 <decVal max="8"/>
                 <label>Whistle Short 2</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="171">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Medium + Short Burst</label>
             </variable>
-	    <variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="655">
+			<variable CV="164" default="4" item="Sound Setting 3"  tooltip="F4 Volume"  comment="Range 0-8" include="655">
                 <decVal max="8"/>
                 <label>Whistle Long 2</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="2699">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="2699">
                 <decVal max="8"/>
                 <label>Whistle Short</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="129">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Screech Whistle Short</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="DoG,131">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Injector</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="133">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="133">
                 <decVal max="8"/>
                 <label>Chime Whistle Passing</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="137,135">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="137,135">
                 <decVal max="8"/>
                 <label>Doors Slamming</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="141,145,165,655,2703">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="141,145,165,655,2703">
                 <decVal max="8"/>
                 <label>Whistle Two Bursts</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="169">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>Whistle Very Short</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="171">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Very Short Two Burst</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="177">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Fancy</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="179">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Two Bursts Hi/Lo</label>
             </variable>
-	    <variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="183">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Long Fancy</label>
             </variable>
-	    <variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="129">
+			<variable CV="165" default="4" item="Sound Setting 4"  tooltip="F5 Volume"  comment="Range 0-8" include="185">
+                <decVal max="8"/>
+                <label>Whistle Very Long 2 Bursts</label>
+            </variable>
+			<variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Chime Whistle Short</label>
-	    </variable>		
-	    <variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+			</variable>		
+			<variable CV="166" default="4" item="Sound Setting 5"  tooltip="F6 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Wheel Slip</label>
             </variable>   
-	    <variable CV="167" default="4" item="Sound Setting 6"  tooltip="F7 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+		    <variable CV="167" default="4" item="Sound Setting 6"  tooltip="F7 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Coal Shovelling</label>
             </variable>
-	    <variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,179,183,655,2699,2703">
+		    <variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Blow Down</label>
             </variable>
-	    <variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="177">
+			<variable CV="168" default="4" item="Sound Setting 7"  tooltip="F8 Volume"  comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Coal Pusher</label>
             </variable>
-	    <variable CV="169" default="4" item="Sound Setting 8"   tooltip="F9 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+		    <variable CV="169" default="4" item="Sound Setting 8"   tooltip="F9 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Safety Valve</label>
             </variable>	
-	    <variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="129,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+		    <variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="129,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Injector</label>
             </variable>	
-	    <variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="DoG,131">
+			<variable CV="170" default="4" item="Sound Setting 9"  tooltip="F10 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Coal Pusher</label>
             </variable>
-            <variable CV="171" default="4" item="Sound Setting 10"  tooltip="F11 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+         	<variable CV="171" default="4" item="Sound Setting 10"  tooltip="F11 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Cylinder Cock</label>
             </variable>
-	    <variable CV="172" default="4" item="Sound Setting 11"  tooltip="F12 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+		   <variable CV="172" default="4" item="Sound Setting 11"  tooltip="F12 Volume"  comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Brake</label>
             </variable>			           
-            <variable CV="173" default="4" item="Sound Setting 12"   tooltip="F13 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+            <variable CV="173" default="4" item="Sound Setting 12"   tooltip="F13 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Blower</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,141,165,169,171,177,179,183,655,2699,2703">
+		    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,141,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Guard’s Whistle</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="145">
+		    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F14 Volume"  comment="Range 0-8" include="145">
                 <decVal max="8"/>
                 <label>Guard’s Whistle and Whistle Acknowledge</label>
             </variable>
-	    <variable CV="174" default="4" item="Sound Setting 13"  tooltip="F18 Volume"  comment="Range 0-8" include="129">
+			<variable CV="174" default="4" item="Sound Setting 13"  tooltip="F18 Volume"  comment="Range 0-8" include="129">
                 <decVal max="8"/>
                 <label>Wheel Slip</label>
             </variable>
-	    <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="DoG,131">
+		    <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="DoG,131">
                 <decVal max="8"/>
                 <label>Doors Slam</label>
             </variable>
-	    <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="129,133,135,137,141,145,165,169,171,177,179,183,655,2703,2699">
+		    <variable CV="175" default="4" item="Sound Setting 14"  tooltip="F15 Volume"  comment="Range 0-8" include="129,133,135,137,141,145,165,169,171,177,179,183,185,655,2703,2699">
                 <decVal max="8"/>
                 <label>Coupler Clank</label>
             </variable>
-	    <variable CV="176" default="4" item="Sound Setting 15"   tooltip="F16 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,655,2699,2703">
+		    <variable CV="176" default="4" item="Sound Setting 15"   tooltip="F16 Volume" comment="Range 0-8" include="DoG,129,131,133,135,137,141,145,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="8"/>
                 <label>Fireman Breakfast</label>
             </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="169">
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>Whistle Long alt</label>	
             </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="171">
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Long</label>	
             </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="177">
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Long Then Short</label>	
             </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="179">
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Medium Alt</label>	
             </variable>
-	    <variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="183">
+			<variable CV="178" default="4" item="Sound Setting 16" tooltip="F19 Volume" comment="Range 0-8" include="183,185">
                 <decVal max="8"/>
                 <label>Whistle Short Burst B</label>	
             </variable>
             <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>whistle Passing</label>
-	    </variable>
-            <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="171">
+			</variable>
+           	<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Long 2 Short Bursts Alternative</label>
             </variable>
-	    <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="177">
+			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle Two Short Bursts</label>
             </variable>
-	    <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="179">
+			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Short Alternative</label>
             </variable>
-	    <variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="183">
+			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Short Burst C</label>
             </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="169">
+			<variable CV="179" default="4" item="Sound Setting 17" tooltip="F20 Volume" comment="Range 0-8" include="185">
+                <decVal max="8"/>
+                <label>Whistle Fancy</label>
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>Whistle Medium alt</label>
-	    </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="171">
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Medium Fancy</label>
-	    </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="177">
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Whistle "Strange"</label>
-	    </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="179">
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Short Hi</label>
-	    </variable>
-	    <variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="183">
+			</variable>
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="183">
                 <decVal max="8"/>
                 <label>Whistle Tunnel</label>
-	    </variable>
-	    <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="169">
+			</variable>	
+			<variable CV="180" default="4" item="Sound Setting 18" tooltip="F21 Volume" comment="Range 0-8" include="185">
+                <decVal max="8"/>
+                <label>Whistle Long Fancy</label>
+			</variable>	
+			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="169">
                 <decVal max="8"/>
                 <label>Whistle Very Short</label>	
             </variable>
-	    <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="171">
+			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="171">
                 <decVal max="8"/>
                 <label>Whistle Very Short Alternative</label>	
             </variable>
-	    <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="177">
+			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="177">
                 <decVal max="8"/>
                 <label>Blown Down</label>	
             </variable>
-	    <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="179">
+			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="179">
                 <decVal max="8"/>
                 <label>Whistle Short Lo</label>	
             </variable>
-	    <variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="183">
+			<variable CV="181" default="4" item="Sound Setting 19" tooltip="F22 Volume" comment="Range 0-8" include="183,185">
                 <decVal max="8"/>
                 <label>Whistle 2 Short Bursts B</label>	
             </variable>
-			
+		
 		<!-- START DELAY AND NOTCHING	-->			
            
-            <variable CV="201" default="25" item="Sound Option 1" tooltip="Loco Start Delay (0-70,tenths of second)"  include="DoG,129,131,133,135,137,141,145,159,165,169,171,177,179,183,655,2699,2703">
+            <variable CV="201" default="25" item="Sound Option 1" tooltip="Loco Start Delay (0-70,tenths of second)"  include="DoG,129,131,133,135,137,141,145,159,165,169,171,177,179,183,185,655,2699,2703">
                 <decVal max="70"/>
                 <label>Loco Start Delay</label>
             </variable>
-            <variable CV="210" default="5" item="Sound Option 2" tooltip="Trigger Threshold 1 Notch 1"  include="Cl37,147,149,151,153,157,159,161,163,175,181">
+            <variable CV="210" default="5" item="Sound Option 2" tooltip="Trigger Threshold 1 Notch 1"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="5" max="15"/>
                 <label>Trigger Threshold 1 - Notch 1</label>
             </variable>
-            <variable CV="211" default="5" item="Sound Option 3" tooltip="Trigger Threshold Window 1"  include="Cl37,147,149,151,153,157,159,161,163,175,181">
+            <variable CV="211" default="5" item="Sound Option 3" tooltip="Trigger Threshold Window 1"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="5" max="14"/>
                 <label>Trigger Threshold Window 1</label>
             </variable>
-            <variable CV="212" default="30" item="Sound Option 4" tooltip="Trigger Threshold 2 Notch 2"  include="Cl37,147,149,151,153,157,159,161,163,175,181">
+            <variable CV="212" default="30" item="Sound Option 4" tooltip="Trigger Threshold 2 Notch 2"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="25" max="45"/>
                 <label>Trigger Threshold 2 - Notch 2</label>
             </variable>
-            <variable CV="213" default="5" item="Sound Option 5" tooltip="Trigger Threshold Window 2"  include="Cl37,147,149,151,153,157,159,161,163,175,181">
+            <variable CV="213" default="5" item="Sound Option 5" tooltip="Trigger Threshold Window 2"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="5" max="14"/>
                 <label>Trigger Threshold Window 2</label>
             </variable>
-            <variable CV="214" default="60" item="Sound Option 6" tooltip="Trigger Threshold 3 Notch 3"  include="Cl37,147,149,151,153,157,159,161,163,175,181">
+            <variable CV="214" default="60" item="Sound Option 6" tooltip="Trigger Threshold 3 Notch 3"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="60" max="80"/>
                 <label>Trigger Threshold 3 - Notch 3</label>
             </variable>
-            <variable CV="215" default="5" item="Sound Option 7" tooltip="Trigger Threshold Window 3"  include="Cl37,147,149,151,153,157,159,161,163,175,181">
+            <variable CV="215" default="5" item="Sound Option 7" tooltip="Trigger Threshold Window 3"  include="Cl37,147,149,151,153,157,159,161,163,175,181,189">
                 <decVal min="5" max="15"/>
                 <label>Trigger Threshold Window 3</label>
-            </variable>
+            </variable>			
         </variables>
         <resets>
             <factReset label="Reset All CVs" CV="8" default="8">

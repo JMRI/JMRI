@@ -65,17 +65,17 @@
         <li>Click "Save" &amp; restart</li>
       </ul>
       
-      <h4>Digitrax/Loconet</h4>
+      <h4>Digitrax/LocoNet</h4>
       
       <p>Providing that the Digikeijs DR5000 unit has been configured to 
-      use "Loconet over TCP/IP LBServer" protocol (Firmware version 1.3.0 when writing this documentation)</p>
+      use "LocoNet over TCP/IP LBServer" protocol (Firmware version 1.3.0 when writing this documentation)</p>
 
       <ul>
        <li>Open the JMRI "Preferences" under the "Edit" menu (or the PanelPro menu on OS X)</li>
        
        <li>Select Digitrax as the System Manufacturer</li>
        
-       <li>Select "Loconet over TCP" as the System Connection</li>
+       <li>Select "LocoNet over TCP" as the System Connection</li>
 
        <li>Enter the IP address for your DR5000 unit</li>
 
@@ -92,7 +92,7 @@
       Then, set the JMRI connection preferences to:
       <ul>
         <li>System Manufacturer: Digitrax
-        <li>System connection: Loconet LocoBuffer-USB
+        <li>System connection: LocoNet LocoBuffer-USB
         <li>Serial Port: (as needed for your USB connection)
         <li>Command station type DSC100 (Chief)
       </ul>
@@ -135,7 +135,7 @@
 
       <ul>
         <li><a href=
-        "http://www.digikeijs.com/dr5000-dcc-multi-bus-centrale.html">
+        "http://support.digikeijs.com/display/DS/DR5000-ADJ/">
         Digirails DR5000 documentation</a></li>
       </ul>
 

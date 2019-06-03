@@ -231,7 +231,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     /**
      * Set tooltip text to be used by both the "value" and representations of
      * this Variable.
-     * <P>
+     * <p>
      * This is expected to be overridden in subclasses to change their internal
      * info.
      *

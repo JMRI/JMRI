@@ -1,6 +1,7 @@
 package jmri.jmrix.pi;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.SensorManager;
@@ -10,28 +11,30 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active
- * and provide general information
+ * and provide general information.
  * <p>
  * Objects of specific subtypes are registered in the 
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2015
- * 
  */
-
 public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
-   public RaspberryPiSystemConnectionMemo(){
-     super("P","RaspberryPi");
-     register(); // registers general type
-     InstanceManager.store(this,RaspberryPiSystemConnectionMemo.class); // also register as specific type
-     if(log.isDebugEnabled()) log.debug("Created RaspberryPiSystemConnectionMemo");
-   }
+    public RaspberryPiSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name); // NOI18N
 
+        register(); // registers general type
+        InstanceManager.store(this, RaspberryPiSystemConnectionMemo.class); // also register as specific type
+        log.debug("Created RaspberryPiSystemConnectionMemo");
+    }
+
+    public RaspberryPiSystemConnectionMemo(){
+        this("P", "RaspberryPi");
+    }
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
-     * NOTE: Sensor manager defaults to NULL
+     * Provides access to the SensorManager for this particular connection.
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager(){
         return sensorManager;
@@ -45,8 +48,8 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
     private SensorManager sensorManager=null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager(){
         return turnoutManager;
@@ -57,10 +60,10 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          turnoutManager = t;
     }
 
-    private TurnoutManager turnoutManager=null;
+    private TurnoutManager turnoutManager = null;
 
     /*
-     * Provides access to the Light Manager for this particular connection.
+     * Provides access to the LightManager for this particular connection.
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager(){
@@ -71,7 +74,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          lightManager = l;
     }
 
-    private LightManager lightManager=null;
+    private LightManager lightManager = null;
 
     public void configureManagers(){
        setTurnoutManager(new RaspberryPiTurnoutManager(getSystemPrefix()));
@@ -87,7 +90,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
         else if (type.equals(jmri.TurnoutManager.class))
             return true;
         else if (type.equals(jmri.LightManager.class))
-            return false; // implement light manager later.
+            return false;  // implement LightManager later.
         else return false; // nothing, by default
     }
 
@@ -118,6 +121,4 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
 
     private final static Logger log = LoggerFactory.getLogger(RaspberryPiSystemConnectionMemo.class);
 
-
 }
-

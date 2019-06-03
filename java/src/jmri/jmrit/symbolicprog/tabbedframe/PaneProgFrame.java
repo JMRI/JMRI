@@ -393,15 +393,15 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * Initialization sequence:
-     * <UL>
-     * <LI> Ask the RosterEntry to read its contents
-     * <LI> If the decoder file is specified, open and load it, otherwise get
+     * <ul>
+     * <li> Ask the RosterEntry to read its contents
+     * <li> If the decoder file is specified, open and load it, otherwise get
      * the decoder filename from the RosterEntry and load that. Note that we're
      * assuming the roster entry has the right decoder, at least w.r.t. the loco
      * file.
-     * <LI> Fill CV values from the roster entry
-     * <LI> Create the programmer panes
-     * </UL>
+     * <li> Fill CV values from the roster entry
+     * <li> Create the programmer panes
+     * </ul>
      *
      * @param pDecoderFile    XML file defining the decoder contents; if null,
      *                        the decoder definition is found from the
@@ -547,7 +547,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * <li>Retrieves "productID" and "model attributes from the "model" element
      * and "family" attribute from the roster entry. </li>
      * <li>Then invokes DecoderFile.isIncluded() with the retrieved values.</li>
-     * <li>Deals deals gracefully with null or missing elements and
+     * <li>Deals gracefully with null or missing elements and
      * attributes.</li>
      * </ul>
      *
@@ -1324,7 +1324,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     /**
      * Enable the read/write buttons.
      * <p>
-     * In addition, if a programming mode pane is present, it's "set" button is
+     * In addition, if a programming mode pane is present, its "set" button is
      * enabled.
      *
      * @param stat Are reads possible? If false, so not enable the read buttons.

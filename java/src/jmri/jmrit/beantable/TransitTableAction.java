@@ -435,6 +435,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
+            sysNameLabel.setLabelFor(sysName);
             p.add(sysNameFixed);
             p.add(sysName);
             p.add(_autoSystemName);
@@ -452,6 +453,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // user name
             p = new JPanel();
             p.add(userNameLabel);
+            userNameLabel.setLabelFor(userName);
             p.add(userName);
             userName.setToolTipText(rbx.getString("TransitUserNameHint"));
             addFrame.getContentPane().add(p);
@@ -1753,7 +1755,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel11.add(new JLabel("    " + rbx.getString("OptionalDelay") + ": "));
             panel11.add(whenDataSpinner);
             whenDataSpinner.setToolTipText(rbx.getString("HintDelayData"));
-            panel11.add(new JLabel(rbx.getString("Milliseconds")));
+            panel11.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             panelx.add(panel11);
             JPanel spacer = new JPanel();
             spacer.setLayout(new FlowLayout());

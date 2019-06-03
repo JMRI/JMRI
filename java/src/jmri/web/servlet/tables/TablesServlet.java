@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -20,8 +19,8 @@ import org.openide.util.lookup.ServiceProvider;
  * Each method of this Servlet responds to a unique URL pattern.
  *
  * @author mstevetodd
- * 
- *  */
+ */
+
 /*
  *
  */
@@ -32,11 +31,10 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = HttpServlet.class)
 public class TablesServlet extends HttpServlet {
 
-    @SuppressWarnings("deprecation")  // URLDecoder.decode(..) not being removed
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String[] path = request.getRequestURI().split("/"); // NOI18N
-        String tableType = java.net.URLDecoder.decode(path[path.length - 1]);
+        String tableType = java.net.URLDecoder.decode(path[path.length - 1], "UTF-8");
 
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N

@@ -14,7 +14,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.List;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,9 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.MultiSensorIcon;
+import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
@@ -39,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-abstract class AbstractPanelServlet extends HttpServlet {
+public abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
     private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class);
@@ -148,7 +155,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
             response.setContentType(UTF8_APPLICATION_JSON);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
-            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML));
+            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML, 0));
         } else {
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
@@ -237,14 +244,35 @@ abstract class AbstractPanelServlet extends HttpServlet {
      *
      * @param name user/system name of the signalMast using the icons
      * @return an icons element containing icon URLs for SignalMast states
+     * @deprecated since 4.15.4 use {@link #getSignalMastIconsElement(String, String)} instead
      */
+    @Deprecated  
     protected Element getSignalMastIconsElement(String name) {
+        return getSignalMastIconsElement(name, "default") ;
+    }
+    
+    /**
+     * Build and return an "icons" element containing icon URLs for all
+     * SignalMast states. Element names are cleaned-up aspect names, aspect
+     * attribute is actual name of aspect.
+     *
+     * @param name user/system name of the signalMast using the icons
+     * @param imageset imageset name or "default"
+     * @return an icons element containing icon URLs for SignalMast states
+     */
+    protected Element getSignalMastIconsElement(String name, String imageset) {
         Element icons = new Element("icons");
         SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
         if (signalMast != null) {
+            final String imgset ;
+            if (imageset == null) {
+                imgset = "default" ;
+            } else {
+                imgset = imageset ;
+            }
             signalMast.getValidAspects().forEach((aspect) -> {
                 Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
-                String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
+                String url = signalMast.getAppearanceMap().getImageLink(aspect, imgset);  // use correct imageset
                 if (!url.contains("preference:")) {
                     url = "program:" + url.substring(url.indexOf("resources"));
                 }
@@ -252,7 +280,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 ea.setAttribute("url", url);
                 icons.addContent(ea);
             });
-            String url = signalMast.getAppearanceMap().getImageLink("$held", "default");  //add "Held" aspect if defined
+            String url = signalMast.getAppearanceMap().getImageLink("$held", imgset);  //add "Held" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
                     url = "program:" + url.substring(url.indexOf("resources"));
@@ -262,7 +290,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 ea.setAttribute("url", url);
                 icons.addContent(ea);
             }
-            url = signalMast.getAppearanceMap().getImageLink("$dark", "default");  //add "Dark" aspect if defined
+            url = signalMast.getAppearanceMap().getImageLink("$dark", imgset);  //add "Dark" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
                     url = "program:" + url.substring(url.indexOf("resources"));
@@ -278,5 +306,45 @@ abstract class AbstractPanelServlet extends HttpServlet {
             icons.addContent(ea);
         }
         return icons;
+    }
+
+    protected Element positionableElement(@Nonnull Positionable sub) {
+        Element e = ConfigXmlManager.elementFromObject(sub);
+        if (e != null) {
+            switch (e.getName()) {
+                case "signalmasticon":
+                    e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast"),
+                            e.getAttributeValue("imageset")));
+                    break;
+                case "multisensoricon":
+                    if (sub instanceof MultiSensorIcon) {
+                        List<Sensor> sensors = ((MultiSensorIcon) sub).getSensors();
+                        for (Element a : e.getChildren()) {
+                            String s = a.getAttributeValue("sensor");
+                            if (s != null) {
+                                for (Sensor sensor : sensors) {
+                                    if (s.equals(sensor.getUserName())) {
+                                        a.setAttribute("sensor", sensor.getSystemName());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    // nothing to do
+            }
+            try {
+                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+            } catch (NullPointerException ex) {
+                if (sub.getNamedBean() == null) {
+                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                } else {
+                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                }
+            }
+            parsePortableURIs(e);
+        }
+        return e;
     }
 }

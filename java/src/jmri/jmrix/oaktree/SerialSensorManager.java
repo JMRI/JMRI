@@ -48,7 +48,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
-
     }
 
     /**
@@ -167,8 +166,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**

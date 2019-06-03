@@ -64,7 +64,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         super();
         _memo = memo;
 
-//        addHelpMenu("package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame", true); // please write a help file first
+        addHelpMenu("package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame", true); // please write this help file
     }
 
     /**

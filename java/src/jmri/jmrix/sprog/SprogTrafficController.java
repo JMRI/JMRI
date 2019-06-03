@@ -56,11 +56,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         memo = adaptermemo;
 
         // Set the timeout for communication with hardware
-        if (memo.getSprogMode() == SprogConstants.SprogMode.OPS) {
-            timeout = SprogConstants.TC_OPS_REPLY_TIMEOUT;
-        } else {
-            timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
-        }
+        resetTimeout();
 
         tcThread = new Thread(this);
         tcThread.setName("SPROG TC thread");
@@ -98,6 +94,21 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         }
     }
 
+    /**
+     * Reset timeout to default depending on current mode
+     */
+    public void resetTimeout() {
+        if (memo.getSprogMode() == SprogConstants.SprogMode.OPS) {
+            timeout = SprogConstants.TC_OPS_REPLY_TIMEOUT;
+        } else {
+            timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
+        }
+    }
+
+    public void setTimeout(int t) {
+        timeout = t;
+    }
+    
     public SprogState getSprogState() {
         return sprogState;
     }
@@ -273,13 +284,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             }
             log.debug("Message dequeued id: {}", messageToSend.message.getId());
             // remember who sent this
-//            log.debug("Updating last sender {}");
             lastSender = messageToSend.listener;
             lastId = messageToSend.message.getId();
             // notify all _other_ listeners
-            if (messageToSend.listener != null) {
-                notifyMessage(messageToSend.message, messageToSend.listener);
-            }
+            notifyMessage(messageToSend.message, messageToSend.listener);
             replyAvailable = false;
             sendToInterface(messageToSend.message);
             log.debug("Waiting for a reply");
@@ -289,7 +297,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
-                return;
             }
             if (!replyAvailable) {
                 // Timed out

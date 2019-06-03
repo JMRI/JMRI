@@ -11,19 +11,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2017
  */
-public class DefaultAudioManagerTest {
+public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBase<jmri.AudioManager,jmri.Audio> {
 
     @Test
     public void testCtor() {
-        DefaultAudioManager l = new DefaultAudioManager();
         Assert.assertNotNull("exists", l);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new DefaultAudioManager();
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        l = null;
+        JUnitUtil.tearDown();
+    }
 }

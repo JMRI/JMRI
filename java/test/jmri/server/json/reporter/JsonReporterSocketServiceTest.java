@@ -24,6 +24,8 @@ import org.junit.Test;
  */
 public class JsonReporterSocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testReporterChange() {
         try {
@@ -32,7 +34,7 @@ public class JsonReporterSocketServiceTest {
             JsonReporterSocketService service = new JsonReporterSocketService(connection);
             ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
             Reporter memory1 = manager.provideReporter("IR1");
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
             // TODO: test that service is listener in ReporterManager
             // default null value of memory1 has text representation "null" in JSON
             message = connection.getMessage();
@@ -70,22 +72,22 @@ public class JsonReporterSocketServiceTest {
             Reporter memory1 = manager.provideReporter("IR1");
             // Reporter "close"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "close");
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
             Assert.assertEquals("close", memory1.getCurrentReport());
             // Reporter "throw"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "throw");
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
             Assert.assertEquals("throw", memory1.getCurrentReport());
             // Reporter UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").putNull(JsonReporter.REPORT);
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
             Assert.assertEquals(null, memory1.getCurrentReport());
             memory1.setReport("throw");
             // Reporter no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
+                service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
             } catch (JsonException ex) {
                 exception = ex;
             }

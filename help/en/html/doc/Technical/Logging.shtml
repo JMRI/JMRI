@@ -242,7 +242,7 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
         Log4JUtil.warnOnce(log, "The warning with arguments {} {}", "A", "B");
 </pre>
         Note: The warnOnce method requires a bit of special handling in the unit and CI tests, see
-        <a href="JUNit.shtml#warrnOnce">testing documentation</a>.
+        <a href="JUnit.shtml#warrnOnce">testing documentation</a>.
         
       <p>Exceptions should be logged as:</p>
 <pre style="font-family: monospace;">

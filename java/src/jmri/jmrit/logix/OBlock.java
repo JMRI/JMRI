@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
  * sensor and the OBlock will pass state changes of the sensor on to its
  * warrant.
  *
- * <P>
+ * <p>
  * Entrances (exits when train moves in opposite direction) to OBlocks have
  * Portals. A Portal object is a pair of OBlocks. Each OBlock has a list of its
  * Portals.
  *
- * <P>
+ * <p>
  * When an OBlock (Detection Circuit) has a Portal whose entrance to the OBlock
  * has a signal, then the OBlock and its chains of adjacent OBlocks up to the
  * next OBlock having an entrance Portal with a signal, can be considered a
@@ -41,24 +41,23 @@ import org.slf4j.LoggerFactory;
  * the "Block" should have entrance Portals with a signal.
  *
  *
- * <P>
+ * <p>
  * A Portal has a list of paths (OPath objects) for each OBlock it separates.
  * The paths are determined by the turnout settings of the turnouts contained in
  * the block. Paths are contained within the Block boundaries. Names of OPath
  * objects only need be unique within an OBlock.
  *
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman (C) 2009
  */
@@ -127,7 +126,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return _statusNameMap.get(str);
     }
-    ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
+    private ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
@@ -428,7 +427,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (warrant == null) {
             return false;
         }
-        return (warrant == _warrant);
+        return warrant.equals(_warrant);
     }
 
     public String getAllocatedPathName() {
@@ -711,6 +710,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                 portal.getName(), path.getName(), getDisplayName());
                     }
                 }
+            }
+            iter = getPaths().iterator();
+            while (iter.hasNext()) {
+                OPath path = (OPath) iter.next();
                 if (path.getFromPortal() == null && path.getToPortal() == null) {
                     removePath(path);
                     if (log.isDebugEnabled()) {
@@ -747,7 +750,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     public List<Portal> getPortals() {
-        return _portals;
+        ArrayList<Portal> clone = new ArrayList<Portal>();
+        Iterator<Portal> iter = _portals.iterator();
+        while (iter.hasNext()) {
+            clone.add(iter.next());
+        }
+        return clone;
     }
 
     @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
@@ -761,6 +769,19 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return null;
     }
+
+    @Override
+    public void setLength(float len) {
+        float oldLen = getLengthMm();
+        if (oldLen > 0.0f) {   // if new block, paths also have length 0
+            float ratio = getLengthMm() / oldLen;
+            List<Path> list = getPaths();
+            for (Path path : list) {
+                path.setLength(path.getLength()*ratio);
+            }
+        }
+        super.setLength(len);
+   }
 
     /**
      * Enforce unique path names within block, but allow a duplicate 
@@ -813,7 +834,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void removePath(Path path) {
-        if (!getSystemName().equals(path.getBlock().getSystemName())) {
+        jmri.Block block = path.getBlock();
+        if (block != null && !getSystemName().equals(block.getSystemName())) {
             return;
         }
 //        if (log.isDebugEnabled()) log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
@@ -943,16 +965,20 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void dispose() {
-        List<Portal> list = getPortals();
-        for (int i = 0; i < list.size(); i++) {
-            Portal portal = list.get(i);
+        Iterator<Portal> iter = getPortals().iterator();
+        while (iter.hasNext()) {
+            Portal portal = iter.next();
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
-            opBlock.removePortal(portal);
+            if (opBlock != null) {
+                opBlock.removePortal(portal);
+            }
+            portal.dispose();
         }
-        List<Path> pathList = getPaths();
-        for (int i = 0; i < pathList.size(); i++) {
-            removePath(pathList.get(i));
+        _portals.clear();
+        Iterator<Path> it = getPaths().iterator();
+        while (it.hasNext()) {
+            removePath(it.next());
         }
         jmri.InstanceManager.getDefault(OBlockManager.class).deregister(this);
         super.dispose();

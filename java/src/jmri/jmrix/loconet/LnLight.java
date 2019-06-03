@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Light Object for Loconet
+ * Implementation of the Light Object for LocoNet
  * <p>
  * Based in part on SerialLight.java
  *

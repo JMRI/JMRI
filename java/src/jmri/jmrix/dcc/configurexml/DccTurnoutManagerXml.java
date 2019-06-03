@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring DccTurnoutManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
@@ -37,4 +37,5 @@ public class DccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(DccTurnoutManagerXml.class);
+
 }

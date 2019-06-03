@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to the various tables via a listed pane. Based upon the
  * apps.gui3.TabbedPreferences.java by Bob Jacoben
- * <P>
+ *
  * @author Kevin Dickerson Copyright 2010
  * @author Bob Jacobsen Copyright 2010
  */
@@ -205,7 +205,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         for (TabbedTableItem<E> tti : tabbedTableArray) {
             tti.dispose();
         }
-        if (list.getListSelectionListeners().length > 0) {
+        if (list != null && list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
         super.dispose();

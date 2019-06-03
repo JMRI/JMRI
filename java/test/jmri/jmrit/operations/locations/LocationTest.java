@@ -21,7 +21,7 @@ import org.junit.Test;
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- * <p>
+ *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class LocationTest extends OperationsTestCase {
@@ -682,4 +682,5 @@ public class LocationTest extends OperationsTestCase {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
+
 }

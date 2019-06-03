@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanListener;
@@ -43,13 +42,15 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     static public final int NODE_NUMBER_COLUMN = 0; 
     static public final int NODE_TYPE_NAME_COLUMN = 1; 
     static public final int NODE_USER_NAME_COLUMN = 2;
-    static public final int COMMAND_STAT_NUMBER_COLUMN = 3;
-    static public final int CANID_COLUMN = 4;
-    static public final int NODE_EVENTS_COLUMN = 5;
-    static public final int BYTES_REMAINING_COLUMN = 6;
-    static public final int NODE_TOTAL_BYTES_COLUMN = 7;
-    static public final int NODE_IN_LEARN_MODE_COLUMN = 8;
-    static public final int MAX_COLUMN = 9;
+    static public final int NODE_RESYNC_BUTTON_COLUMN = 3;
+    static public final int COMMAND_STAT_NUMBER_COLUMN = 4;
+    static public final int CANID_COLUMN = 5;
+    static public final int NODE_EVENTS_COLUMN = 6;
+    static public final int BYTES_REMAINING_COLUMN = 7;
+    static public final int NODE_TOTAL_BYTES_COLUMN = 8;
+    static public final int NODE_IN_LEARN_MODE_COLUMN = 9;
+    static public final int NODE_EVENT_INDEX_VALID_COLUMN = 10;
+    static public final int MAX_COLUMN = 11;
 
     public CbusNodeTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         
@@ -65,32 +66,28 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         send = new CbusSend(memo);
 
-        
     }
     
     public void startup(){
         
         preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
         
-        
-        setBackgroundAllocateListener( preferences.getAllocateNNListener() );
-        
-        if ( preferences.getStartupSearchForCs() ) {
-            send.searchForCommandStations();
+        if ( preferences != null ) {
+            
+            setBackgroundAllocateListener( preferences.getAllocateNNListener() );
+            if ( preferences.getStartupSearchForCs() ) {
+                send.searchForCommandStations();
+            }
+            if ( preferences.getStartupSearchForNodes() ) {
+                send.searchForNodes();
+            }
         }
-        
-        if ( preferences.getStartupSearchForNodes() ) {
-            send.searchForNodes();
-        }        
-        
         
     }
     
-    
-
     // start listener for nodes requesting a new node number
     public void setBackgroundAllocateListener( boolean newState ){
-        if (newState){
+        if (newState  && !java.awt.GraphicsEnvironment.isHeadless() ) {
             if (allocate == null) {
                 allocate = new CbusAllocateNodeNumber( _memo, this );
             } else {
@@ -105,7 +102,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
     
     
-
     // order needs to match column list top of dtabledatamodel
     public static final String[] columnToolTips = {
         null,
@@ -117,7 +113,8 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         null,
         null,
         null,
-        null
+        null,
+        "Index invalid when an event addition or deletion has taken place since last fetch."
 
     }; // Length = number of items in array should (at least) match number of columns
     
@@ -126,7 +123,13 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public int getRowCount() {
-        return _mainArray.size();
+        if ( _mainArray == null ) {
+            log.error("Node Table Array _mainArray not initialised");
+            return 0;
+        }
+        else {
+            return _mainArray.size();
+        }
     }
 
     @Override
@@ -139,7 +142,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -168,21 +170,25 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case CANID_COLUMN:
                 return Bundle.getMessage("CanID");
             case NODE_NUMBER_COLUMN:
-                return ("Node Num");
+                return Bundle.getMessage("NodeNumberCol");
             case NODE_USER_NAME_COLUMN:
-                return ("User Name");
+                return Bundle.getMessage("UserName");
+            case NODE_RESYNC_BUTTON_COLUMN:
+                return Bundle.getMessage("ReSynchronizeButton");
             case NODE_TYPE_NAME_COLUMN:
-                return ("Node Type");
+                return Bundle.getMessage("ColumnType");
             case COMMAND_STAT_NUMBER_COLUMN:
-                return ("CS Num");
+                return Bundle.getMessage("CommandStationNumber");
             case NODE_EVENTS_COLUMN:
-                return ("Events");
+                return Bundle.getMessage("CbusEvents");
             case NODE_TOTAL_BYTES_COLUMN:
-                return("Tot. Bytes");
+                return Bundle.getMessage("TotalBytes");
             case BYTES_REMAINING_COLUMN:
-                return("Fetch Progress");
+                return Bundle.getMessage("FetchProgress");
             case NODE_IN_LEARN_MODE_COLUMN:
-                return("Learn Mode");
+                return Bundle.getMessage("LearnMode");
+            case NODE_EVENT_INDEX_VALID_COLUMN:
+                return Bundle.getMessage("EventIndexValid");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -198,21 +204,23 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NODE_EVENTS_COLUMN:
             case COMMAND_STAT_NUMBER_COLUMN:
             case NODE_IN_LEARN_MODE_COLUMN:
+            case NODE_EVENT_INDEX_VALID_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
-            case NODE_NUMBER_COLUMN:
             case NODE_TOTAL_BYTES_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
+            case NODE_NUMBER_COLUMN:
+                return new JTextField(6).getPreferredSize().width;
+            case NODE_RESYNC_BUTTON_COLUMN:
+                return new JTextField(8).getPreferredSize().width;
             case NODE_TYPE_NAME_COLUMN:
                 return new JTextField(10).getPreferredSize().width;
             case NODE_USER_NAME_COLUMN:
             case BYTES_REMAINING_COLUMN:
                 return new JTextField(13).getPreferredSize().width;
             default:
-                log.warn("width {} undefined",col);
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
-    
     
     /**
     * Returns column class type.
@@ -231,9 +239,11 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NODE_TYPE_NAME_COLUMN:
                 return String.class;
             case NODE_IN_LEARN_MODE_COLUMN:
+            case NODE_EVENT_INDEX_VALID_COLUMN:
                 return Boolean.class;
+            case NODE_RESYNC_BUTTON_COLUMN:
+                return javax.swing.JButton.class;
             default:
-                log.warn("no class set col {}",col);
                 return null;
         }
     }
@@ -246,6 +256,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case NODE_USER_NAME_COLUMN:
+            case NODE_RESYNC_BUTTON_COLUMN:
                 return true;
             default:
                 return false;
@@ -276,18 +287,20 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NODE_TOTAL_BYTES_COLUMN:
                 return _mainArray.get(row).totalNodeBytes();
             case BYTES_REMAINING_COLUMN:
-               //  return ;
                 return _mainArray.get(row).floatPercentageRemaining();
             case NODE_IN_LEARN_MODE_COLUMN:
                 return _mainArray.get(row).getNodeInLearnMode();
+            case NODE_RESYNC_BUTTON_COLUMN:
+                return ("Re-Sync");
+            case NODE_EVENT_INDEX_VALID_COLUMN:
+                return _mainArray.get(row).isEventIndexValid();
             default:
-                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
     
     /**
-     * Capture new comments or node names.
+     * Edit node Username,
      * Button events
      * @param value object value
      * @param row int row number
@@ -295,12 +308,19 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (col == NODE_USER_NAME_COLUMN) {        
+        if (col == NODE_USER_NAME_COLUMN) {
             _mainArray.get(row).setUserName( (String) value );
             ThreadingUtil.runOnGUI( ()->{
                 fireTableCellUpdated(row, col);
             });
-            
+        }
+        else if ( col == NODE_RESYNC_BUTTON_COLUMN) {
+            _mainArray.get(row).resetNodeAll();
+            setUrgentNode( _mainArray.get(row).getNodeNumber() );
+            startBackgroundFetch();
+        }
+        else {
+            log.debug("invalid column");
         }
     }
 
@@ -310,19 +330,20 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
-    //    int opc = CbusMessage.getOpcode(m);
     }
     
-    
-    int csFound=0;
-    int ndFound = 0;
+    private int csFound=0;
+    private int ndFound = 0;
     
     /**
-     * Capture node and event, check isevent and send to parse from reply.
+     * Listen on the network for incoming STAT and PNN OPC's
      * @param m incoming CanReply
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         int nodenum = ( m.getElement(1) * 256 ) + m.getElement(2);
         if (opc==CbusConstants.CBUS_STAT) {
@@ -336,10 +357,11 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 CbusNode cs = provideCsByNum(csnum,nodenum);
                 cs.setFW(m.getElement(5),m.getElement(6),m.getElement(7));
                 cs.setCsFlags(m.getElement(4));
+                cs.setCanId(CbusMessage.getId(m));
             }
             csFound++;
         }
-        if (opc==CbusConstants.CBUS_PNN) {
+        else if (opc==CbusConstants.CBUS_PNN) {
             log.debug("Node Report message {}",m);
             if ( preferences.getAddNodes() ) {
                 // provides a node by node number
@@ -347,8 +369,18 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 nd.setManuModule(m.getElement(3),m.getElement(4));
                 nd.setNodeFlags(m.getElement(5));
                 nd.sendExitLearnMode();
+                nd.setCanId(CbusMessage.getId(m));
             }
             ndFound++;
+        }
+        else if (opc==CbusConstants.CBUS_NNREL) { // from node advising releasing node number
+            if ( getNodeRowFromNodeNum(nodenum) >-1 ) {
+                log.info( Bundle.getMessage("NdRelease", getNodeName(nodenum), nodenum ) );
+                removeRow( getNodeRowFromNodeNum(nodenum) );
+            }
+        }
+        else {
+            // ignore
         }
     }
     
@@ -376,12 +408,9 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             if ( _mainArray.get(i).getCsNum() == csnum ) {
                 return _mainArray.get(i);
             }
-        }        
+        }
         return null;
     }
-
-    // returns a new or existing command station by cs number, NOT node number
-
 
     /**
      * Returns a new or existing command station by cs number, NOT node number
@@ -400,7 +429,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }
         CbusNode cs = new CbusNode(_memo, nodenum);
         cs.setCsNum(csnum);
-        cs.startParamsLookup();
         addNode(cs);
         return cs;
     }
@@ -422,7 +450,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             }
         }
         CbusNode cs = new CbusNode(_memo, nodenum);
-        cs.startParamsLookup();
         addNode(cs);
         return cs;        
     }
@@ -439,6 +466,15 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             }
         }
         return null;        
+    }
+    
+    /**
+     * Returns an existing node by table row number
+     * @param rowNum The Row Number
+     * @return the Node
+     */
+    public CbusNode getNodeByRowNum( int rowNum ) {
+        return _mainArray.get(rowNum);
     }
     
     /**
@@ -501,16 +537,20 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * Returns a string ArrayList of all Node Number and User Names on the table
      * @param node Node Number, NOT row number
      * @param col Table Column Number
-     */       
+     */
     public void updateFromNode( int node, int col){
         
-        //  log.info("table update from node {} column {}",node,col);
+        log.debug("table update from node {} column {}",node,col);
         ThreadingUtil.runOnGUI( ()->{
             fireTableCellUpdated(getNodeRowFromNodeNum(node), col);
         });
     }
     
-    
+    /**
+     * Single Node User Name
+     * @param nn Node Number, NOT row number
+     * @return Node Username, if unset returns node type name
+     */
     public String getNodeName( int nn ) {
         int rownum = getNodeRowFromNodeNum(nn);
         if ( rownum < 0 ) {
@@ -524,7 +564,12 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }        
         return "";
     }
-    
+
+    /**
+     * Returns the next available Node Number
+     * @param higherthan Node Number
+     * @return calculated next available number, else original value
+     */      
     public int getNextAvailableNodeNumber( int higherthan ) {
         if ( getRowCount() > 0 ) {
             for (int i = 0; i < getRowCount(); i++) {
@@ -543,14 +588,18 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     int urgentNode = -1;
     int nodebefore = -1;
     int nodeafter = -1;
-    Boolean urgentScheduled=false; // a message is already in the out queue
-    Boolean urgentActive=false; // feature active, set false for background fetch
+    boolean urgentActive=false; // feature active, set false for background fetch
     
-    Boolean urgentFetchRequested = false;
     
     public void startUrgentFetch() {
         urgentActive = true;
-        triggerUrgentFetch();
+        startBackgroundFetch();
+    }
+    
+    private void setUrgentNode( int nodeNum ){
+        urgentNode = nodeNum;
+        urgentActive = true;
+        startBackgroundFetch();
     }
     
     // fetch data in order of priority based on what user is currently viewing
@@ -560,264 +609,17 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         nodebefore = urgentNodeBefore;
         nodeafter = urgentNodeAfter;
         urgentActive = true;
-        triggerUrgentFetch();
+        startBackgroundFetch();
     }
     
     public void triggerUrgentFetch(){
-        
         if (!urgentActive) {
             return;
         }
-        
-        if (urgentFetchTimerTask == null) {
-            setUrgentFetchTimer();
-        }
         else {
-            urgentFetchRequested = true;
+            sendNextBackgroundFetch();
         }
     }
-    
-    private TimerTask urgentFetchTimerTask;
-    
-    private void clearUrgentFetchTimer(){
-        if (urgentFetchTimerTask != null ) {
-            urgentFetchTimerTask.cancel();
-            urgentFetchTimerTask = null;
-        }
-    }
-    
-    private void setUrgentFetchTimer() {
-        if (urgentFetchTimerTask != null ) {
-            return;
-        }
-        urgentFetchTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-                urgentFetchTimerTask = null;
-              //  log.info("urgent fetch from timer" );
-                sendNextUrgentFetch(); // the only place this should be called
-                if (urgentFetchRequested) { // during timer running
-                    urgentFetchRequested=false;
-                    setUrgentFetchTimer();
-                }
-            }
-        };
-        TimerUtil.schedule(urgentFetchTimerTask, 20);
-    }
-    
-    // sends the next parameter, nv or ev var
-    private void sendNextUrgentFetch() {
-        
-        if ( getNodeByNodeNum(urgentNode) == null ) {
-            clearUrgentFetchTimer();
-            return;
-        }
-        
-        // get this param
-        // get below param
-        // get this nv
-        // get above param
-        // get this events
-        // get below nv
-        // get below events
-        // get above nv
-        // get above events
-        if (urgentTab==0 || urgentTab==3 || urgentTab==4 ) { // node parameters selected
-            
-            if ( getNodeByNodeNum(urgentNode).getOutstandingParams() > 0 ) { // this param
-                getNodeByNodeNum(urgentNode).sendRequestNextParam();
-                return;
-            }
-            
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingParams() > 0 ) { // below param
-                    getNodeByNodeNum(nodeafter).sendRequestNextParam();
-                    return;
-                }
-            }
-            
-            if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
-                getNodeByNodeNum(urgentNode).sendNextNVToFetch();
-                return;
-            }
-            
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingParams() > 0 ) { // above param
-                    getNodeByNodeNum(nodebefore).sendRequestNextParam();
-                    return;
-                }
-            }
-            
-            if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this events
-                getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
-                return;
-            }            
-            
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingNvCount() > 0 ){ // below nv
-                    getNodeByNodeNum(nodeafter).sendNextNVToFetch();
-                    return;
-                }
-                
-                if ( getNodeByNodeNum(nodeafter).getOutstandingEvVars() > 0 ) { // below events
-                    getNodeByNodeNum(nodeafter).sendNextEvVarToFetch();
-                    return;
-                } 
-            }
-
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingNvCount() > 0 ){ // above nv
-                    getNodeByNodeNum(nodebefore).sendNextNVToFetch();
-                    return;
-                }
-                
-                if ( getNodeByNodeNum(nodebefore).getOutstandingEvVars() > 0 ) { // above events
-                    getNodeByNodeNum(nodebefore).sendNextEvVarToFetch();
-                    return;
-                } 
-            }
-        }
-        
-        // this nv
-        // below nv
-        // this param
-        // above nv
-        // this events
-        // below param
-        // above param
-        // below events
-        // above events
-        if (urgentTab==1) { // NV's selected
-        
-            if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
-                getNodeByNodeNum(urgentNode).sendNextNVToFetch();
-                return;
-            }
-            
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingNvCount() > 0 ){ // below nv
-                    getNodeByNodeNum(nodeafter).sendNextNVToFetch();
-                    return;
-                }
-            }
-            
-            if ( getNodeByNodeNum(urgentNode).getOutstandingParams() > 0 ) { // this param
-                getNodeByNodeNum(urgentNode).sendRequestNextParam();
-                return;
-            }
-            
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingNvCount() > 0 ){ // above nv
-                    getNodeByNodeNum(nodebefore).sendNextNVToFetch();
-                    return;
-                }
-            }
-            
-            if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this ev vars
-                getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
-                return;
-            }
-            
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingParams() > 0 ) { // below param
-                    getNodeByNodeNum(nodeafter).sendRequestNextParam();
-                    return;
-                }
-            }
-
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingParams() > 0 ) { // above param
-                    getNodeByNodeNum(nodebefore).sendRequestNextParam();
-                    return;
-                }
-            }
-
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingEvVars() > 0 ) { // below events
-                    getNodeByNodeNum(nodeafter).sendNextEvVarToFetch();
-                    return;
-                } 
-            }
-
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingEvVars() > 0 ) { // above events
-                    getNodeByNodeNum(nodebefore).sendNextEvVarToFetch();
-                    return;
-                } 
-            }
-
-        }
-        
-        // this events
-        // this param
-        // this nv
-        // below events
-        // above events
-        // below nv
-        // below param
-        // above param
-        // above nv
-        if (urgentTab==2) { // ev vars selected
-                
-            if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this events
-                getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
-                return;
-            }
-
-            if ( getNodeByNodeNum(urgentNode).getOutstandingParams() > 0 ) { // this param
-                getNodeByNodeNum(urgentNode).sendRequestNextParam();
-                return;
-            }
-            
-            if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
-                getNodeByNodeNum(urgentNode).sendNextNVToFetch();
-                return;
-            }
-            
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingEvVars() > 0 ) { // below events
-                    getNodeByNodeNum(nodeafter).sendNextEvVarToFetch();
-                    return;
-                } 
-            }
-
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingEvVars() > 0 ) { // above events
-                    getNodeByNodeNum(nodebefore).sendNextEvVarToFetch();
-                    return;
-                } 
-            }
-
-            if ( nodeafter > -1 ) {
-                if ( getNodeByNodeNum(nodeafter).getOutstandingNvCount() > 0 ){ // below nv
-                    getNodeByNodeNum(nodeafter).sendNextNVToFetch();
-                    return;
-                }
-
-                if ( getNodeByNodeNum(nodeafter).getOutstandingParams() > 0 ) { // below param
-                    getNodeByNodeNum(nodeafter).sendRequestNextParam();
-                    return;
-                }
-            }
-
-            if ( nodebefore > -1 ) {
-                if ( getNodeByNodeNum(nodebefore).getOutstandingParams() > 0 ) { // above param
-                    getNodeByNodeNum(nodebefore).sendRequestNextParam();
-                    return;
-                }
-                if ( getNodeByNodeNum(nodebefore).getOutstandingNvCount() > 0 ){ // above nv
-                    getNodeByNodeNum(nodebefore).sendNextNVToFetch();
-                    return;
-                }
-            }
-        }
-        
-        log.debug("all urgent fetching done");
-        // all urgent fetching done
-        urgentActive=false;
-        
-    }
-    
     
     /**
      * Starts background fetching for all table data as per user prefs
@@ -825,7 +627,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * 
      */ 
     public void startBackgroundFetch(){
-        
+
         // reset if already running
         if ( trickleFetch != null ){
                 trickleFetch.dispose();
@@ -835,14 +637,103 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             trickleFetch = new CbusNodeTrickleFetch( _memo, this, preferences.getNodeBackgroundFetchDelay() );
         }
     }
-    
+
     protected void sendNextBackgroundFetch(){
         
+        if ( getAnyNodeInLearnMode()>0 ){
+            return;
+        }
         for (int i = 0; i < getRowCount(); i++) {
-            if ( _mainArray.get(i).getOutstandingParams() > 0 ) {
+            if ( _mainArray.get(i).hasActiveTimers() ){
+                return;
+            }
+        }
+        
+        // prioritise command station node variables 1-16
+        for (int i = 0; i < getRowCount(); i++) {
+            if ( _mainArray.get(i).getCsNum() > -1 ) { // is a command station
+            
+                if ( _mainArray.get(i).getOutstandingParams() > 0 ) {
+                    _mainArray.get(i).sendRequestNextParam();
+                    return;
+                }
+            
+                if ( _mainArray.get(i).getParameter(6) > 15 ) { // If CS does has have more than 15 NV's
+                    if ( _mainArray.get(i).getNV(16) < 0 ) {
+                        _mainArray.get(i).sendNextNVToFetch();
+                        return;
+                    }
+                }
+            }
+        }
+        
+        // Get all node parameters fetched so basic node details ( type, num nv's etc. ) are known
+        for (int i = 0; i < getRowCount(); i++) {
+            if ( _mainArray.get(i).getOutstandingParams() > 0 ) { // this param
                 _mainArray.get(i).sendRequestNextParam();
                 return;
             }
+        }
+        
+        // If a node is selected in the node manager the details for this are fetched next
+        if ( getNodeByNodeNum(urgentNode) != null ) {
+            
+            if (urgentTab==1) { // NV's selected
+                if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
+                    getNodeByNodeNum(urgentNode).sendNextNVToFetch();
+                    return;
+                }
+                if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this events
+                    getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
+                    return;
+                }
+            } else {
+                if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this events
+                    getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
+                    return;
+                }
+                if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
+                    getNodeByNodeNum(urgentNode).sendNextNVToFetch();
+                    return;
+                }
+            }
+            
+            if (urgentTab==1) { // NV's selected
+                if ( nodeafter > -1 ) {
+                    if ( getNodeByNodeNum(nodeafter).getOutstandingNvCount() > 0 ){ // below nv
+                        getNodeByNodeNum(nodeafter).sendNextNVToFetch();
+                        return;
+                    }
+                }
+                if ( nodebefore > -1 ) {
+                    if ( getNodeByNodeNum(nodebefore).getOutstandingNvCount() > 0 ){ // above nv
+                        getNodeByNodeNum(nodebefore).sendNextNVToFetch();
+                        return;
+                    }
+                }
+            }
+            else { // events selected
+                if ( nodeafter > -1 ) {
+                    if ( getNodeByNodeNum(nodeafter).getOutstandingEvVars() > 0 ) { // below events
+                        getNodeByNodeNum(nodeafter).sendNextEvVarToFetch();
+                        return;
+                    } 
+                }
+                if ( nodebefore > -1 ) {
+                    if ( getNodeByNodeNum(nodebefore).getOutstandingEvVars() > 0 ) { // above events
+                        getNodeByNodeNum(nodebefore).sendNextEvVarToFetch();
+                        return;
+                    } 
+                }
+            }
+        }
+        
+        // the node selected in table has been synched, 
+        // along with the row above and below in case user scolls
+        urgentActive=false;
+        
+        // default lookup routine
+        for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getOutstandingNvCount() > 0 ){ // this nv
                 _mainArray.get(i).sendNextNVToFetch();
                 return;
@@ -854,7 +745,9 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }
         
         // if all done dispose trickle fetch
-        trickleFetch.dispose();
+        if ( trickleFetch != null ) {
+            trickleFetch.dispose();
+        }
         trickleFetch = null;
     }
     
@@ -921,21 +814,41 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
     
     /**
-     * Remove Row from table
+     * Remove Row from table and dispose of it
      * @param row int row number
      */    
     public void removeRow(int row) {
+        CbusNode toRemove = getNodeByNodeNum( _mainArray.get(row).getNodeNumber() );
         _mainArray.remove(row);
         ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
+        toRemove.dispose();
     }
     
     /**
-     * disconnect from the CBUS
+     * Disconnect from the network
+     * <p>
+     * Close down any background listeners
+     * <p>
+     * Cancel outstanding Timers
      */
     public void dispose() {
+        
+        clearSearchForNodesTimeout();
+        if ( trickleFetch != null ) {
+            trickleFetch.dispose();
+            trickleFetch = null;
+        }
+        
+        setBackgroundAllocateListener(false); // stop listening for node number requests
         if (tc != null) {
             tc.removeCanListener(this);
         }
+        
+        for (int i = 0; i < getRowCount(); i++) {
+            _mainArray.get(i).dispose();
+        }
+        _mainArray = null;
+        
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusNodeTableDataModel.class);

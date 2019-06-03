@@ -17,16 +17,16 @@ import org.slf4j.LoggerFactory;
  * sends/receives Mx1Message objects. The connection to a Mx1PortController is
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
+ * <ul>
+ * <li> RcvHandler - at highest available priority
+ * <li> XmtHandler - down one, which is assumed to be above the GUI
+ * <li> (everything else)
+ * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  *
@@ -206,7 +206,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be

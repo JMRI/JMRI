@@ -4,6 +4,9 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class to represent an event stored on a node.
  *
@@ -13,7 +16,8 @@ public class CbusNodeEvent extends CbusEvent {
     private int _thisnode;
     private int _index;
     public int[] _evVarArr;
-    private int _nodeConfigPanelID;
+    private String _fcuNodeName;
+    private CbusNodeSingleEventTableDataModel eventDataModel;
     
     /**
      * Set the value of the event variable array by index
@@ -28,41 +32,46 @@ public class CbusNodeEvent extends CbusEvent {
         super(nn,en);
         _thisnode = thisnode;
         _index = index;
-        _nodeConfigPanelID = -1;
         _evVarArr = new int[maxEvVar];
         java.util.Arrays.fill(_evVarArr,-1);
+        _fcuNodeName = "";
     }
- 
-    /**
-     * Create a copy of an existing Node Event
-     *
-     * @param m existing Node Event to copy from
-     */
-    public CbusNodeEvent(@Nonnull CbusNodeEvent m) {
-        super(m.getNn(),m.getEn());
-        _thisnode = m._thisnode;
-        _index = m._index;
-        _nodeConfigPanelID = m._nodeConfigPanelID;
-        _evVarArr = m._evVarArr;
+    
+    protected void setEditTableModel( CbusNodeSingleEventTableDataModel model ) {
+        eventDataModel = model;
+    }
+    
+    private void notifyModel(){
+        if ( eventDataModel != null ) {
+            jmri.util.ThreadingUtil.runOnGUI( ()->{
+                eventDataModel.fireTableDataChanged();
+        });
+        }
     }
 
     /**
      * Set the value of the event variable array by index
      *
-     * @param index variable array index, index 0 should be total variables in array
+     * @param index event variable index, minimum 1
      * @param value min 0 max 255
      */
     public void setEvVar(int index, int value) {
-        _evVarArr[(index-1)]=value;
+        if ( index < 1 ) {
+            log.error("Event Index needs to be > 0");
+        } else {
+            _evVarArr[(index-1)]=value;
+            notifyModel();
+        }
     }
     
     /**
      * Set the value of the event variable array by existing array
      *
-     * @param newArray event variable array, 1st value index 0 should be total variables in array
+     * @param newArray event variable array, 1st value index 0 should be 1st event value, NOT total
      */    
     public void setEvArr( int[] newArray ){
         _evVarArr = newArray;
+        notifyModel();
     }
     
     /**
@@ -78,11 +87,24 @@ public class CbusNodeEvent extends CbusEvent {
     /**
      * Returns all event variables as a single string
      *
-     * @return the decimal string for of the array
+     * @return the decimal string for of the array, unknown values are blanked
      */    
     public String getEvVarString(){
-        return Arrays.toString(_evVarArr);
-        
+        StringBuilder n = new StringBuilder();
+        // n.append("[ ");
+        for(int i = 0; i< _evVarArr.length; i++){
+            if ( _evVarArr[i] > -1 ) {
+                n.append( _evVarArr[i] );
+            }
+            else {
+                n.append( " " );
+            }
+            if ( i != ( _evVarArr.length-1 ) ) {
+                n.append( ", " );
+            }
+        }
+        // n.append(" ]");
+        return n.toString();
     }
 
     /**
@@ -91,10 +113,10 @@ public class CbusNodeEvent extends CbusEvent {
      * @return the decimal outstanding total
      */    
     public int getOutstandingVars() {
-        int count = 0;
         if ( _evVarArr == null ){
             return 0;
         }
+        int count = 0;
         for (int val : _evVarArr){
             if (val == -1) {
                 count ++;
@@ -105,8 +127,7 @@ public class CbusNodeEvent extends CbusEvent {
     
     /**
      * Returns the index of the next unknown event variable
-     *
-     * @return the decimal index value
+     * @return the decimal index value else 0 if all known
      */     
     public int getNextOutstanding() {
         for (int i = 0; i < _evVarArr.length; i++) {
@@ -136,21 +157,40 @@ public class CbusNodeEvent extends CbusEvent {
     public void setIndex(int index){
         _index = index;
     }
-    
-    public void setNodeConfigPanelID( int index){
-        _nodeConfigPanelID = index;
-    }
-    
-    public int getNodeConfigPanelID() {
-        return _nodeConfigPanelID;
-    }
 
+    /**
+     * Get the index number of this event on a node
+     * 
+     * @return index number, -1 if unset
+     */  
     public int getIndex(){
         return _index;
     }
-    
+
+    /**
+     * Get the number of event variables
+     * 
+     */      
     public int getNumEvVars() {
         return _evVarArr.length;
     }
+    
+    /**
+     * Set a temporary node name
+     * 
+     */
+    public void setTempFcuNodeName( String tempName){
+        _fcuNodeName = tempName;
+    }
+    
+    /**
+     * Get a temporary node name
+     * 
+     */
+    public String getTempFcuNodeName(){
+        return _fcuNodeName;
+    }
+    
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeEvent.class);
 
 }

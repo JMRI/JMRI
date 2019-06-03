@@ -76,6 +76,11 @@ public class ConsistToolScaffold extends JFrameOperator {
         }
         );
 	jbo.push();
+   }
+
+   // push the buttons at the bottom and dismiss the resulting question dialog.
+   public void pushDeleteWithDismiss(){
+	pushDeleteButton();
 	// and dismiss the dialog that appears by pressing OK.
 	JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("QuestionTitle"));
         new JButtonOperator(jdo,Bundle.getMessage("ButtonYes")).push();

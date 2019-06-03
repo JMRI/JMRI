@@ -55,12 +55,13 @@ import org.junit.runners.Suite;
         XNetAddressTest.class,
         XNetStreamConnectionConfigTest.class,
         XNetHeartBeatTest.class,
+        jmri.jmrix.lenz.lzv200.PackageTest.class,
 })
 
 /**
  * Tests for the jmri.jmrix.lenz package
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class PackageTest  {
 }

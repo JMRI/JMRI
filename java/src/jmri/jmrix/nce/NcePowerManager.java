@@ -1,5 +1,7 @@
 package jmri.jmrix.nce;
 
+import java.beans.PropertyChangeListener;
+
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -7,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class NcePowerManager implements PowerManager, NceListener {
 
     public NcePowerManager(NceSystemConnectionMemo memo) {
@@ -90,6 +92,30 @@ public class NcePowerManager implements PowerManager, NceListener {
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     NceTrafficController tc = null;

@@ -63,12 +63,28 @@ public class CbusSlotMonitorSession  {
     
     protected String getDirection() {
         if ( _speed == 1 ){
-            return ("E Stop Rev");
+            return ( Bundle.getMessage("EStop" ) + Bundle.getMessage("REV") );
         }
-        if ( _speed == 129 ){
-            return ("E Stop Fwd");
+        else if ( _speed == 129 ){
+            return ( Bundle.getMessage("EStop" ) + Bundle.getMessage("FWD"));
         }
-        if ( getSpeedSteps().equals("128") ){
+        else if ( getSpeedSteps().equals("14") ){
+            if ( _speed > 13 ){
+                return (Bundle.getMessage("FWD"));
+            }
+            else {
+                return (Bundle.getMessage("REV"));
+            }
+        }
+        else if ( getSpeedSteps().equals("28") || getSpeedSteps().equals("28I") ) {
+            if ( _speed > 27 ){
+                return (Bundle.getMessage("FWD"));
+            }
+            else {
+                return (Bundle.getMessage("REV"));
+            }
+        }
+        else { // default to 128 ( 126 ) steps
             if ( _speed > 127 ){
                 return (Bundle.getMessage("FWD"));
             }
@@ -76,7 +92,6 @@ public class CbusSlotMonitorSession  {
                 return (Bundle.getMessage("REV"));
             }
         }
-        return "";
     }
     
     protected void setSpeedSteps ( String steps ) {
@@ -118,7 +133,7 @@ public class CbusSlotMonitorSession  {
             _speedSteps="14";
         }        
         else if ((sm0) && (!sm1)){
-            _speedSteps="28 Interleave";
+            _speedSteps="28I";
         }        
         else if ((sm0) && (sm1)){
             _speedSteps="28";
@@ -135,24 +150,24 @@ public class CbusSlotMonitorSession  {
         
         boolean esa = ((_flags >> 4 ) & 1) != 0; // bit4
         boolean esb = ((_flags >> 5 ) & 1) != 0; // bit5
-        flagstring.append("Engine State:");
+        flagstring.append(Bundle.getMessage("EngineState"));
         if ((!esa) && (!esb)){
-            flagstring.append("Active");
+            flagstring.append(Bundle.getMessage("Active"));
         }
         else if ((!esa) && (esb)){
-            flagstring.append("Consisted");
+            flagstring.append(Bundle.getMessage("Consisted"));
         }        
         else if ((esa) && (!esb)){
-            flagstring.append("Consist master");
+            flagstring.append(Bundle.getMessage("Consistmaster"));
         }        
         else if ((esa) && (esb)){
-            flagstring.append("Inactive");
+            flagstring.append(Bundle.getMessage("Inactive"));
         }            
         flagstring.append(" ");            
-        flagstring.append("Lights:");
+        flagstring.append(Bundle.getMessage("Lights"));
         flagstring.append(((_flags >> 2 ) & 1)); // bit2
         flagstring.append(" ");
-        flagstring.append("Rel Direction:");
+        flagstring.append(Bundle.getMessage("RelDirection"));
         flagstring.append(((_flags >> 3 ) & 1)); // bit3
         flagstring.append(" ");
         

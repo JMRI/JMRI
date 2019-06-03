@@ -9,6 +9,7 @@ import java.util.Collection;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -278,6 +279,8 @@ public class LoadAndStoreTestBase {
 
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);
+        
+        JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
 
     @Before
@@ -293,8 +296,10 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
+
 }

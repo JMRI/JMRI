@@ -95,7 +95,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
-    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
+    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
     // Storage for getSystemNameOriginalList
@@ -106,30 +106,25 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists. This is intended to be used by concrete classes to
-     * implement their getBySystemName method. We can't call it that here
-     * because Java doesn't have polymorphic return types.
-     *
-     * @param systemName the system name
-     * @return requested NamedBean object or null if none exists
+     * Now obsolete. Used {@link #getBeanBySystemName} instead.
+     * @param systemName the system name, but don't call this method
+	 * @return the results of a {@link #getBeanBySystemName} call, which you should use instead of this
+     * @deprecated 4.15.6
      */
+    @Deprecated // since 4.15.6
     protected E getInstanceBySystemName(String systemName) {
-        return _tsys.get(systemName);
+        return getBeanBySystemName(systemName);
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists. This is intended to be used by concrete classes to
-     * implement their getBySystemName method. We cant call it that here because
-     * Java doesn't have polymorphic return types.
-     *
-     * @param userName the user name
-     * @return requested E (NamedBean, i.e. Turnout) object or null if none exists
+     * Now obsolete. Used {@link #getBeanByUserName} instead.
+     * @param userName the system name, but don't call this method
+	 * @return the results of a {@link #getBeanByUserName} call, which you should use instead of this
+     * @deprecated 4.15.6
      */
+    @Deprecated // since 4.15.6
     protected E getInstanceByUserName(String userName) {
-        String normalizedUserName = NamedBean.normalizeUserName(userName);
-        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
+        return getBeanByUserName(userName);
     }
 
     /** {@inheritDoc} */
@@ -179,6 +174,16 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public void register(E s) {
         String systemName = s.getSystemName();
 
+        E existingBean = getBeanBySystemName(systemName);
+        if (existingBean != null) {
+            if (s == existingBean) {
+                log.debug("the named bean is registered twice: {}", systemName);
+            } else {
+                log.error("systemName is already registered: {}", systemName);
+                throw new IllegalArgumentException("systemName is already registered: " + systemName);
+            }
+        }
+
         // clear caches
         cachedSystemNameArray = null;
         cachedSystemNameList = null;
@@ -195,7 +200,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         fireDataListenersAdded(position, position, s);
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
-        s.addPropertyChangeListener(this, "", "Manager");
+        s.addPropertyChangeListener(this);
     }
 
     // not efficient, but does job for now
@@ -276,6 +281,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * By default there are no custom properties.
+     *
      * @return empty list
      */
     @Override
@@ -339,7 +345,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return cachedSystemNameArray;
     }
 
-    
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -354,7 +359,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return Collections.unmodifiableList(cachedSystemNameList);
     }
 
-
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -362,7 +366,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -401,6 +404,34 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         pcs.removePropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
@@ -422,8 +453,36 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         vcs.removeVetoableChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+        vcs.addVetoableChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public VetoableChangeListener[] getVetoableChangeListeners() {
+        return vcs.getVetoableChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
+        return vcs.getVetoableChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+        vcs.removeVetoableChangeListener(propertyName, listener);
+    }
+
     /**
-     * Method to inform all registered listerners of a vetoable change. If the
+     * Method to inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a

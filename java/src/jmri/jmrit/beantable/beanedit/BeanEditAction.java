@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-abstract class BeanEditAction extends AbstractAction {
+public abstract class BeanEditAction extends AbstractAction {
 
     public BeanEditAction(String s) {
         super(s);
@@ -375,7 +375,7 @@ abstract class BeanEditAction extends AbstractAction {
 
     public void save() {
         String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
-                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
+                + " " + bean.getFullyFormattedDisplayName();
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);
         statusBar.setForeground(Color.gray);

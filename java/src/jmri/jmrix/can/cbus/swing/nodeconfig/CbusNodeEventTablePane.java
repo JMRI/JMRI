@@ -98,6 +98,8 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         tcm.getColumn(CbusNodeEventTableDataModel.EVENT_NUMBER_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusNodeEventTableDataModel.NODE_NAME_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusNodeEventTableDataModel.EVENT_NAME_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeEventTableDataModel.EV_VARS_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeEventTableDataModel.EV_INDEX_COLUMN).setCellRenderer(getRenderer());
         
         TableColumn delBColumn = tcm.getColumn(CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN);
         delBColumn.setCellEditor(new ButtonEditor(new JButton()));
@@ -116,9 +118,11 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         pane1 = new JPanel();
         
+        setLayout(new BorderLayout() );
+        pane1.setLayout(new BorderLayout());
+        
         // scroller for main table
         eventVarScroll = new JScrollPane(nodeEventTable);
-        eventVarScroll.setPreferredSize(new Dimension(600, 220));
 
         pane1.add(eventVarScroll);
         
@@ -160,6 +164,9 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                             string="";
                         }
                     } catch (NumberFormatException ex) {
+                    }
+                    if (string.equals("-1")) {
+                        string = "";
                     }
 
                     f.setText(string);

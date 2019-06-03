@@ -13,16 +13,16 @@ import jmri.LogixManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2015
  */
-public class DefaultLogixManagerTest {
+public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixManager,jmri.Logix> {
 
     @Test
     public void testCtor() {
-        new DefaultLogixManager();
+       Assert.assertNotNull("exists",l);
     }
 
     @Test
     public void testCreateForms() {
-        LogixManager m = new DefaultLogixManager();
+        LogixManager m = l;
         
         Logix l1 = m.createNewLogix("User name 1");
         Logix l2 = m.createNewLogix("User name 2");
@@ -50,7 +50,7 @@ public class DefaultLogixManagerTest {
 
     @Test
     public void testEmptyUserName() {
-        LogixManager m = new DefaultLogixManager();
+        LogixManager m = l;
         
         Logix l1 = m.createNewLogix("IX01", "");
         Logix l2 = m.createNewLogix("IX02", "");
@@ -68,17 +68,19 @@ public class DefaultLogixManagerTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initIdTagManager();
+        l = new DefaultLogixManager();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
+        l = null;
         jmri.util.JUnitUtil.tearDown();
     }
 }

@@ -1,7 +1,8 @@
 package jmri.jmrit.picker;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
+import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -10,15 +11,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Dave Sand Copyright (C) 2018
  */
-public class PickFrameTest {
-
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickFrame t = new PickFrame("Pick Frame Test");
-        Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(t);
-    }
+public class PickFrameTest extends JmriJFrameTestBase {
 
     @Test
     public void testAddNames() {
@@ -34,7 +27,7 @@ public class PickFrameTest {
         // Add an invalid name
         JTextFieldOperator jto = new JTextFieldOperator(jfo, 0);
         jto.enterText("AAA");
-        Thread add1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "add1");  // NOI18N
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "add1 finished");  // NOI18N
 
@@ -64,27 +57,19 @@ public class PickFrameTest {
         JUnitUtil.dispose(f);
     }
 
-    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(dialogTitle);
-            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
-        });
-        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
-        t.start();
-        return t;
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new PickFrame("Pick Frame Test");
+	}
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

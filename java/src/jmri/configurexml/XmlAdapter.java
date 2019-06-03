@@ -49,7 +49,7 @@ public interface XmlAdapter {
     /**
      * Create a set of configured objects from their XML description, using an
      * auxiliary object.
-     * <P>
+     * <p>
      * For example, the auxilary object o might be a manager or GUI of some type
      * that needs to be informed as each object is created.
      *
@@ -63,7 +63,7 @@ public interface XmlAdapter {
     /**
      * Create a set of configured objects from their XML description, using an
      * auxiliary object.
-     * <P>
+     * <p>
      * For example, the auxilary object o might be a manager or GUI of some type
      * that needs to be informed as each object is created.
      *

@@ -636,7 +636,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     void cancelClearOptionBox() {
         if (cancelClearFrame == null) {
             JButton jButton_Clear = new JButton(Bundle.getMessage("ClearDown"));  // NOI18N
-            JButton jButton_Cancel = new JButton("Cancel");  // NOI18N
+            JButton jButton_Cancel = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
 
             JButton jButton_Exit = new JButton(Bundle.getMessage("Exit"));  // NOI18N
             JLabel jLabel = new JLabel(Bundle.getMessage("InterlockPrompt"));  // NOI18N

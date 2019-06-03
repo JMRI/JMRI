@@ -258,10 +258,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     @Override
     public void dispose() {
-        prefs.setComboBoxLastSelection(selectedScalePref, (String)scaleList.getSelectedItem());
-        prefs.setProperty(customScalePref, "customScale", customScale);
-        prefs.setSimplePreferenceState(speedUnitsKphPref, kphButton.isSelected());
-        prefs.setSimplePreferenceState(dialTypePref, dialButton.isSelected());
+        if(prefs!=null) {
+           prefs.setComboBoxLastSelection(selectedScalePref, (String)scaleList.getSelectedItem());
+           prefs.setProperty(customScalePref, "customScale", customScale);
+           prefs.setSimplePreferenceState(speedUnitsKphPref, kphButton.isSelected());
+           prefs.setSimplePreferenceState(dialTypePref, dialButton.isSelected());
+        }
         _memo.getTrafficController().removeSpeedoListener(this);
         super.dispose();
     }
@@ -1070,7 +1072,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     profileGraphPane.repaint();
                     profileTimer.start();
                     log.info("Requesting throttle");
-                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(profileAddress, profileIsLong, this);
+                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(
+                        new DccLocoAddress(profileAddress, profileIsLong), this, false);
                     if (!requestOK) {
                         log.error("Loco Address in use, throttle request failed.");
                     }
@@ -1132,10 +1135,23 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
 
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
+    @Deprecated
     public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     javax.swing.Timer replyTimer = null;
@@ -1221,7 +1237,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Timeout requesting a throttle.
      */
     synchronized protected void throttleTimeout() {
-        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, profileIsLong, this);
+        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(
+            new DccLocoAddress(profileAddress, profileIsLong), this);
         state = ProfileState.IDLE;
         log.error("Timeout waiting for throttle");
     }
@@ -1284,7 +1301,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 //        }
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
-            //jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
             //throttle.release();
             throttle = null;

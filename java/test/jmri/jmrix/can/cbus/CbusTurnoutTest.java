@@ -212,6 +212,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(3, 0x00);
         m2.setElement(4, 0x07);
         Assert.assertTrue("equals same", m1.equals(m2));
+        
+        m1 = null;
+        m2 = null;
     }
 
     @Test
@@ -226,6 +229,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(3, 0x00);
         m2.setElement(4, 0x07);
         Assert.assertTrue("equals same", m1.equals(m2));
+        
+        m1 = null;
+        m2 = null;
     }
 
     @Test
@@ -240,6 +246,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
         Assert.assertTrue("equals same", m1.equals(m2));
+        
+        m1 = null;
+        m2 = null;
     }
 
     @Test
@@ -256,6 +265,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         Assert.assertTrue("equals same", m1.equals(m2));
         m2.setElement(0, 0x90); // ACON OPC
         Assert.assertFalse("not equals same", m1.equals(m2));
+        
+        m1 = null;
+        m2 = null;
     }
 
     @Test
@@ -271,6 +283,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
         Assert.assertTrue("equals same", m1.equals(m2));
+        
+        m1 = null;
+        m2 = null;
     }
 
     @Test
@@ -286,6 +301,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
         Assert.assertTrue("equals same", m1.equals(m2));
+        
+        m1 = null;
+        m2 = null;
     }
 
     @Test
@@ -317,7 +335,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(0, 0x90); // ACON OPC
         t.setInverted(true);
         t.message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);    
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m = null;
     }
 
     @Test
@@ -348,7 +368,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(0, 0x90); // ACON OPC
         t.setInverted(true);
         t.reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);    
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        r = null;
     }
 
     // with presence of node number should still resolve to short event turnout due to opc
@@ -372,6 +393,21 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(0, 0x99); // ASOF OPC
         t.message(m);
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m.setElement(0, 0x98); // ASON OPC
+        m.setExtended(true);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m.setExtended(false);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        m = null;
         
     }
     
@@ -397,6 +433,19 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.reply(r);
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
         
+        
+        r.setElement(0, 0x98); // ASON OPC
+        r.setExtended(true);
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        r = null;
+        
     }
 
     @Test
@@ -410,7 +459,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=1;
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
         t.setFeedbackMode("DELAYED");
         t.message(m);
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
@@ -419,13 +468,19 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(0, 0x91); // ACOF OPC
         t.message(m);
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "msg Turnout.CLOSED didn't arrive"); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "msg Turnout.CLOSED didn't arrive");
+        
+        m = null;
     }
     
     
     @Test
-    public void testDelayedTurnoutCanReply() throws jmri.JmriException {
+    public void testDelayedTurnoutThrownCanReply() throws jmri.JmriException {
+        
         CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
+        t.setFeedbackMode("DELAYED");
+        
         CanReply m = new CanReply(tcis.getCanid());
         m.setNumDataElements(5);
         m.setElement(0, 0x90); // ACON OPC
@@ -434,17 +489,38 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=1;
-        t.setFeedbackMode("DELAYED");
         t.reply(m);
         Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "reply Turnout.THROWN didn't arrive");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
+            "Turnout.THROWN didn't happen after delayed feedback");
+
+        m = null;
+    }
+    
+    @Test
+    public void testDelayedTurnoutClosedCanReply() throws jmri.JmriException {
         
-        m.setElement(0, 0x91); // ACOF OPC
-        t.reply(m);
-        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "reply Turnout.CLOSED didn't arrive"); 
-    }    
+        CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
+        t.setFeedbackMode("DELAYED");
+        
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, 0x91); // ACOF OPC
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        
+        t.reply(r);
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
+            "closed Turnout.INCONSISTENT didn't happen add retry?"); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
+            " Turnout.CLOSED didn't happen after delayed feedback add retry?");
+        
+        t.dispose();
+        r = null;
+    }
 
     // The minimal setup for log4J
     @Before
@@ -458,8 +534,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     @After
     public void tearDown() {
         t.dispose();
+        t = null;
         tcis=null;
-        // l = null;
         JUnitUtil.tearDown();
     }
     // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class);

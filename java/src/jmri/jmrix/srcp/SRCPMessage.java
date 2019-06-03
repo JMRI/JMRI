@@ -3,7 +3,7 @@ package jmri.jmrix.srcp;
 /**
  * Encodes a message to an SRCP server. The SRCPReply class handles the response
  * from the command station.
- * <P>
+ *
  * The {@link SRCPReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008

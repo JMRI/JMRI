@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ThrottleManager for debugging.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2005
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
@@ -72,7 +72,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface
+     * possible modes specified by the DccThrottle interface
      */
     @Override
     public int supportedSpeedModes() {

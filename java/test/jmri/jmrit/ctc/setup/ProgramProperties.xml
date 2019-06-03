@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>ProgramProperties.xml</comment>
+<entry key="_mSIDL_NormalInternalSensorPattern">IS#:NL</entry>
+<entry key="_mTUL_DispatcherInternalSensorUnlockedIndicatorPattern">IS#:UNLOCKEDIND</entry>
+<entry key="_mSIDI_RightInternalSensorPattern">IS#:RK</entry>
+<entry key="_mCodeButtonDelayTime">0</entry>
+<entry key="_mSIDL_LeftInternalSensorPattern">IS#:LL</entry>
+<entry key="_mSWDI_ReversedInternalSensorPattern">IS#:SR</entry>
+<entry key="_mSWDL_InternalSensorPattern">IS#:LEVER</entry>
+<entry key="_mSIDI_NormalInternalSensorPattern">IS#:NK</entry>
+<entry key="_mFilename">preference:ctc/CTCSystem.xml</entry>
+<entry key="_mSWDI_NormalInternalSensorPattern">IS#:SN</entry>
+<entry key="_mSIDI_CodingAndResponseTime">0</entry>
+<entry key="_mSIDL_RightInternalSensorPattern">IS#:RL</entry>
+<entry key="_mCO_CallOnToggleInternalSensorPattern">IS#:CALLON</entry>
+<entry key="_mSWDI_CodingTimeInMilliseconds">0</entry>
+<entry key="_mTUL_DispatcherInternalSensorLockTogglePattern">IS#:LOCKTOGGLE</entry>
+<entry key="_mSIDI_TimeLockingTimeInMilliseconds">0</entry>
+<entry key="_mSIDI_LeftInternalSensorPattern">IS#:LK</entry>
+<entry key="_mCodeButtonInternalSensorPattern">IS#:CB</entry>
+</properties>

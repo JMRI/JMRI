@@ -17,19 +17,21 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     // ctor has to register for RaspberryPi events
     public RaspberryPiTurnoutManager(String prefix) {
         super();
-        this.prefix=prefix.toUpperCase();
+        this.prefix = prefix;
     }
 
     /**
      * Provides access to the system prefix string.
-     * This was previously called the "System letter"
+     * This was previously called the "System letter".
      */
     @Override
-    public String getSystemPrefix(){ return prefix; }
+    public String getSystemPrefix() {
+        return prefix;
+    }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        Turnout t = new RaspberryPiTurnout(systemName,userName);
+        Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }
 

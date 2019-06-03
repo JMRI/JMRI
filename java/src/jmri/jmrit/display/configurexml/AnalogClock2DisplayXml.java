@@ -81,8 +81,12 @@ public class AnalogClock2DisplayXml
             if (element.getAttribute("scale") != null) {
                 scale = element.getAttribute("scale").getDoubleValue();
             }
-            if (element.getAttribute("color") != null) {
-                color = ColorUtil.stringToColor(element.getAttribute("color").getValue());
+            try {
+                if (element.getAttribute("color") != null) {
+                    color = ColorUtil.stringToColor(element.getAttribute("color").getValue());
+                }
+            } catch (IllegalArgumentException e) {
+                log.error("Invalid color {}; using black", element.getAttribute("color").getValue());
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert positional attribute");

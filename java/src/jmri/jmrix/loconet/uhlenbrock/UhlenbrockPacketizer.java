@@ -204,7 +204,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: " + msg.toString());
+                        log.warn("Ignore LocoNet packet with bad checksum: " + msg.toString());
                         throw new LocoNetMessageException();
                     }
 
@@ -219,7 +219,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     // message is complete, dispatch it !!
                     {
                         log.debug("queue message for notification");
-//log.info("-------------------Uhlenbrock IB-COM Loconet message RECEIVED: "+msg.toString());
+//log.info("-------------------Uhlenbrock IB-COM LocoNet message RECEIVED: "+msg.toString());
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
@@ -278,7 +278,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                         lastMessage = xmtLocoNetList.removeFirst();
                         msg = xmtList.removeFirst();
                     }
-//log.info("-------------------Uhlenbrock IB-COM Loconet message to SEND: "+msg.toString());
+//log.info("-------------------Uhlenbrock IB-COM LocoNet message to SEND: "+msg.toString());
 
                     // input - now send
                     try {

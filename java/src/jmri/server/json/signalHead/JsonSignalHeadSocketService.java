@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -27,59 +28,66 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHeadHttpService> {
 
-    private final HashMap<String, SignalHeadListener> signalHeadListeners = new HashMap<>();
-    private final SignalHeadsListener signalHeadsListener = new SignalHeadsListener();
+    private final HashMap<String, SignalHeadListener> beanListeners = new HashMap<>();
+    private SignalHeadsListener managerListener = null;
     private final static Logger log = LoggerFactory.getLogger(JsonSignalHeadSocketService.class);
 
     public JsonSignalHeadSocketService(JsonConnection connection) {
-        super(connection, new JsonSignalHeadHttpService(connection.getObjectMapper()));
+        this(connection, new JsonSignalHeadHttpService(connection.getObjectMapper()));
     }
 
+    // package protected
+    public JsonSignalHeadSocketService(JsonConnection connection, JsonSignalHeadHttpService service) {
+        super(connection, service);
+    }
+    
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         String name = data.path(NAME).asText();
         if (method.equals(PUT)) {
-            this.connection.sendMessage(this.service.doPut(type, name, data, locale));
+            this.connection.sendMessage(this.service.doPut(type, name, data, locale, id), id);
         } else {
-            this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+            this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
         }
-        if (!this.signalHeadListeners.containsKey(name)) {
+        if (!this.beanListeners.containsKey(name)) {
             SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
             if (signalHead != null) {
                 SignalHeadListener listener = new SignalHeadListener(signalHead);
                 signalHead.addPropertyChangeListener(listener);
-                this.signalHeadListeners.put(name, listener);
+                this.beanListeners.put(name, listener);
             }
         }
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
         log.debug("adding SignalHeadsListener");
-        InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(signalHeadsListener); //add parent listener
-        addListenersToChildren();
+        if (managerListener == null) {
+            managerListener = new SignalHeadsListener();
+            InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(managerListener);
+        }
     }
 
-    private void addListenersToChildren() {
-        InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().stream().forEach((sh) -> { //add listeners to each child (if not already)
-            String shn = sh.getSystemName();
-            if (!signalHeadListeners.containsKey(shn)) {
-                log.debug("adding SignalHeadListener for SignalHead '{}'", shn);
-                signalHeadListeners.put(shn, new SignalHeadListener(sh));
-                sh.addPropertyChangeListener(this.signalHeadListeners.get(shn));
+    private void removeListenersFromRemovedBeans() {
+        SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
+        for (String name : new HashSet<>(beanListeners.keySet())) {
+            if (manager.getBeanBySystemName(name) == null) {
+                beanListeners.remove(name);
             }
-        });
+        }
     }    
 
     @Override
     public void onClose() {
-        signalHeadListeners.values().stream().forEach((reporter) -> {
-            reporter.signalHead.removePropertyChangeListener(reporter);
+        beanListeners.values().stream().forEach((listener) -> {
+            listener.signalHead.removePropertyChangeListener(listener);
         });
-        signalHeadListeners.clear();
+        beanListeners.clear();
+        InstanceManager.getDefault(SignalHeadManager.class).removePropertyChangeListener(managerListener);
+        managerListener = null;
     }
 
     private class SignalHeadListener implements PropertyChangeListener {
@@ -92,19 +100,18 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-//            if (e.getPropertyName().equals("Appearance") || e.getPropertyName().equals("Held")) {
+            try {
                 try {
-                    try {
-                        connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(), getLocale()));
-                    } catch (JsonException ex) {
-                        connection.sendMessage(ex.getJsonMessage());
-                    }
-                } catch (IOException ie) {
-                    // if we get an error, de-register
-                    signalHead.removePropertyChangeListener(this);
-                    signalHeadListeners.remove(this.signalHead.getSystemName());
+                    connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(),
+                            connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                } catch (JsonException ex) {
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
-//            }
+            } catch (IOException ie) {
+                // if we get an error, de-register
+                signalHead.removePropertyChangeListener(this);
+                beanListeners.remove(this.signalHead.getSystemName());
+            }
         }
     }
     
@@ -116,19 +123,17 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(SIGNAL_HEADS, getLocale()));
+                    connection.sendMessage(service.doGetList(SIGNAL_HEADS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
-                        addListenersToChildren();
+                        removeListenersFromRemovedBeans();
                     }
                 } catch (JsonException ex) {
                     log.warn("json error sending SignalHeads: {}", ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
-                // if we get an error, de-register
-                log.debug("deregistering signalHeadsListener due to IOException");
-                InstanceManager.getDefault(SignalHeadManager.class).removePropertyChangeListener(signalHeadsListener);
+                // do nothing; the listeners will be removed as the connection gets closed
             }
         }
     }

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalMastManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
  *

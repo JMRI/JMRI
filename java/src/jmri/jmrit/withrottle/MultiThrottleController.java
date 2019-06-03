@@ -252,26 +252,59 @@ public class MultiThrottleController extends ThrottleController {
             listener.sendPacketToDevice(message.toString());
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        notifyDecisionRequired(address, DecisionType.STEAL);
+    }
 
     /**
+     * A decision is required for Throttle creation to continue.
+     * <p>
+     * Steal / Cancel, Share / Cancel, or Steal / Share Cancel
+     * <p>
      * Callback of a request for an address that is in use.
      * Will initiate a steal only if this MTC is flagged to do so.
      * Otherwise, it will remove the request for the address.
      *
-     * @param address of DCC locomotive involved in the steal
+     * {@inheritDoc}
      */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        if (isStealAddress) {
-            //  Address is now staged in ThrottleManager and has been requested as a steal
-            //  Complete the process
-            InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
-            isStealAddress = false;
-        } else {
-            //  Address has not been requested as a steal yet
-            sendStealAddress();
-            notifyFailedThrottleRequest(address, "Steal Required");
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+        if ( question == DecisionType.STEAL ){
+            if (isStealAddress) {
+                //  Address is now staged in ThrottleManager and has been requested as a steal
+                //  Complete the process
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
+                isStealAddress = false;
+            } else {
+                //  Address has not been requested as a steal yet
+                sendStealAddress();
+                notifyFailedThrottleRequest(address, "Steal Required");
+            }
         }
+        else if ( question == DecisionType.STEAL_OR_SHARE ){ // using the same process as a Steal
+            if (isStealAddress) {
+                //  Address is now staged in ThrottleManager and has been requested as a steal
+                //  Complete the process
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
+                isStealAddress = false;
+            } else {
+                //  Address has not been requested as a steal yet
+                sendStealAddress();
+                notifyFailedThrottleRequest(address, "Steal Required");
+            }
+        }
+        else { // if encountered likely to be DecisionType.SHARE
+            log.info("{} question not supported by WiThrottle.",question );
+        }
+        
+        
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);

@@ -12,10 +12,10 @@ import jmri.jmrix.AbstractProgrammer;
  * Programmer support for DCC++.
  * <p>
  * The read operation state sequence is:
- * <UL>
- * <LI>Send Register Mode / Paged mode /Direct Mode read request
- * <LI>Wait for results reply, interpret
- * </UL>
+ * <ul>
+ * <li>Send Register Mode / Paged mode /Direct Mode read request
+ * <li>Wait for results reply, interpret
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003-2010

@@ -17,6 +17,7 @@ public class Z21AdapterTest {
     public void testCtor() {
         Z21Adapter a = new Z21Adapter();
         Assert.assertNotNull(a);
+        a.dispose();
     }
 
     @Before

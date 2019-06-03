@@ -1,10 +1,9 @@
 package jmri.server.json.consist;
 
 import static jmri.server.json.JSON.ADDRESS;
-import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORWARD;
-import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.IS_LONG_ADDRESS;
 import static jmri.server.json.JSON.POSITION;
 import static jmri.server.json.JSON.SIZE_LIMIT;
@@ -45,18 +44,18 @@ public class JsonConsistHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         if (!this.manager.isConsistManager()) {
-            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager"), id); // NOI18N
         }
-        return this.getConsist(locale, JsonUtilHttpService.addressForString(name));
+        return this.getConsist(locale, JsonUtilHttpService.addressForString(name), id);
     }
 
     /**
      * Change the properties and locomotives of a consist.
      *
      * This method takes as input the JSON representation of a consist as
-     * provided by {@link #getConsist(Locale, jmri.LocoAddress) }.
+     * provided by {@link #getConsist(Locale, jmri.LocoAddress, int) }.
      *
      * If present in the JSON, this method sets the following consist
      * properties:
@@ -76,6 +75,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      *               {@value jmri.server.json.JSON#ADDRESS} and
      *               {@value jmri.server.json.JSON#IS_LONG_ADDRESS} nodes
      * @param data   the consist as a JsonObject
+     * @param id     message id set by client
      * @return the JSON representation of the Consist
      * @throws jmri.server.json.JsonException if there is no consist manager
      *                                        (code 503), the consist does not
@@ -83,9 +83,9 @@ public class JsonConsistHttpService extends JsonHttpService {
      *                                        cannot be saved (code 500).
      */
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         if (!this.manager.isConsistManager()) {
-            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager"), id); // NOI18N
         }
         LocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
@@ -94,11 +94,11 @@ public class JsonConsistHttpService extends JsonHttpService {
             address = JsonUtilHttpService.addressForString(data.path(ADDRESS).asText());
         }
         if (!this.manager.getConsistList().contains(address)) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, name), id);
         }
         Consist consist = this.manager.getConsist(address);
-        if (data.path(ID).isTextual()) {
-            consist.setConsistID(data.path(ID).asText());
+        if (data.path(NAME).isTextual()) {
+            consist.setConsistID(data.path(NAME).asText());
         }
         if (data.path(TYPE).isInt()) {
             consist.setConsistType(data.path(TYPE).asInt());
@@ -123,15 +123,15 @@ public class JsonConsistHttpService extends JsonHttpService {
         try {
             (new ConsistFile()).writeFile(this.manager.getConsistList());
         } catch (IOException ex) {
-            throw new JsonException(500, ex.getLocalizedMessage());
+            throw new JsonException(500, ex.getLocalizedMessage(), id);
         }
-        return this.getConsist(locale, address);
+        return this.getConsist(locale, address, id);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    public JsonNode doPut(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         if (!this.manager.isConsistManager()) {
-            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager"), id); // NOI18N
         }
         LocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
@@ -140,30 +140,30 @@ public class JsonConsistHttpService extends JsonHttpService {
             address = JsonUtilHttpService.addressForString(data.path(ADDRESS).asText());
         }
         this.manager.getConsist(address);
-        return this.doPost(type, name, data, locale);
+        return this.doPost(type, name, data, locale, id);
     }
 
     @Override
-    public void doDelete(String type, String name, Locale locale) throws JsonException {
+    public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         if (!this.manager.isConsistManager()) {
-            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager"), id); // NOI18N
         }
         if (!this.manager.getConsistList().contains(JsonUtilHttpService.addressForString(name))) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, name)); // NOI18N
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, name), id); // NOI18N
         }
         this.manager.delConsist(JsonUtilHttpService.addressForString(name));
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
         if (!this.manager.isConsistManager()) {
-            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager"), id); // NOI18N
         }
-        ArrayNode root = mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         for (LocoAddress address : this.manager.getConsistList()) {
-            root.add(getConsist(locale, address));
+            array.add(getConsist(locale, address, id));
         }
-        return root;
+        return message(array, id);
     }
 
     /**
@@ -190,15 +190,14 @@ public class JsonConsistHttpService extends JsonHttpService {
      *
      * @param locale  The locale to throw exceptions in.
      * @param address The address of the consist to get.
+     * @param id      message id set by client
      * @return The JSON representation of the consist.
      * @throws JsonException This exception has code 404 if the consist does not
      *                       exist.
      */
-    public JsonNode getConsist(Locale locale, LocoAddress address) throws JsonException {
+    public JsonNode getConsist(Locale locale, LocoAddress address, int id) throws JsonException {
         if (this.manager.getConsistList().contains(address)) {
-            ObjectNode root = mapper.createObjectNode();
-            root.put(TYPE, CONSIST);
-            ObjectNode data = root.putObject(DATA);
+            ObjectNode data = mapper.createObjectNode();
             Consist consist = this.manager.getConsist(address);
             data.put(ADDRESS, consist.getConsistAddress().getNumber());
             data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
@@ -212,25 +211,26 @@ public class JsonConsistHttpService extends JsonHttpService {
                 engine.put(POSITION, consist.getPosition(locomotive));
                 engines.add(engine);
             });
-            data.put(ID, consist.getConsistID());
+            data.put(NAME, consist.getConsistID());
             data.put(SIZE_LIMIT, consist.sizeLimit());
-            return root;
+            return message(CONSIST, data, id);
         } else {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, address.toString())); // NOI18N
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, address.toString()), id); // NOI18N
         }
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case CONSIST:
             case CONSISTS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/consist/consist-server.json",
-                        "jmri/server/json/consist/consist-client.json");
+                        "jmri/server/json/consist/consist-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 }

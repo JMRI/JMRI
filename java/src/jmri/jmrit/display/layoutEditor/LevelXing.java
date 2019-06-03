@@ -38,11 +38,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A LevelXing is two track segment on a layout that cross at an angle.
- * <P>
+ * <p>
  * A LevelXing has four connection points, designated A, B, C, and D. At the
  * crossing, A-C and B-D are straight segments. A train proceeds through the
  * crossing on either of these segments.
- * <P>
+ * <p>
  * {@literal
  *    A   D
  *    \\ //
@@ -50,18 +50,18 @@ import org.slf4j.LoggerFactory;
  *    // \\
  *    B   C
  * literal}
- * <P>
+ * <p>
  * Each straight segment carries Block information. A-C and B-D may be in the
  * same or different Layout Blocks.
- * <P>
+ * <p>
  * For drawing purposes, each LevelXing carries a center point and displacements
  * for A and B. The displacements for C = - the displacement for A, and the
  * displacement for D = - the displacement for B. The center point and these
  * displacements may be adjusted by the user when in edit mode.
- * <P>
+ * <p>
  * When LevelXings are first created, there are no connections. Block
  * information and connections are added when available.
- * <P>
+ * <p>
  * Signal Head names are saved here to keep track of where signals are.
  * LevelXing only serves as a storage place for signal head names. The names are
  * placed here by Set Signals at Level Crossing in Tools menu.
@@ -1038,6 +1038,48 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
+        if (!beanReferences.isEmpty()) {
+            displayRemoveWarningDialog(beanReferences, "LevelCrossing");  // NOI18N
+        }
+        return beanReferences.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a level crossing point.
+     * @param pointName Specify the point (A-D) or all (All) points.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getBeanReferences(String pointName) {
+        ArrayList<String> references = new ArrayList<>();
+        if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
+            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
+            if (!getSignalAName().isEmpty()) references.add(getSignalAName());
+        }
+        if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
+            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
+            if (!getSignalBName().isEmpty()) references.add(getSignalBName());
+        }
+        if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
+            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
+            if (!getSignalCName().isEmpty()) references.add(getSignalCName());
+        }
+        if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
+            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
+            if (!getSignalDName().isEmpty()) references.add(getSignalDName());
+        }
+        return references;
+    }
+
     JPopupMenu popup = null;
 
     /**
@@ -1154,7 +1196,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLevelXing(LevelXing.this)) {
+                    if (canRemove() && layoutEditor.removeLevelXing(LevelXing.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -1537,7 +1579,7 @@ public class LevelXing extends LayoutTrack {
 
     @Override
     protected void drawEditControls(Graphics2D g2) {
-        g2.setColor(defaultTrackColor);
+        g2.setColor(layoutEditor.getDefaultTrackColorColor());
         //TODO:uncomment this line g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
 
         if (getConnectA() == null) {

@@ -15,7 +15,7 @@ public class NamedBeanComparatorTest {
 
     @Test
     public void testOneLetterCases() {
-        NamedBeanComparator t = new NamedBeanComparator();
+        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
 
         Turnout it1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         Turnout it10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT10");
@@ -32,7 +32,7 @@ public class NamedBeanComparatorTest {
 
     @Test
     public void testTwoLetterCases() {
-        NamedBeanComparator t = new NamedBeanComparator();
+        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
 
         Turnout i2t1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I2T1");
         Turnout i2t10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I2T10");
@@ -49,7 +49,7 @@ public class NamedBeanComparatorTest {
 
     @Test
     public void testThreeLetterCases() {
-        NamedBeanComparator t = new NamedBeanComparator();
+        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
 
         Turnout i23t1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I23T1");
         Turnout i23t10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I23T10");
@@ -68,11 +68,11 @@ public class NamedBeanComparatorTest {
     
     @Test
     public void testSystemSpecificCase() {
-        NamedBeanComparator t = new NamedBeanComparator();
+        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
 
         // this just checks that the local sort is called
         Turnout it1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
-        Turnout it2 = new jmri.implementation.AbstractTurnout("it2") {
+        Turnout it2 = new jmri.implementation.AbstractTurnout("IT2") {
 
             @Override
             protected void forwardCommandChangeToLayout(int s) {

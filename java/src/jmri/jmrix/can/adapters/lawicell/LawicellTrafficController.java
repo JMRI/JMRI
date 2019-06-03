@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Traffic controller for the LAWICELL protocol.
- * <P>
+ * <p>
  * Lawicell adapters use messages transmitted as an ASCII string of up to 24
  * characters of the form: ;ShhhhNd0d1d2d3d4d5d6d7: The S indicates a standard
  * CAN frame hhhh is the two byte header N or R indicates a normal or remote
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class LawicellTrafficController extends jmri.jmrix.can.TrafficController {
 
     public LawicellTrafficController() {

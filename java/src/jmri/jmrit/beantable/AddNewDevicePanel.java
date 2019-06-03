@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
+ * JPanel to create a new JMRI device (used to add IdTag).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
@@ -35,8 +35,10 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
         p.add(sysNameLabel, c);
+        sysNameLabel.setLabelFor(sysName);
         c.gridy = 1;
         p.add(userNameLabel, c);
+        userNameLabel.setLabelFor(userName);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;

@@ -2,13 +2,9 @@ package jmri.jmrix.openlcb;
 
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import jmri.jmrix.can.TestTrafficController;
+import org.junit.*;
+import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottle class.
@@ -17,7 +13,10 @@ import jmri.jmrix.can.TestTrafficController;
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         
-    private static OlcbSystemConnectionMemo m;
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
 
     /**
      * Test of getIsForward method, of class AbstractThrottle.
@@ -363,7 +362,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Before
     public void setUp() {
-        instance = new OlcbThrottle(new DccLocoAddress(100,true), m);
+        instance = new OlcbThrottle(new DccLocoAddress(100,true), memo);
     }
 
     @Override
@@ -373,18 +372,40 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @BeforeClass
-    public static void preClassInit() {
+    static public void preClassInit() {
         JUnitUtil.setUp();
-        m = OlcbTestInterface.createForLegacyTests();
-        m.configureManagers();
+        JUnitUtil.initInternalTurnoutManager();
+        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+        memo.setTrafficController(new TestTrafficController());
+        memo.configureManagers();
+    
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
     }
 
     @AfterClass
-    public static void postClassTearDown() {
-        if(m != null && m.getInterface() !=null ) {
-           m.getInterface().dispose();
+    public static void postClassTearDown() throws Exception {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
         }
-        m = null;
+        memo = null;
+        connection = null;
+        nodeID = null;
         JUnitUtil.tearDown();
     }
 }

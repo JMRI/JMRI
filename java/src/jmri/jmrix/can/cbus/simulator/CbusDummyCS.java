@@ -13,14 +13,14 @@ import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.cbus.simulator.CbusDummyCSSession;
 import jmri.jmrix.can.cbus.swing.simulator.CsPane;
 import jmri.jmrix.can.TrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Command Station
+ * Simulating a MERG CBUS Command Station.
+ * Can operate as stand-alone or managed via @CbusSimulator.
+ *
  * @author Steve Young Copyright (C) 2018 2019
- * Can operate as stand-alone or managed via @CbusSimulator
  * @see CbusSimulator
  * @see CbusDummyCSSession
  * @since 4.15.2
@@ -45,8 +45,8 @@ public class CbusDummyCS implements CanListener {
     private Boolean _sendOut;
     protected CbusSend send;
 
-    public static ArrayList<String> csTypes = new ArrayList<String>();
-    public static ArrayList<String> csTypesTip = new ArrayList<String>();
+    public ArrayList<String> csTypes = new ArrayList<String>();
+    public ArrayList<String> csTypesTip = new ArrayList<String>();
     
     protected static int DEFAULT_CS_TIMEOUT = 60000; // ms
     protected static int DEFAULT_SESSION_START_SPDDIR = 128;  // default DCC speed direction on start session
@@ -223,7 +223,7 @@ public class CbusDummyCS implements CanListener {
         
         // check for existing session
         int exSession = getExistingSession( rcvdIntAddr, rcvdIsLong );
-        if ( exSession > 0 )  {
+        if ( exSession > -1 )  {
             int locoaddr = rcvdIntAddr;
             if (rcvdIsLong) {
                 locoaddr = locoaddr | 0xC000;
@@ -337,6 +337,9 @@ public class CbusDummyCS implements CanListener {
 
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
             CanFrame test = m;
             passMessage(test);
@@ -345,6 +348,9 @@ public class CbusDummyCS implements CanListener {
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
             CanFrame test = r;
             passMessage(test);
@@ -392,4 +398,5 @@ public class CbusDummyCS implements CanListener {
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyCS.class);
+
 }

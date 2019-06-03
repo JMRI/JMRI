@@ -40,4 +40,5 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         // for DCC Signals
         InstanceManager.store(new MockCommandStation("N"), CommandStation.class);
     }
+
  }

@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Layout Editor Tools provides tools making use of layout connectivity
  * available in Layout Editor panels.
- * <P>
+ * <p>
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  *
  * @author Dave Duchamp Copyright (c) 2007
@@ -181,10 +181,10 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a turnout, including placing the signal icons and
      * optionally setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * This tool assumes left facing signal head icons have been selected, and
      * will rotate the signal head icons accordingly.
-     * <P>
+     * <p>
      * This tool will place throat icons on the right side of the track, and
      * continuing and diverging icons on the outside edge of the turnout.
      */
@@ -1976,7 +1976,7 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a block boundary, including placing the signal
      * icons and setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * Block boundary must be at an Anchor Point on the LayoutEditor panel.
      */
     // operational variables for Set Signals at Block Boundary tool
@@ -2547,12 +2547,12 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a double crossover turnout, including placing the
      * signal icons and setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * This tool assumes left facing signal head icons have been selected, and
      * will rotate the signal head icons accordingly.
-     * <P>
+     * <p>
      * This tool will place icons on the outside edge of the turnout.
-     * <P>
+     * <p>
      * At least one signal at each of the four connection points is required. A
      * second signal at each is optional.
      */
@@ -3622,15 +3622,15 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a level crossing, including placing the signal
      * icons and setup of Simple Signal Logic for each signal head
-     * <P>
+     * <p>
      * This tool assumes left facing signal head icons have been selected, and
      * will rotate the signal head icons accordingly.
-     * <P>
+     * <p>
      * This tool will place icons on the right side of each track.
-     * <P>
+     * <p>
      * Both tracks do not need to be signalled. If one signal for a track, A-C
      * or B-D, the other must also be present.
-     * <P>
+     * <p>
      * Some user adjustment of turnout positions may be needed.
      */
     // operational variables for Set Signals at Level Crossing tool
@@ -3704,7 +3704,7 @@ public class LayoutEditorTools {
         if (setSignalsAtLevelXingFrame == null) {
             setSignalsAtLevelXingOpenFlag = false;
             setSignalsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalsAtLevelXing"), false, true);
-            oneFrameToRuleThemAll(setSignalsAtXoverTurnoutFrame);
+            oneFrameToRuleThemAll(setSignalsAtLevelXingFrame);
             setSignalsAtLevelXingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
             setSignalsAtLevelXingFrame.setLocation(70, 30);
@@ -4402,16 +4402,16 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at throat-to-throat turnouts, including placing the
      * signal icons and setup of signal logic for each signal head
-     * <P>
+     * <p>
      * This tool can only be accessed from the Tools menu. There is no access
      * from a turnout pop-up menu.
-     * <P>
+     * <p>
      * This tool requires a situation where two turnouts are connected throat-
      * to-throat by a single "short" track segment. The actual length of the
      * track segment is not tested. If this situation is not found, and error
      * message is sent to the user. To get started with this the user needs to
      * enter at least one of the two connected turnouts.
-     * <P>
+     * <p>
      * This tool assumes two turnouts connected throat-to-throat, as would be
      * used to represent a double slip turnout. The turnouts may be either
      * left-handed, right-handed, wye, or any pair of these. This tool also
@@ -4419,13 +4419,13 @@ public class LayoutEditorTools {
      * heads will be rotated to face outward--away from the throats. Four sets
      * of one or two signal heads will be placed, one at each of the converging
      * and diverging for each turnout.
-     * <P>
+     * <p>
      * This tool assumes that each of the four tracks is contained in a
      * different block. Things work best if the two throat-to-throat turnouts
      * are in their own separate block, but this is not necessary.
-     * <P>
+     * <p>
      * This tool will place icons on the outside edges of each turnout.
-     * <P>
+     * <p>
      * At least one signal at each of the four connection points is required. A
      * second signal at each is optional.
      */
@@ -4906,7 +4906,6 @@ public class LayoutEditorTools {
             String uname = turnout2.getUserName();
             if ((uname == null) || uname.isEmpty()
                     || !uname.equals(ttotTurnoutName2)) {
-                ttotTurnoutName2 = ttotTurnoutName2.toUpperCase();
                 turnout2ComboBox.setText(ttotTurnoutName2);
             }
             layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtThroatToThroatTurnoutsFrame);
@@ -4957,7 +4956,6 @@ public class LayoutEditorTools {
             }
             String uname = turnout1.getUserName();
             if ((uname == null) || uname.isEmpty() || !uname.equals(ttotTurnoutName1)) {
-                ttotTurnoutName1 = ttotTurnoutName1.toUpperCase();
                 turnout1ComboBox.setText(ttotTurnoutName1);
             }
             // have turnout 1 - get corresponding layoutTurnout
@@ -5013,7 +5011,6 @@ public class LayoutEditorTools {
                 }
                 uname = turnout2.getUserName();
                 if ((uname == null) || uname.isEmpty() || !uname.equals(ttotTurnoutName2)) {
-                    ttotTurnoutName2 = ttotTurnoutName2.toUpperCase();
                     turnout2ComboBox.setText(ttotTurnoutName2);
                 }
                 layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2, false, ttotTurnoutName2, setSignalsAtThroatToThroatTurnoutsFrame);
@@ -5875,16 +5872,16 @@ public class LayoutEditorTools {
     /**
      * Tool to set signals at a three-way turnout, including placing the signal
      * icons and setup of signal logic for each signal head
-     * <P>
+     * <p>
      * This tool can only be accessed from the Tools menu. There is no access
      * from a turnout pop-up menu.
-     * <P>
+     * <p>
      * This tool requires a situation where two turnouts are connected to model
      * a 3-way turnout, with the throat of the second turnout connected to the
      * continuing leg of the first turnout by a very short track segment. The
      * actual length of the track segment is not tested. If this situation is
      * not found, and error message is sent to the user.
-     * <P>
+     * <p>
      * This tool assumes two turnouts connected with the throat of the second
      * turnout connected to the continuing leg of the first turnou, as used to
      * represent a 3-way turnout. The turnouts may be either left-handed, or
@@ -5893,7 +5890,7 @@ public class LayoutEditorTools {
      * the continuing leg of the second turnout, at each of the diverging legs,
      * and at the throat. At the throat, either one or three heads are provided
      * for. So four or six heads will be placed.
-     * <P>
+     * <p>
      * This tool assumes that each of the four tracks, the continuing, the two
      * diverging, and the throat is contained in a different block. The two
      * turnouts used to model the 3-way turnout must be in the same block.
@@ -7284,9 +7281,9 @@ public class LayoutEditorTools {
             eastBoundSensor.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
             if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 } else {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 }
             }
             eastBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
@@ -7295,9 +7292,9 @@ public class LayoutEditorTools {
             westBoundSensor.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
             if (setSensorsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 } else {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 }
             }
             westBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
@@ -7305,11 +7302,11 @@ public class LayoutEditorTools {
         } else {
             if (setSensorsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     eastBoundSensor.getDetailsPanel().setBackground(new Color(200, 255, 255));
                     sensorBlockPanel.add(eastBoundSensor.getDetailsPanel());
                 } else {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     westBoundSensor.getDetailsPanel().setBackground(new Color(255, 255, 200));
                     sensorBlockPanel.add(westBoundSensor.getDetailsPanel());
                 }
@@ -7579,20 +7576,20 @@ public class LayoutEditorTools {
 
         if (boundary.getType() != PositionablePoint.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             } else {
-                eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                westBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             }
         } else {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westBoundSensor.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westBoundSensor.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                eastBoundSensor.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
         }
 
@@ -7866,9 +7863,9 @@ public class LayoutEditorTools {
             }
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 } else {
-                    eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 }
             }
             eastSignalMast.getDetailsPanel().setBackground(new Color(255, 255, 200));
@@ -7880,9 +7877,9 @@ public class LayoutEditorTools {
             }
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                 } else {
-                    westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 }
             }
             westSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
@@ -7890,11 +7887,11 @@ public class LayoutEditorTools {
         } else {    // End Bumper
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                    eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     eastSignalMast.getDetailsPanel().setBackground(new Color(200, 255, 255));
                     signalMastBlockPanel.add(eastSignalMast.getDetailsPanel());
                 } else {
-                    westSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    westSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     westSignalMast.getDetailsPanel().setBackground(new Color(255, 255, 200));
                     signalMastBlockPanel.add(westSignalMast.getDetailsPanel());
                 }
@@ -8124,20 +8121,20 @@ public class LayoutEditorTools {
 
         if (boundary.getType() != PositionablePoint.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             } else {
-                eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                westSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                westSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             }
         } else {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
-                westSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                westSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             } else {
-                eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                eastSignalMast.setBoundaryLabelText(Bundle.getMessage("EndOfBlock") + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
         }
         setSignalMastsAtBlockBoundaryFrame.setPreferredSize(null);
@@ -13426,10 +13423,10 @@ public class LayoutEditorTools {
             if (to != null) {
                 String uname = to.getUserName();
                 String sname = to.getSystemName();
-                if (!inTurnoutNameA.isEmpty() && (sname.equals(inTurnoutNameA.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
+                if (!inTurnoutNameA.isEmpty() && (sname.equals(inTurnoutNameA) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
                     layoutTurnout = layoutTurnout1 = layoutTurnoutA = lt;
                 }
-                if (!inTurnoutNameB.isEmpty() && (sname.equals(inTurnoutNameB.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
+                if (!inTurnoutNameB.isEmpty() && (sname.equals(inTurnoutNameB) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
                     layoutTurnout2 = layoutTurnoutB = lt;
                 }
             }

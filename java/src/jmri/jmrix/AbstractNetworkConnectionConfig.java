@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig.
+ * Abstract base class for common implementation of the NetworkConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -42,14 +42,17 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
 
     /**
-     * Create a connection configuration without a preexisting adapter. Expect
-     * that the subclass setInstance() will fill the adapter member.
+     * Ctor for a functional object with no preexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
      */
     public AbstractNetworkConnectionConfig() {
     }
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -264,8 +267,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * {@inheritDoc}
      */
     @Override
     abstract protected void setInstance();
@@ -275,6 +277,19 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         return adapter.getCurrentPortName();
     }
 
+    protected void checkOptionValueValidity(String i, JComboBox<String> opt) {
+        if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
+            // no, set 1st option choice
+            opt.setSelectedIndex(0);
+            // log before setting new value to show old value
+            log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
+            adapter.setOptionState(i, (String) opt.getSelectedItem());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;
@@ -287,14 +302,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
+                
                 // check that it worked
-                if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
-                    // no, set 1st option choice
-                    opt.setSelectedIndex(0);
-                    // log before setting new value to show old value
-                    log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
-                    adapter.setOptionState(i, (String) opt.getSelectedItem());
-                }
+                checkOptionValueValidity(i, opt);
+                
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }

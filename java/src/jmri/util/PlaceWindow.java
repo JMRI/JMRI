@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Position a Window relative to a component in another window so as
  * to not obscure a component in that window. Typically, the Component
  * is being edited by actions done in the target Window.
- * <p>
+ *
  * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */
@@ -73,18 +73,22 @@ public class PlaceWindow {
             }
         }
         if (log.isDebugEnabled()) {
-            Point pt1 = parent.getLocation();
-            Point pt2 = parent.getLocationOnScreen();
-            log.debug("parentDevice= {}, parentScreenNum #{}: getLocation()= [{}, {}] getLocationOnScreen()= [{}, {}]",
+            try {
+               Point pt1 = parent.getLocation();
+               Point pt2 = parent.getLocationOnScreen();
+               log.debug("parentDevice= {}, parentScreenNum #{}: getLocation()= [{}, {}] getLocationOnScreen()= [{}, {}]",
                     parentDeviceID, parentScreenNum, pt1.x, pt1.y, pt2.x, pt2.y);
-            pt1 = target.getLocation();
-            log.debug("targetDevice= {}, targetScreenNum # {}: getLocation()= [{}, {}]",
+               pt1 = target.getLocation();
+               log.debug("targetDevice= {}, targetScreenNum # {}: getLocation()= [{}, {}]",
                     targetDeviceID, targetScreenNum, pt1.x, pt1.y);
-            GraphicsDevice dgd = _environ.getDefaultScreenDevice();
-            dm = dgd.getDisplayMode();
-            log.debug("\"DefaultScreen= {}: width= {}, height= {}", dgd.getIDstring(), dm.getWidth(), dm.getHeight());
-            Dimension totalScreen = getScreenSizeOf(gd.length - 1);
-            log.debug("\"Total Screen size: width= {}, height= {}", totalScreen.width, totalScreen.height);
+               GraphicsDevice dgd = _environ.getDefaultScreenDevice();
+               dm = dgd.getDisplayMode();
+               log.debug("\"DefaultScreen= {}: width= {}, height= {}", dgd.getIDstring(), dm.getWidth(), dm.getHeight());
+               Dimension totalScreen = getScreenSizeOf(gd.length - 1);
+               log.debug("\"Total Screen size: width= {}, height= {}", totalScreen.width, totalScreen.height);
+            } catch (java.awt.IllegalComponentStateException icse ) {
+                log.debug( "unable to construct debug information due to illegal component state");
+            }
         }
         return parentScreenNum;
     }

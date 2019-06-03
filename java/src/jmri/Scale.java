@@ -28,7 +28,7 @@ import jmri.beans.ConstrainedBean;
  * the change cannot occur, it can throw a <strong>PropertyVetoException</strong>.
  * <p>
  * See {@link jmri.ScaleManager Scale Manager} for manager details.
- * <p>
+ *
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.6
  */

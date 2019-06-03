@@ -78,15 +78,14 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("XT21"));
+            log.debug("by system name: {}", t.getBySystemName("XT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("XT21"));
         Assert.assertTrue(null != t.getByUserName("my name"));
-
     }
 
     @Test
@@ -97,6 +96,18 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testAllowMultipleAdditions(){
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
+    }
+
+    @Test
+    @Override
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    @Override
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
     }
 
     @After

@@ -9,17 +9,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single searchlight signal head via three "Turnout" objects.
- * <P>
+ * <p>
  * "Triple Output RGB" to differentiate from the existing RYG triple output
  * head; The class name fits in with the quad output name which is the
  * equivalent discrete lamp head.
- * <P>
+ * <p>
  * The three Turnout objects are provided during construction, and each drives a
  * specific color (RED, GREEN and BLUE). Normally, "THROWN" is on, and "CLOSED"
  * is off.
- * <P>
+ * <p>
  * Red = Red Green = Green Yellow = Red and Green Lunar = Red, Green and Blue
- * <P>
+ * <p>
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *

@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 /**
  * Defines a simple place to get the JMRI version string.
  * <p>
- * * JMRI version strings are of the form x.y.z-m:
+ * JMRI version strings are of the form x.y.z-m:
  * <ul>
  * <li>x, called the "major" number, is a small integer that increases with time
  * <li>y, called the "minor" number, is a small integer that increases with time
@@ -47,15 +47,15 @@ import java.util.ResourceBundle;
  * will be 1.2.4ish.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright 1997-2016
  */
 public class Version {
@@ -92,7 +92,7 @@ public class Version {
      * Descriptor for non-official build. Included in {@link #name()}, but not
      * in {@link #getCanonicalVersion()}.
      */
-    static final private String NON_OFFICIAL = "ish"; // NOI18N
+    static final public String NON_OFFICIAL = "ish"; // NOI18N
 
     /**
      * The user who built this versionBundle, as determined by the build
@@ -134,7 +134,7 @@ public class Version {
 
     /**
      * Provide the current version string.
-     * <P>
+     * <p>
      * This string is built using various known build parameters, including the
      * versionBundle.{major,minor,build} values, the MODIFIER, the Git revision
      * ID (if known) and the official property
