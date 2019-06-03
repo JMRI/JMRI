@@ -59,6 +59,103 @@ public class LightControlTest {
         
         LightControl l2 = new LightControl(o);
         Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlType(999);
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlType(999);
+        Assert.assertTrue(l1.equals(l2));
+        JUnitAppender.assertWarnMessage("Unexpected _controlType = 999");
+        
+        l1.setControlType(Light.SENSOR_CONTROL);
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlType(Light.SENSOR_CONTROL);
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlSensorName("S2");
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlSensorName("S2");
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlSensorSense(Sensor.ACTIVE);
+        Assert.assertTrue(l1.equals(l2)); // default is ACTIVE
+        
+        l1.setControlSensorSense(Sensor.INACTIVE);
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlSensorSense(Sensor.INACTIVE);
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlType(Light.FAST_CLOCK_CONTROL );
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlType(Light.FAST_CLOCK_CONTROL );
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setFastClockControlSchedule(0,0,0,0); // onHr, OnMin, OffHr, OffMin  default
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setFastClockControlSchedule(1,0,0,0); // onHr, OnMin, OffHr, OffMin
+        Assert.assertFalse(l1.equals(l2));
+        l1.setFastClockControlSchedule(0,1,0,0); // onHr, OnMin, OffHr, OffMin
+        Assert.assertFalse(l1.equals(l2));
+        l1.setFastClockControlSchedule(0,0,1,0); // onHr, OnMin, OffHr, OffMin
+        Assert.assertFalse(l1.equals(l2));
+        l1.setFastClockControlSchedule(0,0,0,1); // onHr, OnMin, OffHr, OffMin
+        Assert.assertFalse(l1.equals(l2));
+        
+        l1.setControlType(Light.TURNOUT_STATUS_CONTROL );
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlType(Light.TURNOUT_STATUS_CONTROL );
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlTurnout("T1");
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlTurnout("T1");
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlTurnoutState(Turnout.CLOSED); // default CLOSED
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlTurnoutState(Turnout.THROWN);
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlTurnoutState(Turnout.THROWN);
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlType(Light.TIMED_ON_CONTROL );
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlType(Light.TIMED_ON_CONTROL );
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlTimedOnSensorName("S1");
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlTimedOnSensorName("S1");
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setTimedOnDuration(77);
+        Assert.assertFalse(l1.equals(l2));
+        l2.setTimedOnDuration(77);
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlType(Light.TWO_SENSOR_CONTROL );
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlType(Light.TWO_SENSOR_CONTROL );
+        Assert.assertTrue(l1.equals(l2));
+        
+        
+        l1.setControlSensorName("S1");
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlSensorName("S1");
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlSensor2Name("S2");
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlSensor2Name("S2");
+        Assert.assertTrue(l1.equals(l2));
+        
+        l1.setControlSensorSense(Sensor.ACTIVE);
+        Assert.assertFalse(l1.equals(l2));
+        l2.setControlSensorSense(Sensor.ACTIVE);
+        Assert.assertTrue(l1.equals(l2));
+        
+        
     }
     
     @Test
@@ -175,7 +272,7 @@ public class LightControlTest {
     }
     
     @Test
-    public void testSingleTurnoutFollower() throws jmri.JmriException {
+    public void testTurnoutFollower() throws jmri.JmriException {
         
         Light l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Turnout t = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("T1");
@@ -495,14 +592,12 @@ public class LightControlTest {
         lc.setControlType(Light.TIMED_ON_CONTROL);
         lc.setControlTimedOnSensorName("S2");
         
-        
         l.setState(Light.ON); // should go OFF when light enabled and Timed Sensor Control activated
         
         // adding the PCL to check the Light changes
         // ie "normal" amount of PCEvents for a state change.
         // NOT testing the actual PCListeners
         l.addPropertyChangeListener(new ControlListen());
-        
         
         l.addLightControl(lc);
         l.activateLight();
@@ -533,7 +628,6 @@ public class LightControlTest {
         
         JUnitUtil.waitFor(()->{return Light.OFF == l.getState();},"Light goes back OFF after timer");
         Assert.assertEquals("10 Light PropertyChangeEvents", 10, _listenerkicks );
-        
         
         l.setEnabled(false);
         s.setState(Sensor.ON);
