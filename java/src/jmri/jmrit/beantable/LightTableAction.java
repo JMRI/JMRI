@@ -686,21 +686,20 @@ public class LightTableAction extends AbstractTableAction<Light> {
             // light control table
             JPanel panel3 = new JPanel();
             panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-            JPanel panel31 = new JPanel();
             lightControlTableModel = new LightControlTableModel();
             JTable lightControlTable = new JTable(lightControlTableModel);
             lightControlTable.setRowSelectionAllowed(false);
-            lightControlTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550, 100));
+            lightControlTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 100));
             TableColumnModel lightControlColumnModel = lightControlTable.getColumnModel();
             TableColumn typeColumn = lightControlColumnModel.getColumn(LightControlTableModel.TYPE_COLUMN);
             typeColumn.setResizable(true);
-            typeColumn.setMinWidth(110);
-            typeColumn.setMaxWidth(150);
+            typeColumn.setMinWidth(130);
+            typeColumn.setMaxWidth(170);
             TableColumn descriptionColumn = lightControlColumnModel.getColumn(
                     LightControlTableModel.DESCRIPTION_COLUMN);
             descriptionColumn.setResizable(true);
             descriptionColumn.setMinWidth(270);
-            descriptionColumn.setMaxWidth(340);
+            descriptionColumn.setMaxWidth(380);
             ButtonRenderer buttonRenderer = new ButtonRenderer();
             lightControlTable.setDefaultRenderer(JButton.class, buttonRenderer);
             TableCellEditor buttonEditor = new ButtonEditor(new JButton());
@@ -714,8 +713,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             removeColumn.setResizable(false);
             removeColumn.setMinWidth(testButton.getPreferredSize().width);
             JScrollPane lightControlTableScrollPane = new JScrollPane(lightControlTable);
-            panel31.add(lightControlTableScrollPane, BorderLayout.CENTER);
-            panel3.add(panel31);
+            panel3.add(lightControlTableScrollPane);
             JPanel panel35 = new JPanel();
             panel35.setLayout(new FlowLayout());
             panel35.add(addControl = new JButton(Bundle.getMessage("LightAddControlButton")));
@@ -1096,8 +1094,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return; // without creating
         }
         // set control information if any
-        clearLightControlsTable(); // remove all controls from local list
         setLightControlInformation(g);
+        clearLightControlsTable(); // remove all controls from local list
         g.activateLight();
         lightCreatedOrUpdated = true;
 
@@ -1597,6 +1595,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
         turnoutBox.setVisible(false);
         panel34.setVisible(false);
         typeBox.setSelectedIndex(ctype);
+        createControl.setEnabled(true);
+        updateControl.setEnabled(true);
         
         if (ctype==Light.SENSOR_CONTROL) {
             // set up panel for sensor control
@@ -1690,6 +1690,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
             f1Label.setText(Bundle.getMessage("LightNoneSelected"));
             defaultControlIndex = Light.NO_CONTROL;
             f2Label.setVisible(false);
+            createControl.setEnabled(false);
+            updateControl.setEnabled(false);
         } else {
             log.error("Unexpected control type in controlTypeChanged: {}", ctype);
         }
