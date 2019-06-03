@@ -1096,8 +1096,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return; // without creating
         }
         // set control information if any
+        clearLightControlsTable(); // remove all controls from local list
         setLightControlInformation(g);
-        clearLightControls();
         g.activateLight();
         lightCreatedOrUpdated = true;
 
@@ -1204,7 +1204,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         inEditMode = true;
         // get information for this Light
         userName.setText(g.getUserName());
-        clearLightControls();
+        clearLightControlsTable(); // remove all controls from local list
         
         // Get a copy of the LightControl list
         controlList = new ArrayList<>();
@@ -1294,7 +1294,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (inEditMode && !lightControlChanged) {
             return;
         }
-        g.clearLightControls();
+        g.clearLightControls(); // clear list on Light
         for (int i = 0; i < controlList.size(); i++) {
             LightControl control = controlList.get(i);
             control.setParentLight(g);
@@ -1326,7 +1326,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (addFrame != null) {
             addFrame.setVisible(false); // hide first for cleaner display
         }
-        clearLightControls();
+        clearLightControlsTable(); // remove all controls from local list
         status2.setText("");
         // remind to save, if Light was created or edited
         if (lightCreatedOrUpdated) {
@@ -1345,7 +1345,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
     }
 
-    private void clearLightControls() {
+    private void clearLightControlsTable() {
         log.debug("Clear LightControls");
         for (int i = controlList.size(); i > 0; i--) {
             controlList.remove(i - 1);
