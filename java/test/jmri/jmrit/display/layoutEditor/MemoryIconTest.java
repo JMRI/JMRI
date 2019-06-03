@@ -43,7 +43,11 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
     @After
     @Override
     public void tearDown() {
-        to.getEditor().dispose();
+        if(to!=null) {
+           to.getEditor().dispose();
+           to = null;
+           p = null;
+        }
         JUnitUtil.tearDown();
     }
 
