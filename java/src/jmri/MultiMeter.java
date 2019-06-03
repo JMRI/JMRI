@@ -76,7 +76,7 @@ public interface MultiMeter extends PropertyChangeProvider {
     /**
      * get the voltage.
      *
-     * @returns v the voltage in volts.
+     * @return v the voltage in volts.
      */
     public float getVoltage();
 

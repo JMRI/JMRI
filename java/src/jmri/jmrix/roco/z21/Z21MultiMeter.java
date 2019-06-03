@@ -89,7 +89,7 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override
     public CurrentUnits getCurrentUnits() {
-        return  CurrentUnits.CURRENT_UNITS_AMPS;
+        return  CurrentUnits.CURRENT_UNITS_MILLIAMPS;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21MultiMeter.class);
