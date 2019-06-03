@@ -97,9 +97,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
     public void setManager(@Nonnull Manager<Light> man) {
         if (man instanceof LightManager) {
             lightManager = (LightManager) man;
-            if (m != null) {
-                m.setManager(lightManager);
-            }
         }
     }
 

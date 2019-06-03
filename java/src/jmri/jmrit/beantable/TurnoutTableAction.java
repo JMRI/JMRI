@@ -141,9 +141,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     public void setManager(@Nonnull Manager<Turnout> man) {
         if (man instanceof TurnoutManager) {
             turnManager = (TurnoutManager) man;
-            if (m != null) {
-                m.setManager(turnManager);
-            }
         }
     }
 

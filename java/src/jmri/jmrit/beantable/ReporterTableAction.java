@@ -60,9 +60,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     public void setManager(@Nonnull Manager<Reporter> man) {
         if (man instanceof ReporterManager) {
             reportManager = (ReporterManager) man;
-            if (m != null) {
-                m.setManager(reportManager);
-            }
         }
     }
 
