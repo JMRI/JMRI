@@ -344,7 +344,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      */
     @Override
     public SortedSet<DestinationPoints> getNamedBeanSet() {
-        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
             List<String> uidList = e.getDestinationUniqueId();
             for (String uid : uidList) {
@@ -796,7 +796,10 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                 for (int i = 0; i < lgx.getNumConditionals(); i++) {
                     String cdlName = lgx.getConditionalByNumberOrder(i);
                     jmri.implementation.DefaultConditional cdl = (jmri.implementation.DefaultConditional) lgx.getConditional(cdlName);
-                    String cdlUserName = (cdl.getUserName() == null) ? "" : cdl.getUserName();
+                    String cdlUserName = cdl.getUserName();
+                    if (cdlUserName == null) {
+                        cdlUserName = "";
+                    }
                     for (jmri.ConditionalVariable var : cdl.getStateVariableList()) {
                         if (var.getBean() == dPair.dp) {
                             String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
@@ -1423,16 +1426,16 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {
+    public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {
+    public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener> listeners = new ArrayList<>();
+    final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
     
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);

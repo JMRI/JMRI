@@ -1,20 +1,23 @@
 package jmri.jmrix.openlcb;
 
-import jmri.util.JUnitUtil;
+import java.util.Iterator;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
-import jmri.util.PropertyChangeListenerScaffold;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.Turnout;
+import jmri.jmrix.can.CanMessage;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
+import jmri.util.PropertyChangeListenerScaffold;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
@@ -323,14 +326,14 @@ public class OlcbTurnoutTest {
     public void testSystemSpecificComparisonOfSpecificFormats() {
 
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Turnout> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Turnout> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
         set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
         set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
         set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
         
-        java.util.Iterator<Turnout> it = set.iterator();
+        Iterator<Turnout> it = set.iterator();
         
         Assert.assertEquals("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MT1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());

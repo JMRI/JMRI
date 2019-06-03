@@ -1283,7 +1283,7 @@ public class DefaultConditional extends AbstractNamedBean
             contentPanel.add(panel);
 
             panel = new JPanel();
-            panel.add(new JLabel(getUserName() + " (" + getSystemName() + ")"));
+            panel.add(new JLabel(getFullyFormattedDisplayName()));
             contentPanel.add(panel);
 
             panel = new JPanel();

@@ -1113,7 +1113,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
         }
         // provide feedback to user
-        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + " (" + uName + ")";
+        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getFullyFormattedDisplayName();
         // create additional lights if requested
         if (numberOfLights > 1) {
             String sxName = "";

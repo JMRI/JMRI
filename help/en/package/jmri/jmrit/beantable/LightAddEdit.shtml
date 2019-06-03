@@ -401,8 +401,8 @@
         <li><strong>02:00 .. 02:59</strong> The latest action time is 02:00 so Light ON</li>
         <li><strong>03:00 .. 03:59</strong> The latest action time is 03:00 so Light OFF</li>
         <li><strong>04:00 .. 23:59</strong> The latest action time is 04:00 so Light OFF</li>
-          
-          
+        </ul>
+        
 
     <h4><a name="lightcontroltimedon" id="lightcontroltimedon">Light Controlled by Timed ON</a></h4>
 

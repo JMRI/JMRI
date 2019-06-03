@@ -126,15 +126,16 @@ public class MatrixSignalMastTest {
         m.setMatrixMastCommandDelay(0);
         // wait for outputs and outputbits to be set
 
-        log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear")));
-        Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        //log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        Assert.assertEquals("check bitarray for Stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         m.setAspect("Clear");
-        Assert.assertEquals("check clear", "Clear", m.getAspect());
-        Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState()); // it12 state is fragile
+        Assert.assertEquals("check Clear", "Clear", m.getAspect());
+        JUnitUtil.waitFor( ()->{ return it11.getCommandedState() == Turnout.CLOSED; }, "it11 for Clear" );
         m.setAspect("Stop");
-        Assert.assertEquals("check stop", "Stop", m.getAspect());
-        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // it12 state is fragile
+        Assert.assertEquals("check Stop", "Stop", m.getAspect());
+        JUnitUtil.waitFor( ()->{ return it12.getCommandedState() == Turnout.THROWN; }, "it12 for Stop" );
+        // it12 state is more fragile
     }
 
     public void testAspectAttributes() {
@@ -159,6 +160,7 @@ public class MatrixSignalMastTest {
         Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
         m.setMatrixMastCommandDelay(150);
         Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(0);
     }
 
     // from here down is testing infrastructure
@@ -175,6 +177,6 @@ public class MatrixSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+    //private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
 
 }
