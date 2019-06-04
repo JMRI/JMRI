@@ -130,7 +130,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private ClockControl clockControl = null;
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provides access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
         return powerManager;
@@ -143,7 +143,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private PowerManager powerManager;
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
+     * Provides access to the SensorManager for this particular connection.
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -157,8 +157,8 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private SensorManager sensorManager = null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;

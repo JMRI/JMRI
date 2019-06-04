@@ -192,6 +192,20 @@
         <dd>Brake</dd>
       </dl>
 
+      <a name="tools" id="tools"></a>
+      <h2>JMRI TMCC Tools</h2>
+
+      <ul>
+        <li>TMCC network traffic can be viewed with <a href=
+        "../../../package/jmri/jmrix/tmcc/serialmon/SerialMonFrame.shtml">
+        Acela Monitor</a></li>
+
+        <li>Messages can be sent to TMCC devices with <a href=
+        "../../../package/jmri/jmrix/tmcc/packetgen/SerialPacketGenFrame.shtml">
+        Send Acela Packets</a></li>
+
+      </ul>
+
       <a name="documentation" id="documentation"></a>
       <h3>TMCC New Entry Format Summary</h3>
       <p>Here's a summary on how to enter the address for a new item (eg. Turnouts):</p>

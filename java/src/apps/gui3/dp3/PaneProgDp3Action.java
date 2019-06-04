@@ -74,7 +74,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a frame for selecting the information
  * needed to open a PaneProgFrame in service mode.
- * <P>
+ * <p>
  * The class name is a historical accident, and probably should have included
  * "ServiceMode" or something.
  *
@@ -647,7 +647,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
     /**
      * Enable the read/write buttons.
      * <p>
-     * In addition, if a programming mode pane is present, it's "set" button is
+     * In addition, if a programming mode pane is present, its "set" button is
      * enabled.
      *
      * @param enable Are reads possible? If false, so not enable the read

@@ -6,11 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for NCE systems
- * <P>
+ * Implement LightManager for NCE systems
+ * <p>
  * System names are "NLnnnnn", where N is the user configurable system prefix,
  * nnnnn is the stationary decoder address.
- * <P>
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Dave Duchamp Copyright (C) 2010
@@ -124,8 +124,7 @@ public class NceLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceLightManager.class);

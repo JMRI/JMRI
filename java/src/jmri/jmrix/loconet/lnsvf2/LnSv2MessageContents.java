@@ -161,7 +161,7 @@ public class LnSv2MessageContents {
      * Check a LocoNet message to determine if it is a valid SV Programming Format 
      *      2 message.
      * @param m  LocoNet message to check
-     * @return true if Loconet message m is a supported SV Programming Format 2 
+     * @return true if LocoNet message m is a supported SV Programming Format 2
      *      message, else false.
      */
     public static boolean isSupportedSv2Message(LocoNetMessage m) {

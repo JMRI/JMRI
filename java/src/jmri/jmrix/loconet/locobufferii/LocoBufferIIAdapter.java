@@ -26,8 +26,7 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"19,200 baud (Sw1 off, Sw3 off)",
-            "57,600 baud (Sw1 on, Sw3 off)"}; // TODO I18N
+        return new String[]{Bundle.getMessage("Baud19200LBII"), Bundle.getMessage("Baud57600LBII")};
     }
 
     public String option1Name() {

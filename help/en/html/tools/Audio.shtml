@@ -191,29 +191,32 @@
         system:</li>
       </ul>
 
-      <h4>Mac OS X</h4>Those versions of Mac OS X that are suitable
-      for JMRI already have a suitable version of OpenAL installed.
+      <h4>macOS</h4>Those versions of macOS (aka Mac OS X) that are
+      suitable for JMRI already have a suitable version of OpenAL
+      installed.
 
-      <h4>MS Windows</h4>By default, OpenAL will require installing
+      <h4>MS Windows</h4>
+      <p>By default, OpenAL will require installing
       on your system. Certain sound cards, notably those
       manufactured by Creative Labs and NVidia, will normally
       already come with suitable OpenAL drivers. If OpenAL is not
       installed, <a href="http://www.openal.org/downloads/">it
       should be downloaded</a> from OpenAL.org and then installed
-      on your system.
+      on your system.</p>
 
-      <h4>Linux</h4>Depending on the provider of your Linux
+      <h4>Linux</h4>
+      <p>Depending on the provider of your Linux
       distribution, OpenAL might already be included in the default
       package. If not, the 'libopenal-dev' package should be
       installed using the package manager on your system. For
       Debian-based distributions, this will typically be achieved
-      by the command:
+      by the command:</p>
       <pre>
       $ sudo apt-get install libopenal-dev
       </pre>
 
-      <p>For Ubuntu, the 'Universe' repository should be enabled.
-      </p><!--#include virtual="/Footer" -->
+      <p>For Ubuntu, the 'Universe' repository should be enabled.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

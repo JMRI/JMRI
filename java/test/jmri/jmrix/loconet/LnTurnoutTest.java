@@ -75,6 +75,25 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnis.sendTestMessage(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
+    @Test
+    public void checkIncomingWithAck() {
+        // notify the Ln that somebody else changed it...using OPC_SW_ACK
+        LocoNetMessage m = new LocoNetMessage(4);
+        m.setOpCode(0xbd);
+        m.setElement(1, 0x14);     // set CLOSED
+        m.setElement(2, 0x30);
+        m.setElement(3, 0x00);
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
+
+        m = new LocoNetMessage(4);
+        m.setOpCode(0xbd);
+        m.setElement(1, 0x14);     // set THROWN
+        m.setElement(2, 0x10);
+        m.setElement(3, 0x00);
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
 
     // LnTurnout test for incoming status message
     @Test
@@ -98,6 +117,32 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(3, 0x7b);
         lnis.sendTestMessage(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
+
+    }
+
+    // LnTurnout test for incoming status message
+    @Test
+    public void testLnTurnoutStatusMsgAck() {
+        // prepare an interface
+        // set closed
+        try {
+            t.setProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY, true);
+            t.setCommandedState(jmri.Turnout.THROWN);
+        } catch (Exception e) {
+            log.error("TO exception: " + e);
+        }
+        Assert.assertTrue(lnis.outbound.elementAt(0)
+                .toString().equals("BD 14 10 00"));  // thrown loconet message
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+
+        // notify the Ln that somebody else changed it...
+        LocoNetMessage m = new LocoNetMessage(4);
+        m.setOpCode(0xb1);
+        m.setElement(1, 0x14);     // set thrown
+        m.setElement(2, 0x10);
+        m.setElement(3, 0x7b);
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
 
     }
 
@@ -252,6 +297,63 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 14 10 00");  // THROWN/ON loconet message
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
+
+    // test that only one message is sent when property SendOnAndOff is false.
+    @Test
+    public void testPropertySet() throws InterruptedException {
+        t.setBinaryOutput(false);
+        t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, false);
+        t.setCommandedState(jmri.Turnout.THROWN);
+
+        // Make sure that timed message has fired by waiting
+        synchronized (this) {
+            this.wait(LnTurnout.METERINTERVAL + 25);
+        }
+
+        // check for messages
+        Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
+        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "B0 14 10 00");  // THROWN/ON loconet message
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
+
+    // test that only two messages are sent when property SendOnAndOff is true.
+    @Test
+    public void testPropertySet1() throws InterruptedException {
+        t.setBinaryOutput(false);
+        t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, true);
+        t.setCommandedState(jmri.Turnout.THROWN);
+
+        // Make sure that timed message has fired by waiting
+        synchronized (this) {
+            this.wait(LnTurnout.METERINTERVAL + 25);
+        }
+
+        // check for messages
+        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
+        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "B0 14 00 00");  // THROWN/OFF loconet message
+        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
+
+    // test that only two messages are sent when property SendOnAndOff is true, even if (ulenbook) binary set.
+    @Test
+    public void testPropertySet2() throws InterruptedException {
+        t.setBinaryOutput(true);
+        t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, true);
+        t.setCommandedState(jmri.Turnout.THROWN);
+
+        // Make sure that timed message has fired by waiting
+        synchronized (this) {
+            this.wait(LnTurnout.METERINTERVAL + 25);
+        }
+
+        // check for messages
+        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
+        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "B0 14 00 00");  // THROWN/OFF loconet message
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 

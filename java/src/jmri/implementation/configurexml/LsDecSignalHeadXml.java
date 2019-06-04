@@ -32,7 +32,7 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     }
 
     /**
-     * Default implementation for storing the contents of a LsDecSignalHead
+     * Default implementation for storing the contents of a LsDecSignalHead.
      *
      * @param o Object to store, of type LsDecSignalHead
      * @return Element containing the complete info
@@ -108,7 +108,7 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
                         .getBeanBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
-            log.error("systemName is already registered: " + sys);
+            log.error("systemName is already registered: {}", sys);
         } else {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         }

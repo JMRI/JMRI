@@ -220,7 +220,7 @@ INCOH&#201RENT si l'un des deux capteurs est actif, ou les deux inactifs).
 
 <h3>Bus Syst&#232;me et Messages d'Entr&#233;e</h3>
 
-Quelques syst&#232;mes DCC ex: Loconet, XpressNet et syst&#232;me NCE, peuvent g&#233;rer les commandes 
+Quelques syst&#232;mes DCC ex: LocoNet, XpressNet et syst&#232;me NCE, peuvent g&#233;rer les commandes
 d'aiguillages provenant de multiple sources. Quand c'est r&#233;gl&#233; sur r&#233;trosignalisation "MONITORING", JMRI cherche celles-ci
 pour la confirmation de l'&#233;tat correct des aiguillages: le message envoy&#233; est consid&#233;r&#233; comme
 confirmation que l'aiguillage a chang&#233;. 

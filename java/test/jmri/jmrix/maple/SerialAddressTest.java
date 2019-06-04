@@ -12,7 +12,7 @@ import org.junit.Test;
  * JUnit tests for the SerialAddress utility class.
  *
  * @author	Dave Duchamp Copyright 2004
-  */
+ */
 public class SerialAddressTest {
 
     @Test

@@ -32,6 +32,20 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  */
 abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConfig {
+
+    /**
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
+     */
+    public AbstractUsbConnectionConfig(UsbPortAdapter p) {
+        adapter = p;
+        //addToActionList();
+        log.debug("*	AbstractUSBConnectionConfig({})", p);
+    }
+
     /**
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
@@ -39,12 +53,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     public AbstractUsbConnectionConfig() {
         this(null);
         log.debug("*	AbstractUSBConnectionConfig()");
-    }
-
-    public AbstractUsbConnectionConfig(UsbPortAdapter p) {
-        adapter = p;
-        //addToActionList();
-        log.debug("*	AbstractUSBConnectionConfig({})", p);
     }
 
     protected UsbPortAdapter adapter = null;
@@ -57,11 +65,12 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (!init) {
             if (adapter.getSystemConnectionMemo() != null) {
                 systemPrefixField.addActionListener(new ActionListener() {

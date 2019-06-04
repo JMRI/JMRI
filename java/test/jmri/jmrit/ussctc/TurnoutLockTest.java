@@ -9,7 +9,7 @@ import org.junit.*;
  * Tests for OccupancyLock classes in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class TurnoutLockTest {
 
     @Test

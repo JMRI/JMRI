@@ -145,9 +145,9 @@
         Matrix</a></dt>
 
         <dd><span class="since">since 4.6</span>
-          <a href="images/MatrixMastPanel-3t.png"><img src=
-          "images/MatrixMastPanel-3t.png" width="256" height="251"
-          hspace="0" vspace="0" alt=
+          <a href="images/MatrixMastPanel-3t.png"><img height="297" src=
+                  "images/MatrixMastPanel-3t.png" width="298"
+                                                       hspace="0" vspace="0" alt=
           "Output Matrix Decoder panel"></a><br>
           This Driver creates a truth table to set from 1 to 6
           outputs per Aspect. To define 8 different patterns, you
@@ -172,6 +172,10 @@
 
             <li>For each Aspect, Checkboxes allow you to set the
             corresponding position of the outputs, hence the Matrix name</li>
+
+            <li><span class="since">since 4.15.7</span>Set a mast-specific
+              delay that is applied between every output command
+            </li>
           </ol>
           
           For now, only turnouts can be

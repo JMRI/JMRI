@@ -22,7 +22,7 @@ import java.util.TreeMap;
  *       Trains -- Train characteristics.
  *         Stops -- A junction between a train and a station that contains arrival and departure times.
  * </pre>
- * <p>
+ *
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableDataManager {

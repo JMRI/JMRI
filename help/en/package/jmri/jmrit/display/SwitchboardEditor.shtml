@@ -30,9 +30,10 @@
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
       To create a new Switchboard, from the Panels menu, choose New Panel &gt; Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 24 opens.<br>
-      If any Turnouts were defined in JMRI beforehand, those switches will immediately show their current state and let you control them.</p>
+      If any Turnouts were defined in JMRI beforehand, those switches will immediately show
+      their current state and let you control them.</p>
       <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="247" height="214"
-                                                  align="right"></a>
+      align="right"></a>
       <p>To the left, a small Switchboard Editor pane allows you to refine what this Switchboard will control.
       Select an option for:</p>
       <ul>
@@ -74,8 +75,9 @@
       </ul>
 
       <p>Remember to save your setup and configured items by choosing Store Panels... from the File menu.<br>
-      You can have your Switchboards open automatically upon startup by setting them as as a Startup Action under Preferences &gt; Startup.</p>
-      <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">PanelPro help page</a>.
+      You can have your Switchboards open automatically upon startup by setting them as as an "Open File"
+      Startup Action under Preferences &gt; Startup.</p>
+      <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">PanelPro help page</a>.
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -28,7 +28,7 @@ import jmri.util.swing.JmriColorChooser;
  * A dialog to color a Component in a Window.  The ColorChooser
  * interactively modifies the color of the component on the window
  * until the user either cancels or decides to keep the changes.
- * <p>
+ *
  * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */

@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 /**
  * PositionableLabel is a JLabel that can be dragged around the inside of the
  * enclosing Container using a right-drag.
- * <P>
+ * <p>
  * The positionable parameter is a global, set from outside. The 'fixed'
  * parameter is local, set from the popup here.
  *

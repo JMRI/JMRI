@@ -40,11 +40,11 @@ import org.slf4j.LoggerFactory;
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
  * to allow trains to change from one straight track to the other, as well as
  * going straight across.
- * <P>
+ * <p>
  * A LayoutSlip has four connection points, designated A, B, C, and D. A train
  * may proceed between A and D, A and C, B and D and in the case of
  * double-slips, B and C.
- * <P>
+ * <p>
  * {@literal
  * \\      //
  *   A==-==D
@@ -54,15 +54,15 @@ import org.slf4j.LoggerFactory;
  *   B==-==C
  *  //      \\
  * literal}
- * <P>
+ * <p>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
  * A, and the displacement for D = - the displacement for B. The center point
  * and these displacements may be adjusted by the user when in edit mode.
- * <P>
+ * <p>
  * When LayoutSlips are first created, there are no connections. Block
  * information and connections are added when available.
- * <P>
+ * <p>
  * SignalHead names are saved here to keep track of where signals are.
  * LayoutSlip only serves as a storage place for SignalHead names. The names are
  * placed here by Set Signals at Level Crossing in Tools menu.
@@ -881,7 +881,7 @@ public class LayoutSlip extends LayoutTurnout {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
+                    if (canRemove() && layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement Light Manager for DCC++ systems.
+ * Implement LightManager for DCC++ systems.
  * <p>
  * System names are "DxppSnnn", where Dx is the system prefix and nnn is the sensor number without padding.
  * <p>
@@ -130,8 +130,7 @@ public class DCCppLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

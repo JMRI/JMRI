@@ -121,21 +121,23 @@
         operations to configure the Digitrax lock feature so you
         can use it. (Normally you'd take the locomotive apart so as
         to be able to load the Digitrax CV16 value).</li>
-      </ul>Finally, the bottom part of the page allows you to
-      control the programming mode in use.
+      </ul>
+      <p>Finally, the bottom part of the page allows you to
+      control the programming mode in use.</p>
 
       <p>Although it's possible to use this tool in "Ops mode"
       (programming on the main), in that case it's not able to
       confirm operations, so one can't be 100% sure that the right
-      decoder is selected. <a name="digitraxproposal" id=
-      "digitraxproposal"></a></p>
+      decoder is selected.</p>
 
-      <h2>Digitrax's Original Proposal</h2>DCC users sometimes want
+      <a name="digitraxproposal" id="digitraxproposal"></a>
+      <h2>Digitrax's Original Proposal</h2>
+      <p>DCC users sometimes want
       to install more than one decoder in a single locomotive. One
       common case is using separate decoders for motor control and
       sound. Because these decoders often need to have their CVs
       configured separately, a mechanism is needed to communicate
-      with only one at a time.
+      with only one at a time.</p>
 
       <p>This mechanism must be able to:</p>
 

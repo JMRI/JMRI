@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring NceLightManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2010
  */
 public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {

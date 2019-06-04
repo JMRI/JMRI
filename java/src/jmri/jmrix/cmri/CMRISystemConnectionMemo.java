@@ -239,7 +239,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Normalize a C/MRI system name.
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
      *

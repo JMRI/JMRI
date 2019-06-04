@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light class for X10-based subclasses.
- * <P>
+ * <p>
  * Uses X10 dimming commands to set intensity unless the value is 0.0 or 1.0, in
  * which case it uses on/off commands only.
  * <p>
@@ -42,7 +42,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      * @param systemName system name
      * @param tc traffic controller
@@ -55,7 +55,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      * @param systemName system name
      * @param tc traffic controller

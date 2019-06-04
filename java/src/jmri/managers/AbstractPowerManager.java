@@ -11,7 +11,7 @@ import java.time.Instant;
  * Base PowerManager implementation for controlling layout power.
  * <p>
  * These are registered when they are added to the InstanceManager
- * <P>
+ *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
 abstract public class AbstractPowerManager implements PowerManager {

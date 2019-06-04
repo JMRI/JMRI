@@ -110,7 +110,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
 
     /**
      * Set the held property of the signal mast.
-     * <P>
+     * <p>
      * Note that this does not directly effect the output on the layout; the
      * held property is a local variable which effects the aspect only via
      * higher-level logic.

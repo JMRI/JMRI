@@ -21,9 +21,9 @@ import org.junit.Before;
  * <p>
  * Just tests Elements, not actual files. Based upon a stub by Bob Jacobsen
  * Copyright 2008
- * <p>
+ *
  * @author Bob Coleman Copyright 2012
-  */
+ */
 public class BlockManagerXmlTest {
 
     @Test
@@ -439,4 +439,5 @@ public class BlockManagerXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

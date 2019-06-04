@@ -6556,9 +6556,9 @@ public class LlnmonTest {
         JUnitUtil.initReporterManager();
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        lntm = new LnTurnoutManager(lnis, lnis, "L", false);
-        lnsm = new LnSensorManager(lnis, "L");
-        lnrm = new LnReporterManager(lnis, "L");
+        lntm = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        lnsm = new LnSensorManager(lnis, memo.getSystemPrefix());
+        lnrm = new LnReporterManager(lnis, memo.getSystemPrefix());
 
         Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         f = new Llnmon(lntm, lnsm, lnrm);

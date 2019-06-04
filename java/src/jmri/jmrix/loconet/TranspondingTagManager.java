@@ -29,7 +29,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
     @Override
     public String getSystemPrefix() {
-       // since this applies to Loconet, we will use the typical
+       // since this applies to LocoNet, we will use the typical
        // loconet prefix of L.  Transponding tags are not associated
        // with any specific loconet connection (i.e. they can move
        // from one to another).
@@ -75,7 +75,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
         // save in the maps
         register(s);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }

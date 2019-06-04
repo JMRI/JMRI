@@ -11,6 +11,8 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.util.ColorUtil;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -240,9 +242,14 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         panel.setColumns(columns);
 
-        String defaultTextColor = "black";
+        Color defaultTextColor = Color.BLACK;
         if (shared.getAttribute("defaulttextcolor") != null) {
-            defaultTextColor = shared.getAttribute("defaulttextcolor").getValue();
+            String color = shared.getAttribute("defaulttextcolor").getValue();
+            try {
+                defaultTextColor = ColorUtil.stringToColor(color);
+            } catch (IllegalArgumentException ex) {
+                log.error("Invalid defaulttextcolor {} using black", color);
+            }
         }
         panel.setDefaultTextColor(defaultTextColor);
         // set color if needed

@@ -8,10 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the CBUS-specific Reporter implementation.
+ * Implement ReporterManager for CAN CBUS systems.
  * <p>
  * System names are "MRnnnnn", where M is the user-configurable system prefix,
  * nnnnn is the reporter number without padding.
+ * <p>
  * CBUS Reporters are NOT automatically created.
  *
  * @author Mark Riddoch Copyright (C) 2015
@@ -98,8 +99,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddReporterEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddReporterEntryToolTip");
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class);

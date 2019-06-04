@@ -173,7 +173,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
+        return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"; // NOI18N replacement UR92
     } // NOI18N
 
     /**
@@ -578,8 +578,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
          * GUI. An invalid channel number may be used to cause the class to
          * clear the channel highlight. After invoking this method, a call to
          * this class' repaint() method is required to cause the GUI update.
-         * <p>
-         * @param channelNum  integer representing a Duplex Group channel
+         *
+     * @param channelNum  integer representing a Duplex Group channel
          *                   number.
          */
         public void setChannelBeingScanned(int channelNum) {

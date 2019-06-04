@@ -29,13 +29,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
  * Provide a graphical representation of the ESU mapping table. Each row
  * represents a possible mapping between input conditions (function keys, etc.)
- * and logical, physical or sound outputs.</p>
+ * and logical, physical or sound outputs.
  * <p>
  * Uses data from the "model" and "family" elements from the decoder definition
- * file to configure the number of rows and set up any custom item names:</p>
+ * file to configure the number of rows and set up any custom item names:
  * <dl>
  * <dt>extFnsESU</dt>
  * <dd>Uses the ESU-style function map rather than the NMRA style.</dd>
@@ -89,9 +88,10 @@ import org.slf4j.LoggerFactory;
  * <dl>
  * <dt>Variable definitions:</dt>
  * <dd>Are of the form "ESU Function Row xx Item yy" and are created "on the
- * fly" by this class. Many thousands of variables are needed to populate the function
- * map. It is more efficient to create these in code than to use XML in the
- * decoder file. <strong>DO NOT</strong> specify them in the decoder file.</dd>
+ * fly" by this class. Many thousands of variables are needed to populate the
+ * function map. It is more efficient to create these in code than to use XML in
+ * the decoder file. <strong>DO NOT</strong> specify them in the decoder
+ * file.</dd>
  * <dd><br>
  * The "tooltip" &amp; "label" attributes on a fnmapping variable are ignored.
  * Expanded internationalized tooltips are generated in the code.
@@ -154,7 +154,7 @@ public final class FnMapPanelESU extends JPanel {
      * </dl>
      * <p>
      * Item labels can be overridden by the "output" element of the "model" or
-     * "family" element from the decoder definition file.</p>
+     * "family" element from the decoder definition file.
      */
     String[] itemLabel;
     String[][] itemName;
@@ -497,11 +497,21 @@ public final class FnMapPanelESU extends JPanel {
                             }
                             if (cvObject != null) {
                                 cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                                    private int row;
+                                    private int block;
+
                                     @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                        updateAllSummaryLines();
+                                        log.debug("Updating Summary Line for row {} block {}", row, block);
+                                        updateSummaryLine(row, block);
                                     }
-                                });
+
+                                    private java.beans.PropertyChangeListener init(int i, int j) {
+                                        row = i;
+                                        block = j;
+                                        return this;
+                                    }
+                                }.init(iRow, outBlockNum));
                             } else {
                                 log.error("cvObject still null after attempt to allocate");
                             }
@@ -695,7 +705,7 @@ public final class FnMapPanelESU extends JPanel {
      * @param block the block to update
      */
     void updateSummaryLine(int row, int block) {
-        String retString = "";
+        StringBuilder retString = new StringBuilder("");
         int retState = AbstractValue.SAME;
 
         for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
@@ -708,37 +718,36 @@ public final class FnMapPanelESU extends JPanel {
                 if (value > 0) {
                     if (outBlockItemBits[block] == 1) {
                         if (itemLabel[item].equals("")) {
-                            retString = retString + "," + itemName[item][0];
+                            retString.append(",").append(itemName[item][0]);
                         } else {
-                            retString = retString + "," + itemLabel[item];
+                            retString.append(",").append(itemLabel[item]);
                         }
                     } else if (outBlockItemBits[block] == 2) {
                         if (value > 2) {
-                            retString = retString + "," + "reserved value " + value;
+                            retString.append(",").append("reserved value ").append(value);
                         } else if (itemName[item][value].equals("")) {
                             if (value == 1) {
-                                retString = retString + "," + itemName[item][0];
+                                retString.append(",").append(itemName[item][0]);
                             } else if (value == 2) {
-                                retString = retString + ",not " + itemName[item][0];
+                                retString.append(",not ").append(itemName[item][0]);
                             }
                         } else {
-                            retString = retString + "," + itemName[item][value];
+                            retString.append(",").append(itemName[item][value]);
                         }
                     }
                 }
             }
         }
 
-        if (retString.startsWith(",")) {
-            retString = retString.substring(1);
-        }
-        if (retString.equals("")) {
-            retString = "-";
+        if (retString.length() == 0) {
+            retString.append("-");
+        } else if (retString.charAt(0) == ',') {
+            retString.deleteCharAt(0);
         }
 
         summaryLine[row][block].setBackground(AbstractValue.stateColorFromValue(retState));
-        summaryLine[row][block].setText(retString);
-        summaryLine[row][block].setToolTipText(retString);
+        summaryLine[row][block].setText(retString.toString());
+        summaryLine[row][block].setToolTipText(retString.toString());
     }
 
     /**
@@ -786,10 +795,10 @@ public final class FnMapPanelESU extends JPanel {
     }
 
     /**
-     * Moves rows up or down
+     * Moves rows up or down.
      * <p>
      * Row moves are for convenience purposes only. Decoder functioning is
-     * unaffected by row position in mapping table.</p>
+     * unaffected by row position in mapping table.
      *
      * @param increment number of rows to move by
      */

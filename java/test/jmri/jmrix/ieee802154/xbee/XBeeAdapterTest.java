@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for XBeeAdapter
- * </P>
+ * Tests for XBeeAdapter.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeAdapterTest {
@@ -30,6 +29,5 @@ public class XBeeAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }
