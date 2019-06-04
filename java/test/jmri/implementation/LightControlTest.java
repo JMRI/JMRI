@@ -155,6 +155,7 @@ public class LightControlTest {
         l2.setControlSensorSense(Sensor.ACTIVE);
         Assert.assertTrue(l1.equals(l2));
         
+        Assert.assertNotNull("Has Hashcode", l1.hashCode());
         
     }
     
@@ -633,14 +634,31 @@ public class LightControlTest {
         s.setState(Sensor.ON);
         s.setState(Sensor.OFF);
         Assert.assertEquals("Light not enabled", Light.OFF, l.getState());
-        
         l.deactivateLight();
         
         l.setState(Light.ON);
         l.activateLight();
         Assert.assertEquals("Light not enabled so not switched off", Light.ON, l.getState());
-        
         l.deactivateLight();
+        
+        // deactivate light mid-timing
+        l.setEnabled(true);
+        lc.setTimedOnDuration(4000); // ms
+        l.activateLight();
+        Assert.assertEquals("Light enabled", Light.OFF, l.getState());
+        s.setState(Sensor.ON);
+        s.setState(Sensor.OFF);
+        Assert.assertEquals("Light triggered", Light.ON, l.getState());
+        l.deactivateLight();
+        Assert.assertEquals("Light still on", Light.ON, l.getState());
+        
+        l.activateLight();
+        Assert.assertEquals("Light enabled", Light.OFF, l.getState());
+        
+        lc.setControlType(999);
+        l.deactivateLight();
+        JUnitAppender.assertWarnMessage("Unexpected control type when deactivating Light: ILL1");
+        
         l.dispose();
         
     }

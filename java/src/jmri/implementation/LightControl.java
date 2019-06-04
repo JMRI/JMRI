@@ -842,7 +842,7 @@ public class LightControl {
                     }
                     break;
                 default:
-                    log.warn("Unexpected control type when activating Light: {}", _parentLight.getSystemName());
+                    log.warn("Unexpected control type when deactivating Light: {}", _parentLight.getSystemName());
             }
             _active = false;
         }
