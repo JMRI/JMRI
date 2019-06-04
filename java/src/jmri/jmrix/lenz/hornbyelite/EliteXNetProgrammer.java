@@ -27,7 +27,6 @@ import jmri.jmrix.lenz.XNetTrafficController;
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 
-    static private final int RETURNSENT = 3;
     // Message timeout lengths.  These have been determined by
     // experimentation, and may need to be adjusted
     static private final int ELITEMESSAGETIMEOUT = 10000;
@@ -142,16 +141,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             throw e;
         }
 
-        // On the Elite, we're not getting a broadcast message
-        // saying we're in service mode, so go ahead and request
-        // the results.
-        progState = INQUIRESENT;
-        //start the error timer
-        restartTimer(EliteXNetProgrammerTimeout);
-        XNetMessage resultMsg = XNetMessage.getServiceModeResultsMsg();
-        resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-        resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
-        controller().sendXNetMessage(resultMsg, this);
     }
 
     /** 
@@ -208,16 +197,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                     notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                     return;
                 }
-
-                // here ready to request the results
-                progState = INQUIRESENT;
-                //start the error timer
-                restartTimer(EliteXNetProgrammerTimeout);
-                XNetMessage resultMsg = XNetMessage.getServiceModeResultsMsg();
-
-                resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-                resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
-                controller().sendXNetMessage(resultMsg, this);
                 return;
             } else if (m.getElement(0) == XNetConstants.CS_INFO
                     && m.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
@@ -227,11 +206,15 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 return;
             } else if (m.getElement(0) == XNetConstants.CS_INFO
                     && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
-                // We Exited Programming Mode early
-                log.error("Service mode exited before sequence complete.");
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.SequenceError);
+                    // On the Elite, the broadcast exit service mode message
+                    // needs to triger the request for results.
+                    progState = INQUIRESENT;
+                    //start the error timer
+                    restartTimer(EliteXNetProgrammerTimeout);
+                    XNetMessage resultMsg = XNetMessage.getServiceModeResultsMsg();
+                    resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+                    resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
+                    controller().sendXNetMessage(resultMsg, this);
             } else if (m.getElement(0) == XNetConstants.CS_INFO
                     && m.getElement(1) == XNetConstants.PROG_SHORT_CIRCUIT) {
                 // We experienced a short Circuit on the Programming Track
@@ -326,16 +309,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
             } else {
                 // nothing important, ignore
-                return;
-            }
-
-        } else if (progState == RETURNSENT) {
-            log.debug("reply in RETURNSENT state");
-            if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                //notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
                 return;
             }
         } else {
