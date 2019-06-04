@@ -130,7 +130,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
         p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutEvents")));
         add(p1);
-        
 
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive") {
@@ -138,10 +137,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             void create(String name) {
                 try {
                     if (memo != null) {
-                        ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
-                        // provideSensor does not yet add the conn prefix + S
+                        ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor(prefix + "S" + name);
                     } else {
-                        InstanceManager.sensorManagerInstance().provideSensor("MS" + name); // S for Sensor
+                        InstanceManager.sensorManagerInstance().provideSensor(prefix + "S" + name); // S for Sensor
                     }
                 }
                 catch (Exception ex) {
@@ -161,9 +159,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 try {
                     if (memo != null) {
                         ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout(name); 
-                        // auto adds the conn. prefix + T
+                        // provideTurnout auto adds the conn. prefix + T
                     } else {
-                        InstanceManager.turnoutManagerInstance().provideTurnout("MT" + name); // T for Turnout
+                        InstanceManager.turnoutManagerInstance().provideTurnout(prefix + "T" + name); // T for Turnout
                     }
                 }
                 catch (Exception ex) {
@@ -175,7 +173,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         };
         makeTurnout.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TitleAddX", Bundle.getMessage("BeanNameTurnout"))));
         add(makeTurnout);
-
         
         // add light
         makeLight = new MakeNamedBean("LabelEventLightOn", "LabelEventLightOff") {
@@ -183,10 +180,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             void create(String name) {
                 try {
                     if (memo != null) {
-                        ((jmri.LightManager) memo.get(jmri.LightManager.class)).provideLight("ML" + name);
-                        // provideLight does not yet add a custom conn prefix + L
+                        ((jmri.LightManager) memo.get(jmri.LightManager.class)).provideLight(prefix + "L" + name);
                     } else {
-                        InstanceManager.lightManagerInstance().provideLight("ML" + name); // L for Light
+                        InstanceManager.lightManagerInstance().provideLight(prefix + "L" + name); // L for Light
                     }
                 }
                 catch (Exception ex) {
@@ -201,12 +197,14 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         
     }
 
-    TrafficController tc;
+    protected TrafficController tc;
+    protected String prefix = "M";
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         // log.debug("ConfigToolPane initComponents");
         super.initComponents(memo);
+        prefix = memo.getSystemPrefix();
         tc = memo.getTrafficController();
         tc.addCanListener(this);
         incrementInstance();
@@ -272,8 +270,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
     }
-    
-    
+
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
@@ -568,15 +565,17 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
         public Default() {
-            super(Bundle.getMessage("ConfigTitle"),
+            super(Bundle.getMessage("CapConfigTitle"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     ConfigToolPane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
+
     private static final Logger log = LoggerFactory.getLogger(ConfigToolPane.class);
+
 }

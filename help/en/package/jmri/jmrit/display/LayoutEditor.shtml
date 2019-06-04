@@ -129,16 +129,7 @@
       panel, or in the Panels menu. When you do this, all panels
       listed in the submenu of <strong>Show Panel</strong> are saved, along
       with all shared configuration items (sensors, turnouts,
-      signal heads, etc.). To make it easier to save your panel
-      often, Layout Editor provides the menu item, <strong>Save Location
-      and Size</strong>, in the <strong>Options</strong> menu. Once you have sized
-      and positioned your panel exactly as you would like it to
-      come up when loaded, select this item and save your panel.
-      You need not be concerned about the position and size of your
-      panel changing during subsequent saves! The position and size
-      of your panel will only change when you select <strong>Save
-      Location and Size</strong>. So save your panel often to preserve
-      your work.</p>
+      signal heads, etc.).</p>
 
       <p><strong>Layout Editor</strong> supports the construction and display
       of PanelPro panels. <strong>Layout Editor</strong> is similar to the
@@ -608,9 +599,10 @@
         dialog, all layout configuration information is written to
         disk, including information for all panels, Layout
         Editor, Control Panel Editor and Panel Editor types, and all non-panel
-        specific layout configuration items (e.g., turnouts,
+        specific layout configuration items (e.g. turnouts,
         sensors, lights, signal heads, routes, logixs, blocks,
-        etc.) <strong>Store panels...</strong> is available in the File menu
+        etc.)<br>
+        <strong>Store panels...</strong> is available in the File menu
         of each panel, and in the Panels menu. It can also be
         reached by selecting <strong>Store Configuration And Panels To
         File...</strong> in the Store submenu of the File menu of any
@@ -622,8 +614,8 @@
         removes the panel from the program. To permanently delete a
         panel from your panel file, <strong>Store panels...</strong> must be
         selected after deleting that panel. <strong>There is no undo for
-        deletion.</strong> Unless the panel has been saved to disk, it
-        is gone after deletion.</li>
+        deletion.</strong> Unless the panel previously was saved to
+        disk under a different file name, it is gone after deletion.</li>
       </ul>
 
       <a name="option" id="option"></a>
@@ -717,14 +709,17 @@
         <li><strong>Set Default Text Color...</strong> - Select the default text
         color using a color chooser.</li>
 
-        <li><strong>Save Location and Size</strong> - When this item is
-        selected, the current panel window size and location
-        replace the default size and location of the panel window.
-        If the panel is saved to disk after this item is selected,
-        when the panel is reloaded its window will have the size
-        and location saved when this item was selected, provided
-        the computer operating system permits a window with that
-        size and location.</li>
+        <li><span class="since">Since 4.15.6</span>
+        <strong>Save Location and Size</strong> - This item is only displayed
+        when the <strong>Use old location and size logic for editor panels</strong>
+        option is enabled in <strong>Preferences >> Display</strong>.<br>
+
+        When this item is selected, the current panel window size and location
+        replace the default size and location of the panel window.  If the panel
+        is saved to disk after this item is selected, when the panel is reloaded
+        its window will have the size and location saved when this item was
+        selected, provided the computer operating system permits a window with
+        that size and location.</li>
 
         <li><strong>Add</strong>
           <ul>
@@ -1783,7 +1778,7 @@
 
       <div style="margin-left: 2em;">
       <img src="images/TrackDrawingOptions.png"
-      alt="Track Drawing Options Dialog" height="370" width="600">
+      alt="Track Drawing Options Dialog" height="730" width="868">
       </div>
 
       <p>There is a column for the track defined as mainline and one for sideline
@@ -1811,7 +1806,7 @@
       <p>The <strong>Block Line Dash Percentage</strong> has
       <strong><em>nothing</em></strong> to do with dashed track.  This is a
       special setting to create an on/off pattern to blocks.  The <strong>
-      British 70's</strong> or Czechoslovak <strong>&#268;SD A&#381;D-71</strong> 
+      British 70's</strong> or Czechoslovak <strong>&#268;SD A&#381;D-71</strong>
       preset uses this option.</p>
 
       <h3>Notes</h3>
@@ -2026,7 +2021,7 @@
       deciding where blocks and signal heads/masts should be placed before
       actually installing them on your layout.</p>
 
-      <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
+      <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">
         PanelPro help page</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

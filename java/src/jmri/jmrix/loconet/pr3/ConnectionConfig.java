@@ -7,7 +7,7 @@ import jmri.util.SystemType;
  * PR2Adapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -21,14 +21,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
     }
 
     /**
-     * Get the connection type name
+     * Get the connection type name.
+     *
      * @return Connection type name
      */
     @Override
@@ -52,10 +54,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
+
 }

@@ -10,7 +10,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
 /**
- * <P>
+ *
  * @author Pete Cressman Copyright: Copyright (c) 2014
  *
  */

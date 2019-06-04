@@ -31,7 +31,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Simple GUI for access to an NCE monitor card
- * <P>
+ * <p>
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
  *

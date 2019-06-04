@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     SerialMonFrameTest.class,
     SerialMonPaneTest.class,
-    SerialMonActionTest.class
+    SerialMonActionTest.class,
+    BundleTest.class,
 })
 
 /**

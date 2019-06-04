@@ -38,7 +38,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
     /**
      * Default implementation for storing the contents of all the BLockBossLogic
      * elements.
-     * <P>
+     * <p>
      * Static members in the BlockBossLogic class record the complete set of
      * items. This function writes those out as a single XML element.
      *

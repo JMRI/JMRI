@@ -6,7 +6,7 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
 /**
- * Swing action to create and register a CabSignalPanel object
+ * Swing action to create and register a CabSignalPanel object.
  *
  * @author Paul Bender Copyright (C) 2003
  */
@@ -14,7 +14,6 @@ public class CabSignalAction extends JmriAbstractAction {
 
     public CabSignalAction(String s, WindowInterface wi) {
         super(s, wi);
-        
     }
 
     public CabSignalAction(String s, Icon i, WindowInterface wi) {
@@ -26,7 +25,7 @@ public class CabSignalAction extends JmriAbstractAction {
     }
 
     public CabSignalAction() {
-        this("Cab Signal");
+        this(Bundle.getMessage("MenuItemCabSignalPane"));
     }
 
     @Override

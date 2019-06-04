@@ -13,14 +13,14 @@ import org.xml.sax.InputSource;
 
 /**
  * Entity Resolver to locate JMRI DTDs in the local space.
- * <P>
+ * <p>
  * For historical reasons, JMRI xml files might have DTD definitions of three
  * forms:
- * <OL>
- * <LI>SYSTEM "../DTD/decoder-config.dtd"
- * <LI>SYSTEM "layout-config.dtd"
- * <LI>SYSTEM "http://jmri.sourceforce.net/xml/DTD/layout-config.dtd"
- * </OL>
+ * <ol>
+ * <li>SYSTEM "../DTD/decoder-config.dtd"
+ * <li>SYSTEM "layout-config.dtd"
+ * <li>SYSTEM "http://jmri.sourceforce.net/xml/DTD/layout-config.dtd"
+ * </ol>
  * Only the last of these is preferred now. The first two refer to local files
  * within the JMRI distributions in the xml/DTD directory.
  *

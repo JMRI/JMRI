@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is an extension of the XNetPacketizer to handle the device specific
  * requirements of the LIUSB Server.
- * <P>
+ * <p>
  * In particular, LIUSBServerXNetPacketizer counts the number of commands
  * received.
  *

@@ -20,7 +20,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  * The panel contains two button grids.
  * The left grid contains the 13 standard Java colors.
  * The right grid contains recently used colors.
- * <p>
+ *
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.1
  */

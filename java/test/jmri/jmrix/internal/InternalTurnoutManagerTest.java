@@ -30,7 +30,6 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         // make sure loaded into tables
         Assert.assertTrue(null != l.getBySystemName("IT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
-
     }
 
     @Test
@@ -83,10 +82,8 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         Assert.assertFalse("tSpaceLLEE not unique", list.contains(tSpaceLLEE));
         Assert.assertTrue(tSpaceLLEE != null);
         list.add(tSpaceLLEE);
-
     }
-    
-    
+
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Override

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display the status of a track segment in a block
- * <P>
+ * <p>
  * This responds to the following conditions: 1. KnownState of an occupancy
  * sensor of the block where the track segment appears 2. Allocation of a route
  * by a Warrant where the track segment appears 3. Current position of a train
@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
  * route 4. Out of Service for a block that cannot or should not be used 5. An
  * error state of the block where the track segment appears (short/no power
  * etc.)
- * <P>
+ * <p>
  * A click on the icon does not change any of the above conditions..
- * <P>
+ *
  * @author Pete Cressman Copyright (c) 2010
  */
 public class IndicatorTrackIcon extends PositionableIcon

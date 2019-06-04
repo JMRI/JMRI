@@ -144,9 +144,13 @@
 			"type": "integer",
 			"description": "Number of clients attempting to control the throttle"
 		},
-		"throttle": {
+		"name": {
 			"type": "string",
 			"description": "The identity of this throttle used for communications between JMRI server and client"
+		},
+		"throttle": {
+			"type": "string",
+			"description": "The identity of this throttle used for communications between JMRI server and client; deprecated in favor of \"name\""
 		},
 		"release": {
 			"type": "null",
@@ -155,6 +159,6 @@
 	},
 	"additionalProperties": false,
 	"required": [
-		"throttle"
+		"throttle", "name"
 	]
 }

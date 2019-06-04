@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base (and partial implementation) for classes persisting the status
  * of (non-serial) Stream Port adapters.
- * <p>
+ *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author George Warner Copyright: Copyright (c) 2017
  */

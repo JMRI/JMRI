@@ -8,7 +8,7 @@ import jmri.*;
  * Demo of classes in jmri.jmrit.ussctc
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2015, 2017
-  */
+ */
 public class PackageDemo {
 
     public PackageDemo(String s) {

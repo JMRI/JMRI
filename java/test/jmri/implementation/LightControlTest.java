@@ -29,6 +29,13 @@ public class LightControlTest {
     }
     
     @Test
+    public void testLightControlCopyCtor() {
+        LightControl l = new LightControl();
+        LightControl copyOfl = new LightControl(l);
+        Assert.assertNotNull("LightControl Copy not null", copyOfl);
+    }
+    
+    @Test
     @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to LightControl
     public void testEquals() {
         Light o = new AbstractLight("IL1","test light"){
@@ -46,7 +53,8 @@ public class LightControlTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initRailComManager();

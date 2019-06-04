@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Note that this is not only the panes carrying variables, but also the special
  * purpose panes for the CV table, etc.
- * <P>
+ * <p>
  * This class implements PropertyChangeListener so that it can be notified when
  * a variable changes its busy status at the end of a programming read/write
  * operation.
@@ -76,7 +76,7 @@ import org.slf4j.LoggerFactory;
  * <DT>Write Changes<DD>This must write changes that occur after the operation
  * starts, because the act of writing a variable/CV may change another. For
  * example, writing CV 1 will mark CV 29 as changed.
- * <P>
+ * <p>
  * The definition of "changed" is operationally in the
  * {@link jmri.jmrit.symbolicprog.VariableValue#isChanged} member function.
  *
@@ -94,7 +94,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
- * @author Dave Heap Copyright (C) 2014
+ * @author Dave Heap Copyright (C) 2014, 2019
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  */
 /*
@@ -628,7 +628,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Prepare this pane for a read operation.
-     * <P>
+     * <p>
      * The read mechanism only reads variables in certain states (and needs to
      * do that to handle error processing right now), so this is implemented by
      * first setting all variables and CVs on this pane to TOREAD via this
@@ -813,11 +813,11 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * If there are any more read operations to be done on this pane, do the
      * next one.
-     * <P>
+     * <p>
      * Each invocation of this method reads one variable or CV; completion of
      * that request will cause it to happen again, reading the next one, until
      * there's nothing left to read.
-     * <P>
+     * <p>
      * @return true is a read has been started, false if the pane is complete.
      */
     boolean nextRead() {
@@ -893,11 +893,11 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * If there are any more compare operations to be done on this pane, do the
      * next one.
-     * <P>
+     * <p>
      * Each invocation of this method compare one CV; completion of that request
      * will cause it to happen again, reading the next one, until there's
      * nothing left to read.
-     * <P>
+     * <p>
      * @return true is a compare has been started, false if the pane is
      *         complete.
      */
@@ -1070,7 +1070,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Prepare this pane for a compare operation.
-     * <P>
+     * <p>
      * The read mechanism only reads variables in certain states (and needs to
      * do that to handle error processing right now), so this is implemented by
      * first setting all variables and CVs on this pane to TOREAD via this
@@ -2214,7 +2214,7 @@ public class PaneProgPane extends javax.swing.JPanel
         Attribute a = modelElem.getAttribute("extFnsESU");
         try {
             if (a != null) {
-                extFnsESU = (a.getValue()).equalsIgnoreCase("yes");
+                extFnsESU = !(a.getValue()).equalsIgnoreCase("no");
             }
         } catch (Exception ex) {
             log.error("error handling decoder's extFnsESU value");
@@ -2565,7 +2565,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         alreadyPrinted = true;
                     }
                 }
-                //If already printed, skip it.  If not, store it and print
+                // If already printed, skip it.  If not, store it and print
                 if (alreadyPrinted == true) {
                     continue;
                 }
@@ -2576,7 +2576,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String originalValue = value;
                 name = name + " (CV" + var.getCvNum() + ")"; // NO I18N
 
-                //define index values for name and value substrings
+                // define index values for name and value substrings
                 int nameLeftIndex = 0;
                 int nameRightIndex = name.length();
                 int valueLeftIndex = 0;

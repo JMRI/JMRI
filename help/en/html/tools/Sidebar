@@ -35,7 +35,7 @@
 		<dd>
 		    <ul>
 		    <li><dfn><a href="../hardware/acela/index.shtml#tools">Acela (CTI)</a></dfn>
-		    <li><dfn><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI</a></dfn>
+		    <li><dfn><a href="../hardware/cmri/CMRI.shtml#L258">C/MRI</a></dfn>
 		    <li><dfn><a href="../hardware/can/index.shtml#tools">CAN</a></dfn>
 		    <li><dfn><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS</a></dfn>
 		    <li><dfn><a href="../hardware/dccpp/index.shtml#tools">DCC++</a></dfn>
@@ -64,6 +64,7 @@
             <li><dfn><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="uss/index.shtml">USS CTC</a></dfn>
 		    <li><dfn><a href="scripting/index.shtml">Scripting</a></dfn>
 		    </ul>
 		</dd>

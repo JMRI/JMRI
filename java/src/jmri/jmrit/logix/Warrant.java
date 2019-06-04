@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -26,24 +27,21 @@ import org.slf4j.LoggerFactory;
  * from WarrantFrame who records throttle commands from "_student" throttle.
  * Warrant fires PropertyChanges for WarrantFrame to record when blocks are
  * entered. "_engineer" thread is null.
- * </p>
- * <P>
+ * <p>
  * MODE_RUN - Warrant may be launched from several places. An array of
  * BlockOrders, _savedOrders, and corresponding _throttleCommands allow an
  * "_engineer" thread to execute the throttle commands. The blockOrders
  * establish the route for the Warrant to acquire and reserve OBlocks. The
  * Warrant monitors block activity (entrances and exits, signals, rogue
  * occupancy etc) and modifies speed as needed.
- * </p>
- * <P>
+ * <p>
  * MODE_MANUAL - Warrant may be launched from several places. The Warrant to
  * acquires and reserves the route from the array of BlockOrders. Throttle
  * commands are done by a human operator. "_engineer" and "_throttleCommands"
  * are not used. Warrant monitors block activity but does not set _stoppingBlock
  * or _shareTOBlock since it cannot control speed. It does attempt to realign
  * the route as needed, but can be thwarted.
- * </p>
- * <P>
+ * <p>
  * Version 1.11 - remove setting of SignalHeads
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
@@ -77,6 +75,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     protected int _runMode;
     private Engineer _engineer; // thread that runs the train
+    @GuardedBy("this")
     private CommandDelay _delayCommand; // thread for delayed ramp down
     private boolean _allocated; // initial Blocks of _orders have been allocated
     private boolean _totalAllocated; // All Blocks of _orders have been allocated
@@ -872,7 +871,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (tm == null) {
                 msg = Bundle.getMessage("noThrottle", _speedUtil.getDccAddress().getNumber());
             } else {
-                if (!tm.requestThrottle(dccAddress.getNumber(), dccAddress.isLongAddress(), this)) {
+                if (!tm.requestThrottle(dccAddress, this, false)) {
                     return Bundle.getMessage("trainInUse", dccAddress.getNumber());
                 }
             }
@@ -909,11 +908,24 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 (reason + " " + (address != null ? address.getNumber() : getDisplayName()))));
         fireRunStatus("throttleFail", null, reason);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     protected void releaseThrottle(DccThrottle throttle) {
@@ -1589,6 +1601,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // The latter warrant's deallocation may not have happened yet and
         // this has prevented allocation to this warrant.  For this case,
         // wait until leaving warrant's deallocation is seen and completed.
+        @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
         final Runnable allocateBlocks = new Runnable() {
             @Override
             public void run() {
@@ -2208,7 +2221,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    private void rampDelayDone() {
+    synchronized private void rampDelayDone() {
         _delayCommand = null;
     }
 
@@ -2377,14 +2390,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @return distance in millimeters
      */
     private float rampLengthOfEntrance(int idxBlockOrder, String toSpeedType) {
-        if (_curSpeedType.equals(toSpeedType)) {
+/*        if (_curSpeedType.equals(toSpeedType)) {
             return 0.0f;
-        }
+        }*/
         BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         float throttleSetting = blkSpeedInfo.getEntranceSpeed();
-        float fromSpeed = _speedUtil.modifySpeed(throttleSetting, _curSpeedType);
-        float toSpeed = _speedUtil.modifySpeed(throttleSetting, toSpeedType);
-        float rampLen = _speedUtil.getRampForSpeedChange(fromSpeed, toSpeed).getRampLength();
+        float rampLen = _speedUtil.rampLengthForRampDown(throttleSetting, _curSpeedType, toSpeedType);
         if (_waitForBlock || _waitForWarrant) {    // occupied or foreign track ahead.
             rampLen *= RAMP_ADJUST;    // provide more space to avoid collisions
         } else if (_waitForSignal) {        // signal restricting speed
@@ -2743,11 +2754,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
     
     private void rampSpeedDelay (long waitTime, String speedType, int endBlockIdx) {
-        if (_delayCommand != null) {
-            if (_delayCommand.doNotCancel(speedType, waitTime, endBlockIdx)) {
-                return;
-            }
-            cancelDelayRamp();
+        synchronized(this) {
+           if (_delayCommand != null) {
+               if (_delayCommand.doNotCancel(speedType, waitTime, endBlockIdx)) {
+                   return;
+               }
+               cancelDelayRamp();
+           }
         }
         if (waitTime <= 0) {
             _engineer.rampSpeedTo(speedType, endBlockIdx, true);

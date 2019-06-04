@@ -1586,14 +1586,15 @@ public class CircuitBuilder {
         if (_editCircuitFrame != null || _editPathsFrame != null) {
             return true;     // no dragging when editing
         }
-        if (_editPortalFrame != null || _editDirectionFrame != null) {
-            if (selection instanceof PortalIcon) {
+        if (selection instanceof PortalIcon) {
+            if (_editPortalFrame != null) {
                 _editPortalFrame.setSelected((PortalIcon)selection);
                 return false;  // OK to drag portal icon
+            } else if (_editDirectionFrame != null) {
+                return false;  // OK to drag portal arrow
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     /**

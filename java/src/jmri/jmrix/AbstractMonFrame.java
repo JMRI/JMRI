@@ -39,7 +39,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
 
     /**
      * Initialize the data source.
-     * <P>
+     * <p>
      * This is invoked at the end of the GUI initialization phase. Subclass
      * implementations should connect to their data source here.
      */

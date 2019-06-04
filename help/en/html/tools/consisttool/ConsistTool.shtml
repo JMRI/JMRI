@@ -250,7 +250,10 @@
 	<img src="images/Preferences-ConsistManagerSelection-Annotated.png" alt="Annotated User Preferences window" />
 
         <p>
-        Once the preferences are loaded, the choices for the consist manager will be selectable in the "Consists" column (inside the box labeled 1 in the figure above).  Here we see two choices, one for a Loconet connection, labeled A and one for the Internal connection labeled B.  If you have more system connections available, other options may be available as well.
+        Once the preferences are loaded, the choices for the consist manager will be selectable in the "Consists" column
+		(inside the box labeled 1 in the figure above).  Here we see two choices, one for a LocoNet connection, labeled A
+		and one for the Internal connection labeled B.<br>
+		If you have more system connections available, other options may be available as well.
         </p>
 
         <p>

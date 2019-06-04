@@ -2,21 +2,21 @@ package jmri.jmrix.lenz;
 
 /**
  * XNetInterface defines the general connection to an XNet layout.
- * <P>
+ * <p>
  * Use this interface to send messages to an XNet layout. Classes implementing
  * the XNetListener interface can register here to receive incoming XNet
  * messages as events.
- * <P>
+ * <p>
  * The jmri.jrmix.lenz.XNetTrafficControler provides the first implementation of
  * this interface.
- * <P>
+ * <p>
  * How do you locate an implemenation of this interface? That's an interesting
  * question. This is inherently XNet specific, so it would be inappropriate to
  * put it in the jmri.InterfaceManager. And Java interfaces can't have static
  * members, so we can't provide an implementation() member. For now, we use a
  * static implementation member in the XNetTrafficController implementation to
  * locate _any_ implementation; this clearly needs to be improved.
- * <P>
+ * <p>
  * XNetListener implementations registering for traffic updates cannot assume
  * that messages will be returned in any particular thread. See the XNetListener
  * doc for more background.
@@ -38,13 +38,13 @@ public interface XNetInterface {
 
     /**
      * Request notification of things happening on the XNet.
-     * <P>
+     * <p>
      * The same listener can register multiple times with different masks.
      * (Multiple registrations with a single mask value are equivalent to a
      * single registration) Mask values are defined as class constants. Note
      * that these are bit masks, and should be OR'd, not added, if multiple
      * values are desired.
-     * <P>
+     * <p>
      * The event notification contains the received message as source, not this
      * object, so that we can notify of an incoming message to multiple places
      * and then move on.

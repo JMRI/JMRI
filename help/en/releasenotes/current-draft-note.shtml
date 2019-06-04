@@ -96,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li><>/li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -155,6 +155,11 @@
             </ul>
 
         <h4>BNM Hobbies</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>CT Elektronik</h4>
             <ul>
                 <li></li>
             </ul>
@@ -319,7 +324,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>Petr Šídlo improved the Czech translation</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -378,18 +383,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>Custom scripts that release throttles may need to be modified.</strong><br>
-            <ul>
-                <li>AutoDispatcher2</li>
-                <li>RobotThrottle2</li>
-                <li>RobotThrottle3</li>
-                <li>RocoCrane</li>
-                <li>Zimo Programmers</li>
-            </ul>
-            <br>
-            Old syntax: <code>self.throttle.release()</code> <br>
-            New syntax assuming no throttle listeners in script: <code>self.throttle.release(None)</code>
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -471,6 +465,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add new <code>TestWaitsForever</class> test class to allow end-of-job debug.</li>
+            <li></li>
         </ul>
 

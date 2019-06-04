@@ -23,7 +23,7 @@ import org.junit.BeforeClass;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = {"junit:cucumber-results.xml","progress"},
+@CucumberOptions(plugin = {"junit:cucumber-results.xml","progress","json:cucumber-results.json"},
                  features="java/acceptancetest/features",
                  tags = {"not @webtest"})
 public class RunCucumberTest {

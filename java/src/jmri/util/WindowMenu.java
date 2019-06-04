@@ -13,7 +13,7 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Creates a menu showing all open windows and allows to bring one in front
- * <P>
+ *
  * @author	Giorgio Terdina Copyright 2008
  */
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {

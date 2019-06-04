@@ -300,10 +300,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         String name;
         if (namedSensor == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getSensor().getUserName() == null) {
-            name = getSensor().getSystemName();
         } else {
-            name = getSensor().getUserName() + " (" + getSensor().getSystemName() + ")";
+            name = getSensor().getFullyFormattedDisplayName();
         }
         return name;
     }
