@@ -2,6 +2,8 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.annotation.Nonnull;
@@ -29,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class IdTagTableAction extends AbstractTableAction<IdTag> {
+public class IdTagTableAction extends AbstractTableAction<IdTag> implements PropertyChangeListener {
 
     /**
      * Create an action with a specific title.
@@ -41,6 +43,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      */
     public IdTagTableAction(String actionName) {
         super(actionName);
+        tagManager.addPropertyChangeListener(this);
     }
     
     @Nonnull
@@ -51,10 +54,14 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      */
     @Override
     public void setManager(@Nonnull Manager<IdTag> t) {
+        if(tagManager!=null){
+           tagManager.removePropertyChangeListener(this);
+        }
         tagManager = (IdTagManager) t;
         if (m != null) {
             m.setManager(tagManager);
         }
+        tagManager.addPropertyChangeListener(this);
     }
 
     public IdTagTableAction() {
@@ -210,7 +217,6 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
-                // return (e.getPropertyName().indexOf("alue")>=0);
             }
 
             @Override
@@ -333,6 +339,18 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
        });
        log.debug("Added CheckBox in addToPanel method for system {}",systemPrefix);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("StateStored")) {
+           isStateStored.setSelected(tagManager.isStateStored());
+        } else if (e.getPropertyName().equals("UseFastClock")) {
+           isFastClockUsed.setSelected(tagManager.isFastClockUsed()); 
+        }
     }
 
     @Override

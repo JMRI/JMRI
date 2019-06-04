@@ -264,7 +264,9 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (state != storeState) {
             this.setDirty(true);
         }
+        boolean old = storeState;
         storeState = state;
+        firePropertyChange("StateStored", old, state);
     }
 
     @Override
@@ -283,7 +285,9 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (fastClock != useFastClock) {
             this.setDirty(true);
         }
-        useFastClock = fastClock;
+        boolean old = useFastClock;
+        useFastClock  = fastClock;
+        firePropertyChange("UseFastClock", old, fastClock);
     }
 
     @Override
