@@ -3,7 +3,6 @@ package jmri.jmrit.beantable.beanedit;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.Sensor;
 
 /**
@@ -11,7 +10,7 @@ import jmri.Sensor;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class SensorEditAction extends BeanEditAction {
+public class SensorEditAction extends BeanEditAction<Sensor> {
 
     @Override
     public String helpTarget() {
@@ -38,7 +37,7 @@ public class SensorEditAction extends BeanEditAction {
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
+    public Sensor getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }
 
@@ -56,15 +55,13 @@ public class SensorEditAction extends BeanEditAction {
     @Override
     protected void saveBasicItems(ActionEvent e) {
         super.saveBasicItems(e);
-        Sensor sen = (Sensor) bean;
-        sen.setInverted(inverted.isSelected());
+        bean.setInverted(inverted.isSelected());
     }
 
     @Override
     protected void resetBasicItems(ActionEvent e) {
         super.resetBasicItems(e);
-        Sensor sen = (Sensor) bean;
-        inverted.setSelected(sen.getInverted());
+        inverted.setSelected(bean.getInverted());
     }
 
 }

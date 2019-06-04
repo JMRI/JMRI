@@ -464,6 +464,10 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
+    public SignalHead getSignalA1() {
+        return signalA1HeadNamed != null ? signalA1HeadNamed.getBean() : null;
+    }
+
     public String getSignalA1Name() {
         if (signalA1HeadNamed != null) {
             return signalA1HeadNamed.getName();
@@ -484,6 +488,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalA1HeadNamed = null;
             log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalA2() {
+        return signalA2HeadNamed != null ? signalA2HeadNamed.getBean() : null;
     }
 
     public String getSignalA2Name() {
@@ -508,6 +516,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalA3() {
+        return signalA3HeadNamed != null ? signalA3HeadNamed.getBean() : null;
+    }
+
     public String getSignalA3Name() {
         if (signalA3HeadNamed != null) {
             return signalA3HeadNamed.getName();
@@ -528,6 +540,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalA3HeadNamed = null;
             log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalB1() {
+        return signalB1HeadNamed != null ? signalB1HeadNamed.getBean() : null;
     }
 
     public String getSignalB1Name() {
@@ -552,6 +568,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalB2() {
+        return signalB2HeadNamed != null ? signalB2HeadNamed.getBean() : null;
+    }
+
     public String getSignalB2Name() {
         if (signalB2HeadNamed != null) {
             return signalB2HeadNamed.getName();
@@ -572,6 +592,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalB2HeadNamed = null;
             log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalC1() {
+        return signalC1HeadNamed != null ? signalC1HeadNamed.getBean() : null;
     }
 
     public String getSignalC1Name() {
@@ -596,6 +620,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalC2() {
+        return signalC2HeadNamed != null ? signalC2HeadNamed.getBean() : null;
+    }
+
     public String getSignalC2Name() {
         if (signalC2HeadNamed != null) {
             return signalC2HeadNamed.getName();
@@ -618,6 +646,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalD1() {
+        return signalD1HeadNamed != null ? signalD1HeadNamed.getBean() : null;
+    }
+
     public String getSignalD1Name() {
         if (signalD1HeadNamed != null) {
             return signalD1HeadNamed.getName();
@@ -638,6 +670,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalD1HeadNamed = null;
             log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalD2() {
+        return signalD2HeadNamed != null ? signalD2HeadNamed.getBean() : null;
     }
 
     public String getSignalD2Name() {

@@ -1254,7 +1254,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void addTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
-        String msg = Bundle.getMessage("AddNoTurnout", new Object[]{s1, s2});
+        String msg = Bundle.getMessage("AddNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
@@ -2643,7 +2643,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void noTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
-        String msg = Bundle.getMessage("WarningNoTurnout", new Object[]{s1, s2});
+        String msg = Bundle.getMessage("WarningNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(editFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
