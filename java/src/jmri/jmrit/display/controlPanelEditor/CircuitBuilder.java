@@ -115,6 +115,7 @@ public class CircuitBuilder {
     private EditPortalFrame _editPortalFrame;
     private EditCircuitPaths _editPathsFrame;
     private EditPortalDirection _editDirectionFrame;
+    private EditSignalFrame _editSignalFrame;
 
     // list of icons making a circuit (OBlock) - used by editing frames to indicate block(s) being worked on
     private ArrayList<Positionable> _circuitIcons;      // Dark Blue
@@ -217,6 +218,14 @@ public class CircuitBuilder {
                 _cbFrame.dispose();
             }
             editPortalDirection("editDirectionItem", true);
+        });
+        editItem = new JMenuItem(Bundle.getMessage("editSignalItem"));
+        _circuitMenu.add(editItem);
+        editItem.addActionListener((ActionEvent event) -> {
+            if (_cbFrame !=null) {
+                _cbFrame.dispose();
+            }
+            editSignalFrame("editSignalItem", true);
         });
         _todoMenu = new JMenu(Bundle.getMessage("circuitErrorsItem"));
         _circuitMenu.add(_todoMenu);
@@ -526,6 +535,29 @@ public class CircuitBuilder {
         }
     }
 
+    protected void editSignalFrame(String title, boolean fromMenu) {
+        if (editingOK()) {
+            if (fromMenu) {
+                editCircuitDialog(title);
+            }
+            if (_currentBlock != null) {
+                _circuitIcons = _circuitMap.get(_currentBlock);
+                // check icons to be indicator type
+                if (!iconsConverted(_currentBlock)) {
+                    queryConvertIcons(_currentBlock);
+                }
+                _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
+                _editor.disableMenus();
+                TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
+                targetPane.setSelectGroupColor(_editGroupColor);
+                targetPane.setHighlightColor(_highlightColor);
+                _editSignalFrame = new EditSignalFrame(Bundle.getMessage("OpenSignalsTitle"), this, _currentBlock);
+            } else if (!fromMenu) {
+                selectPrompt();
+            }
+        }
+    }
+
     protected void editCircuitPaths(String title, boolean fromMenu) {
         if (editingOK()) {
             if (fromMenu) {
@@ -564,6 +596,8 @@ public class CircuitBuilder {
             _editPathsFrame.clearListSelection();
         } else if (_editDirectionFrame != null) {
             _editDirectionFrame.clearListSelection();
+        } else if (_editSignalFrame != null) {
+            _editSignalFrame.clearListSelection();
         } else {
             Iterator<PortalIcon> it = _portalIconMap.values().iterator();
             while (it.hasNext()) {
@@ -573,7 +607,8 @@ public class CircuitBuilder {
     }
 
     private boolean editingOK() {
-        if (_editCircuitFrame != null || _editPathsFrame != null || _editPortalFrame != null || _editDirectionFrame != null) {
+        if (_editCircuitFrame != null || _editPathsFrame != null || _editPortalFrame != null ||
+                _editDirectionFrame != null || _editSignalFrame != null) {
             // Already editing a circuit, ask for completion of that edit
             JOptionPane.showMessageDialog(_editCircuitFrame,
                     Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("ErrorTitle"),
@@ -590,6 +625,9 @@ public class CircuitBuilder {
             } else if (_editDirectionFrame != null) {
                 _editDirectionFrame.toFront();
                 _editDirectionFrame.setVisible(true);
+            } else if (_editSignalFrame != null) {
+                _editSignalFrame.toFront();
+                _editSignalFrame.setVisible(true);
             }
             return false;
         }
@@ -798,11 +836,6 @@ public class CircuitBuilder {
     }
 
     ////////////////////////// Closing Editing Frames //////////////////////////
-    protected void closeCircuitFrame() {
-        _editCircuitFrame = null;
-        closeCircuitBuilder();
-    }
-
     /**
      * Edit frame closing, set block's icons
      * @param block OBlock to set icon selections into data maps
@@ -852,6 +885,11 @@ public class CircuitBuilder {
         return null;
     }
 
+    protected void closeCircuitFrame() {
+        _editCircuitFrame = null;
+        closeCircuitBuilder();
+    }
+
     protected void closePathFrame(OBlock block) {
         if (_currentBlock != null) {
             _currentBlock.deAllocate(null);
@@ -871,6 +909,12 @@ public class CircuitBuilder {
     protected void closePortalDirection(OBlock block) {
         setPortalsPositionable(block, false);
         _editDirectionFrame = null;
+        closeCircuitBuilder();
+    }
+
+    protected void closeEditSignalFrame(OBlock block) {
+        setPortalsPositionable(block, false);
+        _editSignalFrame = null;
         closeCircuitBuilder();
     }
 
@@ -1504,10 +1548,8 @@ public class CircuitBuilder {
      */
     protected boolean saveSelectionGroup(ArrayList<Positionable> selectionGroup) {
         _saveSelectionGroup = selectionGroup;
-        return _editCircuitFrame != null
-                || _editPortalFrame != null
-                || _editPathsFrame != null
-                || _editDirectionFrame != null;
+        return _editCircuitFrame != null || _editPortalFrame != null || _editPathsFrame != null
+                || _editDirectionFrame != null || _editSignalFrame != null;
     }
 
     /**
@@ -1531,6 +1573,9 @@ public class CircuitBuilder {
         } else if (_editDirectionFrame != null) {
             _editDirectionFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
+        } else if (_editSignalFrame != null) {
+            _editSignalFrame.toFront();
+            _editor.setSelectionGroup(_saveSelectionGroup);
         } else {
             return false;
         }
@@ -1540,8 +1585,12 @@ public class CircuitBuilder {
     public boolean doMouseReleased(Positionable selection, boolean dragging) {
         if (_editCircuitFrame != null || _editPathsFrame != null || _editDirectionFrame != null) {
             return true;
-        } else if (_editPortalFrame != null) {
+        } else if (_editPortalFrame != null || _editSignalFrame != null) {
             if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
+                if (_editSignalFrame != null) {
+                    _editSignalFrame.setSelected((PortalIcon)selection);
+                    return true;
+                }
                 if (dragging) {
                     _editPortalFrame.checkPortalIconForUpdate((PortalIcon) selection, true);
                 } else {
@@ -1555,7 +1604,8 @@ public class CircuitBuilder {
 
     protected boolean doMouseClicked(List<Positionable> selections, MouseEvent event) {
         if (_editCircuitFrame != null || _editPathsFrame != null
-                || _editPortalFrame != null || _editDirectionFrame != null) {
+                || _editPortalFrame != null || _editDirectionFrame != null
+                || _editSignalFrame != null) {
             if (selections != null && selections.size() > 0) {
                 ArrayList<Positionable> tracks = new ArrayList<>();
                 Iterator<Positionable> iter = selections.iterator();
@@ -1637,7 +1687,7 @@ public class CircuitBuilder {
      * @return true to prevent dragging; false otherwise
      */
     public boolean doMouseDragged(Positionable selection, MouseEvent event) {
-        if (_editCircuitFrame != null || _editPathsFrame != null) {
+        if (_editCircuitFrame != null || _editPathsFrame != null || _editSignalFrame != null) {
             return true;     // no dragging when editing
         }
         if (selection instanceof PortalIcon) {
@@ -1710,6 +1760,15 @@ public class CircuitBuilder {
                 _editDirectionFrame.setPortalIcon(null, false);
             }
             _editDirectionFrame.toFront();
+        } else if (_editSignalFrame != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("selection= " + (selection == null ? "null"
+                        : selection.getClass().getName()));
+            }
+            if (selection instanceof PortalIcon) {
+                _editSignalFrame.setSelected((PortalIcon)selection);
+            }
+            _editSignalFrame.toFront();
         }
     }
 
@@ -1747,7 +1806,7 @@ public class CircuitBuilder {
             panel.add(makeButton("editPortalsItem", PORTAL));
             panel.add(makeButton("editCircuitPathsItem", OPATH));
             panel.add(makeButton("editDirectionItem", ARROW));
-//            panel.add(makeButton("editSignalItem", SIGNAL));
+            panel.add(makeButton("editSignalItem", SIGNAL));
             b.setSelected(true);
             panel0.add(panel);
 
@@ -1775,7 +1834,7 @@ public class CircuitBuilder {
                     } else if (_which == ARROW) {
                         editPortalDirection("editDirectionItem", false);
                     } else if (_which == SIGNAL) {
-                        //editSignal("editSignalItem", false);
+                        editSignalFrame("editSignalItem", false);
                     }
                 }
             });
