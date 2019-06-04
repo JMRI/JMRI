@@ -40,6 +40,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public DefaultIdTagManager() {
         super();
+        init();
     }
 
     @Override

@@ -30,6 +30,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
     public DefaultRailComManager() {
         InstanceManager.store(this, RailComManager.class);
         InstanceManager.setIdTagManager(this);
+        init();
     }
 
     @Override
