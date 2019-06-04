@@ -25,7 +25,6 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
     public TranspondingTagManager() {
         InstanceManager.store(this, TranspondingTagManager.class);
-        init();
     }
 
     @Override
