@@ -33,7 +33,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This class could definitely benefit from beng made generic on "E extends NamedBean"
  * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean}" method.
+ * 
+ * @deprecated since 4.17.1; use {@link jmri.swing.NamedBeanComboBox} instead
  */
+@Deprecated
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
     /**
