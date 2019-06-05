@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: WiFi Throttle</title><!-- Style -->
+  <title>JMRI: WiFi Server support for WiFi Throttles</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,33 +22,15 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: WiFi Connected Throttle</h1>The WiThrottle window controls the
+      <h1>JMRI: WiFi Connected Throttle</h1>
+      JMRI provides a "WiThrottle Server" which can provide a bridge between
+      the connected DCC system and WiFi-based throttles.
+      
+      <p>The WiThrottle Server window controls the
       connection between WiFi throttles, e.g. an iPhone, iPod
-      Touch, or Android Phone, and JMRI.
+      Touch, or Android Phone, and JMRI.  
 
-      <p>It can be set to start automatically with the "<a href=
-      "../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>"
-      section in the "<a href=
-      "../../../apps/TabbedPreferences.shtml">JMRI
-      Preferences</a>".</p>
-
-      <p><a href=
-      "../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
-      for the WiFi throttles can be found in the JMRI Preferences
-      under the heading WiThrottle.</p>
-
-      <p>This utility broadcasts its connection information across
-      all local networks, so it can be picked up by any device
-      looking for the service. This eliminates having to enter
-      connection information into the device. If the computer
-      running JMRI is protected by a software firewall, you may
-      need to add an exception for JMRI or disable the firewall
-      to allow the WiFi throttle to connect.</p>
-
-      <p>When using a WiFi throttle, if the computer enters sleep
-      mode, control will be lost. System preferences may need to be
-      adjusted to prevent the computer from putting itself to sleep
-      when it is inactive. <a href=
+      <a href=
       "http://enginedriver.mstevetodd.com"><img src=
       "images/EngineDriverScreen.png" height="200" width="120"
       align="right" style="margin:20px;" alt=
@@ -62,45 +44,98 @@
       <img src="images/DigiTrainsScreen.png" height="120" width=
       "200" align="right" style="margin:20px;" alt=
       "DigiTrains for Android devices" title=
-      "DigiTrains for Android devices"></a></p>
-
-      <p>To use your iPhone, iPad or iPod Touch with JMRI as a
-      throttle, you run the <a href=
-      "http://withrottle.com">WiThrottle</a> app on the iPhone or
-      iPod Touch. The basic application is available for free
-      download from the iTunes store.</p>
-
-      <p>To use your Android device with JMRI as a throttle, you
-      run the <a href="http://enginedriver.mstevetodd.com">Engine
-      Driver</a> app or <a href=
-      "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
-      Digitrains</a> on the Android device. These free apps are
-      available from the <a href=
-      "https://play.google.com/store/apps/details?id=jmri.enginedriver">
-      Google Play Store</a> or the <a href=
-      "http://enginedriver.mstevetodd.com">EngineDriver site</a></p>
-
-      <p>You can connect from a Windows computer using the
-      <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Train Throttle Windows App</a>
-      available on the 
-      <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Microsoft store</a>.
+      "DigiTrains for Android devices"></a>
+   
+      
+      <h2>WiFi Throttle "applications" for your WiFi device</h2>
+      The JMRI WiThrottle Server supports a number of readily-available
+      devices and applications:
+      <ul>
+          <li>To use your iPhone, iPad or iPod Touch with JMRI as a
+          throttle, you run the <a href=
+          "http://withrottle.com">WiThrottle</a> app on the iPhone or
+          iPod Touch. The basic application is available for free
+          download from the iTunes store.</li>
+          
+          <li>To use your Android device with JMRI as a throttle, you
+          run the <a href="http://enginedriver.mstevetodd.com">Engine
+          Driver</a> app or <a href=
+          "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
+          Digitrains</a> on the Android device. These free apps are
+          available from the <a href=
+          "https://play.google.com/store/apps/details?id=jmri.enginedriver">
+          Google Play Store</a> or the <a href=
+          "http://enginedriver.mstevetodd.com">EngineDriver site</a>.</li>
+          
+          <li>You can connect from a Windows computer using the
+          <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Train Throttle Windows App</a>
+          available on the 
+          <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Microsoft store</a>.</li>
+          
+          <li>The Iowa Scaled Engineering "ProtoThrottle" can be used with JMRI 
+          used in conjunction with the Iowa Scaled Engineering "ProtoThrottle 
+          Receiver for ESU CabControl, JMRI WiFi Throttle, and Digitrax LNWI"
+          adapter device.  The "application" is built into the "Receiver" device.</li>
+      </ul>
       
       <p>You can use any of these devices via the same or a different (remote) 
       network than the one that your JMRI computer is running on.  See below
       for more information on remote use of mobile devices.</p>
-      
+
+      <h2>Starting the JMRI WiThrottle Server</h2>
+      By default, JMRI does not activate
+      the its WiThrottle Server.  Starting the WiThrottle Server is typically
+      done in one of two ways:
+      <ul>
+          <li>interactively, by selecting "Tools->Throttles->WiThrottle Server", 
+              or</li>
+
+          <li>automatically at JMRI start-up, by "adding" an "action" in the
+          "preferences" for the configuration profile, to "Start WiThrottle Server".  
+          The process of adding start-up actions is generally described in the 
+          "<a href="../../../apps/TabbedPreferences.shtml#Startup">
+          Start Up</a>"section in the "<a href=
+          "../../../apps/TabbedPreferences.shtml">JMRI
+          Preferences</a>".</li>
+      </ul>
+
+      <h2>Configuring the WiThrottle Server</h2>
+
+      <p><a href=
+      "../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
+      for the WiFi throttles can be found in the JMRI Preferences
+      under the heading WiThrottle.</p>
+
+      <h2>Notes on  the WiThrottle Server</h2>
+
+      <p>The WiThrottle Server broadcasts its connection information across
+      all local networks, so it can be picked up by any device
+      looking for the service. This eliminates having to enter
+      connection information into the device. If the computer
+      running JMRI is protected by a software firewall, you may
+      need to add an exception for JMRI or disable the firewall
+      to allow the WiFi throttle to connect.</p>
+
+      <p>When using a WiFi throttle, if the computer enters sleep
+      mode, control will be lost. System preferences may need to be
+      adjusted to prevent the computer from putting itself to sleep
+      when it is inactive.</p>
+
       <p>The protocol is described on a <a href=
       "Protocol.shtml">separate page</a>. For more on JMRI
       networking, see the <a href=
       "../../../../html/doc/Technical/Networking.shtml">networking
       technical page</a>.</p>
 
-      <p>You can also <a href=
-      "../webThrottle/webThrottle.shtml">use a web browser</a> in
+      <p>If for some reason you can't install an app on the
+      device or cannot get the WiFi Throttle to properly connect to the
+      JMRI WiThrottle Server, you can instead try to <a href=
+      "../webThrottle/webThrottle.shtml">use a web browser</a> on
       your device to <a href="../webThrottle/webThrottle.shtml">run
-      trains</a> if for some reason you can't install an app on the
-      device.</p>
+      trains</a>.</p>
 
+      <h2>WiThrottle Server Features</h2>
+      
       <h3>Function Labels</h3>Function labels can be customized for
       each roster entry through JMRI, using the Labels &amp; Media
       button. These labels will then be displayed in place of the
@@ -185,6 +220,8 @@
  for this purpose.  It is generally not recommended to use remote monitoring cameras such as are used for
  baby monitoring or security cameras as most introduce a several second delay -- something that could lead
  to some very interesting railroad accidents!]</p>
+<h1>See Also</h1>
+For information on JMRI's native "throttle" capabilities, see <a href=""></a>.
 
       <!--#include virtual="/Footer" -->
     </div>
