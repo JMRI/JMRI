@@ -23,7 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JMRI: WiFi Connected Throttle</h1>
-      JMRI provides a "WiThrottle Server" which can provide a bridge between
+      JMRI provides a WiThrottle Server which can provide a bridge between
       the connected DCC system and WiFi-based throttles.
       
       <p>The WiThrottle Server window controls the
@@ -47,7 +47,7 @@
       "DigiTrains for Android devices"></a>
    
       
-      <h2>WiFi Throttle "applications" for your WiFi device</h2>
+      <h2>WiFi Throttle applications for your WiFi device</h2>
       The JMRI WiThrottle Server supports a number of readily-available
       devices and applications:
       <ul>
@@ -72,10 +72,10 @@
           available on the 
           <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Microsoft store</a>.</li>
           
-          <li>The Iowa Scaled Engineering "ProtoThrottle" can be used with JMRI 
+          <li>The Iowa Scaled Engineering ProtoThrottle can be used with JMRI 
           used in conjunction with the Iowa Scaled Engineering "ProtoThrottle 
           Receiver for ESU CabControl, JMRI WiFi Throttle, and Digitrax LNWI"
-          adapter device.  The "application" is built into the "Receiver" device.</li>
+          adapter device.  The required application is built into the Receiver device.</li>
       </ul>
       
       <p>You can use any of these devices via the same or a different (remote) 
@@ -84,19 +84,19 @@
 
       <h2>Starting the JMRI WiThrottle Server</h2>
       By default, JMRI does not activate
-      the its WiThrottle Server.  Starting the WiThrottle Server is typically
+      its WiThrottle Server.  Starting the WiThrottle Server is typically
       done in one of two ways:
       <ul>
           <li>interactively, by selecting "Tools->Throttles->WiThrottle Server", 
               or</li>
 
-          <li>automatically at JMRI start-up, by "adding" an "action" in the
-          "preferences" for the configuration profile, to "Start WiThrottle Server".  
+          <li>automatically at JMRI start-up, by adding an action in the
+          preferences for the configuration profile, to "Start WiThrottle Server".  
           The process of adding start-up actions is generally described in the 
-          "<a href="../../../apps/TabbedPreferences.shtml#Startup">
-          Start Up</a>"section in the "<a href=
+          <a href="../../../apps/TabbedPreferences.shtml#Startup">
+          Start Up</a> section in the <a href=
           "../../../apps/TabbedPreferences.shtml">JMRI
-          Preferences</a>".</li>
+          Preferences</a>.</li>
       </ul>
 
       <h2>Configuring the WiThrottle Server</h2>
@@ -221,7 +221,7 @@
  baby monitoring or security cameras as most introduce a several second delay -- something that could lead
  to some very interesting railroad accidents!]</p>
 <h1>See Also</h1>
-For information on JMRI's native "throttle" capabilities, see <a href=""></a>.
+For information on JMRI's native throttle capabilities, see the <a href="../throttle/ThrottleFrame.shtml">JMRI Throttle</a> page.
 
       <!--#include virtual="/Footer" -->
     </div>

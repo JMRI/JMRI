@@ -266,9 +266,9 @@
       <p>See <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
       WiThrottle Server</a> for more information.
       
-      <h2><a name="protoThrottle" id="android">Iowa Scaled Engineering "ProtoThrottle"</a></h2>
+      <h2><a name="protoThrottle" id="protoThrottle">Iowa Scaled Engineering ProtoThrottle</a></h2>
       The Iowa Scaled Engineering <a href="https://www.iascaled.com/store/ModelRailroad/ProtoThrottle">
-      "ProtoThrottle"</a> can be used with JMRI when the appropriate "Receiver" is
+      ProtoThrottle</a> can be used with JMRI when the appropriate Iowa Scaled Engineering Receiver is
       used.  See the JMRI <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
       WiThrottle Server</a> information page.
         
