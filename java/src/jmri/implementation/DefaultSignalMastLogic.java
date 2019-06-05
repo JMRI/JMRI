@@ -54,7 +54,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     boolean disposing = false;
 
     /**
-     * Initialise a Signal Mast Logic for a given source Signal mast.
+     * Initialise a Signal Mast Logic for a given source Signal Mast.
      *
      * @param source  The Signal Mast we are configuring an SML for
      */
@@ -114,7 +114,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             if (destMast.getAssociatedSection() != null) {
                 String oldUserName = destMast.getAssociatedSection().getUserName();
                 String newUserName = source.getDisplayName() + ":" + sm.getDisplayName();
-                jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).renameBean(oldUserName, newUserName, ((NamedBean) destMast.getAssociatedSection()));
+                if (oldUserName != null) {
+                    jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).renameBean(oldUserName, newUserName, ((NamedBean) destMast.getAssociatedSection()));
+                } else {
+                    log.warn("AssociatedSection oldUserName null for destination mast {}, skipped", destMast.getDisplayName());
+                }
             }
         }
         firePropertyChange("updatedSource", oldMast, newMast);
@@ -137,7 +141,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         if (destMast.getAssociatedSection() != null) {
             String oldUserName = destMast.getAssociatedSection().getUserName();
             String newUserName = source.getDisplayName() + ":" + newMast.getDisplayName();
-            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).renameBean(oldUserName, newUserName, destMast.getAssociatedSection());
+            if (oldUserName != null) {
+                jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).renameBean(oldUserName, newUserName, destMast.getAssociatedSection());
+            } else {
+                log.warn("AssociatedSection oldUserName null for destination mast {}, skipped", destMast.getDisplayName());
+            }
         }
         destList.put(newMast, destMast);
         firePropertyChange("updatedDestination", oldMast, newMast);
@@ -856,7 +864,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
                     log.debug("Diverging route? {}", divergRoute);
                     boolean divergFlagsAvailable = false;
-                    //We split the aspects into two lists, one with divering flag set, the other without.
+                    //We split the aspects into two lists, one with diverging flag set, the other without.
                     for (int i = 0; i < advancedAspect.length; i++) {
                         String div = null;
                         if (!getSourceMast().isAspectDisabled(advancedAspect[i])) {
@@ -869,7 +877,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                 divergFlagsAvailable = true;
                                 log.debug("Using Diverging Flag");
                             } else if (div.equals("Either")) {
-                                log.debug("Aspect {} added as Both Diverging and Normal Route", advancedAspect[i]);
+                                log.debug("Aspect {} added as both Diverging and Normal Route", advancedAspect[i]);
                                 nonDivergAspects.add(i);
                                 divergAspects.add(i);
                                 divergFlagsAvailable = true;
@@ -1097,6 +1105,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             return protectingBlock;
         }
 
+        String getDisplayName() {
+            return destination.getDisplayName();
+        }
+
         String comment;
 
         String getComment() {
@@ -1156,7 +1168,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 return;
             }
             associatedSection = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(section.getDisplayName(), section);
-            if (!autoBlocks.isEmpty() && associatedSection != null) {
+            if (!autoBlocks.isEmpty()) { // associatedSection is guaranteed to exist
                 createSectionDetails();
             }
         }
@@ -2239,12 +2251,15 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                     log.debug("D " + lt.getConnectD());
                                 }
                             }
-                            turnoutSettings.put(turnout, turnoutList.get(x).getExpectedState());
+                            if (turnout != null ) {
+                                turnoutSettings.put(turnout, turnoutList.get(x).getExpectedState());
+                            }
                             if (lt.getSecondTurnout() != null) {
                                 turnoutSettings.put(lt.getSecondTurnout(), turnoutList.get(x).getExpectedState());
                             }
-                            /* TODO: We could do with a more inteligent way to deal with double crossovers, other than just looking at the state of the other conflicting blocks
-                             such as looking at Signalmasts that protect the other blocks and the settings of any other turnouts along the way.
+                            /* TODO: We could do with a more intelligent way to deal with double crossovers, other than
+                                just looking at the state of the other conflicting blocks, such as looking at Signalmasts
+                                that protect the other blocks and the settings of any other turnouts along the way.
                              */
                             if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
                                 if (turnoutList.get(x).getExpectedState() == jmri.Turnout.THROWN) {
