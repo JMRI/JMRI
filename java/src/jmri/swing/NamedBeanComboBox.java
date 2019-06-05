@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 
 import jmri.Manager;
@@ -30,6 +31,19 @@ import jmri.util.NamedBeanComparator;
 import jmri.util.NamedBeanUserNameComparator;
 import jmri.util.ThreadingPropertyChangeListener;
 
+/**
+ * A {@link javax.swing.JComboBox} for {@link jmri.NamedBean}s.
+ * 
+ * This JComboBox will change the background color to show validation of the
+ * input as an input is typed. A validation is considered successful if a
+ * NamedBean of the supported type exists that has a matching UserName or
+ * SystemName. A validation is a failure if {@link #isValidatingInput()} is true
+ * and a NamedBean matching the input cannot be found. A validation is a warning
+ * in all other cases. This matches the behavior of
+ * {@link jmri.util.swing.JmriBeanComboBox}.
+ * 
+ * @param <B> the supported type of NamedBean
+ */
 public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     private final Manager<B> manager;
@@ -88,12 +102,12 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
         this.manager = manager;
-        setSelectedItem(selection);
         setDisplayOrder(displayOrder);
         setRenderer(new NamedBeanRenderer());
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
         sort();
+        setSelectedItem(selection);
     }
 
     public Manager<B> getManager() {
@@ -106,29 +120,55 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     public void setDisplayOrder(DisplayOptions displayOrder) {
         if (displayOptions != displayOrder) {
-            B selection = getSelectedItem();
             displayOptions = displayOrder;
             sort();
-            setSelectedItem(selection);
         }
     }
 
+    /**
+     * Is this JComboBox validating typed input?
+     * 
+     * @return true if validating input; false otherwise
+     */
     public boolean isValidatingInput() {
         return validatingInput;
     }
 
+    /**
+     * Set if this JComboBox validates typed input.
+     * 
+     * @param validatingInput true to validate; false to prevent validation
+     */
     public void setValidatingInput(boolean validatingInput) {
         this.validatingInput = validatingInput;
     }
 
+    /**
+     * Is this JComboBox allowing a null object to be selected?
+     * 
+     * @return true if allowing a null selection; false otherwise
+     */
     public boolean isAllowNull() {
         return allowNull;
     }
 
+    /**
+     * Set if this JComboBox allows a null object to be selected. If so, the
+     * null object is placed first in the displayed list of NamedBeans.
+     * 
+     * @param allowNull true if allowing a null selection; false otherwise
+     */
     public void setAllowNull(boolean allowNull) {
         this.allowNull = allowNull;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @return the selected item as the supported type of NamedBean or null if
+     *         there is no selection, or {@link #isAllowNull()} is true and the
+     *         null object is selected
+     */
     @Override
     public B getSelectedItem() {
         return getItemAt(getSelectedIndex());
@@ -211,6 +251,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     }
 
     private void sort() {
+        B selectedItem = getSelectedItem();
         Comparator<B> comparator = new NamedBeanComparator<>();
         if (displayOptions == DisplayOptions.USERNAME || displayOptions == DisplayOptions.USERNAMESYSTEMNAME) {
             comparator = new NamedBeanUserNameComparator<>();
@@ -223,15 +264,18 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
             vector.insertElementAt(null, 0);
         }
         setModel(new DefaultComboBoxModel<>(vector));
+        setSelectedItem(selectedItem); // retain selection
     }
 
     private void validateInput() {
         ComboBoxEditor cbe = getEditor();
-        JComponent c = (JComponent) cbe.getEditorComponent();
-        String text = cbe.getItem().toString();
+        JTextField c = (JTextField) cbe.getEditorComponent();
+        String text = c.getText();
         if (isEditable() && !text.isEmpty()) {
             c.setOpaque(true);
-            if (manager.getNamedBean(text) != null) {
+            B item = manager.getNamedBean(text);
+            if (item != null) {
+                setSelectedItem(item);
                 c.setBackground(SUCCESS);
             } else if (validatingInput) {
                 c.setBackground(FAILURE);
@@ -309,7 +353,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
             if (value != null) {
                 switch (displayOptions) {
                     case SYSTEMNAMEUSERNAME:
-                        label.setText(value.getFullyFormattedDisplayName());
+                        label.setText(value.getFullyFormattedDisplayName(false));
                         break;
                     case DISPLAYNAME:
                         label.setText(value.getDisplayName());
@@ -319,7 +363,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                         label.setText((userName != null && userName.isEmpty()) ? userName : value.getSystemName());
                         break;
                     case USERNAMESYSTEMNAME:
-                        label.setText(value.getFullyFormattedDisplayName(false));
+                        label.setText(value.getFullyFormattedDisplayName());
                         break;
                     case SYSTEMNAME:
                     default:
