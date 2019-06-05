@@ -252,8 +252,27 @@
       Touch</a></h2>There's a third-party application called
       <a href="http://withrottle.com/">WiThrottle</a> that works
       with JMRI to let you control trains with your iPhone or iPod
-      Touch.
-
+      Touch.  JMRI can provide the bridge between WiFi and your 
+      layout using the JMRI WiThrottle Server.  
+      <p>See <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
+      WiThrottle Server</a> for more information.
+      
+      <h2><a name="android" id="android">Android</a></h2>
+      There's a third-party application called
+      <a href="http://enginedriver.mstevetodd.com">Engine Driver</a> that works
+      with JMRI to let you control trains with your Android-based device.  
+      JMRI can provide the bridge between WiFi and your layout using the JMRI 
+      WiThrottle Server.  
+      <p>See <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
+      WiThrottle Server</a> for more information.
+      
+      <h2><a name="protoThrottle" id="android">Iowa Scaled Engineering "ProtoThrottle"</a></h2>
+      The Iowa Scaled Engineering <a href="https://www.iascaled.com/store/ModelRailroad/ProtoThrottle">
+      "ProtoThrottle"</a> can be used with JMRI when the appropriate "Receiver" is
+      used.  See the JMRI <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
+      WiThrottle Server</a> information page.
+        
+      <h2>Web Browser Throttle</h2>
       <p>You can also browse the <a href=
       "../../web/index.shtml">JMRI webserver</a> from Safari on
       your iPhone or iPod Touch.</p>
