@@ -77,6 +77,8 @@
 
         <li><a href="HowToJMRIOrientedThrottle.shtml">How to build
         a Throttle oriented JMRI</a></li>
+        
+        <li><a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">JMRI as a 'bridge" for WiFi throttles</a></li> 
       </ul>
       <hr>
 
