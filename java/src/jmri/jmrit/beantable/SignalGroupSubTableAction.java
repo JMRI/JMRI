@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -414,7 +415,7 @@ public class SignalGroupSubTableAction {
             SignalGroupTurnoutTable.setRowSelectionAllowed(false);
             SignalGroupTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
-            ROW_HEIGHT = SignalGroupTurnoutTable.getRowHeight();
+            SignalGroupSubTableAction.setRowHeight(SignalGroupTurnoutTable.getRowHeight());
             JComboBox<String> stateTCombo = new JComboBox<String>();
             stateTCombo.addItem(SET_TO_CLOSED);
             stateTCombo.addItem(SET_TO_THROWN);
@@ -595,7 +596,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Configure colum widths for the Turnout and Sensor Conditional tables.
+     * Configure column widths for the Turnout and Sensor Conditional tables.
      *
      * @param table JTable to put button in
      * @param column index of column in table
@@ -940,6 +941,10 @@ public class SignalGroupSubTableAction {
 
     private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensors
     private ArrayList<SignalGroupSensor> _includedSensorList;
+
+    private static void setRowHeight(@Nonnull int newVal) {
+        ROW_HEIGHT = newVal;
+    }
 
     private abstract class SignalGroupElement {
 
