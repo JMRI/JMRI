@@ -309,7 +309,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         }
     }
 
-    private static void setInit(boolean newVal) {
+    private synchronized static void setInit(boolean newVal) {
         init = newVal;
     }
 

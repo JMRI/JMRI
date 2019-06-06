@@ -3,7 +3,6 @@ package jmri.jmrit.audio;
 /**
  * Base implementation of all common thread code for use by threads in the
  * various Audio classes.
- *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -20,30 +19,33 @@ package jmri.jmrit.audio;
 public abstract class AbstractAudioThread extends Thread implements AudioThread {
 
     /**
-     * True while the thread is running
+     * True while the thread is running.
      */
     private boolean alive = true;
 
     /**
-     * True when thread should die
+     * True when thread should die.
      */
     private boolean die = false;
 
     /**
-     * Simple counter to ensure that each created thread has a unique name
+     * Simple counter to ensure that each created thread has a unique name.
      */
     private static long counter;
 
+    private synchronized static long nextCounter() {
+        return counter++;
+    }
     /**
      * Default constructor that gives this thread a unique name based on the
      * value of the static counter
      */
     public AbstractAudioThread() {
-        this.setName("audio-" + counter++);
+        this.setName("audio-" + AbstractAudioThread.nextCounter());
     }
 
     /**
-     * Perform necessary cleanup routines before shutting down
+     * Perform necessary cleanup routines before shutting down.
      */
     protected void cleanup() {
 
@@ -65,7 +67,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     }
 
     /**
-     * Checks if the thread is in the process of shutting down
+     * Checks if the thread is in the process of shutting down.
      *
      * @return true, if thread should die
      */
@@ -74,7 +76,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     }
 
     /**
-     * Based on the 'action' parameter, sets or returns if the thread is running
+     * Based on the 'action' parameter, sets or returns if the thread is running.
      *
      * @param action GET or SET
      * @param value  for action==SET, new value; for action==GET, NA
@@ -88,7 +90,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     }
 
     /**
-     * Based on the 'action' parameter, sets or returns if the thread should die
+     * Based on the 'action' parameter, sets or returns if the thread should die.
      *
      * @param action GET or SET
      * @param value  for action==SET, new value; for action==GET, NA
@@ -102,7 +104,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     }
 
     /**
-     * Sleep for the specified number of milliseconds
+     * Sleep for the specified number of milliseconds.
      * <p>
      * (Avoids cluttering the main code with the try-catch construct)
      *
@@ -114,4 +116,5 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
         } catch (InterruptedException ex) {
         }
     }
+
 }
