@@ -867,8 +867,12 @@ public final class InstanceManager {
         /**
          * Replace the (static) InstanceManager.
          */
-        public static void resetInstanceManager() {
-            instanceManager = new InstanceManager();
+        public synchronized static void resetInstanceManager() {
+            try {
+                instanceManager = new InstanceManager();
+            } catch (Exception e) {
+                log.error("can't create new InstanceManager");
+            }
         }
 
     }
