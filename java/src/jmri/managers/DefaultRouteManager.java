@@ -157,8 +157,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameRoute");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
     }
 
     @Override

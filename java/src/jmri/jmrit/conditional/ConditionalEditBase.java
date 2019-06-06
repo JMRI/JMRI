@@ -1383,7 +1383,7 @@ public class ConditionalEditBase {
                 }
             }
         }
-        messageInvalidActionItemName(name, "EntryExit"); // NOI18N
+        messageInvalidActionItemName(name, "BeanNameEntryExit"); // NOI18N
         return null;
     }
 

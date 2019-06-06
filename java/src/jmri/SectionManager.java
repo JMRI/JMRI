@@ -287,8 +287,8 @@ public class SectionManager extends AbstractManager<Section> implements Property
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSection");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSections" : "BeanNameSection");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManager.class);

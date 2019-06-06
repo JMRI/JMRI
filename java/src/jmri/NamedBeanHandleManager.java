@@ -265,8 +265,8 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
 
     @Override
     @CheckReturnValue
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanName");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);

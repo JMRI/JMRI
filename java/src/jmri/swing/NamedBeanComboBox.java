@@ -19,7 +19,6 @@ import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
@@ -102,6 +101,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
         this.manager = manager;
+        setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
         setRenderer(new NamedBeanRenderer());
         this.manager.addPropertyChangeListener("beans", managerListener);

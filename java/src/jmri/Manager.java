@@ -375,7 +375,26 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @Nonnull
-    public String getBeanTypeHandled();
+    public default String getBeanTypeHandled() {
+        return getBeanTypeHandled(false);
+    }
+
+    /**
+     * Returns the user-readable name of the type of NamedBean handled by this
+     * manager.
+     * <p>
+     * For instance, in the code where we are dealing with just a bean and a
+     * message that needs to be passed to the user or in a log.
+     * 
+     * @param plural true to return plural form of the type; false to return
+     *                   singular form
+     *
+     * @return a string of the bean type that the manager handles, eg Turnout,
+     *         Sensor etc
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural);
 
     /**
      * Enforces, and as a user convenience converts to, the standard form for a
