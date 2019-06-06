@@ -33,15 +33,16 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
      */
     private static long counter;
 
-    private synchronized static long nextCounter() {
-        return counter++;
-    }
     /**
      * Default constructor that gives this thread a unique name based on the
      * value of the static counter
      */
     public AbstractAudioThread() {
         this.setName("audio-" + AbstractAudioThread.nextCounter());
+    }
+
+    private synchronized static long nextCounter() {
+        return counter++;
     }
 
     /**
