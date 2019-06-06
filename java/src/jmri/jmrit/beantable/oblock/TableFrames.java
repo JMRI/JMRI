@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    static int ROW_HEIGHT;
+    private static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
 
     JTable _oBlockTable;
@@ -418,6 +418,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _openMenu.add(openTurnoutPath);
     }
 
+    private synchronized static void setRowHeight(@Nonnull int newVal) {
+        ROW_HEIGHT = newVal;
+    }
+
     /*
      * ********************* BlockFrame *****************************
      */
@@ -474,16 +478,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        ROW_HEIGHT = _oBlockTable.getRowHeight();
+        setRowHeight(_oBlockTable.getRowHeight());
         int tableWidth = _desktop.getPreferredSize().width;
-        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
+        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
         _blockTablePane = new JScrollPane(_oBlockTable);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL), false);
-//        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
+        // tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
 
         JPanel contentPane = new JPanel();
@@ -531,7 +535,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _portalTable.sizeColumnsToFit(-1);
         int tableWidth = _portalTable.getPreferredSize().width;
-        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
+        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
         _portalTablePane = new JScrollPane(_portalTable);
 
         JPanel contentPane = new JPanel();
@@ -564,7 +568,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _blockPortalTable.sizeColumnsToFit(-1);
         int tableWidth = _blockPortalTable.getPreferredSize().width;
-        _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 25));
+        _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 25));
         JScrollPane tablePane = new JScrollPane(_blockPortalTable);
 
         JPanel contentPane = new JPanel();
@@ -602,7 +606,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _signalTable.sizeColumnsToFit(-1);
         int tableWidth = _signalTable.getPreferredSize().width;
-        _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 8));
+        _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 8));
         _signalTablePane = new JScrollPane(_signalTable);
 
         JPanel contentPane = new JPanel();
@@ -672,7 +676,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         blockPathTable.sizeColumnsToFit(-1);
         int tableWidth = blockPathTable.getPreferredSize().width;
-        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
+        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
         JScrollPane tablePane = new JScrollPane(blockPathTable);
 
         JPanel contentPane = new JPanel();
@@ -720,7 +724,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         PathTurnoutTable.sizeColumnsToFit(-1);
         int tableWidth = PathTurnoutTable.getPreferredSize().width;
-        PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 5));
+        PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 5));
         JScrollPane tablePane = new JScrollPane(PathTurnoutTable);
 
         JPanel contentPane = new JPanel();
@@ -899,4 +903,5 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     private final static Logger log = LoggerFactory.getLogger(TableFrames.class);
+
 }
