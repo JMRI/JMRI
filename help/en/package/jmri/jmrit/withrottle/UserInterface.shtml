@@ -25,10 +25,10 @@
       <h1>JMRI: WiFi Connected Throttle</h1>
       JMRI provides a WiThrottle Server which can provide a bridge between
       the connected DCC system and WiFi-based throttles.
-      
+
       <p>The WiThrottle Server window controls the
       connection between WiFi throttles, e.g. an iPhone, iPod
-      Touch, or Android Phone, and JMRI.  
+      Touch, or Android Phone, and JMRI.
 
       <a href=
       "http://enginedriver.mstevetodd.com"><img src=
@@ -45,8 +45,8 @@
       "200" align="right" style="margin:20px;" alt=
       "DigiTrains for Android devices" title=
       "DigiTrains for Android devices"></a>
-   
-      
+
+
       <h2>WiFi Throttle applications for your WiFi device</h2>
       The JMRI WiThrottle Server supports a number of readily-available
       devices and applications:
@@ -56,7 +56,7 @@
           "http://withrottle.com">WiThrottle</a> app on the iPhone or
           iPod Touch. The basic application is available for free
           download from the iTunes store.</li>
-          
+
           <li>To use your Android device with JMRI as a throttle, you
           run the <a href="http://enginedriver.mstevetodd.com">Engine
           Driver</a> app or <a href=
@@ -66,19 +66,19 @@
           "https://play.google.com/store/apps/details?id=jmri.enginedriver">
           Google Play Store</a> or the <a href=
           "http://enginedriver.mstevetodd.com">EngineDriver site</a>.</li>
-          
+
           <li>You can connect from a Windows computer using the
           <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Train Throttle Windows App</a>
-          available on the 
+          available on the
           <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Microsoft store</a>.</li>
-          
-          <li>The Iowa Scaled Engineering ProtoThrottle can be used with JMRI 
-          used in conjunction with the Iowa Scaled Engineering "ProtoThrottle 
+
+          <li>The Iowa Scaled Engineering ProtoThrottle can be used with JMRI
+          used in conjunction with the Iowa Scaled Engineering "ProtoThrottle
           Receiver for ESU CabControl, JMRI WiFi Throttle, and Digitrax LNWI"
           adapter device.  The required application is built into the Receiver device.</li>
       </ul>
-      
-      <p>You can use any of these devices via the same or a different (remote) 
+
+      <p>You can use any of these devices via the same or a different (remote)
       network than the one that your JMRI computer is running on.  See below
       for more information on remote use of mobile devices.</p>
 
@@ -87,12 +87,12 @@
       its WiThrottle Server.  Starting the WiThrottle Server is typically
       done in one of two ways:
       <ul>
-          <li>interactively, by selecting "Tools->Throttles->WiThrottle Server", 
+          <li>interactively, by selecting "Tools->Throttles->WiThrottle Server",
               or</li>
 
           <li>automatically at JMRI start-up, by adding an action in the
-          preferences for the configuration profile, to "Start WiThrottle Server".  
-          The process of adding start-up actions is generally described in the 
+          preferences for the configuration profile, to "Start WiThrottle Server".
+          The process of adding start-up actions is generally described in the
           <a href="../../../apps/TabbedPreferences.shtml#Startup">
           Start Up</a> section in the <a href=
           "../../../apps/TabbedPreferences.shtml">JMRI
@@ -106,7 +106,7 @@
       for the WiFi throttles can be found in the JMRI Preferences
       under the heading WiThrottle.</p>
 
-      <h2>Notes on  the WiThrottle Server</h2>
+      <h2>Notes on the WiThrottle Server</h2>
 
       <p>The WiThrottle Server broadcasts its connection information across
       all local networks, so it can be picked up by any device
@@ -135,7 +135,7 @@
       trains</a>.</p>
 
       <h2>WiThrottle Server Features</h2>
-      
+
       <h3>Function Labels</h3>Function labels can be customized for
       each roster entry through JMRI, using the Labels &amp; Media
       button. These labels will then be displayed in place of the
@@ -146,7 +146,7 @@
 
       <h3>Routes &amp; Turnouts</h3>The app can control any
       turnouts (and routes) that JMRI can control. NOTE:
-      By default, EngineDriver only lists turnouts and routes which 
+      By default, EngineDriver only lists turnouts and routes which
       have User Names. This can be changed in EngineDriver Preferences.
 
       <p>Additionally, you can limit what turnouts appear. In JMRI,
@@ -174,18 +174,18 @@
       built and controlled. These consists should perform better
       when built with a WiFi device, but controlled by a throttle
       from the DCC manufacturer of your system.</p>
-      
+
       <h2>Using A Remote Mobile Device Throttle</h2>
       <!-- Section added by Jerry Grochow 2018-09-29 -->
-	  
+
  <p>Typically, people using smartphones or tablets as throttles are physically in the same room as the layout
  they are controlling.  Mobile device throttles, however, can be operated from anywhere in the world,
  significantly adding to the fun of model railroading by making it possible to share control of a layout with
  family or friends many miles away.</p>
 
  <p>Setting up a mobile device throttle is straighforward, as discussed above.  Apps such as the similarly named WiThrottle
- (for IOS devices) and EngineDriver (for Android devices) will either recognize that JMRI WiThrottle 
- Server is transmitting or ask you to connect to the server manually by entering its IP address and 
+ (for IOS devices) and EngineDriver (for Android devices) will either recognize that JMRI WiThrottle
+ Server is transmitting or ask you to connect to the server manually by entering its IP address and
  port.  The WiThrottle Server displays its broadcast IP address and port in the top section of the WiThrottle
  window.  If you are using a typical home router, this will begin with 192 or 10 and consist of four parts,
  for example 192.168.0.103.  This "internal" IP address will only be recognized by other devices connecting
@@ -204,8 +204,8 @@
  specific instructions on how to do that.  However, detailed instructions can usually be found on the internet
  and the topic has been addressed in the JMRI online forum as well.</p>
 
-<p>Once you have determined the public address of your JMRI computer and set up port forwarding 
- to the WiThrottle Server, you enter this information into the throttle app on your mobile device. 
+<p>Once you have determined the public address of your JMRI computer and set up port forwarding
+ to the WiThrottle Server, you enter this information into the throttle app on your mobile device.
  You will know you have been successful when your mobile device's name appears in the WiThrottle Server
  window and your engine roster appears on your app.
 
@@ -213,7 +213,7 @@
  you have the correct internal and public IP addresses (which may change from day to day due to the way
  your network router and internet service provider assign addresses), correct port number, and that you
  saved the port forwarding information to your router's memory.</p>
- 
+
 <p>Now all you have to do is provide a way for the remote engineer to talk with you and see your layout
  while he or she takes control of your JMRI-enabled layout via a mobile device throttle from anywhere in
  the world!  [FYI: use FaceTime or Skype or some other video system that provides realtime communication
