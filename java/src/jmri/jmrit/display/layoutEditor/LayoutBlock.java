@@ -35,6 +35,7 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Path;
 import jmri.Reporter;
+import jmri.Reportable;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
@@ -882,7 +883,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             //copy block value to memory if there is a value
             Object val = block.getValue();
             if (val != null) {
-                if (!(val instanceof RosterEntry)) {
+                if (!(val instanceof RosterEntry) && !(val instanceof Reportable)) {
                     val = val.toString();
                 }
             }
