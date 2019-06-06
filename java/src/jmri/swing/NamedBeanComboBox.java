@@ -41,6 +41,14 @@ import jmri.util.ThreadingPropertyChangeListener;
  * in all other cases. This matches the behavior of
  * {@link jmri.util.swing.JmriBeanComboBox}.
  * 
+ * <strong>Note:</strong> It is recommended that implementations that exclude
+ * some NamedBeans from the combo box call {@link #setToolTipText(String)} to
+ * provide a context specific reason for excluding those items. The default tool
+ * tip reads (example for Turnouts) "Turnouts not shown cannot be used in this
+ * context.", but a better tool tip (example for Signal Heads when creating a
+ * Signal Mast) may be "Signal Heads not shown are assigned to another Signal
+ * Mast."
+ * 
  * @param <B> the supported type of NamedBean
  */
 public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
