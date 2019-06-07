@@ -196,7 +196,7 @@ public class Section extends AbstractNamedBean {
                             getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
                         }
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensors for Section " + getSystemName());
+                        log.error("Exception when setting Sensors for Section {}", getSystemName());
                     }
                     break;
                 case REVERSE:
@@ -208,7 +208,7 @@ public class Section extends AbstractNamedBean {
                             getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
                         }
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensors for Section " + getSystemName());
+                        log.error("Exception when setting Sensors for Section {}", getSystemName());
                     }
                     break;
                 case FREE:
@@ -220,14 +220,14 @@ public class Section extends AbstractNamedBean {
                             getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
                         }
                     } catch (jmri.JmriException reason) {
-                        log.error("Exception when setting Sensors for Section " + getSystemName());
+                        log.error("Exception when setting Sensors for Section {}", getSystemName());
                     }
                     break;
                 default:
                     break;
             }
         } else {
-            log.error("Attempt to set state of Section " + getSystemName() + " to illegal value - " + state);
+            log.error("Attempt to set state of Section {} to illegal value - {}", getSystemName(), state);
         }
     }
 
@@ -247,8 +247,8 @@ public class Section extends AbstractNamedBean {
             if (block.getState() == OCCUPIED) {
                 mOccupancy = OCCUPIED;
             } else if (block.getState() != UNOCCUPIED) {
-                log.warn("Occupancy of block " + block.getSystemName()
-                        + " is not OCCUPIED or UNOCCUPIED in Section - " + getSystemName());
+                log.warn("Occupancy of block {} is not OCCUPIED or UNOCCUPIED in Section - {}",
+                        block.getSystemName(), getSystemName());
                 return (block.getState());
             }
         }
@@ -278,8 +278,8 @@ public class Section extends AbstractNamedBean {
             Sensor s = InstanceManager.sensorManagerInstance().
                     getSensor(mForwardBlockingSensorName);
             if (s == null) {
-                log.error("Missing Sensor - " + mForwardBlockingSensorName + " - when initializing Section - "
-                        + getSystemName());
+                log.error("Missing Sensor - {} - when initializing Section - {}",
+                        mForwardBlockingSensorName, getSystemName());
                 return null;
             }
             mForwardBlockingNamedSensor = nbhm.getNamedBeanHandle(mForwardBlockingSensorName, s);
@@ -298,7 +298,8 @@ public class Section extends AbstractNamedBean {
         Sensor s = validateSensor();
         if (s == null) {
             // sensor name not correct or not in sensor table
-            log.error("Sensor name - " + forwardSensor + " invalid when setting forward sensor in Section " + getSystemName());
+            log.error("Sensor name - {} invalid when setting forward sensor in Section {}",
+                    forwardSensor, getSystemName());
             return null;
         }
         mForwardBlockingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
@@ -327,7 +328,8 @@ public class Section extends AbstractNamedBean {
         Sensor s = validateSensor();
         if (s == null) {
             // sensor name not correct or not in sensor table
-            log.error("Sensor name -" + reverseSensor + "invalid when setting reverse sensor in Section " + getSystemName());
+            log.error("Sensor name - {} invalid when setting reverse sensor in Section {}",
+                    reverseSensor, getSystemName());
             return null;
         }
         mReverseBlockingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
@@ -348,8 +350,8 @@ public class Section extends AbstractNamedBean {
             Sensor s = InstanceManager.sensorManagerInstance().
                     getSensor(mReverseBlockingSensorName);
             if (s == null) {
-                log.error("Missing Sensor - " + mReverseBlockingSensorName + " - when initializing Section - "
-                        + getSystemName());
+                log.error("Missing Sensor - {} - when initializing Section - {}",
+                        mReverseBlockingSensorName, getSystemName());
                 return null;
             }
             mReverseBlockingNamedSensor = nbhm.getNamedBeanHandle(mReverseBlockingSensorName, s);
@@ -397,8 +399,8 @@ public class Section extends AbstractNamedBean {
             Sensor s = InstanceManager.sensorManagerInstance().
                     getSensor(mForwardStoppingSensorName);
             if (s == null) {
-                log.error("Missing Sensor - " + mForwardStoppingSensorName + " - when initializing Section - "
-                        + getSystemName());
+                log.error("Missing Sensor - {} - when initializing Section - {}",
+                        mForwardStoppingSensorName, getSystemName());
                 return null;
             }
             mForwardStoppingNamedSensor = nbhm.getNamedBeanHandle(mForwardStoppingSensorName, s);
@@ -417,7 +419,8 @@ public class Section extends AbstractNamedBean {
         Sensor s = validateSensor();
         if (s == null) {
             // sensor name not correct or not in sensor table
-            log.error("Sensor name -" + forwardSensor + "invalid when setting forward sensor in Section " + getSystemName());
+            log.error("Sensor name - {} invalid when setting forward sensor in Section {}",
+                    forwardSensor, getSystemName());
             return null;
         }
         mForwardStoppingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
@@ -446,7 +449,8 @@ public class Section extends AbstractNamedBean {
         Sensor s = validateSensor();
         if (s == null) {
             // sensor name not correct or not in sensor table
-            log.error("Sensor name -" + reverseSensor + "invalid when setting reverse sensor in Section " + getSystemName());
+            log.error("Sensor name - {} invalid when setting reverse sensor in Section {}",
+                    reverseSensor, getSystemName());
             return null;
         }
         mReverseStoppingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
@@ -467,8 +471,8 @@ public class Section extends AbstractNamedBean {
             Sensor s = InstanceManager.sensorManagerInstance().
                     getSensor(mReverseStoppingSensorName);
             if (s == null) {
-                log.error("Missing Sensor - " + mReverseStoppingSensorName + " - when initializing Section - "
-                        + getSystemName());
+                log.error("Missing Sensor - {}  - when initializing Section - {}",
+                        mReverseStoppingSensorName, getSystemName());
                 return null;
             }
             mReverseStoppingNamedSensor = nbhm.getNamedBeanHandle(mReverseStoppingSensorName, s);
@@ -498,7 +502,8 @@ public class Section extends AbstractNamedBean {
 
         // a lot of this code searches for blocks by their user name.
         // warn if there isn't one.
-        if (b.getUserName()== null) log.warn("Block {} does not have a user name, may not work correctly in Section {}", b.getSystemName(), getSystemName());
+        if (b.getUserName()== null) log.warn("Block {} does not have a user name, may not work correctly in Section {}",
+                b.getSystemName(), getSystemName());
         // add Block to the Block list
         mBlockEntries.add(b);
         mLastBlock = b;
@@ -527,8 +532,8 @@ public class Section extends AbstractNamedBean {
         for (int i = 0; i < blockNameList.size(); i++) {
             Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(blockNameList.get(i));
             if (b == null) {
-                log.error("Missing Block - " + blockNameList.get(i) + " - when initializing Section - "
-                        + getSystemName());
+                log.error("Missing Block - {} - when initializing Section - {}",
+                        blockNameList.get(i), getSystemName());
             } else {
                 if (mBlockEntries.isEmpty()) {
                     mFirstBlock = b;
@@ -957,8 +962,8 @@ public class Section extends AbstractNamedBean {
         LayoutBlock bBlock = ((TrackSegment) t.getConnectB()).getLayoutBlock();
         LayoutBlock cBlock = ((TrackSegment) t.getConnectC()).getLayoutBlock();
         if ((aBlock == null) || (bBlock == null) || (cBlock == null)) {
-            log.error("All blocks not assigned for track segments connecting to turnout - "
-                    + t.getTurnout().getSystemName() + ".");
+            log.error("All blocks not assigned for track segments connecting to turnout - {}.",
+                    t.getTurnout().getSystemName());
             return EntryPoint.UNKNOWN;
         }
         Block exBlock = checkDualDirection(aBlock, bBlock, cBlock);
@@ -981,7 +986,7 @@ public class Section extends AbstractNamedBean {
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
                 }
             }
-            if (tBlock != null && tBlock.getUserName()!=null) {
+            if (tBlock != null && tBlock.getUserName() != null) {
                 LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                 if (lb != null) {
                     dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -996,7 +1001,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
                 }
-                if (tBlock != null && tBlock.getUserName()!=null) {
+                if (tBlock != null && tBlock.getUserName() != null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1004,8 +1009,8 @@ public class Section extends AbstractNamedBean {
                 }
             }
             if (dir == EntryPoint.UNKNOWN) {
-                log.error("Block definition ambiguity - cannot determine direction of Turnout "
-                        + t.getTurnout().getSystemName() + " in Section " + getSystemName() + ".");
+                log.error("Block definition ambiguity - cannot determine direction of Turnout {} in Section {}",
+                        t.getTurnout().getSystemName(), getSystemName());
             }
             return dir;
         }
@@ -1026,7 +1031,7 @@ public class Section extends AbstractNamedBean {
         }
         LayoutBlock tBlock = t.getLayoutBlock();
         if (tBlock == null) {
-            log.error("Block not assigned for turnout " + t.getTurnout().getSystemName());
+            log.error("Block not assigned for turnout {}", t.getTurnout().getSystemName());
             return EntryPoint.UNKNOWN;
         }
         if (containsBlock(aBlock.getBlock()) && (!containsBlock(bBlock.getBlock()))) {
@@ -1076,8 +1081,8 @@ public class Section extends AbstractNamedBean {
         }
 
         // should never get here
-        log.error("Unexpected error in getDirectionStandardTurnout when working with turnout "
-                + t.getTurnout().getSystemName());
+        log.error("Unexpected error in getDirectionStandardTurnout when working with turnout {}",
+                t.getTurnout().getSystemName());
         return EntryPoint.UNKNOWN;
     }
 
@@ -1096,13 +1101,13 @@ public class Section extends AbstractNamedBean {
         LayoutBlock cBlock = ((TrackSegment) t.getConnectC()).getLayoutBlock();
         LayoutBlock dBlock = ((TrackSegment) t.getConnectD()).getLayoutBlock();
         if ((aBlock == null) || (bBlock == null) || (cBlock == null) || (dBlock == null)) {
-            log.error("All blocks not assigned for track segments connecting to crossover turnout - "
-                    + t.getTurnout().getSystemName() + ".");
+            log.error("All blocks not assigned for track segments connecting to crossover turnout - {}.",
+                    t.getTurnout().getSystemName());
             return EntryPoint.UNKNOWN;
         }
         if ((aBlock == bBlock) && (aBlock == cBlock) && (aBlock == dBlock)) {
-            log.error("Block setup problem - All track segments connecting to crossover turnout - "
-                    + t.getTurnout().getSystemName() + " are assigned to the same Block.");
+            log.error("Block setup problem - All track segments connecting to crossover turnout - {} are assigned to the same Block.",
+                    t.getTurnout().getSystemName());
             return EntryPoint.UNKNOWN;
         }
         if ((containsBlock(aBlock.getBlock())) || (containsBlock(bBlock.getBlock()))) {
@@ -1122,7 +1127,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName()!=null) {
+                if (tBlock != null && tBlock.getUserName() != null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1134,7 +1139,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName()!=null) {
+                    if (tBlock != null && tBlock.getUserName() != null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1142,8 +1147,8 @@ public class Section extends AbstractNamedBean {
                     }
                 }
                 if (dir == EntryPoint.UNKNOWN) {
-                    log.error("Block definition ambiguity - cannot determine direction of crossover Turnout "
-                            + t.getTurnout().getSystemName() + " in Section " + getSystemName() + ".");
+                    log.error("Block definition ambiguity - cannot determine direction of crossover Turnout {} in Section {}",
+                            t.getTurnout().getSystemName(), getSystemName());
                 }
                 return dir;
             }
@@ -1198,7 +1203,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName()!=null) {
+                if (tBlock != null && tBlock.getUserName() != null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1210,7 +1215,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName()!=null) {
+                    if (tBlock != null && tBlock.getUserName() != null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1218,8 +1223,8 @@ public class Section extends AbstractNamedBean {
                     }
                 }
                 if (dir == EntryPoint.UNKNOWN) {
-                    log.error("Block definition ambiguity - cannot determine direction of crossover Turnout "
-                            + t.getTurnout().getSystemName() + " in Section " + getSystemName() + ".");
+                    log.error("Block definition ambiguity - cannot determine direction of crossover Turnout {} in Section {}.",
+                            t.getTurnout().getSystemName(), getSystemName());
                 }
                 return dir;
             }
@@ -1277,13 +1282,13 @@ public class Section extends AbstractNamedBean {
         LayoutBlock cBlock = ((TrackSegment) t.getConnectC()).getLayoutBlock();
         LayoutBlock dBlock = ((TrackSegment) t.getConnectD()).getLayoutBlock();
         if ((aBlock == null) || (bBlock == null) || (cBlock == null) || (dBlock == null)) {
-            log.error("All blocks not assigned for track segments connecting to crossover turnout - "
-                    + t.getTurnout().getSystemName() + ".");
+            log.error("All blocks not assigned for track segments connecting to crossover turnout - {}.",
+                    t.getTurnout().getSystemName());
             return EntryPoint.UNKNOWN;
         }
         if ((aBlock == bBlock) && (aBlock == cBlock) && (aBlock == dBlock)) {
-            log.error("Block setup problem - All track segments connecting to crossover turnout - "
-                    + t.getTurnout().getSystemName() + " are assigned to the same Block.");
+            log.error("Block setup problem - All track segments connecting to crossover turnout - {} are assigned to the same Block.",
+                    t.getTurnout().getSystemName());
             return EntryPoint.UNKNOWN;
         }
         if ((containsBlock(aBlock.getBlock())) || (containsBlock(cBlock.getBlock()))) {
@@ -1303,7 +1308,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName()!=null) {
+                if (tBlock != null && tBlock.getUserName() != null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1315,7 +1320,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName()!=null) {
+                    if (tBlock != null && tBlock.getUserName() != null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1323,8 +1328,8 @@ public class Section extends AbstractNamedBean {
                     }
                 }
                 if (dir == EntryPoint.UNKNOWN) {
-                    log.error("Block definition ambiguity - cannot determine direction of crossover slip "
-                            + t.getTurnout().getSystemName() + " in Section " + getSystemName() + ".");
+                    log.error("Block definition ambiguity - cannot determine direction of crossover slip {} in Section {}.",
+                            t.getTurnout().getSystemName(), getSystemName());
                 }
                 return dir;
             }
@@ -1370,7 +1375,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName()!=null) {
+                if (tBlock != null && tBlock.getUserName() != null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1382,7 +1387,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName()!=null) {
+                    if (tBlock != null && tBlock.getUserName() != null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1390,8 +1395,8 @@ public class Section extends AbstractNamedBean {
                     }
                 }
                 if (dir == EntryPoint.UNKNOWN) {
-                    log.error("Block definition ambiguity - cannot determine direction of slip "
-                            + t.getTurnout().getSystemName() + " in Section " + getSystemName() + ".");
+                    log.error("Block definition ambiguity - cannot determine direction of slip {} in Section {}.",
+                            t.getTurnout().getSystemName(), getSystemName());
                 }
                 return dir;
             }
@@ -1549,8 +1554,8 @@ public class Section extends AbstractNamedBean {
             }
         }
         // should never get here
-        log.error("Unexpected error in getDirectionForBlocks when working with LevelCrossing in Section "
-                + getSystemName());
+        log.error("Unexpected error in getDirectionForBlocks when working with LevelCrossing in Section {}",
+                getSystemName());
         return EntryPoint.UNKNOWN;
     }
 
@@ -1600,22 +1605,26 @@ public class Section extends AbstractNamedBean {
                     successful = true;
                 }
             } else {
-                log.error("Trouble following track in Block "
-                        + cBlock.getSystemName() + " in Section " + getSystemName() + ".");
+                log.error("Trouble following track in Block {} in Section {}.",
+                        cBlock.getSystemName(), getSystemName());
             }
         }
         return successful;
     }
 
     /**
-     * Places direction sensors in SSL for all Signal Heads in this Section if
-     * the Sensors are not already present in the SSL. Only anchor point block
+     * Place direction sensors in SSL for all Signal Heads in this Section if
+     * the Sensors are not already present in the SSL.
+     * <p>
+     * Only anchor point block
      * boundaries that have assigned signals are considered. Only turnouts that
      * have assigned signals are considered. Only level crossings that have
      * assigned signals are considered. Turnouts and anchor points without
      * signals are counted, and reported in warning messages during this
-     * procedure, if there are any missing signals. If this method has trouble,
-     * an error message is placed in the log describing the trouble.
+     * procedure, if there are any missing signals.
+     * <p>
+     * If this method has trouble, an error message is placed in the log
+     * describing the trouble.
      *
      * @param panel the panel to place direction sensors on
      * @return the number or errors placing sensors; 1 is returned if no
@@ -1635,7 +1644,7 @@ public class Section extends AbstractNamedBean {
         }
         if ((mForwardBlockingSensorName == null) || (mForwardBlockingSensorName.equals(""))
                 || (mReverseBlockingSensorName == null) || (mReverseBlockingSensorName.equals(""))) {
-            log.error("Missing direction sensor in Section " + getSystemName());
+            log.error("Missing direction sensor in Section {}", getSystemName());
             return 1;
         }
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -1649,7 +1658,7 @@ public class Section extends AbstractNamedBean {
                     // have a signalled block boundary
                     SignalHead sh = cUtil.getSignalHeadAtAnchor(p, cBlock, false);
                     if (sh == null) {
-                        log.warn("Unexpected missing signal head at boundary of Block " + cBlock.getUserName());
+                        log.warn("Unexpected missing signal head at boundary of Block {}", cBlock.getUserName());
                         errorCount++;
                     } else {
                         int direction = cUtil.getDirectionFromAnchor(mForwardEntryPoints,
@@ -1824,8 +1833,8 @@ public class Section extends AbstractNamedBean {
                             SignalHead aHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalA1Name());
                             SignalHead a2Head = null;
-                            String a2Name = t.getSignalA2Name();
-                            if ((a2Name != null) && (!a2Name.equals(""))) {
+                            String a2Name = t.getSignalA2Name(); // returns "" for empty name, never null
+                            if (!a2Name.equals("")) {
                                 a2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(a2Name);
                             }
                             SignalHead bHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
@@ -1917,20 +1926,20 @@ public class Section extends AbstractNamedBean {
                         // special linked turnout
                         LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(t.getLinkedTurnoutName(), panel);
                         if (tLinked == null) {
-                            log.error("null Layout Turnout linked to turnout " + t.getTurnout().getSystemName());
+                            log.error("null Layout Turnout linked to turnout {}", t.getTurnout().getSystemName());
                         } else if (t.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
                             SignalHead b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalB1Name());
                             SignalHead b2Head = null;
-                            String hName = t.getSignalB2Name();
-                            if ((hName != null) && (!hName.equals(""))) {
+                            String hName = t.getSignalB2Name(); // returns "" for empty name, never null
+                            if (!hName.equals("")) {
                                 b2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                             }
                             SignalHead c1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalC1Name());
                             SignalHead c2Head = null;
-                            hName = t.getSignalC2Name();
-                            if ((hName != null) && (!hName.equals(""))) {
+                            hName = t.getSignalC2Name(); // returns "" for empty name, never null
+                            if (!hName.equals("")) {
                                 c2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                             }
                             int direction = getDirectionStandardTurnout(t, cUtil);
@@ -1966,16 +1975,16 @@ public class Section extends AbstractNamedBean {
                                     // turnout is not in this block, switch to heads of linked turnout
                                     b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                             tLinked.getSignalB1Name());
-                                    hName = tLinked.getSignalB2Name();
+                                    hName = tLinked.getSignalB2Name(); // returns "" for empty name, never null
                                     b2Head = null;
-                                    if ((hName != null) && (!hName.equals(""))) {
+                                    if (!hName.equals("")) {
                                         b2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                                     }
                                     c1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                             tLinked.getSignalC1Name());
                                     c2Head = null;
-                                    hName = tLinked.getSignalC2Name();
-                                    if ((hName != null) && (!hName.equals(""))) {
+                                    hName = tLinked.getSignalC2Name(); // returns "" for empty name, never null
+                                    if (!hName.equals("")) {
                                         c2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                                     }
                                     if (((t.getContinuingSense() == Turnout.CLOSED)
@@ -2039,13 +2048,13 @@ public class Section extends AbstractNamedBean {
                             SignalHead a1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalA1Name());
                             SignalHead a2Head = null;
-                            String hName = t.getSignalA2Name();
-                            if ((hName != null) && (!hName.equals(""))) {
+                            String hName = t.getSignalA2Name(); // returns "" for empty name, never null
+                            if (!hName.equals("")) {
                                 a2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                             }
                             SignalHead a3Head = null;
-                            hName = t.getSignalA3Name();
-                            if ((hName != null) && (!hName.equals(""))) {
+                            hName = t.getSignalA3Name(); // returns "" for empty name, never null
+                            if (!hName.equals("")) {
                                 a3Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                             }
                             SignalHead cHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
@@ -2109,8 +2118,8 @@ public class Section extends AbstractNamedBean {
                             SignalHead a1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     tLinked.getSignalA1Name());
                             SignalHead a3Head = null;
-                            String hName = tLinked.getSignalA3Name();
-                            if ((hName != null) && (!hName.equals(""))) {
+                            String hName = tLinked.getSignalA3Name(); // returns "" for empty name, never null
+                            if (!hName.equals("")) {
                                 a3Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
                             }
                             int direction = getDirectionStandardTurnout(t, cUtil);
@@ -2139,8 +2148,8 @@ public class Section extends AbstractNamedBean {
                                             errorCount++;
                                         }
                                     } else {
-                                        log.warn("Turnout " + tLinked.getTurnoutName() + " - SSL for head " + a1Head.getSystemName()
-                                                + " cannot handle direction sensor for second diverging track.");
+                                        log.warn("Turnout {} - SSL for head {} cannot handle direction sensor for second diverging track.",
+                                                tLinked.getTurnoutName(), a1Head.getSystemName());
                                         errorCount++;
                                     }
                                 } else if (((TrackSegment) t.getConnectB()).getLayoutBlock().getBlock() == cBlock) {
@@ -2276,8 +2285,8 @@ public class Section extends AbstractNamedBean {
                             }
                         }
                     } else {
-                        log.error("Unknown turnout type for turnout " + t.getTurnout().getSystemName()
-                                + " in Section " + getSystemName() + ".");
+                        log.error("Unknown turnout type for turnout {} in Section {}.",
+                                t.getTurnout().getSystemName(), getSystemName());
                         errorCount++;
                     }
                 } else {
@@ -2333,7 +2342,7 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * Checks that there are Signal Heads at all Entry Points to this Section.
+     * Check that there are Signal Heads at all Entry Points to this Section.
      * This method will warn if it finds unsignaled internal turnouts, but will
      * continue checking. Unsignaled entry points except for those at unsignaled
      * internal turnouts will be considered errors, and will be reported to the
@@ -2393,8 +2402,8 @@ public class Section extends AbstractNamedBean {
                 LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(
                         getBlockBySequenceNumber(i).getUserName());
                 if (lBlock == null) {
-                    log.error("Layout Block " + getBlockBySequenceNumber(i).getUserName()
-                            + " not found.  Paths not checked.");
+                    log.error("Layout Block {} not found. Paths not checked.",
+                            getBlockBySequenceNumber(i).getUserName());
                 } else {
                     lBlock.updatePathsUsingPanel(lePanel);
                 }
@@ -2500,7 +2509,7 @@ public class Section extends AbstractNamedBean {
      */
     public void setAlternateColor(boolean set) {
         for (Block b : mBlockEntries) {
-            if (b.getUserName()!=null) {
+            if (b.getUserName() != null) {
                 LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
                 if (lb != null) {
                     lb.setUseExtraColor(set);
@@ -2510,11 +2519,11 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * This function sets/resets the display to use alternate color for
-     * unoccupied blocks in this section. If the section already contains an
-     * active block, then the alternative colour will be set from the active
+     * Set/reset the display to use alternate color for
+     * unoccupied blocks in this Section. If the Section already contains an
+     * active block, then the alternative color will be set from the active
      * block, if no active block is found or we are clearing the alternative
-     * colour then all the blocks in the section will be set. If Layout Editor
+     * color then all the blocks in the Section will be set. If Layout Editor
      * panel is not present, Layout Blocks will not be present, and nothing will
      * be set.
      *
@@ -2556,7 +2565,7 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * Set the block values for blocks in this section.
+     * Set the block values for blocks in this Section.
      *
      * @param name the value to set all blocks to
      */
@@ -2567,7 +2576,7 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * This function sets the block values for blocks in this section.
+     * Set the block values for blocks in this Section.
      *
      * @param value the name to set block values to
      */
@@ -2606,7 +2615,7 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * This function clears the block values for blocks in this section.
+     * Clear the block values for blocks in this Section.
      */
     public void clearNameInUnoccupiedBlocks() {
         for (Block b : mBlockEntries) {
