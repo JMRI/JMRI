@@ -851,7 +851,8 @@ public final class InstanceManager {
 
     /**
      * A class for lazy initialization of the singleton class InstanceManager.
-     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     *
+     * {@see https://www.ibm.com/developerworks/library/j-jtp03304/}
      */
     private static class LazyInstanceManager {
 
