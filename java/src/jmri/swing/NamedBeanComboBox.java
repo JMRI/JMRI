@@ -111,6 +111,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager = manager;
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
+        setEditable(true);
         setRenderer(new NamedBeanRenderer());
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
