@@ -8,17 +8,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of 2.1th algorithm for reducing Readings
- * <P>
+ * <p>
  * This algorithm was provided by Robert Ashenfelter based in part on the work
  * of Ralph Bucher in his paper "Exact Solution for Three Dimensional Hyperbolic
  * Positioning Algorithm and Synthesizable VHDL Model for Hardware
  * Implementation".
- * <P>
+ * <p>
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
- *
- *
- *
  *
  * <h2>RPSpos2.2 program description.</h2>
  *
@@ -149,10 +146,9 @@ import org.slf4j.LoggerFactory;
  * same as those for version 1.1. These are described in the e-mail with that
  * version sent on 12/9/06.
  *
-* <P>
  * @author	Robert Ashenfelter Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
@@ -378,7 +374,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
         x = y = 0.0;
         z = -100000.0;//  Iterative solution
         while (++i < 5000) {
-//printf("%4d %2d %3d  %d%d%d  %lf %lf %lf  %lg\r\n",i,j,k,S,nss,ns,x,y,z,var/vmax);
+            //printf("%4d %2d %3d  %d%d%d  %lf %lf %lf  %lg\r\n",i,j,k,S,nss,ns,x,y,z,var/vmax);
             if (S == 0) {//   Stage 0
                 j = k = (i - 1) % ns;//    Receivers in order
                 w = 1.0;
@@ -635,6 +631,5 @@ public class Ash2_2Algorithm extends AbstractCalculator {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Ash2_2Algorithm.class);
+
 }
-
-

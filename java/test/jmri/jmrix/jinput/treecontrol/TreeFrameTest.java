@@ -2,31 +2,28 @@ package jmri.jmrix.jinput.treecontrol;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of TreeFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class TreeFrameTest {
+public class TreeFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        TreeFrame action = new TreeFrame();
-        Assert.assertNotNull("exists", action);
-    }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){ 
+           frame = new TreeFrame();
+        }
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {        
+       super.tearDown();    
+    }
 }

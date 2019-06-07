@@ -6,21 +6,20 @@ import java.util.List;
  * RailCom represents a RailCom enabled decoder that might be fitted to a
  * specific piece of rolling stock to uniquely identify it.<br>
  * RailCom is a registered trademark of Lenz GmbH.
- * <P>
+ * <p>
  * This implementation of RailCom is an extension of @see IdTag and holds the
  * additional information that can be supplied by the decoder as defined in
  * RP-9.3.2
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4

@@ -1,11 +1,11 @@
 package jmri.jmrix.powerline.simulator;
 
 /**
- * Constants and functions specific to the Insteon 2412S interface
+ * Constants and functions specific to the Insteon 2412S interface.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009
  * @author Ken Cameron Copyright (C) 2010
-  */
+ */
 public class Constants {
 
     public static final int HEAD_STX = 0x02;
@@ -54,6 +54,3 @@ public class Constants {
     }
 
 }
-
-
-

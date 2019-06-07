@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -22,6 +23,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsFrame;
@@ -44,8 +49,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of tracks
@@ -61,9 +64,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     public Location _location = null;
     public Track _track = null;
-    String _trackName = null; // track name for tools menu
     String _type = "";
-    JMenu _toolMenu = null;
+    JMenu _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
     List<JCheckBox> checkBoxes = new ArrayList<>();
 
@@ -360,7 +362,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             commentTextArea.setText(_track.getComment());
             trackLengthTextField.setText(Integer.toString(_track.getLength()));
             enableButtons(true);
-            _trackName = _track.getName();
             if (Setup.isRfidEnabled()) {
                 readerSelector.setSelectedItem(_track.getReporter());
             }
@@ -370,7 +371,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         _toolMenu.add(new TrackLoadEditAction(this));
         _toolMenu.add(new TrackRoadEditAction(this));
         _toolMenu.add(new TrackEditCommentsAction(this));
@@ -777,6 +777,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     protected void enableButtons(boolean enabled) {
+        _toolMenu.setEnabled(enabled);
         northCheckBox.setEnabled(enabled);
         southCheckBox.setEnabled(enabled);
         eastCheckBox.setEnabled(enabled);

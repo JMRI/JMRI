@@ -7,16 +7,17 @@ import javax.annotation.Nonnull;
 
 /**
  * Provide access to clock capabilities in hardware or software.
- * <P>
- * The Rate parameter determines how much faster than real time this runs. For
- * example, a value of 2.0 means that the value returned by getTime will advance
- * an hour for every half-hour of wall-clock time elapsed.
- * <P>
- * The Rate and Run parameters are bound, so you can listen for changes to them.
- * The Time parameters is not bound, because it changes continuously. Ask for
- * its value when needed, or add a a listener for the changes in the "minute"
- * value using {@link #addMinuteChangeListener}
- * <P>
+ * <p>
+ * The {@code rate} property determines how much faster than real time this
+ * runs. For example, a value of 2.0 means that the value returned by getTime
+ * will advance an hour for every half-hour of wall-clock time elapsed.
+ * <p>
+ * The {@code rate} and {@code run} properties are bound, so you can listen for
+ * changes to them. The {@code time} property is bound, but listeners only
+ * receive change notifications if the change is a minute or more, because it
+ * changes continuously; query to {@code time} property when needed to get the
+ * current value.
+ * 
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
  */
 public interface Timebase extends NamedBean {
@@ -54,7 +55,7 @@ public interface Timebase extends NamedBean {
      *
      * @param factor the fast clock rate
      * @throws jmri.TimebaseRateException if the implementation can not use the
-     *                                    requested rate
+     *                                        requested rate
      */
     public void setRate(double factor) throws TimebaseRateException;
 
@@ -63,7 +64,7 @@ public interface Timebase extends NamedBean {
      *
      * @param factor the fast clock rate
      * @throws jmri.TimebaseRateException if the implementation can not use the
-     *                                    requested rate
+     *                                        requested rate
      */
     public void userSetRate(double factor) throws TimebaseRateException;
 
@@ -111,7 +112,7 @@ public interface Timebase extends NamedBean {
      *
      * @param display true for a 12-hour display; false for a 24-hour display
      * @param update  true to set display for external fast clocks; false
-     *                otherwise
+     *                    otherwise
      */
     public void set12HourDisplay(boolean display, boolean update);
 
@@ -131,6 +132,7 @@ public interface Timebase extends NamedBean {
 
     // methods for start up with clock stopped/started/nochange option
     public void setClockInitialRunState(ClockInitialRunState initialState);
+
     public ClockInitialRunState getClockInitialRunState();
 
     // methods for start up with start/stop button displayed
@@ -145,10 +147,12 @@ public interface Timebase extends NamedBean {
 
     // What to set the rate at startup.
     public void setStartRate(double factor);
+
     public double getStartRate();
 
     // If true, the rate at startup will be set to the value of getStartRate().
     public void setSetRateAtStart(boolean set);
+
     public boolean getSetRateAtStart();
 
     @Nonnull
@@ -169,7 +173,8 @@ public interface Timebase extends NamedBean {
     public static final int LCD_CLOCK = 0x04;
 
     /**
-     * Initialize hardware clock at start up after all options are set up.<p>
+     * Initialize hardware clock at start up after all options are set up.
+     * <p>
      * Note: This method is always called at start up. It should be ignored if
      * there is no communication with a hardware clock
      */
@@ -181,19 +186,10 @@ public interface Timebase extends NamedBean {
     public boolean getIsInitialized();
 
     /**
-     * Request a call-back when the bound Rate or Run property changes.
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l);
-
-    /**
-     * Remove a request for a call-back when a bound property changes.
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l);
-
-    /**
-     * Request a callback when the minutes place of the time changes.
+     * Request a callback when the minutes place of the time changes. This is
+     * the same as calling
+     * {@link #addPropertyChangeListener(String, PropertyChangeListener)} with
+     * the propertyName {@code minutes}.
      *
      * @param l the listener to receive the callback
      */
@@ -201,13 +197,18 @@ public interface Timebase extends NamedBean {
 
     /**
      * Remove a request for callback when the minutes place of the time changes.
+     * This is the same as calling
+     * {@link #removePropertyChangeListener(String, PropertyChangeListener)}
+     * with the propertyName {@code minutes}.
      *
      * @param l the listener to receive the callback
      */
     public void removeMinuteChangeListener(@Nonnull PropertyChangeListener l);
 
     /**
-     * Get the list of minute change listeners.
+     * Get the list of minute change listeners. This is the same as calling
+     * {@link #getPropertyChangeListeners(String)} with the propertyName
+     * {@code minutes}.
      *
      * @return the list of listeners
      */

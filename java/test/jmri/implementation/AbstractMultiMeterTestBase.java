@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
  * @author  Paul Bender Copyright (C) 2017	
-  */
+ */
 public abstract class AbstractMultiMeterTestBase {
 
     @Before

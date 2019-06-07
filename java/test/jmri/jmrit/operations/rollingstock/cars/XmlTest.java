@@ -176,12 +176,13 @@ public class XmlTest extends OperationsTestCase {
         tempcarList = manager.getByIdList();
         Assert.assertEquals("Number of Cars", 6, tempcarList.size());
 
-        c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
-        c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
-        c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
-        c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id
-        c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
-        c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
+        // verify cars can be gotten with current roads and numbers
+        c1 = manager.getByRoadAndNumber("newRoad", "New Test Number c1");
+        c2 = manager.getByRoadAndNumber("c2 Road", "X Test Number c2");
+        c3 = manager.getByRoadAndNumber("c3 Road", "X Test Number c3");
+        c4 = manager.getByRoadAndNumber("PC", "Test Number 4");
+        c5 = manager.getByRoadAndNumber("c5Road", "New Test Number c5");
+        c6 = manager.getByRoadAndNumber("SP", "Test Number 6");
 
         Assert.assertNotNull("car c1 exists", c1);
         Assert.assertNotNull("car c2 exists", c2);
@@ -305,12 +306,13 @@ public class XmlTest extends OperationsTestCase {
         tempcarList = manager.getByIdList();
         Assert.assertEquals("Number of Cars", 3, tempcarList.size());
 
-        c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
-        c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
-        c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
-        c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id
-        c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
-        c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
+        // verify cars can be gotten with current roads and numbers
+        c1 = manager.getByRoadAndNumber("OLDRoad", "X Test Number c1");
+        c2 = manager.getByRoadAndNumber("c2 Road", "X Test Number c2");
+        c3 = manager.getByRoadAndNumber("c3 Road", "X Test Number c3");
+        c4 = manager.getByRoadAndNumber("PC", "Test Number 4");
+        c5 = manager.getByRoadAndNumber("c5Road", "New Test Number c5");
+        c6 = manager.getByRoadAndNumber("SP", "Test Number 6");
 
         Assert.assertNotNull("car c1 exists", c1);
         Assert.assertNotNull("car c2 exists", c2);

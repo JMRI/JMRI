@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections.
- * <P>
+ * <p>
  * This class is named as being the persistant form of the JmrixConfigPane
  * class, but there's no object of that form created or used. Instead, this
  * interacts forwards to a similar class in one of the protocol-specific

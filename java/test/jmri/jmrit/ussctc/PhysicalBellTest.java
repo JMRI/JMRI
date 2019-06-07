@@ -8,7 +8,7 @@ import org.junit.*;
  * Tests for PhysicalBell class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class PhysicalBellTest {
 
     @Test

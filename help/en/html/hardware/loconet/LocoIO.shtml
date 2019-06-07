@@ -62,7 +62,7 @@
         <li>Click on "probe" button</li>
 
         <li>If a locoIO is found at that address, its firmware
-        version is displayed (the Monitor Loconet window will show
+        version is displayed (the Monitor LocoNet window will show
         all the LocoIO's that responded to the probe request if you
         need to refresh your memory)</li>
 
@@ -70,7 +70,7 @@
         you MUST ensure that it is the ONLY LocoIO-based board
         connected to the LocoNet, as the address is set via a
         broadcast message. A popup will remind you of this. If you
-        ignore it, then ALL of the LocoIO's on your Loconet will be
+        ignore it, then ALL of the LocoIO's on your LocoNet will be
         reprogrammed with the same new address.</li>
 
         <li>"read all" reads all the CV values from the LocoIO
@@ -80,7 +80,7 @@
         only one port at a time.</li>
 
         <li>"capture" extracts the address out of the next turnout
-        or occupancy sensor Loconet message it sees and uses it as
+        or occupancy sensor LocoNet message it sees and uses it as
         the address of the selected port.</li>
       </ul>
       <!-- No longer supported, so no usage for a To Do list here -->

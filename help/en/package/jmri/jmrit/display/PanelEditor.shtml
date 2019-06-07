@@ -42,11 +42,10 @@
       images to represent Turnouts, Sensors, Signal Heads, Signal
       Masts, trackwork, etc.</p>
 
-      <p>If you'd like to see animated clinics that show how each
-      of these things are actually done on the computer screen,
-      please see <a href=
-      "http://www.rr-cirkits.com/Clinics/Clinics.html">Dick
-      Bronson's clinics page</a>.</p>
+      <p>For clinics showing how each of these things are actually
+      done on the computer screen, please see the <a href=
+      "http://jmri.org/community/clinics/">JMRI Clinics page</a>.
+      </p>
 
       <h2>Contents of the Panel Editor</h2>
 
@@ -64,10 +63,10 @@
         Press the button and you will be prompted to enter the
         text.</li>
 
-        <li>A button to add a text label. Put the desired text in
-        the field and click the button. You can slide the label
-        around after inserting it, but you currently can't edit the
-        text later.</li>
+          <li>A button to add a text label. Put the desired text in
+          the field and click the button. You can slide the label
+          around after inserting it and you can edit the
+          text by context clicking and choosing "Edit Text...".</li>
 
         <li style="list-style: none"><img src="images/PanelEditor2.png"
         align="right"></li>
@@ -179,13 +178,13 @@
       <h2>After Creating A Panel</h2>
 
       <p>After getting the panel the way you want, you need to use
-      the "Store panels..." entry in the "Panels" menu to write it
-      to an XML file.</p>
+      the <a href="PanelMenuHelp.shtml">"Store panels..."</a>
+      entry in the "Panels" menu to write it to an XML file.</p>
 
-      <h3>Available Icons</h3>The JMRI library contains lots of
-      contributed icons for representing CTC panels, LEDs, etc. You
-      can browse through them using the file tree in the Change
-      Icon frame.
+      <h3>Available Icons</h3>
+      <p>The JMRI library contains lots of contributed icons for
+      representing CTC panels, LEDs, etc. You can browse through
+      them using the file tree in the Change Icon frame.</p>
 
       <p>Each of the Icon Editor windows has a <b>Find Icons</b>
       Menu that provides several ways to find and acquire
@@ -194,28 +193,28 @@
 
       <h2>Other types of panels</h2>
 
-      <p>Because this is icon-based, you can create panels that
-      look any way you want. For example, instead of using
+      <p>Because this type of panel is icon-based, you can create
+      panels that look any way you want. For example, instead of using
       track-schematic icons for turnouts, you could use small
       images of the levers and plates on CTC machine. This would
       give you "mechanical" levers you can flip back and forth with
       a click.</p>
 
-      <p>It's also possible to create a panel where the "track"
-      lines change color to indicate whether the track is occupied.
-      The procedure for doing that is described on a <a href=
-      "http://jmri.org/apps/PanelPro/ColorTrack.html">separate
-      page</a>.</p>
+      <p>In JMRI it's possible to create a panel where the "track"
+      lines change color to indicate whether the block is occupied by
+      switching to either <a href="ControlPanelEditor.shtml">Control
+      Panel Editor</a> (using Indicator Track icons) or
+      <a href="LayoutEditor.shtml">Layout Editor</a>.</p>
 
       <h2>Manipulating Icons</h2>
 
       <p>To move an icon around on the panel, you "meta-drag" it.
-      On a Mac, that's "hold the cmd key and drag with the cursor";
+      On macOS, that's "hold the cmd key and drag with the cursor";
       on Linux or Windows, "hold the right mouse click and drag
       with the cursor".</p>
 
-      <p>There's also a pop-up menu (ctrl-click on a Mac;
-      right-click on Linux or Windows) that will provide various
+      <p>There's also a pop-up menu (ctrl-click on macOS;
+      right-click on Linux and Windows) that will provide various
       ways to manipulate the icon. It will let you rotate the icon
       so that it points in whatever direction you want. Text labels
       can have their font, size and color changed. You can also
@@ -340,15 +339,17 @@
       Connection.</p>
 
       <p>If you add a Turnout, Sensor or Signal Mast to a Panel
-      using just a number, e.g. "23", it will be assigned to the
-      Default System as defined on the Preferences panel -&gt;
-      Defaults tab. To access the second system, you have to use
-      JMRI <a href=
+      using just a number, e.g. "23" in the Add... pane of a table,
+      its System Name will be created using the System Connection
+      Prefix as set in the Preferences panel -&gt; Connections tab
+      (e.g. LT1 for a turnout on the L LocoNet connection).
+      As a second system connection is required to use a different
+      prefix, it is simple to use more than one hardware
+      system at the same time (for JMRI naming rules see <a href=
       "../../../../html/doc/Technical/Names.shtml">System
-      Names</a>. For example, if the second attachment is to a
-      LocoNet system, you'd refer to a LocoNet Turnout as LT13; a
-      LocoNet Sensor as LS21, etc.</p>
-      <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
+      Names</a>).</p>
+
+      <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">
         PanelPro help page</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

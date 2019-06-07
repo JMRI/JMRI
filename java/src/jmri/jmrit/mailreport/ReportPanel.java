@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The report is sent to a dedicated SourceForge mailing list, from which people
  * can retrieve it.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Matthew Harris Copyright (c) 2014
  */

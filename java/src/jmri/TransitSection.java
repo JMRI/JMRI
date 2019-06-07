@@ -8,15 +8,15 @@ import org.slf4j.LoggerFactory;
  * This class holds information and options for a Section when assigned to a
  * Transit. Corresponds to an allocatable "Section" of track assigned to a
  * Transit.
- * <P>
+ * <p>
  * A TransitSection holds the following information: Section ID Section
  * Direction Sequence number of Section within the Transit Special actions list
  * for train in this Section, if requested (see TransitSectionAction.java)
  * Whether this Section is a primary section or an alternate section
- * <P>
+ * <p>
  * A TransitSection is referenced via a list in its parent Transit, and is
  * stored on disk when its parent Transit is stored.
- * <P>
+ * <p>
  * Provides for delayed initializatio of Section when loading panel files, so
  * that this is not dependent on order of items in the panel file.
  *

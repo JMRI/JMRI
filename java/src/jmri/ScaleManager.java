@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
  * Create a list of layout scale objects and provide retrieval methods.
  * <p>
  * See {@link jmri.Scale Scale} for details of each scale object.
- * <p>
+ *
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.6
  */

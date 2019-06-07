@@ -4,12 +4,12 @@ import jmri.Turnout;
 
 /**
  * Implement turnout manager for JMRIClient systems
- * <P>
+ * <p>
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the turnout number without padding.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     private JMRIClientSystemConnectionMemo memo = null;

@@ -212,13 +212,25 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.debug("Notify TCListener address declined in-use: {}", l.getClass());
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        notifyFailedThrottleRequest(address, "Steal Required");
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        notifyDecisionRequired(address, DecisionType.STEAL);
+    }
 
-        // this is an automatically stealing impelementation.
-//        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    /**
+     * calls notifyFailedThrottleRequest, Steal Required
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
+        notifyFailedThrottleRequest(address, "Steal Required");
     }
 
 
@@ -597,9 +609,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void setAddress(int number, boolean isLong) {
         log.debug("setAddress: {}, isLong: {}", number, isLong);
         if (rosterLoco != null) {
-            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this, true);
         } else {
-            jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(new DccLocoAddress(number, isLong), this, true);
+            
         }
     }
 
@@ -639,6 +652,21 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             return ((DccLocoAddress) throttle.getLocoAddress()).toString();
         } else {
             return "Not Set";
+        }
+    }
+
+    /**
+     * Get the string representation of this Roster ID. Returns empty string 
+     * if no address in use.
+     * since 4.15.4
+     *
+     * @return string value of throttle Roster ID
+     */
+    public String getCurrentRosterIdString() {
+        if (rosterLoco != null) {
+            return rosterLoco.getId() ;
+        } else {
+            return " ";
         }
     }
 

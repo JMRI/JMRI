@@ -4,30 +4,20 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of XBeeAddNodeFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class XBeeAddNodeFrameTest {
+public class XBeeAddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
 
 
     private XBeeTrafficController tc = null;
     private XBeeConnectionMemo m = null;
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        XBeeNodeConfigFrame frame = new XBeeNodeConfigFrame(tc);
-        XBeeAddNodeFrame action = new XBeeAddNodeFrame(tc,frame);
-        Assert.assertNotNull("exists", action);
-    }
-
+    private XBeeNodeConfigFrame parent = null;
+ 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,9 +34,21 @@ public class XBeeAddNodeFrameTest {
         m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
+        if(!GraphicsEnvironment.isHeadless()){
+           parent = new XBeeNodeConfigFrame(tc);
+           frame = new XBeeAddNodeFrame(tc,parent);
+        }
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    @Override
+    public void tearDown() {
+        tc = null;
+        m = null;
+        if(parent!=null){
+           JUnitUtil.dispose(parent);
+        }
+        parent = null;
+        super.tearDown();
     }
 }

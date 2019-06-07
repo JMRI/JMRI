@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:docbook="http://docbook.org/ns/docbook"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+      exclude="Essential Sound Unit">
+    <name>SUSI Map</name>
+    <column>
+        <label>
+            <text>Map Decoder Function Keys (F0 to F15) to SUSI Functions (SF0-SF15)</text>
+            <text xml:lang="de">Zuweisen der Funktionstasten (F0 bis F15) zu SUSI Funktionen (SF0-SF15)</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <grid ipadx="5" ipady="5">
+            <!-- column labels -->
+            <griditem gridx="0" gridy="1">
+                <label>
+                    <text>F0</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="2">
+                <label>
+                    <text>F1</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="3">
+                <label>
+                    <text>F2</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="4">
+                <label>
+                    <text>F3</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="5">
+                <label>
+                    <text>F4</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="6">
+                <label>
+                    <text>F5</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="7">
+                <label>
+                    <text>F6</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="8">
+                <label>
+                    <text>F7</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="9">
+                <label>
+                    <text>F8</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="10">
+                <label>
+                    <text>F9</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="11">
+                <label>
+                    <text>F10</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="12">
+                <label>
+                    <text>F11</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="13">
+                <label>
+                    <text>F12</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="14">
+                <label>
+                    <text>F13</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="15">
+                <label>
+                    <text>F14</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="16">
+                <label>
+                    <text>F15</text>
+                </label>
+            </griditem>
+            <!-- row labels -->
+            <griditem gridx="1" gridy="0">
+                <label>
+                    <text>SF0</text>
+                </label>
+            </griditem>
+            <griditem gridx="2" gridy="0">
+                <label>
+                    <text>SF1</text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="0">
+                <label>
+                    <text>SF2</text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="0">
+                <label>
+                    <text>SF3</text>
+                </label>
+            </griditem>
+            <griditem gridx="5" gridy="0">
+                <label>
+                    <text>SF4</text>
+                </label>
+            </griditem>
+            <griditem gridx="6" gridy="0">
+                <label>
+                    <text>SF5</text>
+                </label>
+            </griditem>
+            <griditem gridx="7" gridy="0">
+                <label>
+                    <text>SF6</text>
+                </label>
+            </griditem>
+            <griditem gridx="8" gridy="0">
+                <label>
+                    <text>SF7</text>
+                </label>
+            </griditem>
+            <griditem gridx="9" gridy="0">
+                <label>
+                    <text>SF8</text>
+                </label>
+            </griditem>
+            <griditem gridx="10" gridy="0">
+                <label>
+                    <text>SF9</text>
+                </label>
+            </griditem>
+            <griditem gridx="11" gridy="0">
+                <label>
+                    <text>SF10</text>
+                </label>
+            </griditem>
+            <griditem gridx="12" gridy="0">
+                <label>
+                    <text>SF11</text>
+                </label>
+            </griditem>
+            <griditem gridx="13" gridy="0">
+                <label>
+                    <text>SF12</text>
+                </label>
+            </griditem>
+            <griditem gridx="14" gridy="0">
+                <label>
+                    <text>SF13</text>
+                </label>
+            </griditem>
+            <griditem gridx="15" gridy="0">
+                <label>
+                    <text>SF14</text>
+                </label>
+            </griditem>
+            <griditem gridx="16" gridy="0">
+                <label>
+                    <text>SF15</text>
+                </label>
+            </griditem>
+            <!-- data -->
+            <griditem gridx="1" gridy="1">
+                <display item="F0 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="1">
+                <display item="F0 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="1">
+                <display item="F0 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="1">
+                <display item="F0 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="1">
+                <display item="F0 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="1">
+                <display item="F0 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="1">
+                <display item="F0 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="1">
+                <display item="F0 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="1">
+                <display item="F0 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="1">
+                <display item="F0 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="1">
+                <display item="F0 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="1">
+                <display item="F0 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="1">
+                <display item="F0 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="1">
+                <display item="F0 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="1">
+                <display item="F0 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="1">
+                <display item="F0 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="F1 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="2">
+                <display item="F1 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="2">
+                <display item="F1 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="2">
+                <display item="F1 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="2">
+                <display item="F1 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="2">
+                <display item="F1 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="2">
+                <display item="F1 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="2">
+                <display item="F1 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="2">
+                <display item="F1 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="2">
+                <display item="F1 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="2">
+                <display item="F1 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="2">
+                <display item="F1 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="2">
+                <display item="F1 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="2">
+                <display item="F1 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="2">
+                <display item="F1 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="2">
+                <display item="F1 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="3">
+                <display item="F2 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="3">
+                <display item="F2 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="3">
+                <display item="F2 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="3">
+                <display item="F2 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="3">
+                <display item="F2 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="3">
+                <display item="F2 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="3">
+                <display item="F2 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="3">
+                <display item="F2 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="3">
+                <display item="F2 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="3">
+                <display item="F2 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="3">
+                <display item="F2 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="3">
+                <display item="F2 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="3">
+                <display item="F2 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="3">
+                <display item="F2 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="3">
+                <display item="F2 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="3">
+                <display item="F2 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="4">
+                <display item="F3 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="4">
+                <display item="F3 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="4">
+                <display item="F3 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="4">
+                <display item="F3 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="4">
+                <display item="F3 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="4">
+                <display item="F3 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="4">
+                <display item="F3 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="4">
+                <display item="F3 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="4">
+                <display item="F3 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="4">
+                <display item="F3 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="4">
+                <display item="F3 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="4">
+                <display item="F3 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="4">
+                <display item="F3 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="4">
+                <display item="F3 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="4">
+                <display item="F3 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="4">
+                <display item="F3 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="5">
+                <display item="F4 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="5">
+                <display item="F4 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="5">
+                <display item="F4 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="5">
+                <display item="F4 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="5">
+                <display item="F4 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="5">
+                <display item="F4 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="5">
+                <display item="F4 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="5">
+                <display item="F4 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="5">
+                <display item="F4 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="5">
+                <display item="F4 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="5">
+                <display item="F4 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="5">
+                <display item="F4 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="5">
+                <display item="F4 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="5">
+                <display item="F4 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="5">
+                <display item="F4 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="5">
+                <display item="F4 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="6">
+                <display item="F5 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="6">
+                <display item="F5 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="6">
+                <display item="F5 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="6">
+                <display item="F5 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="6">
+                <display item="F5 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="6">
+                <display item="F5 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="6">
+                <display item="F5 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="6">
+                <display item="F5 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="6">
+                <display item="F5 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="6">
+                <display item="F5 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="6">
+                <display item="F5 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="6">
+                <display item="F5 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="6">
+                <display item="F5 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="6">
+                <display item="F5 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="6">
+                <display item="F5 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="6">
+                <display item="F5 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="7">
+                <display item="F6 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="7">
+                <display item="F6 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="7">
+                <display item="F6 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="7">
+                <display item="F6 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="7">
+                <display item="F6 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="7">
+                <display item="F6 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="7">
+                <display item="F6 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="7">
+                <display item="F6 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="7">
+                <display item="F6 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="7">
+                <display item="F6 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="7">
+                <display item="F6 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="7">
+                <display item="F6 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="7">
+                <display item="F6 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="7">
+                <display item="F6 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="7">
+                <display item="F6 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="7">
+                <display item="F6 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="8">
+                <display item="F7 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="8">
+                <display item="F7 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="8">
+                <display item="F7 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="8">
+                <display item="F7 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="8">
+                <display item="F7 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="8">
+                <display item="F7 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="8">
+                <display item="F7 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="8">
+                <display item="F7 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="8">
+                <display item="F7 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="8">
+                <display item="F7 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="8">
+                <display item="F7 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="8">
+                <display item="F7 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="8">
+                <display item="F7 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="8">
+                <display item="F7 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="8">
+                <display item="F7 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="8">
+                <display item="F7 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="9">
+                <display item="F8 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="9">
+                <display item="F8 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="9">
+                <display item="F8 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="9">
+                <display item="F8 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="9">
+                <display item="F8 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="9">
+                <display item="F8 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="9">
+                <display item="F8 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="9">
+                <display item="F8 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="9">
+                <display item="F8 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="9">
+                <display item="F8 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="9">
+                <display item="F8 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="9">
+                <display item="F8 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="9">
+                <display item="F8 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="9">
+                <display item="F8 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="9">
+                <display item="F8 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="9">
+                <display item="F8 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="10">
+                <display item="F9 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="10">
+                <display item="F9 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="10">
+                <display item="F9 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="10">
+                <display item="F9 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="10">
+                <display item="F9 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="10">
+                <display item="F9 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="10">
+                <display item="F9 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="10">
+                <display item="F9 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="10">
+                <display item="F9 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="10">
+                <display item="F9 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="10">
+                <display item="F9 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="10">
+                <display item="F9 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="10">
+                <display item="F9 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="10">
+                <display item="F9 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="10">
+                <display item="F9 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="10">
+                <display item="F9 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="11">
+                <display item="F10 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="11">
+                <display item="F10 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="11">
+                <display item="F10 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="11">
+                <display item="F10 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="11">
+                <display item="F10 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="11">
+                <display item="F10 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="11">
+                <display item="F10 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="11">
+                <display item="F10 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="11">
+                <display item="F10 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="11">
+                <display item="F10 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="11">
+                <display item="F10 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="11">
+                <display item="F10 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="11">
+                <display item="F10 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="11">
+                <display item="F10 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="11">
+                <display item="F10 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="11">
+                <display item="F10 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="12">
+                <display item="F11 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="12">
+                <display item="F11 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="12">
+                <display item="F11 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="12">
+                <display item="F11 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="12">
+                <display item="F11 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="12">
+                <display item="F11 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="12">
+                <display item="F11 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="12">
+                <display item="F11 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="12">
+                <display item="F11 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="12">
+                <display item="F11 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="12">
+                <display item="F11 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="12">
+                <display item="F11 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="12">
+                <display item="F11 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="12">
+                <display item="F11 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="12">
+                <display item="F11 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="12">
+                <display item="F11 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="13">
+                <display item="F12 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="13">
+                <display item="F12 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="13">
+                <display item="F12 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="13">
+                <display item="F12 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="13">
+                <display item="F12 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="13">
+                <display item="F12 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="13">
+                <display item="F12 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="13">
+                <display item="F12 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="13">
+                <display item="F12 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="13">
+                <display item="F12 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="13">
+                <display item="F12 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="13">
+                <display item="F12 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="13">
+                <display item="F12 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="13">
+                <display item="F12 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="13">
+                <display item="F12 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="13">
+                <display item="F12 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="14">
+                <display item="F13 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="14">
+                <display item="F13 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="14">
+                <display item="F13 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="14">
+                <display item="F13 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="14">
+                <display item="F13 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="14">
+                <display item="F13 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="14">
+                <display item="F13 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="14">
+                <display item="F13 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="14">
+                <display item="F13 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="14">
+                <display item="F13 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="14">
+                <display item="F13 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="14">
+                <display item="F13 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="14">
+                <display item="F13 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="14">
+                <display item="F13 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="14">
+                <display item="F13 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="14">
+                <display item="F13 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="15">
+                <display item="F14 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="15">
+                <display item="F14 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="15">
+                <display item="F14 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="15">
+                <display item="F14 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="15">
+                <display item="F14 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="15">
+                <display item="F14 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="15">
+                <display item="F14 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="15">
+                <display item="F14 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="15">
+                <display item="F14 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="15">
+                <display item="F14 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="15">
+                <display item="F14 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="15">
+                <display item="F14 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="15">
+                <display item="F14 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="15">
+                <display item="F14 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="15">
+                <display item="F14 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="15">
+                <display item="F14 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="1" gridy="16">
+                <display item="F15 controls SUSI SF0" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="16">
+                <display item="F15 controls SUSI SF1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="16">
+                <display item="F15 controls SUSI SF2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="16">
+                <display item="F15 controls SUSI SF3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="16">
+                <display item="F15 controls SUSI SF4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="16">
+                <display item="F15 controls SUSI SF5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="16">
+                <display item="F15 controls SUSI SF6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="16">
+                <display item="F15 controls SUSI SF7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="9" gridy="16">
+                <display item="F15 controls SUSI SF8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="10" gridy="16">
+                <display item="F15 controls SUSI SF9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="11" gridy="16">
+                <display item="F15 controls SUSI SF10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="12" gridy="16">
+                <display item="F15 controls SUSI SF11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="13" gridy="16">
+                <display item="F15 controls SUSI SF12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="14" gridy="16">
+                <display item="F15 controls SUSI SF13" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="15" gridy="16">
+                <display item="F15 controls SUSI SF14" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="16" gridy="16">
+                <display item="F15 controls SUSI SF15" format="checkbox" label=""/>
+            </griditem>
+        </grid>
+    </column>
+</pane>

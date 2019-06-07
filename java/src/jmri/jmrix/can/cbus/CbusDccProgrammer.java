@@ -133,6 +133,9 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      */
     @Override
     synchronized public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             return;

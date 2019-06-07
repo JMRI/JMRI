@@ -14,7 +14,7 @@ import org.junit.Assert;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
-  */
+ */
 public class SerialAddressTest {
 
     SerialTrafficControlScaffold tc = null;

@@ -327,7 +327,7 @@
 				<a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
 				and improved the WiThrottle support.
 			<li>Matthew Macdonald-Wallace arranged support for Linux on ARM V7 processors
-			<LI>Jeffrey Machacek updated the WiThrottle server and updated Loconet SlotMonitor.
+			<LI>Jeffrey Machacek updated the WiThrottle server and updated LocoNet SlotMonitor.
 			<LI>Greg Madsen improved the operations backup and restore code
 			<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
 			<li>Peter Mansvelder, who contributed Flieschmann decoder definitions
@@ -538,10 +538,10 @@
 		</ul>
 
 		<h2>Développeur de Code Swarm</h2>
-		<p>nous avons créé un <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm du développement de JMRI
+		<p>nous avons créé un <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm du développement de JMRI
 		</a>depuis sa création à Janvier 2009.  Un Code Swarm est une représentation visuelle dynamique et passionnante 
 		des modifications que les développeurs apportent aux fichiers qui composent un projet.. Plus d'informations sont disponibles sur
-		la page <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> .</p>
+		la page <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> .</p>
 			<!--#include virtual="/Footer" -->
 </div>
 </div>

@@ -459,7 +459,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      *
      * @return the scale
      */
-    public float getLayoutScale() {
+    public final float getLayoutScale() {
         return _scale;
     }
 
@@ -650,7 +650,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      *
      * @return the time increment in milliseconds
      */
-    public int getTimeIncrement() {
+    public final int getTimeIncrement() {
         return _msIncrTime;
     }
 
@@ -670,7 +670,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      *
      * @return the throttle increment
      */
-    public float getThrottleIncrement() {
+    public final float getThrottleIncrement() {
         return _throttleIncr;
     }
 

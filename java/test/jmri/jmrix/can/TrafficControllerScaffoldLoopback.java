@@ -9,8 +9,9 @@ import jmri.jmrix.can.TrafficControllerScaffold;
  * Stands in for the can.TrafficController class
  * Passes a CanMessage or CanReply to any internal listeners
  * You should normally use TrafficControllerScaffold, not this.
+ *
  * @author Steve Young (c) 2019
-  */
+ */
 public class TrafficControllerScaffoldLoopback extends TrafficControllerScaffold {
 
     public TrafficControllerScaffoldLoopback() {

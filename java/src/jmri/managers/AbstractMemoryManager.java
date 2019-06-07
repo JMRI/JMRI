@@ -161,4 +161,5 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class);
+
 }

@@ -8,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for SprogCSSerialDriverAdapter
- * </P>
+ * Tests for SprogCSSerialDriverAdapter.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogCSSerialDriverAdapterTest {
@@ -34,6 +33,5 @@ public class SprogCSSerialDriverAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

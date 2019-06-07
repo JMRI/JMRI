@@ -3,13 +3,13 @@ package jmri.jmrix.jmriclient;
 import jmri.Light;
 
 /**
- * Implement light manager for JMRIClient systems
- * <P>
+ * Implement LightManager for JMRIClient systems
+ * <p>
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the light number without padding.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -57,5 +57,3 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     }
 
 }
-
-

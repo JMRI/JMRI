@@ -15,7 +15,7 @@ public class XNetAddressTest {
     @Test
     public void testCTor() {
         XNetAddress t = new XNetAddress();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

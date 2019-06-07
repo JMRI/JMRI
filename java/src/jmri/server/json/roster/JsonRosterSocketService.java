@@ -1,16 +1,15 @@
 package jmri.server.json.roster;
 
 import static jmri.server.json.JSON.ADD;
-import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.POST;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.JSON.REMOVE;
-import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -58,48 +57,48 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         switch (method) {
             case DELETE:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("DeleteNotAllowed", type));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("DeleteNotAllowed", type), id);
             case POST:
                 switch (type) {
                     case JsonRoster.ROSTER_ENTRY:
-                        this.connection.sendMessage(this.service.postRosterEntry(locale, data.path(NAME).asText(), data));
+                        this.connection.sendMessage(this.service.postRosterEntry(locale, data.path(NAME).asText(), data, id), id);
                         break;
                     default:
-                        throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("MethodNotImplemented", method, type));
+                        throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("MethodNotImplemented", method, type), id);
                 }
                 break;
             case PUT:
-                throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("MethodNotImplemented", method, type));
+                throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("MethodNotImplemented", method, type), id);
             case GET:
                 switch (type) {
                     case JsonRoster.ROSTER:
-                        this.connection.sendMessage(this.service.getRoster(locale, data));
+                        this.connection.sendMessage(this.service.getRoster(locale, data, id), id);
                         break;
                     case JsonRoster.ROSTER_ENTRY:
-                        this.connection.sendMessage(this.service.getRosterEntry(locale, data.path(NAME).asText()));
+                        this.connection.sendMessage(this.service.getRosterEntry(locale, data.path(NAME).asText(), id), id);
                         break;
                     case JsonRoster.ROSTER_GROUP:
-                        this.connection.sendMessage(this.service.getRosterGroup(locale, data.path(NAME).asText()));
+                        this.connection.sendMessage(this.service.getRosterGroup(locale, data.path(NAME).asText(), id), id);
                         break;
                     case JsonRoster.ROSTER_GROUPS:
-                        this.connection.sendMessage(this.service.getRosterGroups(locale));
+                        this.connection.sendMessage(this.service.getRosterGroups(locale, id), id);
                         break;
                     default:
-                        throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage("ErrorUnknownType", type));
+                        throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage("ErrorUnknownType", type), id);
                 }
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("UnknownMethod", method));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("UnknownMethod", method), id);
         }
         this.listen();
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(service.doGetList(type, locale));
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
+        this.connection.sendMessage(service.doGetList(type, data, locale, id), id);
         this.listen();
     }
 
@@ -123,21 +122,20 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                 try {
                     if (evt.getPropertyName().equals(RosterEntry.ID)) {
                         // send old roster entry and new roster entry to client as roster changes
-                        ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, JsonRoster.ROSTER);
-                        ObjectNode data = root.putObject(DATA);
+                        ObjectNode data = connection.getObjectMapper().createObjectNode();
                         RosterEntry old = new RosterEntry((RosterEntry) evt.getSource(), (String) evt.getOldValue());
-                        data.set(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource()));
-                        data.set(REMOVE, service.getRosterEntry(connection.getLocale(), old));
+                        data.set(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource(), 0));
+                        data.set(REMOVE, service.getRosterEntry(connection.getLocale(), old, 0));
                         log.debug("Sending add and remove rosterEntry for {} ({} => {})", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-                        connection.sendMessage(root);
+                        connection.sendMessage(service.message(JsonRoster.ROSTER, data, 0), 0);
                     } else if (!evt.getPropertyName().equals(RosterEntry.DATE_UPDATED)
                             && !evt.getPropertyName().equals(RosterEntry.FILENAME)
                             && !evt.getPropertyName().equals(RosterEntry.COMMENT)) {  //don't send comment changes
                         log.debug("Sending updated rosterEntry for {} ({} => {})", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-                        connection.sendMessage(service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource()));
+                        connection.sendMessage(service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource(), 0), 0);
                     }
                 } catch (JsonException ex) {
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
                 onClose();
@@ -149,25 +147,25 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, JsonRoster.ROSTER);
+            ObjectNode data = connection.getObjectMapper().createObjectNode();
             try {
                 try {
                     if (evt.getPropertyName().equals(Roster.ADD)) {
-                        root.putObject(DATA).set(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
+                        data.set(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue(), 0));
                         ((PropertyChangeProvider) evt.getNewValue()).addPropertyChangeListener(rosterEntryListener);
-                        connection.sendMessage(root);
+                        connection.sendMessage(service.message(JsonRoster.ROSTER, data, 0), 0);
                     } else if (evt.getPropertyName().equals(Roster.REMOVE)) {
-                        root.putObject(DATA).set(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
-                        connection.sendMessage(root);
+                        data.set(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue(), 0));
+                        connection.sendMessage(service.message(JsonRoster.ROSTER, data, 0), 0);
                     } else if (!evt.getPropertyName().equals(Roster.SAVED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
                         // catch all events other than SAVED and ROSTER_GROUP_* (handled elsewhere)
-                        connection.sendMessage(service.getRoster(connection.getLocale(), root));
+                        connection.sendMessage(service.getRoster(connection.getLocale(), NullNode.getInstance(), 0), 0);
                     }
                 } catch (JsonException ex) {
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
                 onClose();
@@ -185,9 +183,9 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
                     try {
-                        connection.sendMessage(service.getRosterGroups(connection.getLocale()));
+                        connection.sendMessage(service.getRosterGroups(connection.getLocale(), 0), 0);
                     } catch (JsonException ex) {
-                        connection.sendMessage(ex.getJsonMessage());
+                        connection.sendMessage(ex.getJsonMessage(), 0);
                     }
                     //handle event names of format "attributeUpdated:RosterGroup:GROUPNAME"
                 } else if (evt.getPropertyName().startsWith(RosterEntry.ATTRIBUTE_UPDATED)) {
@@ -197,10 +195,10 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                         if (Roster.getDefault().getRosterGroups().containsKey(groupName)) {
                             try {
                                 log.debug("sending changed rosterGroup {} and updated group array", groupName);
-                                connection.sendMessage(service.getRosterGroup(connection.getLocale(), groupName));
-                                connection.sendMessage(service.getRosterGroups(connection.getLocale()));
+                                connection.sendMessage(service.getRosterGroup(connection.getLocale(), groupName, 0), 0);
+                                connection.sendMessage(service.getRosterGroups(connection.getLocale(), 0), 0);
                             } catch (JsonException ex) {
-                                connection.sendMessage(ex.getJsonMessage());
+                                connection.sendMessage(ex.getJsonMessage(), 0);
                             }
                         }
                     }
@@ -211,10 +209,10 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                         if (Roster.getDefault().getRosterGroups().containsKey(groupName)) {
                             try {
                                 log.debug("sending changed rosterGroup {} and updated group array", groupName);
-                                connection.sendMessage(service.getRosterGroup(connection.getLocale(), groupName));
-                                connection.sendMessage(service.getRosterGroups(connection.getLocale()));
+                                connection.sendMessage(service.getRosterGroup(connection.getLocale(), groupName, 0), 0);
+                                connection.sendMessage(service.getRosterGroups(connection.getLocale(), 0), 0);
                             } catch (JsonException ex) {
-                                connection.sendMessage(ex.getJsonMessage());
+                                connection.sendMessage(ex.getJsonMessage(), 0);
                             }
                         }
                     }

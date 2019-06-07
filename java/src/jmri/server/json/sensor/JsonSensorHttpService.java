@@ -29,8 +29,8 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
     }
 
     @Override
-    public ObjectNode doGet(Sensor sensor, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(sensor, name, type, locale); // throws JsonException if sensor == null
+    public ObjectNode doGet(Sensor sensor, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = this.getNamedBean(sensor, name, type, locale, id); // throws JsonException if sensor == null
         ObjectNode data = root.with(JSON.DATA);
         data.put(JSON.INVERTED, sensor.getInverted());
         switch (sensor.getKnownState()) {
@@ -48,15 +48,13 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
                 break;
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
+                        Bundle.getMessage(locale, "ErrorInternal", type), id); // NOI18N
         }
         return root;
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Sensor sensor = this.postNamedBean(getManager().getBeanBySystemName(name), data, name,
-                type, locale);
+    public ObjectNode doPost(Sensor sensor, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
         if (data.path(JSON.INVERTED).isBoolean()) {
             sensor.setInverted(data.path(JSON.INVERTED).asBoolean());
         }
@@ -74,26 +72,33 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
                     // silently ignore
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SENSOR, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SENSOR, state), id);
             }
         } catch (JmriException ex) {
-            throw new JsonException(500, ex);
+            throw new JsonException(500, ex, id);
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(sensor, name, type, locale, id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    protected void doDelete(Sensor bean, String name, String type, JsonNode data, Locale locale, int id)
+            throws JsonException {
+        deleteBean(bean, name, type, data, locale, id);
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case SENSOR:
             case SENSORS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/sensor/sensor-server.json",
-                        "jmri/server/json/sensor/sensor-client.json");
+                        "jmri/server/json/sensor/sensor-client.json",
+                        id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorUnknownType", type));
+                        Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 

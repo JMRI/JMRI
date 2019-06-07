@@ -1,37 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22 -->
 
 <html>
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Control Panel Editor Help</title>
+  <title>JMRI: L'&Eacute;diteur Panneau de Commande</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <meta http-equiv="Content-Type" content=
-          "text/html; ccharset=iso-8859-1">
+  <!-- Style --><meta http-equiv="Content-Type" content=
+          "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-  --&gt; <!-- Style -->
-   <!-- /Style -->
+
    <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>L'&eacute;diteur Panneau de
-      Commande</h1><b>&eacute;diteur Panneau de Commande</b> est
+      <h1>L'&Eacute;diteur Panneau de Commande</h1>
+      L'<b>&Eacute;diteur Panneau de Commande</b> est
       tout simplement une vue alternative et un contr&ocirc;leur
       avec exactement le m&ecirc;me contenu de donn&eacute;es que
-      dans l'<b>&eacute;diteur Panneau</b>. Vous pouvez modifier
+      dans l'<b>&Eacute;diteur Panneau</b>. Vous pouvez modifier
       l'affichage et les commandes de votre panneau &agrave; chaque
       fois et aussi souvent que vous voulez. Le Stockage et le
       chargement peut &ecirc;tre fait de l'un ou l'autre
@@ -78,7 +76,7 @@
 
         <li><b>Cr&eacute;er/Modifier Index des images</b>.</li>
 
-        <li><b>Changement Vue de l'&eacute;diteur de
+        <li><b>Changement Vue de l'&Eacute;diteur de
         Panneau</b>.</li>
 
         <li><b>Changer vue du G&eacute;n&eacute;rateur de
@@ -190,7 +188,7 @@
       palette peut &eacute;galement &ecirc;tre ouvert avec la
       touche de raccourci, ctrl P.
 
-      <p>La Palette d&amp;ns l&eacute;diteur de Panneau de Commande
+      <p>La Palette dans l&eacute;diteur de Panneau de Commande
       ne supporte les ic&ocirc;nes aiguillages
       <b>TJ/3-Voies/Croisement</b> qui sont disponible depuis
       l'&eacute;diteur de Panneau.</p>
@@ -260,9 +258,7 @@
       s&eacute;lection ou un groupe de s&eacute;lection peut
       &ecirc;tre faite soit avec bouton de la souris dans
       l'&eacute;diteur de Panneau de Commande. Une ic&ocirc;ne de
-      fond
-
-      <p>(c'est &agrave; dire une ic&ocirc;ne au niveau 1) peut
+      fond (c'est &agrave; dire une ic&ocirc;ne au niveau 1) peut
       &ecirc;tre d&eacute;plac&eacute;e en la faisant glisser avec
       la touche Ctrl enfonc&eacute;e.</p>
 
@@ -306,7 +302,8 @@
       &eacute;l&eacute;ments du groupe. Si par exemple, une horloge
       rapide a &eacute;t&eacute; incluse dans ce groupe, alors
       aucune modification ne serait apport&eacute;e &agrave;
-      l'horloge. <!--#include virtual="/Footer" -->
+      l'horloge.
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -4,55 +4,112 @@
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"engine\"",
     "properties": {
-        "id": {
+        "name": {
             "type": "string",
-            "description": "Id for engine"
+            "description": "Operations id for engine"
         },
-        "number": {
+        "rename": {
             "type": "string",
-            "description": "The engine number"
+            "description": "Old name of engine if road or number has changed"
         },
         "road": {
             "type": "string",
             "description": "The engine owning railroad"
         },
-        "type": {
+        "number": {
             "type": "string",
-            "description": "The engine type"
+            "description": "The engine number"
         },
-        "length": {
-            "type": "int",
-            "description": "Current engine length for available siding calculations"
+        "built": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Month and year engine was built in MM-YY, MM-YYYY, or YYYY format"
         },
         "color": {
             "type": "string",
             "description": "The color of the engine"
         },
-        "owner": {
-            "type": "string",
-            "description": "The engine owner"
-        },
         "comment": {
             "type": "string",
             "description": "Freeform comment concerning engine"
         },
-        "location": {
-            "type": "string",
-            "description": "The current location of the engine"
+        "consist": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The name of the consist the engine is in"
         },
         "destination": {
-            "type": "string",
+            "type": [
+                "object",
+                "null"
+            ],
             "description": "the current destination of the engine"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Current engine length for available siding calculations"
+        },
+        "location": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The current location of the engine"
         },
         "model": {
             "type": "string",
             "description": "The model of engine"
         },
-        "consist": {
+        "outOfService": {
+            "type": "boolean",
+            "description": "True if out of service; false otherwise"
+        },
+        "owner": {
             "type": "string",
-            "description": "The name of the consist the engine is in"
+            "description": "The engine owner"
+        },
+        "rfid": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "RFID tag attached to car; null if none"
+        },
+        "carType": {
+            "type": "string",
+            "description": "The engine type"
+        },
+        "weight": {
+            "type": "number",
+            "description": "Weight of car in onces"
+        },
+        "weightTons": {
+            "type": "number",
+            "description": "Weight of car in tons"
         }
     },
     "additionalProperties": false,
-    "required": ["id", "number", "road", "type", "length", "owner", "comment", "model", "consist"]
+    "required": [
+        "name",
+        "number",
+        "road",
+        "built",
+        "color",
+        "comment",
+        "consist",
+        "destination",
+        "length",
+        "location",
+        "model",
+        "outOfService",
+        "owner",
+        "rfid",
+        "carType",
+        "weight",
+        "weightTons"
+    ]
 }

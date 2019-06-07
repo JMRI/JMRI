@@ -11,23 +11,27 @@
  <tocitem text="Manuals " target="manual.index_Top"/>
 
  <tocitem text="Setup " target="html.setup.index">
-  <tocitem text="Preferences Pane " target="package.apps.TabbedPreferences"/>
+  <tocitem text="JMRI Preferences Pane " target="package.apps.TabbedPreferences"/>
 
   <tocitem text="Configuration Profiles " target="html.setup.profiles"/>
 
-  <tocitem text="System Console " target="package.apps.SystemConsole"/>
+  <tocitem text="The System Console " target="package.apps.SystemConsole"/>
+
+  <tocitem text="Names &amp; Naming Rules " target="html.doc.Technical.Names"/>
+
+  <tocitem text="USB input " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
   <tocitem text="Error Codes " target="html.setup.Errors"/>
 
-  <tocitem text="InstallTest " target="package.apps.InstallTest.InstallTest"/>
-
-  <tocitem text="Names &amp; Naming " target="html.doc.Technical.Names"/>
-
-  <tocitem text="USB input " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
+  <tocitem text="InstallTest (Windows) " target="package.apps.InstallTest.InstallTest"/>
 
  </tocitem>
  <tocitem text="Hardware Support " target="html.hardware.index">
   <tocitem text="Acela (CTI) " target="html.hardware.acela.index"/>
+
+  <tocitem text="Anyma " target="html.hardware.anyma.index"/>
+
+  <tocitem text="Bachrus Speedo " target="package.jmri.jmrix.bachrus.SpeedoConsoleFrame"/>
 
   <tocitem text="CAN Bus Overview " target="html.hardware.can.index"/>
 
@@ -38,6 +42,8 @@
   <tocitem text="DCC++ " target="html.hardware.dccpp.index"/>
 
   <tocitem text="DCC Specialties " target="html.hardware.misc.DccSpecialties"/>
+
+  <tocitem text="Digikeijs " target="html.hardware.digirails.index"/>
 
   <tocitem text="EasyDCC " target="html.hardware.easydcc.EasyDCC"/>
 
@@ -53,15 +59,17 @@
 
   <tocitem text="Modbus " target="html.hardware.modbus.index"/>
 
-  <tocitem text="MRC " target="html.hardware.mrc.index"/>
-
   <tocitem text="MQTT " target="html.hardware.mqtt.index"/>
+
+  <tocitem text="MRC " target="html.hardware.mrc.index"/>
 
   <tocitem text="NCE " target="html.hardware.nce.NCE"/>
 
   <tocitem text="OakTree Systems " target="html.hardware.oaktree.OakTree"/>
 
   <tocitem text="OpenLCB " target="html.hardware.openlcb.index"/>
+
+  <tocitem text="Pi (GPIO) " target="html.hardware.pi.index"/>
 
   <tocitem text="Powerline (X10) " target="html.hardware.powerline.index"/>
 
@@ -70,6 +78,8 @@
   <tocitem text="RailDriver Throttle " target="html.hardware.raildriver.index"/>
 
   <tocitem text="RFID Readers " target="html.hardware.rfid.index"/>
+
+  <tocitem text="Roco (z21) " target="html.hardware.roco.z21.index"/>
 
   <tocitem text="RPS " target="html.hardware.rps.index"/>
 
@@ -94,10 +104,20 @@
  </tocitem>
  <tocitem text="Applications ">
   <tocitem text="DecoderPro ">
-   <tocitem text="Introduction " target="html.apps.DecoderPro.index">
-    <tocitem text="Tour " target="html.apps.DecoderPro.Tour"/>
+   <tocitem text="Getting Started " target="html.apps.DecoderPro.index"/>
 
-   </tocitem>
+   <tocitem text="Tour " target="html.apps.DecoderPro.Tour"/>
+
+   <tocitem text="Supported Decoder Manufacturers and Models " target="html.apps.DecoderPro.index_decoderlisting"/>
+
+   <tocitem text="Installing New Decoder Definitions " target="html.apps.DecoderPro.FileUpdate"/>
+
+   <tocitem text="Roster Groups " target="manual.DecoderPro3.dp3_settings_rosterGroups"/>
+
+   <tocitem text="Multi-Decoder Control " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
+
+   <tocitem text="Error Messages " target="manual.DecoderPro3.Error"/>
+
    <tocitem text="DecoderPro Manual " target="manual.DecoderPro3.index">
     <tocitem text="Getting Started " target="manual.DecoderPro3.Start_DCC">
      <tocitem text="Setting Preferences " target="manual.DecoderPro3.Start_Preferences"/>
@@ -149,17 +169,7 @@
     </tocitem>
     <tocitem text="All Manuals " target="manual.index"/>
 
-    <tocitem text="Getting Started " target="html.apps.DecoderPro.index"/>
-
    </tocitem>
-   <tocitem text="Roster Groups " target="manual.DecoderPro3.dp3_settings_rosterGroups"/>
-
-   <tocitem text="Installing New Decoder Definitions " target="html.apps.DecoderPro.FileUpdate"/>
-
-   <tocitem text="Multi-Decoder Control " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
-
-   <tocitem text="Error Messages " target="manual.DecoderPro3.Error"/>
-
   </tocitem>
   <tocitem text="DispatcherPro " target="package.jmri.jmrit.dispatcher.Dispatcher">
    <tocitem text="Introduction " target="package.jmri.jmrit.dispatcher.Dispatcher">
@@ -176,7 +186,7 @@
    </tocitem>
    <tocitem text="Options Menu " target="package.jmri.jmrit.dispatcher.Options"/>
 
-   <tocitem text="Allocated Section Window " target="package.jmri.jmrit.dispatcher.AllocatedSectionsTable"/>
+   <tocitem text="Allocated Section Window " target="package.jmri.jmrit.dispatcher.Dispatcher_allocated"/>
 
    <tocitem text="Allocate Extra " target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
 
@@ -211,14 +221,16 @@
    <tocitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
 
   </tocitem>
-  <tocitem text="PanelPro " target="html.apps.PanelPro.PanelPro">
-   <tocitem text="Intro " target="html.apps.PanelPro.PanelPro"/>
+  <tocitem text="PanelPro " target="html.apps.PanelPro.index">
+   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
+
+   <tocitem text="Control Panel Editor " target="package.jmri.jmrit.display.ControlPanelEditor"/>
 
    <tocitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
-   <tocitem text="Panel Controls " target="package.jmri.jmrit.display.PanelTarget"/>
+   <tocitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchboardEditor"/>
 
-   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
+   <tocitem text="Panel Controls " target="package.jmri.jmrit.display.PanelTarget"/>
 
    <tocitem text="Displaying Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
@@ -230,14 +242,18 @@
   <tocitem text="TrainCrew " target="html.apps.TrainCrew.index"/>
 
  </tocitem>
- <tocitem text="Panels " target="html.apps.PanelPro.Panels">
+ <tocitem text="Panels " target="html.apps.PanelPro.index">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
+
+  <tocitem text="Control Panel Editor " target="package.jmri.jmrit.display.ControlPanelEditor"/>
 
   <tocitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
   <tocitem text="Displaying Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
   <tocitem text="Handling Errors " target="package.jmri.configurexml.ErrorHandler"/>
+
+  <tocitem text="Switchboards " target="package.jmri.jmrit.display.SwitchboardEditor"/>
 
  </tocitem>
  <tocitem text="Tables ">
@@ -277,6 +293,66 @@
   </tocitem>
   <tocitem text="Consisting Tool " target="html.tools.consisttool.ConsistTool"/>
 
+  <tocitem text="CTC " target="package.jmri.jmrit.ctc.CTC">
+   <tocitem text="CTCEditor " target="package.jmri.jmrit.ctc.CTC_editor">
+    <tocitem text="Menus " target="package.jmri.jmrit.ctc.CTC_menuFile">
+     <tocitem text="File menu " target="package.jmri.jmrit.ctc.CTC_menuFile">
+      <tocitem text="New " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+      <tocitem text="Save " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+      <tocitem text="Exit without saving " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+
+     </tocitem>
+     <tocitem text="Edit menu " target="package.jmri.jmrit.ctc.CTC_menuEditFind">
+      <tocitem text="Find and Replace... " target="package.jmri.jmrit.ctc.CTC_menuEditFind"/>
+
+      <tocitem text="Fix Error(s)... " target="package.jmri.jmrit.ctc.CTC_menuEditFix"/>
+
+     </tocitem>
+     <tocitem text="Configure menu " target="package.jmri.jmrit.ctc.CTC_menuCfgDeb">
+      <tocitem text="Debugging " target="package.jmri.jmrit.ctc.CTC_menuCfgDeb"/>
+
+      <tocitem text="Defaults " target="package.jmri.jmrit.ctc.CTC_menuCfgDef"/>
+
+      <tocitem text="Fleeting " target="package.jmri.jmrit.ctc.CTC_menuCfgFlt"/>
+
+      <tocitem text="Patterns " target="package.jmri.jmrit.ctc.CTC_menuCfgPat"/>
+
+      <tocitem text="GUI Design " target="package.jmri.jmrit.ctc.CTC_menuCfgGui"/>
+
+     </tocitem>
+    </tocitem>
+    <tocitem text="O.S. Sections List " target="package.jmri.jmrit.ctc.CTC_osList"/>
+
+    <tocitem text="Edit Buttons " target="package.jmri.jmrit.ctc.CTC_frmCB">
+     <tocitem text="Code button " target="package.jmri.jmrit.ctc.CTC_frmCB"/>
+
+     <tocitem text="Signal direction indicators " target="package.jmri.jmrit.ctc.CTC_frmSIDI"/>
+
+     <tocitem text="Signal direction lever " target="package.jmri.jmrit.ctc.CTC_frmSIDL"/>
+
+     <tocitem text="Switch direction indicators " target="package.jmri.jmrit.ctc.CTC_frmSWDI"/>
+
+     <tocitem text="Switch direction lever " target="package.jmri.jmrit.ctc.CTC_frmSWDL"/>
+
+     <tocitem text="Call On " target="package.jmri.jmrit.ctc.CTC_frmCO"/>
+
+     <tocitem text="Traffic locking " target="package.jmri.jmrit.ctc.CTC_frmTRL"/>
+
+     <tocitem text="Turnout locking " target="package.jmri.jmrit.ctc.CTC_frmTUL"/>
+
+     <tocitem text="Indication locking " target="package.jmri.jmrit.ctc.CTC_frmIL"/>
+
+    </tocitem>
+   </tocitem>
+   <tocitem text="Files " target="package.jmri.jmrit.ctc.CTC_ctcFiles"/>
+
+   <tocitem text="CTCMain " target="package.jmri.jmrit.ctc.CTC_ctcMain"/>
+
+   <tocitem text="Definitions " target="package.jmri.jmrit.ctc.CTC_ctcDefinitions"/>
+
+  </tocitem>
   <tocitem text="Fast Clocks " target="html.tools.fastclock.index">
    <tocitem text="Introduction " target="html.tools.fastclock.index"/>
 
@@ -290,7 +366,9 @@
 
    <tocitem text="Add/Edit Light " target="package.jmri.jmrit.beantable.LightAddEdit"/>
 
-   <tocitem text="Light Control " target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
+   <tocitem text="Light Controls " target="package.jmri.jmrit.beantable.LightAddEdit_lightcontrol"/>
+
+   <tocitem text="Simple Light Control " target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
 
   </tocitem>
   <tocitem text="Locomotive Speed Matching " target="html.tools.speedometer.SpeedMatch"/>
@@ -383,6 +461,16 @@
 
     <tocitem text="Add/Edit Signal Masts " target="package.jmri.jmrit.beantable.SignalMastAddEdit"/>
 
+    <tocitem text="Virtual Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit_virtual"/>
+
+    <tocitem text="Signal Head Controlled Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit_headCtl"/>
+
+    <tocitem text="Turnout Controlled Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit_turnoutCtl"/>
+
+    <tocitem text="Output Matrix Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit_matrixCtl"/>
+
+    <tocitem text="DCC Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit_dccsmd"/>
+
    </tocitem>
    <tocitem text="Signal Mast Logic " target="package.jmri.jmrit.beantable.SignalMastLogicTable"/>
 
@@ -416,21 +504,27 @@
 
    <tocitem text="Add/Edit Turnouts " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
 
-   <tocitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
+   <tocitem text="Simple Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
   </tocitem>
   <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant">
-   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+   <tocitem text="Warrants Introduction " target="package.jmri.jmrit.logix.Warrant"/>
 
    <tocitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
 
    <tocitem text="NXWarrants " target="package.jmri.jmrit.logix.NXWarrant"/>
+
+   <tocitem text="SCWarrants " target="package.jmri.jmrit.logix.SCWarrant"/>
+
+   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
 
    <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 
    <tocitem text="Creating and Editing OBlocks, Portals and OPaths " target="package.jmri.jmrit.logix.OBlockEdit"/>
+
+   <tocitem text="Circuit Builder " target="package.jmri.jmrit.display.CircuitBuilder"/>
 
   </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
@@ -441,6 +535,18 @@
   </tocitem>
  </tocitem>
  <tocitem text="System-Specific Tools ">
+  <tocitem text="Acela ">
+   <tocitem text="Configure Nodes " target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame"/>
+
+   <tocitem text="Monitor " target="package.jmri.jmrix.acela.acelamon.AcelaMonFrame"/>
+
+   <tocitem text="Send Packet " target="package.jmri.jmrix.acela.packetgen.AcelaPacketGenFrame"/>
+
+  </tocitem>
+  <tocitem text="Bachrus " target="html.hardware.bachrus.index">
+   <tocitem text="Speedo Console " target="package.jmri.jmrix.bachrus.SpeedoConsoleFrame"/>
+
+  </tocitem>
   <tocitem text="C/MRI ">
    <tocitem text="Check Pin Assignments " target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
 
@@ -451,22 +557,14 @@
    <tocitem text="Signals " target="html.hardware.cmri.Signals"/>
 
   </tocitem>
-  <tocitem text="MERG (CBUS) " target="html.hardware.can.cbus.index">
-   <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+  <tocitem text="Ecos " target="html.hardware.ecos.index">
+   <tocitem text="Ecos Preferences " target="package.jmri.jmrix.ecos.swing.preferencesframe.PreferencesFrame"/>
 
-   <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+   <tocitem text="Loco Table " target="package.jmri.jmrix.ecos.swing.locodatabase.EcosLocoTable"/>
 
-   <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
+   <tocitem text="Status " target="package.jmri.jmrix.ecos.swing.statusframe.StatusFrame"/>
 
-   <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
-
-   <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
-
-   <tocitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
-
-   <tocitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
-
-   <tocitem text="CAN Networks " target="html.hardware.can.index"/>
+   <tocitem text="Send Packet " target="package.jmri.jmrix.ecos.swing.packetgen.PacketGenFrame"/>
 
   </tocitem>
   <tocitem text="Digitrax ">
@@ -510,9 +608,63 @@
 
    <tocitem text="Throttle Messages " target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"/>
 
+   <tocitem text="DCS52 Mode Select " target="package.jmri.jmrix.loconet.usb_dcs52.swing.Dcs52UsbModeSelect"/>
+
+   <tocitem text="DCS240 Mode Select " target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect"/>
+
   </tocitem>
   <tocitem text="Grapevine " target="html.hardware.grapevine.index">
+   <tocitem text="Configure Node " target="package.jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame"/>
+
    <tocitem text="Node Table " target="package.jmri.jmrix.grapevine.nodetable.NodeTableFrame"/>
+
+   <tocitem text="Renumber Node " target="package.jmri.jmrix.grapevine.nodetable.RenumberFrame"/>
+
+  </tocitem>
+  <tocitem text="IEEE802154 ">
+   <tocitem text="Add Node " target="package.jmri.jmrix.ieee802154.swing.nodeconfig.AddNodeFrame"/>
+
+   <tocitem text="Edit Node " target="package.jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame"/>
+
+   <tocitem text="Configure Node " target="package.jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame"/>
+
+  </tocitem>
+  <tocitem text="Maple " target="html.hardware.maple.index">
+   <tocitem text="List " target="package.jmri.jmrix.maple.assignment.ListFrame"/>
+
+   <tocitem text="Configure Node " target="package.jmri.jmrix.maple.nodeconfig.NodeConfigFrame"/>
+
+   <tocitem text="Monitor Maple Traffic " target="package.jmri.jmrix.maple.serialmon.SerialMonFrame"/>
+
+  </tocitem>
+  <tocitem text="M&#228;rklin ">
+   <tocitem text="Send Packet " target="package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame"/>
+
+  </tocitem>
+  <tocitem text="MERG (CBUS) " target="html.hardware.can.cbus.index">
+   <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+
+   <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+
+   <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
+
+   <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+
+   <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
+
+   <tocitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
+
+   <tocitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
+
+   <tocitem text="CAN Networks " target="html.hardware.can.index"/>
+
+   <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
+
+  </tocitem>
+  <tocitem text="MRC " target="html.hardware.mrc.index">
+   <tocitem text="MRC Traffic Monitor " target="package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel"/>
+
+   <tocitem text="Send Packet " target="package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"/>
 
   </tocitem>
   <tocitem text="NCE ">
@@ -526,6 +678,12 @@
 
    <tocitem text="Monitor Clock " target="package.jmri.jmrix.nce.clockmon.ClockMonFrame"/>
 
+   <tocitem text="USB Interface tool " target="package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel"/>
+
+  </tocitem>
+  <tocitem text="Oaktree " target="html.hardware.oaktree.OakTree">
+   <tocitem text="Configure Nodes " target="package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame"/>
+
   </tocitem>
   <tocitem text="OpenLCB " target="html.hardware.openlcb.index">
    <tocitem text="Names " target="html.hardware.openlcb.Names"/>
@@ -533,6 +691,14 @@
    <tocitem text="Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
 
    <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
+
+  </tocitem>
+  <tocitem text="Powerline " target="html.hardware.powerline.index">
+   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenFrame"/>
+
+   <tocitem text="Traffic Monitor " target="package.jmri.jmrix.powerline.serialmon.SerialMonFrame"/>
+
+   <tocitem text="Configure Nodes " target="package.jmri.jmrix.powerline.nodeconfig.NodeConfigFrame"/>
 
   </tocitem>
   <tocitem text="RPS Positioning System " target="html.hardware.rps.index">
@@ -551,6 +717,52 @@
   </tocitem>
   <tocitem text="SRCP " target="html.hardware.SRCP.index"/>
 
+  <tocitem text="SECSI " target="html.hardware.secsi.index">
+   <tocitem text="Configure Node " target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame"/>
+
+   <tocitem text="Traffic Monitor " target="package.jmri.jmrix.secsi.serialmon.SerialMonFrame"/>
+
+   <tocitem text="Send Packet " target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame"/>
+
+  </tocitem>
+  <tocitem text="SPROG " target="html.hardware.sprog.SPROG_tools">
+   <tocitem text="SPROG Update " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
+
+   <tocitem text="Send Packet " target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame"/>
+
+   <tocitem text="Traffic Monitor " target="package.jmri.jmrix.sprog.sprogmon.SprogMonFrame"/>
+
+   <tocitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
+
+   <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
+
+  </tocitem>
+  <tocitem text="TAMs " target="html.hardware.tams.index">
+   <tocitem text="Loco Database " target="package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame"/>
+
+   <tocitem text="Send Packet " target="package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame"/>
+
+  </tocitem>
+  <tocitem text="TMCC " target="html.hardware.tmcc.index"/>
+
+  <tocitem text="Zimo " target="html.hardware.zimo.Zimo">
+   <tocitem text="Mx1 Monitor " target="package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel"/>
+
+   <tocitem text="Send Mx1 Packet " target="package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel"/>
+
+  </tocitem>
+  <tocitem text="XBee " target="html.hardware.XBee.index_tools">
+   <tocitem text="Configure XBee Node " target="html.hardware.XBee.XBeeNodeConfigurationTool"/>
+
+  </tocitem>
+  <tocitem text="XPressNet (Lenz) " target="html.hardware.XPressNet.index_tools">
+   <tocitem text="System Information " target="html.hardware.XPressNet.XNetSystemInformationtool"/>
+
+   <tocitem text="LI101 Configuration " target="html.hardware.XPressNet.LI101Configurationtool"/>
+
+   <tocitem text="LZV100 Configuration " target="html.hardware.XPressNet.LZV100Configurationtool"/>
+
+  </tocitem>
  </tocitem>
  <tocitem text="Technical " target="html.doc.Technical.index">
   <tocitem text="Getting the Source Code ">
@@ -567,6 +779,8 @@
    <tocitem text="Building with NetBeans " target="html.doc.Technical.NetBeans"/>
 
    <tocitem text="Building with Eclipse " target="html.doc.Technical.Eclipse"/>
+
+   <tocitem text="Building with IDEA IntelliJ " target="html.doc.Technical.IntelliJ"/>
 
   </tocitem>
   <tocitem text="How We Do Stuff ">
@@ -592,7 +806,7 @@
 
    <tocitem text="Unit testing with JUnit " target="html.doc.Technical.JUnit"/>
 
-   <tocitem text="The Website " target="html.doc.Technical.WebSite"/>
+   <tocitem text="The JMRI Website " target="html.doc.Technical.WebSite"/>
 
   </tocitem>
   <tocitem text="XML Information " target="html.apps.DecoderPro.IntroXML">
@@ -604,6 +818,6 @@
 
   </tocitem>
  </tocitem>
- <tocitem text="Web " target="html.web.index"/>
+ <tocitem text="Web Access to JMRI " target="html.web.index"/>
 
 </toc>

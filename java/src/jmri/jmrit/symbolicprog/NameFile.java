@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 // try to limit the JDOM to this class, so that others can manipulate...
 /**
  * Represents a set of standard names and aliases in memory.
- * <P>
+ * <p>
  * This class doesn't provide tools for defining the names and aliases; that's
  * done manually, or at least not done here, to create the file.
- * <P>
+ * <p>
  * Initially, we only need one of these, so we use an "instance" method to
  * locate the one associated with the "xml/names.xml" file.
  *

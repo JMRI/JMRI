@@ -16,7 +16,7 @@ import org.junit.Assert;
  * working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class PositionFileTest {
 
     @Test
@@ -98,4 +98,5 @@ public class PositionFileTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
+
 }

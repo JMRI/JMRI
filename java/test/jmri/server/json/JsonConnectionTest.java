@@ -57,16 +57,17 @@ public class JsonConnectionTest {
         // test when validating messages
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         // validate valid message
-        instance.sendMessage(instance.getObjectMapper().readTree(valid));
+        instance.sendMessage(instance.getObjectMapper().readTree(valid), 0);
         Assert.assertEquals("Valid message is passed", valid, baos.toString("UTF-8"));
         baos.reset();
         // validate invalid message
-        instance.sendMessage(instance.getObjectMapper().readTree(invalid));
+        instance.sendMessage(instance.getObjectMapper().readTree(invalid), 0);
         Assert.assertNotEquals("Invalid message is not passed", invalid, baos.toString("UTF-8"));
         Assert.assertEquals("Invalid message is replaced with error", error, baos.toString("UTF-8"));
         baos.reset();
-        // suppress warnings from validating invalid message
+        // suppress warnings from validating invalid message (there are five)
         JUnitAppender.checkForMessageStartingWith("Errors validating");
+        JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
         JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
         JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
         JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
@@ -87,11 +88,11 @@ public class JsonConnectionTest {
         String invalid = "{\"type\":\"hello\"}"; // missing data portion
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(false);
         // pass valid message when not validating
-        instance.sendMessage(instance.getObjectMapper().readTree(valid));
+        instance.sendMessage(instance.getObjectMapper().readTree(valid), 0);
         Assert.assertEquals("Valid message is passed", valid, baos.toString("UTF-8"));
         baos.reset();
         // pass invalid message when not validating
-        instance.sendMessage(instance.getObjectMapper().readTree(invalid));
+        instance.sendMessage(instance.getObjectMapper().readTree(invalid), 0);
         Assert.assertEquals("Invalid message is passed", invalid, baos.toString("UTF-8"));
         baos.reset();
     }

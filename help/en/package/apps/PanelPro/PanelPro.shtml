@@ -82,7 +82,6 @@
         </li>
       </ul>
 
-      <p>This is the apps.PanelPro.PanelPro.shtml help page</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

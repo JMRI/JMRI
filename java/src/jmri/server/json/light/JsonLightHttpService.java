@@ -32,8 +32,8 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    public ObjectNode doGet(Light light, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(light, name, type, locale);
+    public ObjectNode doGet(Light light, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = this.getNamedBean(light, name, type, locale, id);
         ObjectNode data = root.with(DATA);
         if (light != null) {
             switch (light.getState()) {
@@ -56,8 +56,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Light light = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Light light, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
@@ -70,22 +69,23 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state), id);
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(light, name, type, locale, id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case LIGHT:
             case LIGHTS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/light/light-server.json",
-                        "jmri/server/json/light/light-client.json");
+                        "jmri/server/json/light/light-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 

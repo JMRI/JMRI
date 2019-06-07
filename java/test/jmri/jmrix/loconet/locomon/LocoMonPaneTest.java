@@ -122,7 +122,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         // create and register the manager object
         jmri.util.JUnitUtil.initInternalTurnoutManager();
-        l = new jmri.jmrix.loconet.LnTurnoutManager(lnis, lnis, "L", false);
+        l = new jmri.jmrix.loconet.LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.util.JUnitUtil.initInternalSensorManager();

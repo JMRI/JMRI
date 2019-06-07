@@ -18,25 +18,25 @@ import org.slf4j.LoggerFactory;
 /**
  * This class holds information and options for an AllocatedSection, a Section
  * that is currently allocated to an ActiveTrain.
- * <P>
+ * <p>
  * AllocatedSections are referenced via a list in DispatcherFrame, which serves
  * as a manager for AllocatedSection objects. Each ActiveTrain also maintains a
  * list of AllocatedSections currently assigned to it.
- * <P>
+ * <p>
  * AllocatedSections are transient, and are not saved to disk.
- * <P>
+ * <p>
  * AllocatedSections keep track of whether they have been entered and exited.
- * <P>
+ * <p>
  * If the Active Train this Section is assigned to is being run automatically,
  * support is provided for monitoring Section changes and changes for Blocks
  * within the Section.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.

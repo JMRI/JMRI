@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class JsonMessageClientManagerTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -45,7 +47,7 @@ public class JsonMessageClientManagerTest {
         }
         Assert.assertTrue(exceptionThrown);
         instance.subscribe("2", connection2);
-        instance.send(new JsonMessage("testSubscribe1", Locale.ENGLISH));
+        instance.send(new JsonMessage("testSubscribe1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
         Assert.assertNotNull("message1 is not null", message1);
@@ -63,7 +65,7 @@ public class JsonMessageClientManagerTest {
         JsonMessageClientManager instance = new JsonMessageClientManager();
         instance.subscribe("1", connection1);
         instance.subscribe("2", connection2);
-        instance.send(new JsonMessage("testUnsubscribe1", Locale.ENGLISH));
+        instance.send(new JsonMessage("testUnsubscribe1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
         Assert.assertNotNull("message1 is not null", message1);
@@ -71,7 +73,7 @@ public class JsonMessageClientManagerTest {
         Assert.assertEquals("testUnsubscribe1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
         Assert.assertEquals("testUnsubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
         instance.unsubscribe("2");
-        instance.send(new JsonMessage("testUnsubscribe2", Locale.ENGLISH));
+        instance.send(new JsonMessage("testUnsubscribe2", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
         Assert.assertNotNull("message1 is not null", message1);
@@ -89,14 +91,14 @@ public class JsonMessageClientManagerTest {
         JsonMessageClientManager instance = new JsonMessageClientManager();
         instance.subscribe("1", connection1);
         instance.subscribe("2", connection2);
-        instance.send(new JsonMessage("testSend1", Locale.ENGLISH));
+        instance.send(new JsonMessage("testSend1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
         Assert.assertNotNull("message1 is not null", message1);
         Assert.assertNotNull("message2 is not null", message2);
         Assert.assertEquals("testSend1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
         Assert.assertEquals("testSend1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        instance.send(new JsonMessage(JsonMessage.TYPE.INFO, "testSend2", "1", Locale.ENGLISH));
+        instance.send(new JsonMessage(JsonMessage.TYPE.INFO, "testSend2", "1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
         Assert.assertNotNull("message1 is not null", message1);

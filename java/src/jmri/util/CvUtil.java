@@ -10,18 +10,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with CVs
- * <P>
+ * <p>
  * We needed a place to refactor common CV-processing idioms in JMRI code, so
  * this class was created. It's more of a library of procedures than a real
  * class, as (so far) all of the operations have needed no state information.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dave Heap Copyright (C) 2016
  */
 public class CvUtil {
-
-    public static final String HTML_CLOSE_TAG = "</html>";
-    public static final String HTML_OPEN_TAG = "<html>";
 
     /**
      *
@@ -156,7 +153,7 @@ public class CvUtil {
             if (toolTip == null || toolTip.length() < 1) {
                 toolTip = descString;
             } else {
-                toolTip = concatTextHtmlAware(toolTip, " (" + descString + ")");
+                toolTip = StringUtil.concatTextHtmlAware(toolTip, " (" + descString + ")");
             }
         } else if (toolTip == null) {
             toolTip = "";
@@ -210,46 +207,6 @@ public class CvUtil {
             log.trace("{} Mask:{}", maskDescString, mask);
         }
         return maskDescString.toString();
-    }
-
-    /**
-     * Concatenates text Strings where either could possibly be in HTML format
-     * (as used in many Swing components).
-     * <p>
-     * Ensures any appended text is added within the {@code <html>...</html>}
-     * element, if there is any.
-     *
-     * @param baseText  original text
-     * @param extraText text to be appended to original text
-     * @return Combined text, with a single enclosing {@code <html>...</html>}
-     *         element (only if needed).
-     */
-    public static String concatTextHtmlAware(String baseText, String extraText) {
-        if (baseText == null && extraText == null) {
-            return null;
-        }
-        if (baseText == null) {
-            return extraText;
-        }
-        if (extraText == null) {
-            return baseText;
-        }
-
-        boolean hasHtml = false;
-
-        String result = baseText + extraText;
-        result = result.replaceAll("(?i)" + HTML_OPEN_TAG, "");
-        result = result.replaceAll("(?i)" + HTML_CLOSE_TAG, "");
-        if (!result.equals(baseText + extraText)) {
-            hasHtml = true;
-            log.debug("\n\nbaseText:\n\"{}\"\nextraText:\n\"{}\"\n", baseText, extraText);
-        }
-        if (hasHtml) {
-            result = HTML_OPEN_TAG + result + HTML_CLOSE_TAG;
-            log.debug("\nCombined String:\n\"{}\"\n", result);
-        }
-
-        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvUtil.class.getName());
