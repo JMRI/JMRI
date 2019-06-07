@@ -2,7 +2,6 @@ package jmri.swing;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
@@ -33,13 +32,11 @@ import jmri.util.ThreadingPropertyChangeListener;
 /**
  * A {@link javax.swing.JComboBox} for {@link jmri.NamedBean}s.
  * 
- * This JComboBox will change the background color to show validation of the
- * input as an input is typed. A validation is considered successful if a
- * NamedBean of the supported type exists that has a matching UserName or
- * SystemName. A validation is a failure if {@link #isValidatingInput()} is true
- * and a NamedBean matching the input cannot be found. A validation is a warning
- * in all other cases. This matches the behavior of
- * {@link jmri.util.swing.JmriBeanComboBox}.
+ * Validation of user input to select a NamedBean is limited to setting the
+ * selection to a NamedBean matching the typed input, and is always enabled
+ * unless {@link #setEditable(boolean)} is called against this JComboBox with
+ * {@code false}. API hooks exist for more complex validation, although they
+ * currently do nothing.
  * 
  * <strong>Note:</strong> It is recommended that implementations that exclude
  * some NamedBeans from the combo box call {@link #setToolTipText(String)} to
@@ -281,19 +278,10 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         JTextField c = (JTextField) cbe.getEditorComponent();
         String text = c.getText();
         if (isEditable() && !text.isEmpty()) {
-            c.setOpaque(true);
             B item = manager.getNamedBean(text);
             if (item != null) {
                 setSelectedItem(item);
-                c.setBackground(SUCCESS);
-            } else if (validatingInput) {
-                c.setBackground(FAILURE);
-            } else {
-                c.setBackground(WARNING);
             }
-        } else {
-            c.setOpaque(false);
-            c.setBackground(SystemColor.menu);
         }
     }
 

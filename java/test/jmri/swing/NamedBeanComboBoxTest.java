@@ -186,6 +186,7 @@ public class NamedBeanComboBoxTest {
     }
 
     @Test
+    @Ignore("background color validation removed to be replaced")
     public void testSensorTestValidity()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
