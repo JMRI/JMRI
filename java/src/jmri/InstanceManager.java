@@ -809,8 +809,8 @@ public final class InstanceManager {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
         
-        // reset the instance manager, so future calls will invoke the new one
-        LazyInstanceManager.resetInstanceManager();
+        // replace the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.instanceManager = new InstanceManager();
         
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
@@ -855,26 +855,7 @@ public final class InstanceManager {
      */
     private static class LazyInstanceManager {
 
-        private static InstanceManager instanceManager = new InstanceManager();
-
-        /**
-         * Get the InstanceManager.
-         */
-        public static InstanceManager getInstanceManager() {
-            return instanceManager;
-        }
-
-        /**
-         * Replace the (static) InstanceManager.
-         */
-        public synchronized static void resetInstanceManager() {
-            try {
-                instanceManager = new InstanceManager();
-            } catch (Exception e) {
-                log.error("can't create new InstanceManager");
-            }
-        }
-
+        public static InstanceManager instanceManager = new InstanceManager();
     }
 
     /**
@@ -886,7 +867,7 @@ public final class InstanceManager {
      */
     @Nonnull
     public static InstanceManager getDefault() {
-        return LazyInstanceManager.getInstanceManager();
+        return LazyInstanceManager.instanceManager;
     }
 
     // support checking for overlapping intialization

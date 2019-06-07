@@ -12,6 +12,7 @@ import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.annotation.Nonnull;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -47,7 +48,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlocks
+ * GUI to define OBlocks.
  * <br>
  * <hr>
  * This file is part of JMRI.
@@ -117,7 +118,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
                     _oBlockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });
@@ -131,7 +132,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
                     _portalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });
@@ -145,7 +146,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
                     _signalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });
@@ -159,7 +160,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
                     _blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });
@@ -295,7 +296,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _showWarnItem.setText(Bundle.getMessage("ShowWarning"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("setShowWarnings: _showWarnings= " + _showWarnings);
+            log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
         }
     }
 
@@ -304,7 +305,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         errorCheck();
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         if (log.isDebugEnabled()) {
-            log.debug("windowClosing: " + toString());
+            log.debug("windowClosing: {}", toString());
         }
     }
 
@@ -330,7 +331,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 try {
                     _blockTableFrame.setIcon(false);
                 } catch (PropertyVetoException pve) {
-                    log.warn("Block Table Frame vetoed setIcon " + pve.toString());
+                    log.warn("Block Table Frame vetoed setIcon {}", pve.toString());
                 }
                 _blockTableFrame.moveToFront();
             }
@@ -344,7 +345,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 try {
                     _portalTableFrame.setIcon(false);
                 } catch (PropertyVetoException pve) {
-                    log.warn("Portal Table Frame vetoed setIcon " + pve.toString());
+                    log.warn("Portal Table Frame vetoed setIcon {}", pve.toString());
                 }
                 _portalTableFrame.moveToFront();
             }
@@ -358,7 +359,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 try {
                     _blockPortalXRefFrame.setIcon(false);
                 } catch (PropertyVetoException pve) {
-                    log.warn("XRef Table Frame vetoed setIcon " + pve.toString());
+                    log.warn("XRef Table Frame vetoed setIcon {}", pve.toString());
                 }
                 _blockPortalXRefFrame.moveToFront();
             }
@@ -372,7 +373,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 try {
                     _signalTableFrame.setIcon(false);
                 } catch (PropertyVetoException pve) {
-                    log.warn("Signal Table Frame vetoed setIcon " + pve.toString());
+                    log.warn("Signal Table Frame vetoed setIcon {}", pve.toString());
                 }
                 _signalTableFrame.moveToFront();
             }
@@ -652,7 +653,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         String title = Bundle.getMessage("TitleBlockPathTable", block.getDisplayName());
         BlockPathFrame frame = new BlockPathFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) {
-            log.debug("makeBlockPathFrame for Block " + block.getDisplayName());
+            log.debug("makeBlockPathFrame for Block {}", block.getDisplayName());
         }
         frame.setName(block.getSystemName());
         frame.init(block, this);
@@ -699,7 +700,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
         JInternalFrame frame = new JInternalFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) {
-            log.debug("makePathTurnoutFrame for Block " + block.getDisplayName() + " and Path " + pathName);
+            log.debug("makePathTurnoutFrame for Block {} and Path {}", block.getDisplayName(), pathName);
         }
         frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
         OPath path = block.getPathByName(pathName);
@@ -833,7 +834,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
-        //log.debug("Internal frame closing: "+frame.getTitle());
+        //log.debug("Internal frame closing: {}", frame.getTitle());
     }
 
     @Override
@@ -841,9 +842,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JInternalFrame frame = (JInternalFrame) e.getSource();
         String name = frame.getName();
         if (log.isDebugEnabled()) {
-            log.debug("Internal frame closed: "
-                    + frame.getTitle() + ", name= " + name + " size ("
-                    + frame.getSize().getWidth() + ", " + frame.getSize().getHeight() + ")");
+            log.debug("Internal frame closed: {}, name= {} size ({}, {})",
+                    frame.getTitle(), name,
+                    frame.getSize().getWidth(), frame.getSize().getHeight());
         }
         if (name != null && name.startsWith("OB")) {
             _blockPathMap.remove(name);
@@ -861,9 +862,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         /*  JInternalFrame frame = (JInternalFrame)e.getSource();
-         if (log.isDebugEnabled()) log.debug("Internal frame Opened: "+
-         frame.getTitle()+", name= "+frame.getName()+" size ("+
-         frame.getSize().getWidth()+", "+frame.getSize().getHeight()+")"); */
+         if (log.isDebugEnabled()) {
+             log.debug("Internal frame Opened: {}, name= {} size ({}, {})",
+                    frame.getTitle(), frame.getName(),
+                    frame.getSize().getWidth(), frame.getSize().getHeight());
+          }*/
     }
 
     @Override
@@ -871,9 +874,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JInternalFrame frame = (JInternalFrame) e.getSource();
         String name = frame.getName();
         if (log.isDebugEnabled()) {
-            log.debug("Internal frame Iconified: "
-                    + frame.getTitle() + ", name= " + name + " size ("
-                    + frame.getSize().getWidth() + ", " + frame.getSize().getHeight() + ")");
+            log.debug("Internal frame Iconified: {}, name= {} size ({}, {})",
+                    frame.getTitle(), name,
+                    frame.getSize().getWidth(), frame.getSize().getHeight());
         }
         if (name != null && name.startsWith("OB")) {
             WarrantTableAction.initPathPortalCheck();
@@ -887,19 +890,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     @Override
     public void internalFrameDeiconified(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
-        //log.debug("Internal frame deiconified: "+frame.getTitle());
+        //log.debug("Internal frame deiconified: {}", frame.getTitle());
     }
 
     @Override
     public void internalFrameActivated(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
-        //log.debug("Internal frame activated: "+frame.getTitle());
+        //log.debug("Internal frame activated: {}", frame.getTitle());
     }
 
     @Override
     public void internalFrameDeactivated(InternalFrameEvent e) {
         //JInternalFrame frame = (JInternalFrame)e.getSource();
-        //log.debug("Internal frame deactivated: "+frame.getTitle());
+        //log.debug("Internal frame deactivated: {}", frame.getTitle());
     }
 
     private final static Logger log = LoggerFactory.getLogger(TableFrames.class);
