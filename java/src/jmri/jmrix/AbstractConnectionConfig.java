@@ -230,7 +230,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(systemPrefixLabel, cL);
             gbLayout.setConstraints(systemPrefixField, cR);
-	    systemPrefixLabel.setLabelFor(systemPrefixField);
+            systemPrefixLabel.setLabelFor(systemPrefixField);
             _details.add(systemPrefixLabel);
             _details.add(systemPrefixField);
             i++;
@@ -238,7 +238,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(connectionNameLabel, cL);
             gbLayout.setConstraints(connectionNameField, cR);
-	    connectionNameLabel.setLabelFor(connectionNameField);
+	        connectionNameLabel.setLabelFor(connectionNameField);
             _details.add(connectionNameLabel);
             _details.add(connectionNameField);
             i++;

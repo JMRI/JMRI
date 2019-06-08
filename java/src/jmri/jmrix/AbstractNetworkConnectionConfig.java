@@ -159,11 +159,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             final String item = entry.getKey();
             if (entry.getValue().getComponent() instanceof JComboBox) {
-                ((JComboBox<?>) entry.getValue().getComponent()).addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        adapter.setOptionState(item, options.get(item).getItem());
-                    }
+                ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                    adapter.setOptionState(item, options.get(item).getItem());
                 });
             }
         }
@@ -376,7 +373,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-    justification = "type was checked before casting")
+        justification = "type was checked before casting")
     protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
@@ -445,14 +442,14 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 i++;
             }
 
-            for (String item : options.keySet()) {
-                if (options.get(item).isAdvanced()) {
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                if (entry.getValue().isAdvanced()) {
                     cR.gridy = i;
                     cL.gridy = i;
-                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                    _details.add(options.get(item).getLabel());
-                    _details.add(options.get(item).getComponent());
+                    gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                    gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                    _details.add(entry.getValue().getLabel());
+                    _details.add(entry.getValue().getComponent());
                     i++;
                 }
             }
