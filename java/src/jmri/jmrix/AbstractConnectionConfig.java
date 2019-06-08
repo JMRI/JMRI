@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -212,14 +213,14 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     abstract protected void showAdvancedItems();
 
     protected int addStandardDetails(PortAdapter adapter, boolean incAdvanced, int i) {
-        for (String item : options.keySet()) {
-            if (!options.get(item).isAdvanced()) {
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            if (!entry.getValue().isAdvanced()) {
                 cR.gridy = i;
                 cL.gridy = i;
-                gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                _details.add(options.get(item).getLabel());
-                _details.add(options.get(item).getComponent());
+                gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                _details.add(entry.getValue().getLabel());
+                _details.add(entry.getValue().getComponent());
                 i++;
             }
         }
