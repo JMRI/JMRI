@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Editors for all layout track objects (PositionablePoint, TrackSegment,
- * LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
+ * LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable).
  *
  * @author George Warner Copyright (c) 2017-2018
  */
@@ -97,6 +97,7 @@ public class LayoutTrackEditors {
      * Create a list of NX sensors that refer to the current layout block.
      * This is used to disable block selection in the edit dialog.
      * The list is built by {@link jmri.jmrit.entryexit.EntryExitPairs#layoutBlockSensors}.
+     *
      * @since 4.11.2
      * @param loBlk The current layout block.
      * @return true if sensors are affected.
@@ -119,6 +120,7 @@ public class LayoutTrackEditors {
      * An option is provided to hide the message.
      * Note: The PanelMenu class is being used to satisfy the showInfoMessage requirement
      * for a default manager type class.
+     *
      * @since 4.11.2
      */
     @InvokeOnGuiThread
@@ -306,14 +308,13 @@ public class LayoutTrackEditors {
         editTrackSegmentOpen = true;
 
         showSensorMessage();
-
-    }   // editTrackSegment
+    }
 
     @InvokeOnGuiThread
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if ((trackSegment.getBlockName() == null)
+        if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -335,7 +336,7 @@ public class LayoutTrackEditors {
         trackSegment.getLayoutBlock().editLayoutBlock(editTrackSegmentFrame);
         layoutEditor.setDirty();
         editTrackSegmentNeedsRedraw = true;
-    }   // editTrackSegmentEditBlockPressed
+    }
 
     @InvokeOnGuiThread
     private void editTracksegmentDonePressed(ActionEvent a) {
@@ -368,7 +369,7 @@ public class LayoutTrackEditors {
         }
         // check if Block changed
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if ((trackSegment.getBlockName() == null)
+        if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -391,7 +392,7 @@ public class LayoutTrackEditors {
             editTrackSegmentNeedsRedraw = false;
         }
         layoutEditor.setDirty();
-    }   // editTracksegmentDonePressed
+    }
 
     @InvokeOnGuiThread
     private void editTrackSegmentCancelPressed(ActionEvent a) {
@@ -440,7 +441,7 @@ public class LayoutTrackEditors {
     private int editLayoutTurnoutThrownIndex;
 
     /**
-     * Edit a Layout Turnout
+     * Edit a Layout Turnout.
      */
     protected void editLayoutTurnout(@Nonnull LayoutTurnout layoutTurnout) {
         this.layoutTurnout = layoutTurnout;
@@ -693,8 +694,7 @@ public class LayoutTrackEditors {
         editLayoutTurnoutNeedsBlockUpdate = false;
 
         showSensorMessage();
-
-    }   // editLayoutTurnout
+    }
 
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -719,7 +719,7 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlock().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // editLayoutTurnoutEditBlockPressed
+    }
 
     private void editLayoutTurnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -744,7 +744,7 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlockB().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // editLayoutTurnoutEditBlockBPressed
+    }
 
     private void editLayoutTurnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -769,7 +769,7 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlockC().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // editLayoutTurnoutEditBlockCPressed
+    }
 
     private void editLayoutTurnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -794,7 +794,7 @@ public class LayoutTrackEditors {
         layoutTurnout.getLayoutBlockD().editLayoutBlock(editLayoutTurnoutFrame);
         editLayoutTurnoutNeedRedraw = true;
         layoutEditor.setDirty();
-    }   // editLayoutTurnoutEditBlockDPressed
+    }
 
     private void editLayoutTurnoutDonePressed(ActionEvent a) {
         // check if Turnout changed
@@ -916,7 +916,7 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLayoutTurnoutNeedRedraw = false;
         }
-    }   // editLayoutTurnoutDonePressed
+    }
 
     private void editLayoutTurnoutCancelPressed(ActionEvent a) {
         editLayoutTurnoutOpen = false;
@@ -954,7 +954,7 @@ public class LayoutTrackEditors {
     private boolean editLayoutSlipNeedsBlockUpdate = false;
 
     /**
-     * Edit a Slip
+     * Edit a Slip.
      */
     protected void editLayoutSlip(LayoutSlip layoutSlip) {
         sensorList.clear();
@@ -1142,8 +1142,7 @@ public class LayoutTrackEditors {
         editLayoutSlipNeedsBlockUpdate = false;
 
         showSensorMessage();
-
-    }   // editLayoutSlip
+    }
 
     private void drawSlipState(Graphics2D g2, int state) {
         Point2D cenP = layoutSlip.getCoordsCenter();
@@ -1225,7 +1224,7 @@ public class LayoutTrackEditors {
                 g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
             }
         }
-    }   // drawSlipState
+    }
 
     class SampleStates extends JPanel {
 
@@ -1249,7 +1248,7 @@ public class LayoutTrackEditors {
 
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
-     * disabled
+     * disabled.
      */
     public void toggleStateTest() {
         int turnAState;
@@ -1292,7 +1291,7 @@ public class LayoutTrackEditors {
         if (testPanel != null) {
             testPanel.repaint();
         }
-    }   // togleStateTest
+    }
 
     class TestState extends JPanel {
 
@@ -1330,7 +1329,7 @@ public class LayoutTrackEditors {
         layoutSlip.getLayoutBlock().editLayoutBlock(editLayoutSlipFrame);
         editLayoutSlipNeedsRedraw = true;
         layoutEditor.setDirty();
-    }   // editLayoutSlipEditBlockPressed(
+    }
 
     private void editLayoutSlipDonePressed(ActionEvent a) {
         String newName = editLayoutSlipTurnoutAComboBox.getDisplayName();
@@ -1390,7 +1389,7 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLayoutSlipNeedsRedraw = false;
         }
-    }   // editLayoutSlipDonePressed
+    }
 
     private void editLayoutSlipCancelPressed(ActionEvent a) {
         editLayoutSlipOpen = false;
@@ -1431,7 +1430,7 @@ public class LayoutTrackEditors {
     private boolean editLevelXingNeedsBlockUpdate = false;
 
     /**
-     * Edit a Level Crossing
+     * Edit a Level Crossing.
      */
     protected void editLevelXing(LevelXing levelXing) {
         sensorList.clear();
@@ -1534,7 +1533,7 @@ public class LayoutTrackEditors {
 
         showSensorMessage();
 
-    }   // editLevelXing
+    }
 
     private void editLevelXingBlockACPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -1565,7 +1564,7 @@ public class LayoutTrackEditors {
         }
         levelXing.getLayoutBlockAC().editLayoutBlock(editLevelXingFrame);
         editLevelXingNeedsRedraw = true;
-    }   // editLevelXingBlockACPressed
+    }
 
     private void editLevelXingBlockBDPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -1601,7 +1600,7 @@ public class LayoutTrackEditors {
         }
         levelXing.getLayoutBlockBD().editLayoutBlock(editLevelXingFrame);
         editLevelXingNeedsRedraw = true;
-    }   // editLevelXingBlockBDPressed
+    }
 
     private void editLevelXingDonePressed(ActionEvent a) {
         // check if Blocks changed
@@ -1661,7 +1660,7 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLevelXingNeedsRedraw = false;
         }
-    }   // editLevelXingDonePressed
+    }
 
     private void editLevelXingCancelPressed(ActionEvent a) {
         editLevelXingOpen = false;
@@ -1700,7 +1699,7 @@ public class LayoutTrackEditors {
     private boolean editLayoutTurntableNeedsRedraw = false;
 
     /**
-     * Edit a Turntable
+     * Edit a Turntable.
      */
     protected void editLayoutTurntable(LayoutTurntable layoutTurntable) {
         this.layoutTurntable = layoutTurntable;
@@ -1806,7 +1805,7 @@ public class LayoutTrackEditors {
         editLayoutTurntableFrame.pack();
         editLayoutTurntableFrame.setVisible(true);
         editLayoutTurntableOpen = true;
-    }   // editLayoutTurntable
+    }
 
     //Remove old rays and add them back in
     private void updateRayPanel() {
@@ -1905,7 +1904,7 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLayoutTurntableNeedsRedraw = false;
         }
-    }   // editLayoutTurntableDonePressed
+    }
 
     private void turntableEditCancelPressed(ActionEvent a) {
         editLayoutTurntableOpen = false;
@@ -2048,6 +2047,8 @@ public class LayoutTrackEditors {
             rayTurnoutStateComboBox.setVisible(vis);
             rayTurnoutStateLabel.setVisible(vis);
         }
-    }   // class TurntableRayPanel
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class);
-}   // class LayoutTrackEditors
+
+}

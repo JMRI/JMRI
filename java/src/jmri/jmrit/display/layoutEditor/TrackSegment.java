@@ -5,6 +5,7 @@ import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.EDGE_CONNECTOR;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.END_BUMPER;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -422,7 +423,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * get the direction from end point 1 to 2
+     * Get the direction from end point 1 to 2
      * <p>
      * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
      * (PI*3/2), etc.
@@ -441,7 +442,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * get the direction from end point 1 to 2
+     * Get the direction from end point 1 to 2
      * <p>
      * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
      * etc.
@@ -534,8 +535,9 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set Up a Layout Block for a Track Segment.
+     * Set up a Layout Block for a Track Segment.
      */
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlock(@Nullable LayoutBlock newLayoutBlock) {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != newLayoutBlock) {
@@ -551,6 +553,7 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockByName(@Nullable String name) {
         if ((name != null) && !name.isEmpty()) {
             LayoutBlock b = layoutEditor.provideLayoutBlock(name);
@@ -563,8 +566,9 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
+
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * Scale this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
@@ -581,7 +585,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * Translate (2D Move) this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -629,11 +633,11 @@ public class TrackSegment extends LayoutTrack {
         LayoutBlock lb;
         if (!tLayoutBlockName.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockName);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
-                log.error("bad blockname '" + tLayoutBlockName + "' in tracksegment " + getName());
+                log.error("bad blockname '{}' in tracksegment {}", tLayoutBlockName, getName());
                 namedLayoutBlock = null;
             }
             tLayoutBlockName = null; //release this memory
@@ -643,12 +647,12 @@ public class TrackSegment extends LayoutTrack {
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
-            log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
+            log.warn("Unknown connect1 object prefix: '{}' of type {}.", tConnect1Name, type1);
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
-            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
+            log.warn("Unknown connect2 object prefix: '{}' of type {}.", tConnect2Name, type2);
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
@@ -2318,7 +2322,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }
-    }   // calculateTrackSegmentAngle
+    }
 
     /**
      * {@inheritDoc}
@@ -2867,7 +2871,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }   // if (tunnelValue != null)
-    }   // drawDecorations
+    }
 
     private int drawArrow(
             Graphics2D g2,
@@ -3017,7 +3021,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
         return offset;
-    }   // drawArrow
+    }
 
     /*======================*\
     |* decoration accessors *|
@@ -3031,7 +3035,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * get decorations
+     * Get decorations.
      *
      * @return decorations to set
      */
@@ -3152,10 +3156,10 @@ public class TrackSegment extends LayoutTrack {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   // if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    } // getDecorations
+    }
 
     /**
-     * set decorations
+     * Set decorations.
      *
      * @param decorations to set
      */
@@ -3165,7 +3169,7 @@ public class TrackSegment extends LayoutTrack {
         super.setDecorations(decorations);
         if (decorations != null) {
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
-                log.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                log.debug("Key = {}, Value = {}", entry.getKey(), entry.getValue());
                 String key = entry.getKey();
                 //
                 // arrow decorations
@@ -3213,7 +3217,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             gap = Integer.parseInt(valueString);
                         } else {
-                            log.debug("arrow value ignored: " + value);
+                            log.debug("arrow value ignored: {}", value);
                         }
                     }
                     hasIn |= !hasOut;   // if hasOut is false make hasIn true
@@ -3270,7 +3274,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             deckWidth = Integer.parseInt(valueString);
                         } else {
-                            log.debug("bridge value ignored: " + value);
+                            log.debug("bridge value ignored: {}", value);
                         }
                     }
                     // these both can't be false
@@ -4005,7 +4009,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }   // if (lb1 != null)
         return results;
-    }   // getLayoutConnectivity()
+    }
 
     /**
      * {@inheritDoc}
@@ -4047,7 +4051,7 @@ public class TrackSegment extends LayoutTrack {
         List<Set<String>> TrackNameSets = null;
         Set<String> TrackNameSet = null;    // assume not found (pessimist!)
         String blockName = getBlockName();
-        if (blockName != null) {
+        if (!blockName.isEmpty()) {
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -4076,7 +4080,7 @@ public class TrackSegment extends LayoutTrack {
                 connect2.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
             }
         }
-    }   // collectContiguousTracksNamesInBlockNamed
+    }
 
     /**
      * {@inheritDoc}
@@ -4111,6 +4115,6 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(TrackSegment.class);
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+
 }

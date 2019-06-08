@@ -1,7 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -482,7 +482,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalA1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalA1HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -504,7 +504,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalA2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalA2HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -526,7 +526,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalA3HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalA3HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -548,7 +548,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalB1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalB1HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -570,7 +570,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalB2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalB2HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -592,7 +592,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalC1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalC1HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -614,7 +614,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalC2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalC2HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -636,7 +636,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalD1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalD1HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -658,7 +658,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalD2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
             signalD2HeadNamed = null;
-            log.error("Signal Head " + signalHead + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
     }
 
@@ -745,6 +745,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Build a list of sensors, signal heads, and signal masts attached to a turnout point.
+     *
      * @param pointName Specify the point (A-D) or all (All) points.
      * @return a list of bean reference names.
      */
@@ -804,7 +805,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
             signalAMastNamed = null;
-            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Mast {} Not found for turnout {}", signalMast, getTurnoutName());
         }
     }
 
@@ -833,7 +834,7 @@ public class LayoutTurnout extends LayoutTrack {
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
             signalBMastNamed = null;
-            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Mast {} Not found for turnout {}", signalMast, getTurnoutName());
         }
     }
 
@@ -861,7 +862,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (mast != null) {
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
-            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Mast {} Not found for turnout {}", signalMast, getTurnoutName());
             signalCMastNamed = null;
         }
     }
@@ -890,7 +891,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (mast != null) {
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
-            log.error("Signal Mast " + signalMast + " Not found for turnout " + getTurnoutName());
+            log.error("Signal Mast {} Not found for turnout {}", signalMast, getTurnoutName());
             signalDMastNamed = null;
         }
     }
@@ -1059,7 +1060,6 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * isInContinuingSenseState
      *
      * @return true is the continuingSense matches the known state
      */
@@ -1207,7 +1207,7 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             }
             default: {
-                log.error("Invalid Connection Type " + connectionType); //I18IN
+                log.error("Invalid Connection Type {}", connectionType); //I18IN
                 throw new jmri.JmriException("Invalid Connection Type");
             }
         }
@@ -1220,7 +1220,7 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to layoutturnout - " + type);
+            log.error("unexpected type of connection to layoutturnout - {}", type);
             throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
         }
         switch (connectionType) {
@@ -1237,7 +1237,7 @@ public class LayoutTurnout extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Connection Type " + connectionType); //I18IN
+                log.error("Invalid Connection Type {}", connectionType); //I18IN
                 throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
@@ -1245,28 +1245,28 @@ public class LayoutTurnout extends LayoutTrack {
     public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of A connection to layoutturnout - " + type);
+            log.error("unexpected type of A connection to layoutturnout - {}", type);
         }
     }
 
     public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of B connection to layoutturnout - " + type);
+            log.error("unexpected type of B connection to layoutturnout - {}", type);
         }
     }
 
     public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of C connection to layoutturnout - " + type);
+            log.error("unexpected type of C connection to layoutturnout - {}", type);
         }
     }
 
     public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of D connection to layoutturnout - " + type);
+            log.error("unexpected type of D connection to layoutturnout - {}", type);
         }
     }
 
@@ -1354,7 +1354,7 @@ public class LayoutTurnout extends LayoutTrack {
                 result = getCoordsD();
                 break;
             default:
-                log.error("Invalid connection type " + connectionType); //I18IN
+                log.error("Invalid connection type {}", connectionType); // NOI18N
         }
         return result;
     }
@@ -1532,7 +1532,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Set Up a Layout Block(s) for this Turnout
+     * Set up Layout Block(s) for this Turnout.
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
         LayoutBlock blockA = getLayoutBlock();
@@ -1549,7 +1549,8 @@ public class LayoutTurnout extends LayoutTrack {
             }
 
             blockA = newLayoutBlock;
-            if (newLayoutBlock != null) {
+            if ((newLayoutBlock != null) &&
+                    (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock) != null)) {
                 namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
             } else {
                 namedLayoutBlockA = null;
@@ -1564,6 +1565,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockB(LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
@@ -1603,6 +1605,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockC(LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
@@ -1642,6 +1645,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockD(LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
@@ -1870,9 +1874,10 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Methods to test if turnout legs are mainline track or not Returns true if
-     * connecting track segment is mainline Defaults to not mainline if
-     * connecting track segment is missing
+     * Test if turnout legs are mainline track or not.
+     *
+     * @return true if connecting track segment is mainline;
+     * Defaults to not mainline if connecting track segment is missing
      */
     public boolean isMainlineA() {
         if (connectA != null) {
@@ -2056,7 +2061,7 @@ public class LayoutTurnout extends LayoutTrack {
             result = NONE;
         }
         return result;
-    }   // findHitPointType
+    }
 
     /*
      * Modify coordinates methods
@@ -2256,7 +2261,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * Scale this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
@@ -2276,7 +2281,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * Translate (2D move) this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -2336,7 +2341,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Toggle turnout if clicked on, physical turnout exists, and not disabled
+     * Toggle turnout if clicked on, physical turnout exists, and not disabled.
      */
     public void toggleTurnout() {
         if (getTurnout() != null) {
@@ -2381,7 +2386,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * is this turnout occupied?
+     * Is this turnout occupied?
      *
      * @return true if occupied
      */
@@ -2390,7 +2395,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == LH_TURNOUT)
                 || (getTurnoutType() == WYE_TURNOUT)) {
             if (getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED) {
-                log.debug("Block " + getBlockName() + "is Occupied");
+                log.debug("Block {} is Occupied", getBlockName());
                 return true;
             }
         }
@@ -2401,12 +2406,12 @@ public class LayoutTurnout extends LayoutTrack {
             if (getTurnout().getKnownState() == Turnout.CLOSED) {
                 if ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + getBlockName() + " & " + getBlockBName() + " are Occupied");
+                    log.debug("Blocks {} & {} are Occupied", getBlockName(), getBlockBName());
                     return true;
                 }
                 if ((getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + getBlockCName() + " & " + getBlockDName() + " are Occupied");
+                    log.debug("Blocks {} & {} are Occupied", getBlockCName(), getBlockDName());
                     return true;
                 }
             }
@@ -2417,7 +2422,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (getTurnout().getKnownState() == Turnout.THROWN) {
                 if ((getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + getBlockBName() + " & " + getBlockDName() + " are Occupied");
+                    log.debug("Blocks {} & {} are Occupied", getBlockBName(), getBlockDName());
                     return true;
                 }
             }
@@ -2428,13 +2433,13 @@ public class LayoutTurnout extends LayoutTrack {
             if (getTurnout().getKnownState() == Turnout.THROWN) {
                 if ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
                         && (getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED)) {
-                    log.debug("Blocks " + getLayoutBlock() + " & " + getBlockCName() + " are Occupied");
+                    log.debug("Blocks {} & {} are Occupied", getLayoutBlock(), getBlockCName());
                     return true;
                 }
             }
         }
         return false;
-    }   // isOccupied
+    }
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -2448,7 +2453,7 @@ public class LayoutTurnout extends LayoutTrack {
     public String tBlockDName = "";
 
     /**
-     * Initialization method The above variables are initialized by
+     * Initialization method. The above variables are initialized by
      * LayoutTurnoutXml, then the following method is called after the entire
      * LayoutEditor is loaded to set the specific TrackSegment objects.
      */
@@ -2462,11 +2467,11 @@ public class LayoutTurnout extends LayoutTrack {
         LayoutBlock lb;
         if (!tBlockAName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockAName);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
-                log.error("bad blockname '" + tBlockAName + "' in layoutturnout " + getId());
+                log.error("bad blockname '{}' in layoutturnout {}", tBlockAName, getId());
                 namedLayoutBlockA = null;
             }
             tBlockAName = null; //release this memory
@@ -2474,13 +2479,13 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockBName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockBName);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 if (namedLayoutBlockB != namedLayoutBlockA) {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + getId());
+                log.error("bad blockname '{}' in layoutturnout {}", tBlockBName, getId());
                 namedLayoutBlockB = null;
             }
             tBlockBName = null; //release this memory
@@ -2488,14 +2493,14 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockCName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockCName);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 if ((namedLayoutBlockC != namedLayoutBlockA)
                         && (namedLayoutBlockC != namedLayoutBlockB)) {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + getId());
+                log.error("bad blockname '{}' in layoutturnout {}", tBlockCName, getId());
                 namedLayoutBlockC = null;
             }
             tBlockCName = null; //release this memory
@@ -2503,7 +2508,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockDName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockDName);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 if ((namedLayoutBlockD != namedLayoutBlockA)
                         && (namedLayoutBlockD != namedLayoutBlockB)
@@ -2511,13 +2516,13 @@ public class LayoutTurnout extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + getId());
+                log.error("bad blockname '{}' in layoutturnout {}", tBlockDName, getId());
                 namedLayoutBlockD = null;
             }
             tBlockDName = null; //release this memory
         }
         activateTurnout();
-    } // setObjects
+    }
 
     private JPopupMenu popup = null;
 
@@ -2866,7 +2871,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
         return popup;
-    } // showPopup
+    }
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -3004,7 +3009,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         }
         return boundaryBetween;
-    }   // getBlockBoundaries
+    }
 
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<>(2);
@@ -3142,7 +3147,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         return ret;
-    }   // getProtectedBlocks
+    }
 
     protected void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -3158,7 +3163,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
+     * the object is still displayed; see {@link #remove()}
      */
     void dispose() {
         if (popup != null) {
@@ -3168,7 +3173,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Remove this object from display and persistance.
      */
     void remove() {
         // if a turnout has been activated, deactivate it
@@ -3558,7 +3563,7 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             }
         }
-    }   // draw1
+    }
 
     /**
      * {@inheritDoc}
@@ -3723,7 +3728,7 @@ public class LayoutTurnout extends LayoutTrack {
 //                         path = new GeneralPath();
 //                         path.moveTo(pSR.getX(), pSR.getY());
 //                         path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
-//     bad                    g2.draw(path);
+//                  bad    g2.draw(path);
                     }
                 }
                 if (isMain == mainlineC) {
@@ -4232,7 +4237,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             default: {
                 // this should never happen... but...
-                log.error("Unknown turnout type: " + type);
+                log.error("Unknown turnout type: {}", type);
                 break;
             }
         }
@@ -4336,10 +4341,11 @@ public class LayoutTurnout extends LayoutTrack {
             }
             g2.draw(layoutEditor.trackEditControlRectAt(pt));
         }
-    }   // drawEditControls
+    }
 
     /*
-        this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+     * Used by ConnectivityUtil to determine the turnout state necessary to get
+     * from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
     protected int getConnectivityStateForLayoutBlocks(
             LayoutBlock currLayoutBlock,
@@ -4370,7 +4376,7 @@ public class LayoutTurnout extends LayoutTrack {
                         result = Turnout.THROWN;
                     } else {
                         if (!suppress) {
-                            log.error("Cannot determine turnout setting - " + getTurnoutName());
+                            log.error("Cannot determine turnout setting - {}", getTurnoutName());
                         }
                         result = Turnout.CLOSED;
                     }
@@ -4380,10 +4386,10 @@ public class LayoutTurnout extends LayoutTrack {
                     result = Turnout.THROWN;
                 } else {
                     if (!suppress) {
-                        log.error("Cannot determine turnout setting for " + getTurnoutName());
+                        log.error("Cannot determine turnout setting for {}", getTurnoutName());
                     }
                     if (!suppress) {
-                        log.error("lb " + currLayoutBlock + " nlb " + nextLayoutBlock + " connect B " + layoutBlockB + " connect C " + layoutBlockC);
+                        log.error("lb {} nlb {} connect B {} connect C {}", currLayoutBlock, nextLayoutBlock, layoutBlockB, layoutBlockC);
                     }
                     result = Turnout.CLOSED;
                 }
@@ -4406,7 +4412,7 @@ public class LayoutTurnout extends LayoutTrack {
                         result = Turnout.THROWN;
                     } else {
                         if (!suppress) {
-                            log.error("Cannot determine turnout setting(A) - " + getTurnoutName());
+                            log.error("Cannot determine turnout setting(A) - {}", getTurnoutName());
                         }
                         result = Turnout.CLOSED;
                     }
@@ -4419,7 +4425,7 @@ public class LayoutTurnout extends LayoutTrack {
                         result = Turnout.THROWN;
                     } else {
                         if (!suppress) {
-                            log.error("Cannot determine turnout setting(B) - " + getTurnoutName());
+                            log.error("Cannot determine turnout setting(B) - {}", getTurnoutName());
                         }
                         result = Turnout.CLOSED;
                     }
@@ -4434,7 +4440,7 @@ public class LayoutTurnout extends LayoutTrack {
                         result = Turnout.THROWN;
                     } else {
                         if (!suppress) {
-                            log.error("Cannot determine turnout setting(C) - " + getTurnoutName());
+                            log.error("Cannot determine turnout setting(C) - {}", getTurnoutName());
                         }
                         result = Turnout.CLOSED;
                     }
@@ -4446,7 +4452,7 @@ public class LayoutTurnout extends LayoutTrack {
                         result = Turnout.THROWN;
                     } else {
                         if (!suppress) {
-                            log.error("Cannot determine turnout setting(D) - " + getTurnoutName());
+                            log.error("Cannot determine turnout setting(D) - {}", getTurnoutName());
                         }
                         result = Turnout.CLOSED;
                     }
@@ -4454,19 +4460,18 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             }
             default: {
-                log.warn("getTurnoutList() unknown tTyp: " + tTyp);
+                log.warn("getTurnoutList() unknown tTyp: {}", tTyp);
                 break;
             }
         }   // switch (tTyp)
 
         return result;
-    }   // getConnectivityStateForLayoutBlocks
-
+    }
 
     /*
      * {@inheritDoc}
      */
-    //TODO: on the cross-overs check the internal boundary details.
+    //TODO: on the cross-overs, check the internal boundary details.
     @Override
     public void reCheckBlockBoundary() {
         if (connectA == null && connectB == null && connectC == null) {
@@ -4581,7 +4586,7 @@ public class LayoutTurnout extends LayoutTrack {
                 sensorDNamed = null;
             }
         }
-    }   // reCheckBlockBoundary
+    }
 
     /*
      * {@inheritDoc}
@@ -4632,7 +4637,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         return results;
-    }   // getLayoutConnectivity()
+    }
 
     /**
      * {@inheritDoc}
@@ -4746,7 +4751,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
-    }   // collectContiguousTracksNamesInBlockNamed
+    }
 
     /**
      * {@inheritDoc}
@@ -4785,13 +4790,13 @@ public class LayoutTurnout extends LayoutTrack {
             for (LayoutTrack connect : connects) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track '{}' for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbour!
                 connect.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
             }
         }
-    }   // collectContiguousTracksNamesInBlockNamed
+    }
 
     /**
      * {@inheritDoc}
@@ -4829,6 +4834,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class);
+
 }
