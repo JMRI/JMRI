@@ -610,7 +610,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     public int getOccupancy() {
         if (occupancyNamedSensor == null) {
-            Sensor s = InstanceManager.sensorManagerInstance().getSensor(occupancySensorName);
+            Sensor s = null;
+            if (!occupancySensorName.isEmpty()) {
+                s = InstanceManager.sensorManagerInstance().getSensor(occupancySensorName);
+            }
             if (s == null) {
                 //no occupancy sensor, so base upon block occupancy state
                 if (block != null) {
