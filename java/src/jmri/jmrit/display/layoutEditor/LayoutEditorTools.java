@@ -1148,7 +1148,6 @@ public class LayoutEditorTools {
         if (result != null) {
             String uname = result.getUserName();
             if ((uname == null) || uname.isEmpty() || !uname.equals(signalName)) {
-                signalName = signalName.toUpperCase();
                 signalNameComboBox.setSelectedItem(result);
             }
         }
