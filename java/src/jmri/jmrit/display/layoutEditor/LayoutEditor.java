@@ -731,45 +731,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         turnoutNamePanel.add(turnoutNameComboBox);
 
         // disable turnouts that are already in use
-        PopupMenuListener pml = new PopupMenuListener() {
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent event) {
-                // This method is called before the popup menu becomes visible.
-                log.debug("PopupMenuWillBecomeVisible");
-                Object o = event.getSource();
-                if (o instanceof NamedBeanComboBox) {
-                    NamedBeanComboBox<Turnout> jbcb = (NamedBeanComboBox<Turnout>) o;
-                    Set<Turnout> l = new HashSet<>();
-                    jbcb.getManager().getNamedBeanSet().forEach((turnout) -> {
-                        if (!validatePhysicalTurnout(turnout.getDisplayName(), null)) {
-                            l.add(turnout);
-                        }
-                    });
-                    jbcb.setExcludedItems(l);
-                }
-            }
 
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent event) {
-                // This method is called before the popup menu becomes invisible
-                log.debug("PopupMenuWillBecomeInvisible");
-            }
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent event) {
-                // This method is called when the popup menu is canceled
-                log.debug("PopupMenuCanceled");
-            }
-        };
-
-        turnoutNameComboBox.addPopupMenuListener(pml);
+        turnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox));
         // turnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
         // turnoutNameComboBox.setDisabledColor(Color.red);
 
         setupComboBox(extraTurnoutNameComboBox, false, true);
         extraTurnoutNameComboBox.setToolTipText(Bundle.getMessage("SecondTurnoutNameToolTip"));
 
-        extraTurnoutNameComboBox.addPopupMenuListener(pml);
+        extraTurnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox));
         // extraTurnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
         // extraTurnoutNameComboBox.setDisabledColor(Color.red);
 
@@ -4824,9 +4794,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     protected void setOptionMenuTurnoutCircleSize() {
         String tcs = Integer.toString(getTurnoutCircleSize());
-        Enumeration e = turnoutCircleSizeButtonGroup.getElements();
+        Enumeration<AbstractButton> e = turnoutCircleSizeButtonGroup.getElements();
         while (e.hasMoreElements()) {
-            AbstractButton button = (AbstractButton) e.nextElement();
+            AbstractButton button = e.nextElement();
             String buttonName = button.getText();
             button.setSelected(buttonName.equals(tcs));
         }
@@ -10932,6 +10902,45 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;
     @Deprecated // 4.11.3
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
+
+    // package protected
+    class TurnoutComboBoxPopupMenuListener implements PopupMenuListener {
+
+        private final NamedBeanComboBox<Turnout> comboBox;
+
+        public TurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
+            this.comboBox = comboBox;
+        }
+
+        @Override
+        public void popupMenuWillBecomeVisible(PopupMenuEvent event) {
+            // This method is called before the popup menu becomes visible.
+            log.debug("PopupMenuWillBecomeVisible");
+            Set<Turnout> l = new HashSet<>();
+            comboBox.getManager().getNamedBeanSet().forEach((turnout) -> {
+                if (!validatePhysicalTurnout(turnout.getDisplayName(), null)) {
+                    l.add(turnout);
+                }
+            });
+            comboBox.setExcludedItems(l);
+        }
+
+        @Override
+        public void popupMenuWillBecomeInvisible(PopupMenuEvent event) {
+            // This method is called before the popup menu becomes invisible
+            log.debug("PopupMenuWillBecomeInvisible");
+        }
+
+        @Override
+        public void popupMenuCanceled(PopupMenuEvent event) {
+            // This method is called when the popup menu is canceled
+            log.debug("PopupMenuCanceled");
+        }
+    }
+
+    public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
+        return new TurnoutComboBoxPopupMenuListener(comboBox);
+    }
 
     //initialize logging
     private transient final static Logger log = LoggerFactory.getLogger(LayoutEditor.class);

@@ -21,10 +21,8 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
@@ -43,8 +41,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.util.JmriJFrame;
@@ -470,40 +466,7 @@ public class LayoutTrackEditors {
                     NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, true, true);
 
-            // disable items that are already in use
-            PopupMenuListener pml = new PopupMenuListener() {
-                @Override
-                public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                    // This method is called before the popup menu becomes visible.
-                    log.debug("PopupMenuWillBecomeVisible");  // NOI18N
-                    Object o = e.getSource();
-                    if (o instanceof NamedBeanComboBox) {
-                        NamedBeanComboBox<Turnout> jbcb = (NamedBeanComboBox<Turnout>) o;
-                        Manager<Turnout> m = jbcb.getManager();
-                        Set<Turnout> excludedItems = new HashSet<>();
-                        for (Turnout t : m.getNamedBeanSet()) {
-                            if (!layoutEditor.validatePhysicalTurnout(t.getSystemName(), null)) {
-                                excludedItems.add(t);
-                            }
-                        }
-                        jbcb.setExcludedItems(excludedItems);
-                    }
-                }
-
-                @Override
-                public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                    // This method is called before the popup menu becomes invisible
-                    log.debug("PopupMenuWillBecomeInvisible");  // NOI18N
-                }
-
-                @Override
-                public void popupMenuCanceled(PopupMenuEvent e) {
-                    // This method is called when the popup menu is canceled
-                    log.debug("PopupMenuCanceled");  // NOI18N
-                }
-            };
-
-            editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(pml);
+            editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox));
             // editLayoutTurnout1stTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
             // editLayoutTurnout1stTurnoutComboBox.setDisabledColor(Color.red);
 
@@ -519,7 +482,8 @@ public class LayoutTrackEditors {
                     NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, true, false);
 
-            editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(pml);
+            editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
+                    layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout2ndTurnoutComboBox));
             // editLayoutTurnout2ndTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
             // editLayoutTurnout2ndTurnoutComboBox.setDisabledColor(Color.red);
 
@@ -988,40 +952,8 @@ public class LayoutTrackEditors {
                     NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, true, true);
 
-            // disable items that are already in use
-            PopupMenuListener pml = new PopupMenuListener() {
-                @Override
-                public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                    // This method is called before the popup menu becomes visible.
-                    log.debug("PopupMenuWillBecomeVisible");  // NOI18N
-                    Object o = e.getSource();
-                    if (o instanceof NamedBeanComboBox) {
-                        NamedBeanComboBox<Turnout> jbcb = (NamedBeanComboBox<Turnout>) o;
-                        Manager<Turnout> m = jbcb.getManager();
-                        Set<Turnout> excludedItems = new HashSet<>();
-                        for (Turnout t : m.getNamedBeanSet()) {
-                            if (!layoutEditor.validatePhysicalTurnout(t.getSystemName(), null)) {
-                                excludedItems.add(t);
-                            }
-                        }
-                        jbcb.setExcludedItems(excludedItems);
-                    }
-                }
-
-                @Override
-                public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                    // This method is called before the popup menu becomes invisible
-                    log.debug("PopupMenuWillBecomeInvisible");  // NOI18N
-                }
-
-                @Override
-                public void popupMenuCanceled(PopupMenuEvent e) {
-                    // This method is called when the popup menu is canceled
-                    log.debug("PopupMenuCanceled");  // NOI18N
-                }
-            };
-
-            editLayoutSlipTurnoutAComboBox.addPopupMenuListener(pml);
+            editLayoutSlipTurnoutAComboBox.addPopupMenuListener(
+                    layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutAComboBox));
             // editLayoutSlipTurnoutAComboBox.setEnabledColor(Color.green.darker().darker());
             // editLayoutSlipTurnoutAComboBox.setDisabledColor(Color.red);
 
@@ -1039,7 +971,8 @@ public class LayoutTrackEditors {
                     NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, true, true);
 
-            editLayoutSlipTurnoutBComboBox.addPopupMenuListener(pml);
+            editLayoutSlipTurnoutBComboBox.addPopupMenuListener(
+                    layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutBComboBox));
             // editLayoutSlipTurnoutBComboBox.setEnabledColor(Color.green.darker().darker());
             // editLayoutSlipTurnoutBComboBox.setDisabledColor(Color.red);
 
@@ -1291,10 +1224,10 @@ public class LayoutTrackEditors {
         turnBState = layoutSlip.getTurnoutStates().get(testState).getTestTurnoutBState();
 
         if (editLayoutSlipTurnoutAComboBox.getSelectedItem() != null) {
-            ((Turnout) editLayoutSlipTurnoutAComboBox.getSelectedItem()).setCommandedState(turnAState);
+            editLayoutSlipTurnoutAComboBox.getSelectedItem().setCommandedState(turnAState);
         }
         if (editLayoutSlipTurnoutBComboBox.getSelectedItem() != null) {
-            ((Turnout) editLayoutSlipTurnoutBComboBox.getSelectedItem()).setCommandedState(turnBState);
+            editLayoutSlipTurnoutBComboBox.getSelectedItem().setCommandedState(turnBState);
         }
         if (testPanel != null) {
             testPanel.repaint();
