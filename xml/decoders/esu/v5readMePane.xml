@@ -215,10 +215,10 @@
             <text> </text>
         </label>
         <label>
-            <text>The LokSound 5 DCC/MM/SX/M4 decoders use the NMRA standard</text>
-            <text xml:lang="it">I decoders LokSound 5 DCC/MM/SX/M4 usano un fattore di moltiplica di standard NMRA</text>
-            <text xml:lang="de">Die LokSound 5 DCC/MM/SX/M4 Decoder verwenden für die Werte der Beschleunigungs- (CV 3) und Verzögerungs- (CV 4)</text>
-            <text xml:lang="ca">Els LokSound 5 DCC/MM/SX/M4 fan servir l'estàndard NMRA</text>
+            <text>The LokSound 5 DCC decoders use the NMRA standard</text>
+            <text xml:lang="it">I decoders LokSound 5 DCC usano un fattore di moltiplica di standard NMRA</text>
+            <text xml:lang="de">Die LokSound 5 DCC Decoder verwenden für die Werte der Beschleunigungs- (CV 3) und Verzögerungs- (CV 4)</text>
+            <text xml:lang="ca">Els LokSound 5 DCC fan servir l'estàndard NMRA</text>
         </label>
         <label>
             <text>factor of 0.896 for the values of Acceleration (CV 3) and Deceleration (CV 4) rates.</text>
