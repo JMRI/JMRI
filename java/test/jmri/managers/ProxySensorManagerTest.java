@@ -192,7 +192,8 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         s1.setUserName("Sensor 1");
         
         l.addDataListener(this);
-        l.addPropertyChangeListener(this);
+        l.addPropertyChangeListener("length", this);
+        l.addPropertyChangeListener("DisplayListName", this);
         
         // add an item
         Sensor s2 = l.provideSensor("IS2");
@@ -517,7 +518,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     String lastCall;
     
     @Override
-    public void intervalAdded(Manager.ManagerDataEvent e) {
+    public void intervalAdded(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -525,7 +526,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = "Added";
     }
     @Override
-    public void intervalRemoved(Manager.ManagerDataEvent e) {
+    public void intervalRemoved(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -533,7 +534,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = "Removed";
     }
     @Override
-    public void contentsChanged(Manager.ManagerDataEvent e) {
+    public void contentsChanged(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
