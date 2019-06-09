@@ -892,7 +892,7 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(connectionsMenu);
         }
 
-        if ((type == EDGE_CONNECTOR) || (type == END_BUMPER)) {
+        if (connect1 != null && (type == EDGE_CONNECTOR || type == END_BUMPER)) {
             //
             // decorations menu
             //
