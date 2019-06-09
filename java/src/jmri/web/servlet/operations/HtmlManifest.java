@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.Xml;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
@@ -307,6 +308,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.LOCATION),
                                             ShowLocation.both))).append(" "); // NOI18N
+                } else if (attribute.equals(Xml.TYPE)) {
+                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
