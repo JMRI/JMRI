@@ -435,7 +435,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return this.getFormattedAttribute(JSON.FINAL_DESTINATION, this.getFormattedLocation(rollingStock
                     .path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination")); // NOI18N
         }
-        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).textValue());
+        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
 
     protected String getFormattedAttribute(String attribute, String value) {
