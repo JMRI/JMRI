@@ -377,7 +377,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Improved behaviour of multiple <a 
+              href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
+              >Fast Clock following Light Controllers</a> on a single Light.</li>
         </ul>
 
     <h3>Scripting</h3>
