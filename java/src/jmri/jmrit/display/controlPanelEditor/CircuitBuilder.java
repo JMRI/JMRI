@@ -1594,7 +1594,7 @@ public class CircuitBuilder {
                 return false;  // OK to drag portal arrow
             }
         }
-        return true;
+        return false;
     }
 
     /**
