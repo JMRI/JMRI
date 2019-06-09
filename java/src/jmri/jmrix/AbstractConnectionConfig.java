@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 
 /**
@@ -96,6 +98,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     abstract public void updateAdapter();
 
+    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Field used by implementing classes")
     protected int NUMOPTIONS = 2;
 
     // Load localized field names
@@ -192,6 +195,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     @Override
     abstract public String getInfo();
 
+    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Field used by implementing classes")
     protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
 
     /**
@@ -238,7 +242,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(connectionNameLabel, cL);
             gbLayout.setConstraints(connectionNameField, cR);
-	        connectionNameLabel.setLabelFor(connectionNameField);
+            connectionNameLabel.setLabelFor(connectionNameField);
             _details.add(connectionNameLabel);
             _details.add(connectionNameField);
             i++;
