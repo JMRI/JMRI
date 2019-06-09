@@ -2,7 +2,7 @@ package jmri.server.json.operations;
 
 import static jmri.server.json.JSON.COLOR;
 import static jmri.server.json.JSON.COMMENT;
-import static jmri.server.json.JSON.DIRECTION;
+import static jmri.server.json.JSON.TRAIN_DIRECTION;
 import static jmri.server.json.JSON.EXPECTED_ARRIVAL;
 import static jmri.server.json.JSON.EXPECTED_DEPARTURE;
 import static jmri.server.json.JSON.LENGTH;
@@ -451,7 +451,7 @@ public class JsonUtil {
             RouteLocation rl = route;
             root.put(NAME, rl.getId());
             root.put(USERNAME, rl.getName());
-            root.put(DIRECTION, rl.getTrainDirectionString());
+            root.put(TRAIN_DIRECTION, rl.getTrainDirectionString());
             root.put(COMMENT, rl.getComment());
             root.put(SEQUENCE, rl.getSequenceNumber());
             root.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));

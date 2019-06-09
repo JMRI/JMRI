@@ -3704,7 +3704,7 @@ public class LayoutEditorTools {
         if (setSignalsAtLevelXingFrame == null) {
             setSignalsAtLevelXingOpenFlag = false;
             setSignalsAtLevelXingFrame = new JmriJFrame(Bundle.getMessage("SignalsAtLevelXing"), false, true);
-            oneFrameToRuleThemAll(setSignalsAtXoverTurnoutFrame);
+            oneFrameToRuleThemAll(setSignalsAtLevelXingFrame);
             setSignalsAtLevelXingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setSignalsAtLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
             setSignalsAtLevelXingFrame.setLocation(70, 30);

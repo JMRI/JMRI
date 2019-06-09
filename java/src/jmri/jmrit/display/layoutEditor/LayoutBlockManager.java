@@ -1881,7 +1881,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }	//getProtectedBlockByNamedBean
 
     @CheckReturnValue
-    @Nullable
+    @Nonnull
     public List<LayoutBlock> getProtectingBlocksByNamedBean(
             @Nullable NamedBean nb,
             @Nullable LayoutEditor panel) {

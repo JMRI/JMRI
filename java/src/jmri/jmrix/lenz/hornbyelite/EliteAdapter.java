@@ -31,9 +31,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         super(new EliteXNetSystemConnectionMemo());
         option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
-        option2Name = Bundle.getMessage("BufferTitle");
-        options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
-        setCheckBuffer(true); // default to true for elite
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 

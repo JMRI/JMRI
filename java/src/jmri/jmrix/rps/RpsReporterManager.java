@@ -71,8 +71,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddReporterEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddReporterEntryToolTip");
     }
 
     /**

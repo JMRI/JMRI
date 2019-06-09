@@ -892,7 +892,7 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(connectionsMenu);
         }
 
-        if ((type == EDGE_CONNECTOR) || (type == END_BUMPER)) {
+        if (connect1 != null && (type == EDGE_CONNECTOR || type == END_BUMPER)) {
             //
             // decorations menu
             //
@@ -1281,7 +1281,7 @@ public class PositionablePoint extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (layoutEditor.removePositionablePoint(PositionablePoint.this)) {
+                if (canRemove() && layoutEditor.removePositionablePoint(PositionablePoint.this)) {
                     // user is serious about removing this point from the panel
                     remove();
                     dispose();
@@ -1424,6 +1424,69 @@ public class PositionablePoint extends LayoutTrack {
 
         return popup;
     }   // showPopup
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        List<String> itemList = new ArrayList<>();
+        // A has two track segments, EB has one, EC has one plus optional link
+
+        TrackSegment ts1 = getConnect1();
+        TrackSegment ts2 = getConnect2();
+
+        if (ts1 != null) {
+            itemList.addAll(getSegmentReferences(ts1));
+        }
+        if (ts2 != null) {
+            for (String item : getSegmentReferences(ts2)) {
+                // Do not add duplicates
+                if (!itemList.contains(item)) {
+                    itemList.add(item);
+                }
+            }
+        }
+
+        if (!itemList.isEmpty()) {
+            String typeName = "";
+            switch (type) {
+                case ANCHOR:
+                    typeName = "Anchor";  // NOI18N
+                    break;
+                case END_BUMPER:
+                    typeName = "EndBumper";  // NOI18N
+                    break;
+                case EDGE_CONNECTOR:
+                    typeName = "EdgeConnector";  // NOI18N
+                    break;
+                default:
+                    typeName = "Unknown type (" + type + ")";  // NOI18N
+                    break;
+            }
+            displayRemoveWarningDialog(itemList, typeName);
+        }
+        return itemList.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a connection point.
+     * @param ts The track segment to be checked.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getSegmentReferences(TrackSegment ts) {
+        ArrayList<String> items = new ArrayList<>();
+
+        int type1 = ts.getType1();
+        LayoutTrack conn1 = ts.getConnect1();
+        items.addAll(ts.getPointReferences(type1, conn1));
+
+        int type2 = ts.getType2();
+        LayoutTrack conn2 = ts.getConnect2();
+        items.addAll(ts.getPointReferences(type2, conn2));
+
+        return items;
+    }
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
@@ -1836,7 +1899,7 @@ public class PositionablePoint extends LayoutTrack {
             eastBoundSignalMastNamed = null;
             setWestBoundSensor("");
             setEastBoundSensor("");
-            //TODO: May want to look at a method to remove the assigned mast 
+            //TODO: May want to look at a method to remove the assigned mast
             //from the panel and potentially any SignalMast logics generated
         }
     }   // reCheckBlockBoundary

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test the ProxyTurnoutManager
+ * Tests the ProxyTurnoutManager.
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
  */

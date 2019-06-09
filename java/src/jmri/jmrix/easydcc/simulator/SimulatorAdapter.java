@@ -102,12 +102,11 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      */
     @Override
     public void configure() {
-        // connect to the traffic controller
+        // connect to the traffic controller, which is provided via the memo
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccSimulatorTrafficController(getSystemConnectionMemo());
-        //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
-        control.connectPort(this);
-        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+
+        getSystemConnectionMemo().getTrafficController().connectPort(this);
+
         // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
 

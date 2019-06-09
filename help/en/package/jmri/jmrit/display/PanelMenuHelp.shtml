@@ -22,33 +22,35 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Panels Menu</h1>The JMRI "Panels" menu contains the
-      following items:
+      <h1>JMRI: Panels Menu</h1>
+
+      <p>The JMRI "Panels" menu contains the following items:</p>
 
       <ul>
         <li>New Panel...: Select to create a new panel in either
-        <a href="PanelEditor.shtml">Panel Editor</a> or <a href=
-        "LayoutEditor.shtml">Layout Editor</a>.</li>
+        <a href="PanelEditor.shtml">Panel Editor</a>,
+        <a href="ControlPanelEditor.shtml">Control Panel Editor</a>,
+        <a href="LayoutEditor.shtml">Layout Editor</a> or
+        <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</li>
 
         <li>Load Panel...: Loads a a file previously stored with
         the "Store Panels..." choice below. If the file contains
-        Panel Editor or Layout Editor panels, they will be added to
-        any that already exist in the program.</li>
+        Panel information, it will be added to any that already
+        exists in the running program.</li>
 
         <li>Store Panels...: Store the current setup of the program
-        to a file, including all current Panel Editor and Layout
-        editor panels. Use "Show Panel" below to see the complete
-        list.</li>
+        to a file, including all currently loaded Panels.
+        Use "Show Panel" below to see the complete list.</li>
 
-        <li>Show History: Shows a history of all files loaded into
+        <li>Show History: <span class="since">since 2.9.3</span>
+        Shows a history of all files loaded into
         the currently running program, and how they were stored
         from previous runs of the program, along with what was
-        loaded into those, and so on. Only records information from
-        running JMRI 2.9.3 and later.</li>
+        loaded into those, and so on.</li>
 
-        <li>Show Panel: Shows the list of Layout and/or Panel
-        Editor panels currently in the program, and allows you to
-        bring one to the front by selecting it.</li>
+        <li>Show Panel: Shows the list of all Panels
+        currently loaded in the program, and allows
+        you to bring one to the front by selecting it.</li>
 
         <li>Run Script...: Select and run a <a href=
         "../../../../html/tools/scripting/index.shtml">script
@@ -66,7 +68,11 @@
         directly type scripting commands here.</li>
       </ul>
 
-      <p>This is the jmri.jmrit.display.PanelMenuHelp help page.</p>
+      <p>Continue to the help pages for
+      <a href="PanelEditor.shtml">Panel Editor</a>,
+      <a href="ControlPanelEditor.shtml">Control Panel Editor</a>,
+      <a href="LayoutEditor.shtml">Layout Editor</a> or
+      <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

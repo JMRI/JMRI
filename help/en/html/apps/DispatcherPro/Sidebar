@@ -15,13 +15,13 @@
 
 <dt><h3>Other Apps</h3></dt>
 <dd>
-		<ul>
+	<ul>
 		<li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+		<li><a href="../PanelPro/index.shtml">PanelPro&trade;</a></li>
 		<!-- <li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li> -->
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
-		</ul>
+	</ul>
 </dd>
 
 		<dt><h3><a href="../../tools/index.shtml">Tools</a></h3></dt>
@@ -51,7 +51,7 @@
 		</ul>
 		</dd>
 
-  	<dt><h3><a href="automation">Layout Automation</a></h3></dt>
+  	<dt><h3><a href="../../tools/automation/index.shtml">Layout Automation</a></h3></dt>
 		<dd>JMRI can be used to automate parts 
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
@@ -62,6 +62,7 @@
             <li><dfn><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="../../tools/uss/index.shtml">USS CTC</a></dfn>
 		    <li><dfn><a href="../../tools/scripting/index.shtml">Scripting</a></dfn>
 		    </ul>
 		</dd>

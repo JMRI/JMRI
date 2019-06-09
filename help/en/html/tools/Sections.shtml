@@ -191,7 +191,7 @@
       direction being set as FORWARD travel, going from the source
       to destination Signal Mast. Please note that the Block
       details are not saved when the Panel is stored, but are
-      re-created when the file is loaded.</p>
+      re-created when the file is reloaded from disk.</p>
 
       <p>The tool will also automatically create forward and
       reverse direction Sensors and places them in the Section,
@@ -349,7 +349,10 @@
       <p>Use the <b>Store</b> item in the <b>File</b> menu of the
       Section Table (or the <b>Store Panels...</b> item in the
       <b>Panels</b> menu of the main JMRI window) to save Section
-      information to disk. This information (and any modified
+      information to disk, allowing to
+      <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+      it</a> next time you run JMRI.
+      This information (and any modified
       signal logic information) is saved with the configuration and
       panels in an XML file, along with control panel setup and
       similar stuff. To store your panels in the same file

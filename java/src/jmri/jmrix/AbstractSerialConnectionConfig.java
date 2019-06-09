@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig.
+ * Abstract base class for common implementation of the SerialConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -140,7 +140,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void focusLost(FocusEvent e) {
             }
-
         });
 
         for (String i : options.keySet()) {
