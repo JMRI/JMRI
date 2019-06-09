@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -39,8 +36,6 @@ import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
@@ -1622,7 +1617,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * @throws IllegalArgumentException if "user input no good"
      */
     // why are the controls being passed, and not their selections?
-    int makeSensorConditional(NamedBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds,
+    int makeSensorConditional(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlSensorVar(jmriBox, sensorbox, false, onChange);
@@ -1672,7 +1667,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * @throws IllegalArgumentException if "user input no good"
      */
     // why are the controls being passed, and not their selections?
-    int makeTurnoutConditional(NamedBeanComboBox jmriBox, JComboBox<String> box, int numConds,
+    int makeTurnoutConditional(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlTurnoutVar(jmriBox, box, false, onChange);
@@ -1730,7 +1725,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return list;
     }
 
-    ConditionalVariable makeCtrlSensorVar(NamedBeanComboBox jmriBox, JComboBox<String> sensorbox,
+    ConditionalVariable makeCtrlSensorVar(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox,
             boolean makeVeto, boolean onChange) {
         String devName = jmriBox.getSelectedItemDisplayName();
         if (jmriBox.getSelectedItem() == null /*|| devName.length() == 0*/) {
