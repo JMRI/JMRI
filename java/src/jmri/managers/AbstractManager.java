@@ -95,7 +95,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
-    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
+    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
     // Storage for getSystemNameOriginalList

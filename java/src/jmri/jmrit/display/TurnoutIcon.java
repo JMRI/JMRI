@@ -221,10 +221,8 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         String name;
         if (namedTurnout == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getTurnout().getUserName() != null) {
-            name = getTurnout().getUserName() + " (" + getTurnout().getSystemName() + ")";
         } else {
-            name = getTurnout().getSystemName();
+            name = getTurnout().getFullyFormattedDisplayName();
         }
         return name;
     }

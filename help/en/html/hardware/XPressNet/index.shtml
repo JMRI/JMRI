@@ -58,6 +58,8 @@
             LI101F</a></li>
 
             <li><a href="#connectLiusb">LI-USB</a></li>
+            
+            <li><a href="#connectLzv200">LZV200</a></li>
 
             <li><a href="#connectLiusbServer">LI-USB Server</a></li>
 
@@ -122,6 +124,9 @@
               3.x)</li>
 
               <li>Lenz LZV100 based systems (software version
+              3.x)</li>
+              
+              <li>Lenz LZV200 based systems (software version
               3.x)</li>
 
               <li>OpenDCC's Command Center</li>
@@ -212,7 +217,7 @@
 
       <h3>Computer Interfaces</h3>
 
-      <p>Currently 14 XpressNet computer interfaces are supported
+      <p>Currently 15 XpressNet computer interfaces are supported
       by JMRI:</p>
 
       <ul>
@@ -223,7 +228,7 @@
         supports serial port speeds of 9,600 and 19,200 baud. The
         Factory default is 9,600 baud.</li>
 
-        <li>The Lenz LI101F is Lenz's latest serial port based
+        <li>The Lenz LI101F is Lenz's last serial port based
         computer interface. It is significantly different than the
         LI100 and LI100F in physical appearance, and in the method
         by which the device is configured. The device is configured
@@ -271,6 +276,13 @@
         Connection via an Ethernet connection is available through
         the LI-USB Ethernet connection type, which was first made
         available in JMRI version 2.13.7.</li>
+        
+        <li>The Lenz LZV200 is Lenz's command station with a built
+        in computer interface. The computer interface is very similar
+        to the LI-USB and can ve configured using the JMRI tool for
+        configuring the LI-USB.  The LZV200 connection option was added
+        in version 4.15.7, though thr LZV200 can also be configured 
+        using the LI-USB or LI-USB Server options.</li>
 
         <li>In addition to the Lenz purpose built computer
         interfaces, we have also included support for using an
@@ -399,7 +411,7 @@
             be able to using a Lenz system and the LI100, LI101F or
             LI-USB, please let us know.</p>
 
-            <p>LZ100 and LZV100-based systems support the full
+            <p>LZ100, LZV100, and LZV200 based systems support the full
             range of JMRI functionality. The LZ100 is the command
             station used in the Set-01. The LZV100 is the command
             station used in the Set-90, Set-100, and Set-LI.</p>
@@ -640,7 +652,7 @@
             link to the drivers current as of this writing:
             <a href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).</li>
 
-            <li>Fort the LI-USB-Ethernet (Lenz part Number 23151) in
+            <li>For the LI-USB-Ethernet (Lenz part Number 23151) in
             USB mode with JMRI, you must first install a software
             driver on your computer. Internally, the device
             contains a The USB connection on the device is provided
@@ -828,7 +840,68 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectsim" id="connectsim"></a>
+      </ol>
+      
+      <a name="connectLzv200" id="connectLzv200"></a>
+
+      <h3>Connecting using a Lenz LZV200</h3>
+
+      <ol>
+        <li>To connect your computer to Lenz LZV200using the 
+        built in USb port, connect the LZV200 to your
+        computer's USB port using a standard USB A to USB B 
+        cable.</li>
+
+        <li>Install the appropriate drivers.
+
+          <p>For the LZV200 USB connection with JMRI, you 
+             must first install a software driver on your
+            computer. Internally, the device contains a FTDI
+            FT232BM USB to Serial converter. There are two drivers
+            available for this device, make sure you obtain the
+            Virtual Comm Port (VCP) driver.<br>
+            The device drivers for Windows are included on the CD
+            that comes with the device.<br>
+            The device drivers for Linux are included with recent
+            versions of the Linux kernel.<br>
+            Device drivers for Linux, and MacOS (8,9 and X ) and
+            Windows are available from the <a href=
+            "http://www.ftdichip.com/">FTDI website</a> (direct
+            link to the drivers current as of this writing:
+            <a href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).</p>
+
+          <p>When the device drivers are installed, and the LZV200
+          is connected to your PC, the LZV200 should have a Red LED
+          turned on, indicating the USB connection is OK.</p>
+
+          <p><b>NOTE: If you have installed the Lenz software, make
+          sure none of it is running. This includes the LI-Server,
+          which may be running in the background.</b></p>
+        </li>
+
+        <li>Once the drivers are installed, you are ready to
+        configure JMRI. Start one of the JMRI-based programs, Then
+        go to the preferences panel. This opens automatically the
+        first time a program is run, or you can select it from the
+        "Edit" menu.</li>
+
+        <li>Select "Lenz LZV200" from the top selection box. You can
+        then select the proper serial port in the second selection
+        box.</li>
+
+        <li>The baud rate selection box should be set to 57,600
+        baud.</li>
+
+        <li>The fourth box should be set to "no flow control" (the 
+        LZV200 does not support flow control).</li>
+
+        <li>Click "Save". You'll be asked if it's OK for the
+        program to quit, click "Yes".</li>
+
+        <li>Restart the program. You should be up and running.</li>
+      </ol>
+      
+      <a name="connectsim" id="connectsim"></a>
 
       <h3>Connecting to the XpressNet Simulator</h3>
 

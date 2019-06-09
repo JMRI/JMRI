@@ -21,7 +21,7 @@ public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
         // tc = new SerialTrafficControlScaffold();
         panel = new SerialPacketGenPane();
         title = "Powerline_: Command Generator";
-        helpTarget="package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
+        helpTarget="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane";
     }
 
     @Override
