@@ -585,43 +585,50 @@
       sure to build first. You could add that to your Debug Configuration too.</p>
       <p>Besides Debug, there's also a Coverage option available in the Debug menu and tool bar.</p>
 
-      <a name="findbugs" id="findbugs"></a>
-      <h2>Running FindBugs</h2>
+      <a name="spotbugs" id="spotbugs"></a>
+      <h2>Running SpotBugs</h2>
         <ol>
         <li>Confirm that the class and output paths have been <a href="#debug">set up correctly</a> for the
           compiler.</li>
-        <li>Install the IntelliJ FindBugs 1.01 plug-in. If your Findbugs installation is correct, the FindBugs tab at
-          bottom left will show, a FindBugs item will show up at the bottom of the <b>Analyze</b> menu and the path to
-          FindBugs 3.01 in your <code>local.properties</code> file will match the place where the
-          Findbugs application is located on your computer.</li>
-        <li>From the <b>Build</b> menu select <b>Build Project</b> or <b>Build Module 'JMRI'</b> (and wait for up to
-          20 minutes, do some stretch exercises etc), followed by FindBugs doings its duty.</li>
-        <li>When you right click on any file icon in the <code>src</code> or <code>test</code> folders, the
-          <b>FindBugs</b> context menu allows you to <b>Analyze Selected File(s)</b> and more:<br>
+        <li>An IntelliJ SpotBugs plug-in is not yet available, so you run it as an Ant Build task and study the .html
+          report.<br>
+          To add the path to SpotBugs for Ant in your <code>local.properties</code> file to match the place where the
+          SpotBugs application is located on your computer add these lines:<br>
+          <code># configure SpotBugs<br>
+          spotbugs.home=/Users/you/Apps/spotbugs-3.1.12</code><br>
+        </li>
+        <li>From the <b>Build</b> menu select <b>Build Project</b> or <b>Build Module 'JMRI'</b> (and wait for
+        up to 20 minutes, do some stretch exercises etc), followed by SpotBugs doings its duty.</li>
+        <!-- update once a plugin is available for SpotBugs:
+
+        <li>When you right click on any file icon in the
+        <code>src</code> or <code>test</code> folders, the
+          <b>SpotBugs</b> context menu allows you to <b>Analyze Selected File(s)</b> and more:<br>
           <img src="images/IntelliJ/IjFbContextMenuOnFile.png" width="363" height="170"
-               alt="FindBugs context menu">&nbsp;
-          <img src="images/IntelliJ/IjFindbugsToolbar.png" width="152" height="188"
-               alt="FindBugs Plug-In toolbar active"><br>
-          The Findbugs toolbar provides access to the same functions, ranging from file to class, package, Module and
+               alt="SpotBugs context menu">&nbsp;
+          <img src="images/IntelliJ/IjSpotbugsToolbar.png" width="152" height="188"
+               alt="SpotBugs Plug-In toolbar active"><br>
+          The Bugs toolbar provides access to the same functions, ranging from file to class, package, Module and
           scope.<br>
           A bit lower in the context menu the <b>Rebuild</b> and <b>Build Module</b> items should also become
           active.</li>
-        <li>Either choice will start a compilation of the classes involved, followed by FindBugs analyzing the
+        <li>Either choice will start a compilation of the classes involved, followed by SpotBugs analyzing the
           code structure. Watch the progress bar either at the bottom of the IntelliJ window or in a dialog:<br>
           <img src="images/IntelliJ/IjFbProgressbar.png" width="494" height="104"
-               alt="FindBugs Analysis progress dialog">&nbsp;
+               alt="SpotBugs Analysis progress dialog">&nbsp;
           <img src="images/IntelliJ/IjBuildtaskProgressbar.png" width="217" height="110"
-               alt="FindBugs background task indicator">
+               alt="SpotBugs background task indicator">
         </li>
-      <li>Once the FindBugs analysis has completed, its tab pane at bottom left in IntelliJ at the JI (bug) icon will
+      <li>Once the SpotBugs analysis has completed, its tab pane at bottom left in IntelliJ at the JI (bug) icon will
         show one or more bugs.<br>
         Click <b>more...</b> to see a summary of your settings.<br>
         Browse the bugs, code preview bug details and suggested fixes (click image to enlarge):<br>
         <a href="images/IntelliJ/IjFbAnalysisDetails.png"><img
                 src="images/IntelliJ/IjFbAnalysisDetails.png" width="644" height="296"
-                alt="FindBugs plugin in action"></a>
-      </li>
+                alt="SpotBugs plugin in action"></a>
+      </li> -->
       </ol>
+      <p>See: <a href=“https://spotbugs.readthedocs.io/en/stable/installing.html>"SpotBugs Online Help"</a></p>
 
       <a name="tricks" id="tricks"></a>
       <h3>Tricks</h3>
