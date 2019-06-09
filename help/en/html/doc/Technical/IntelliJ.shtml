@@ -292,10 +292,13 @@
 
       <h3>Making Changes</h3>
 
-      <p>To work on the JMRI code, always start a new Branch, so
-      your own "master" will stay intact.<br>
-      To create a new Branch in IntelliJ, from the <strong>Git
-      Branches</strong> pane, select "New Branch":<br>
+      <p>To work on the JMRI code, always start a new Branch off
+      from master, so your own "master" will stay intact.<br>
+      To create a new Branch in IntelliJ, check out master, VCS
+      &gt; Git &gt; Pull... from JMRI-master, VCS &gt; Git &gt;
+      Push... to create a current base.<br>
+      Now then from the <strong>Git Branches</strong> pane, select
+      "+ New Branch":<br>
       <a href="images/IntelliJ/IjGitBranches.png"><img src=
       "images/IntelliJ/IjGitBranches.png" width="323" height="172"
       alt="IntelliJ main project window"></a><br>
@@ -320,29 +323,30 @@
         download comes with a JDK, but you have to configure ant to
         use the right JDK.<br>
         To verify the JDK is set to java 1.8, open the Ant Build
-        tab [1], click a file in the Ant Build list [3] and select
-        the Properties button [2] at the top right of the pane:<br>
+        tab [1] and select the Properties button [2] at the top
+        right of the pane.<br>
+        As "Run under JDK:" select <strong>1.8 (java version
+        1.8.xxx)</strong> if not already set:<br>
         <a href="images/IntelliJ/IjAntPropertiesOpen.png"><img src=
         "images/IntelliJ/IjAntPropertiesOpen.png" width="340"
-        height="196" alt="IntelliJ Ant menu"></a></li>
-
-        <li>Select <strong>1.8</strong> as "Run under JDK" if not
-        yet set:<br>
+        height="196" alt="IntelliJ Ant menu"></a>&nbsp;
         <a href=
         "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src="images/IntelliJ/IjAntBuildFilePropertiesPane.png"
         width="318" height="175" alt="IntelliJ Ant Settings"></a><br>
         Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).</li>
 
-        <li>Select the &lt;Default target&gt; file in the Ant Build
-        list, right click, and select "Run", or click the green
-        triangle "Run" button at the top of the pane. This should
-        start the ant build. Follow any messages in the Event Log
-        that pops up from the bottom edge of the Project
+        <li>Select a file in one of the JMRI ant folders in the Ant Build
+        list, right click, and select "Run Target", simply double-click or
+        press the green triangle "Run" button at the top of the pane.
+        This should start the ant build. Follow any messages in the
+        Event Log that pops up from the bottom edge of the Project
         window.</li>
 
-        <li>A new JMRI checkout should build cleanly. If not,
-        please check with the JMRIusers or jmri-developers mailings
-        lists for help.</li>
+        <li>A new JMRI checkout should build cleanly. If not, do ant clean
+        (meaning: double-click the <b>clean</b> item on the Ant Built list
+        before contacting the <a href=
+        "https://jmri-developers.groups.io/g/jmri">jmri-developers.groups.io</a>
+        for assistance.</li>
       </ol>
 
       <p>If the ant build is successful, you can launch any of the
@@ -504,13 +508,15 @@
         <li>Select the <b>Sources</b> tab on the right.</li>
         <li>In the file tree, select the <b>JMRI &gt; java &gt; src</b> folder icon and click on <b>Mark as:
           <u>S</u>ources</b> (the blue icon, picture at left).<br>
-          <img src="images/IntelliJ/Ij_ProjectSettingsSources_step1_class.png" width="577" height="359">&nbsp;
-          <img src="images/IntelliJ/Ij_ProjectSettingsSources_step2_tests.png" width="573" height="356"></li>
+          <img src="images/IntelliJ/IjProjectSettingsSourcesStep1_class.png" width="577" height="359"
+               alt="IntelliJ Project Setting Sources tab - sources">&nbsp;
+          <img src="images/IntelliJ/IjProjectSettingsSourcesStep2_tests.png" width="573" height="356"
+               alt="IntelliJ Project Setting Sources tab - tests"></li>
         <li>Repeat for the test classes by selecting <b>JMRI &gt; java &gt; test</b> and clicking on the green <b>
           Mark as: <u>T</u>ests</b> icon (picture at right). In the column to the right both choice will be added.</li>
         <li>From now on you will also see these special icons in the Project file listing: <br>
-          <img src="images/IntelliJ/Ij Project compile paths set.png" width="229" height="291"
-               alt="SRC and TEST folders highlighted in Ij Project File List">
+          <img src="images/IntelliJ/IjProjectCompilepathsSet.png" width="229" height="291"
+               alt="SRC and TEST folders highlighted in Ij Project File List"/>
         </li>
         <li>From the <b>Build</b> menu select <b>Build Project</b> or <b>Build Module 'JMRI'</b> (and wait for up to
           20 minutes, do some stretch exercises etc).</li>
@@ -522,21 +528,27 @@
       <ol>
         <li>In IntelliJ, start by opening Preferences > Build, Execution, Deployment
         and check "Generate debugging info":<br>
-        <img src="images/IntelliJ/IjDebugPrefs.png" width="655" height="436"></li>
-        <li>Then, doubleclick "jar-resources" in the Build tab to have IntelliJ build a fresh .jar Java archive to use
-        for our debugging.</li>
+        <a href="images/IntelliJ/IjDebugPrefs.png"><img
+        src="images/IntelliJ/IjDebugPrefs.png" width="327" height="218" alt="IntelliJ
+        Preferences - Build - Java Compiler screen"></a></li>
+        <li>Then, doubleclick "jar-resources" in the Ant Build tab to have IntelliJ build a
+        fresh .jar Java archive to use for our debugging.</li>
         <li>When that has run, choose "Debug..." from the Run menu.<br>
-        <img src="images/IntelliJ/IjDebug1Menu.png" width="377" height="145"><br>
+        <img src="images/IntelliJ/IjDebug1Menu.png" width="377" height="145" alt="IntelliJ
+        Debug - Run menu"><br>
         On the small "Debug" pane that appears, click "Edit Configurations..."<br>
-        Alternatively, on the top right, click on the downward triangle "Select Run/Debug Configuration" button
-        and select the "Edit Configurations..." option from there:<br>
-        <img src="images/IntelliJ/IjDebug1Button.png" width="216" height="71"></li>
+        Alternatively, on the top right, click "Add Configuration...":<br>
+        <img src="images/IntelliJ/IjDebug1Button.png" width="396" height="98" alt="IntelliJ
+        Debug/Run Configuration pane"></li>
         <li>On the top left of the new pane that appears, click the + sign (Add New Configuration).<br>
-        <img src="images/IntelliJ/IjDebug2Plus.png" width="134" height="91"><br>
+        <img src="images/IntelliJ/IjDebug2Plus.png" width="134" height="91" alt="IntelliJ
+        Debug/Run Configuration - New button"><br>
         Or simply type Command + N.<br>
         Select "JAR Application" in the list.</li>
         <li>This opens the "Run/Debug Configurations" pane:<br>
-        <img src="images/IntelliJ/IjDebug3ConfigPane.png" width="734" height="611"><br>
+        <a href="images/IntelliJ/IjDebug3ConfigPane.png"><img
+        src="images/IntelliJ/IjDebug3ConfigPane.png" width="367" height="305"alt="IntelliJ
+        Debug/Run Configuration - Edit New Config pane"></a><br>
           <ul>
           <li>As the Name of this Configuration, enter "JMRI DP debug".</li>
           <li>Make sure "Build" is visible in the "Before launch:" table, select "Run Ant target"  and choose
@@ -551,20 +563,24 @@
           </ul>
         <li>To run your first debug session, start by opening a .java file and setting a Breakpoint on a line in your
         code by clicking in the left margin of the central edit pane:<br>
-        <img src="images/IntelliJ/IjDebug5Breakpoint.png" width="302" height="184"></li>
+        <img src="images/IntelliJ/IjDebug5Breakpoint.png" width="302" height="184" alt="IntelliJ
+        Debug Breakpoint in margin"></li>
         <li>We're now ready to start a Debug session by clicking the Bug button at the top right, making sure our
         "JMRI debug" configuration is selected in the drop down to the left of it:<br>
-        <img src="images/IntelliJ/IjDebug4StartDebug.png" width="272" height="79">
+        <img src="images/IntelliJ/IjDebug4StartDebug.png" width="272" height="79" alt="IntelliJ
+        Debug select your config set">
         </li>
         <li>After a short while, at the bottom of the main IntelliJ IDE interface, the Debug pane appears, stopping
         just before your Breakpoint (or some previous error):<br>
-        <img src="images/IntelliJ/IjDebug6DebugInterface.png" width="782" height="398"></li>
+        <img src="images/IntelliJ/IjDebug6DebugInterface.png" width="391" height="199" alt="IntelliJ
+        Debug code execution stopped at Breakpoint"></li>
         <li>Inspect the current values of the active variables, and click the Step Into button to execute 1 line of
         code:<br>
-        <img src="images/IntelliJ/IjDebug7StepInto.png" width="118" height="49"></li>
+        <img src="images/IntelliJ/IjDebug7StepInto.png" width="118" height="49" alt="IntelliJ
+        Debug Step Into buttons"></li>
       </ol>
       <p>A further explanation of this pane and debugging in general can be found in the
-      <a href="https://www.jetbrains.com/help/idea/debugging.html">IntelliJ Help</a>.<br>
+      <a href="https://www.jetbrains.com/help/idea/debugging.html">IntelliJ Online Help</a>.<br>
       If your code has not been compiled before debugging, the source and class files might be out of sync, so be
       sure to build first. You could add that to your Debug Configuration too.</p>
       <p>Besides Debug, there's also a Coverage option available in the Debug menu and tool bar.</p>
@@ -572,19 +588,19 @@
       <a name="findbugs" id="findbugs"></a>
       <h2>Running FindBugs</h2>
         <ol>
-        <li>Confirm that the class and output paths have been <a href="#debug">set up correctly for the
-          compiler</a>.</li>
-        <li>Install the IntelliJ FindBugs 1.01 plug-in like If your Findbugs installation was correct, the FindBugs tab at
-          bottom left will show, a FindBugs item will show up at the bottom of the Analyze menu and the path to
-          FindBugs 3.01 in your <code>local.properties</code> file will match the place on your computer where the
+        <li>Confirm that the class and output paths have been <a href="#debug">set up correctly</a> for the
+          compiler.</li>
+        <li>Install the IntelliJ FindBugs 1.01 plug-in. If your Findbugs installation is correct, the FindBugs tab at
+          bottom left will show, a FindBugs item will show up at the bottom of the <b>Analyze</b> menu and the path to
+          FindBugs 3.01 in your <code>local.properties</code> file will match the place where the
           Findbugs application is located on your computer.</li>
         <li>From the <b>Build</b> menu select <b>Build Project</b> or <b>Build Module 'JMRI'</b> (and wait for up to
           20 minutes, do some stretch exercises etc), followed by FindBugs doings its duty.</li>
         <li>When you right click on any file icon in the <code>src</code> or <code>test</code> folders, the
           <b>FindBugs</b> context menu allows you to <b>Analyze Selected File(s)</b> and more:<br>
-          <img src="images/IntelliJ/Ij FB context menu on file.png" width="363" height="170"
+          <img src="images/IntelliJ/IjFbContextMenuOnFile.png" width="363" height="170"
                alt="FindBugs context menu">&nbsp;
-          <img src="images/IntelliJ/Ij_FindBugs_toolbar.png" width="152" height="188"
+          <img src="images/IntelliJ/IjFindbugsToolbar.png" width="152" height="188"
                alt="FindBugs Plug-In toolbar active"><br>
           The Findbugs toolbar provides access to the same functions, ranging from file to class, package, Module and
           scope.<br>
@@ -592,17 +608,18 @@
           active.</li>
         <li>Either choice will start a compilation of the classes involved, followed by FindBugs analyzing the
           code structure. Watch the progress bar either at the bottom of the IntelliJ window or in a dialog:<br>
-          <img src="images/IntelliJ/Ij FB progress bar.png" width="494" height="104"
+          <img src="images/IntelliJ/IjFbProgressbar.png" width="494" height="104"
                alt="FindBugs Analysis progress dialog">&nbsp;
-          <img src="images/IntelliJ/Ij_build_task_progress_bar.png" width="217" height="110"
+          <img src="images/IntelliJ/IjBuildtaskProgressbar.png" width="217" height="110"
                alt="FindBugs background task indicator">
         </li>
       <li>Once the FindBugs analysis has completed, its tab pane at bottom left in IntelliJ at the JI (bug) icon will
         show one or more bugs.<br>
         Click <b>more...</b> to see a summary of your settings.<br>
         Browse the bugs, code preview bug details and suggested fixes (click image to enlarge):<br>
-        <a href="images/IntelliJ/Ij FB analysis details.png"><img
-        src="images/IntelliJ/Ij FB analysis details.png" width="644" height="296" alt="FinBugs plugin in action"></a>
+        <a href="images/IntelliJ/IjFbAnalysisDetails.png"><img
+                src="images/IntelliJ/IjFbAnalysisDetails.png" width="644" height="296"
+                alt="FindBugs plugin in action"></a>
       </li>
       </ol>
 
@@ -611,25 +628,26 @@
 
       <h4>Edit .properties files</h4>
 
-      <p class="important">Make sure you have set up IntelliJ to
+      <p class="important">Before you start, make sure you have set up IntelliJ to
       convert special characters using <strong>lower case</strong>
       encoding strings, as only then will your changes be accepted
       for merging into JMRI.<br>
-      The - not trivial - instructions to set this via
-      <code>vmoptions</code> are <a href="#install">at the top of
-        this page</a>.</p>
+      The instructions to set this via <code>vmoptions</code> are
+      <a href="#install">at the top of this page</a>.<br>
+      In addition, check that in the IntelliJ Preferences &gt; Editor &gt; Code Style &gt; Properties you checked
+        "Insert space around key-value delimiter", or your edits will mess up the work already in place.</p>
 
       <p>To easily edit Resource Bundle <code>.properties</code> files, containing translations in different languages,
       select a closed 'Bundle' folder in the Project file list and type Cmd + arrow down key, or double click one
-      of the language files and once it appears on screen, at the bottom select the <b>Resource Bundle</b> tab:<br>
-      <a href="images/IntelliJ/IjResourceJump.png">
-      <img src="images/IntelliJ/IjResourceJump.png" width="198" height="85" alt="IntelliJ Bundle edit menu"></a></p>
-
-      <p>This will open a window with a list of coded keywords on
-      the left and a text box for every translation to the
-      right:<br>
+      of the language files. This will open a window with a list of coded keywords on
+      the left and a text box for every translation to the right:<br>
       <a href="images/IntelliJ/IjEditProperties.png">
-      <img src="images/IntelliJ/IjEditProperties.png" width="480" height="260" alt="IntelliJ Bundle edit window"></a></p>
+      <img src="images/IntelliJ/IjEditProperties.png" width="649" height="311" alt="IntelliJ Bundle edit window"></a></p>
+
+      <p>When you open a specific language file, at the bottom of the screen you can switch views by clicking the
+        <b>Resource Bundle</b> or the <b>Text</b> tab:<br>
+      <a href="images/IntelliJ/IjResourceJump.png">
+        <img src="images/IntelliJ/IjResourceJump.png" width="198" height="85" alt="IntelliJ Bundle edit menu"></a>
 
       <h4>Error: Can't start Git</h4>
       <p>On macOS, when you run into this error, usually when starting IntelliJ for the
@@ -639,8 +657,8 @@
       <ol>
         <li>Quit and restart IntelliJ</li>
         <li>If that does not fix it, quit IntelliJ and start the Apple Xcode application.<br>
-        By this you be asked to agree with the licence agreement, and that will reenable
-        the Git installation to be used inside IntelliJ too.<br>
+        You will be asked to agree with its licence agreement, and that will reenable
+        the Git installation to be used inside IntelliJ as well as Xcode.<br>
         <a href="images/IntelliJ/IjXcode1.png">
           <img src="images/IntelliJ/IjXcode1.png" width="223" height="111" alt="IntelliJ Git error"></a>
         </li>
@@ -696,11 +714,12 @@
       <a href="images/IntelliJ/IjGitPRCreate.png">
         <img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a></p>
 
-      <p>To Make a PR from GitHub web - outside IntelliJ - start by
+      <p>To create a PR from GitHub web - outside IntelliJ - start by
       signing on to the <a href="http://github.com">GitHub web
-        site</a>, selecting your repository &amp; branch and clicking
+      site</a>, selecting your repository &amp; branch and clicking
       the <a href="gitdeveloper.shtml#pull">Pull Request
-        button</a>. For more info, see the <a href="gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
+      button</a>. For more info, see the
+      <a href="gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
 
       <a name="test" id="test"></a><h3>Testing with IntelliJ</h3>
       <p>When you create or edit a <a href="JUnit.shtml">test</a>
