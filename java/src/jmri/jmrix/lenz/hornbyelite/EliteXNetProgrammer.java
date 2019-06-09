@@ -76,16 +76,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             throw e;
         }
 
-        // On the Elite, we're not getting a broadcast message
-        // saying we're in service mode, so go ahead and request
-        // the results.
-        progState = INQUIRESENT;
-        //start the error timer
-        restartTimer(EliteXNetProgrammerTimeout);
-        XNetMessage resultMsg = XNetMessage.getServiceModeResultsMsg();
-        resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-        resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
-        controller().sendXNetMessage(resultMsg, this);
     }
 
     /** 
