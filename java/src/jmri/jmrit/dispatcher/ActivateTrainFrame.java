@@ -73,7 +73,6 @@ public class ActivateTrainFrame {
     //private String selectedTrain = "";
     private JmriJFrame initiateFrame = null;
     private JPanel initiatePane = null;
-    private JPanel middlePane = null;
     private final JComboBox<String> transitSelectBox = new JComboBox<>();
     private final List<Transit> transitBoxList = new ArrayList<>();
     private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
