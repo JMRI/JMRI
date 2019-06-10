@@ -23,11 +23,11 @@ import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.TurnoutIcon;
-import jmri.jmrit.display.palette.ItemPalette;
+//import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.picker.PickPanel;
+//import jmri.jmrit.picker.PickPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +49,9 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     private JToggleButton _units;
 
     // Sensor list
-    private JFrame _pickFrame;
-    private JButton _openPicklistButton;
+//    private JFrame _pickFrame;
+    OpenPickListButton<Sensor> _pickTable;
+//    private JButton _openPicklistButton;
 
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(-1, -1);
@@ -133,7 +134,11 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _errorSensorName.setToolTipText(Bundle.getMessage("detectorErrorName"));
         contentPane.add(panel);
 
-        contentPane.add(makePickListPanel());
+        String[] blurbLines = { Bundle.getMessage("DragOccupancySensor", Bundle.getMessage("DetectionSensor")),
+                                Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))};
+        _pickTable = new OpenPickListButton<Sensor>(blurbLines, PickListModel.sensorPickModelInstance(), this);
+        contentPane.add(_pickTable.getButtonPanel());
+//        contentPane.add(makePickListPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel pp = new JPanel();
@@ -175,68 +180,6 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         }
         changeUnits();
     }
-
-    private JPanel makePickListPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-
-        _openPicklistButton = new JButton(Bundle.getMessage("OpenSensorPicklist"));
-        _openPicklistButton.addActionListener((ActionEvent a) -> {
-            if (_pickFrame == null) {
-                openPickList();
-            } else {
-                closePickList();
-            }
-        });
-        _openPicklistButton.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
-        panel.add(_openPicklistButton);
-        panel.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
-
-        buttonPanel.add(panel);
-        return buttonPanel;
-    }
-
-    void openPickList() {
-        _pickFrame = new JFrame();
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-
-        JPanel blurb = new JPanel();
-        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        JPanel panel = new JPanel();
-        panel.add(blurb);
-        content.add(panel);
-        PickListModel[] models = {PickListModel.sensorPickModelInstance()};
-        content.add(new PickPanel(models));
-
-        _pickFrame.setContentPane(content);
-        _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                closePickList();
-            }
-        });
-        _pickFrame.setLocationRelativeTo(this);
-        _pickFrame.toFront();
-        _pickFrame.setVisible(true);
-        _pickFrame.pack();
-        _openPicklistButton.setText(Bundle.getMessage("ClosePicklist"));
-    }
-
-    void closePickList() {
-        if (_pickFrame != null) {
-            _pickFrame.dispose();
-            _pickFrame = null;
-            _openPicklistButton.setText(Bundle.getMessage("OpenSensorPicklist"));
-        }
-    }
-
     private JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -437,7 +380,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        closePickList();
+        _pickTable.closePickList();
         getLocation(_loc);
         getSize(_dim);
         _parent.closeCircuitFrame();

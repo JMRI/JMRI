@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -185,8 +187,10 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
-            PortalIcon icon = _parent.getPortalIconMap().get(portal.getName());
-            setPortalIcon(icon, false);
+            java.util.List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
+            for (PortalIcon icon : piArray) {
+                setPortalIcon(icon, false);
+            }
         }
     }
 

@@ -215,8 +215,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());
-                ((ControlPanelEditor) getEditor()).getCircuitBuilder().changePortalName(
-                        (String) e.getOldValue(), (String) e.getNewValue());
             }
         }
     }
