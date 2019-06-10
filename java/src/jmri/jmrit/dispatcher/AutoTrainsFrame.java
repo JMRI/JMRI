@@ -189,12 +189,13 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         } else {
             sb.append("(rev)");
         }
-        //Only repack if the text size has increased.
+        // Pre 4.17.1 Only repacked if the text size has increased.
         if (status.getText().length() < sb.toString().length()) {
             status.setText(sb.toString());
             autoTrainsFrame.pack();
         } else {
             status.setText(sb.toString());
+            autoTrainsFrame.pack();
         }
     }
 
