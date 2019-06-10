@@ -147,13 +147,13 @@ public class DccSignalMast extends AbstractSignalMast {
      29. "Clear"
      30. "Cab-Speed"
      31. "Dark" */
-    protected int packetRepeatCount = 3;
+    protected int packetSendCount = 3;  // default 3
 
     @Override
     public void setAspect(String aspect) {
 
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
+            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
             log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
         }
@@ -168,7 +168,7 @@ public class DccSignalMast extends AbstractSignalMast {
         if (newLit) {
             setAspect(getAspect());
         } else {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetRepeatCount);
+            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetSendCount);
         }
         super.setLit(newLit);
     }
@@ -204,6 +204,27 @@ public class DccSignalMast extends AbstractSignalMast {
             }
         }
         return null;
+    }
+
+    /**
+     * Set Number of times the packet should be sent.
+     * @param count - less than 1 is treated as 1.
+     */
+    public void setDccSignalMastPacketSendCount(int count) {
+        if (count >= 0) {
+            packetSendCount = count;
+        } else {
+            packetSendCount = 1;
+        }
+    }
+
+    /**
+     * get the number of times the packet should be sent to the track.
+     *
+     * @return the count.
+     */
+    public int getDccSignalMastPacketSendCount() {
+        return packetSendCount;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
