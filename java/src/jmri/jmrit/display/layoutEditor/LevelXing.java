@@ -989,7 +989,7 @@ public class LevelXing extends LayoutTrack {
             result = NONE;
         }
         return result;
-    }
+    }   // findHitPointType
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -1302,7 +1302,7 @@ public class LevelXing extends LayoutTrack {
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
         return popup;
-    }
+    }   // showPopup
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -1739,7 +1739,7 @@ public class LevelXing extends LayoutTrack {
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
-    }
+    }   // collectContiguousTracksNamesInBlockNamed
 
     /**
      * {@inheritDoc}

@@ -628,12 +628,13 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
     @Override
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed before using return value")
     public void setObjects(LayoutEditor p) {
 
         LayoutBlock lb;
         if (!tLayoutBlockName.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
+            if (lb != null) {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
@@ -2322,7 +2323,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }
-    }
+    }   // calculateTrackSegmentAngle
 
     /**
      * {@inheritDoc}
@@ -2871,7 +2872,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }   // if (tunnelValue != null)
-    }
+    }   // drawDecorations
 
     private int drawArrow(
             Graphics2D g2,
@@ -3021,7 +3022,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
         return offset;
-    }
+    }   // drawArrow
 
     /*======================*\
     |* decoration accessors *|
@@ -3156,7 +3157,7 @@ public class TrackSegment extends LayoutTrack {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   // if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    }
+    } // getDecorations
 
     /**
      * Set decorations.
@@ -4009,7 +4010,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }   // if (lb1 != null)
         return results;
-    }
+    }   // getLayoutConnectivity()
 
     /**
      * {@inheritDoc}

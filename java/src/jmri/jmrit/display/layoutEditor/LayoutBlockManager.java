@@ -1825,7 +1825,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }
+    }	//getFacingBean
 
     /**
      * In the first instance get a Signal Mast or if none exists a Signal
@@ -1871,7 +1871,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         return proBlocks.get(0);
-    }
+    }	//getProtectedBlockByNamedBean
 
     @CheckReturnValue
     @Nonnull
@@ -2001,7 +2001,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return t.getProtectedBlocks(bean);
         }
         return protectingBlocks;
-    }
+    }	//getProtectingBlocksByBean
 
     @CheckReturnValue
     @Nullable
@@ -2099,7 +2099,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return t.getProtectedBlocks(sensor);
         }
         return result;
-    }
+    }	//getProtectingBlocksBySensorOld
 
     /**
      * Get the LayoutBlock that a given sensor is protecting.
@@ -2328,7 +2328,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }
+    }	//getFacingBlockByBean
 
     /**
      * Get the LayoutBlock that a given sensor is facing.
@@ -2501,6 +2501,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         stabilised = false;
         setRoutingStabilised();
     }
+
     boolean checking = false;
     boolean stabilised = false;
 
@@ -2565,7 +2566,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         };
         thr = new Thread(r, "Routing stabilising timer");
         thr.start();
-    }
+    }	//setRoutingStabilised
 
     private Thread thr = null;
 

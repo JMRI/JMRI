@@ -308,7 +308,7 @@ public class LayoutTrackEditors {
         editTrackSegmentOpen = true;
 
         showSensorMessage();
-    }
+    }   // editTrackSegment
 
     @InvokeOnGuiThread
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
@@ -694,7 +694,7 @@ public class LayoutTrackEditors {
         editLayoutTurnoutNeedsBlockUpdate = false;
 
         showSensorMessage();
-    }
+    }   // editLayoutTurnout
 
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -916,7 +916,7 @@ public class LayoutTrackEditors {
             layoutEditor.setDirty();
             editLayoutTurnoutNeedRedraw = false;
         }
-    }
+    }   // editLayoutTurnoutDonePressed
 
     private void editLayoutTurnoutCancelPressed(ActionEvent a) {
         editLayoutTurnoutOpen = false;
@@ -1142,7 +1142,7 @@ public class LayoutTrackEditors {
         editLayoutSlipNeedsBlockUpdate = false;
 
         showSensorMessage();
-    }
+    }   // editLayoutSlip
 
     private void drawSlipState(Graphics2D g2, int state) {
         Point2D cenP = layoutSlip.getCoordsCenter();
@@ -1224,7 +1224,7 @@ public class LayoutTrackEditors {
                 g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
             }
         }
-    }
+    }   // drawSlipState
 
     class SampleStates extends JPanel {
 
@@ -1532,8 +1532,7 @@ public class LayoutTrackEditors {
         editLevelXingNeedsBlockUpdate = false;
 
         showSensorMessage();
-
-    }
+    }   // editLevelXing
 
     private void editLevelXingBlockACPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -1805,7 +1804,7 @@ public class LayoutTrackEditors {
         editLayoutTurntableFrame.pack();
         editLayoutTurntableFrame.setVisible(true);
         editLayoutTurntableOpen = true;
-    }
+    }   // editLayoutTurntable
 
     //Remove old rays and add them back in
     private void updateRayPanel() {
@@ -2047,7 +2046,7 @@ public class LayoutTrackEditors {
             rayTurnoutStateComboBox.setVisible(vis);
             rayTurnoutStateLabel.setVisible(vis);
         }
-    }
+    }   // class TurntableRayPanel
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class);
 

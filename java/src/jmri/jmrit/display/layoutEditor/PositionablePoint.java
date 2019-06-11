@@ -222,7 +222,7 @@ public class PositionablePoint extends LayoutTrack {
         if (p == linkedPoint) {
             return;
         }
-        if (linkedPoint != null && linkedPoint != p) {
+        if (linkedPoint != null) {
             PositionablePoint oldLinkedPoint = linkedPoint;
             linkedPoint = null;
             if (oldLinkedPoint.getLinkedPoint() != null) {
@@ -2139,6 +2139,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(PositionablePoint.class);
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }

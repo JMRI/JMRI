@@ -2061,7 +2061,7 @@ public class LayoutTurnout extends LayoutTrack {
             result = NONE;
         }
         return result;
-    }
+    }   // findHitPointType
 
     /*
      * Modify coordinates methods
@@ -2522,7 +2522,7 @@ public class LayoutTurnout extends LayoutTrack {
             tBlockDName = null; //release this memory
         }
         activateTurnout();
-    }
+    } // setObjects
 
     private JPopupMenu popup = null;
 
@@ -2871,7 +2871,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
         return popup;
-    }
+    } // showPopup
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -3009,7 +3009,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         }
         return boundaryBetween;
-    }
+    }   // getBlockBoundaries
 
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<>(2);
@@ -3147,7 +3147,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         return ret;
-    }
+    }   // getProtectedBlocks
 
     protected void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -3563,7 +3563,7 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             }
         }
-    }
+    }   // draw1
 
     /**
      * {@inheritDoc}
@@ -4241,7 +4241,7 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             }
         }
-    }
+    }   // draw2
 
     /**
      * {@inheritDoc}
@@ -4466,7 +4466,8 @@ public class LayoutTurnout extends LayoutTrack {
         }   // switch (tTyp)
 
         return result;
-    }
+    }   // getConnectivityStateForLayoutBlocks
+
 
     /*
      * {@inheritDoc}
@@ -4586,7 +4587,7 @@ public class LayoutTurnout extends LayoutTrack {
                 sensorDNamed = null;
             }
         }
-    }
+    }   // reCheckBlockBoundary
 
     /*
      * {@inheritDoc}
@@ -4751,7 +4752,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
-    }
+    }   // collectContiguousTracksNamesInBlockNamed
 
     /**
      * {@inheritDoc}

@@ -2660,7 +2660,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
             }
         }
-    }
+    }   // addThroughPath
 
     private void addThroughPathPostChecks(Block srcBlock,
             Block dstBlock, List<LayoutTrackExpectedState<LayoutTurnout>> stod) {

@@ -562,9 +562,9 @@ public class LayoutTurntable extends LayoutTrack {
         return false;
     }
 
-    /**
-     * Modify coordinates methods
-     */
+    //
+    // Modify coordinates methods
+    //
 
     /**
      * Scale this LayoutTrack's coordinates by the x and y factors.
@@ -882,7 +882,7 @@ public class LayoutTurntable extends LayoutTrack {
         private boolean disableWhenOccupied = false;
 
         //
-        // accessor routines
+        // Accessor routines
         //
 
         /**
@@ -1095,7 +1095,7 @@ public class LayoutTurntable extends LayoutTrack {
                 lastKnownIndex = -1;
             }
         }
-    }
+    }   // class RayTrack
 
     /**
      * {@inheritDoc}
