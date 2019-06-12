@@ -34,8 +34,10 @@ public class ApplicationTestAcceptanceSteps implements En {
        try {
             // create a custom profile
             tempFolder =Files.createTempDirectory("AppTest").toFile();
-            FileUtils.copyDirectory(new File(profile), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+            File profileDir = new File(tempFolder.getAbsolutePath() + File.separator + "Name" );
+            FileUtils.copyDirectory(new File(profile), profileDir );
+            System.setProperty("jmri.prefsdir",tempFolder.getAbsolutePath());
+            System.setProperty("org.jmri.profile", profileDir.getAbsolutePath() );
        } catch(java.io.IOException ioe) {
          Assert.fail("Unable to create temporary profile");
        }
