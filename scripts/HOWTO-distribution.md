@@ -217,7 +217,7 @@ git push github
 - Create the new draft note section
 
     cp help/en/releasenotes/jmri4.15-master.shtml help/en/releasenotes/current-draft-note.shtml
-    git commit -m"start for 4.15.8 release note" help/en/releasenotes/current-draft-note.shtml
+    git commit -m"start for 4.17.1 release note" help/en/releasenotes/current-draft-note.shtml
 
 - Commit release note, push and pull back
 
