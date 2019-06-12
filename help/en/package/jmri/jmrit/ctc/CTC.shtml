@@ -277,7 +277,7 @@
         When active, the number of the Traffic Locking rule that was true is
         logged when a code button is pressed.  It is logged as an INFO message
         to the System Console.  In order to see the System Console within JMRI
-        select Help >> System console...  It's the "Green Screen".
+        select Help &gt; System Console...  It's the "Green Screen".
         </p>
 
         <a name="menuCfgDef" id="menuCfgDef"></a>
@@ -1004,7 +1004,7 @@ do, then define the missing object(s) in JMRI.
     <h3>Debug</h3>
     When this toggle switch is turned on (not off), it will dump out all of the
     presently locked routes in the system, and for each route will list the
-    resource(s) still allocated to the route onto the JMRI System console screen.
+    resource(s) still allocated to the route onto the JMRI System Console screen.
     <p>
     While this toggle is on, each time a code button is pressed and a signal direction
     lever for that code button selects a direction of travel, the program will
@@ -1020,7 +1020,7 @@ do, then define the missing object(s) in JMRI.
     <p>
     After this button is pressed, the CTC system will be <strong>completely</strong>
     re-initialized to it's starting position(s).  Also, remember to look at
-    the JMRI System console for any new errors.
+    the JMRI System Console for any new errors.
     </p>
     <p>
     You <strong>should</strong> remove this button after all debugging is completed,

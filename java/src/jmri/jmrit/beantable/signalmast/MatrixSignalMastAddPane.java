@@ -6,11 +6,9 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
@@ -305,14 +303,14 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             log.warn("bean not found");
         }
 
-        for (String aspect : matrixAspect.keySet()) {
+        for (Map.Entry<String, MatrixAspectPanel> entry : matrixAspect.entrySet()) {
             // store matrix in mast per aspect, compare with line 991
-            matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // read from aspect panel to mast
-            if (matrixAspect.get(aspect).isAspectDisabled()) {
-                currentMast.setAspectDisabled(aspect); // don't store bits when this aspect is disabled
+            matrixMastPanel.add(entry.getValue().getPanel()); // read from aspect panel to mast
+            if (matrixAspect.get(entry.getKey()).isAspectDisabled()) {
+                currentMast.setAspectDisabled(entry.getKey()); // don't store bits when this aspect is disabled
             } else {
-                currentMast.setAspectEnabled(aspect);
-                currentMast.setBitsForAspect(aspect, matrixAspect.get(aspect).trimAspectBits()); // return as char[]
+                currentMast.setAspectEnabled(entry.getKey());
+                currentMast.setBitsForAspect(entry.getKey(), matrixAspect.get(entry.getKey()).trimAspectBits()); // return as char[]
             }
         }
         currentMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, not displayed?
@@ -471,8 +469,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixHeaderLabel.setToolTipText(Bundle.getMessage("AspectMatrixHeaderTooltip"));
         matrixMastPanel.add(matrixHeader);
 
-        for (String aspect : matrixAspect.keySet()) {
-            matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // load Aspect sub panels to matrixMastPanel from hashmap
+        for (Map.Entry<String, MatrixAspectPanel> entry : matrixAspect.entrySet()) {
+            matrixMastPanel.add(entry.getValue().getPanel()); // load Aspect sub panels to matrixMastPanel from hashmap
             // build aspect sub panels
         }
         if ((matrixAspect.size() & 1) == 1) {
@@ -486,7 +484,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // copy option matrixMast bitstrings = settings
         JPanel matrixCopyPanel = new JPanel();
         matrixCopyPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
+        matrixCopyPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("MatrixMastCopyAspectBits"))));
         matrixCopyPanel.add(copyFromMastSelection());
         matrixMastPanel.add(matrixCopyPanel);
 
@@ -544,12 +542,12 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             }
         }
         // cf. line 405 loading an existing mast for edit
-        for (String key : matrixAspect.keySet()) {
+        for (Map.Entry<String, MatrixAspectPanel> entry : matrixAspect.entrySet()) {
             // select the correct checkboxes
-            MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
-            matrixPanel.setAspectDisabled(mast.isAspectDisabled(key)); // sets a disabled aspect
-            if (!mast.isAspectDisabled(key)) {
-                char[] mastBits = mast.getBitsForAspect(key); // same as loading an existing MatrixMast
+            MatrixAspectPanel matrixPanel = entry.getValue(); // load aspectpanel from hashmap
+            matrixPanel.setAspectDisabled(mast.isAspectDisabled(entry.getKey())); // sets a disabled aspect
+            if (!mast.isAspectDisabled(entry.getKey())) {
+                char[] mastBits = mast.getBitsForAspect(entry.getKey()); // same as loading an existing MatrixMast
                 char[] panelAspectBits = Arrays.copyOf(mastBits, MAXMATRIXBITS); // store as 6 character array in panel
                 matrixPanel.updateAspectBits(panelAspectBits);
                 matrixPanel.setAspectBoxes(panelAspectBits);
@@ -576,11 +574,10 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // refresh aspects list
         // TODO sort matrixAspect HashTable, which at this point is not sorted
         matrixMastPanel.removeAll();
-        for (String aspect : matrixAspect.keySet()) {
-            matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
+        for (Map.Entry<String, MatrixAspectPanel> entry : matrixAspect.entrySet()) {
+            matrixMastPanel.add(entry.getValue().getPanel());
             // Matrix checkbox states are set by getPanel()
         }
-
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
         matrixMastPanel.revalidate();
     }
@@ -662,7 +659,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<>();
         for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
-            if (mast instanceof DccSignalMast){
+            if (mast instanceof MatrixSignalMast){
                 mastSelect.addItem(mast.getDisplayName());
             }
         }
@@ -712,17 +709,17 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         boolean identical = false;
         numberOfActiveAspects = 0;
         Collection<String> seenBits = new HashSet<String>(); // a fast access, no duplicates Collection of bit combinations
-        for (String aspect : matrixAspect.keySet()) {
+        for (Map.Entry<String, MatrixAspectPanel> entry : matrixAspect.entrySet()) {
             // check per aspect
-            if (matrixAspect.get(aspect).isAspectDisabled()) {
+            if (entry.getValue().isAspectDisabled()) {
                 continue; // skip disabled aspects
-            } else if (seenBits.contains(String.valueOf(matrixAspect.get(aspect).trimAspectBits()))) {
+            } else if (seenBits.contains(String.valueOf(entry.getValue().trimAspectBits()))) {
                 identical = true;
-                log.debug("-found duplicate {}", String.valueOf(matrixAspect.get(aspect).trimAspectBits()));
-                // break; // don't break, so we can count number of enabled aspects for this mast
+                log.debug("-found duplicate {}", String.valueOf(entry.getValue().trimAspectBits()));
+                // don't break, so we can count number of enabled aspects for this mast
             } else {
-                seenBits.add(String.valueOf(matrixAspect.get(aspect).trimAspectBits())); // convert back from char[] to String
-                log.debug("-added new {}; seenBits = {}", String.valueOf(matrixAspect.get(aspect).trimAspectBits()), seenBits.toString());
+                seenBits.add(String.valueOf(entry.getValue().trimAspectBits())); // convert back from char[] to String
+                log.debug("-added new {}; seenBits = {}", String.valueOf(entry.getValue().trimAspectBits()), seenBits.toString());
             }
             ++numberOfActiveAspects;
         }
@@ -765,7 +762,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
         /**
          * Rebuild an aspect matrix panel using char[] previously entered. Called
-         * from updateMatrixAspectPanel() (line 581) when number of outputs = columns
+         * from {@link #updateMatrixAspectPanel()} (line 568) when number of outputs = columns
          * is changed (possible during new mast creation only).
          *
          * @param aspect    String like "Clear"

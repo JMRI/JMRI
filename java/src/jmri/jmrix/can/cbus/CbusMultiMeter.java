@@ -79,6 +79,12 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
         log.info("Disabled meter.");
     }
 
+    @Override
+    public CurrentUnits getCurrentUnits() {
+        return  CurrentUnits.CURRENT_UNITS_MILLIAMPS;
+    }
+
+
     /**
      * Listen for CAN Frames sent by Command Station 0
      * Typically sent every 4-5 seconds.
