@@ -79,7 +79,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      * error message is displayed.
      */
     private void requestThrottleSetup(LocoAddress address, DecisionType decision) {
-        
         if ( !( address instanceof DccLocoAddress)) {
             log.error("{} is not a DccLocoAddress",address);
             return;

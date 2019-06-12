@@ -137,7 +137,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             LAFGroup.add(jmi);
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
-                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(installedLAFs.get(name));
             });
             if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
