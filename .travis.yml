@@ -50,9 +50,9 @@ env:
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
   matrix:
-  - HEADLESS=true STATIC=true
-  - HEADLESS=true STATIC=false
   - HEADLESS=false STATIC=false
+  - HEADLESS=true STATIC=false
+  - HEADLESS=true STATIC=true
 
 matrix:
   exclude:
