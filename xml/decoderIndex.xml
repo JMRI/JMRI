@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.15.7ish+heap+20190525T0200Z+Reb28a333b2 on Sat May 25 12:01:47 AEST 2019-->
-  <decoderIndex version="956">
+  <!--Written by JMRI version 4.15.8ish+jake+20190612T0131Z+R6e37a84994 on Tue Jun 11 18:32:05 PDT 2019-->
+  <decoderIndex version="962">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -8854,6 +8854,12 @@
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
         <model model="Hornby TTS Class 47" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="149">
+          <versionCV lowVersionID="10" highVersionID="132" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS Class 50" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="189">
           <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
