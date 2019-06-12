@@ -31,6 +31,7 @@ public class WebServerScaffold implements En {
             jmri.util.JUnitUtil.initShutDownManager();
             jmri.util.JUnitUtil.initConnectionConfigManager();
             jmri.util.JUnitUtil.initDebugPowerManager();
+            instance.getDefault(jmri.web.server.WebServerPreferences.class).setRailroadName("My JMRI Railroad"); // make sure railroad name is the default.
             server = new WebServer(); // a webserver using default preferences.
             server.start();
             jmri.util.JUnitUtil.waitFor(() -> {
