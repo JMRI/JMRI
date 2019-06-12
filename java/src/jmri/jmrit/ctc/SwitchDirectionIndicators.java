@@ -32,8 +32,8 @@ public class SwitchDirectionIndicators {
     private Timer _mSimulatedTurnoutFeedbackTimer = null;
     private ActionListener _mSimulatedTurnoutFeedbackTimerActionListener = null;
     private int _mLastIndicatorState = CTCConstants.OUTOFCORRESPONDENCE;
-    
-    public SwitchDirectionIndicators(   String userIdentifier, 
+
+    public SwitchDirectionIndicators(   String userIdentifier,
                                         String normalIndicatorSensor,
                                         String reveresedIndicatorSensor,
                                         String actualTurnout,
@@ -43,18 +43,29 @@ public class SwitchDirectionIndicators {
         _mReversedIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "reveresedIndicatorSensor", reveresedIndicatorSensor, false);    // NOI18N
         _mActualTurnout = new NBHTurnout("SwitchDirectionIndicators", userIdentifier, "actualTurnout", actualTurnout, feedbackDifferent);                       // NOI18N
         _mActualTurnoutHasFeedback = _mActualTurnout.getFeedbackMode() != Turnout.DIRECT && _mActualTurnout.getFeedbackMode() != Turnout.MONITORING;
-        
-        if (_mActualTurnoutHasFeedback) { // Let real sensor that drives turnout feedback set indicators:
+
+        if (_mActualTurnoutHasFeedback) {
+            // Let real sensor that drives turnout feedback set indicators:
             _mActualTurnoutPropertyChangeListener = (PropertyChangeEvent e) -> { if (e.getPropertyName().equals("KnownState")) setSwitchIndicationSensorsToPresentState(); };   // NOI18N
             _mActualTurnout.addPropertyChangeListener(_mActualTurnoutPropertyChangeListener);
+            setSwitchIndicationSensorsToPresentState();
         } else { // Simulate feedback delay if any:
             _mSimulatedTurnoutFeedbackTimerActionListener = (ActionEvent) -> { setSwitchIndicationSensorsToPresentState(); };
             _mSimulatedTurnoutFeedbackTimer = new Timer(codingTimeInMilliseconds, _mSimulatedTurnoutFeedbackTimerActionListener);
             _mSimulatedTurnoutFeedbackTimer.setRepeats(false);
+/*      IF AND ONLY IF the layout owner DOES NOT initialize all DIRECT or MONITORING turnouts BEFORE
+        starting this CTC system, we wind up with turnouts that have KnownState = UNKNOWN
+        Here, IF AND ONLY IF the layout owner initialized those turnouts prior to starting this CTC system,
+        we now "give a chance" for us to find out the real state, and update the state if know, otherwise,
+        we ASSUME it is SWITCHNORMAL for those people who don't.
+*/
+            setSwitchIndicationSensorsToPresentState();
+            if (_mLastActualTurnoutState == CTCConstants.CTC_UNKNOWN) {
+                setSwitchIndicatorSensors(CTCConstants.SWITCHNORMAL);
+            }
         }
-        setSwitchIndicationSensorsToPresentState();
     }
-    
+
     public void removeAllListeners() {
         _mActualTurnout.removePropertyChangeListener(_mActualTurnoutPropertyChangeListener);
         if (_mSimulatedTurnoutFeedbackTimer != null) {
@@ -62,7 +73,7 @@ public class SwitchDirectionIndicators {
             _mSimulatedTurnoutFeedbackTimer.removeActionListener(_mSimulatedTurnoutFeedbackTimerActionListener);
         }
     }
-    
+
     public void codeButtonPressed(int requestedState) {
         if (_mWaitingForFeedbackOrTimer) return;    // We've already done something in the past, ignore new request
         if (requestedState != _mLastActualTurnoutState) {   // It's different:
@@ -73,7 +84,7 @@ public class SwitchDirectionIndicators {
             if (!_mActualTurnoutHasFeedback) _mSimulatedTurnoutFeedbackTimer.start();   // Simulate feedback (fire timer only once)
         }
     }
-    
+
     private int getPresentState() {
         int actualTurnoutKnownState = _mActualTurnout.getKnownState();
         if (actualTurnoutKnownState == Turnout.CLOSED) _mLastActualTurnoutState = CTCConstants.SWITCHNORMAL;
@@ -81,20 +92,20 @@ public class SwitchDirectionIndicators {
         else _mLastActualTurnoutState = CTCConstants.CTC_UNKNOWN;
         return _mLastActualTurnoutState;
     }
-    
+
     public int getLastIndicatorState() {
         return _mLastIndicatorState;
     }
-    
+
     public boolean inCorrespondence() {
         if (_mLastActualTurnoutState == CTCConstants.CTC_UNKNOWN) return true;   // Fake out calling routine to allow it to call us at "CodeButtonPressed"
         return _mLastIndicatorState != CTCConstants.OUTOFCORRESPONDENCE;
     }
-    
+
     public NBHSensor getProperIndicatorSensor(boolean isNormal) {
         return isNormal ? _mNormalIndicatorSensor : _mReversedIndicatorSensor;
     }
-    
+
     private void setSwitchIndicatorSensors(int requestedState) {
         switch(requestedState) {
             case CTCConstants.SWITCHNORMAL:
@@ -120,7 +131,7 @@ public class SwitchDirectionIndicators {
         _mWaitingForFeedbackOrTimer = false;
         setSwitchIndicatorSensors(getPresentState());
     }
-    
+
 //  private int getTransmissionDelayInMilliseconds(CodingDistrict codingDistrict) {
 //      if (codingDistrict != null) return codingDistrict.getTransmissionDelayInMilliseconds();
 //      return 0;

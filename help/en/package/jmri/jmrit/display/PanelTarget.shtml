@@ -64,10 +64,11 @@
       the "Unknown" state, used when no information has yet been
       received from the layout.</p>
 
-      <h2>Creating a Panel</h2>Panels are created with the <a href=
+      <h2>Creating a Panel</h2>
+      <p>Panels are created with the <a href=
       "PanelEditor.shtml">Panel Editor</a>, which allows you to
       place images to represent Turnouts, Sensors (on some systems)
-      and trackwork.
+      and trackwork.</p>
 
       <h2>Popup menus</h2>
 

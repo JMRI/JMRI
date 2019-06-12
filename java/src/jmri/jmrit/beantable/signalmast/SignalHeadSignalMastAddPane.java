@@ -17,8 +17,8 @@ import jmri.util.swing.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring SignalHeadSignalMast objects
- * <P>
+ * A pane for configuring SignalHeadSignalMast objects.
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
@@ -110,13 +110,12 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             disabledAspects.put(aspect, disabled);
         }
 
-        for (String aspect : disabledAspects.keySet()) {
-            disabledAspectsPanel.add(disabledAspects.get(aspect));
+        for (Map.Entry<String, JCheckBox> entry : disabledAspects.entrySet()) {
+            disabledAspectsPanel.add(entry.getValue());
         }
 
         disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
         disabledAspectsPanel.revalidate();
-         
     }
 
     /** {@inheritDoc} */
@@ -157,7 +156,6 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         }
         signalHeadPanel.add(includeUsed);
         signalHeadPanel.revalidate();
-
 
         List<String> disabled = currentMast.getDisabledAspects();
         if (disabled != null) {
@@ -205,17 +203,17 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
                     return false; // without creating
                 }
         }
-        
-        // heads are attached via the system name
 
-        for (String aspect : disabledAspects.keySet()) {
-            if (disabledAspects.get(aspect).isSelected()) {
-                currentMast.setAspectDisabled(aspect);
+        // load a new or existing mast
+        for (Map.Entry<String, JCheckBox> entry : disabledAspects.entrySet()) {
+            if (entry.getValue().isSelected()) {
+                currentMast.setAspectDisabled(entry.getKey());
             } else {
-                currentMast.setAspectEnabled(aspect);
+                currentMast.setAspectEnabled(entry.getKey());
             }
         }
 
+        // heads are attached via the system name
         if (!username.equals("")) {
             currentMast.setUserName(username);
         }
@@ -265,4 +263,5 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSignalMastAddPane.class);
+
 }

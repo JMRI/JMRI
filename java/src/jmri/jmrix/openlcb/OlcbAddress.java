@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Utilities for handling OpenLCB event messages as addresses.
- * <P>
+ * <p>
  * OpenLCB event messages have header information, plus an EventID in the data
  * part. JMRI maps these into address strings.
  * <p>
@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
  * validity check of the name.  All other operations 
  * assume correctness, diagnose some invalid-format strings, but 
  * may appear to successfully handle other invalid forms.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
  */
 public class OlcbAddress {

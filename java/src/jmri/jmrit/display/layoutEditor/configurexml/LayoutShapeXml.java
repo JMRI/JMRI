@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,12 +117,22 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
 
         a = element.getAttribute("lineColor");
         if (a != null) {
-            s.setLineColor(ColorUtil.stringToColor(a.getValue()));
+            try {
+                s.setLineColor(ColorUtil.stringToColor(a.getValue()));
+            } catch (IllegalArgumentException e) {
+                s.setLineColor(Color.BLACK);
+                log.error("Invalid lineColor {}; using black", a.getValue());
+            }
         }
 
         a = element.getAttribute("fillColor");
         if (a != null) {
-            s.setFillColor(ColorUtil.stringToColor(a.getValue()));
+            try {
+                s.setFillColor(ColorUtil.stringToColor(a.getValue()));
+            } catch (IllegalArgumentException e) {
+                s.setFillColor(Color.BLACK);
+                log.error("Invalid fillColor {}; using black", a.getValue());
+            }
         }
 
         Element pointsElement = element.getChild("points");

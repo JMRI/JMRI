@@ -12,7 +12,7 @@ import org.junit.Test;
  * the base for test classes, including providing some common tests.
  *
  * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
-  */
+ */
 public abstract class AbstractLightTestBase {
 
     // implementing classes must provide these abstract members:
@@ -118,6 +118,27 @@ public abstract class AbstractLightTestBase {
         Assert.assertTrue("Light is ON", t.getKnownState() == Light.ON);
         t.setState(Light.OFF);
         Assert.assertTrue("Light is ON", t.getKnownState() == Light.OFF);
+    }
+    
+    // add a LightControl
+    @Test
+    public void testAddLightControls() {
+        
+        Assert.assertTrue("0 controls attached", t.getLightControlList().size() == 0);
+        jmri.implementation.LightControl lc = new jmri.implementation.LightControl(t);
+        lc.setControlType(Light.SENSOR_CONTROL);
+        t.addLightControl(lc);
+        Assert.assertTrue("1 control attached", t.getLightControlList().size() == 1);
+        t.addLightControl(lc);
+        Assert.assertTrue("1 control attached", t.getLightControlList().size() == 1);
+        Assert.assertTrue("control attached", t.getLightControlList().get(0) == lc);
+        t.addLightControl(new jmri.implementation.LightControl(t));
+        Assert.assertTrue("2 controls attached", t.getLightControlList().size() == 2);
+        Assert.assertTrue("2 controls attached", t.getLightControlList().get(0) 
+            != t.getLightControlList().get(1));
+        t.clearLightControls();
+        Assert.assertTrue("0 controls attached", t.getLightControlList().size() == 0);
+        
     }
 
 }

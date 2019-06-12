@@ -142,6 +142,7 @@
         editing modes of Circuit Builder.
 
     <h3>OBlocks - Circuit Editing mode</h3>
+     OBlocks are created by selecting track icons.
 
     <h4>Creating OBlocks</h4>
      From the <b>Circuit Builder</b> menu select the <b>Add OBlock Circuit</b> menu item.

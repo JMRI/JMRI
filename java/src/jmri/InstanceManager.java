@@ -15,11 +15,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides methods for locating various interface implementations. These form
@@ -60,15 +63,15 @@ import org.slf4j.LoggerFactory;
  * references to the default instance during initialization to work as expected.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
@@ -253,10 +256,9 @@ public final class InstanceManager {
     @CheckForNull
     public <T> T getInstance(@Nonnull Class<T> type) {
         log.trace("getOptionalDefault of type {}", type.getName());
-        List<T> l = getInstances(type);
-        if (l.isEmpty()) {
-            synchronized (type) {
-
+        synchronized (type) {
+            List<T> l = getInstances(type);
+            if (l.isEmpty()) {
                 // example of tracing where something is being initialized
                 // log.error("jmri.implementation.SignalSpeedMap init", new Exception());
                 if (traceFileActive) {
@@ -269,13 +271,15 @@ public final class InstanceManager {
                 Exception except = getInitializationException(type);
                 setInitializationState(type, InitializationState.STARTED);
                 if (working == InitializationState.STARTED) {
-                    log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+                    log.error("Proceeding to initialize {} while already in initialization", type,
+                            new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
                     log.error("    Prior initialization:", except);
                     if (traceFileActive) {
                         traceFilePrint("*** Already in process ***");
                     }
                 } else if (working == InitializationState.DONE) {
-                    log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+                    log.error("Proceeding to initialize {} but initialization is marked as complete", type,
+                            new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
                 }
 
                 // see if can autocreate
@@ -289,7 +293,11 @@ public final class InstanceManager {
                             ((InstanceManagerAutoInitialize) obj).initialize();
                         }
                         log.debug("      auto-created default of {}", type.getName());
-                    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    } catch (
+                            NoSuchMethodException |
+                            InstantiationException |
+                            IllegalAccessException |
+                            InvocationTargetException e) {
                         log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
                         setInitializationState(type, InitializationState.FAILED);
                         if (traceFileActive) {
@@ -324,7 +332,8 @@ public final class InstanceManager {
                         }
                         return l.get(l.size() - 1);
                     } catch (IllegalArgumentException ex) {
-                        log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
+                        log.error("Known initializer for {} does not provide a default instance for that class",
+                                type.getName());
                     }
                 } else {
                     log.debug("        no initializer registered for {}", type.getName());
@@ -338,8 +347,8 @@ public final class InstanceManager {
                 }
                 return null;
             }
+            return l.get(l.size() - 1);
         }
-        return l.get(l.size() - 1);
     }
 
     /**

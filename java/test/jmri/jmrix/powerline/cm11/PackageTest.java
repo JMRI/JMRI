@@ -15,7 +15,8 @@ import org.junit.runners.Suite;
    SpecificReplyTest.class,
    SpecificSystemConnectionMemoTest.class,
    SpecificTrafficControllerTest.class,
-   ConstantsTest.class
+   ConstantsTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.powerline.cm11 package.

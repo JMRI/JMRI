@@ -30,15 +30,14 @@ import org.slf4j.LoggerFactory;
  * listener has been used.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @see jmri.NamedBean
  * @see jmri.NamedBeanHandle
@@ -85,8 +84,8 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     public <T extends NamedBean> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
-         Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name
+         Although when we get a new bean we always return the first one that exists,
+         when a rename is performed it doesn't delete the bean with the old name;
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */

@@ -17,26 +17,32 @@
     <variable CV="0.255.261:4" readOnly="yes" item="ProId">
         <splitHexVal case="upper"/>
         <label>Product ID</label>
+        <label xml:lang="de">Produkt ID</label>
     </variable>
     <variable CV="0.255.261:4" readOnly="yes" item="ProId 2">
         <splitVal/>
         <label>(decimal)</label>
+        <label xml:lang="de">(dezimal)</label>
     </variable>
     <variable CV="0.255.265:4" readOnly="yes" item="SerNo">
         <splitHexVal case="upper"/>
         <label>Serial Number</label>
+        <label xml:lang="de">Seriennummer</label>
     </variable>
     <variable CV="0.255.269:4" readOnly="yes" item="PDate">
         <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
         <label>Production Date</label>
+        <label xml:lang="de">Produktionsdatum</label>
     </variable>
     <variable CV="0.255.273:4" readOnly="yes" item="PInfo">
         <splitHexVal case="upper"/>
         <label>Production Info</label>
+        <label xml:lang="de">Produkt Info</label>
     </variable>
     <variable CV="0.255.277:2" readOnly="yes" item="BCode Build Number">
         <splitVal/>
         <label>Bootcode Build Build Number</label>
+        <label xml:lang="de">Bootcode Build Nummer</label>
     </variable>
     <variable CV="0.255.279" readOnly="yes" item="BCode Minor Version">
         <decVal/>
@@ -49,10 +55,12 @@
     <variable CV="0.255.281:4" readOnly="yes" item="BDate">
         <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
         <label>Bootcode Date</label>
+        <label xml:lang="de">Bootcode Datum</label>
     </variable>
     <variable CV="0.255.285:2" readOnly="yes" item="ACode Build Number">
         <splitVal/>
         <label>Firmware Build Number</label>
+        <label xml:lang="de">Firmware Build Nummer</label>
     </variable>
     <variable CV="0.255.287" readOnly="yes" item="ACode Minor Version">
         <decVal/>
@@ -65,6 +73,7 @@
     <variable CV="0.255.289:4" readOnly="yes" item="ADate">
         <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
         <label>Firmware Date</label>
+        <label xml:lang="de">Firmware Datum</label>
     </variable>
     <variable CV="0.255.293:4" readOnly="yes" item="AType">
         <splitVal/>

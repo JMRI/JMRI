@@ -1,9 +1,9 @@
 package jmri.managers;
 
+import java.util.Objects;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
-
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
@@ -51,6 +51,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public Turnout getTurnout(@Nonnull String name) {
         Turnout result = getByUserName(name);
         if (result == null) {
@@ -77,12 +78,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         // add normalize? see AbstractSensor
-        log.debug("newTurnout: {};{}",systemName, userName);
+        log.debug("newTurnout: {};{}", systemName, userName);
 
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.error("Invalid system name for turnout: {} needed {}{}",
+            log.error("Invalid system name for turnout: {} needed {}{} followed by a suffix",
                     systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
@@ -264,7 +265,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         try {
             iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
             return null;
@@ -283,6 +284,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Turnouts added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);
@@ -366,8 +369,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);

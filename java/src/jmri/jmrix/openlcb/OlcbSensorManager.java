@@ -173,6 +173,14 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddSensorEntryToolTip");
+    }
 
     // listen for sensors, creating them as needed
     @Override

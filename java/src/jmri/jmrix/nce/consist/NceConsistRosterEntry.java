@@ -13,16 +13,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ConsistRosterEntry represents a single element in a consist roster.
- * <P>
+ * <p>
  * The ConsistRosterEntry is the central place to find information about a
  * consists configuration, including loco address, address type, loco's
  * direction, and consist number. Up to six consist locos are currently tracked.
  * ConsistRosterEntry handles persistency through the LocoFile class. Creating a
  * ConsistRosterEntry does not necessarily read the corresponding file (which
  * might not even exist), please see readFile(), writeFile() member functions.
- * <P>
+ * <p>
  * All the data attributes have a content, not null.
- * <P>
+ * <p>
  * When the filePath attribute is non-null, the user has decided to organize the
  * roster into directories.
  *

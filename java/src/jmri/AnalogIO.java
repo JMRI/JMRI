@@ -42,7 +42,7 @@ public interface AnalogIO extends NamedBean {
      * Change the commanded value, which results in the relevant command(s)
      * being sent to the hardware. The exception is thrown if there are problems
      * communicating with the layout hardware.
-     * <P>
+     * <p>
      * The value must be a valid number, not a NaN or infinity number.
      *
      * @param value the desired analog value
@@ -56,7 +56,7 @@ public interface AnalogIO extends NamedBean {
     /**
      * Query the commanded value. This is a bound parameter, so you can also
      * register a listener to be informed of changes.
-     * <P>
+     * <p>
      * The result must be a valid number, not a NaN or infinity number.
      *
      * @return the analog value
@@ -68,7 +68,7 @@ public interface AnalogIO extends NamedBean {
      * register a listener to be informed of changes. A result is always
      * returned; if no other feedback method is available, the commanded value
      * will be used.
-     * <P>
+     * <p>
      * The result must be a valid number, not a NaN or infinity number.
      *
      * @return the known analog value

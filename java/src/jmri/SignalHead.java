@@ -5,10 +5,10 @@ package jmri;
  * may have more than one of these (e.g. a signal mast consisting of several
  * heads) when needed to represent more complex aspects, e.g. Diverging Approach
  * etc.
- * <P>
+ * <p>
  * This allows access to explicit appearance information. We don't call this an
  * Aspect, as that's a composite of the appearance of several heads.
- * <P>
+ * <p>
  * This class has three bound parameters:
  * <DL>
  * <DT>Appearance<DD>The specific color being shown. Values are the various
@@ -21,7 +21,7 @@ package jmri;
  * color, it doesn't try to replace it, but rather just leaves that color off
  * the resulting display.
  * <DT>Lit<DD>Whether the head's lamps are lit or left dark.
- * <P>
+ * <p>
  * This differs from the DARK color defined for the appearance parameter, in
  * that it's independent of that. Lit is intended to allow you to extinguish a
  * signal head for approach lighting, while still allowing it's color to be set
@@ -30,7 +30,7 @@ package jmri;
  *
  * <DT>Held<DD>Whether the head's lamps should be forced to a specific
  * appearance, e.g. RED in higher-level logic.
- * <P>
+ * <p>
  * For use in signaling systems, this is a convenient way of storing whether a
  * higher-level of control (e.g. non-vital system or dispatcher) has "held" the
  * signal at stop. It does not effect how this signal head actually works; any
@@ -39,15 +39,14 @@ package jmri;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */

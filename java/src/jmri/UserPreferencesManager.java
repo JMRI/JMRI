@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * Interface for the User Preferences Manager.
- * <P>
+ * <p>
  * The User Message Preference Manager keeps track of the options that a user
  * has selected in messages where they have selected "Remember this setting for
  * next time"

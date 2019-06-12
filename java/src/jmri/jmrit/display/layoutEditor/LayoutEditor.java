@@ -110,19 +110,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
- * <P>
+ * <p>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
  * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
  * integral subparts of the LayoutEditor class.
- * <P>
+ * <p>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
  * numbers.
- * <P>
+ * <p>
  * The "contents" List keeps track of all text and icon label objects added to
  * the target frame for later manipulation. Other Lists keep track of drawn
  * items.
- * <P>
+ * <p>
  * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
  * particular, text and icon label items are copied from Panel editor, as well
  * as some of the control design.
@@ -142,6 +142,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JPanel editToolBarContainerPanel = null;
     private transient JPanel helpBarPanel = null;
     private transient JPanel helpBar = new JPanel();
+    private transient boolean editorUseOldLocSize;
 
     private transient Font toolBarFont = null;
 
@@ -288,6 +289,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
     protected Color turnoutCircleColor = Color.black; //matches earlier versions
+    protected Color turnoutCircleThrownColor = Color.black;
+    protected boolean turnoutFillControlCircles = false;
     protected int turnoutCircleSize = 4; //matches earlier versions
 
     //use turnoutCircleSize when you need an int and these when you need a double
@@ -339,6 +342,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
     private transient ButtonGroup turnoutCircleSizeButtonGroup = null;
@@ -521,7 +525,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public LayoutEditor(@Nonnull String name) {
         super(name);
+        setSaveSize(true);
         layoutName = name;
+
+        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();
@@ -1057,34 +1064,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //setupToolBarFontSizes(toolBarFontSize);
                 //}
                 updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
-
-                //this doesn't work as expected (1st one called messes up 2nd?)
-                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                log.debug("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-                log.debug("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
-
-                //Point prefsWindowLocation = null;
-                //Dimension prefsWindowSize = null;
-                //use this instead?
-                if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
-                    prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                    log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
-
-                    if (prefsProp != null) {
-                        Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
-                        prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
-                        prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
-                    }
-                }
-
-                if ((prefsWindowLocation != null) && (prefsWindowSize != null)
-                        && (prefsWindowSize.width >= 640) && (prefsWindowSize.height >= 480)) {
-                    //note: panel width & height comes from the saved (xml) panel (file) on disk
-                    setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
-                            prefsWindowLocation.x, prefsWindowLocation.y,
-                            panelWidth, panelHeight, true);
-                }
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
@@ -2514,15 +2493,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
-        //
-        //  save location and size
-        //
-        JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
-        optionMenu.add(locationItem);
-        locationItem.addActionListener((ActionEvent event) -> {
-            setCurrentPositionAndSize();
-            log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
-        });
+        if (editorUseOldLocSize) {
+            //
+            //  save location and size
+            //
+            JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
+            optionMenu.add(locationItem);
+            locationItem.addActionListener((ActionEvent event) -> {
+                setCurrentPositionAndSize();
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+            });
+        }
 
         //
         // Add Options
@@ -2746,7 +2727,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //select turnout circle color
         JMenuItem turnoutCircleColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleColor"));
-
         turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("TurnoutCircleColor"),
@@ -2758,6 +2738,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
         turnoutOptionsMenu.add(turnoutCircleColorMenuItem);
+
+        //select turnout circle thrown color
+        JMenuItem turnoutCircleThrownColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleThrownColor"));
+        turnoutCircleThrownColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("TurnoutCircleThrownColor"),
+                    turnoutCircleThrownColor);
+            if (desiredColor != null && !turnoutCircleThrownColor.equals(desiredColor)) {
+                setTurnoutCircleThrownColor(desiredColor);
+                setDirty();
+                redrawPanel();
+            }
+        });
+        turnoutOptionsMenu.add(turnoutCircleThrownColorMenuItem);
+
+        turnoutFillControlCirclesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("TurnoutFillControlCircles"));
+        turnoutOptionsMenu.add(turnoutFillControlCirclesCheckBoxMenuItem);
+        turnoutFillControlCirclesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            turnoutFillControlCircles = turnoutFillControlCirclesCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        turnoutFillControlCirclesCheckBoxMenuItem.setSelected(turnoutFillControlCircles);
 
         //select turnout circle size
         JMenu turnoutCircleSizeMenu = new JMenu(Bundle.getMessage("TurnoutCircleSize"));
@@ -2791,8 +2793,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
-    /**
-     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
+    /***************************************************************************
+     * Getter Layout Track Drawing Options.
+     * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor <br>
+     * blockDefaultColor, blockOccupiedColor and blockAlternativeColor added to LayoutTrackDrawingOptions <br>
      * @return LayoutTrackDrawingOptions object
      */
     @Nonnull
@@ -2806,11 +2810,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
             layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
+            layoutTrackDrawingOptions.setBlockDefaultColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            layoutTrackDrawingOptions.setBlockAlternativeColor(defaultAlternativeTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
 
-    /** 
+    /**
      * since 4.15.6 split variable defaultTrackColor and mainlineTrackColor/sidelineTrackColor
      * @param ltdo LayoutTrackDrawingOptions object
      */
@@ -3046,7 +3053,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         //try to get the preference
                         ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
                         if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
+                            ddldoPref = ddldoProp.toString(); //get its (string value
                         } else { //otherwise...
                             //save it in the users preferences
                             prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
@@ -4770,37 +4777,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Point pt = getLocationOnScreen();
         upperLeftX = pt.x;
         upperLeftY = pt.y;
-
-        // TODO: figure out why this isn't working...
-        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-            String windowFrameRef = getWindowFrameRef();
-
-            //the restore code for this isn't working...
-            prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
-            prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
-
-            if (true) {
-                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-
-                if ((prefsWindowLocation.x != upperLeftX) || (prefsWindowLocation.y != upperLeftY)) {
-                    log.error("setWindowLocation failure.");
-                }
-                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-
-                if ((prefsWindowSize.width != windowWidth) || (prefsWindowSize.height != windowHeight)) {
-                    log.error("setWindowSize failure.");
-                }
-            }
-
-            //we're going to use this instead
-            if (true) { //(Nope, it's not working ether)
-                //save it in the user preferences for the window
-                Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
-                prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
-                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                log.debug("testing prefsProp: {}", prefsProp);
-            }
-        });
 
         log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
         setDirty();
@@ -7822,15 +7798,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             //remove connections if any
-            TrackSegment t = o.getConnect1();
+            TrackSegment t1 = o.getConnect1();
+            TrackSegment t2 = o.getConnect2();
 
-            if (t != null) {
-                removeTrackSegment(t);
+            if (t1 != null) {
+                removeTrackSegment(t1);
             }
-            t = o.getConnect2();
 
-            if (t != null) {
-                removeTrackSegment(t);
+            if (t2 != null) {
+                removeTrackSegment(t2);
             }
 
             //delete from array
@@ -9106,12 +9082,36 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultTrackColor.
+     * @return block default color as Color
+     */
+    public Color getDefaultTrackColorColor() {
+        return defaultTrackColor;
+    }
+
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
 
+    /***************************************************************************
+     * Getter defaultOccupiedTrackColor.
+     * @return block default occupied color as Color
+     */
+    public Color getDefaultOccupiedTrackColorColor() {
+        return defaultOccupiedTrackColor;
+    }
+
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
+    }
+
+    /***************************************************************************
+     * Getter defaultAlternativeTrackColor.
+     * @return block default alternetive color as Color
+     */
+    public Color getDefaultAlternativeTrackColorColor() {
+        return defaultAlternativeTrackColor;
     }
 
     public String getDefaultTextColor() {
@@ -9122,17 +9122,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ColorUtil.colorToColorName(turnoutCircleColor);
     }
 
-    public int getTurnoutCircleSize() {
-        return turnoutCircleSize;
+    public String getTurnoutCircleThrownColor() {
+        return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }
 
-    /**
-     * @deprecated since 4.11.2 use {@link #isTurnoutDrawUnselectedLeg()}
-     * instead.
-     */
-    @Deprecated
-    public boolean getTurnoutDrawUnselectedLeg() {
-        return turnoutDrawUnselectedLeg;
+    public boolean isTurnoutFillControlCircles() {
+        return turnoutFillControlCircles;
+    }
+
+    public int getTurnoutCircleSize() {
+        return turnoutCircleSize;
     }
 
     public boolean isTurnoutDrawUnselectedLeg() {
@@ -9266,29 +9265,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTrackColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultTrackColor(@Nonnull String colorName) {
-        setDefaultTrackColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
-        LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setDefaultOccupiedTrackColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setDefaultOccupiedTrackColor(@Nonnull String colorName) {
-        setDefaultOccupiedTrackColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
@@ -9300,15 +9281,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use
-     * {@link #setDefaultAlternativeTrackColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultAlternativeTrackColor(@Nonnull String colorName) {
-        setDefaultAlternativeTrackColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default alternate track color to.
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
@@ -9317,26 +9289,37 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setTurnoutCircleColor(Color)}
-     * instead.
+     * @param color new color for turnout circle.
      */
-    @Deprecated
-    public void setTurnoutCircleColor(@Nonnull String colorName) {
-        if (colorName.equals("track")) {
-            colorName = getDefaultTrackColor();
+    public void setTurnoutCircleColor(Color color) {
+        if (color == null) {
+            turnoutCircleColor = getDefaultTrackColorColor();
+        } else {
+            turnoutCircleColor = color;
+            JmriColorChooser.addRecentColor(color);
         }
-        setTurnoutCircleColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
      * @param color new color for turnout circle.
      */
-    public void setTurnoutCircleColor(Color color) {
+    public void setTurnoutCircleThrownColor(Color color) {
         if (color == null) {
-            turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
+            turnoutCircleThrownColor = getDefaultTrackColorColor();
         } else {
-            turnoutCircleColor = color;
+            turnoutCircleThrownColor = color;
             JmriColorChooser.addRecentColor(color);
+        }
+    }
+
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
+    public void setTurnoutFillControlCircles(boolean state) {
+        if (turnoutFillControlCircles != state) {
+            turnoutFillControlCircles = state;
+            turnoutFillControlCirclesCheckBoxMenuItem.setSelected(turnoutFillControlCircles);
         }
     }
 
@@ -9363,28 +9346,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * @deprecated since 4.9.6 use {@link #setDefaultTextColor(Color)} instead.
-     */
-    @Deprecated
-    public void setDefaultTextColor(@Nonnull String colorName) {
-        setDefaultTextColor(ColorUtil.stringToColor(colorName));
-    }
-
-    /**
      * @param color value to set the default text color to.
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
         JmriColorChooser.addRecentColor(color);
-    }
-
-    /**
-     * @deprecated since 4.9.6 use {@link #setDefaultBackgroundColor(Color)}
-     * instead.
-     */
-    @Deprecated
-    public void setDefaultBackgroundColor(@Nonnull String colorName) {
-        setDefaultBackgroundColor(ColorUtil.stringToColor(colorName));
     }
 
     /**
@@ -10192,6 +10158,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private void drawTurnoutControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
+        g2.setBackground(turnoutCircleThrownColor);
+
         // loop over all turnouts
         boolean editable = isEditable();
         layoutTrackList.forEach((tr) -> {

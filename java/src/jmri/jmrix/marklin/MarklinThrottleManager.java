@@ -52,8 +52,8 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         /*Here we do not set notifythrottle, we simply create a new Marklin throttle.
          The Marklin throttle in turn will notify the throttle manager of a successful or
          unsuccessful throttle connection. */
-        log.debug("new MarklinThrottle for " + address);
-        notifyThrottleKnown(new MarklinThrottle((MarklinSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
+        log.debug("new MarklinThrottle for {}", address);
+        notifyThrottleKnown(new MarklinThrottle((MarklinSystemConnectionMemo) adapterMemo, address), address);
     }
 
     @Override
@@ -87,6 +87,11 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         return false;
     }
 
+    /**
+     * Returns false
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean singleUse() {
         return false;
@@ -123,9 +128,11 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            MarklinThrottle lnt = (MarklinThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof MarklinThrottle) {
+                MarklinThrottle lnt = (MarklinThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

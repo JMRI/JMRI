@@ -302,7 +302,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
         /**
          * Update the GUI for progress
-         * <P>
+         * <p>
          * Should be invoked on the Swing thread
          */
         void updateGUI() {
@@ -320,7 +320,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
         /**
          * Signal GUI that it's the end of the download
-         * <P>
+         * <p>
          * Should be invoked on the Swing thread
          */
         void enableGUI() {

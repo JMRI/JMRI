@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Position a Window relative to a component in another window so as
  * to not obscure a component in that window. Typically, the Component
  * is being edited by actions done in the target Window.
- * <p>
+ *
  * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */

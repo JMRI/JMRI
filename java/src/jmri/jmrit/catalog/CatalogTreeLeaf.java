@@ -2,7 +2,7 @@ package jmri.jmrit.catalog;
 
 /**
  * Leaf of a CatalogTree.
- * <P>
+ * <p>
  * Name for the leaf Path to lead.
  *
  * @author Pete Cressman Copyright 2009

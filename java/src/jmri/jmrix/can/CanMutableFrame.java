@@ -2,7 +2,7 @@ package jmri.jmrix.can;
 
 /**
  * Base interface for mutable messages in a CANbus based message/reply protocol.
- * <P>
+ * <p>
  * It is expected that any CAN based system will be based upon basic CAN
  * concepts such as ID/header (standard or extended), Normal and RTR frames and
  * a data field.

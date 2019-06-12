@@ -90,7 +90,7 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     }
 
     public boolean requestThrottle(DccLocoAddress address, ThrottleListener listener) {
-        return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener);
+        return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener, false);
     }
 
     public void attachListener(DccLocoAddress address, JsonThrottle throttle) {

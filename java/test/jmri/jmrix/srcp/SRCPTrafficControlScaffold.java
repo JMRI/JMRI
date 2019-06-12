@@ -1,10 +1,8 @@
 /**
- * SRCPInterfaceScaffold.java
- *
- * Description:	Stands in for the SRCPTrafficController class
+ * SRCPInterfaceScaffold stands in for the SRCPTrafficController class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 package jmri.jmrix.srcp;
 
 import java.util.Vector;
@@ -40,7 +38,7 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
 
     // test control member functions
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     protected void sendTestMessage(SRCPMessage m, SRCPListener l) {
         // forward a test message to NceListeners
@@ -52,7 +50,7 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
     }
 
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     protected void sendTestReply(SRCPReply m) {
         // forward a test message to NceListeners
@@ -63,7 +61,7 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
         return;
     }
 
-    /*
+    /**
      * Check number of listeners, used for testing dispose()
      */
     public int numListeners() {

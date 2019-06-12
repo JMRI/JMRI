@@ -6,7 +6,7 @@ import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * The transmission protocol can come in one of several forms:
  * <ul>
  * <li>If the interlocked parameter is false (default), the packet is just sent.

@@ -5,7 +5,7 @@
 	  <div style="text-align: center">JMRI is...</div>
 	  <dl>
 
-		<dt><h3><a href="index.shtml">Scripting</a></h3></dt>
+		<dt><h3>Scripting</h3></dt>
 		<dd>Information on writing scripts to control JMRI in more detail:
 		    <ul>
 		    <li><dfn><a href="Start.shtml">Getting Started</a></dfn>
@@ -68,6 +68,7 @@
             <li><dfn><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 			<li><dfn><a href="../Routes.shtml">Routes</a></dfn>
 	        <li><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
+	        <li><dfn><a href="../uss/index.shtml">USS CTC</a></dfn>
 	        <li><dfn><a href="../scripting/index.shtml">Scripting</a></dfn>
 	        </ul>
 		</dd>

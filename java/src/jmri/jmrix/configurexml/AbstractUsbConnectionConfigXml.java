@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * IOW: if you're just using usb to access a serial buss on the other side then
  * you should be using AbstractSerialConnectionConfigXml instead.
- * <p>
+ *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author George Warner Copyright: Copyright (c) 2017
  */

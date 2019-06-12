@@ -561,7 +561,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Service method to set up a column so that it will hold a button for it's
+     * Service method to set up a column so that it will hold a button for its
      * values.
      *
      * @param table  the table

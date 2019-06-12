@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -57,7 +58,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Route Table.
  *
- * Based in part on SignalHeadTableAction.java by Bob Jacobsen
+ * Based in part on {@link SignalHeadTableAction} by Bob Jacobsen
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007
@@ -96,22 +97,22 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         // late initialization of string "constants" so that TurnoutManager
         // has time to be fully configured
-        SET_TO_CLOSED = Bundle.getMessage("Set") + " "
-                + InstanceManager.turnoutManagerInstance().getClosedText();
-        SET_TO_THROWN = Bundle.getMessage("Set") + " "
-                + InstanceManager.turnoutManagerInstance().getThrownText();
-        turnoutInputModes = new String[]{
+        RouteTableAction.setClosedString(Bundle.getMessage("Set") + " "
+                + InstanceManager.turnoutManagerInstance().getClosedText());
+        RouteTableAction.setThrownString(Bundle.getMessage("Set") + " "
+                + InstanceManager.turnoutManagerInstance().getThrownText());
+        RouteTableAction.setTurnoutInputModes(new String[]{
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
             Bundle.getMessage("OnConditionChange"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
-        };
-        lockTurnoutInputModes = new String[]{
+        });
+        RouteTableAction.setLockTurnoutModes(new String[]{
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
             Bundle.getMessage("OnConditionChange")
-        };
+        });
 
         m = new BeanTableDataModel<Route>() {
             static public final int ENABLECOL = NUMCOLUMN;
@@ -129,7 +130,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                     return "";  // no heading on "Set"
                 }
                 if (col == SETCOL) {
-                    return "";    // no heading on "Edit"
+                    return "";  // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
                     return Bundle.getMessage("ColumnHeadEnabled");
@@ -286,7 +287,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             /**
              * Delete the bean after all the checking has been done.
-             * <P>
+             * <p>
              * Deactivate the Route, then use the superclass to delete it.
              */
             @Override
@@ -575,7 +576,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
-            ROW_HEIGHT = routeTurnoutTable.getRowHeight();
+            RouteTableAction.setRowHeight(routeTurnoutTable.getRowHeight());
             JComboBox<String> stateTCombo = new JComboBox<>();
             stateTCombo.addItem(SET_TO_CLOSED);
             stateTCombo.addItem(SET_TO_THROWN);
@@ -742,11 +743,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
             p34.add(cTurnoutStateBox);
             p3.add(p34);
-            // add added delay
+            // add additional route-specific delay
             JPanel p36 = new JPanel();
             p36.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelTurnoutDelay"))));
             timeDelay.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
-//            timeDelay.setValue(0); // reset from possible previous use
+            // timeDelay.setValue(0); // reset from possible previous use
             timeDelay.setPreferredSize(new JTextField(5).getPreferredSize());
             p36.add(timeDelay);
             timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
@@ -963,7 +964,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * Check name and return a new or existing Route object with the name
      * as entered in the _systemName field on the addFrame pane.
      *
-     * @return The new/updated Route object
+     * @return the new/updated Route object
      */
     Route checkNamesOK() {
         // Get system name and user name
@@ -1069,7 +1070,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             // No Control Turnout was entered
             g.setControlTurnout("");
         }
-        // set Delay information
+        // set route specific Delay information, see jmri.implementation.DefaultRoute#SetRouteThread()
         int addDelay = (Integer) timeDelay.getValue(); // from a JSpinner with 0 set as minimum
         g.setRouteCommandDelay(addDelay);
 
@@ -1229,7 +1230,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
-        // set up additional Delay
+        // set up additional route specific Delay
         timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts
         // set up buttons and notes
@@ -2120,13 +2121,34 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         Bundle.getMessage("OnConditionChange")
     };
 
+    // safe methods to set tho above 4 static field values
     private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
         Route.VETOCLOSED, Route.VETOTHROWN};
+
+    private static void setClosedString(@Nonnull String newVal) {
+        SET_TO_CLOSED = newVal;
+    }
+
+    private static void setThrownString(@Nonnull String newVal) {
+        SET_TO_THROWN = newVal;
+    }
+
+    private static void setTurnoutInputModes(@Nonnull String[] newArray) {
+        turnoutInputModes = newArray;
+    }
+
+    private static void setLockTurnoutModes(@Nonnull String[] newArray) {
+        lockTurnoutInputModes = newArray;
+    }
+
+    private synchronized static void setRowHeight(@Nonnull int newVal) {
+        ROW_HEIGHT = newVal;
+    }
 
     private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList<RouteTurnout> _includedTurnoutList;
 
-    private ArrayList<RouteSensor> _sensorList;        // array of all Sensorsy
+    private ArrayList<RouteSensor> _sensorList;        // array of all Sensors
     private ArrayList<RouteSensor> _includedSensorList;
 
     private abstract class RouteElement {

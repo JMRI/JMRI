@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TamsDCC implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on early NCE code.
  * 
  * Based on work by Bob Jacobsen 
@@ -44,11 +44,17 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
 
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        /*Here we do not set notifythrottle, we simply create a new Tams throttle.
-         The Tams throttle in turn will notify the throttle manager of a successful or
-         unsuccessful throttle connection. */
-        log.info("new TamsThrottle for " + address);
-        notifyThrottleKnown(new TamsThrottle((TamsSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
+        if (address instanceof DccLocoAddress ) {
+            /*Here we do not set notifythrottle, we simply create a new Tams throttle.
+            The Tams throttle in turn will notify the throttle manager of a successful or
+            unsuccessful throttle connection. */
+            log.info("new TamsThrottle for " + address);
+            notifyThrottleKnown(new TamsThrottle((TamsSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress " +address+ " is not a DccLocoAddress");
+        }
     }
 
     @Override
@@ -82,6 +88,11 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return true;
     }
 
+    /**
+     * Returns false
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean singleUse() {
         return false;
@@ -102,9 +113,11 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            TamsThrottle lnt = (TamsThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof TamsThrottle) {
+                TamsThrottle lnt = (TamsThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

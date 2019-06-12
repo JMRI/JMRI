@@ -8,14 +8,20 @@
 
   <title>JMRI: PanelPro Frequently Asked Questions</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
+    <!-- FAQ-Head -->
+    <script type="text/javascript">
+    /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
+  </script>
+    <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
+          media="screen">
+    <!-- /FAQ-Head -->
 </head>
 
 <body>
@@ -25,14 +31,11 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: PanelPro Frequently Asked Questions</h1><a name=
-      "context" id="context"></a>
-
-      <h3>How does JMRI tie into the rest of my layout?</h3>
-
-      <p>Jim Betz responded with this on the JMRI User's alias when
-      asked for an overview:</p>
-
+      <h1>JMRI: PanelPro Frequently Asked Questions</h1>
+      <dl class="faq">
+      <dt id="context" class="on">How does
+          JMRI tie into the rest of my layout?</dt>
+        <dd class="first"><!-- by Jim Betz -->
       <ol>
         <li>JMRI works like a throttle - it sends and listens to
         the messages on the "command bus". Nothing more, nothing
@@ -111,37 +114,38 @@
         make. And there is also the "workload" issue(s)... but a
         computer running PanelPro is usually loafing and has more
         than enough power to keep ahead of the needs of the layout.
-
-          <p>Implementing layout control (turnouts, block
-          occupancy, signals, etc.) is not an "easy deal". And, in
-          my opinion, it is not something you should attempt to
-          teach yourself - or to do it alone with just the
-          help/guidance of online lists such as this one. I am not
-          saying "don't use online" ... I'm saying that if you want
-          to do this as easily as possible then you should seek out
-          those who have gone before and enlist their face-to-face
-          support/guidance. Yes, you can do it your self - no,
-          that's not the best way to do this and you will find you
-          make -many- mistakes that will cause considerable delays
-          and rework. Many layout automation projects have gotten
-          stalled for just this very reason.</p>
-
-          <p>And just so this gets mentioned ... adding
-          capabilities such as block occupancy detection, computer
-          controlled turnouts, and signals is not inexpensive and
-          needs to be budgeted/spec'd out. And you may find that
-          you will need to re-wire some or even major portions of
-          your layout in order to support them correctly/at
-          all.</p>
+        <br>
+        Implementing layout control (turnouts, block
+        occupancy, signals, etc.) is not an "easy deal". And, in
+        my opinion, it is not something you should attempt to
+        teach yourself - or to do it alone with just the
+        help/guidance of online lists such as this one. I am not
+        saying "don't use online" ... I'm saying that if you want
+        to do this as easily as possible then you should seek out
+        those who have gone before and enlist their face-to-face
+        support/guidance. Yes, you can do it your self - no,
+        that's not the best way to do this and you will find you
+        make -many- mistakes that will cause considerable delays
+        and rework. Many layout automation projects have gotten
+        stalled for just this very reason.
+        <br>
+        And just so this gets mentioned ... adding
+        capabilities such as block occupancy detection, computer
+        controlled turnouts, and signals is not inexpensive and
+        needs to be budgeted/spec'd out. And you may find that
+        you will need to re-wire some or even major portions of
+        your layout in order to support them correctly/at all.
         </li>
-      </ol><a name="store" id="store"></a>
+      </ol>
+      </dd>
 
-      <h3>How do I save my work?</h3>There are several ways to save
+      <dt id="store">How do I save my work?</dt>
+      <dd>There are several ways to save
       your panel. This is because the program has to store both
       configuration (turnouts, sensors, etc) and layout (the
-      details of your specific panel) information.
+      details of your specific panel) information.<br>
 
-      <p>Usually, the easiest way is to use just one file to
+      Usually, the easiest way is to use just one file to
       contain everything. For example, you can store your panel(s)
       in a file called "MainPanel.xml" (or something like that),
       and set the preferences to load that file. Then, all you have
@@ -150,20 +154,20 @@
       when you save the file! If you close it, then save the file,
       it will of course write a version of the file that doesn't
       show the panel. And save this file from the "Panels" menu,
-      using the "Store Panels..." item.</p>
+      using the "Store Panels..." item.<br>
 
-      <p>This works because panels are stored with all the
+      This works because panels are stored with all the
       configuration information at that same time (which guarantees
-      they'll work when reloaded) <a name="multifile" id=
-      "multifile"></a></p>
+        they'll work when reloaded)</dd>
 
-      <h3>Can I store just the configuration information?</h3>You
+      <dt id="multifile">Can I store just the
+      configuration information?</dt>
+      <dd>You
       can store just the "configuration" information in a file,
       which you can save without worrying about whether your
       panel(s) are open, etc. If you do this, you can also save
-      your panels to their own, separate files.
-
-      <p>To do this:</p>
+      your panels to their own, separate files.<br>
+        To do this:
 
       <ul>
         <li>Go to one of the table tools (e.g. Route Table) and
@@ -174,43 +178,68 @@
         "MyConfig.xml" instead of "MyPanel.xml")</li>
 
         <li>Remember that name and location, then store.</li>
-      </ul>This puts config info, but not panels, in the file.
+      </ul>
+      This puts config info like Turnouts, Sensors etc, but
+      not panels, in the file. If you also want to save your
+      currently loaded panels, select "Store Panels and
+      Configuration..." instead.
+      </dd>
 
-      <p>Now, to ensure this configuration information
-      automatically loads when the program starts:</p>
+      <dt id="showfile">How can I see my saved
+      configuration, including Turnouts etc and panels?</dt>
+        <dd>JMRI does not remember the Turnout, Sensor
+        or Reporter table entries from
+        a previous JMRI session unless you take specific action to save your
+        information, and unless you take specific action to instruct JMRI to read
+        the saved configuration.  (This is generally also true of the information
+        in the other Tables.)<br>
+        Once you close and reopen a JMRI application, you have
+        to load your configuration information xml file to see
+        your Turnouts, Sensors etc. This allows to use JMRI with
+        different configurations, or go back to an older version
+        of the configuration when an error was made in your
+        latest saved version.<br>
+        To automatically load the file when the program starts:
 
-      <ul>
-        <li>Open the preferences panel,</li>
+        <ul>
+            <li>Open the Preferences panel.</li>
+            <li>Select the Start-up tab.</li>
+            <li>From the drop down list at bottom left, select
+            "Add", then "Open File..."</li>
+            <li>In the dialog box that opens, select the file in
+            which you have stored the configuration/panels.<br>
+            A new line with this action is added to the list.</li>
+            <li>Click "Save" on the Preferences pane to make sure
+            this is stored.</li>
+            <li>Quit the program and restart it to test.</li>
+        </ul>
 
-        <li>check the box for "show advanced preferences", and wait
-        a second for them to appear.</li>
+        On subsequent JMRI invocations, all start-up actions are invoked,
+        including any "start-up" actions you have defined to "Load" a "Panel File".<br>
 
-        <li>Scroll down to "Load panel file at startup", click
-        "Add",</li>
+        If automatic reloading of the table entries is not desired, it is possible
+        to manually read a panel file.  Under the JMRI "Panels" menu item, select
+        "Open Panel..." and then locate and select one or more panel files
+        containing the appropriate information.  Select the "Open Panels" button
+        to read those files into JMRI.</dd>
 
-        <li>and select the file in which you have stored the
-        configuration.</li>
-
-        <li>Click "Save" on the preferences pane to make sure this
-        is stored.</li>
-
-        <li>Quit the program and restart it to test.</li>
-      </ul><a name="location" id="location"></a>
-
-      <h3>Where should I put my custom icons and other
-      files?</h3>The best place to put your own files is in the
+      <dt id="location">Where should I put my custom icons and other
+      files?</dt>
+      <dd>The best place to put your own files is in the
       JMRI Preferences directory (all JMRI apps use <a href=
       "../../setup/Files.shtml#location">the same directory</a>).
       You should put any locally-modified versions of files here so
       they don't get overwritten by a new version of the program.
       Any files that the program writes to contain local
-      information, e.g. roster entries, are also written here.
-
-      <p>The location of this varies by computer type.</p>
+      information, e.g. roster entries, are also written here.<br>
+      The location of this varies by computer type:
+      <img src="../../../images/IconFileTree.gif" alt=
+      "Screen shot of file tree" align="right" width="288" height=
+      "327" hspace="5" vspace="0">
 
       <ul>
-        <li>On a Linux machine, look for a .jmri directory in your
-        home directory.</li>
+        <li>On a Linux machine, look for a <code>.jmri</code>
+        directory in your home directory.</li>
 
         <li>On a Macintosh, look in the Preferences folder of the
         current System Folder if running MacOS 8 or 9, or the
@@ -221,41 +250,55 @@
         on which Windows version you're running and whether you
         have multiple users configured; Search for a "JMRI"
         directory to find it.</li>
-      </ul>Make sure you find the preferences, and <em>not</em> the
+      </ul>
+      The easiest way to find the preferences location is to start
+      a JMRI program, e.g. DecoderPro or PanelPro, select
+      "Locations..." from the "Help" menu and click on [User Files
+      Location].<br>
+      A special treat for Windows users: if you go to the Windows Start
+      Menu, in the JMRI section, you can select
+      "Preferences" to have it open that directory for
+      you.<br>
+
+      Make sure you go to the preferences, and <em>not</em> the
       original application package. They are kept separate to
       simplify updating the program version. You'll know you've
       found the right place if you see the preferences files that
-      store your applications settings:
-      <tt>PanelProConfig2.xml</tt>. You can also search for this
-      file to find this directory
-
-      <p><img src="../../../images/IconFileTree.gif" alt=
-      "Screen shot of file tree" align="right" width="288" height=
-      "327" hspace="5" vspace="0"> If you have created icons that
+      store your applications settings:<br>
+      <code>PanelProConfig2.xml</code>.<br>
+      You can also search for this file to find this directory:
+      <br>
+      If you have created icons that
       you want to be able from the panel editor, put them in a
       directory called "resources" in the Preferences directory.
       They'll then show up in the "files" part of the selection box
       when you press a "Change icon..." button on the panel
-      editor.</p>
+      editor.<br>
 
-      <p>For example, if the Preferences directory contains the
+      For example, if the Preferences directory contains the
       files shown below, you'll get the file display shown at the
-      right.</p><code>&gt; ls resources/ decoderpro.gif green.gif
+      right.
+      <code>&gt; ls resources/ decoderpro.gif green.gif
       icons red.gif tester.gif &gt; ls resources/icons/ something
       tester.gif &gt; ls resources/icons/something/
       tester.gif</code>
 
-      <p>It's also possible to put your files in the
+      It's also possible to put your files in the
       <code>resources</code> directory within the JMRI distribution
       directory that you get when you install the program. This is
       <em>not</em> recommended, because files there will likely be
       overwritten when you install a future version (a newer
       version of a file, perhaps to fix a problem, will overwrite
-      your copy; the replacement is based on the file's date). More
-      information about the <a href="../../setup/Files.shtml">JMRI
-      Configuration Files</a></p>
+      your copy; the replacement is based on the file's date).<br>
+      See
+      <a href="../../setup/Files.shtml">JMRI Configuration Files</a>
+      </dd>
+    </dl>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <!-- FAQ-Tail -->
+  <script type="text/javascript" src="/web/js/faq.js">
+  </script><!-- /FAQ-Tail -->
 </body>
 </html>

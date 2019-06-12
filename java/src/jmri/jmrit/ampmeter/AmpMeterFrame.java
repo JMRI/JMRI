@@ -11,15 +11,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.MultiMeter;
+import jmri.MultiMeter.CurrentUnits;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
 /**
  * Frame providing a simple lcd-based display of track current.
- * <P>
+ * <p>
  * A Run/Stop button is built into this, but because I don't like the way it
  * looks, it's not currently displayed in the GUI.
- *
  *
  * @author Ken Cameron Copyright (C) 2007
  * @author Mark Underwood Copyright (C) 2007
@@ -27,7 +27,6 @@ import jmri.util.JmriJFrame;
  * This was a direct steal form the LCDClock code by Ken Cameron, which was a
  * direct steal from the Nixie clock code, ver 1.2. Thank you Bob Jacobsen and
  * Ken Cameron.
- *
  */
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -35,6 +34,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     ArrayList<JLabel> digitIcons;
     JLabel percent;
     JLabel decimal;
+    JLabel milliAmp;
+    JLabel amp;
 
     double aspect;
     double iconAspect;
@@ -47,9 +48,11 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     NamedIcon digits[] = new NamedIcon[10];
     NamedIcon percentIcon;
     NamedIcon decimalIcon;
+    NamedIcon milliAmpIcon;
+    NamedIcon ampIcon;
 
     public AmpMeterFrame() {
-        super(Bundle.getMessage("MenuItemAmpMeter"));
+        super(Bundle.getMessage("TrackCurrentMeterTitle"));
 
         meter = InstanceManager.getDefault(MultiMeter.class);
     }
@@ -62,6 +65,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
+        milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
+        ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
 
         // determine aspect ratio of a single digit graphic
         iconAspect = 24. / 32.;
@@ -81,6 +86,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         percent = new JLabel(percentIcon);
         decimal = new JLabel(decimalIcon);
+        milliAmp = new JLabel(milliAmpIcon);
+        amp = new JLabel(ampIcon);
 
         buildContents();
 
@@ -127,6 +134,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         percentIcon.scale(scale,this);
         decimalIcon.scale(scale,this);
+        ampIcon.scale(scale, this);
+        milliAmpIcon.scale(scale,this);
     }
 
     private void buildContents(){
@@ -139,9 +148,22 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         for(int i=0;i<digitIcons.size()-1;i++){
             getContentPane().add(digitIcons.get(i));
         }
-        getContentPane().add(decimal);
-        getContentPane().add(digitIcons.get(digitIcons.size()-1));
-        getContentPane().add(percent);
+        switch (meter.getCurrentUnits()) {
+            case CURRENT_UNITS_MILLIAMPS:
+                getContentPane().add(milliAmp);
+                break;
+            case CURRENT_UNITS_AMPS:
+                getContentPane().add(decimal);
+                getContentPane().add(digitIcons.get(digitIcons.size()-1));
+                getContentPane().add(amp);
+                break;
+            case CURRENT_UNITS_PERCENTAGE:
+            default:
+                getContentPane().add(decimal);
+                getContentPane().add(digitIcons.get(digitIcons.size()-1));
+                getContentPane().add(percent);
+                break;
+        }
 
         getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
         b.addActionListener(new ButtonListener());
@@ -153,10 +175,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     synchronized void update() {
         float val = meter.getCurrent();
-
-
         int value = (int)Math.floor(val *10); // keep one decimal place.
-
         boolean scaleChanged = false;
         // autoscale the array of labels.
         while( (value) > (Math.pow(10,digitIcons.size()-1))) {

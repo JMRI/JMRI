@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the EcosPortController class
- * <p>
+ * JUnit tests for the EcosPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */

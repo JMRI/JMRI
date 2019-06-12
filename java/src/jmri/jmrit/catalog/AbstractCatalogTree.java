@@ -82,7 +82,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     /*
-     * ** NamedBean implementation (Copied from AbstractNamedBean) *********
+     * NamedBean implementation (Copied from AbstractNamedBean) *********
      */
     /**
      * Get associated comment text.
@@ -121,10 +121,14 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     @CheckReturnValue
     @Override
-    public String getFullyFormattedDisplayName() {
+    public String getFullyFormattedDisplayName(boolean userNameFirst) {
         String name = getUserName();
-        if (name != null && name.length() > 0) {
-            name = name + "(" + getSystemName() + ")";
+        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
+            if (userNameFirst) {
+                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, name, getSystemName());
+            } else {
+                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, getSystemName(), name);
+            }
         } else {
             name = getSystemName();
         }

@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    UsbInterfacePanelTest.class
+    UsbInterfacePanelTest.class,
+    BundleTest.class,
 })
 
 /**
