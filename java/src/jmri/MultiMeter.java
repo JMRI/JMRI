@@ -33,12 +33,34 @@ public interface MultiMeter extends PropertyChangeProvider {
     @Deprecated // 4.7.1
     public void updateCurrent(float c);
 
+    /**
+     * get the current
+     * @return the current in units specified by getCurrentUnits
+     */
     public float getCurrent();
+
+    /**
+     * The units returned by getCurrent.
+     * CURRENT_UNITS_PERCENTAGE - 100.0 = 100%
+     * CURRENT_UNITS_AMPS - 1 = 1AMP.
+     * CURRENT_UNITS_MILLIAMPS - 1000 = 1AMP.
+     */
+    public static enum CurrentUnits {
+        CURRENT_UNITS_PERCENTAGE,
+        CURRENT_UNITS_AMPS,
+        CURRENT_UNITS_MILLIAMPS
+    }
+
+    /**
+     * Gets the unit used for current
+     * @return the units used for current either percentage (100.0 = 100%) or Amps or milliamps.
+     */
+    public CurrentUnits getCurrentUnits();
 
     /**
      * Set the voltage.
      *
-     * @param v the voltage
+     * @param v the voltage in volts.
      */
     public void setVoltage(float v);
 
@@ -51,6 +73,11 @@ public interface MultiMeter extends PropertyChangeProvider {
     @Deprecated // 4.7.1
     public void updateVoltage(float v);
 
+    /**
+     * get the voltage.
+     *
+     * @return v the voltage in volts.
+     */
     public float getVoltage();
 
     public void initializeHardwareMeter();

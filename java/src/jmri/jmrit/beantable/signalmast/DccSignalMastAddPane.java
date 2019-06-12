@@ -16,7 +16,7 @@ import jmri.util.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring MatrixSignalMast objects
+ * A pane for configuring MatrixSignalMast objects.
  *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
@@ -37,7 +37,6 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         dccMastScroll = new JScrollPane(dccMastPanel);
         dccMastScroll.setBorder(BorderFactory.createEmptyBorder());
         add(dccMastScroll);
-
     }
 
     /** {@inheritDoc} */
@@ -62,7 +61,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     SignalSystem sigsys;
 
     /**
-     * Check if a command station will work for this subtype
+     * Check if a command station will work for this subtype.
      */
     protected boolean usableCommandStation(CommandStation cs) {
         return true;
@@ -109,12 +108,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         dccAspectAddressField.setText("");
         dccMastPanel.add(dccAspectAddressField);
 
-        for (String aspect : dccAspect.keySet()) {
-            log.trace("   aspect: {}", aspect);
-            dccMastPanel.add(dccAspect.get(aspect).getPanel());
+        for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
+            log.trace("   aspect: {}", entry.getKey());
+            dccMastPanel.add(entry.getValue().getPanel());
         }
 
-        dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastCopyAspectId") + ":"));
+        dccMastPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCMastCopyAspectId"))));
         dccMastPanel.add(copyFromMastSelection());
         
         dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 2)); // 0 means enough
@@ -123,7 +122,6 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
         log.trace("setAspectNames(...) end");
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -161,7 +159,6 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
                 if (!currentMast.isAspectDisabled(key)) {
                     dccPanel.setAspectId(currentMast.getOutputForAppearance(key));
                 }
-
             }
         }
         List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -206,15 +203,15 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     }
     
     /**
-     * Return the first part of the system name 
-     * for the specific mast type
+     * Get the first part of the system name
+     * for the specific mast type.
      */
     protected @Nonnull String getNamePrefix() {
         return "F$dsm:";
     }
 
     /** 
-     * Create a mast of the specific subtype
+     * Create a mast of the specific subtype.
      */
     protected DccSignalMast constructMast(@Nonnull String name) {
         return new DccSignalMast(name);
@@ -250,13 +247,13 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
 
-        for (String aspect : dccAspect.keySet()) {
-            dccMastPanel.add(dccAspect.get(aspect).getPanel()); // update mast from aspect subpanel panel
-            currentMast.setOutputForAppearance(aspect, dccAspect.get(aspect).getAspectId());
-            if (dccAspect.get(aspect).isAspectDisabled()) {
-                currentMast.setAspectDisabled(aspect);
+        for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
+            dccMastPanel.add(entry.getValue().getPanel()); // update mast from aspect subpanel panel
+            currentMast.setOutputForAppearance(entry.getKey(), entry.getValue().getAspectId());
+            if (entry.getValue().isAspectDisabled()) {
+                currentMast.setAspectDisabled(entry.getKey());
             } else {
-                currentMast.setAspectEnabled(aspect);
+                currentMast.setAspectEnabled(entry.getKey());
             }
         }
         if (!username.equals("")) {
@@ -340,7 +337,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     }
 
     /**
-     * Copy aspects by name from another DccSignalMast
+     * Copy aspects by name from another DccSignalMast.
      */
     void copyFromAnotherDCCMastAspect(@Nonnull String strMast) {
         DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
@@ -349,14 +346,14 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             return;
         }
         Vector<String> validAspects = mast.getValidAspects();
-        for (String aspect : dccAspect.keySet()) {
-            if (validAspects.contains(aspect) || mast.isAspectDisabled(aspect)) { // valid doesn't include disabled
+        for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
+            if (validAspects.contains(entry.getKey()) || mast.isAspectDisabled(entry.getKey())) { // valid doesn't include disabled
                 // present, copy
-                dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
-                dccAspect.get(aspect).setAspectDisabled(mast.isAspectDisabled(aspect));
+                entry.getValue().setAspectId(mast.getOutputForAppearance(entry.getKey()));
+                entry.getValue().setAspectDisabled(mast.isAspectDisabled(entry.getKey()));
             } else {
                 // not present, log
-                log.info("Can't get aspect \"{}\" from head \"{}\", leaving unchanged", aspect, mast);
+                log.info("Can't get aspect \"{}\" from head \"{}\", leaving unchanged", entry.getKey(), mast);
             }
         }
     }
@@ -364,7 +361,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /**
      * JPanel to define properties of an Aspect for a DCC Signal Mast.
      * <p>
-     * Invoked from the AddSignalMastPanel class when a DCC Signal Mast is
+     * Invoked from the {@link AddSignalMastPanel} class when a DCC Signal Mast is
      * selected.
      */
     static class DCCAspectPanel {
@@ -455,4 +452,5 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DccSignalMastAddPane.class);
+
 }
