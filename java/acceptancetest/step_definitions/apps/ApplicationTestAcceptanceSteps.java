@@ -22,7 +22,7 @@ public class ApplicationTestAcceptanceSteps implements En {
    String[] tags = {"@apptest"};
    File tempFolder;
    
-   public ApplicationTestAcceptanceSteps(jmri.InstanceManager instance) {
+   public ApplicationTestAcceptanceSteps() {
 
 
    Before(tags,() -> {
@@ -69,7 +69,7 @@ public class ApplicationTestAcceptanceSteps implements En {
     After(tags,() -> {
         try{
            // gracefully shutdown, but don't exit
-           ((DefaultShutDownManager)instance.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+           ((DefaultShutDownManager)jmri.InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
         } finally { 
            // wait for threads, etc
            jmri.util.JUnitUtil.releaseThread(this, 5000);
